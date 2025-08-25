@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>รักเค้าไหม?</title>
+  <meta name="description" content="เว็บถามว่า รักเค้ามั้ย ถ้าตอบ No ปุ่มจะหนี ถ้าตอบ Yes จะเจอข้อความหวาน ๆ พร้อมเอฟเฟกต์น่ารัก ๆ" />
+  <style>
+    :root{
+      --bg1:#fff0f6; --bg2:#e8f7ff; --card:#ffffffee; --text:#111; --muted:#666; --accent:#ff4d79;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0; font-family: ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial;
+      color:var(--text);
+      display:grid; place-items:center;
+      background:
+        radial-gradient(1200px 700px at 15% 10%, var(--bg1), transparent 60%),
+        radial-gradient(1200px 700px at 85% 90%, var(--bg2), transparent 60%),
+        linear-gradient(180deg,#fff, #f7f9fc 40%, #fdf2f8);
+    }
+    .stage{
+      position:relative; width:min(920px, 94vw); height:min(580px, 84vh);
+      background:var(--card); backdrop-filter:saturate(1.2) blur(6px);
+      border-radius:28px; box-shadow:0 20px 60px rgba(0,0,0,.08), inset 0 1px 0 #fff;
+      padding:28px; overflow:hidden;
+    }
+    /* cute dot pattern overlay */
+    .stage::before{ content:""; position:absolute; inset:-30px; pointer-events:none; opacity:.35;
+      background:
+        radial-gradient(#ffd6ea 1px, transparent 1.6px) 0 0/18px 18px,
+        radial-gradient(#cfe8ff 1px, transparent 1.6px) 9px 9px/18px 18px;
+      animation: drift 18s linear infinite;
+    }
+    .stage::after{ content:""; position:absolute; inset:-20%; background:radial-gradient(closest-side, #fff0 40%, #ffe9f5 60%, #fff0 75%);
+      filter:blur(18px); opacity:.6; transform:rotate(8deg); pointer-events:none; animation: breathe 8s ease-in-out infinite;
+    }
+    @keyframes drift{to{transform:translateY(-60px)}}
+    @keyframes breathe{ 0%,100%{ transform:scale(1) rotate(8deg)} 50%{ transform:scale(1.03) rotate(8deg)} }
+
+    h1{margin:0; font-size:clamp(30px, 5.5vw, 48px); line-height:1.12}
+    p.tagline{margin:.5rem 0 1.25rem; color:var(--muted)}
+
+    .controls{ position:absolute; left:50%; transform:translateX(-50%); bottom:22px; display:flex; flex-wrap:wrap; justify-content:center; align-items:center; gap:12px; z-index:2; max-width:92%; }
+    button{
+      appearance:none; border:0; border-radius:15px; padding:14px 22px; font-size:18px; cursor:pointer;
+      box-shadow:0 8px 18px rgba(0,0,0,.10);
+      transition:transform .08s ease, box-shadow .2s ease, background .2s ease, color .2s ease, left .18s ease, top .18s ease;
+    }
+
+    /* Yes buttons */
+    .yes{ color:#fff; position:relative; isolation:isolate; }
+    .yes::after{ content:""; position:absolute; inset:-2px; border-radius:inherit; pointer-events:none; mix-blend-mode:soft-light;
+      background:radial-gradient(60% 80% at 20% 20%, #fff8, #fff0 60%); }
+    .yes:hover{ transform:translateY(-1px) scale(1.02); box-shadow:0 12px 22px rgba(0,0,0,.14) }
+    .yes.float{ position:absolute; z-index:1; }
+
+    /* The fleeing NO button */
+    #no{
+      background:#fff; color:#111; position:absolute; left:50%; top:62%; transform:translate(-50%,-50%);
+      border:1px solid #eaeaea; user-select:none; touch-action:none;
+    }
+    #no:active{ transform:translate(-50%,-50%) scale(.96) }
+
+    .center{ position:absolute; inset:0; display:grid; place-items:center; pointer-events:none }
+    .question{ text-align:center; max-width:80ch; padding:6px 12px }
+
+    .love{ font-size:clamp(22px,4.2vw,34px); display:none; text-align:center }
+    .love.show{ display:block; animation:pop .22s ease-out }
+    @keyframes pop{ from{ transform:scale(.95); opacity:.4 } to{ transform:scale(1); opacity:1 } }
+
+    /* hearts & confetti */
+    .heart{ position:absolute; bottom:12px; font-size:16px; pointer-events:none; opacity:0; filter:drop-shadow(0 6px 10px rgba(0,0,0,.12)) }
+    @keyframes floatUp{ 0%{ transform:translateY(0) scale(1) rotate(0deg); opacity:0 } 10%{ opacity:1 } 100%{ transform:translateY(-120vh) scale(1.4) rotate(360deg); opacity:0 } }
+
+    .conf{ position:absolute; top:-12px; width:8px; height:12px; border-radius:2px; pointer-events:none; opacity:.95;
+      transform:translateY(-10px) rotate(0deg);
+      animation: confFall var(--dur,1800ms) linear var(--delay,0ms) forwards;
+    }
+    @keyframes confFall{ to{ transform:translateY(110vh) rotate(720deg); opacity:1 } }
+
+    .reset{ margin-top:14px; display:none; border:1px solid #eaeaea; background:#fff; pointer-events:auto; z-index:3 }
+    .reset.show{ display:inline-block }
+
+    @media (max-width:560px){
+      .stage{ height:min(620px, 90vh) }
+      button{ padding:12px 18px; font-size:16px }
+    }
+  </style>
+</head>
+<body>
+  <div class="stage" id="stage" role="application" aria-label="เกมคำถามความรัก">
+    <div class="center">
+      <div class="question" id="qbox">
+        <h1>รักเค้าไหม?</h1>
+        <p class="tagline">เลือกดี ๆ นะ ☺️</p>
+      </div>
+    </div>
+
+    <div class="controls" id="controls">
+      <button id="yes" class="yes" aria-describedby="qbox">Yes ❤️</button>
+    </div>
+
+    <button id="no" aria-label="No">No 😜</button>
+
+    <div class="center">
+      <div id="loveMsg" class="love" aria-live="polite">รักเหมือนกันน้า 💖</div>
+      <button id="reset" class="reset" aria-label="เล่นอีกครั้ง">เล่นอีกครั้ง</button>
+    </div>
+  </div>
+
+  <script>
+    const stage = document.getElementById('stage');
+    const noBtn = document.getElementById('no');
+    const yesSeed = document.getElementById('yes'); // ปุ่ม yes เริ่มต้นด้านล่าง
+    const controls = document.getElementById('controls');
+    const loveMsg = document.getElementById('loveMsg');
+    const resetBtn = document.getElementById('reset');
+
+    const YES_CAP = 120; // กันเว็บหน่วงเกินไป
+    let dodgeCount = 0;
+
+    const pick = (arr)=> arr[Math.floor(Math.random()*arr.length)];
+    const clamp = (n, min, max)=> Math.max(min, Math.min(n, max));
+    const randomInt = (min,max)=> Math.floor(Math.random()*(max-min+1))+min;
+
+    function colorYes(btn){
+      const h = Math.floor(Math.random()*360);
+      btn.style.background = `linear-gradient(180deg, hsl(${h} 90% 62%), hsl(${(h+340)%360} 85% 52%))`;
+    }
+
+    function yesCount(){ return stage.querySelectorAll('.yes').length; }
+
+    // สร้าง YES แบบลอยในพื้นที่ stage
+    function createYesFloat(){
+      if (yesCount() >= YES_CAP) return null;
+      const b = yesSeed.cloneNode(true);
+      b.classList.add('float');
+      b.id = '';
+      colorYes(b);
+      b.addEventListener('click', confessLove);
+      stage.appendChild(b);
+      // วางตำแหน่งสุ่มแบบกระจาย
+      const sw = stage.clientWidth, sh = stage.clientHeight;
+      const bw = b.offsetWidth, bh = b.offsetHeight;
+      const pad = 10;
+      const x = Math.random() * (sw - bw - pad*2) + pad;
+      const y = Math.random() * (sh - bh - pad*2) + pad;
+      b.style.left = x + 'px';
+      b.style.top  = y + 'px';
+      return b;
+    }
+
+    // ปุ่ม NO หนี + สุ่มสร้าง YES 1–5 ปุ่มกระจายทั่วจอ
+    function teleportNo(ev){
+      if (loveMsg.classList.contains('show')) return;
+      const sw = stage.clientWidth; const sh = stage.clientHeight;
+      const bw = noBtn.offsetWidth; const bh = noBtn.offsetHeight;
+      const pad = 6;
+      let x = Math.random() * (sw - bw - pad*2) + pad;
+      let y = Math.random() * (sh - bh - pad*2) + pad;
+      const yesZoneWidth = 280, yesZoneHeight = 160;
+      if (y > sh - yesZoneHeight && Math.abs(x - (sw/2 - bw/2)) < yesZoneWidth/2){
+        y = clamp(y - yesZoneHeight - 24, pad, sh - bh - pad);
+        x = clamp(x + (Math.random() < .5 ? -140 : 140), pad, sw - bw - pad);
+      }
+      noBtn.style.left = x + 'px';
+      noBtn.style.top  = y + 'px';
+
+      dodgeCount++;
+      const t = Math.max(50, 180 - dodgeCount*10);
+      noBtn.style.transitionDuration = `${t}ms, ${t}ms, 80ms`;
+      noBtn.animate([
+        { transform: 'translate(-50%,-50%) scale(1.0)' },
+        { transform: 'translate(-50%,-50%) scale(1.06)' },
+        { transform: 'translate(-50%,-50%) scale(1.0)' }
+      ], { duration: 160, easing: 'ease-out' });
+
+      // สุ่มเพิ่ม YES 1–5 ปุ่มต่อครั้ง
+      const n = randomInt(1,5);
+      for(let i=0;i<n;i++) createYesFloat();
+
+      burstHearts(3 + Math.floor(Math.random()*3));
+      if (ev) ev.preventDefault();
+    }
+
+    function confessLove(){
+      // ลบปุ่ม YES ที่สุ่มลอยทั้งหมดเพื่อไม่ให้บังหน้าจอ
+      stage.querySelectorAll('.yes.float').forEach(el=>{
+        el.style.transition = 'opacity .18s ease, transform .18s ease';
+        el.style.opacity = '0';
+        el.style.transform = 'scale(0.9)';
+        setTimeout(()=> el.remove(), 200);
+      });
+
+      loveMsg.classList.add('show');
+      document.querySelector('.tagline').textContent = 'รู้สึกเหมือนกันเลย 💞';
+      noBtn.style.display = 'none';
+      controls.style.display = 'none';
+      burstHearts(36);
+      burstConfetti(80);
+      resetBtn.classList.add('show');
+    }
+
+    function reset(){
+      loveMsg.classList.remove('show');
+      controls.style.display = 'flex';
+      noBtn.style.display = 'inline-block';
+      // ลบ YES ทั้งหมด ยกเว้นปุ่ม seed ใน controls
+      stage.querySelectorAll('.yes.float').forEach(el=> el.remove());
+      dodgeCount = 0;
+      // center the NO for a fresh start
+      noBtn.style.left = '50%';
+      noBtn.style.top  = '72%';
+      resetBtn.classList.remove('show');
+      document.querySelector('.tagline').textContent = 'เลือกดี ๆ นะ ☺️';
+    }
+
+    function burstHearts(n){
+      for(let i=0;i<n;i++){
+        const span = document.createElement('span');
+        span.className = 'heart';
+        span.textContent = pick(['💖','💘','💗','💓','💞']);
+        const x = Math.random() * stage.clientWidth;
+        const delay = Math.random()*80;
+        const dur = 1600 + Math.random()*900;
+        span.style.left = x + 'px';
+        span.style.animation = `floatUp ${dur}ms ease-out ${delay}ms forwards`;
+        span.style.fontSize = (14 + Math.random()*22) + 'px';
+        stage.appendChild(span);
+        setTimeout(()=> span.remove(), dur + delay + 60);
+      }
+    }
+
+    function burstConfetti(n){
+      const colors = ['#ff7da6','#ffd166','#8be8c9','#9ad0ff','#c7a7ff','#ff9fb5'];
+      for(let i=0;i<n;i++){
+        const el = document.createElement('span');
+        el.className = 'conf';
+        el.style.left = (Math.random()*100) + 'vw';
+        el.style.background = pick(colors);
+        el.style.setProperty('--dur', (1500 + Math.random()*1200) + 'ms');
+        el.style.setProperty('--delay', (Math.random()*400) + 'ms');
+        stage.appendChild(el);
+        setTimeout(()=> el.remove(), 2600);
+      }
+    }
+
+    ;['pointerenter','pointerdown','touchstart','focus'].forEach(evt => {
+      noBtn.addEventListener(evt, teleportNo, { passive:false });
+    });
+
+    window.addEventListener('load', ()=>{ colorYes(yesSeed); /* start with 1 YES only; random spawns begin on first NO */ });
+    // no random spawns on resize
+    window.addEventListener('resize', ()=>{});
+
+    yesSeed.addEventListener('click', confessLove);
+    resetBtn.addEventListener('click', reset);
+  </script>
+</body>
+</html>
