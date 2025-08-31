@@ -1,262 +1,233 @@
 <!DOCTYPE html>
 <html lang="th">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>รักเค้าไหม?</title>
-  <meta name="description" content="เว็บถามว่า รักเค้ามั้ย ถ้าตอบ No ปุ่มจะหนี ถ้าตอบ Yes จะเจอข้อความหวาน ๆ พร้อมเอฟเฟกต์น่ารัก ๆ" />
-  <style>
-    :root{
-      --bg1:#fff0f6; --bg2:#e8f7ff; --card:#ffffffee; --text:#111; --muted:#666; --accent:#ff4d79;
-    }
-    *{box-sizing:border-box}
-    html,body{height:100%}
-    body{
-      margin:0; font-family: ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial;
-      color:var(--text);
-      display:grid; place-items:center;
-      background:
-        radial-gradient(1200px 700px at 15% 10%, var(--bg1), transparent 60%),
-        radial-gradient(1200px 700px at 85% 90%, var(--bg2), transparent 60%),
-        linear-gradient(180deg,#fff, #f7f9fc 40%, #fdf2f8);
-    }
-    .stage{
-      position:relative; width:min(920px, 94vw); height:min(580px, 84vh);
-      background:var(--card); backdrop-filter:saturate(1.2) blur(6px);
-      border-radius:28px; box-shadow:0 20px 60px rgba(0,0,0,.08), inset 0 1px 0 #fff;
-      padding:28px; overflow:hidden;
-    }
-    /* cute dot pattern overlay */
-    .stage::before{ content:""; position:absolute; inset:-30px; pointer-events:none; opacity:.35;
-      background:
-        radial-gradient(#ffd6ea 1px, transparent 1.6px) 0 0/18px 18px,
-        radial-gradient(#cfe8ff 1px, transparent 1.6px) 9px 9px/18px 18px;
-      animation: drift 18s linear infinite;
-    }
-    .stage::after{ content:""; position:absolute; inset:-20%; background:radial-gradient(closest-side, #fff0 40%, #ffe9f5 60%, #fff0 75%);
-      filter:blur(18px); opacity:.6; transform:rotate(8deg); pointer-events:none; animation: breathe 8s ease-in-out infinite;
-    }
-    @keyframes drift{to{transform:translateY(-60px)}}
-    @keyframes breathe{ 0%,100%{ transform:scale(1) rotate(8deg)} 50%{ transform:scale(1.03) rotate(8deg)} }
-
-    h1{margin:0; font-size:clamp(30px, 5.5vw, 48px); line-height:1.12}
-    p.tagline{margin:.5rem 0 1.25rem; color:var(--muted)}
-
-    .controls{ position:absolute; left:50%; transform:translateX(-50%); bottom:22px; display:flex; flex-wrap:wrap; justify-content:center; align-items:center; gap:12px; z-index:2; max-width:92%; }
-    button{
-      appearance:none; border:0; border-radius:15px; padding:14px 22px; font-size:18px; cursor:pointer;
-      box-shadow:0 8px 18px rgba(0,0,0,.10);
-      transition:transform .08s ease, box-shadow .2s ease, background .2s ease, color .2s ease, left .18s ease, top .18s ease;
-    }
-
-    /* Yes buttons */
-    .yes{ color:#fff; position:relative; isolation:isolate; }
-    .yes::after{ content:""; position:absolute; inset:-2px; border-radius:inherit; pointer-events:none; mix-blend-mode:soft-light;
-      background:radial-gradient(60% 80% at 20% 20%, #fff8, #fff0 60%); }
-    .yes:hover{ transform:translateY(-1px) scale(1.02); box-shadow:0 12px 22px rgba(0,0,0,.14) }
-    .yes.float{ position:absolute; z-index:1; }
-
-    /* The fleeing NO button */
-    #no{
-      background:#fff; color:#111; position:absolute; left:50%; top:62%; transform:translate(-50%,-50%);
-      border:1px solid #eaeaea; user-select:none; touch-action:none;
-    }
-    #no:active{ transform:translate(-50%,-50%) scale(.96) }
-
-    .center{ position:absolute; inset:0; display:grid; place-items:center; pointer-events:none }
-    .question{ text-align:center; max-width:80ch; padding:6px 12px }
-
-    .love{ font-size:clamp(22px,4.2vw,34px); display:none; text-align:center }
-    .love.show{ display:block; animation:pop .22s ease-out }
-    @keyframes pop{ from{ transform:scale(.95); opacity:.4 } to{ transform:scale(1); opacity:1 } }
-
-    /* hearts & confetti */
-    .heart{ position:absolute; bottom:12px; font-size:16px; pointer-events:none; opacity:0; filter:drop-shadow(0 6px 10px rgba(0,0,0,.12)) }
-    @keyframes floatUp{ 0%{ transform:translateY(0) scale(1) rotate(0deg); opacity:0 } 10%{ opacity:1 } 100%{ transform:translateY(-120vh) scale(1.4) rotate(360deg); opacity:0 } }
-
-    .conf{ position:absolute; top:-12px; width:8px; height:12px; border-radius:2px; pointer-events:none; opacity:.95;
-      transform:translateY(-10px) rotate(0deg);
-      animation: confFall var(--dur,1800ms) linear var(--delay,0ms) forwards;
-    }
-    @keyframes confFall{ to{ transform:translateY(110vh) rotate(720deg); opacity:1 } }
-
-    .reset{ margin-top:14px; display:none; border:1px solid #eaeaea; background:#fff; pointer-events:auto; z-index:3 }
-    .reset.show{ display:inline-block }
-
-    @media (max-width:560px){
-      .stage{ height:min(620px, 90vh) }
-      button{ padding:12px 18px; font-size:16px }
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>เครื่องมือสำรวจเทคโนโลยีการผลิตไฮโดรเจน</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Warm Neutrals with Teal Accent -->
+    <!-- Application Structure Plan: The app is structured into two main parts. Part 1 is an interactive dashboard for direct comparison of Hydrocarbon Reforming technologies (SMR, POX, ATR) using tabs and a dynamic chart. This facilitates understanding of similar direct-production methods. Part 2 is a new, separate informational section for Thermochemical processes from Biomass (Combustion, Liquefaction). This separation is crucial because these are not direct H2 production methods but supporting/intermediate steps. This structure prevents user confusion by grouping concepts logically by their role, not just their source. -->
+    <!-- Visualization & Content Choices: Reforming is visualized via an interactive Chart.js bar chart for quantitative comparison. Thermochemical processes are explained using structured HTML/CSS diagrams to illustrate their roles (Combustion as a heat source, Liquefaction as a creator of an intermediate liquid fuel). This choice avoids misleading direct comparisons and focuses on explaining the process flow. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body {
+            font-family: 'Sarabun', sans-serif;
+            background-color: #f8f7f4;
+            color: #44403c;
+        }
+        .active-tech-btn {
+            background-color: #0d9488 !important;
+            color: #ffffff !important;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+        }
+        .tech-btn {
+            transition: all 0.3s ease;
+        }
+        .content-card {
+            background-color: #ffffff;
+            border: 1px solid #e7e5e4;
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+        .content-card-body {
+            flex-grow: 1;
+        }
+        .content-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.07), 0 4px 6px -4px rgb(0 0 0 / 0.07);
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 400px;
+            max-height: 50vh;
+        }
+        .section-divider {
+            border-top: 2px dashed #d6d3d1;
+            margin: 3rem auto;
+        }
+        .details-grid {
+            display: grid;
+            grid-template-columns: repeat(1, 1fr);
+            gap: 1.5rem;
+        }
+        @media (min-width: 1024px) {
+            .details-grid {
+                grid-template-columns: repeat(6, 1fr);
+            }
+            .grid-span-2 { grid-column: span 2 / span 2; }
+            .grid-span-3 { grid-column: span 3 / span 3; }
+            .grid-span-4 { grid-column: span 4 / span 4; }
+        }
+    </style>
 </head>
-<body>
-  <div class="stage" id="stage" role="application" aria-label="เกมคำถามความรัก">
-    <div class="center">
-      <div class="question" id="qbox">
-        <h1>รักเค้าไหม?</h1>
-        <p class="tagline">เลือกดี ๆ นะ ☺️</p>
-      </div>
+<body class="antialiased">
+
+    <div class="container mx-auto p-4 sm:p-6 lg:p-8">
+        
+        <header class="text-center mb-8">
+            <h1 class="text-3xl sm:text-4xl font-bold text-teal-800">เครื่องมือสำรวจเทคโนโลยีการผลิตไฮโดรเจน</h1>
+            <p class="mt-2 text-lg text-stone-600">วิเคราะห์เปรียบเทียบเทคโนโลยีจากเชื้อเพลิงฟอสซิลและชีวมวล</p>
+        </header>
+
+        <main>
+            <!-- Section 1: Hydrocarbon Reforming -->
+            <section class="mb-12">
+                <h2 class="text-2xl sm:text-3xl font-bold text-center text-stone-700 mb-2">Part 1: Hydrocarbon Reforming (จากเชื้อเพลิงฟอสซิล)</h2>
+                <p class="text-center text-stone-600 mb-6">เทคโนโลยีกลุ่มนี้คิดเป็นสัดส่วนการผลิตไฮโดรเจนกว่า 95% ของโลก โดย SMR เป็นกระบวนการที่โดดเด่นและใช้กันแพร่หลายมากที่สุด</p>
+                
+                <div id="technology-selector" class="mb-8 p-4 bg-stone-100 rounded-xl shadow-inner">
+                    <p class="text-center text-stone-700 font-semibold mb-4">เลือกเทคโนโลยีที่ต้องการศึกษา</p>
+                    <div class="flex flex-wrap justify-center gap-2 sm:gap-4">
+                        <button id="btn-smr" class="tech-btn w-full sm:w-auto text-stone-700 bg-white border border-stone-300 font-semibold py-3 px-6 rounded-lg shadow-sm hover:bg-teal-50">Steam Methane Reforming (SMR)</button>
+                        <button id="btn-pox" class="tech-btn w-full sm:w-auto text-stone-700 bg-white border border-stone-300 font-semibold py-3 px-6 rounded-lg shadow-sm hover:bg-teal-50">Partial Oxidation (POX)</button>
+                        <button id="btn-atr" class="tech-btn w-full sm:w-auto text-stone-700 bg-white border border-stone-300 font-semibold py-3 px-6 rounded-lg shadow-sm hover:bg-teal-50">Autothermal Reforming (ATR)</button>
+                    </div>
+                </div>
+
+                <div id="technology-details" class="mb-12">
+                    <div id="details-container" class="details-grid">
+                        <div id="card-principle" class="content-card grid-span-2"></div>
+                        <div id="card-reactor" class="content-card grid-span-2"></div>
+                        <div id="card-conditions" class="content-card grid-span-2"></div>
+                        <div id="card-pros-cons" class="content-card grid-span-3"></div>
+                        <div id="card-improvements" class="content-card grid-span-3"></div>
+                    </div>
+                </div>
+
+                <div id="comparison-section" class="bg-white p-6 rounded-xl shadow-md border border-stone-200">
+                    <h3 class="text-xl sm:text-2xl font-bold text-center text-teal-800 mb-6">การเปรียบเทียบเชิงปริมาณ</h3>
+                    <div class="mb-8">
+                        <label for="chart-metric-selector" class="block text-center font-semibold text-stone-700 mb-2">เลือกหัวข้อเพื่อเปรียบเทียบในกราฟ:</label>
+                        <select id="chart-metric-selector" class="block w-full max-w-sm mx-auto p-2 border border-stone-300 rounded-md shadow-sm focus:ring-teal-500 focus:border-teal-500"></select>
+                    </div>
+                    <div class="chart-container mb-12">
+                        <canvas id="comparisonChart"></canvas>
+                    </div>
+                </div>
+            </section>
+
+            <div class="section-divider"></div>
+            
+            <!-- Section 2: Thermochemical Processes -->
+            <section class="mb-12">
+                <h2 class="text-2xl sm:text-3xl font-bold text-center text-stone-700 mb-2">Part 2: Thermochemical (จากชีวมวล)</h2>
+                 <p class="text-center text-stone-600 mb-8">กระบวนการที่เกี่ยวข้องกับการผลิตไฮโดรเจนจากแหล่งพลังงานหมุนเวียน</p>
+
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                    <div id="combustion-card" class="content-card"></div>
+                    <div id="liquefaction-card" class="content-card"></div>
+                </div>
+            </section>
+        </main>
     </div>
 
-    <div class="controls" id="controls">
-      <button id="yes" class="yes" aria-describedby="qbox">Yes ❤️</button>
-    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            
+            const techData = {
+                smr: {
+                    principle: `<h3 class="text-xl font-bold text-teal-700 mb-3">หลักการและปฏิกิริยา</h3><div class="content-card-body"><p class="mb-2"><span class="font-semibold text-stone-800">หลักการ:</span> เป็นกระบวนการ <strong class="text-blue-600">ดูดความร้อนสูง (Endothermic)</strong> ที่ต้องให้ความร้อนจากภายนอกตลอดเวลาเพื่อสลายพันธะมีเทนด้วยไอน้ำ</p><div class="mt-4 text-sm bg-stone-50 p-3 rounded-lg border space-y-2"><p class="font-semibold">1. Reforming (ปฏิกิริยาหลัก):</p><p class="font-mono text-xs sm:text-sm">CH₄ + H₂O ⇌ CO + 3H₂</p><p class="font-semibold mt-2">2. Water-Gas Shift (ปฏิกิริยาเสริม):</p><p class="font-mono text-xs sm:text-sm">CO + H₂O ⇌ CO₂ + H₂</p></div></div>`,
+                    reactor: `<h3 class="text-xl font-bold text-teal-700 mb-3">กระบวนการและเตาปฏิกรณ์</h3><div class="content-card-body"><p class="text-sm font-semibold mb-2">ขั้นตอน (Process Flow):</p><ol class="list-decimal list-inside text-sm space-y-1 mb-4"><li>กำจัดกำมะถัน (Desulfurization)</li><li>ผสมกับไอน้ำ (Steam Mixing)</li><li>เข้าเตาปฏิกรณ์หลัก (Primary Reformer)</li><li>เข้าเตาปฏิกรณ์ WGS (WGS Reactor)</li><li>แยกผลิตภัณฑ์ให้บริสุทธิ์ (Purification - PSA)</li></ol><p class="text-sm font-semibold mb-2">ลักษณะเตาปฏิกรณ์:</p><p class="text-sm text-stone-600">ท่อ Catalyst จำนวนมากในเตาเผา (Furnace) เพื่อรับความร้อนจากการแผ่รังสี</p><div class="w-full max-w-xs mx-auto text-center mt-2"><div class="bg-stone-200 border-2 border-stone-400 rounded-lg p-4 h-32 flex justify-around items-end"><div class="w-3 h-4/5 bg-teal-700 rounded-t-sm" title="Catalyst Tube"></div><div class="w-3 h-4/5 bg-teal-700 rounded-t-sm" title="Catalyst Tube"></div><div class="w-3 h-4/5 bg-teal-700 rounded-t-sm" title="Catalyst Tube"></div></div></div></div>`,
+                    conditions: `<h3 class="text-xl font-bold text-teal-700 mb-3">สภาวะการทำงาน</h3><div class="content-card-body"><ul class="space-y-3"><li><span class="font-semibold">🌡️ อุณหภูมิ:</span> 700 - 1000 °C</li><li><span class="font-semibold">💨 ความดัน:</span> 15 - 30 bar</li><li><span class="font-semibold">💧 อัตราส่วนไอน้ำต่อคาร์บอน (S/C):</span> 2.5 - 3.5 (สำคัญมากเพื่อป้องกันการเกิดคาร์บอน/coke)</li><li><span class="font-semibold">🔬 ตัวเร่งปฏิกิริยา:</span> <strong>นิกเกิล (Ni)</strong> บนแกนรองรับอะลูมินา (Al₂O₃)</li></ul></div>`,
+                    pros_cons: `<h3 class="text-xl font-bold text-teal-700 mb-3">ข้อดีและข้อเสีย</h3><div class="content-card-body"><p class="font-semibold text-green-700 mb-2">ข้อดี:</p><ul class="list-disc list-inside space-y-2 mb-4"><li><strong>เทคโนโลยีสมบูรณ์ (Mature):</strong> น่าเชื่อถือสูง มีข้อมูลอ้างอิงเยอะ</li><li><strong>ต้นทุนการผลิตต่ำ (Economies of Scale):</strong> เมื่อสร้างขนาดใหญ่ จะมีต้นทุนต่อหน่วย ($/kg H₂) ต่ำที่สุดในปัจจุบัน</li><li><strong>ได้ H₂/CO Ratio สูง:</strong> เหมาะกับการผลิตไฮโดรเจนบริสุทธิ์โดยเฉพาะ</li></ul><p class="font-semibold text-red-700 mb-2">ข้อเสีย:</p><ul class="list-disc list-inside space-y-2"><li><strong>ปล่อยคาร์บอนสูง (Large Carbon Footprint):</strong> ปล่อย CO₂ จากทั้งปฏิกิริยาและปล่องไฟ Furnace ทำให้เป็น Grey Hydrogen</li><li><strong>เงินลงทุนสูง (High CAPEX):</strong> ค่าก่อสร้าง Furnace และท่อโลหะผสมพิเศษ (High-nickel alloys) มีราคาสูง</li><li><strong>ขาดความยืดหยุ่นวัตถุดิบ:</strong> ใช้ได้ดีกับก๊าซธรรมชาติที่สะอาดเท่านั้น</li></ul></div>`,
+                    improvements: `<h3 class="text-xl font-bold text-teal-700 mb-3">แนวคิดในการปรับปรุงและพัฒนา</h3><div class="content-card-body"><p class="mb-4">เป้าหมายหลักคือการลดการปล่อย CO₂ และเพิ่มประสิทธิภาพการใช้พลังงาน</p><ul class="space-y-3"><li><strong class="text-blue-600">1. การดักจับคาร์บอน (CCUS):</strong> ติดตั้งหน่วยดักจับ CO₂ เพื่อเปลี่ยนจาก Grey Hydrogen เป็น <strong>Blue Hydrogen</strong></li><li><strong class="text-green-600">2. เพิ่มประสิทธิภาพพลังงาน:</strong> ออกแบบระบบแลกเปลี่ยนความร้อน (Heat Exchanger Network) เพื่อนำความร้อนทิ้งกลับมาใช้ใหม่ ลดการใช้เชื้อเพลิงใน Furnace</li><li><strong class="text-purple-600">3. พัฒนา Catalyst:</strong> วิจัย Catalyst ที่ทำงานได้ในอุณหภูมิต่ำลง หรือทนทานต่อสิ่งปนเปื้อนได้ดีขึ้น</li></ul></div>`
+                },
+                pox: {
+                    principle: `<h3 class="text-xl font-bold text-teal-700 mb-3">หลักการและปฏิกิริยา</h3><div class="content-card-body"><p class="mb-2"><span class="font-semibold text-stone-800">หลักการ:</span> เป็นกระบวนการ <strong class="text-red-600">คายความร้อนสูง (Exothermic)</strong> ที่สร้างความร้อนขึ้นเองจากปฏิกิริยาเผาไหม้บางส่วนด้วยออกซิเจน</p><div class="mt-4 text-sm bg-stone-50 p-3 rounded-lg border"><p class="font-semibold">POX Reaction:</p><p class="font-mono text-xs sm:text-sm">CH₄ + ½O₂ → CO + 2H₂</p></div></div>`,
+                    reactor: `<h3 class="text-xl font-bold text-teal-700 mb-3">กระบวนการและเตาปฏิกรณ์</h3><div class="content-card-body"><p class="text-sm font-semibold mb-2">ขั้นตอน (Process Flow):</p><ol class="list-decimal list-inside text-sm space-y-1 mb-4"><li>ผสมกับออกซิเจน (Oxygen Mixing)</li><li>เข้าเตาปฏิกรณ์ POX (POX Reactor)</li><li>ลดอุณหภูมิแก๊ส (Syngas Cooling)</li><li><strong>กำจัดเขม่า (Soot Removal)</strong></li><li>แยกผลิตภัณฑ์ให้บริสุทธิ์ (Purification)</li></ol><p class="text-sm font-semibold mb-2">ลักษณะเตาปฏิกรณ์:</p><p class="text-sm text-stone-600">เป็นถังเปล่า (Vessel) ที่บุด้วยวัสดุทนไฟ (Refractory) เพื่อทนอุณหภูมิสูงจัด</p><div class="w-full max-w-xs mx-auto text-center mt-2"><div class="bg-white border-8 border-orange-800 rounded-lg h-32 w-24 mx-auto" title="Refractory Lined Vessel"></div></div></div>`,
+                    conditions: `<h3 class="text-xl font-bold text-teal-700 mb-3">สภาวะการทำงาน</h3><div class="content-card-body"><ul class="space-y-3"><li><span class="font-semibold">🌡️ อุณหภูมิ:</span> 1200 - 1500 °C (สูงจัด)</li><li><span class="font-semibold">💨 ความดัน:</span> 30 - 80 bar (สูงมาก)</li><li><span class="font-semibold">🔬 ตัวเร่งปฏิกิริยา:</span> ❌ <strong>ไม่ใช้ (Non-catalytic)</strong> เป็นส่วนใหญ่ เนื่องจากอุณหภูมิสูงมากพอที่จะเกิดปฏิกิริยาได้เอง</li></ul></div>`,
+                    pros_cons: `<h3 class="text-xl font-bold text-teal-700 mb-3">ข้อดีและข้อเสีย</h3><div class="content-card-body"><p class="font-semibold text-green-700 mb-2">ข้อดี:</p><ul class="list-disc list-inside space-y-2 mb-4"><li><strong>ความยืดหยุ่นของวัตถุดิบสูงสุด:</strong> จุดเด่นที่สุด สามารถใช้ได้ตั้งแต่น้ำมันเตา กากน้ำมัน ไปจนถึงถ่านหินและชีวมวล</li><li><strong>ขนาดกะทัดรัด:</strong> ไม่มี Furnace ขนาดใหญ่ ทำให้ใช้พื้นที่น้อยกว่า SMR</li><li><strong>ปฏิกิริยารวดเร็ว:</strong> Start-up ได้เร็วกว่า SMR</li></ul><p class="font-semibold text-red-700 mb-2">ข้อเสีย:</p><ul class="list-disc list-inside space-y-2"><li><strong>ต้องมีโรงแยกอากาศ (ASU):</strong> เป็นต้นทุนที่สูงและกินพลังงานมากในการผลิตออกซิเจนบริสุทธิ์</li><li><strong>เกิดเขม่า (Soot Formation):</strong> อุณหภูมิสูงจัดทำให้เกิด Thermal Cracking ต้องมีหน่วยกำจัดเขม่า</li><li><strong>ได้ H₂/CO Ratio ต่ำ:</strong> ผลิตภัณฑ์มีสัดส่วน CO สูงกว่า</li></ul></div>`,
+                    improvements: `<h3 class="text-xl font-bold text-teal-700 mb-3">แนวคิดในการปรับปรุงและพัฒนา</h3><div class="content-card-body"><p class="mb-4">เนื่องจากข้อเสียหลักคือการต้องใช้ ASU และเกิดเขม่า การพัฒนาจึงมุ่งเน้นไปที่:</p><ul class="space-y-3"><li><strong class="text-blue-600">1. Catalytic POX (CPOX):</strong> การพัฒนา Catalyst ที่ทนทานเพื่อใช้ในกระบวนการ POX จะช่วยลดอุณหภูมิทำงานลงได้ ทำให้ลดการเกิดเขม่าและอาจลดความต้องการวัสดุราคาสูง</li><li><strong class="text-green-600">2. การจัดการเขม่าที่มีประสิทธิภาพ:</strong> พัฒนาระบบดักจับและนำเขม่า (คาร์บอน) กลับมาใช้ประโยชน์ เพื่อเปลี่ยนของเสียให้เป็นผลิตภัณฑ์ที่มีมูลค่า</li></ul></div>`
+                },
+                atr: {
+                    principle: `<h3 class="text-xl font-bold text-teal-700 mb-3">หลักการและปฏิกิริยา</h3><div class="content-card-body"><p class="mb-2"><span class="font-semibold text-stone-800">หลักการ:</span> เป็นกระบวนการ <strong class="text-purple-600">สมดุลความร้อน (Neutral)</strong> ที่อัจฉริยะ โดยรวมปฏิกิริยาคายความร้อนของ POX และดูดความร้อนของ SMR ไว้ในเตาปฏิกรณ์เดียว</p><div class="mt-4 text-sm bg-stone-50 p-3 rounded-lg border"><p class="font-semibold">ใช้ความร้อนจากโซน POX ด้านบน ไปขับเคลื่อนปฏิกิริยา SMR ในชั้น Catalyst ด้านล่าง</p></div></div>`,
+                    reactor: `<h3 class="text-xl font-bold text-teal-700 mb-3">กระบวนการและเตาปฏิกรณ์</h3><div class="content-card-body"><p class="text-sm font-semibold mb-2">ลักษณะเตาปฏิกรณ์:</p><p class="text-sm text-stone-600">เป็นถังปฏิกรณ์เดียว (Single Vessel) ที่แบ่งภายในเป็น 2 โซนชัดเจน</p><div class="w-full max-w-xs mx-auto text-center mt-2"><div class="bg-white border-4 border-stone-500 rounded-lg h-32 w-24 mx-auto flex flex-col" title="Two-Zone Reactor"><div class="h-1/3 bg-red-200 rounded-t-sm flex items-center justify-center text-xs font-semibold text-red-800">1. POX Zone (บน)</div><div class="h-2/3 bg-blue-200 rounded-b-sm flex items-center justify-center text-xs font-semibold text-blue-800">2. SMR Zone (ล่าง)</div></div></div></div>`,
+                    conditions: `<h3 class="text-xl font-bold text-teal-700 mb-3">สภาวะการทำงาน</h3><div class="content-card-body"><ul class="space-y-3"><li><span class="font-semibold">🌡️ อุณหภูมิ:</span> ~900 - 1100 °C</li><li><span class="font-semibold">💨 ความดัน:</span> 20 - 60 bar</li><li><span class="font-semibold">🔬 ตัวเร่งปฏิกิริยา:</span> ✅ <strong>นิกเกิล (Ni)</strong> ในโซนล่าง (SMR Zone)</li></ul></div>`,
+                    pros_cons: `<h3 class="text-xl font-bold text-teal-700 mb-3">ข้อดีและข้อเสีย</h3><div class="content-card-body"><p class="font-semibold text-green-700 mb-2">ข้อดี:</p><ul class="list-disc list-inside space-y-2 mb-4"><li><strong>เหมาะกับ Blue Hydrogen ที่สุด:</strong> ไม่มี CO₂ จากปล่องไฟ ทำให้การดักจับ CO₂ จากกระแสผลิตภัณฑ์ที่มีความดันสูงทำได้ง่ายและต้นทุนต่ำ</li><li><strong>CAPEX ต่ำกว่า SMR:</strong> เพราะไม่มี Furnace ขนาดใหญ่</li><li><strong>ประสิทธิภาพสูง:</strong> รวมข้อดีของทั้งสองระบบ ทำให้ใช้ออกซิเจนน้อยกว่า POX และเกิดเขม่าน้อยกว่า</li></ul><p class="font-semibold text-red-700 mb-2">ข้อเสีย:</p><ul class="list-disc list-inside space-y-2"><li><strong>ยังคงต้องมี ASU:</strong> เป็นต้นทุนสำคัญเมื่อเทียบกับ SMR ที่ไม่ต้องใช้เลย</li><li><strong>ยืดหยุ่นวัตถุดิบต่ำกว่า POX:</strong> เพราะมีชั้น Catalyst จึงใช้ได้กับก๊าซสะอาดเท่านั้น</li></ul></div>`,
+                    improvements: `<h3 class="text-xl font-bold text-teal-700 mb-3">แนวคิดในการปรับปรุงและพัฒนา</h3><div class="content-card-body"><p class="mb-4">ATR ถือเป็นเทคโนโลยีที่ทันสมัยและเป็นที่จับตาสำหรับการผลิต Blue Hydrogen ขนาดใหญ่</p><ul class="space-y-3"><li><strong class="text-blue-600">1. บูรณาการกับ CCUS:</strong> การออกแบบโรงงาน ATR ควบคู่ไปกับหน่วยดักจับและกักเก็บคาร์บอน (CCUS) ตั้งแต่เริ่มต้น จะทำให้ได้ Blue Hydrogen ที่มีต้นทุนแข่งขันได้</li><li><strong class="text-green-600">2. การใช้ Air-blown ATR:</strong> มีงานวิจัยที่พยายามใช้ "อากาศ" แทน "ออกซิเจนบริสุทธิ์" เพื่อกำจัดต้นทุนจาก ASU แต่ก็ต้องแลกมากับความท้าทายในการจัดการไนโตรเจนในระบบ</li></ul></div>`
+                }
+            };
 
-    <button id="no" aria-label="No">No 😜</button>
+            const thermochemData = {
+                combustion: `<h3 class="text-2xl font-bold text-orange-700 mb-4">Combustion (การเผาไหม้)</h3><div class="content-card-body"><p class="mb-3 text-stone-600"><strong class="text-stone-800">บทบาทหลัก:</strong> เป็น <strong class="text-orange-600">"กระบวนการสนับสนุนเพื่อสร้างพลังงาน"</strong> ไม่ได้ผลิตไฮโดรเจนโดยตรง</p><p class="font-semibold">หลักการทำงาน:</p><p class="text-sm mb-3">คือการเผาไหม้ชีวมวลส่วนหนึ่งกับออกซิเจน (อากาศ) ที่มากเกินพอ เพื่อเปลี่ยนพลังงานเคมีในชีวมวลให้เป็นความร้อนอุณหภูมิสูง จากนั้นนำความร้อนนี้ไปใช้ขับเคลื่อนกระบวนการผลิตไฮโดรเจนหลักที่ดูดความร้อน เช่น Gasification</p><div class="text-sm bg-stone-50 p-3 rounded-lg border mb-3"><p class="font-semibold">สมการเผาไหม้สมบูรณ์ (ตัวอย่าง):</p><p class="font-mono text-xs sm:text-sm">C₆H₁₀O₅ + 6O₂ → 6CO₂ + 5H₂O + 🔥Heat</p></div><p class="font-semibold">สภาวะการทำงาน:</p><ul class="list-disc list-inside text-sm mb-3"><li>อุณหภูมิ: > 850 °C</li><li>สารทำปฏิกิริยา: อากาศในปริมาณที่มากเกินพอ</li></ul></div><div class="mt-auto pt-4 border-t"><p class="font-semibold text-green-700">ข้อดี: เป็นวิธีที่ตรงไปตรงมาในการผลิตความร้อนจากชีวมวล</p><p class="font-semibold text-red-700">ข้อจำกัด: ผลิตภัณฑ์คือ CO₂ และ H₂O ไม่ใช่ H₂ ที่ต้องการ</p></div>`,
+                liquefaction: `<h3 class="text-2xl font-bold text-lime-700 mb-4">Liquefaction (การแปรสภาพเป็นของเหลว)</h3><div class="content-card-body"><p class="mb-3 text-stone-600"><strong class="text-stone-800">บทบาทหลัก:</strong> เป็น <strong class="text-lime-600">"กระบวนการสร้างสารตัวกลาง"</strong> (Intermediate Step)</p><p class="font-semibold">หลักการทำงาน:</p><p class="text-sm mb-3">คือการสลายโครงสร้างชีวมวลของแข็งในตัวทำละลายภายใต้อุณหภูมิปานกลางและความดันสูงมาก เพื่อเปลี่ยนให้เป็น <strong class="font-semibold">"ไบโอ-ออยล์ (Bio-oil)"</strong> ซึ่งเป็นของเหลวที่มีความหนาแน่นพลังงานสูง ง่ายต่อการขนส่งและจัดเก็บ จากนั้นจึงนำ Bio-oil ไปผ่านกระบวนการ Reforming เพื่อผลิตไฮโดรเจนต่อไป</p><p class="font-semibold">สภาวะการทำงาน:</p><ul class="list-disc list-inside text-sm mb-3"><li>อุณหภูมิ: 250 - 370 °C</li><li>ความดัน: 50 - 200 bar (สูงมาก)</li></ul></div><div class="mt-auto pt-4 border-t"><p class="font-semibold text-green-700">ข้อดี: เพิ่มความหนาแน่นพลังงาน (Energy Densification) ทำให้ขนส่งและจัดเก็บชีวมวลในรูปของเหลวได้ง่าย</p><p class="font-semibold text-red-700">ข้อเสีย: Bio-oil ที่ได้มีคุณภาพต่ำ (เป็นกรด, ไม่เสถียร, มีออกซิเจนสูง) ต้องผ่านกระบวนการ <strong class="text-red-800">"ปรับปรุงคุณภาพ" (Upgrading)</strong> ที่ซับซ้อนและมีค่าใช้จ่ายสูงก่อนนำไปใช้</p></div>`
+            };
+            
+            document.getElementById('combustion-card').innerHTML = thermochemData.combustion;
+            document.getElementById('liquefaction-card').innerHTML = thermochemData.liquefaction;
 
-    <div class="center">
-      <div id="loveMsg" class="love" aria-live="polite">รักเหมือนกันน้า 💖</div>
-      <button id="reset" class="reset" aria-label="เล่นอีกครั้ง">เล่นอีกครั้ง</button>
-    </div>
-  </div>
+            const chartData = {
+                temp: { label: 'อุณหภูมิ (°C)', data: [850, 1350, 1000], backgroundColor: 'rgba(217, 119, 6, 0.6)', borderColor: 'rgba(217, 119, 6, 1)' },
+                pressure: { label: 'ความดัน (bar)', data: [22, 55, 40], backgroundColor: 'rgba(29, 78, 216, 0.6)', borderColor: 'rgba(29, 78, 216, 1)' },
+                h2co: { label: 'อัตราส่วน H₂/CO', data: [3.5, 1.8, 2.5], backgroundColor: 'rgba(4, 120, 87, 0.6)', borderColor: 'rgba(4, 120, 87, 1)' },
+                flexibility: { label: 'ความยืดหยุ่นวัตถุดิบ (1=ต่ำ, 3=สูง)', data: [1, 3, 1], backgroundColor: 'rgba(120, 53, 15, 0.6)', borderColor: 'rgba(120, 53, 15, 1)' },
+                capex: { label: 'ต้นทุนลงทุน (CAPEX) (1=ต่ำ, 3=สูง)', data: [3, 2, 2], backgroundColor: 'rgba(109, 40, 217, 0.6)', borderColor: 'rgba(109, 40, 217, 1)' },
+                asu: { label: 'ความต้องการ ASU (0=ไม่, 2=ใช่)', data: [0, 2, 2], backgroundColor: 'rgba(219, 39, 119, 0.6)', borderColor: 'rgba(219, 39, 119, 1)' }
+            };
 
-  <script>
-    const stage = document.getElementById('stage');
-    const noBtn = document.getElementById('no');
-    const yesSeed = document.getElementById('yes'); // ปุ่ม yes เริ่มต้นด้านล่าง
-    const controls = document.getElementById('controls');
-    const loveMsg = document.getElementById('loveMsg');
-    const resetBtn = document.getElementById('reset');
+            const contentElements = { principle: document.getElementById('card-principle'), reactor: document.getElementById('card-reactor'), conditions: document.getElementById('card-conditions'), pros_cons: document.getElementById('card-pros-cons'), improvements: document.getElementById('card-improvements') };
+            const buttons = { smr: document.getElementById('btn-smr'), pox: document.getElementById('btn-pox'), atr: document.getElementById('btn-atr') };
+            let currentTech = 'smr';
 
-    const YES_CAP = 120; // กันเว็บหน่วงเกินไป
-    let dodgeCount = 0;
+            function updateContent(tech) {
+                Object.keys(contentElements).forEach(key => contentElements[key].innerHTML = techData[tech][key]);
+            }
+            function updateActiveButton(tech) {
+                Object.values(buttons).forEach(btn => btn.classList.remove('active-tech-btn'));
+                buttons[tech].classList.add('active-tech-btn');
+            }
+            Object.keys(buttons).forEach(tech => {
+                buttons[tech].addEventListener('click', () => { currentTech = tech; updateActiveButton(tech); updateContent(tech); });
+            });
 
-    const pick = (arr)=> arr[Math.floor(Math.random()*arr.length)];
-    const clamp = (n, min, max)=> Math.max(min, Math.min(n, max));
-    const randomInt = (min,max)=> Math.floor(Math.random()*(max-min+1))+min;
+            const chartSelector = document.getElementById('chart-metric-selector');
+            Object.keys(chartData).forEach(key => {
+                const option = document.createElement('option');
+                option.value = key;
+                option.textContent = chartData[key].label;
+                chartSelector.appendChild(option);
+            });
 
-    function colorYes(btn){
-      const h = Math.floor(Math.random()*360);
-      btn.style.background = `linear-gradient(180deg, hsl(${h} 90% 62%), hsl(${(h+340)%360} 85% 52%))`;
-    }
+            const ctx = document.getElementById('comparisonChart').getContext('2d');
+            const comparisonChart = new Chart(ctx, {
+                type: 'bar',
+                data: { labels: ['SMR', 'POX', 'ATR'], datasets: [{ label: chartData.temp.label, data: chartData.temp.data, backgroundColor: chartData.temp.backgroundColor, borderColor: chartData.temp.borderColor, borderWidth: 1 }] },
+                options: {
+                    responsive: true, maintainAspectRatio: false,
+                    plugins: { legend: { display: false } },
+                    scales: { y: { beginAtZero: true, title: { display: true, text: chartData.temp.label, font: { size: 14, weight: 'bold' } } }, x: { ticks: { font: { size: 14, weight: 'bold' } } } }
+                }
+            });
 
-    function yesCount(){ return stage.querySelectorAll('.yes').length; }
+            chartSelector.addEventListener('change', (event) => {
+                const selectedMetric = event.target.value;
+                const newChartData = chartData[selectedMetric];
+                comparisonChart.data.datasets[0].label = newChartData.label;
+                comparisonChart.data.datasets[0].data = newChartData.data;
+                comparisonChart.data.datasets[0].backgroundColor = newChartData.backgroundColor;
+                comparisonChart.data.datasets[0].borderColor = newChartData.borderColor;
+                comparisonChart.options.scales.y.title.text = newChartData.label;
+                comparisonChart.update();
+            });
 
-    // สร้าง YES แบบลอยในพื้นที่ stage
-    function createYesFloat(){
-      if (yesCount() >= YES_CAP) return null;
-      const b = yesSeed.cloneNode(true);
-      b.classList.add('float');
-      b.id = '';
-      colorYes(b);
-      b.addEventListener('click', confessLove);
-      stage.appendChild(b);
-      // วางตำแหน่งสุ่มแบบกระจาย
-      const sw = stage.clientWidth, sh = stage.clientHeight;
-      const bw = b.offsetWidth, bh = b.offsetHeight;
-      const pad = 10;
-      const x = Math.random() * (sw - bw - pad*2) + pad;
-      const y = Math.random() * (sh - bh - pad*2) + pad;
-      b.style.left = x + 'px';
-      b.style.top  = y + 'px';
-      return b;
-    }
-
-    // ปุ่ม NO หนี + สุ่มสร้าง YES 1–5 ปุ่มกระจายทั่วจอ
-    function teleportNo(ev){
-      if (loveMsg.classList.contains('show')) return;
-      const sw = stage.clientWidth; const sh = stage.clientHeight;
-      const bw = noBtn.offsetWidth; const bh = noBtn.offsetHeight;
-      const pad = 6;
-      let x = Math.random() * (sw - bw - pad*2) + pad;
-      let y = Math.random() * (sh - bh - pad*2) + pad;
-      const yesZoneWidth = 280, yesZoneHeight = 160;
-      if (y > sh - yesZoneHeight && Math.abs(x - (sw/2 - bw/2)) < yesZoneWidth/2){
-        y = clamp(y - yesZoneHeight - 24, pad, sh - bh - pad);
-        x = clamp(x + (Math.random() < .5 ? -140 : 140), pad, sw - bw - pad);
-      }
-      noBtn.style.left = x + 'px';
-      noBtn.style.top  = y + 'px';
-
-      dodgeCount++;
-      const t = Math.max(50, 180 - dodgeCount*10);
-      noBtn.style.transitionDuration = `${t}ms, ${t}ms, 80ms`;
-      noBtn.animate([
-        { transform: 'translate(-50%,-50%) scale(1.0)' },
-        { transform: 'translate(-50%,-50%) scale(1.06)' },
-        { transform: 'translate(-50%,-50%) scale(1.0)' }
-      ], { duration: 160, easing: 'ease-out' });
-
-      // สุ่มเพิ่ม YES 1–5 ปุ่มต่อครั้ง
-      const n = randomInt(1,5);
-      for(let i=0;i<n;i++) createYesFloat();
-
-      burstHearts(3 + Math.floor(Math.random()*3));
-      if (ev) ev.preventDefault();
-    }
-
-    function confessLove(){
-      // ลบปุ่ม YES ที่สุ่มลอยทั้งหมดเพื่อไม่ให้บังหน้าจอ
-      stage.querySelectorAll('.yes.float').forEach(el=>{
-        el.style.transition = 'opacity .18s ease, transform .18s ease';
-        el.style.opacity = '0';
-        el.style.transform = 'scale(0.9)';
-        setTimeout(()=> el.remove(), 200);
-      });
-
-      loveMsg.classList.add('show');
-      document.querySelector('.tagline').textContent = 'รู้สึกเหมือนกันเลย 💞';
-      noBtn.style.display = 'none';
-      controls.style.display = 'none';
-      burstHearts(36);
-      burstConfetti(80);
-      resetBtn.classList.add('show');
-    }
-
-    function reset(){
-      loveMsg.classList.remove('show');
-      controls.style.display = 'flex';
-      noBtn.style.display = 'inline-block';
-      // ลบ YES ทั้งหมด ยกเว้นปุ่ม seed ใน controls
-      stage.querySelectorAll('.yes.float').forEach(el=> el.remove());
-      dodgeCount = 0;
-      // center the NO for a fresh start
-      noBtn.style.left = '50%';
-      noBtn.style.top  = '72%';
-      resetBtn.classList.remove('show');
-      document.querySelector('.tagline').textContent = 'เลือกดี ๆ นะ ☺️';
-    }
-
-    function burstHearts(n){
-      for(let i=0;i<n;i++){
-        const span = document.createElement('span');
-        span.className = 'heart';
-        span.textContent = pick(['💖','💘','💗','💓','💞']);
-        const x = Math.random() * stage.clientWidth;
-        const delay = Math.random()*80;
-        const dur = 1600 + Math.random()*900;
-        span.style.left = x + 'px';
-        span.style.animation = `floatUp ${dur}ms ease-out ${delay}ms forwards`;
-        span.style.fontSize = (14 + Math.random()*22) + 'px';
-        stage.appendChild(span);
-        setTimeout(()=> span.remove(), dur + delay + 60);
-      }
-    }
-
-    function burstConfetti(n){
-      const colors = ['#ff7da6','#ffd166','#8be8c9','#9ad0ff','#c7a7ff','#ff9fb5'];
-      for(let i=0;i<n;i++){
-        const el = document.createElement('span');
-        el.className = 'conf';
-        el.style.left = (Math.random()*100) + 'vw';
-        el.style.background = pick(colors);
-        el.style.setProperty('--dur', (1500 + Math.random()*1200) + 'ms');
-        el.style.setProperty('--delay', (Math.random()*400) + 'ms');
-        stage.appendChild(el);
-        setTimeout(()=> el.remove(), 2600);
-      }
-    }
-
-    ;['pointerenter','pointerdown','touchstart','focus'].forEach(evt => {
-      noBtn.addEventListener(evt, teleportNo, { passive:false });
-    });
-
-    window.addEventListener('load', ()=>{ colorYes(yesSeed); /* start with 1 YES only; random spawns begin on first NO */ });
-    // no random spawns on resize
-    window.addEventListener('resize', ()=>{});
-
-    yesSeed.addEventListener('click', confessLove);
-    resetBtn.addEventListener('click', reset);
-  </script>
+            updateActiveButton(currentTech);
+            updateContent(currentTech);
+        });
+    </script>
 </body>
 </html>
+
+
