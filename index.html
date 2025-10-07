@@ -3,231 +3,659 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>เครื่องมือสำรวจเทคโนโลยีการผลิตไฮโดรเจน</title>
+    <title>เรียนรู้นพลักษณ์ (Enneagram) ฉบับสมบูรณ์</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <!-- Chosen Palette: Warm Neutrals with Teal Accent -->
-    <!-- Application Structure Plan: The app is structured into two main parts. Part 1 is an interactive dashboard for direct comparison of Hydrocarbon Reforming technologies (SMR, POX, ATR) using tabs and a dynamic chart. This facilitates understanding of similar direct-production methods. Part 2 is a new, separate informational section for Thermochemical processes from Biomass (Combustion, Liquefaction). This separation is crucial because these are not direct H2 production methods but supporting/intermediate steps. This structure prevents user confusion by grouping concepts logically by their role, not just their source. -->
-    <!-- Visualization & Content Choices: Reforming is visualized via an interactive Chart.js bar chart for quantitative comparison. Thermochemical processes are explained using structured HTML/CSS diagrams to illustrate their roles (Combustion as a heat source, Liquefaction as a creator of an intermediate liquid fuel). This choice avoids misleading direct comparisons and focuses on explaining the process flow. -->
-    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;700&display=swap" rel="stylesheet">
     <style>
         body {
             font-family: 'Sarabun', sans-serif;
-            background-color: #f8f7f4;
-            color: #44403c;
         }
-        .active-tech-btn {
-            background-color: #0d9488 !important;
-            color: #ffffff !important;
+        .enneagram-card {
+            background-color: #ffffff; /* white */
+            border: 1px solid #E5E7EB; /* border-gray-200 */
+            border-radius: 0.75rem; /* rounded-xl */
+            padding: 1.5rem; /* p-6 */
+            transition: all 0.3s ease-in-out;
             box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
         }
-        .tech-btn {
-            transition: all 0.3s ease;
+        .type-button.active {
+            background-color: #2563EB; /* bg-blue-600 */
+            color: white;
+            transform: scale(1.05);
+            border-color: #2563EB;
         }
-        .content-card {
-            background-color: #ffffff;
-            border: 1px solid #e7e5e4;
-            border-radius: 0.75rem;
-            padding: 1.5rem;
-            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.05);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
+        .content-section h3 {
+            font-size: 1.5rem; /* text-2xl */
+            font-weight: 700; /* font-bold */
+            color: #2563EB; /* text-blue-600 */
+            margin-top: 1.5rem;
+            margin-bottom: 0.75rem;
+            border-bottom: 2px solid #E5E7EB; /* border-gray-200 */
+            padding-bottom: 0.5rem;
         }
-        .content-card-body {
-            flex-grow: 1;
+        .content-section ul {
+            list-style-type: disc;
+            margin-left: 1.5rem;
+            margin-bottom: 1rem;
         }
-        .content-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.07), 0 4px 6px -4px rgb(0 0 0 / 0.07);
-        }
-        .chart-container {
-            position: relative;
-            width: 100%;
-            max-width: 800px;
-            margin-left: auto;
-            margin-right: auto;
-            height: 400px;
-            max-height: 50vh;
-        }
-        .section-divider {
-            border-top: 2px dashed #d6d3d1;
-            margin: 3rem auto;
-        }
-        .details-grid {
-            display: grid;
-            grid-template-columns: repeat(1, 1fr);
-            gap: 1.5rem;
-        }
-        @media (min-width: 1024px) {
-            .details-grid {
-                grid-template-columns: repeat(6, 1fr);
-            }
-            .grid-span-2 { grid-column: span 2 / span 2; }
-            .grid-span-3 { grid-column: span 3 / span 3; }
-            .grid-span-4 { grid-column: span 4 / span 4; }
+        .subtype-card {
+            background-color: #F9FAFB; /* bg-gray-50 */
+            border-radius: 0.5rem; /* rounded-lg */
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border: 1px solid #F3F4F6; /* border-gray-100 */
         }
     </style>
 </head>
-<body class="antialiased">
+<body class="bg-gray-50 text-gray-800">
 
-    <div class="container mx-auto p-4 sm:p-6 lg:p-8">
+    <div class="container mx-auto p-4 md:p-8 max-w-7xl">
         
-        <header class="text-center mb-8">
-            <h1 class="text-3xl sm:text-4xl font-bold text-teal-800">เครื่องมือสำรวจเทคโนโลยีการผลิตไฮโดรเจน</h1>
-            <p class="mt-2 text-lg text-stone-600">วิเคราะห์เปรียบเทียบเทคโนโลยีจากเชื้อเพลิงฟอสซิลและชีวมวล</p>
+        <!-- Header -->
+        <header class="text-center mb-12">
+            <h1 class="text-4xl md:text-6xl font-bold text-gray-900 mb-2">เรียนรู้ นพลักษณ์ (Enneagram)</h1>
+            <p class="text-xl text-gray-600">แผนที่สู่ความเข้าใจตนเองและผู้อื่นฉบับสมบูรณ์</p>
         </header>
 
-        <main>
-            <!-- Section 1: Hydrocarbon Reforming -->
-            <section class="mb-12">
-                <h2 class="text-2xl sm:text-3xl font-bold text-center text-stone-700 mb-2">Part 1: Hydrocarbon Reforming (จากเชื้อเพลิงฟอสซิล)</h2>
-                <p class="text-center text-stone-600 mb-6">เทคโนโลยีกลุ่มนี้คิดเป็นสัดส่วนการผลิตไฮโดรเจนกว่า 95% ของโลก โดย SMR เป็นกระบวนการที่โดดเด่นและใช้กันแพร่หลายมากที่สุด</p>
-                
-                <div id="technology-selector" class="mb-8 p-4 bg-stone-100 rounded-xl shadow-inner">
-                    <p class="text-center text-stone-700 font-semibold mb-4">เลือกเทคโนโลยีที่ต้องการศึกษา</p>
-                    <div class="flex flex-wrap justify-center gap-2 sm:gap-4">
-                        <button id="btn-smr" class="tech-btn w-full sm:w-auto text-stone-700 bg-white border border-stone-300 font-semibold py-3 px-6 rounded-lg shadow-sm hover:bg-teal-50">Steam Methane Reforming (SMR)</button>
-                        <button id="btn-pox" class="tech-btn w-full sm:w-auto text-stone-700 bg-white border border-stone-300 font-semibold py-3 px-6 rounded-lg shadow-sm hover:bg-teal-50">Partial Oxidation (POX)</button>
-                        <button id="btn-atr" class="tech-btn w-full sm:w-auto text-stone-700 bg-white border border-stone-300 font-semibold py-3 px-6 rounded-lg shadow-sm hover:bg-teal-50">Autothermal Reforming (ATR)</button>
+        <!-- Section 1: Foundations -->
+        <section id="foundations" class="mb-16">
+            <h2 class="text-3xl font-bold text-center mb-8 text-blue-600">โครงสร้างพื้นฐานของนพลักษณ์</h2>
+            <div class="grid md:grid-cols-2 lg:grid-cols-2 gap-8 items-center">
+                <div class="enneagram-card">
+                    <h3 class="text-2xl font-bold mb-4">นพลักษณ์คืออะไร?</h3>
+                    <p class="text-gray-700 leading-relaxed">
+                        นพลักษณ์ (Enneagram) คือแผนที่จิตใจที่อธิบายรูปแบบความคิด ความรู้สึก และพฤติกรรมของมนุษย์ 9 รูปแบบ (ลักษณ์) ไม่ใช่การตีตรา แต่เป็นการชี้ให้เห็นถึง "แรงขับเคลื่อนภายใน" ที่ซ่อนอยู่ลึกๆ ซึ่งเป็นตัวกำหนดว่า "ทำไมเราถึงทำในสิ่งที่เราทำ" เป้าหมายคือการตระหนักรู้ในตนเอง (Self-awareness) เพื่อการพัฒนาตนเอง (Personal Growth) และสร้างความเข้าอกเข้าใจผู้อื่น (Compassion)
+                    </p>
+                </div>
+                <div class="flex justify-center items-center p-4">
+                     <!-- Image has been updated as per user request -->
+                    <img src="https://tcaster.net/wp-content/uploads/2023/09/BigSelf_Enneagram_cmyk-2-2.png" alt="แผนภาพนพลักษณ์" class="max-w-xs md:max-w-sm rounded-lg shadow-lg">
+                </div>
+                <div class="enneagram-card col-span-1 md:col-span-2 lg:col-span-2">
+                    <h3 class="text-2xl font-bold mb-4">องค์ประกอบสำคัญ</h3>
+                    <div class="grid md:grid-cols-3 gap-6">
+                        <div>
+                            <h4 class="text-xl font-semibold text-blue-700 mb-2">ปีก (Wings)</h4>
+                            <p>ไม่มีใครเป็นลักษณ์ใดลักษณ์หนึ่ง 100% เราจะได้รับอิทธิพลจากลักษณ์ที่อยู่ข้างๆ บนวงกลมเสมอ สิ่งนี้เรียกว่า "ปีก" ซึ่งจะทำให้แต่ละลักษณ์มี "รสชาติ" ที่แตกต่างกันออกไป เช่น 9w8 หรือ 9w1</p>
+                        </div>
+                        <div>
+                            <h4 class="text-xl font-semibold text-blue-700 mb-2">ลูกศร (Arrows)</h4>
+                            <p>เส้นเชื่อมต่อภายในคือ "ทิศทางการเปลี่ยนแปลง" เมื่อเราเครียด (Stress) เราจะแสดงพฤติกรรมด้านลบของลักษณ์ที่ลูกศรชี้ไป และเมื่อเราเติบโต (Growth) เราจะดึงคุณสมบัติด้านบวกของลักษณ์ที่ลูกศรชี้มาจากเรา</p>
+                        </div>
+                         <div>
+                            <h4 class="text-xl font-semibold text-blue-700 mb-2">สัญชาตญาณย่อย (Subtypes)</h4>
+                            <p>แต่ละลักษณ์จะแสดงออกต่างกันผ่านสัญชาตญาณ 3 แบบ คือ การดูแลตัวเอง (SP), สังคม (SO), และหนึ่งต่อหนึ่ง (SX) ทำให้เกิดบุคลิกย่อย 27 แบบที่ลึกซึ้งยิ่งขึ้น</p>
+                        </div>
                     </div>
                 </div>
+            </div>
+        </section>
 
-                <div id="technology-details" class="mb-12">
-                    <div id="details-container" class="details-grid">
-                        <div id="card-principle" class="content-card grid-span-2"></div>
-                        <div id="card-reactor" class="content-card grid-span-2"></div>
-                        <div id="card-conditions" class="content-card grid-span-2"></div>
-                        <div id="card-pros-cons" class="content-card grid-span-3"></div>
-                        <div id="card-improvements" class="content-card grid-span-3"></div>
-                    </div>
-                </div>
-
-                <div id="comparison-section" class="bg-white p-6 rounded-xl shadow-md border border-stone-200">
-                    <h3 class="text-xl sm:text-2xl font-bold text-center text-teal-800 mb-6">การเปรียบเทียบเชิงปริมาณ</h3>
-                    <div class="mb-8">
-                        <label for="chart-metric-selector" class="block text-center font-semibold text-stone-700 mb-2">เลือกหัวข้อเพื่อเปรียบเทียบในกราฟ:</label>
-                        <select id="chart-metric-selector" class="block w-full max-w-sm mx-auto p-2 border border-stone-300 rounded-md shadow-sm focus:ring-teal-500 focus:border-teal-500"></select>
-                    </div>
-                    <div class="chart-container mb-12">
-                        <canvas id="comparisonChart"></canvas>
-                    </div>
-                </div>
-            </section>
-
-            <div class="section-divider"></div>
-            
-            <!-- Section 2: Thermochemical Processes -->
-            <section class="mb-12">
-                <h2 class="text-2xl sm:text-3xl font-bold text-center text-stone-700 mb-2">Part 2: Thermochemical (จากชีวมวล)</h2>
-                 <p class="text-center text-stone-600 mb-8">กระบวนการที่เกี่ยวข้องกับการผลิตไฮโดรเจนจากแหล่งพลังงานหมุนเวียน</p>
-
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                    <div id="combustion-card" class="content-card"></div>
-                    <div id="liquefaction-card" class="content-card"></div>
-                </div>
-            </section>
-        </main>
+        <!-- Section 2: Type Selection -->
+        <section id="type-explorer">
+            <h2 class="text-3xl font-bold text-center mb-8 text-blue-600">สำรวจทั้ง 9 ลักษณ์</h2>
+            <div id="type-buttons" class="grid grid-cols-3 md:grid-cols-5 lg:grid-cols-9 gap-4 mb-8">
+                <!-- Buttons will be generated by JS -->
+            </div>
+            <div id="type-display" class="enneagram-card min-h-[300px]">
+                <p class="text-gray-500 text-center text-lg p-10">กรุณาเลือกลักษณ์ที่ต้องการศึกษาจากปุ่มด้านบน</p>
+            </div>
+        </section>
+        
+        <footer class="text-center text-gray-500 mt-12">
+            <p>สร้างสรรค์ขึ้นเพื่อการเรียนรู้และพัฒนาตนเอง</p>
+        </footer>
     </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            
-            const techData = {
-                smr: {
-                    principle: `<h3 class="text-xl font-bold text-teal-700 mb-3">หลักการและปฏิกิริยา</h3><div class="content-card-body"><p class="mb-2"><span class="font-semibold text-stone-800">หลักการ:</span> เป็นกระบวนการ <strong class="text-blue-600">ดูดความร้อนสูง (Endothermic)</strong> ที่ต้องให้ความร้อนจากภายนอกตลอดเวลาเพื่อสลายพันธะมีเทนด้วยไอน้ำ</p><div class="mt-4 text-sm bg-stone-50 p-3 rounded-lg border space-y-2"><p class="font-semibold">1. Reforming (ปฏิกิริยาหลัก):</p><p class="font-mono text-xs sm:text-sm">CH₄ + H₂O ⇌ CO + 3H₂</p><p class="font-semibold mt-2">2. Water-Gas Shift (ปฏิกิริยาเสริม):</p><p class="font-mono text-xs sm:text-sm">CO + H₂O ⇌ CO₂ + H₂</p></div></div>`,
-                    reactor: `<h3 class="text-xl font-bold text-teal-700 mb-3">กระบวนการและเตาปฏิกรณ์</h3><div class="content-card-body"><p class="text-sm font-semibold mb-2">ขั้นตอน (Process Flow):</p><ol class="list-decimal list-inside text-sm space-y-1 mb-4"><li>กำจัดกำมะถัน (Desulfurization)</li><li>ผสมกับไอน้ำ (Steam Mixing)</li><li>เข้าเตาปฏิกรณ์หลัก (Primary Reformer)</li><li>เข้าเตาปฏิกรณ์ WGS (WGS Reactor)</li><li>แยกผลิตภัณฑ์ให้บริสุทธิ์ (Purification - PSA)</li></ol><p class="text-sm font-semibold mb-2">ลักษณะเตาปฏิกรณ์:</p><p class="text-sm text-stone-600">ท่อ Catalyst จำนวนมากในเตาเผา (Furnace) เพื่อรับความร้อนจากการแผ่รังสี</p><div class="w-full max-w-xs mx-auto text-center mt-2"><div class="bg-stone-200 border-2 border-stone-400 rounded-lg p-4 h-32 flex justify-around items-end"><div class="w-3 h-4/5 bg-teal-700 rounded-t-sm" title="Catalyst Tube"></div><div class="w-3 h-4/5 bg-teal-700 rounded-t-sm" title="Catalyst Tube"></div><div class="w-3 h-4/5 bg-teal-700 rounded-t-sm" title="Catalyst Tube"></div></div></div></div>`,
-                    conditions: `<h3 class="text-xl font-bold text-teal-700 mb-3">สภาวะการทำงาน</h3><div class="content-card-body"><ul class="space-y-3"><li><span class="font-semibold">🌡️ อุณหภูมิ:</span> 700 - 1000 °C</li><li><span class="font-semibold">💨 ความดัน:</span> 15 - 30 bar</li><li><span class="font-semibold">💧 อัตราส่วนไอน้ำต่อคาร์บอน (S/C):</span> 2.5 - 3.5 (สำคัญมากเพื่อป้องกันการเกิดคาร์บอน/coke)</li><li><span class="font-semibold">🔬 ตัวเร่งปฏิกิริยา:</span> <strong>นิกเกิล (Ni)</strong> บนแกนรองรับอะลูมินา (Al₂O₃)</li></ul></div>`,
-                    pros_cons: `<h3 class="text-xl font-bold text-teal-700 mb-3">ข้อดีและข้อเสีย</h3><div class="content-card-body"><p class="font-semibold text-green-700 mb-2">ข้อดี:</p><ul class="list-disc list-inside space-y-2 mb-4"><li><strong>เทคโนโลยีสมบูรณ์ (Mature):</strong> น่าเชื่อถือสูง มีข้อมูลอ้างอิงเยอะ</li><li><strong>ต้นทุนการผลิตต่ำ (Economies of Scale):</strong> เมื่อสร้างขนาดใหญ่ จะมีต้นทุนต่อหน่วย ($/kg H₂) ต่ำที่สุดในปัจจุบัน</li><li><strong>ได้ H₂/CO Ratio สูง:</strong> เหมาะกับการผลิตไฮโดรเจนบริสุทธิ์โดยเฉพาะ</li></ul><p class="font-semibold text-red-700 mb-2">ข้อเสีย:</p><ul class="list-disc list-inside space-y-2"><li><strong>ปล่อยคาร์บอนสูง (Large Carbon Footprint):</strong> ปล่อย CO₂ จากทั้งปฏิกิริยาและปล่องไฟ Furnace ทำให้เป็น Grey Hydrogen</li><li><strong>เงินลงทุนสูง (High CAPEX):</strong> ค่าก่อสร้าง Furnace และท่อโลหะผสมพิเศษ (High-nickel alloys) มีราคาสูง</li><li><strong>ขาดความยืดหยุ่นวัตถุดิบ:</strong> ใช้ได้ดีกับก๊าซธรรมชาติที่สะอาดเท่านั้น</li></ul></div>`,
-                    improvements: `<h3 class="text-xl font-bold text-teal-700 mb-3">แนวคิดในการปรับปรุงและพัฒนา</h3><div class="content-card-body"><p class="mb-4">เป้าหมายหลักคือการลดการปล่อย CO₂ และเพิ่มประสิทธิภาพการใช้พลังงาน</p><ul class="space-y-3"><li><strong class="text-blue-600">1. การดักจับคาร์บอน (CCUS):</strong> ติดตั้งหน่วยดักจับ CO₂ เพื่อเปลี่ยนจาก Grey Hydrogen เป็น <strong>Blue Hydrogen</strong></li><li><strong class="text-green-600">2. เพิ่มประสิทธิภาพพลังงาน:</strong> ออกแบบระบบแลกเปลี่ยนความร้อน (Heat Exchanger Network) เพื่อนำความร้อนทิ้งกลับมาใช้ใหม่ ลดการใช้เชื้อเพลิงใน Furnace</li><li><strong class="text-purple-600">3. พัฒนา Catalyst:</strong> วิจัย Catalyst ที่ทำงานได้ในอุณหภูมิต่ำลง หรือทนทานต่อสิ่งปนเปื้อนได้ดีขึ้น</li></ul></div>`
+        // --- DATA ---
+        const enneagramData = [
+            {
+                id: 1,
+                title: "ลักษณ์ 1: ผู้สมบูรณ์แบบ (The Perfectionist / The Reformer)",
+                motto: "ฉันต้องทำให้มันถูกต้องและดีงาม",
+                center: "ศูนย์กาย/สัญชาตญาณ (จัดการกับ ความโกรธ ด้วยการ ควบคุม และกดมันไว้)",
+                coreEssence: {
+                    desire: "ต้องการที่จะเป็นคนดี มีคุณธรรม มีความสมดุล และสมบูรณ์พร้อม",
+                    fear: "กลัวที่จะเป็นคนไม่ดี ชั่วร้าย มีตำหนิ หรือทุจริต",
+                    motivation: "ต้องการทำทุกอย่างให้ 'ถูกต้อง' เพื่อพิสูจน์คุณค่าในตัวเอง และเพื่อหลีกเลี่ยงการถูกตัดสิน"
                 },
-                pox: {
-                    principle: `<h3 class="text-xl font-bold text-teal-700 mb-3">หลักการและปฏิกิริยา</h3><div class="content-card-body"><p class="mb-2"><span class="font-semibold text-stone-800">หลักการ:</span> เป็นกระบวนการ <strong class="text-red-600">คายความร้อนสูง (Exothermic)</strong> ที่สร้างความร้อนขึ้นเองจากปฏิกิริยาเผาไหม้บางส่วนด้วยออกซิเจน</p><div class="mt-4 text-sm bg-stone-50 p-3 rounded-lg border"><p class="font-semibold">POX Reaction:</p><p class="font-mono text-xs sm:text-sm">CH₄ + ½O₂ → CO + 2H₂</p></div></div>`,
-                    reactor: `<h3 class="text-xl font-bold text-teal-700 mb-3">กระบวนการและเตาปฏิกรณ์</h3><div class="content-card-body"><p class="text-sm font-semibold mb-2">ขั้นตอน (Process Flow):</p><ol class="list-decimal list-inside text-sm space-y-1 mb-4"><li>ผสมกับออกซิเจน (Oxygen Mixing)</li><li>เข้าเตาปฏิกรณ์ POX (POX Reactor)</li><li>ลดอุณหภูมิแก๊ส (Syngas Cooling)</li><li><strong>กำจัดเขม่า (Soot Removal)</strong></li><li>แยกผลิตภัณฑ์ให้บริสุทธิ์ (Purification)</li></ol><p class="text-sm font-semibold mb-2">ลักษณะเตาปฏิกรณ์:</p><p class="text-sm text-stone-600">เป็นถังเปล่า (Vessel) ที่บุด้วยวัสดุทนไฟ (Refractory) เพื่อทนอุณหภูมิสูงจัด</p><div class="w-full max-w-xs mx-auto text-center mt-2"><div class="bg-white border-8 border-orange-800 rounded-lg h-32 w-24 mx-auto" title="Refractory Lined Vessel"></div></div></div>`,
-                    conditions: `<h3 class="text-xl font-bold text-teal-700 mb-3">สภาวะการทำงาน</h3><div class="content-card-body"><ul class="space-y-3"><li><span class="font-semibold">🌡️ อุณหภูมิ:</span> 1200 - 1500 °C (สูงจัด)</li><li><span class="font-semibold">💨 ความดัน:</span> 30 - 80 bar (สูงมาก)</li><li><span class="font-semibold">🔬 ตัวเร่งปฏิกิริยา:</span> ❌ <strong>ไม่ใช้ (Non-catalytic)</strong> เป็นส่วนใหญ่ เนื่องจากอุณหภูมิสูงมากพอที่จะเกิดปฏิกิริยาได้เอง</li></ul></div>`,
-                    pros_cons: `<h3 class="text-xl font-bold text-teal-700 mb-3">ข้อดีและข้อเสีย</h3><div class="content-card-body"><p class="font-semibold text-green-700 mb-2">ข้อดี:</p><ul class="list-disc list-inside space-y-2 mb-4"><li><strong>ความยืดหยุ่นของวัตถุดิบสูงสุด:</strong> จุดเด่นที่สุด สามารถใช้ได้ตั้งแต่น้ำมันเตา กากน้ำมัน ไปจนถึงถ่านหินและชีวมวล</li><li><strong>ขนาดกะทัดรัด:</strong> ไม่มี Furnace ขนาดใหญ่ ทำให้ใช้พื้นที่น้อยกว่า SMR</li><li><strong>ปฏิกิริยารวดเร็ว:</strong> Start-up ได้เร็วกว่า SMR</li></ul><p class="font-semibold text-red-700 mb-2">ข้อเสีย:</p><ul class="list-disc list-inside space-y-2"><li><strong>ต้องมีโรงแยกอากาศ (ASU):</strong> เป็นต้นทุนที่สูงและกินพลังงานมากในการผลิตออกซิเจนบริสุทธิ์</li><li><strong>เกิดเขม่า (Soot Formation):</strong> อุณหภูมิสูงจัดทำให้เกิด Thermal Cracking ต้องมีหน่วยกำจัดเขม่า</li><li><strong>ได้ H₂/CO Ratio ต่ำ:</strong> ผลิตภัณฑ์มีสัดส่วน CO สูงกว่า</li></ul></div>`,
-                    improvements: `<h3 class="text-xl font-bold text-teal-700 mb-3">แนวคิดในการปรับปรุงและพัฒนา</h3><div class="content-card-body"><p class="mb-4">เนื่องจากข้อเสียหลักคือการต้องใช้ ASU และเกิดเขม่า การพัฒนาจึงมุ่งเน้นไปที่:</p><ul class="space-y-3"><li><strong class="text-blue-600">1. Catalytic POX (CPOX):</strong> การพัฒนา Catalyst ที่ทนทานเพื่อใช้ในกระบวนการ POX จะช่วยลดอุณหภูมิทำงานลงได้ ทำให้ลดการเกิดเขม่าและอาจลดความต้องการวัสดุราคาสูง</li><li><strong class="text-green-600">2. การจัดการเขม่าที่มีประสิทธิภาพ:</strong> พัฒนาระบบดักจับและนำเขม่า (คาร์บอน) กลับมาใช้ประโยชน์ เพื่อเปลี่ยนของเสียให้เป็นผลิตภัณฑ์ที่มีมูลค่า</li></ul></div>`
+                characteristics: [
+                    "มีมาตรฐานสูง: ทั้งกับตัวเองและผู้อื่น เชื่อว่าทุกอย่างสามารถปรับปรุงให้ดีขึ้นได้เสมอ",
+                    "มีหลักการและเหตุผล: ยึดมั่นในอุดมการณ์ มีศีลธรรม และความยุติธรรมเป็นที่ตั้ง",
+                    "มีความรับผิดชอบสูง: เป็นคนขยัน ทำงานหนัก มีวินัยในตนเอง และเชื่อถือได้",
+                    "ช่างวิเคราะห์และวิจารณ์: มองเห็นข้อบกพร่องได้ง่ายมาก อาจทำให้กลายเป็นคนจู้จี้จุกจิก",
+                    "จัดการอารมณ์: มักจะกดความโกรธไว้ และแสดงออกมาในรูปของความหงุดหงิดฉุนเฉียว",
+                    "มองโลกแบบขาว-ดำ: มีแค่ 'ถูก' กับ 'ผิด' ทำให้ขาดความยืดหยุ่น"
+                ],
+                states: {
+                    healthy: "จะมีวิจารณญาณสูง มีเมตตา อดทน ยอมรับความไม่สมบูรณ์แบบได้และให้อภัยตนเองและผู้อื่น เป็นแรงบันดาลใจให้ผู้อื่นด้วยความรัก",
+                    unhealthy: "จะกลายเป็นคนเคร่งครัด พิพากษาตัดสินคนอื่นอย่างรุนแรง ไม่ยืดหยุ่น ย้ำคิดย้ำทำ เชื่อว่าตัวเองเท่านั้นที่ถูกต้อง"
                 },
-                atr: {
-                    principle: `<h3 class="text-xl font-bold text-teal-700 mb-3">หลักการและปฏิกิริยา</h3><div class="content-card-body"><p class="mb-2"><span class="font-semibold text-stone-800">หลักการ:</span> เป็นกระบวนการ <strong class="text-purple-600">สมดุลความร้อน (Neutral)</strong> ที่อัจฉริยะ โดยรวมปฏิกิริยาคายความร้อนของ POX และดูดความร้อนของ SMR ไว้ในเตาปฏิกรณ์เดียว</p><div class="mt-4 text-sm bg-stone-50 p-3 rounded-lg border"><p class="font-semibold">ใช้ความร้อนจากโซน POX ด้านบน ไปขับเคลื่อนปฏิกิริยา SMR ในชั้น Catalyst ด้านล่าง</p></div></div>`,
-                    reactor: `<h3 class="text-xl font-bold text-teal-700 mb-3">กระบวนการและเตาปฏิกรณ์</h3><div class="content-card-body"><p class="text-sm font-semibold mb-2">ลักษณะเตาปฏิกรณ์:</p><p class="text-sm text-stone-600">เป็นถังปฏิกรณ์เดียว (Single Vessel) ที่แบ่งภายในเป็น 2 โซนชัดเจน</p><div class="w-full max-w-xs mx-auto text-center mt-2"><div class="bg-white border-4 border-stone-500 rounded-lg h-32 w-24 mx-auto flex flex-col" title="Two-Zone Reactor"><div class="h-1/3 bg-red-200 rounded-t-sm flex items-center justify-center text-xs font-semibold text-red-800">1. POX Zone (บน)</div><div class="h-2/3 bg-blue-200 rounded-b-sm flex items-center justify-center text-xs font-semibold text-blue-800">2. SMR Zone (ล่าง)</div></div></div></div>`,
-                    conditions: `<h3 class="text-xl font-bold text-teal-700 mb-3">สภาวะการทำงาน</h3><div class="content-card-body"><ul class="space-y-3"><li><span class="font-semibold">🌡️ อุณหภูมิ:</span> ~900 - 1100 °C</li><li><span class="font-semibold">💨 ความดัน:</span> 20 - 60 bar</li><li><span class="font-semibold">🔬 ตัวเร่งปฏิกิริยา:</span> ✅ <strong>นิกเกิล (Ni)</strong> ในโซนล่าง (SMR Zone)</li></ul></div>`,
-                    pros_cons: `<h3 class="text-xl font-bold text-teal-700 mb-3">ข้อดีและข้อเสีย</h3><div class="content-card-body"><p class="font-semibold text-green-700 mb-2">ข้อดี:</p><ul class="list-disc list-inside space-y-2 mb-4"><li><strong>เหมาะกับ Blue Hydrogen ที่สุด:</strong> ไม่มี CO₂ จากปล่องไฟ ทำให้การดักจับ CO₂ จากกระแสผลิตภัณฑ์ที่มีความดันสูงทำได้ง่ายและต้นทุนต่ำ</li><li><strong>CAPEX ต่ำกว่า SMR:</strong> เพราะไม่มี Furnace ขนาดใหญ่</li><li><strong>ประสิทธิภาพสูง:</strong> รวมข้อดีของทั้งสองระบบ ทำให้ใช้ออกซิเจนน้อยกว่า POX และเกิดเขม่าน้อยกว่า</li></ul><p class="font-semibold text-red-700 mb-2">ข้อเสีย:</p><ul class="list-disc list-inside space-y-2"><li><strong>ยังคงต้องมี ASU:</strong> เป็นต้นทุนสำคัญเมื่อเทียบกับ SMR ที่ไม่ต้องใช้เลย</li><li><strong>ยืดหยุ่นวัตถุดิบต่ำกว่า POX:</strong> เพราะมีชั้น Catalyst จึงใช้ได้กับก๊าซสะอาดเท่านั้น</li></ul></div>`,
-                    improvements: `<h3 class="text-xl font-bold text-teal-700 mb-3">แนวคิดในการปรับปรุงและพัฒนา</h3><div class="content-card-body"><p class="mb-4">ATR ถือเป็นเทคโนโลยีที่ทันสมัยและเป็นที่จับตาสำหรับการผลิต Blue Hydrogen ขนาดใหญ่</p><ul class="space-y-3"><li><strong class="text-blue-600">1. บูรณาการกับ CCUS:</strong> การออกแบบโรงงาน ATR ควบคู่ไปกับหน่วยดักจับและกักเก็บคาร์บอน (CCUS) ตั้งแต่เริ่มต้น จะทำให้ได้ Blue Hydrogen ที่มีต้นทุนแข่งขันได้</li><li><strong class="text-green-600">2. การใช้ Air-blown ATR:</strong> มีงานวิจัยที่พยายามใช้ "อากาศ" แทน "ออกซิเจนบริสุทธิ์" เพื่อกำจัดต้นทุนจาก ASU แต่ก็ต้องแลกมากับความท้าทายในการจัดการไนโตรเจนในระบบ</li></ul></div>`
-                }
-            };
+                wings: {
+                    "1w9": "นักอุดมคติ (The Idealist): จะใจเย็น สุขุม และมองการณ์ไกลมากขึ้น ได้รับอิทธิพลความนิ่งสงบของลักษณ์ 9",
+                    "1w2": "ผู้รณรงค์ (The Advocate): จะอบอุ่น ชอบช่วยเหลือและปฏิสัมพันธ์กับผู้คนมากขึ้น ได้รับอิทธิพลความใส่ใจของลักษณ์ 2"
+                },
+                arrows: {
+                    stress: "ไปลักษณ์ 4: เมื่อเครียด จะกลายเป็นคนเจ้าอารมณ์ ดราม่า หดหู่ และรู้สึกว่าไม่มีใครเข้าใจ",
+                    growth: "ไปลักษณ์ 7: เมื่อเติบโต จะเรียนรู้ที่จะผ่อนคลาย มองโลกในแแง่ดี มีความสุขกับชีวิต และไม่ยึดติดกับความสมบูรณ์แบบ"
+                },
+                subtypes: [
+                    { name: "SP - Self-Preservation (ความกังวล)", description: "นี่คือลักษณ์ 1 ต้นแบบที่เก็บกดความโกรธไว้ข้างใน และแปรสภาพเป็นความวิตกกังวลเกี่ยวกับการทำทุกอย่างให้ถูกต้องและปลอดภัย วิจารณ์ตัวเองรุนแรงที่สุด" },
+                    { name: "SO - Social (ความไม่ยืดหยุ่น)", description: "สวมบทบาท 'ครู' ที่คอยบอกว่าอะไรคือ 'กฎเกณฑ์ที่ถูกต้อง' สำหรับกลุ่มหรือสังคม มีความเป็นนักอุดมคติสูง ต้องการปฏิรูปสังคมหรือองค์กร" },
+                    { name: "SX - One-to-One (ความแรงกล้า) (Counter-type)", description: "เป็นลักษณ์สวนทางที่แสดงความโกรธออกมาค่อนข้างตรง มีความแรงกล้าปรารถนาที่จะ 'ปฏิรูป' หรือ 'ทำให้สมบูรณ์แบบ' โดยพุ่งเป้าไปที่คนใกล้ชิด" }
+                ],
+                growthPath: [
+                    "ตระหนักถึง 'ผู้พิพากษาภายใน' และเข้าใจว่ามันเป็นเพียงส่วนหนึ่งของเรา",
+                    "ฝึกความเมตตาต่อตนเอง (Self-compassion) อนุญาตให้ตัวเองทำผิดพลาดได้",
+                    "ผ่อนคลายและสนุกกับชีวิต ทำกิจกรรมเพื่อความสุขล้วนๆ",
+                    "ยอมรับพื้นที่สีเทาของชีวิต เรียนรู้ที่จะยืดหยุ่น",
+                    "เชื่อมต่อกับความรู้สึก อนุญาตให้ตัวเองโกรธหรือเสียใจได้โดยไม่ตัดสิน"
+                ],
+                prosCons: {
+                    pros: "มีความรับผิดชอบสูง, มีหลักการ, เชื่อถือได้, ใส่ใจในรายละเอียด, มีจริยธรรม",
+                    cons: "ตัดสินผู้อื่นง่าย, ไม่ยืดหยุ่น, วิตกกังวลง่าย, เข้มงวดเกินไป, ทำงานหนักจนเกินไป"
+                },
+                summary: "ลักษณ์ 1 คือผู้ที่ขับเคลื่อนด้วยความต้องการที่จะทำให้โลกและตนเองดีขึ้น ผ่านมาตรฐานที่สูงและหลักการที่แน่วแน่ เส้นทางการเติบโตของพวกเขาคือการเรียนรู้ที่จะยอมรับความไม่สมบูรณ์แบบและโอบกอดความสุขในชีวิต"
+            },
+            {
+                id: 2,
+                title: "ลักษณ์ 2: ผู้ให้ (The Helper)",
+                motto: "ฉันต้องเป็นที่ต้องการและเป็นที่รักของผู้คน",
+                center: "ศูนย์ใจ/ความรู้สึก (จัดการกับ ความละอาย ด้วยการมุ่งความสนใจไปที่ความต้องการของผู้อื่น)",
+                coreEssence: {
+                    desire: "ต้องการที่จะรู้สึกว่าตนเป็นที่รัก",
+                    fear: "กลัวการถูกทอดทิ้ง ไม่เป็นที่ต้องการ หรือไม่มีค่าพอที่จะได้รับความรัก",
+                    motivation: "ต้องการเป็นที่ต้องการของผู้อื่น เพื่อให้มั่นใจว่าจะไม่ถูกปฏิเสธและจะได้รับความรักตอบแทน"
+                },
+                characteristics: [
+                    "อบอุ่นและเข้าอกเข้าใจ: รับรู้ความต้องการและความรู้สึกของคนอื่นได้ไวมาก",
+                    "ชอบช่วยเหลือและใจกว้าง: มีความสุขกับการให้และการดูแลคนอื่น และมักจะมองข้ามความต้องการของตัวเอง",
+                    "สร้างสัมพันธ์เก่ง: มีเสน่ห์ ชอบคำชม และรู้วิธีทำให้คนอื่นรู้สึกดี",
+                    "ความทะนงตน (Pride): เชื่อว่า 'ฉันรู้ดีที่สุดว่าเธอต้องการอะไร' และปฏิเสธที่จะยอมรับความต้องการของตนเอง",
+                    "อาจกลายเป็นการครอบงำ: หากไม่ได้รับการตอบสนอง อาจกลายเป็นคนเรียกร้องหรือใช้ความรู้สึกผิดเป็นเครื่องมือ"
+                ],
+                states: {
+                    healthy: "จะเป็นผู้ให้ที่เปี่ยมด้วยรักแท้โดยไม่หวังผลตอบแทน (Altruistic) มีความถ่อมตนและเมตตาสูง สามารถรักผู้อื่นและดูแลตัวเองได้เป็นอย่างดี",
+                    unhealthy: "จะกลายเป็นคนขี้บังคับ พึ่งพาคนอื่นอย่างสูง (Co-dependent) และชอบสวมบทบาท 'นางเอกผู้เสียสละ' เพื่อควบคุมผู้อื่น"
+                },
+                wings: {
+                    "2w1": "ผู้รับใช้ (The Servant): การให้ของพวกเขามีความเป็นส่วนตัวและมุ่งเน้นไปที่ 'การทำสิ่งที่ถูกต้อง' มากกว่า",
+                    "2w3": "เจ้าบ้าน (The Host/Hostess): การให้ของพวกเขาโดดเด่นและมีเป้าหมายเพื่อการยอมรับทางสังคม มีเสน่ห์และชอบเข้าสังคม"
+                },
+                arrows: {
+                    stress: "ไปลักษณ์ 8: เมื่อรู้สึกถูกเอาเปรียบ ความโกรธที่เก็บกดไว้จะระเบิดออกมา กลายเป็นคนก้าวร้าว ชอบควบคุม และเผชิญหน้าโดยตรง",
+                    growth: "ไปลักษณ์ 4: เมื่อเติบโต จะเรียนรู้ที่จะหันกลับมาดูแลใจตัวเอง กล้าเผชิญหน้ากับความรู้สึกที่แท้จริง และยอมรับตัวเองโดยไม่ต้องพึ่งการยอมรับจากคนอื่น"
+                },
+                subtypes: [
+                    { name: "SP - Self-Preservation (อภิสิทธิ์) (Counter-type)", description: "เป็นลักษณ์สวนทางที่ต้องการ 'รับ' การดูแลมากกว่า 'ให้' เป็นคนน่ารัก มีเสน่ห์แบบเด็กๆ และรู้สึกว่าตนเองควรได้รับการดูแลเป็นพิเศษ" },
+                    { name: "SO - Social (ความทะเยอทะยาน)", description: "เป็นผู้นำที่มีเสน่ห์ การให้ของพวกเขามีเป้าหมายเพื่อสร้างเครือข่ายและเป็นจุดศูนย์กลางของกลุ่ม ต้องการการยอมรับในวงกว้าง" },
+                    { name: "SX - One-to-One (การยั่วยวน)", description: "ใช้เสน่ห์และการให้พุ่งเป้าไปที่ 'คนพิเศษ' เพียงคนเดียว เพื่อสร้างความสัมพันธ์ที่เข้มข้นและตัดไม่ขาด เป็นการ 'ให้เพื่อได้ความรัก' ที่ชัดเจนที่สุด" }
+                ],
+                growthPath: [
+                    "เรียนรู้ที่จะรับ อนุญาตให้คนอื่นดูแลและช่วยเหลือคุณบ้าง",
+                    "สำรวจความต้องการของตัวเอง หมั่นถามตัวเองว่า 'ตอนนี้ฉันต้องการอะไร?'",
+                    "ให้โดยไม่คาดหวัง ฝึกที่จะให้ความช่วยเหลือแล้วปล่อยวาง",
+                    "ใช้เวลาอยู่กับตัวเอง เพื่อฟังเสียงหัวใจของตัวเอง ไม่ใช่เสียงของคนอื่น",
+                    "ตระหนักว่าคุณค่าของคุณไม่ได้อยู่ที่การให้ คุณเป็นที่รักได้เพียงเพราะคุณเป็นคุณ"
+                ],
+                prosCons: {
+                    pros: "มีน้ำใจ, เข้าอกเข้าใจ, ให้การสนับสนุน, สร้างสัมพันธ์เก่ง, อบอุ่น",
+                    cons: "อาจล้ำเส้นผู้อื่น, ละเลยความต้องการตัวเอง, จัดการกับคำวิจารณ์ได้ไม่ดี, อาจใช้ความรู้สึกผิดในการควบคุม"
+                },
+                summary: "ลักษณ์ 2 คือผู้ที่ค้นหาความรักและการยอมรับผ่านการให้และการดูแลผู้อื่น พวกเขาอบอุ่นและเข้าอกเข้าใจ แต่ต้องเรียนรู้ที่จะดูแลความต้องการของตนเองด้วย เส้นทางการเติบโตคือการค้นพบคุณค่าในตัวเองโดยไม่ต้องพึ่งพาการยืนยันจากภายนอก"
+            },
+            {
+                id: 3,
+                title: "ลักษณ์ 3: ผู้ใฝ่สำเร็จ (The Achiever)",
+                motto: "ฉันต้องมีคุณค่าและได้รับการยอมรับ",
+                center: "ศูนย์ใจ/ความรู้สึก (จัดการกับ ความละอาย ด้วยการสวม 'หน้ากากแห่งความสำเร็จ' พวกเขาเชื่อว่า 'ฉันคือสิ่งที่ฉันทำ')",
+                coreEssence: {
+                    desire: "ต้องการที่จะรู้สึกมีคุณค่า (to feel valuable and worthwhile)",
+                    fear: "กลัวการเป็นคนไร้ค่า (worthless)",
+                    motivation: "ต้องการพิสูจน์คุณค่าของตนเองผ่านความสำเร็จอย่างต่อเนื่อง เพื่อให้ได้รับการยอมรับและชื่นชม"
+                },
+                characteristics: [
+                    "มุ่งเน้นเป้าหมายและประสิทธิภาพ: มีพลังสูง ขยัน สามารถตั้งเป้าหมายและพุ่งชนได้อย่างมีประสิทธิภาพ",
+                    "ปรับตัวเก่ง: สามารถเปลี่ยนบทบาทและภาพลักษณ์ของตัวเองได้ตามสถานการณ์เพื่อสร้างความประทับใจ",
+                    "ใส่ใจภาพลักษณ์: ให้ความสำคัญกับสิ่งที่คนอื่นมองอย่างมาก จะนำเสนอแต่ด้านที่ดูดีและประสบความสำเร็จ",
+                    "ชอบการแข่งขัน: มองชีวิตเหมือนการแข่งขัน และต้องการที่จะเป็น 'ผู้ชนะ'",
+                    "การหลอกลวง (Deceit): คือการหลอกตัวเอง (Self-deceit) จนเริ่มเชื่อว่า 'หน้ากาก' คือตัวตนจริงๆ"
+                ],
+                states: {
+                    healthy: "จะเป็นคนที่ยอมรับในคุณค่าของตัวเองอย่างแท้จริง มีความจริงใจและเป็นแรงบันดาลใจให้ผู้อื่น ใช้พลังเพื่อสร้างสรรค์สิ่งดีๆ จากความปรารถนาที่แท้จริง",
+                    unhealthy: "จะกลายเป็นคนหลงตัวเองอย่างรุนแรง (Narcissistic) จอมบงการ และพร้อมจะทำทุกอย่างเพื่อรักษาภาพลักษณ์ของตัวเองไว้"
+                },
+                wings: {
+                    "3w2": "ผู้มีเสน่ห์ (The Charmer): ชอบเข้าสังคมและใส่ใจผู้คนมากขึ้น ใช้เสน่ห์และความช่วยเหลือเพื่อสร้างเครือข่าย",
+                    "3w4": "ผู้เชี่ยวชาญ (The Professional): มีความเป็นส่วนตัวและลึกซึ้งมากขึ้น ต้องการให้ผลงานมี 'เอกลักษณ์' และ 'คุณภาพ' ที่โดดเด่น"
+                },
+                arrows: {
+                    stress: "ไปลักษณ์ 9: เมื่อล้มเหลวหรือหมดไฟ 'เครื่องจักรแห่งความสำเร็จ' จะดับลง กลายเป็นคนเฉื่อยชา หมดอาลัยตายอยาก ไม่ทำอะไรเลย",
+                    growth: "ไปลักษณ์ 6: เมื่อเติบโต จะเปลี่ยนจาก 'การแข่งขัน' เป็น 'ความร่วมมือ' เรียนรู้ที่จะเชื่อใจคนอื่นและอุทิศตนเพื่อสิ่งที่ยิ่งใหญ่กว่าความสำเร็จส่วนตัว"
+                },
+                subtypes: [
+                    { name: "SP - Self-Preservation (ความมั่นคง) (Counter-type)", description: "เป็นลักษณ์สวนทางที่หลีกเลี่ยงภาพลักษณ์โอ้อวด ความสำเร็จของพวกเขาคือการทำงานหนักเพื่อให้ได้มาซึ่ง 'ความมั่นคงทางวัตถุ' ต้องการเป็นคนดี ไม่ใช่แค่ดูดี" },
+                    { name: "SO - Social (เกียรติยศ)", description: "นี่คือลักษณ์ 3 ต้นแบบ กระหาย 'เกียรติยศชื่อเสียง' และการยอมรับในสังคมอย่างยิ่ง เชี่ยวชาญด้านการตลาด การสร้างแบรนด์ให้ตัวเอง" },
+                    { name: "SX - One-to-One (เสน่ห์ดึงดูด)", description: "ทุ่มเทพลังงานทั้งหมดเพื่อเป็น 'คนที่น่าดึงดูด' สำหรับคนอื่น โดยเฉพาะคนรัก ดูแลรูปลักษณ์ภายนอก สร้างเสน่ห์ และทำตัวเป็น 'แฟนในอุดมคติ'" }
+                ],
+                growthPath: [
+                    "หยุดและฟังเสียงหัวใจ ถามตัวเองว่า 'ถ้าไม่ต้องทำให้ใครประทับใจ ฉันต้องการอะไรจริงๆ?'",
+                    "ทำอะไรโดยไม่มีเป้าหมาย ทำเพื่อความสุขในการทำ ไม่ใช่เพื่อผลลัพธ์",
+                    "ให้คุณค่ากับความจริงใจ กล้าที่จะเปิดเผยด้านที่ไม่สมบูรณ์แบบของตัวเอง",
+                    "ตระหนักว่าคุณค่าของคุณมีอยู่แล้ว ไม่ได้ผูกติดอยู่กับความสำเร็จ",
+                    "พัฒนาความร่วมมือ มองคนรอบข้างเป็นเพื่อนร่วมทีม ไม่ใช่คู่แข่ง"
+                ],
+                prosCons: {
+                    pros: "มีประสิทธิภาพสูง, ปรับตัวเก่ง, สร้างแรงบันดาลใจ, มีพลัง, มุ่งมั่น",
+                    cons: "อาจผิวเผิน, ทำงานหนักเกินไป, กลัวความล้มเหลว, อาจละเลยความรู้สึกตัวเอง, แข่งขันสูง"
+                },
+                summary: "ลักษณ์ 3 คือผู้ที่เปี่ยมด้วยพลังและประสิทธิภาพในการปรับตัวเพื่อไขว่คว้าความสำเร็จและการยอมรับ พวกเขาเป็นเหมือนกิ้งก่าที่เปลี่ยนสีได้ตามสภาพแวดล้อม เส้นทางการเติบโตคือการหันกลับมาค้นหาตัวตนที่แท้จริงที่อยู่นอกเหนือจากความสำเร็จและภาพลักษณ์"
+            },
+            {
+                id: 4,
+                title: "ลักษณ์ 4: ผู้สร้างสรรค์โศกนาฏกรรม (The Individualist)",
+                motto: "มีบางอย่างในตัวฉันที่ขาดหายไป",
+                center: "ศูนย์ใจ/ความรู้สึก (จัดการกับ ความละอาย ด้วยการ จมดิ่งลงไปในความรู้สึกนั้น และสร้างอัตลักษณ์จากความแตกต่าง)",
+                coreEssence: {
+                    desire: "ต้องการค้นหาตัวเองและค้นพบความหมายที่แท้จริงของชีวิต",
+                    fear: "กลัวการไม่มีตัวตนหรือไม่มีความสำคัญเป็นพิเศษ",
+                    motivation: "ต้องการแสดงออกถึงความเป็นตัวของตัวเองที่ไม่เหมือนใคร และสร้างสรรค์สิ่งต่างๆ จากโลกภายในที่ลึกซึ้ง"
+                },
+                characteristics: [
+                    "อ่อนไหวและเข้าใจอารมณ์ลึกซึ้ง: สัมผัสกับอารมณ์ได้ทุกเฉดสี และไม่กลัวที่จะเผชิญหน้ากับอารมณ์ด้านมืด",
+                    "มีความคิดสร้างสรรค์: มักจะใช้ศิลปะเพื่อแสดงออกถึงความรู้สึกภายในที่ซับซ้อน",
+                    "โหยหาความสัมพันธ์ที่แท้จริง: มองหา 'รักแท้' หรือใครสักคนที่จะเข้าใจพวกเขาได้อย่างสมบูรณ์แบบ",
+                    "รู้สึกแปลกแยก: มักจะรู้สึกเหมือนเป็นคนนอก ซึ่งเป็นทั้งความเจ็บปวดและเครื่องยืนยันความพิเศษของตน",
+                    "ความอิจฉา (Envy): มักจะมองเห็นสิ่งที่คนอื่นมีแต่ตัวเองไม่มี และรู้สึกว่าชีวิตของคนอื่นดีกว่าเสมอ",
+                    "ชอบดราม่า: อาจจะขยายอารมณ์ของตัวเองให้ใหญ่ขึ้น และจมอยู่กับความเศร้า เพราะมันทำให้รู้สึก 'จริง'"
+                ],
+                states: {
+                    healthy: "จะเป็นคนที่มีความคิดสร้างสรรค์สูงและจริงใจต่อตนเอง สามารถเปลี่ยนความเจ็บปวดให้เป็นงานศิลปะที่สวยงามและเยียวยาผู้อื่นได้",
+                    unhealthy: "จะกลายเป็นคนที่จมอยู่กับความสงสารตัวเองอย่างสิ้นหวัง ตัดขาดจากโลก และผลักไสคนที่พยายามจะเข้ามาช่วยเหลือ"
+                },
+                wings: {
+                    "4w3": "ผู้นำแฟชั่น (The Aristocrat): ต้องการเป็นทั้ง 'คนพิเศษ' และ 'คนที่ประสบความสำเร็จ' มีสไตล์โดดเด่นและเข้าสังคมเก่งกว่า",
+                    "4w5": "ผู้รักสันโดษ (The Bohemian): มีความเป็นส่วนตัวและชอบเก็บตัวมากขึ้น สนใจที่จะสำรวจโลกภายในมากกว่าการนำเสนอให้ใครเห็น"
+                },
+                arrows: {
+                    stress: "ไปลักษณ์ 2: เมื่อรู้สึกถูกปฏิเสธ จะพึ่งพิงคนอื่นมากเกินไป เรียกร้องความรักความสนใจอย่างหนัก และพยายาม 'ซื้อ' ความรักด้วยการช่วยเหลือ",
+                    growth: "ไปลักษณ์ 1: เมื่อเติบโต จะเรียนรู้ที่จะมีวินัยและเชื่อมต่อกับโลกความเป็นจริง นำโครงสร้างมาใช้กับชีวิตและความคิดสร้างสรรค์"
+                },
+                subtypes: [
+                    { name: "SP - Self-Preservation (ความทรหด) (Counter-type)", description: "เป็นลักษณ์สวนทางที่ดูไม่เปราะบาง พวกเขา 'ทนทายาด' กับความเจ็บปวด กัดฟันสู้และอดทนความทุกข์โดยไม่ปริปากบ่น เพื่อพิสูจน์ความแข็งแกร่ง" },
+                    { name: "SO - Social (ความละอาย)", description: "นี่คือลักษณ์ 4 แบบคลาสสิกที่รู้สึกถึงความบกพร่องของตัวเองอย่างรุนแรง และแสดงมันออกมาเพื่อเรียกร้องหา 'ผู้ช่วยให้รอด'" },
+                    { name: "SX - One-to-One (การแข่งขัน)", description: "เปลี่ยนความอิจฉาให้กลายเป็นการแข่งขัน แทนที่จะเศร้า พวกเขาจะรู้สึก 'โกรธ' และพยายามผลักดันตัวเองให้ 'ดีกว่า' คนที่ตนอิจฉา" }
+                ],
+                growthPath: [
+                    "ฝึกมองหาสิ่งที่มี แทนที่จะมองหาสิ่งที่ขาด",
+                    "อยู่กับปัจจุบัน ชื่นชมความสุขและความงามในสิ่งธรรมดารอบตัว",
+                    "ลงมือทำ แม้ไม่มีอารมณ์ อย่ารอให้แรงบันดาลใจมาถึง",
+                    "แยกแยะระหว่าง 'อารมณ์' กับ 'ตัวตน' อารมณ์เป็นเพียงสิ่งที่ผ่านมาแล้วก็ผ่านไป",
+                    "ยอมรับความธรรมดา การเป็นเหมือนคนอื่นในบางเรื่องไม่ใช่เรื่องผิด"
+                ],
+                prosCons: {
+                    pros: "มีความคิดสร้างสรรค์, เข้าใจอารมณ์ลึกซึ้ง, จริงใจ, มีเอกลักษณ์, เห็นอกเห็นใจผู้อื่น",
+                    cons: "อารมณ์แปรปรวน, จมอยู่กับตัวเอง, อาจดูห่างเหิน, ขี้อิจฉา, ชอบเปรียบเทียบ"
+                },
+                summary: "ลักษณ์ 4 คือศิลปินแห่งจิตวิญญาณ ผู้ดำดิ่งสู่ห้วงลึกของอารมณ์เพื่อค้นหาตัวตนที่แท้จริงและสร้างสรรค์สิ่งที่มีความหมาย พวกเขาโดดเด่นด้วยเอกลักษณ์และความคิดสร้างสรรค์ แต่ต้องเรียนรู้ที่จะค้นพบความสุขในโลกแห่งความเป็นจริง ไม่ใช่แค่ในโศกนาฏกรรม"
+            },
+            {
+                id: 5,
+                title: "ลักษณ์ 5: ผู้สังเกตการณ์ (The Investigator)",
+                motto: "โลกภายนอกเรียกร้องมากเกินไป ฉันต้องเก็บสะสมทรัพยากร",
+                center: "ศูนย์หัว/ความคิด (จัดการกับ ความกลัว ด้วยการ ถอยห่าง ออกจากโลก แล้วสังเกตการณ์และรวบรวมข้อมูล)",
+                coreEssence: {
+                    desire: "ต้องการที่จะเป็นคนมีความสามารถและรอบรู้",
+                    fear: "กลัวการเป็นคนไร้ประโยชน์ ทำอะไรไม่เป็น หรือถูกโลกภายนอกรุกล้ำ",
+                    motivation: "ต้องการทำความเข้าใจโลกรอบตัว เพื่อที่จะได้รู้สึกปลอดภัยและพร้อมรับมือ"
+                },
+                characteristics: [
+                    "ช่างสังเกตและนักวิเคราะห์: มองโลกอย่างมีวัตถุประสงค์ สามารถทำความเข้าใจระบบที่ซับซ้อนได้",
+                    "รักความเป็นส่วนตัว: ต้องการเวลาและพื้นที่ส่วนตัวอย่างมากเพื่อชาร์จพลัง",
+                    "ใช้ชีวิตแบบมินิมอล: ลดความต้องการของตัวเองให้เหลือน้อยที่สุด เพื่อจะได้ไม่ต้องพึ่งพาใคร",
+                    "กระหายความรู้: ชอบศึกษาค้นคว้าในเรื่องที่ตนสนใจอย่างลึกซึ้งจนเป็นผู้เชี่ยวชาญ",
+                    "ไม่เชื่อมต่อกับร่างกาย: มักจะ 'ใช้ชีวิตอยู่ในหัว' และอาจละเลยความรู้สึกทางกายหรืออารมณ์",
+                    "ความตระหนี่ (Avarice): คือการหวงแหนทรัพยากรภายใน ทั้งเวลา พลังงาน และความรู้"
+                ],
+                states: {
+                    healthy: "จะเป็นนักคิดผู้มีวิสัยทัศน์กว้างไกล สามารถเชื่อมโยงความรู้เข้ากับโลกความเป็นจริง กลายเป็นผู้รู้ที่เปี่ยมด้วยปัญญาและแบ่งปันความรู้อย่างเอื้อเฟื้อ",
+                    unhealthy: "จะกลายเป็นคนแปลกแยกที่ตัดขาดจากโลกโดยสิ้นเชิง หลงอยู่ในทฤษฎีความคิดที่น่ากลัวหรือประหลาด"
+                },
+                wings: {
+                    "5w4": "ผู้ทำลายขนบ (The Iconoclast): สนใจในเรื่องที่เป็นนามธรรมและศิลปะ เป็นนักคิดที่มีความคิดสร้างสรรค์และมีเอกลักษณ์",
+                    "5w6": "นักแก้ปัญหา (The Problem Solver): สนใจในเรื่องที่เป็นระบบและเทคนิค เป็นนักวิเคราะห์ที่เก่งกาจในการแก้ปัญหาที่เกิดขึ้นจริง"
+                },
+                arrows: {
+                    stress: "ไปลักษณ์ 7: เมื่อถูกรุกล้ำ จะกลายเป็นคนอยู่ไม่สุข กระสับกระส่าย คิดฟุ้งซ่าน และหาอะไรทำเพื่อเบี่ยงเบนความสนใจไปเรื่อยๆ",
+                    growth: "ไปลักษณ์ 8: เมื่อเติบโต จะก้าวออกจากโลกแห่งความคิดมาสู่โลกแห่งการกระทำอย่างมั่นใจ กล้าที่จะแสดงพลังและมีบทบาทในโลกแห่งความเป็นจริง"
+                },
+                subtypes: [
+                    { name: "SP - Self-Preservation (ปราสาท)", description: "นี่คือลักษณ์ 5 แบบต้นตำรับ เป็น 'ฤาษี' ตัวจริงที่สร้างกำแพงเพื่อปกป้องพื้นที่ส่วนตัว หวงแหนเวลาและพลังงานอย่างที่สุด" },
+                    { name: "SO - Social (สัญลักษณ์)", description: "เชื่อมต่อกับโลกผ่าน 'ความรู้' หรือ 'อุดมการณ์' มองหาคนกลุ่มเล็กๆ ที่มีความสนใจเดียวกันเพื่อแลกเปลี่ยนความรู้ชั้นสูง" },
+                    { name: "SX - One-to-One (ความไว้วางใจ) (Counter-type)", description: "เป็นลักษณ์สวนทางที่แสวงหา 'ความสัมพันธ์หนึ่งเดียวที่สมบูรณ์แบบ' ที่จะสามารถเปิดเผยโลกภายในของตนเองได้ มีความโรแมนติกและเข้มข้นทางอารมณ์" }
+                ],
+                growthPath: [
+                    "เชื่อมต่อกับร่างกาย ทำกิจกรรมที่ใช้ร่างกายเพื่อดึงตัวเองออกจากความคิด",
+                    "ฝึกการให้ ลองแบ่งปันความรู้ เวลา หรือพลังงานให้ผู้อื่น",
+                    "ลงมือทำทีละนิด อย่ารอจนกว่าจะรู้ทุกอย่าง 100%",
+                    "อยู่กับอารมณ์ ลองแค่อยู่กับมันโดยไม่ต้องรีบวิเคราะห์",
+                    "กำหนดเวลาเข้าสังคม เพื่อป้องกันการตัดขาดจากโลกภายนอก"
+                ],
+                prosCons: {
+                    pros: "มีความรู้ลึกซึ้ง, ช่างสังเกต, มีเหตุผล, พึ่งพาตัวเองได้, แก้ปัญหาเก่ง",
+                    cons: "อาจดูเย็นชา, แยกตัวออกจากสังคม, ตัดสินใจลงมือทำช้า, ไม่ค่อยแสดงอารมณ์, อาจตระหนี่"
+                },
+                summary: "ลักษณ์ 5 คือนักปราชญ์และผู้สังเกตการณ์ผู้สร้างความปลอดภัยให้ตัวเองผ่านความรู้และความเข้าใจ พวกเขาคือป้อมปราการแห่งข้อมูลที่ต้องการเพียงพื้นที่และเวลาในการคิดวิเคราะห์ เส้นทางการเติบโตคือการนำความรู้ที่สะสมไว้ออกมาสู่โลกแห่งการกระทำและแบ่งปันให้ผู้อื่น"
+            },
+            {
+                id: 6,
+                title: "ลักษณ์ 6: ผู้ตั้งคำถาม (The Loyalist)",
+                motto: "ฉันต้องเตรียมพร้อมรับมือกับทุกอันตรายและความไม่แน่นอน",
+                center: "ศูนย์หัว/ความคิด (จัดการกับ ความกลัว ด้วยการ คาดการณ์ ปัญหาและสถานการณ์เลวร้ายที่สุด)",
+                coreEssence: {
+                    desire: "ต้องการที่จะรู้สึกมั่นคงและได้รับการสนับสนุน",
+                    fear: "กลัวการไม่ได้รับการสนับสนุนหรือคำชี้แนะ กลัวการต้องเผชิญหน้ากับปัญหาเพียงลำพัง",
+                    motivation: "ต้องการสร้างพันธมิตรและมีความเชื่อมั่นในระบบหรือบุคคลที่ไว้ใจได้ เพื่อให้รู้สึกปลอดภัย"
+                },
+                characteristics: [
+                    "ชอบวางแผนและเตรียมการ: เป็นนักวางแผนชั้นยอดที่มองเห็นปัญหาที่คนอื่นมองข้าม",
+                    "มีความรับผิดชอบและภักดี: เมื่อมอบความไว้วางใจให้ใครแล้ว จะภักดีและทุ่มเทอย่างยิ่ง",
+                    "ขี้สงสัยและตั้งคำถาม: ไม่เชื่ออะไรง่ายๆ และมักจะตั้งคำถามกับผู้มีอำนาจ",
+                    "มีความวิตกกังวล: จิตใจมักจะวนเวียนอยู่กับความคิด 'what if...?' (ถ้าหากว่า...)",
+                    "มีสองขั้ว: Phobic (ขั้วกลัว) จะหลีกเลี่ยงความเสี่ยง, Counter-phobic (ขั้วกล้าสวน) จะวิ่งเข้าหาอันตรายเพื่อพิสูจน์ความกล้า"
+                ],
+                states: {
+                    healthy: "จะเป็นคนที่กล้าหาญอย่างแท้จริง เชื่อมั่นในตัวเองและผู้อื่น สามารถเป็นผู้นำที่สร้างแรงบันดาลใจและเผชิญหน้ากับความไม่แน่นอนด้วยความสงบจากภายใน",
+                    unhealthy: "จะกลายเป็นคนขี้ระแวงอย่างรุนแรง (paranoid) มองเห็นศัตรูอยู่ทุกหนทุกแห่ง และโจมตีผู้อื่นเพื่อป้องกันตัวเอง"
+                },
+                wings: {
+                    "6w5": "ผู้พิทักษ์ (The Defender): ชอบเก็บตัวและเป็นนักวิชาการมากขึ้น มองหาความมั่นคงผ่าน 'ความรู้' และ 'ระบบ' ที่ชัดเจน",
+                    "6w7": "คู่หู (The Buddy): ชอบเข้าสังคมและมองโลกในแง่ดีมากขึ้น จัดการความกังวลด้วยการสร้างเครือข่ายเพื่อนฝูง"
+                },
+                arrows: {
+                    stress: "ไปลักษณ์ 3: เมื่อกังวลท่วมท้น จะกลายเป็นคนบ้างาน ทำทุกอย่างเพื่อให้ดู 'ยุ่ง' และ 'มีประสิทธิภาพ' เพื่อหนีจากความรู้สึกกลัว",
+                    growth: "ไปลักษณ์ 9: เมื่อเติบโต จะเรียนรู้ที่จะ 'วางใจ' ในชีวิตและในตนเอง ค้นพบความสงบภายใน และเลิกต่อสู้กับจินตนาการในหัว"
+                },
+                subtypes: [
+                    { name: "SP - Self-Preservation (ความอบอุ่น)", description: "เป็นขั้ว Phobic ที่ชัดเจนที่สุด มองหาความปลอดภัยผ่าน 'พันธมิตร' และความสัมพันธ์ที่อบอุ่น เป็นคนน่ารัก เป็นมิตร" },
+                    { name: "SO - Social (หน้าที่)", description: "จัดการความกลัวโดยการมองหากฎเกณฑ์ ระบบ หรืออุดมการณ์ที่ชัดเจนเพื่อยึดถือ อุทิศตนให้กับ 'หน้าที่' ที่ได้รับมอบหมาย" },
+                    { name: "SX - One-to-One (ความแข็งแกร่ง/ความงาม) (Counter-type)", description: "เป็นขั้ว Counter-phobic ที่สุดขั้ว จัดการความกลัวด้วยการ 'ข่มขู่ความกลัวกลับไป' สร้างภาพลักษณ์ที่ดูแข็งแกร่ง ก้าวร้าว หรือมีเสน่ห์" }
+                ],
+                growthPath: [
+                    "ฝึกอยู่กับปัจจุบัน ความกลัวส่วนใหญ่อยู่ในอนาคต",
+                    "เชื่อในสัญชาตญาณตัวเอง เรียนรู้ที่จะฟังเสียงนำทางจากภายใน",
+                    "แยกแยะระหว่าง 'จินตนาการ' กับ 'ความจริง'",
+                    "ลงมือทำทีละขั้น แทนที่จะจมอยู่กับแผนการที่ซับซ้อน",
+                    "ตระหนักว่าคุณแข็งแกร่งกว่าที่คิด คุณสามารถรับมือกับสิ่งที่จะเกิดขึ้นได้"
+                ],
+                prosCons: {
+                    pros: "มีความภักดี, รอบคอบ, เตรียมพร้อม, มีความรับผิดชอบ, ปกป้องพวกพ้อง",
+                    cons: "วิตกกังวลง่าย, ขี้สงสัย, ตัดสินใจยาก, อาจมองโลกในแง่ร้าย, ไม่เชื่อใจคนง่าย"
+                },
+                summary: "ลักษณ์ 6 คือผู้พิทักษ์ที่ภักดีและนักตั้งคำถามผู้มองหาความแน่นอนในโลกที่ไม่แน่นอน จิตใจของพวกเขาทำงานตลอดเวลาเพื่อคาดการณ์และป้องกันปัญหา เส้นทางการเติบโตคือการค้นพบความกล้าหาญที่แท้จริงจากการวางใจในตนเองและในกระแสของชีวิต"
+            },
+            {
+                id: 7,
+                title: "ลักษณ์ 7: ผู้เสพประสบการณ์ (The Enthusiast)",
+                motto: "ฉันต้องมองไปข้างหน้าและมีความสุขอยู่เสมอ",
+                center: "ศูนย์หัว/ความคิด (จัดการกับ ความกลัว ด้วยการ หลีกหนี ไปหาประสบการณ์ใหม่ๆ และความคิดเชิงบวก)",
+                coreEssence: {
+                    desire: "ต้องการที่จะมีความสุขและพึงพอใจ",
+                    fear: "กลัวการถูกจองจำในความทุกข์หรือความเจ็บปวด",
+                    motivation: "ต้องการรักษาอิสรภาพและความสุข หลีกเลี่ยงความเจ็บปวด และไม่พลาดประสบการณ์ดีๆ ในชีวิต"
+                },
+                characteristics: [
+                    "มองโลกในแง่ดีและมีพลัง: เป็นคนร่าเริง สนุกสนาน และสามารถหาแง่มุมดีๆ ได้ในแทบทุกสถานการณ์",
+                    "มุ่งเน้นอนาคต: จิตใจวางแผนการผจญภัยและกิจกรรมสนุกๆ ในอนาคตอยู่เสมอ",
+                    "มีความสามารถหลากหลาย: สนใจในหลายสิ่งหลายอย่างและเรียนรู้ได้เร็ว",
+                    "หลีกเลี่ยงความรู้สึกด้านลบ: มีความอดทนต่อความเจ็บปวดทางอารมณ์หรือความเบื่อหน่ายต่ำมาก",
+                    "ความตะกละ (Gluttony): คือ 'ความตะกละทางความคิดและประสบการณ์' ต้องการสิ่งกระตุ้นใหม่ๆ ตลอดเวลา",
+                    "มีปัญหากับการผูกมัด: การเลือกทำสิ่งใดสิ่งหนึ่ง หมายถึงการปิดประตูสู่โอกาสอื่นๆ ที่อาจจะน่าตื่นเต้นกว่า"
+                ],
+                states: {
+                    healthy: "จะเป็นคนที่เปี่ยมด้วยความสุขและความเบิกบานอย่างแท้จริง สามารถซาบซึ้งกับความสุขในปัจจุบันได้ กลายเป็นนักคิดผู้มีวิสัยทัศน์",
+                    unhealthy: "จะกลายเป็นคนฟุ้งซ่านอย่างหนัก (manic) หนีปัญหา และทำอะไรเสี่ยงๆ ไม่คิดหน้าคิดหลัง เสพติดการกระตุ้นที่รุนแรงขึ้นเรื่อยๆ"
+                },
+                wings: {
+                    "7w6": "ผู้ให้ความบันเทิง (The Entertainer): มีความเป็นมิตร ตลกขบขัน และภักดีต่อเพื่อนฝูง มีความรอบคอบมากขึ้น",
+                    "7w8": "นักปฏิบัติ (The Realist): มีความกล้าแสดงออกและมุ่งมั่นมากขึ้น เก่งในการหาทรัพยากรเพื่อให้ได้มาซึ่งสิ่งที่ต้องการ"
+                },
+                arrows: {
+                    stress: "ไปลักษณ์ 1: เมื่อจนตรอก จะกลายเป็นคนเข้มงวด วิจารณ์จัด จู้จี้จุกจิก และยึดติดกับความสมบูรณ์แบบ",
+                    growth: "ไปลักษณ์ 5: เมื่อเติบโต จะเรียนรู้ที่จะช้าลงและอยู่กับปัจจุบันอย่างลึกซึ้ง ค้นพบความสุขที่แท้จริงจากการจดจ่อกับสิ่งใดสิ่งหนึ่ง"
+                },
+                subtypes: [
+                    { name: "SP - Self-Preservation (พันธมิตร)", description: "มองหาความสุขผ่านการสร้าง 'เครือข่ายพันธมิตร' ที่เหนียวแน่นเพื่อช่วยเหลือซึ่งกันและกันในการแสวงหาผลประโยชน์และความสุขสบาย" },
+                    { name: "SO - Social (การเสียสละ) (Counter-type)", description: "เป็นลักษณ์สวนทางที่ต่อต้านความตะกละด้วย 'การเสียสละ' เพื่อกลุ่ม ยอมเลื่อนความต้องการของตัวเองออกไปก่อนเพื่อส่วนรวม" },
+                    { name: "SX - One-to-One (นักฝัน)", description: "เป็นนักฝันที่มองโลกผ่านแว่นตาสีชมพู ตกหลุมรัก 'ความเป็นไปได้' ของสิ่งต่างๆ และผู้คน อาจหลงอยู่ในโลกแห่งความฝัน" }
+                ],
+                growthPath: [
+                    "ฝึกอยู่กับสิ่งเดียวจนจบ แม้จะเริ่มเบื่อ",
+                    "อนุญาตให้ตัวเองรู้สึกเจ็บปวด ไม่ต้องรีบกลบเกลื่อน",
+                    "เรียนรู้ที่จะอยู่กับความเงียบ ฝึกสมาธิเพื่อให้จิตใจได้พักผ่อน",
+                    "แยกแยะระหว่าง 'ความสุข' กับ 'ความฟุ้งซ่าน'",
+                    "รักษาสัญญา อิสรภาพที่แท้จริงมาจากการมีวินัย"
+                ],
+                prosCons: {
+                    pros: "มองโลกในแง่ดี, มีพลัง, มีความคิดสร้างสรรค์, ปรับตัวเร็ว, สนุกสนาน",
+                    cons: "อาจขาดความรับผิดชอบ, หนีปัญหา, ทำอะไรไม่เสร็จ, เบื่อง่าย, กลัวการผูกมัด"
+                },
+                summary: "ลักษณ์ 7 คือนักผจญภัยผู้มองหาความสุขและความเป็นไปได้ใหม่ๆ อยู่เสมอ พวกเขาวิ่งหนีความเจ็บปวดด้วยการเติมชีวิตให้เต็มไปด้วยประสบการณ์ที่น่าตื่นเต้น เส้นทางการเติบโตคือการค้นพบความสุขที่แท้จริงจากการอยู่กับปัจจุบันและเผชิญหน้ากับชีวิตทุกแง่มุม"
+            },
+            {
+                id: 8,
+                title: "ลักษณ์ 8: ผู้ปกป้อง (The Challenger)",
+                motto: "ฉันต้องแข็งแกร่งและควบคุมสถานการณ์ไว้",
+                center: "ศูนย์กาย/สัญชาตญาณ (จัดการกับ ความโกรธ ด้วยการ แสดงออกไปตรงๆ เพื่อควบคุมสิ่งแวดล้อม)",
+                coreEssence: {
+                    desire: "ต้องการที่จะปกป้องตนเอง (และควบคุมชีวิตและโชคชะตาของตนเอง)",
+                    fear: "กลัวการถูกควบคุมหรือทำร้ายโดยผู้อื่น",
+                    motivation: "ต้องการที่จะยืนยันความแข็งแกร่งของตนเองและต่อต้านการถูกควบคุม"
+                },
+                characteristics: [
+                    "กล้าแสดงออกและเด็ดขาด: เป็นผู้นำโดยธรรมชาติ ไม่กลัวที่จะตัดสินใจเรื่องยากๆ",
+                    "ปกป้องพวกพ้อง: มีสัญชาตญาณในการปกป้องคนที่อ่อนแอกว่าหรือคนที่ตนเองรักอย่างรุนแรง",
+                    "ชอบการเผชิญหน้า: ไม่กลัวความขัดแย้ง มองว่าการปะทะกันตรงๆ คือหนทางสู่ความจริง",
+                    "คิดแบบ 'ทั้งหมดหรือไม่มีเลย': มองโลกแบบขาวกับดำชัดเจน คุณอยู่ข้างฉันหรือตรงข้ามฉัน",
+                    "ไม่ชอบความอ่อนแอ: จะซ่อนความรู้สึกเปราะบางของตนเองไว้ภายใต้เปลือกที่แข็งแกร่ง",
+                    "ความใคร่/ความเกินพอดี (Lust): คือ 'ความกระหายในความเข้มข้น' ต้องการทุกอย่างให้ 'ใหญ่' และ 'เต็มที่'"
+                ],
+                states: {
+                    healthy: "จะเป็นผู้นำที่ยิ่งใหญ่และเปี่ยมด้วยเมตตา (Magnanimous) ใช้พลังเพื่อปกป้องและเสริมพลังให้ผู้อื่น กล้าที่จะเปิดรับความเปราะบางของตนเอง",
+                    unhealthy: "จะกลายเป็นเผด็จการที่โหดเหี้ยมและชอบทำลายล้าง พร้อมจะทำลายทุกคนหรือทุกสิ่งที่ขวางทาง"
+                },
+                wings: {
+                    "8w7": "ผู้บุกเบิก (The Maverick): มีพลังงานสูง ชอบเข้าสังคม และมองหาโอกาสใหม่ๆ เป็นสาย 'ทำงานหนัก เล่นหนัก'",
+                    "8w9": "พญาหมี (The Bear): สุขุม นิ่ง และอดทนมากขึ้น เหมือน 'หมีใหญ่ใจดี' ที่สงบนิ่งจนกว่าจะมีคนมารุกราน"
+                },
+                arrows: {
+                    stress: "ไปลักษณ์ 5: เมื่อสูญเสียการควบคุม จะถอยกลับไปแยกตัวออกจากสังคม กลายเป็นคนเก็บตัว ลึกลับ และเฝ้าสังเกตการณ์เพื่อวางแผน",
+                    growth: "ไปลักษณ์ 2: เมื่อเติบโต จะเรียนรู้ที่จะเปิดหัวใจและเชื่อมต่อกับความเปราะบางของตนเอง ตระหนักว่าความแข็งแกร่งที่แท้จริงรวมถึงความเมตตาด้วย"
+                },
+                subtypes: [
+                    { name: "SP - Self-Preservation (ความพึงพอใจ)", description: "เป็นลักษณ์ 8 ที่ตรงไปตรงมาและเน้นการอยู่รอดที่สุด มองหาความพึงพอใจทางวัตถุ พูดน้อยต่อยหนัก ไม่ชอบเสียเวลา" },
+                    { name: "SO - Social (ความเป็นปึกแผ่น) (Counter-type)", description: "เป็นลักษณ์สวนทางที่ดูอ่อนโยนกว่า ใช้พลังเพื่อ 'ปกป้องฝูง' และต่อสู้เพื่อความยุติธรรมในสังคม เหมือน 'เจ้าพ่อ/เจ้าแม่' ที่ดูแลชุมชน" },
+                    { name: "SX - One-to-One (การครอบครอง)", description: "มีเสน่ห์ดึงดูด ร้อนแรง และเป็นนักปฏิวัติ ต้องการที่จะ 'ครอบครอง' และมีอิทธิพลอย่างเข้มข้นต่อคนคนหนึ่งหรือทั้งห้อง" }
+                ],
+                growthPath: [
+                    "ฝึกการฟัง ไม่ใช่ทุกบทสนทนาคือการต่อสู้ที่ต้องเอาชนะ",
+                    "ยอมรับความเปราะบาง การยอมรับว่าเจ็บปวดคือความแข็งแกร่ง",
+                    "เรียนรู้ที่จะผ่อนแรง บางครั้งการใช้พลังน้อยลงกลับได้ผลดีกว่า",
+                    "สังเกตผลกระทบของพลังงานตัวเองต่อผู้อื่น",
+                    "ปล่อยให้คนอื่นนำบ้าง คุณไม่จำเป็นต้องควบคุมทุกอย่าง"
+                ],
+                prosCons: {
+                    pros: "เป็นผู้นำ, ปกป้องผู้อื่น, เด็ดขาด, มีพลัง, ซื่อตรง",
+                    cons: "อาจดูก้าวร้าว, ชอบควบคุม, ไม่ยอมรับความอ่อนแอ, ใจร้อน, ไม่กลัวการเผชิญหน้าเกินไป"
+                },
+                summary: "ลักษณ์ 8 คือพลังแห่งธรรมชาติ ผู้ปกป้องที่กล้าหาญและผู้นำที่เด็ดเดี่ยว พวกเขาต่อสู้เพื่อควบคุมโชคชะตาของตนเองและปกป้องคนของเขาจากความไม่ยุติธรรม เส้นทางการเติบโตคือการค้นพบว่าความแข็งแกร่งที่ยิ่งใหญ่ที่สุดมาจากการเปิดหัวใจที่เปราะบางของตน"
+            },
+            {
+                id: 9,
+                title: "ลักษณ์ 9: ผู้ประสานไมตรี (The Peacemaker)",
+                motto: "ฉันต้องรักษาความสงบสุขภายในและภายนอกไว้",
+                center: "ศูนย์กาย/สัญชาตญาณ (จัดการกับ ความโกรธ ด้วยการ ลืม หรือกดมันไว้ เพื่อรักษาความสงบสุข)",
+                coreEssence: {
+                    desire: "ต้องการที่จะมีความสงบสุขทั้งภายในและภายนอก",
+                    fear: "กลัวการสูญเสีย การแตกแยก และความขัดแย้ง",
+                    motivation: "ต้องการสร้างความสามัคคีในสภาพแวดล้อมรอบตัว และหลีกเลี่ยงสถานการณ์ที่ตึงเครียด"
+                },
+                characteristics: [
+                    "รักสงบและยอมตาม: มักจะ 'ปล่อยไหล' และคล้อยตามผู้อื่นเพื่อหลีกเลี่ยงการปะทะ",
+                    "มองโลกในแง่ดี: มีแนวโน้มที่จะมองข้ามปัญหาเพื่อรักษาบรรยากาศที่ดีไว้",
+                    "ดื้อเงียบ: แม้จะดูยอมตาม แต่จะต่อต้านด้วยการนิ่งเฉยหรือไม่ให้ความร่วมมือเมื่อถูกบังคับ",
+                    "มีปัญหาในการตัดสินใจ: ลังเลเพราะกลัวว่าการเลือกจะสร้างความไม่พอใจให้อีกฝ่าย",
+                    "ความเกียจคร้าน (Sloth): คือ 'ความเกียจคร้านต่อตนเอง' (Self-forgetting) ลืมความต้องการของตัวเองไป"
+                ],
+                states: {
+                    healthy: "จะเป็นผู้ที่สามารถนำพาความสงบสุขและการเยียวยามาสู่โลกได้อย่างแท้จริง เชื่อมต่อกับตัวเองได้อย่างสมบูรณ์ และเป็นผู้ไกล่เกลี่ยที่เปี่ยมด้วยปัญญา",
+                    unhealthy: "จะกลายเป็นคนเฉื่อยชาอย่างสิ้นเชิง ปฏิเสธที่จะรับรู้ปัญหาใดๆ แตกสลายและตัดขาดจากความเป็นจริง"
+                },
+                wings: {
+                    "9w8": "ผู้ตัดสิน (The Referee): มีความกล้าแสดงออกมากขึ้น พร้อมที่จะลุกขึ้นมาปกป้องความสงบสุขด้วยความแข็งกร้าวเมื่อจำเป็น",
+                    "9w1": "นักฝัน (The Dreamer): มีระเบียบและอุดมคติมากขึ้น มีความฝันถึงโลกที่สมบูรณ์แบบและสงบสุข"
+                },
+                arrows: {
+                    stress: "ไปลักษณ์ 6: เมื่อความสงบสุขถูกคุกคาม จะเต็มไปด้วยความวิตกกังวล ขี้ระแวง มองเห็นแต่ปัญหา",
+                    growth: "ไปลักษณ์ 3: เมื่อเติบโต จะเชื่อมต่อกับคุณค่าและเป้าหมายของตนเอง และลงมือทำเพื่อสิ่งนั้นอย่างมีพลัง"
+                },
+                subtypes: [
+                    { name: "SP - Self-Preservation (ความอยากอาหาร)", description: "หลอมรวมตัวเองเข้ากับความสุขสบายทางกายภาพ เช่น อาหาร การนอน เพื่อสร้างความสงบสุขและทำให้ตัวเองลืมปัญหา" },
+                    { name: "SO - Social (การมีส่วนร่วม) (Counter-type)", description: "เป็นลักษณ์สวนทางที่เป็นคนบ้างาน (Workaholic) หลอมรวมตัวเองเข้ากับ 'กลุ่ม' ทำงานหนักเพื่อเป็นส่วนหนึ่งของกลุ่มจนลืมความต้องการส่วนตัว" },
+                    { name: "SX - One-to-One (การหลอมรวม)", description: "ต้องการ 'หลอมรวมเป็นหนึ่งเดียว' กับคนรัก รับเอาความต้องการของอีกฝ่ายมาเป็นของตนเองเพื่อสร้างความสัมพันธ์ที่ไม่มีความขัดแย้ง" }
+                ],
+                growthPath: [
+                    "ถามตัวเองว่า 'ฉันต้องการอะไร?' และกล้าที่จะทำตามเสียงนั้น",
+                    "อนุญาตให้ตัวเองโกรธ ความโกรธคือสัญญาณที่บอกว่ามีบางอย่างสำคัญสำหรับคุณ",
+                    "ตั้งเป้าหมายเล็กๆ เพื่อปลุกพลังในการลงมือทำ",
+                    "เรียนรู้ที่จะพูดว่า 'ไม่' คือการเคารพขอบเขตของตัวเอง",
+                    "ทำกิจกรรมที่ใช้ร่างกาย เพื่อปลุกพลังงานที่หลับใหล"
+                ],
+                prosCons: {
+                    pros: "เป็นผู้ฟังที่ดี, ใจเย็น, เข้าใจมุมมองผู้อื่น, เป็นนักการทูต, สร้างบรรยากาศที่ดี",
+                    cons: "หลีกเลี่ยงความขัดแย้ง, ตัดสินใจยาก, อาจดูเฉื่อยชา, ไม่ค่อยแสดงความต้องการ, ดื้อเงียบ"
+                },
+                summary: "ลักษณ์ 9 คือมงกุฎแห่งนพลักษณ์ ผู้สร้างสันติและนักการทูตผู้โหยหาความกลมเกลียว พวกเขาคือสายลมที่สงบเงียบ แต่ต้องเรียนรู้ที่จะค้นพบเสียงและความต้องการของตนเอง เส้นทางการเติบโตคือการปลุกพลังภายในและลงมือทำเพื่อสร้างชีวิตที่ตนเองปรารถนาอย่างแท้จริง"
+            }
+        ];
 
-            const thermochemData = {
-                combustion: `<h3 class="text-2xl font-bold text-orange-700 mb-4">Combustion (การเผาไหม้)</h3><div class="content-card-body"><p class="mb-3 text-stone-600"><strong class="text-stone-800">บทบาทหลัก:</strong> เป็น <strong class="text-orange-600">"กระบวนการสนับสนุนเพื่อสร้างพลังงาน"</strong> ไม่ได้ผลิตไฮโดรเจนโดยตรง</p><p class="font-semibold">หลักการทำงาน:</p><p class="text-sm mb-3">คือการเผาไหม้ชีวมวลส่วนหนึ่งกับออกซิเจน (อากาศ) ที่มากเกินพอ เพื่อเปลี่ยนพลังงานเคมีในชีวมวลให้เป็นความร้อนอุณหภูมิสูง จากนั้นนำความร้อนนี้ไปใช้ขับเคลื่อนกระบวนการผลิตไฮโดรเจนหลักที่ดูดความร้อน เช่น Gasification</p><div class="text-sm bg-stone-50 p-3 rounded-lg border mb-3"><p class="font-semibold">สมการเผาไหม้สมบูรณ์ (ตัวอย่าง):</p><p class="font-mono text-xs sm:text-sm">C₆H₁₀O₅ + 6O₂ → 6CO₂ + 5H₂O + 🔥Heat</p></div><p class="font-semibold">สภาวะการทำงาน:</p><ul class="list-disc list-inside text-sm mb-3"><li>อุณหภูมิ: > 850 °C</li><li>สารทำปฏิกิริยา: อากาศในปริมาณที่มากเกินพอ</li></ul></div><div class="mt-auto pt-4 border-t"><p class="font-semibold text-green-700">ข้อดี: เป็นวิธีที่ตรงไปตรงมาในการผลิตความร้อนจากชีวมวล</p><p class="font-semibold text-red-700">ข้อจำกัด: ผลิตภัณฑ์คือ CO₂ และ H₂O ไม่ใช่ H₂ ที่ต้องการ</p></div>`,
-                liquefaction: `<h3 class="text-2xl font-bold text-lime-700 mb-4">Liquefaction (การแปรสภาพเป็นของเหลว)</h3><div class="content-card-body"><p class="mb-3 text-stone-600"><strong class="text-stone-800">บทบาทหลัก:</strong> เป็น <strong class="text-lime-600">"กระบวนการสร้างสารตัวกลาง"</strong> (Intermediate Step)</p><p class="font-semibold">หลักการทำงาน:</p><p class="text-sm mb-3">คือการสลายโครงสร้างชีวมวลของแข็งในตัวทำละลายภายใต้อุณหภูมิปานกลางและความดันสูงมาก เพื่อเปลี่ยนให้เป็น <strong class="font-semibold">"ไบโอ-ออยล์ (Bio-oil)"</strong> ซึ่งเป็นของเหลวที่มีความหนาแน่นพลังงานสูง ง่ายต่อการขนส่งและจัดเก็บ จากนั้นจึงนำ Bio-oil ไปผ่านกระบวนการ Reforming เพื่อผลิตไฮโดรเจนต่อไป</p><p class="font-semibold">สภาวะการทำงาน:</p><ul class="list-disc list-inside text-sm mb-3"><li>อุณหภูมิ: 250 - 370 °C</li><li>ความดัน: 50 - 200 bar (สูงมาก)</li></ul></div><div class="mt-auto pt-4 border-t"><p class="font-semibold text-green-700">ข้อดี: เพิ่มความหนาแน่นพลังงาน (Energy Densification) ทำให้ขนส่งและจัดเก็บชีวมวลในรูปของเหลวได้ง่าย</p><p class="font-semibold text-red-700">ข้อเสีย: Bio-oil ที่ได้มีคุณภาพต่ำ (เป็นกรด, ไม่เสถียร, มีออกซิเจนสูง) ต้องผ่านกระบวนการ <strong class="text-red-800">"ปรับปรุงคุณภาพ" (Upgrading)</strong> ที่ซับซ้อนและมีค่าใช้จ่ายสูงก่อนนำไปใช้</p></div>`
-            };
+
+        // --- LOGIC ---
+        document.addEventListener('DOMContentLoaded', () => {
+            const typeButtonsContainer = document.getElementById('type-buttons');
+            const typeDisplay = document.getElementById('type-display');
+
+            // Generate buttons
+            enneagramData.forEach(type => {
+                const button = document.createElement('button');
+                button.className = 'type-button text-sm md:text-base p-3 bg-white text-gray-700 border border-gray-300 rounded-lg hover:bg-blue-500 hover:text-white transition-all duration-300';
+                button.textContent = `ลักษณ์ ${type.id}`;
+                button.dataset.typeId = type.id;
+                typeButtonsContainer.appendChild(button);
+            });
             
-            document.getElementById('combustion-card').innerHTML = thermochemData.combustion;
-            document.getElementById('liquefaction-card').innerHTML = thermochemData.liquefaction;
+            const typeButtons = document.querySelectorAll('.type-button');
 
-            const chartData = {
-                temp: { label: 'อุณหภูมิ (°C)', data: [850, 1350, 1000], backgroundColor: 'rgba(217, 119, 6, 0.6)', borderColor: 'rgba(217, 119, 6, 1)' },
-                pressure: { label: 'ความดัน (bar)', data: [22, 55, 40], backgroundColor: 'rgba(29, 78, 216, 0.6)', borderColor: 'rgba(29, 78, 216, 1)' },
-                h2co: { label: 'อัตราส่วน H₂/CO', data: [3.5, 1.8, 2.5], backgroundColor: 'rgba(4, 120, 87, 0.6)', borderColor: 'rgba(4, 120, 87, 1)' },
-                flexibility: { label: 'ความยืดหยุ่นวัตถุดิบ (1=ต่ำ, 3=สูง)', data: [1, 3, 1], backgroundColor: 'rgba(120, 53, 15, 0.6)', borderColor: 'rgba(120, 53, 15, 1)' },
-                capex: { label: 'ต้นทุนลงทุน (CAPEX) (1=ต่ำ, 3=สูง)', data: [3, 2, 2], backgroundColor: 'rgba(109, 40, 217, 0.6)', borderColor: 'rgba(109, 40, 217, 1)' },
-                asu: { label: 'ความต้องการ ASU (0=ไม่, 2=ใช่)', data: [0, 2, 2], backgroundColor: 'rgba(219, 39, 119, 0.6)', borderColor: 'rgba(219, 39, 119, 1)' }
-            };
-
-            const contentElements = { principle: document.getElementById('card-principle'), reactor: document.getElementById('card-reactor'), conditions: document.getElementById('card-conditions'), pros_cons: document.getElementById('card-pros-cons'), improvements: document.getElementById('card-improvements') };
-            const buttons = { smr: document.getElementById('btn-smr'), pox: document.getElementById('btn-pox'), atr: document.getElementById('btn-atr') };
-            let currentTech = 'smr';
-
-            function updateContent(tech) {
-                Object.keys(contentElements).forEach(key => contentElements[key].innerHTML = techData[tech][key]);
-            }
-            function updateActiveButton(tech) {
-                Object.values(buttons).forEach(btn => btn.classList.remove('active-tech-btn'));
-                buttons[tech].classList.add('active-tech-btn');
-            }
-            Object.keys(buttons).forEach(tech => {
-                buttons[tech].addEventListener('click', () => { currentTech = tech; updateActiveButton(tech); updateContent(tech); });
+            typeButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const typeId = parseInt(button.dataset.typeId);
+                    const typeData = enneagramData.find(t => t.id === typeId);
+                    
+                    // Update active button style
+                    typeButtons.forEach(btn => btn.classList.remove('active'));
+                    button.classList.add('active');
+                    
+                    displayTypeInfo(typeData);
+                });
             });
 
-            const chartSelector = document.getElementById('chart-metric-selector');
-            Object.keys(chartData).forEach(key => {
-                const option = document.createElement('option');
-                option.value = key;
-                option.textContent = chartData[key].label;
-                chartSelector.appendChild(option);
-            });
-
-            const ctx = document.getElementById('comparisonChart').getContext('2d');
-            const comparisonChart = new Chart(ctx, {
-                type: 'bar',
-                data: { labels: ['SMR', 'POX', 'ATR'], datasets: [{ label: chartData.temp.label, data: chartData.temp.data, backgroundColor: chartData.temp.backgroundColor, borderColor: chartData.temp.borderColor, borderWidth: 1 }] },
-                options: {
-                    responsive: true, maintainAspectRatio: false,
-                    plugins: { legend: { display: false } },
-                    scales: { y: { beginAtZero: true, title: { display: true, text: chartData.temp.label, font: { size: 14, weight: 'bold' } } }, x: { ticks: { font: { size: 14, weight: 'bold' } } } }
+            function displayTypeInfo(data) {
+                let wingsHtml = '';
+                for (const wing in data.wings) {
+                    wingsHtml += `<p class="mb-2"><strong class="text-blue-700">${wing}:</strong> ${data.wings[wing]}</p>`;
                 }
-            });
+                
+                let subtypesHtml = data.subtypes.map(st => `
+                    <div class="subtype-card">
+                        <h4 class="font-bold text-lg text-blue-700">${st.name}</h4>
+                        <p class="text-gray-600">${st.description}</p>
+                    </div>
+                `).join('');
 
-            chartSelector.addEventListener('change', (event) => {
-                const selectedMetric = event.target.value;
-                const newChartData = chartData[selectedMetric];
-                comparisonChart.data.datasets[0].label = newChartData.label;
-                comparisonChart.data.datasets[0].data = newChartData.data;
-                comparisonChart.data.datasets[0].backgroundColor = newChartData.backgroundColor;
-                comparisonChart.data.datasets[0].borderColor = newChartData.borderColor;
-                comparisonChart.options.scales.y.title.text = newChartData.label;
-                comparisonChart.update();
-            });
+                const contentHtml = `
+                    <h2 class="text-3xl font-bold text-center mb-1">${data.title}</h2>
+                    <p class="text-center text-gray-500 italic mb-4">"${data.motto}"</p>
+                    <p class="text-center bg-blue-50 text-blue-800 p-2 rounded-md mb-6 font-medium">${data.center}</p>
+                    
+                    <div class="grid md:grid-cols-2 gap-8">
+                        <div>
+                            <div class="content-section">
+                                <h3>แก่นแท้ (Core Essence)</h3>
+                                <p><strong class="text-gray-900">ความปรารถนาพื้นฐาน:</strong> ${data.coreEssence.desire}</p>
+                                <p><strong class="text-gray-900">ความกลัวพื้นฐาน:</strong> ${data.coreEssence.fear}</p>
+                                <p><strong class="text-gray-900">แรงขับเคลื่อนหลัก:</strong> ${data.coreEssence.motivation}</p>
+                            </div>
+        
+                            <div class="content-section">
+                                <h3>ลักษณะเด่น</h3>
+                                <ul>
+                                    ${data.characteristics.map(c => `<li>${c}</li>`).join('')}
+                                </ul>
+                            </div>
+                            
+                            <div class="content-section">
+                                <h3>ข้อดี / ข้อเสีย</h3>
+                                <p><strong class="text-green-600">ข้อดี:</strong> ${data.prosCons.pros}</p>
+                                <p><strong class="text-red-600">ข้อเสีย:</strong> ${data.prosCons.cons}</p>
+                            </div>
+                            
+                        </div>
+                        <div>
+                             <div class="content-section">
+                                <h3>สภาวะที่ดีที่สุด / แย่ที่สุด</h3>
+                                <p><strong class="text-green-600">สภาวะที่ดี (Healthy):</strong> ${data.states.healthy}</p>
+                                <p><strong class="text-red-600">สภาวะที่แย่ (Unhealthy):</strong> ${data.states.unhealthy}</p>
+                            </div>
+                            
+                            <div class="content-section">
+                                <h3>ปีก (Wings)</h3>
+                                ${wingsHtml}
+                            </div>
+        
+                            <div class="content-section">
+                                <h3>ลูกศร (Arrows)</h3>
+                                <p><strong class="text-red-600">ตอนเครียด (Stress) →</strong> ${data.arrows.stress}</p>
+                                <p><strong class="text-green-600">ตอนเติบโต (Growth) →</strong> ${data.arrows.growth}</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="content-section">
+                        <h3>สัญชาตญาณย่อย (Subtypes)</h3>
+                        ${subtypesHtml}
+                    </div>
 
-            updateActiveButton(currentTech);
-            updateContent(currentTech);
+                    <div class="content-section">
+                        <h3>เส้นทางการเติบโต</h3>
+                        <ul>
+                            ${data.growthPath.map(p => `<li>${p}</li>`).join('')}
+                        </ul>
+                    </div>
+
+                    <div class="content-section">
+                        <h3>บทสรุป</h3>
+                        <p class="text-lg leading-relaxed">${data.summary}</p>
+                    </div>
+                `;
+                typeDisplay.innerHTML = contentHtml;
+                typeDisplay.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+
         });
     </script>
 </body>
 </html>
-
 
