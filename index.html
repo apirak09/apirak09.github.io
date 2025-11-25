@@ -1,374 +1,272 @@
 <!DOCTYPE html>
-<html lang="th">
+
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hello November Nymph!</title>
-    <!-- โหลดฟอนต์ภาษาไทย Kanit จาก Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500&display=swap" rel="stylesheet">
+    <title>Heart Function</title>
     <style>
-        /* รีเซ็ตค่าเริ่มต้นของเบราว์เซอร์ */
-        body, html {
+        * {
             margin: 0;
             padding: 0;
-            height: 100%;
-            width: 100%;
-            overflow: hidden; /* ซ่อน scrollbar */
-            font-family: 'Kanit', sans-serif;
-            cursor: crosshair;
+            box-sizing: border-box;
         }
 
-        body {
-            /* --- [อัปเดต] --- */
-            /* ธีมไล่สี ท้องฟ้ายามค่ำคืนที่มืดมาก ไปหาสีน้ำเงินเข้ม (แม่น้ำ) */
-            background: linear-gradient(to bottom, #020111 0%, #191970 60%, #000033 100%);
-            color: #333;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            position: relative; 
+```
+    body {
+        font-family: 'Georgia', serif;
+        background: linear-gradient(135deg, #ffc4d6 0%, #ffb3c6 50%, #ff9ab5 100%);
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+    }
+    
+    .container {
+        background: rgba(255, 255, 255, 0.95);
+        border-radius: 30px;
+        padding: 40px;
+        box-shadow: 0 20px 60px rgba(255, 105, 180, 0.4);
+        max-width: 900px;
+        width: 100%;
+    }
+    
+    h1 {
+        text-align: center;
+        color: #ff1493;
+        font-size: 2.5em;
+        margin-bottom: 10px;
+        text-shadow: 2px 2px 4px rgba(255, 105, 180, 0.3);
+    }
+    
+    .subtitle {
+        text-align: center;
+        color: #ff69b4;
+        font-size: 1.1em;
+        margin-bottom: 30px;
+        font-style: italic;
+    }
+    
+    canvas {
+        display: block;
+        width: 100%;
+        height: 500px;
+        border-radius: 20px;
+        background: white;
+        box-shadow: inset 0 0 20px rgba(255, 182, 193, 0.3);
+    }
+    
+    .controls {
+        margin-top: 30px;
+        text-align: center;
+    }
+    
+    .info {
+        background: linear-gradient(135deg, #ffe4e9 0%, #ffd4e0 100%);
+        padding: 20px;
+        border-radius: 15px;
+        margin-top: 20px;
+        border: 2px solid #ffb6c1;
+    }
+    
+    .info p {
+        color: #c71585;
+        font-size: 1.1em;
+        margin: 5px 0;
+    }
+    
+    .value {
+        font-weight: bold;
+        color: #ff1493;
+        font-size: 1.3em;
+    }
+    
+    .hearts {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        overflow: hidden;
+        z-index: -1;
+    }
+    
+    .heart {
+        position: absolute;
+        font-size: 30px;
+        color: rgba(255, 105, 180, 0.3);
+        animation: float 15s infinite;
+    }
+    
+    @keyframes float {
+        0% {
+            transform: translateY(100vh) rotate(0deg);
+            opacity: 0;
         }
-
-        /* --- [ลูกเล่นใหม่] --- */
-        /* ดวงดาว */
-        .star {
-            position: absolute;
-            background: white;
-            border-radius: 50%;
-            pointer-events: none;
-            z-index: 0; /* อยู่หลังสุด */
-            animation: twinkle 2s ease-in-out infinite alternate;
-        }
-
-        /* พระจันทร์ */
-        .moon {
-            position: absolute;
-            top: 10%;
-            right: 12%;
-            width: 70px;
-            height: 70px;
-            background: #f0f0e0;
-            border-radius: 50%;
-            box-shadow: 0 0 20px #fff, 0 0 30px #fff, 0 0 50px #f0e68c;
-            z-index: 0; 
-        }
-
-        .container {
-            /* กล่องข้อความตรงกลาง */
-            z-index: 2; /* อยู่หน้าหัวใจและดวงจันทร์ */
-            background-color: rgba(255, 255, 255, 0.7); 
-            padding: 2.5em 3.5em;
-            border-radius: 20px;
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
-            backdrop-filter: blur(10px); 
-            -webkit-backdrop-filter: blur(10px); 
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            animation: float-container 6s ease-in-out infinite;
-        }
-
-        h1 {
-            font-size: 3em;
-            margin-bottom: 0.2em;
-            font-weight: 500;
-            /* --- [อัปเดต] --- */
-            color: #ffffff; /* เปลี่ยนเป็นสีขาว */
-            animation: pulse-glow-dark 3s ease-in-out infinite;
-        }
-
-        p {
-            font-size: 1.5em;
-            font-weight: 300;
-            /* --- [อัปเดต] --- */
-            color: #f0f0f0; /* เปลี่ยนเป็นสีขาวนวล */
-            margin-top: 0;
-            animation: pulse-glow-dark 3s ease-in-out 0.5s infinite;
-        }
-
-        /* ----- ส่วนของเอฟเฟกต์หัวใจ ----- */
-        /* (หัวใจสีขาวจะดูเด่นขึ้นบนพื้นหลังมืด) */
-        .heart {
-            position: absolute;
-            top: -10vh; 
-            font-size: 1.5rem; 
-            color: rgba(255, 255, 255, 0.8);
-            pointer-events: none; 
-            z-index: 1; 
-            text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
-            animation: fall-and-sway linear infinite;
-        }
-
-        /* ประกายไฟตามเมาส์ */
-        .sparkle {
-            position: absolute;
-            background: white;
-            border-radius: 50%;
-            width: 6px;
-            height: 6px;
-            pointer-events: none;
-            z-index: 4; /* อยู่หน้าสุด */
+        10% {
             opacity: 1;
-            box-shadow: 0 0 10px #fff, 0 0 15px #fff;
-            animation: sparkle-fade 0.8s ease-out forwards;
         }
-
-        /* Container สำหรับแม่น้ำและกระทง */
-        .river-container {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: 25%; /* ความสูงของแม่น้ำ */
-            z-index: 3; /* อยู่หน้ากล่องข้อความ */
-            pointer-events: none; 
-            overflow: hidden; 
+        90% {
+            opacity: 1;
         }
-
-        /* สไตล์ของกระทง */
-        .krathong {
-            --scale: 1; 
-            position: absolute;
-            width: 40px;
-            height: 20px;
-            background-color: #2a6f2a; 
-            border-radius: 50% / 100%; 
-            border: 2px solid #1a431a;
-            animation-iteration-count: 1; /* --- [แก้ไข] --- เปลี่ยนเป็น 1 (เดี๋ยว JS จัดการ) */
-            animation-timing-function: linear;
-            box-shadow: 0 5px 15px rgba(255, 255, 150, 0.2);
-            transform: scale(var(--scale));
+        100% {
+            transform: translateY(-100px) rotate(360deg);
+            opacity: 0;
         }
+    }
+</style>
+```
 
-        /* เปลวเทียน */
-        .krathong::before {
-            content: '';
-            position: absolute;
-            width: 5px;
-            height: 10px;
-            background-color: #ffdd00; 
-            border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%; 
-            left: 50%;
-            top: -8px;
-            transform: translateX(-50%);
-            box-shadow: 0 0 5px #fff, 0 0 8px #ffdd00, 0 0 10px #ffaa00;
-            animation: flame-flicker 1.5s ease-in-out infinite alternate;
-        }
-
-        /* ----- Keyframes (ส่วนกำหนดการเคลื่อนไหว) ----- */
-
-        @keyframes fall-and-sway {
-            0% { transform: translateY(0) translateX(0) rotate(0deg); opacity: 1; }
-            100% { transform: translateY(110vh) translateX(-30px) rotate(360deg); opacity: 0; }
-        }
-
-        @keyframes float-container {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-15px); }
-        }
-
-        /* --- [อัปเดต] --- */
-        /* Animation ข้อความเรืองแสง (สำหรับพื้นหลังมืด) */
-        @keyframes pulse-glow-dark {
-            0%, 100% { text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7); }
-            50% { text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7), 0 0 15px rgba(255, 255, 255, 0.8); }
-        }
-
-        @keyframes sparkle-fade {
-            0% { transform: scale(1); opacity: 1; }
-            100% { transform: scale(0); opacity: 0; }
-        }
-
-        @keyframes flame-flicker {
-            0% { transform: translateX(-50%) scale(1, 1); opacity: 1; }
-            50% { transform: translateX(-40%) scale(0.9, 1.1); opacity: 0.8; }
-            100% { transform: translateX(-50%) scale(1.1, 0.9); opacity: 1; }
-        }
-
-        /* Animation กระทงลอยจากซ้ายไปขวา */
-        @keyframes float-L-to-R {
-            0% { transform: translateX(-10vw) scale(var(--scale)) rotate(-3deg); }
-            50% { transform: translateX(55vw) scale(var(--scale)) rotate(3deg); }
-            100% { transform: translateX(110vw) scale(var(--scale)) rotate(-3deg); }
-        }
-        
-        /* Animation กระทงลอยจากขวาไปซ้าย */
-        @keyframes float-R-to-L {
-            0% { transform: translateX(110vw) scale(var(--scale)) rotate(3deg); }
-            50% { transform: translateX(45vw) scale(var(--scale)) rotate(-3deg); }
-            100% { transform: translateX(-10vw) scale(var(--scale)) rotate(3deg); }
-        }
-
-        /* --- [ลูกเล่นใหม่] --- */
-        /* Animation ดาววิบวับ */
-        @keyframes twinkle {
-            from { opacity: 0.2; box-shadow: 0 0 3px #fff; }
-            to { opacity: 1; box-shadow: 0 0 7px #fff; }
-        }
-
-
-        /* ทำให้รองรับหน้าจอมือถือ */
-        @media (max-width: 600px) {
-            .container { padding: 2em 1.5em; width: 90%; }
-            h1 { font-size: 2.2em; }
-            p { font-size: 1.2em; }
-            .moon { width: 50px; height: 50px; top: 8%; right: 10%; }
-        }
-    </style>
 </head>
 <body>
+    <div class="hearts" id="hearts"></div>
 
-    <!-- [ใหม่] ดวงจันทร์ -->
-    <div class="moon"></div>
-
-    <!-- กล่องข้อความหลัก -->
-    <div class="container">
-        <h1>Hello November Nymph</h1>
-        <p>ขอให้เดือนพฤศจิกายนนี้ เป็นเดือนที่ดีสำหรับนิ้มนะ ♡</p>
+```
+<div class="container">
+    <h1>💕 Heart Function 💕</h1>
+    <p class="subtitle">f(x) = x²/³ + √(3-x²) · 0.9sin(ax)</p>
+    
+    <canvas id="heartCanvas"></canvas>
+    
+    <div class="info">
+        <p>Parameter: <span class="value" id="aValue">a = 0.00</span></p>
+        <p>Animating from 0 to 1000...</p>
     </div>
+</div>
 
-    <!-- Container สำหรับแม่น้ำ -->
-    <div class="river-container" id="river-container">
-        <!-- กระทงจะถูกสร้างโดย JavaScript ที่นี่ -->
-    </div>
-
-
-    <!-- Script สำหรับสร้างเอฟเฟกต์ -->
-    <script>
+<script>
+    const canvas = document.getElementById('heartCanvas');
+    const ctx = canvas.getContext('2d');
+    const aValueDisplay = document.getElementById('aValue');
+    
+    // Set canvas size
+    canvas.width = canvas.offsetWidth;
+    canvas.height = canvas.offsetHeight;
+    
+    let a = 0;
+    const maxA = 1000;
+    const animationSpeed = 0.5; // Slow animation
+    
+    // Create floating hearts
+    function createFloatingHearts() {
+        const heartsContainer = document.getElementById('hearts');
+        for (let i = 0; i < 15; i++) {
+            const heart = document.createElement('div');
+            heart.className = 'heart';
+            heart.innerHTML = '💖';
+            heart.style.left = Math.random() * 100 + '%';
+            heart.style.animationDelay = Math.random() * 15 + 's';
+            heart.style.animationDuration = (15 + Math.random() * 10) + 's';
+            heartsContainer.appendChild(heart);
+        }
+    }
+    
+    // Heart function
+    function heartFunction(x, a) {
+        const term1 = Math.pow(Math.abs(x), 2/3);
+        const term2 = Math.sqrt(Math.max(0, 3 - x * x)) * 0.9 * Math.sin(a * x);
+        return term1 + term2;
+    }
+    
+    // Draw the heart curve
+    function drawHeart() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
         
-        // ----- 1. [ลูกเล่นใหม่] Script สร้างดวงดาว -----
-        function createStar() {
-            const star = document.createElement('div');
-            star.classList.add('star');
-            const size = Math.random() * 2 + 1; // ขนาด 1px - 3px
-            star.style.width = size + 'px';
-            star.style.height = size + 'px';
-            star.style.left = Math.random() * 100 + 'vw'; // สุ่มแนวนอน
-            star.style.top = Math.random() * 70 + 'vh'; // สุ่มแนวตั้ง (เฉพาะ 70% บนของจอ)
-            star.style.animationDuration = (Math.random() * 3 + 1) + 's'; // สุ่มความเร็ววิบวับ
-            document.body.appendChild(star);
-        }
-        // สร้างดาว 150 ดวงตอนโหลด
-        for (let i = 0; i < 150; i++) {
-            createStar();
-        }
-
-
-        // ----- 2. Script สร้างหัวใจ -----
-        function createHeart() {
-            try {
-                const heart = document.createElement('div');
-                heart.classList.add('heart');
-                heart.style.left = Math.random() * 100 + 'vw';
-                const duration = (Math.random() * 5 + 7) + 's'; 
-                heart.style.animationDuration = duration;
-                heart.style.fontSize = (Math.random() * 1.5 + 1) + 'rem';
-                heart.style.animationDelay = Math.random() * 7 + 's';
-                heart.innerText = Math.random() > 0.5 ? '♡' : '♥'; 
-                document.body.appendChild(heart);
-
-                const totalTime = (parseFloat(duration) + parseFloat(heart.style.animationDelay || '0')) * 1000;
-                
-                setTimeout(() => {
-                    if (heart && heart.parentNode) {
-                        heart.parentNode.removeChild(heart);
-                    }
-                }, totalTime + 1000); 
-
-            } catch (error) {
-                console.error("Error creating heart:", error);
-            }
-        }
-        setInterval(createHeart, 400); // สร้างหัวใจเรื่อยๆ
-
-
-        // ----- 3. Script สร้างประกายไฟตามเมาส์ -----
-        function createSparkle(x, y) {
-            const sparkle = document.createElement('div');
-            sparkle.classList.add('sparkle');
-            const offsetX = (Math.random() - 0.5) * 20;
-            const offsetY = (Math.random() - 0.5) * 20;
-            sparkle.style.left = (x + offsetX) + 'px';
-            sparkle.style.top = (y + offsetY) + 'px';
-            const size = Math.random() * 4 + 2;
-            sparkle.style.width = size + 'px';
-            sparkle.style.height = size + 'px';
-            sparkle.style.animationDuration = (Math.random() * 0.5 + 0.5) + 's';
-            document.body.appendChild(sparkle);
-            setTimeout(() => {
-                if (sparkle && sparkle.parentNode) {
-                    sparkle.parentNode.removeChild(sparkle);
-                }
-            }, 1000);
-        }
-
-        let isThrottled = false;
-        document.addEventListener('mousemove', (e) => {
-            if (!isThrottled) {
-                createSparkle(e.pageX, e.pageY);
-                isThrottled = true;
-                setTimeout(() => { isThrottled = false; }, 50);
-            }
-        });
-        document.addEventListener('touchmove', (e) => {
-            if (!isThrottled) {
-                const touch = e.touches[0];
-                createSparkle(touch.pageX, touch.pageY);
-                isThrottled = true;
-                setTimeout(() => { isThrottled = false; }, 50);
-            }
-        });
-
-
-        // ----- 4. [แก้ไข] Script สร้างกระทงลอยน้ำ -----
+        // Set up scaling
+        const centerX = canvas.width / 2;
+        const centerY = canvas.height / 2;
+        const scale = canvas.width / 6;
         
-        const river = document.getElementById('river-container');
-
-        function createKrathong() {
-            try {
-                const krathong = document.createElement('div');
-                krathong.classList.add('krathong');
-                
-                const scale = Math.random() * 0.6 + 0.6; 
-                krathong.style.setProperty('--scale', scale);
-                
-                krathong.style.top = (Math.random() * 75) + 5 + '%'; 
-                
-                const duration = Math.random() * 20 + 20; // 20-40 วินาที
-                krathong.style.animationDuration = duration + 's';
-                
-                // --- [แก้ไข] --- ลด Delay เริ่มต้นลง
-                const delay = Math.random() * 5; // 0-5 วินาที
-                krathong.style.animationDelay = delay + 's';
-                
-                if (Math.random() > 0.5) {
-                    krathong.style.animationName = 'float-L-to-R';
-                } else {
-                    krathong.style.animationName = 'float-R-to-L';
-                }
-                
-                river.appendChild(krathong);
-
-                // --- [สำคัญมาก] ---
-                // ตั้งเวลาลบกระทงออกจาก DOM หลังจากลอยเสร็จ
-                const totalTime = (duration + delay) * 1000;
-                setTimeout(() => {
-                    if (krathong && krathong.parentNode) {
-                        krathong.parentNode.removeChild(krathong);
-                    }
-                }, totalTime + 1000); // บวก 1 วิ เผื่อ
-
-            } catch (error) {
-                console.error("Error creating krathong:", error);
+        // Draw grid (light pink)
+        ctx.strokeStyle = '#ffe4e9';
+        ctx.lineWidth = 1;
+        
+        // Vertical lines
+        for (let i = -3; i <= 3; i++) {
+            ctx.beginPath();
+            ctx.moveTo(centerX + i * scale, 0);
+            ctx.lineTo(centerX + i * scale, canvas.height);
+            ctx.stroke();
+        }
+        
+        // Horizontal lines
+        for (let i = -3; i <= 3; i++) {
+            ctx.beginPath();
+            ctx.moveTo(0, centerY - i * scale);
+            ctx.lineTo(canvas.width, centerY - i * scale);
+            ctx.stroke();
+        }
+        
+        // Draw axes
+        ctx.strokeStyle = '#ffb6c1';
+        ctx.lineWidth = 2;
+        
+        ctx.beginPath();
+        ctx.moveTo(0, centerY);
+        ctx.lineTo(canvas.width, centerY);
+        ctx.stroke();
+        
+        ctx.beginPath();
+        ctx.moveTo(centerX, 0);
+        ctx.lineTo(centerX, canvas.height);
+        ctx.stroke();
+        
+        // Draw the heart curve (single side only)
+        ctx.strokeStyle = '#ff1493';
+        ctx.lineWidth = 3;
+        ctx.beginPath();
+        
+        let firstPoint = true;
+        for (let x = -1.8; x <= 1.8; x += 0.01) {
+            const y = heartFunction(x, a);
+            const canvasX = centerX + x * scale;
+            const canvasY = centerY - y * scale;
+            
+            if (firstPoint) {
+                ctx.moveTo(canvasX, canvasY);
+                firstPoint = false;
+            } else {
+                ctx.lineTo(canvasX, canvasY);
             }
         }
-
-        // --- [แก้ไข] ---
-        // สร้างกระทงใหม่ทุก 0.7 วินาที เพื่อให้ "เต็ม" ตลอด
-        setInterval(createKrathong, 700);
-
-    </script>
+        ctx.stroke();
+        
+        // Add gradient fill
+        const gradient = ctx.createRadialGradient(centerX, centerY, 0, centerX, centerY, scale * 2);
+        gradient.addColorStop(0, 'rgba(255, 182, 193, 0.3)');
+        gradient.addColorStop(1, 'rgba(255, 20, 147, 0.1)');
+        ctx.fillStyle = gradient;
+        ctx.fill();
+    }
+    
+    // Animation loop
+    function animate() {
+        drawHeart();
+        aValueDisplay.textContent = `a = ${a.toFixed(2)}`;
+        
+        a += animationSpeed;
+        
+        if (a > maxA) {
+            a = 0; // Loop animation
+        }
+        
+        requestAnimationFrame(animate);
+    }
+    
+    // Initialize
+    createFloatingHearts();
+    animate();
+    
+    // Handle window resize
+    window.addEventListener('resize', () => {
+        canvas.width = canvas.offsetWidth;
+        canvas.height = canvas.offsetHeight;
+    });
+</script>
+```
 
 </body>
 </html>
-
-
