@@ -1,586 +1,668 @@
 <!DOCTYPE html>
-<html lang="th">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Jack & Nymph: Christmas Date 🎄✨</title>
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;600&family=Mali:wght@400;500;700&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jack & Nymph Anniversary</title>
+    
+    <!-- Google Fonts: 'Dancing Script' for headers, 'Prompt' for body text -->
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Prompt:wght@300;400;600&display=swap" rel="stylesheet">
 
     <style>
-        /* --- 1. Global & Backgrounds --- */
+        /* --- CSS VARIABLES (Easy to change colors here) --- */
+        :root {
+            --bg-color: #1a0b14;        /* Dark romantic background */
+            --primary-color: #ff4d6d;   /* Hot pink */
+            --secondary-color: #ff8fa3; /* Soft pink */
+            --text-color: #fff0f3;      /* Off-white text */
+            --gold-color: #ffd700;      /* For coupons */
+            --grid-size: 300px;         /* Size of the photo game */
+        }
+
+        /* --- GLOBAL STYLES --- */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
         body {
-            font-family: 'Kanit', sans-serif;
-            background: linear-gradient(120deg, #fdfbfb 0%, #ebedee 100%);
-            overflow: hidden;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Prompt', sans-serif;
+            overflow-x: hidden;
+            text-align: center;
+            min-height: 100vh;
+        }
+
+        h1, h2, h3 {
+            font-family: 'Dancing Script', cursive;
+        }
+
+        /* --- UTILITIES --- */
+        .hidden {
+            display: none !important;
+        }
+
+        .fade-in {
+            animation: fadeIn 2s ease-in forwards;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* --- PHASE 1: LANDING (GIFT BOX) --- */
+        #phase-1 {
             height: 100vh;
-            width: 100vw;
-            color: #4a4a4a;
-        }
-
-        .handwritten {
-            font-family: 'Mali', cursive;
-        }
-
-        /* --- 2. Map Area Styles --- */
-        .map-area {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
             position: relative;
-            background-color: #f1f5f9; /* Slate 100 */
-            /* Creative Road Pattern */
-            background-image: 
-                linear-gradient(#fff 4px, transparent 4px),
-                linear-gradient(90deg, #fff 4px, transparent 4px);
-            background-size: 80px 80px;
-            background-position: -2px -2px;
+            z-index: 10;
+        }
+
+        .gift-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 5rem;
+            animation: pulse 1.5s infinite;
+            filter: drop-shadow(0 0 15px var(--primary-color));
+        }
+
+        .tap-text {
+            margin-top: 20px;
+            font-size: 1.2rem;
+            color: var(--secondary-color);
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
+            40% {transform: translateY(-10px);}
+            60% {transform: translateY(-5px);}
+        }
+
+        /* --- PHASE 2: FIREWORKS CANVAS --- */
+        #fireworks-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none; /* Let clicks pass through */
+            z-index: 5;
+        }
+
+        /* --- PHASE 3: CONTENT (TIMER) --- */
+        #phase-3 {
+            padding: 40px 20px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative; /* Added for z-index */
+            z-index: 20;        /* Ensure content is ABOVE the fireworks */
+        }
+
+        .header-title {
+            font-size: 3.5rem;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+            text-shadow: 0 0 10px rgba(255, 77, 109, 0.5);
+        }
+
+        .sub-title {
+            font-size: 1.2rem;
+            margin-bottom: 40px;
+            color: var(--secondary-color);
+        }
+
+        /* Timer Container */
+        .timer-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 50px;
+        }
+
+        .time-box {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(5px);
+            padding: 15px;
+            border-radius: 10px;
+            min-width: 80px;
+            border: 1px solid var(--primary-color);
+        }
+
+        .time-val {
+            font-size: 2rem;
+            font-weight: 600;
+            display: block;
+            color: #fff;
+        }
+
+        .time-label {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            color: var(--secondary-color);
+        }
+
+        /* --- PHASE 4: PHOTO GAME --- */
+        .game-section {
+            margin: 30px 0;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .instruction {
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+        }
+
+        .photo-grid {
+            width: var(--grid-size);
+            height: var(--grid-size);
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: repeat(3, 1fr);
+            position: relative;
+            /* ใส่รูปตรงนี้ครับ (ถ้าลิงก์ Google ไม่ขึ้น ให้เปลี่ยนเป็นชื่อไฟล์ในเครื่องแทน) */
+            background-image: url('https://scontent.fbkk5-7.fna.fbcdn.net/v/t39.30808-6/607259788_25890060020624874_2934357777875612054_n.jpg?_nc_cat=107&ccb=1-7&_nc_sid=127cfc&_nc_eui2=AeHLMdZl1mlF6P-AUqS283Djcj11wrTH_tpyPXXCtMf-2mohjbBHVZZZCuLhxLb7BL1LjOHI5nKbmi4dq6QE3ONV&_nc_ohc=MV1PPdzfs98Q7kNvwHim5pj&_nc_oc=Adn2Fw8hK4_1D6MwAOqeYvK3AYfUidlFsjY2V_ns7cZOmDAkL7KHqP4mdZhClNXY5HdvJoU__aL_Hi-CKNExgRis&_nc_zt=23&_nc_ht=scontent.fbkk5-7.fna&_nc_gid=LM7JNnR7Ruu4i03ZSqteCg&oh=00_AfnTzrg25rMm0W7dkJck2metDpWfcoIkAKTfSdIxhSg0-w&oe=695AEBA7'); 
+            background-size: cover;
+            background-position: center;
+            border-radius: 10px;
             overflow: hidden;
-            transition: all 0.5s ease;
-            box-shadow: inset -5px 0 15px rgba(0,0,0,0.05);
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+            /* Fallback color if image doesn't load */
+            background-color: var(--secondary-color);
         }
 
-        /* Roads */
-        .road {
-            position: absolute;
-            background: #cbd5e1;
-            z-index: 0;
+        .grid-tile {
+            background-color: var(--secondary-color);
+            border: 1px solid rgba(255,255,255,0.5);
+            cursor: pointer;
+            transition: opacity 0.5s ease, transform 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
         }
-        .road-v { width: 12px; height: 100%; top: 0; }
-        .road-h { height: 12px; width: 100%; left: 0; }
 
-        /* Decorative Buildings */
-        .building-block {
-            position: absolute;
-            background: #e2e8f0;
-            border: 2px solid #cbd5e1;
-            border-radius: 4px;
-            box-shadow: 2px 2px 0px #94a3b8;
-            z-index: 0;
+        .grid-tile:active {
+            transform: scale(0.95);
+        }
+
+        .grid-tile.revealed {
+            opacity: 0; /* Makes the div invisible, revealing the bg image */
             pointer-events: none;
         }
-        
-        /* Trees */
-        .map-tree {
-            position: absolute;
-            color: #4ade80;
-            font-size: 1rem;
-            z-index: 1;
-            opacity: 0.8;
-            text-shadow: 1px 1px 0 #166534;
+
+        /* --- PHASE 4.5: POLAROID GALLERY --- */
+        .gallery-title {
+            font-size: 2rem;
+            color: var(--primary-color);
+            margin: 40px 0 20px 0;
+            text-shadow: 0 0 5px rgba(255, 77, 109, 0.5);
         }
 
-        /* SVG Path */
-        .path-svg {
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            z-index: 2; pointer-events: none;
-            filter: drop-shadow(0px 3px 2px rgba(0,0,0,0.1));
-        }
-
-        /* BTS Train Icon Decoration */
-        .bts-decor {
-            position: absolute;
-            font-size: 1.2rem;
-            color: #0ea5e9; /* Sky blue */
-            z-index: 2;
-            animation: trainMove 15s linear infinite;
-        }
-        @keyframes trainMove {
-            0% { left: -10%; top: 10%; opacity: 0; }
-            10% { opacity: 1; }
-            90% { opacity: 1; }
-            100% { left: 110%; top: 10%; opacity: 0; }
-        }
-
-        /* --- 3. Avatar Styles --- */
-        #avatar {
-            position: absolute;
-            width: 55px; height: 55px;
-            background: #fff;
-            border: 3px solid #fff;
-            border-radius: 50%;
+        .gallery-container {
             display: flex;
-            align-items: center; justify-content: center;
-            font-size: 1.8rem;
-            z-index: 20;
-            box-shadow: 0 4px 15px rgba(255, 105, 180, 0.4);
-            transition: top 1.2s cubic-bezier(0.34, 1.56, 0.64, 1), 
-                        left 1.2s cubic-bezier(0.34, 1.56, 0.64, 1);
-            transform: translate(-50%, -50%);
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 40px;
+            padding: 0 10px;
         }
 
-        #avatar::after {
-            content: '';
-            position: absolute;
-            top: -5px; left: -5px; right: -5px; bottom: -5px;
-            border-radius: 50%;
-            border: 2px dashed #ff9a9e;
-            animation: spin 8s linear infinite;
+        .polaroid {
+            background: #fff;
+            padding: 8px 8px 25px 8px; /* Extra bottom padding for classic look */
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+            width: 140px; /* Mobile friendly width */
+            transition: transform 0.3s, z-index 0.3s;
+            position: relative;
+            cursor: pointer; /* Change cursor to pointer */
         }
 
-        @keyframes spin { 100% { transform: rotate(360deg); } }
-        .walking { animation: bounceWalk 0.4s infinite alternate; }
-        @keyframes bounceWalk {
-            0% { transform: translate(-50%, -50%) scale(1); }
-            100% { transform: translate(-50%, -65%) scale(1.05) rotate(5deg); }
+        .polaroid img {
+            width: 100%;
+            height: 140px; /* Square aspect ratio */
+            object-fit: cover;
+            display: block;
         }
 
-        /* --- 4. Landmark Styles --- */
-        .landmark {
-            position: absolute;
-            transform: translate(-50%, -50%);
-            display: flex; flex-direction: column; align-items: center;
-            transition: all 0.3s ease;
-            z-index: 10; cursor: pointer;
+        /* Random rotations for natural feel */
+        .polaroid:nth-child(odd) { transform: rotate(-3deg); }
+        .polaroid:nth-child(even) { transform: rotate(3deg); }
+        .polaroid:nth-child(3n) { transform: rotate(-1deg); }
+        .polaroid:nth-child(4n) { transform: rotate(2deg); }
+
+        .polaroid:hover {
+            transform: scale(1.1) rotate(0deg);
+            z-index: 10;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.5);
         }
 
-        .landmark-icon {
-            width: 42px; height: 42px;
-            background: rgba(255, 255, 255, 0.95);
-            border-radius: 50%;
-            display: flex; align-items: center; justify-content: center;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-            border: 2px solid #e0e7ff;
-            color: #a5b4fc;
-            font-size: 1.1rem;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            z-index: 12;
+        /* --- LIGHTBOX (ZOOM) --- */
+        #lightbox {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 100;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            pointer-events: none; /* Click through when hidden */
+            transition: opacity 0.3s ease;
         }
 
-        .landmark.active .landmark-icon {
-            background: linear-gradient(135deg, #f6d365 0%, #fda085 100%);
-            color: white; border-color: #fff; transform: scale(1.3);
-            box-shadow: 0 0 20px rgba(253, 160, 133, 0.6);
-            animation: pulse 2s infinite;
+        #lightbox.active {
+            opacity: 1;
+            pointer-events: auto;
         }
 
-        .landmark.visited .landmark-icon {
-            background: linear-gradient(120deg, #84fab0 0%, #8fd3f4 100%);
-            color: white; border-color: white;
-        }
-
-        .landmark-label {
-            margin-top: 8px;
-            background: rgba(255,255,255,0.95);
-            padding: 4px 10px;
-            border-radius: 12px;
-            font-size: 0.75rem;
-            font-weight: 600;
-            color: #555;
-            white-space: nowrap;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-            opacity: 0.8;
-            font-family: 'Mali', cursive;
-            z-index: 12;
-        }
-
-        .landmark.active .landmark-label { color: #d946ef; opacity: 1; transform: scale(1.1); }
-        @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(253, 160, 133, 0.7); } 70% { box-shadow: 0 0 0 10px rgba(253, 160, 133, 0); } 100% { box-shadow: 0 0 0 0 rgba(253, 160, 133, 0); } }
-
-        /* --- 5. Info Panel --- */
-        .info-panel {
-            background: rgba(255, 255, 255, 0.9);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            z-index: 30;
-            box-shadow: 0 -10px 30px rgba(0,0,0,0.05);
-            border-radius: 30px 30px 0 0;
-            display: flex; flex-direction: column;
-            border-top: 1px solid rgba(255,255,255,0.8);
+        .polaroid-large {
+            background: #fff;
+            padding: 15px 15px 50px 15px; /* Large Polaroid Padding */
+            max-width: 90%;
+            max-height: 90vh;
+            transform: scale(0.8);
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 0 30px rgba(0,0,0,0.5);
+            border-radius: 4px;
             position: relative;
         }
+
+        #lightbox.active .polaroid-large {
+            transform: scale(1) rotate(-2deg); /* Add slight tilt */
+        }
+
+        .polaroid-large img {
+            max-width: 100%;
+            max-height: 75vh; /* Limit height to fit screen */
+            display: block;
+            object-fit: contain;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 3rem;
+            color: #fff;
+            cursor: pointer;
+            z-index: 101;
+            font-family: sans-serif;
+            text-shadow: 0 0 10px #000;
+        }
+
+        /* --- PHASE 5: COUPONS --- */
+        #final-surprise {
+            margin-top: 50px;
+            width: 100%;
+            max-width: 500px;
+            padding-bottom: 50px;
+        }
+
+        .message-card {
+            background: #fff;
+            color: #333;
+            padding: 30px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            transform: rotate(-2deg);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+        }
+
+        .coupon-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .coupon {
+            background: linear-gradient(45deg, #000, #222);
+            border: 2px dashed var(--gold-color);
+            padding: 15px;
+            border-radius: 8px;
+            color: var(--gold-color);
+            font-family: 'Prompt', sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
         
-        .rainbow-border {
-            position: absolute; top: 0; left: 20px; right: 20px; height: 4px;
-            background: linear-gradient(90deg, #ff9a9e, #fad0c4, #fad0c4, #a18cd1, #fbc2eb);
-            border-radius: 0 0 10px 10px; opacity: 0.7;
+        .coupon-icon {
+            font-size: 1.5rem;
         }
 
-        .fade-in-up { animation: fadeInUp 0.6s ease-out forwards; opacity: 0; transform: translateY(10px); }
-        @keyframes fadeInUp { to { opacity: 1; transform: translateY(0); } }
-
-        /* --- 6. Snow & Buttons --- */
-        .snowflake {
-            position: fixed; top: -20px; color: #fff; text-shadow: 0 0 5px rgba(255,255,255,0.8);
-            pointer-events: none; z-index: 50; animation: fall linear forwards;
-        }
-        @keyframes fall { to { transform: translateY(110vh) rotate(360deg); } }
-
-        .btn-gradient {
-            background-size: 200% auto;
-            background-image: linear-gradient(to right, #ff758c 0%, #ff7eb3 51%, #ff758c 100%);
-            transition: 0.5s;
-        }
-        .btn-gradient:hover { background-position: right center; transform: translateY(-2px); box-shadow: 0 5px 15px rgba(255, 117, 140, 0.4); }
-        .btn-prev { background: #f3f4f6; color: #9ca3af; }
-        .btn-prev:hover:not(:disabled) { background: #e5e7eb; color: #6b7280; }
-
-        /* Responsive Layout */
-        @media (min-width: 768px) {
-            body { display: flex; flex-direction: row; }
-            /* Adjusted Layout: Map 35% */
-            .map-area { width: 35%; flex: none; height: 100vh; border-bottom: none; }
-            .info-panel { flex: 1; height: 100vh; border-radius: 0; border-left: 1px solid rgba(255,255,255,0.5); }
-        }
-        @media (max-width: 767px) {
-            body { display: flex; flex-direction: column; }
-            .map-area { flex: 1; width: 100%; }
-            .info-panel { height: 55vh; width: 100%; }
+        .scroll-hint {
+            margin-top: 20px;
+            font-size: 0.9rem;
+            opacity: 0.7;
+            animation: bounce 2s infinite;
         }
     </style>
 </head>
 <body>
 
-    <!-- Snow Container -->
-    <div id="snow-container"></div>
+    <!-- BACKGROUND AUDIO -->
+    <!-- แนะนำให้โหลดไฟล์ mp3 เพลงที่ต้องการมาวางในโฟลเดอร์เดียวกับไฟล์นี้แล้วตั้งชื่อว่า music.mp3 ครับ -->
+    <audio id="bg-music" loop>
+        <source src="music.mp3" type="audio/mpeg">
+    </audio>
 
-    <!-- MAP SECTION -->
-    <div class="map-area" id="mapContainer">
-        
-        <!-- --- CREATIVE CITY ELEMENTS --- -->
-        <!-- Roads (Vertical) -->
-        <div class="road road-v" style="left: 20%;"></div>
-        <div class="road road-v" style="left: 50%;"></div>
-        <div class="road road-v" style="left: 80%;"></div>
-        <!-- Roads (Horizontal) -->
-        <div class="road road-h" style="top: 25%;"></div>
-        <div class="road road-h" style="top: 55%;"></div>
-        <div class="road road-h" style="top: 85%;"></div>
+    <!-- FIREWORKS CANVAS -->
+    <canvas id="fireworks-canvas"></canvas>
 
-        <!-- Buildings Blocks (Malls & Places) -->
-        <div class="building-block" style="top: 35%; left: 25%; width: 15%; height: 15%; background: #fee2e2;"></div> <!-- MBK Area -->
-        <div class="building-block" style="top: 20%; left: 55%; width: 25%; height: 12%; background: #e0e7ff;"></div> <!-- Siam Area -->
-        <div class="building-block" style="top: 15%; left: 82%; width: 10%; height: 20%; background: #dcfce7;"></div> <!-- CW Area -->
-        <div class="building-block" style="top: 75%; left: 45%; width: 15%; height: 15%; background: #ffedd5;"></div> <!-- Samyan Area -->
-
-        <!-- Decoration Container for dynamic items -->
-        <div id="decorContainer"></div>
-
-        <!-- BTS Train Animation -->
-        <div class="bts-decor"><i class="fa-solid fa-train-subway"></i></div>
-
-        <!-- Path Line -->
-        <svg class="path-svg" viewBox="0 0 100 100" preserveAspectRatio="none">
-            <defs>
-                <linearGradient id="rainbowGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                    <stop offset="0%" style="stop-color:#f6d365;stop-opacity:1" />
-                    <stop offset="50%" style="stop-color:#fda085;stop-opacity:1" />
-                    <stop offset="100%" style="stop-color:#a18cd1;stop-opacity:1" />
-                </linearGradient>
-            </defs>
-            <path id="routePath" d="" stroke="url(#rainbowGradient)" stroke-width="4" stroke-dasharray="8, 6" stroke-linecap="round" fill="none" />
-        </svg>
-
-        <div id="avatar">👫</div>
+    <!-- LIGHTBOX (HIDDEN INITIALLY) -->
+    <div id="lightbox" onclick="closeLightbox()">
+        <span class="close-btn">&times;</span>
+        <div class="polaroid-large" onclick="event.stopPropagation()">
+            <img id="lightbox-img" src="" alt="Zoomed Memory">
+        </div>
     </div>
 
-    <!-- INFO PANEL SECTION -->
-    <div class="info-panel p-6">
-        <div class="rainbow-border"></div>
-        <div class="absolute top-4 right-6 text-3xl animate-bounce" style="animation-duration: 2s;">🎄</div>
+    <!-- PHASE 1: MYSTERY -->
+    <div id="phase-1">
+        <button class="gift-btn" onclick="startCelebration()">🎁</button>
+        <p class="tap-text">Tap to Open Gift</p>
+    </div>
 
-        <!-- Content Area -->
-        <div id="infoContent" class="flex-1 overflow-y-auto pr-2 pt-4">
-            <!-- Content will be here -->
+    <!-- PHASE 3: MAIN CONTENT (Hidden initially) -->
+    <div id="phase-3" class="hidden">
+        
+        <!-- ROMANTIC HEADER -->
+        <h1 class="header-title">Jack ❤️ Nymph</h1>
+        <p class="sub-title">Counting every second since we fell in love.</p>
+
+        <!-- TIMER -->
+        <div class="timer-container">
+            <div class="time-box">
+                <span class="time-val" id="days">0</span>
+                <span class="time-label">Days</span>
+            </div>
+            <div class="time-box">
+                <span class="time-val" id="hours">0</span>
+                <span class="time-label">Hours</span>
+            </div>
+            <div class="time-box">
+                <span class="time-val" id="minutes">0</span>
+                <span class="time-label">Mins</span>
+            </div>
+            <div class="time-box">
+                <span class="time-val" id="seconds">0</span>
+                <span class="time-label">Secs</span>
+            </div>
         </div>
 
-        <!-- Controls -->
-        <div class="mt-4 pt-4 border-t border-gray-100 flex justify-between items-center bg-transparent">
-            <button id="prevBtn" onclick="move(-1)" class="btn-prev w-12 h-12 rounded-full flex items-center justify-center transition shadow-sm disabled:opacity-30 disabled:cursor-not-allowed">
-                <i class="fa-solid fa-arrow-left"></i>
-            </button>
-            
-            <div class="flex flex-col items-center">
-                <span id="stepIndicator" class="text-xs font-bold text-gray-400 tracking-widest font-['Mali']">จุดที่ 1 / 7</span>
-                <div class="flex gap-1.5 mt-2" id="dotsContainer"></div>
+        <p class="scroll-hint">Scroll down for a game 👇</p>
+
+        <!-- PHASE 4: THE GAME -->
+        <div class="game-section">
+            <p class="instruction">Tap the tiles to reveal a memory!</p>
+            <div class="photo-grid" id="photoGrid">
+                <!-- 9 Tiles generated by JS or Hardcoded here -->
+                <div class="grid-tile" onclick="revealTile(this)">❤️</div>
+                <div class="grid-tile" onclick="revealTile(this)">❤️</div>
+                <div class="grid-tile" onclick="revealTile(this)">❤️</div>
+                <div class="grid-tile" onclick="revealTile(this)">❤️</div>
+                <div class="grid-tile" onclick="revealTile(this)">❤️</div>
+                <div class="grid-tile" onclick="revealTile(this)">❤️</div>
+                <div class="grid-tile" onclick="revealTile(this)">❤️</div>
+                <div class="grid-tile" onclick="revealTile(this)">❤️</div>
+                <div class="grid-tile" onclick="revealTile(this)">❤️</div>
+            </div>
+        </div>
+
+        <!-- PHASE 5: FINAL SURPRISE (Hidden until game done) -->
+        <div id="final-surprise" class="hidden">
+            <div class="message-card">
+                <h2>Happy New Year!</h2>
+                <p>You make my world brighter every single day. Here's to many more adventures together.</p>
+                <p style="margin-top:10px; font-weight:bold;">Love, Jack</p>
             </div>
 
-            <button id="nextBtn" onclick="move(1)" class="btn-gradient px-6 py-2.5 rounded-full text-white font-bold shadow-lg flex items-center gap-2 font-['Mali'] transition transform hover:scale-105">
-                <span>ไปต่อ</span> <i class="fa-solid fa-chevron-right text-xs"></i>
-            </button>
+            <!-- NEW: GALLERY SECTION -->
+            <h3 class="gallery-title">Our Sweet Memories</h3>
+            <div class="gallery-container">
+                <!-- ใส่รูปทั้ง 6 รูปตามที่ส่งมาครับ -->
+                <!-- เพิ่ม onclick เพื่อเรียกเปิด Lightbox -->
+                <div class="polaroid" onclick="openLightbox(this.querySelector('img').src)">
+                    <img src="https://scontent.fbkk5-6.fna.fbcdn.net/v/t39.30808-6/608504973_25890105377287005_5098495159301056656_n.webp?stp=dst-jpg_tt6&_nc_cat=102&ccb=1-7&_nc_sid=127cfc&_nc_eui2=AeFM6zmSC-P--VRiwsTTHNBzkMrauZjqrkCQytq5mOquQKFdVgLTke2BFrurZwnCtBJmU4JBKmsiv-yD7bY8EaYP&_nc_ohc=0RyBAVLmYH4Q7kNvwGz_xSQ&_nc_oc=AdmIV5jq6lUV_imL1MweK5FcZ7v7I1-czw3OqJ6S-q-5WKMHGNtvIez0nvPfla1qGlCLtehnD7Z9zmTG8rt50Kkp&_nc_zt=23&_nc_ht=scontent.fbkk5-6.fna&_nc_gid=BRGp36QCgbWKBP09JMhfjQ&oh=00_AfkRVcRrn0SXWmBTZsdv0ZDJkJ_T33xh1U3FhuZ9Eqmr2Q&oe=695AC178" alt="Memory 1">
+                </div>
+                <div class="polaroid" onclick="openLightbox(this.querySelector('img').src)">
+                    <img src="https://scontent.fbkk5-3.fna.fbcdn.net/v/t39.30808-6/603902658_25890105430620333_1252911019668480542_n.jpg?_nc_cat=105&ccb=1-7&_nc_sid=127cfc&_nc_eui2=AeHd72kfXr403IzkdmyuURkbyYv7DljcpQTJi_sOWNylBDaDkf4mDzKbxVkm-lFXHClFOH7eZ_tnWo0vJc1gxHnj&_nc_ohc=t9foykoVcT4Q7kNvwHGORRz&_nc_oc=AdkCOMFVb9X05kgZ8-8kWfzctHbSV5Vx9ne2BOlGdCOSEdtJgXqW7Flz3GncZNdYw7TSGm6p-UfIpnQmyZUH2OcH&_nc_zt=23&_nc_ht=scontent.fbkk5-3.fna&_nc_gid=twu7diwN6A13B32eq6thxw&oh=00_AfnJB3i6evRXRXs0AIw03ggJimy1GXyO2Q7fYJzxKTK5Bg&oe=695AD12D" alt="Memory 2">
+                </div>
+                <div class="polaroid" onclick="openLightbox(this.querySelector('img').src)">
+                    <!-- แก้ไขลิงก์รูปที่ 3 เรียบร้อยครับ -->
+                    <img src="https://scontent.fbkk5-1.fna.fbcdn.net/v/t39.30808-6/603846946_25890105567286986_4530808047179501060_n.jpg?stp=cp6_dst-jpg_tt6&_nc_cat=109&ccb=1-7&_nc_sid=127cfc&_nc_eui2=AeEeVaT16hZVfTXKxtA7dsbK99Ulk_xxuaj31SWT_HG5qL9y0lWRXS1J9P4dLxAlxWAQHKLEiGZ1-sicXVN9-QKi&_nc_ohc=6WFyeSqyrY4Q7kNvwEO4PCc&_nc_oc=Adk7m9M6Zhs0DbxfMqtMRDO8NoL4PbS6IexUxlEFmlzL5PQZ50EwV066pFNFz8vgzArsDPXEctOLTcyp80uVmH-W&_nc_zt=23&_nc_ht=scontent.fbkk5-1.fna&_nc_gid=Yj8_X3XILL3spMifigm5tw&oh=00_Afl8Bw7PTk78vk7EGNnPhG6MKJoodwqTd83HG97rNo2PWQ&oe=695AE93F" alt="Memory 3">
+                </div>
+                <div class="polaroid" onclick="openLightbox(this.querySelector('img').src)">
+                    <img src="https://scontent.fbkk5-4.fna.fbcdn.net/v/t39.30808-6/604672139_25890105493953660_4429082875243709614_n.jpg?stp=cp6_dst-jpg_tt6&_nc_cat=110&ccb=1-7&_nc_sid=127cfc&_nc_eui2=AeF8dMqT_cW--sGefmYXZXiHbXtsJ9c_sIlte2wn1z-widi5U6-U_UKtUNQ4UzpUWmxGbyBsb8Y7sBRqDaeW5xyd&_nc_ohc=4uZKcXoPEYoQ7kNvwFp0voY&_nc_oc=AdmB8R-sXqBEj5Q0GpA6sLRIcyh87ynIdECDNZg4QAA62GWirgi50DRZPWGcSVZbDhAkaKfy0jeutrKVsU6zclr4&_nc_zt=23&_nc_ht=scontent.fbkk5-4.fna&_nc_gid=hYPzdR7ft0LLC25Ihc0CjA&oh=00_Afkz04wY7GPMPUCOtETgjvSc3L6gFOO5BGQkjF7m4i6jtQ&oe=695AEE2A" alt="Memory 4">
+                </div>
+                <div class="polaroid" onclick="openLightbox(this.querySelector('img').src)">
+                    <img src="https://scontent.fbkk5-6.fna.fbcdn.net/v/t39.30808-6/605742515_25890105527286990_8363855017126890039_n.jpg?stp=cp6_dst-jpg_tt6&_nc_cat=101&ccb=1-7&_nc_sid=127cfc&_nc_eui2=AeFu9u0ojSjiHuTaO1orDnwrdcAzZhMp-2V1wDNmEyn7ZUvH84iwlsfPj5M5QM6GEpHMMMfhq2ZsCRNtdw6Q_2Q_&_nc_ohc=_vozGLokUgsQ7kNvwGsmAAj&_nc_oc=Admk23TXy-JWXNN4BVudJDI6f9PizQdwB8nwz-uPQl-cpuwmbkYi2LjivPKFkekFMaMJ0cxnFLBUjPqdkwsebls9&_nc_zt=23&_nc_ht=scontent.fbkk5-6.fna&_nc_gid=tOUK6BVnTKQKPEw0qWCrIA&oh=00_AflX_G3e-XrxndyRD0vAEOhzZ_kx_twu0y6QwYylbFhVkA&oe=695AE448" alt="Memory 5">
+                </div>
+                <div class="polaroid" onclick="openLightbox(this.querySelector('img').src)">
+                    <img src="https://scontent.fbkk5-1.fna.fbcdn.net/v/t39.30808-6/603873566_25890105470620329_4760858287554819600_n.jpg?stp=cp6_dst-jpg_tt6&_nc_cat=109&ccb=1-7&_nc_sid=127cfc&_nc_eui2=AeGtozVD_DcatcZyhAOAMxivgLiekPNVkOWAuJ6Q81WQ5TrBvsFKd43EHmH84M9Fq7V_YFN1Pd1xirVKuHXjwzQb&_nc_ohc=NsYk3ZXixn4Q7kNvwEyaZQX&_nc_oc=Adm0wM3TOtAFWGgJhUOMGtEm_9cfwQ2sH7V_YnhH3O_fDgY0POvFJhsGsDAGdWu02YWROYm9bLkbiggxiUOzG7ep&_nc_zt=23&_nc_ht=scontent.fbkk5-1.fna&_nc_gid=s2p9pW-Dffy30AybmR3hrQ&oh=00_AfkgeJ7--zV9TS3FWPCFfXWr8b7qlW4RfWR-_breDePV0w&oe=695AE73F" alt="Memory 6">
+                </div>
+            </div>
+
+            <h3>Your Love Coupons</h3>
+            <ul class="coupon-list">
+                <li class="coupon">
+                    <span>Free Hug (Unlimited)</span>
+                    <span class="coupon-icon">🤗</span>
+                </li>
+                <li class="coupon">
+                    <span>Romantic Dinner Date</span>
+                    <span class="coupon-icon">🍷</span>
+                </li>
+                <li class="coupon">
+                    <span>Trip to Japan</span>
+                    <span class="coupon-icon">✈️</span>
+                </li>
+            </ul>
         </div>
+
     </div>
 
     <script>
-        // --- DATA: Storytelling Content & IMAGES ---
-        const steps = [
-            {
-                id: 'start',
-                title: "จุดเริ่มต้น 💖",
-                time: "10:00",
-                desc: "เช้าวันคริสต์มาสเริ่มต้นที่นี่!\nนิ้มเดินทางมาถึง **BTS อนุสาวรีย์ฯ**\nเจอกันแล้ว จับมือกันให้แน่น ๆ นะ 👫\n\n🎨 **Color Hunt Start:** เริ่มมองหาของสีที่เลือกไว้ได้เลย!",
-                icon: "fa-train-subway",
-                x: 15, y: 15,
-                color: "text-indigo-500",
-                emoji: "🚆",
-                link: "https://www.instagram.com/reel/DP3QZ8pD9Y4/",
-                linkText: "Instagram Reels",
-                image: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0e/Bangkok_BTS_Skytrain_EMU-B1%2C_Phaya_Thai_%2820240701%29_%2854221639857%29_%28cropped%29.jpg/500px-Bangkok_BTS_Skytrain_EMU-B1%2C_Phaya_Thai_%2820240701%29_%2854221639857%29_%28cropped%29.jpg" 
-            },
-            {
-                id: 'mbk',
-                title: "กินข้าว @MBK",
-                time: "10:20 - 11:30",
-                desc: "✨ **Activity Checklist:**\n\n🍜 แวะกินข้าวเช้าที่ **ฮะจิบัง ราเมน**\n👕 พาแจ๊คไปเลือกเสื้อที่ **GQ**\n\n🎨 **Color Hunt:** อย่าลืมมองหาของสีตัวเองนะ!",
-                icon: "fa-palette",
-                x: 30, y: 40,
-                color: "text-pink-500",
-                emoji: "🍜",
-                image: "https://scontent.fbkk24-1.fna.fbcdn.net/v/t39.30808-6/591841753_1251035097050059_6289163217136386386_n.jpg?_nc_cat=101&ccb=1-7&_nc_sid=127cfc&_nc_eui2=AeHHDnhI8E8pNgkqWechc6M3p1180iG18eenXXzSIbXx5_RUC1sr6YELt9f2Dbcr3Oz9619FyLfo0CxLuXGhgwJX&_nc_ohc=VIvqiiUy8qUQ7kNvwGpTRd3&_nc_oc=AdnXhcazVqdqAcjtpZO_USy79fJDq4kFYEw9xP03LOBzTdEr8oBN2JmNAygIXJwAlFZgAAGtuL7g52Rpf9XV9gk6&_nc_zt=23&_nc_ht=scontent.fbkk24-1.fna&_nc_gid=oLcOb8kjYON3DExzDUndrg&oh=00_AfkZJ30mn-A-uXY5cTX_SVwVnXCugME8FNpHq92GdziZ3Q&oe=6951DC17"
-            },
-            {
-                id: 'siam',
-                title: "เดินชิลล์แอร์ฉ่ำ @Siam Discovery & Siam Center",
-                time: "11:30 - 12:30",
-                desc: "🎯 **Mission:** ตามหาผ้าเช็ดตัวที่ **Beverly Hills Polo Club**\n📸 แวะถ่ายรูปมุมสวย ๆ เก็บแต้ม Color Hunt กัน!",
-                icon: "fa-bag-shopping",
-                x: 55, y: 25,
-                color: "text-purple-500",
-                emoji: "🛍️",
-                image: "https://scontent.fbkk24-1.fna.fbcdn.net/v/t1.6435-9/130251911_228876278602774_9144001303891821257_n.jpg?_nc_cat=102&ccb=1-7&_nc_sid=127cfc&_nc_eui2=AeG-Nm8qNVVfBDpzLMkpExo7OtQMrSSk-eI61AytJKT54jWLGB_SwKv2kO0V4u6ErGnKKrR1Jes-9NqRSGB05AGM&_nc_ohc=h_Ve-CBVMf0Q7kNvwHeuUHh&_nc_oc=AdmrqvFPMvwwgE2BzLJWOyECYVymOYwBqwr3pfpxAIV0x7_VrjX3GcD4rF6Fr7FZCJfhAj0QGtGWFVe2ynu7h2Yo&_nc_zt=23&_nc_ht=scontent.fbkk24-1.fna&_nc_gid=SrPrBaCJr2JjcKYTQ_5ewA&oh=00_AfkneHYL1eW3cIGVQHix6gaZhlvOSWr5_AGB1eCLoRY0zA&oe=697384A6"
-            },
-            {
-                id: 'cw',
-                title: "CentralWorld",
-                time: "12:30 - 14:00",
-                desc: "เดิน Skywalk ข้ามมา Central World\n👗 พาไปดูเสื้อผ้าที่ร้าน **CPS** และอื่น ๆ",
-                icon: "fa-star",
-                x: 85, y: 20,
-                color: "text-green-500",
-                emoji: "🎄",
-                image: "https://www.lemon8-app.com/seo/image?item_id=7318007234477507073&index=0&sign=aabd8fee3b94ec6e6d7511008e26dd7b"
-            },
-            {
-                id: 'sealife',
-                title: "Sea Life Bangkok 🐋",
-                time: "14:00 - 16:30",
-                desc: "🦈 เดินลอดอุโมงค์ปลาเหมือนอยู่ในฝัน\n📸 ถ่ายรูปคู่ **Aquarium Date** หวาน ๆ",
-                icon: "fa-fish",
-                x: 85, y: 60,
-                color: "text-blue-500",
-                emoji: "🐠",
-                link: "https://www.instagram.com/reel/C6oUPCASad3/?igsh=MWdqN2JmdG91Z3c1dQ==",
-                linkText: "Instagram Reels",
-                image: "https://product-image.globaltix.com/live-gtImage/5e437bb6-8f2f-4d9c-adee-3abf6cac7aaa"
-            },
-            {
-                id: 'samyan',
-                title: "Kokinaemsae Samyan 🥓",
-                time: "16:30 - 19:00",
-                desc: "มุ่งหน้าสู่สามย่าน ร้าน **Kokinaemsae**\n🥢 บุฟเฟต์ปิ้งย่างเกาหลี ย่างร้อน ๆ ฟิน ๆ\nกินได้ไม่อั้น ไม่จำกัดเวลา",
-                icon: "fa-fire",
-                x: 50, y: 85,
-                color: "text-orange-500",
-                emoji: "🥩",
-                link: "https://www.instagram.com/reel/C_aYI92PhA0/?igsh=MnptYXZsMDRnZWF3",
-                linkText: "Instagram Reels",
-                image: "https://scontent.fbkk24-1.fna.fbcdn.net/v/t39.30808-6/487449280_672188005343382_4954344718016922405_n.jpg?stp=cp6_dst-jpg_tt6&_nc_cat=103&ccb=1-7&_nc_sid=127cfc&_nc_eui2=AeGl22VZJjzh9WBIj7GATLn80Iwm87tPuLnQjCbzu0-4uWcw9e63F4hR9rNB4fl9hvx4iq7_b-9WTVh3A8PLRVp0&_nc_ohc=vVCD6_48vf4Q7kNvwFa6CWs&_nc_oc=Admm1qsi49dbU7VbHvyIOx9OKClytB7jq9sJxCsJMFlkj5ikaXMehxMPjT2DELyKvWEdX4_qkOkyT3PEEdXKG9_r&_nc_zt=23&_nc_ht=scontent.fbkk24-1.fna&_nc_gid=BEbMkxjidyDFPgKclOGZZg&oh=00_AfkRrzMLfcYqICsM66bAI-NIEpniZy3mfdyPq3I2MGLp0g&oe=6951B548"
-            },
-            {
-                id: 'home',
-                title: "กลับ Bangkok Park 🌳",
-                time: "19:00 ++",
-                desc: "กลับไปอนุสาวรีย์ฯ ต่อรถกลับรังสิต\nขอบคุณสำหรับวันที่แสนพิเศษนะ 💕\n🚐 **Note:** รถตู้หมดประมาณ 3 ทุ่ม แต่ถ้ารถตู้หมดก่อน ก็กลับด้วยรถไฟฟ้ากัน",
-                icon: "fa-tree",
-                x: 15, y: 85,
-                color: "text-green-600",
-                emoji: "🍃",
-                image: "https://scontent.fbkk24-1.fna.fbcdn.net/v/t1.6435-9/60892060_2300057706899703_5986836067301457920_n.jpg?_nc_cat=103&ccb=1-7&_nc_sid=127cfc&_nc_eui2=AeEILTL4GbfGTnk004kdP_k3Lj0JSIkHzoMuPQlIiQfOg-6T75erWhyml_WSVc7Phs3Y3qh1SOidvnnaAjlF8cwN&_nc_ohc=RSFrIsHWtEEQ7kNvwGqtf2X&_nc_oc=AdmXtb7OqBQy4vOWQxjergGb0dquwlWgJl325ReiB8fE5h2UebMp_0oM7QfqxoEggvjPBGYMF-Q0mCbdtJ2hovG9&_nc_zt=23&_nc_ht=scontent.fbkk24-1.fna&_nc_gid=GsskLDBWamSaFKp8kaI-qQ&oh=00_Afmwt6TAZzJoUylAcGsuKKWGVhRSxxAYe0_judY4NHDqmA&oe=697375BD"
-            }
-        ];
+        // ================= CONFIGURATION =================
+        // Date Format: Year, Month (0-11), Day, Hour, Minute
+        // Note: Month is 0-indexed (Nov is 10)
+        const START_DATE = new Date(2025, 10, 3, 16, 0, 0); 
 
-        // --- VARS ---
-        let currentStep = 0;
-        const avatar = document.getElementById('avatar');
-        const mapContainer = document.getElementById('mapContainer');
+        // ================= LOGIC =================
         
-        // --- FUNCTION: Add Decoration Trees/Buildings ---
-        function createMapDecor() {
-            const container = document.getElementById('decorContainer');
-            // Add Random Trees
-            for (let i = 0; i < 15; i++) {
-                const tree = document.createElement('i');
-                tree.className = 'fa-solid fa-tree map-tree';
-                tree.style.left = Math.random() * 90 + 5 + '%';
-                tree.style.top = Math.random() * 90 + 5 + '%';
-                tree.style.fontSize = (Math.random() * 10 + 10) + 'px';
-                container.appendChild(tree);
-            }
-            // Add some car icons
-            for (let i = 0; i < 3; i++) {
-                 const car = document.createElement('i');
-                 car.className = 'fa-solid fa-car-side absolute text-gray-400 text-sm';
-                 car.style.left = (20 + i*10) + '%';
-                 car.style.top = '26%'; // On horizontal road
-                 container.appendChild(car);
-            }
-        }
-        
-        // --- INIT ---
-        function init() {
-            // Draw Map Elements
-            steps.forEach((step, index) => {
-                const el = document.createElement('div');
-                el.className = `landmark`;
-                el.style.left = step.x + '%';
-                el.style.top = step.y + '%';
-                el.innerHTML = `
-                    <div class="landmark-icon">
-                        <i class="fa-solid ${step.icon}"></i>
-                    </div>
-                    <div class="landmark-label">${step.id.toUpperCase()}</div>
-                `;
-                el.onclick = () => jumpTo(index);
-                mapContainer.appendChild(el);
-            });
+        let tilesRevealed = 0;
+        const totalTiles = 9;
 
-            // Draw Path
-            let pathD = `M ${steps[0].x} ${steps[0].y}`;
-            steps.forEach((step, index) => {
-                if (index > 0) pathD += ` L ${step.x} ${step.y}`;
-            });
-            document.getElementById('routePath').setAttribute('d', pathD);
-
-            // Create Dots
-            const dotsCont = document.getElementById('dotsContainer');
-            steps.forEach(() => {
-                const dot = document.createElement('div');
-                dot.className = "w-2.5 h-2.5 rounded-full bg-gray-300 transition-all duration-300";
-                dotsCont.appendChild(dot);
-            });
+        // 1. Start Celebration (Phase 1 -> Phase 2 -> Phase 3)
+        function startCelebration() {
+            // Hide Landing
+            document.getElementById('phase-1').classList.add('hidden');
             
-            // Create Decor
-            createMapDecor();
+            // Play Music (Browsers require interaction to play audio)
+            const audio = document.getElementById('bg-music');
+            
+            // ปรับระดับเสียงตรงนี้: 0.2 คือ 20% (เบาๆ คลอๆ)
+            audio.volume = 0.2; 
+            
+            audio.play().catch(e => console.log("Audio requires interaction"));
 
-            updateView();
-            createSnow();
+            // Start Fireworks
+            initFireworks();
+
+            // Wait 3 seconds then show content
+            setTimeout(() => {
+                const phase3 = document.getElementById('phase-3');
+                phase3.classList.remove('hidden');
+                phase3.classList.add('fade-in');
+            }, 3000);
         }
 
-        // --- ACTIONS ---
-        function move(dir) {
-            const next = currentStep + dir;
-            if (next >= 0 && next < steps.length) {
-                currentStep = next;
-                updateView();
+        // 2. Timer Logic
+        function updateTimer() {
+            const now = new Date();
+            const diff = now - START_DATE;
+
+            if (diff < 0) {
+                // If date is in future (debugging purposes)
+                document.getElementById('days').innerText = "0";
+                return;
+            }
+
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+            const minutes = Math.floor((diff / 1000 / 60) % 60);
+            const seconds = Math.floor((diff / 1000) % 60);
+
+            document.getElementById('days').innerText = days;
+            document.getElementById('hours').innerText = hours;
+            document.getElementById('minutes').innerText = minutes;
+            document.getElementById('seconds').innerText = seconds;
+        }
+
+        setInterval(updateTimer, 1000);
+        updateTimer(); // Initial call
+
+        // 3. Grid Reveal Logic
+        function revealTile(element) {
+            if (!element.classList.contains('revealed')) {
+                element.classList.add('revealed');
+                tilesRevealed++;
+
+                // Check if all revealed
+                if (tilesRevealed === totalTiles) {
+                    setTimeout(() => {
+                        const surprise = document.getElementById('final-surprise');
+                        surprise.classList.remove('hidden');
+                        surprise.classList.add('fade-in');
+                        
+                        // Auto scroll to surprise
+                        surprise.scrollIntoView({ behavior: 'smooth' });
+                    }, 800);
+                }
             }
         }
 
-        function jumpTo(index) {
-            currentStep = index;
-            updateView();
+        // 4. Lightbox (Zoom) Logic
+        function openLightbox(src) {
+            const lightbox = document.getElementById('lightbox');
+            const lightboxImg = document.getElementById('lightbox-img');
+            
+            lightboxImg.src = src;
+            lightbox.classList.add('active');
         }
 
-        function updateView() {
-            const step = steps[currentStep];
-
-            // 1. Move Avatar
-            avatar.classList.add('walking');
-            avatar.style.left = step.x + '%';
-            avatar.style.top = step.y + '%';
-            setTimeout(() => avatar.classList.remove('walking'), 1200);
-
-            // 2. Update Landmarks
-            document.querySelectorAll('.landmark').forEach((el, idx) => {
-                el.classList.remove('active', 'visited');
-                if (idx === currentStep) el.classList.add('active');
-                if (idx < currentStep) el.classList.add('visited');
-            });
-
-            // 3. Update Text Content (with Image)
-            const formattedDesc = step.desc.replace(/\*\*(.*?)\*\*/g, '<span class="text-pink-600 font-bold">$1</span>').replace(/\n/g, '<br>');
-            
-            const contentHTML = `
-                <div class="fade-in-up">
-                    <div class="flex items-center gap-2 mb-2">
-                        <span class="px-3 py-1 bg-white border border-pink-100 rounded-full text-xs text-pink-500 font-bold shadow-sm">
-                            <i class="fa-regular fa-clock"></i> ${step.time}
-                        </span>
-                        <span class="text-2xl">${step.emoji}</span>
-                    </div>
-                    
-                    <h1 class="text-2xl md:text-3xl font-bold ${step.color} mb-3 handwritten leading-tight text-transparent bg-clip-text bg-gradient-to-r from-gray-700 to-gray-500">
-                        ${step.title}
-                    </h1>
-
-                    <!-- Photo Card -->
-                    <div class="mb-4 relative group">
-                        <div class="absolute -inset-1 bg-gradient-to-r from-pink-300 to-purple-300 rounded-2xl blur opacity-25 group-hover:opacity-50 transition duration-1000 group-hover:duration-200"></div>
-                        <div class="relative bg-white p-2 rounded-xl shadow-sm border border-gray-100">
-                            <img src="${step.image}" class="w-full aspect-video object-cover rounded-lg" alt="${step.title}">
-                        </div>
-                    </div>
-
-                    <div class="p-4 bg-white/50 rounded-2xl border border-white shadow-sm">
-                        <p class="text-gray-600 leading-relaxed font-light text-sm md:text-base">
-                            ${formattedDesc}
-                        </p>
-                    </div>
-
-                    ${step.link ? `
-                    <a href="${step.link}" target="_blank" class="mt-4 inline-flex items-center gap-2 text-white bg-gradient-to-r from-purple-400 to-pink-400 hover:from-purple-500 hover:to-pink-500 px-5 py-2.5 rounded-xl shadow-md transition transform hover:scale-105 w-full justify-center">
-                        <i class="fa-brands fa-instagram text-xl"></i> 
-                        <span class="font-['Mali']">${step.linkText}</span>
-                    </a>
-                    ` : ''}
-                </div>
-            `;
-            document.getElementById('infoContent').innerHTML = contentHTML;
-
-            // 4. Update Controls with FIXED Logic
-            document.getElementById('prevBtn').disabled = currentStep === 0;
-            const nextBtn = document.getElementById('nextBtn');
-            const nextBtnSpan = nextBtn.querySelector('span');
-
-            // Reset classes to base state
-            nextBtn.className = "px-6 py-2.5 rounded-full text-white font-bold shadow-lg flex items-center gap-2 font-['Mali'] transition transform hover:scale-105";
-            
-            if (currentStep === steps.length - 1) {
-                nextBtnSpan.innerText = 'จบการเดินทาง';
-                // Add Green/Teal Gradient for Finish
-                nextBtn.classList.add('bg-gradient-to-r', 'from-green-400', 'to-teal-500');
-            } else {
-                nextBtnSpan.innerText = 'ไปต่อ';
-                // Add Pink Gradient for Next
-                nextBtn.classList.add('btn-gradient'); 
-            }
-
-            document.getElementById('stepIndicator').innerText = `จุดที่ ${currentStep + 1} / ${steps.length}`;
-
-            // 5. Update Dots
-            const dots = document.getElementById('dotsContainer').children;
-            for (let i = 0; i < dots.length; i++) {
-                dots[i].className = "w-2.5 h-2.5 rounded-full transition-all duration-300 " + 
-                    (i === currentStep ? "bg-gradient-to-r from-pink-500 to-purple-500 w-6" : 
-                     i < currentStep ? "bg-green-400" : "bg-gray-200");
-            }
+        function closeLightbox() {
+            const lightbox = document.getElementById('lightbox');
+            lightbox.classList.remove('active');
         }
 
-        // --- SNOW EFFECT ---
-        function createSnow() {
-            const container = document.getElementById('snow-container');
-            const symbols = ['❄', '✨', '⭐', '🌨️'];
-            
-            setInterval(() => {
-                const snowflake = document.createElement('div');
-                const symbol = symbols[Math.floor(Math.random() * symbols.length)];
-                snowflake.innerText = symbol;
-                snowflake.classList.add('snowflake');
+        // 5. Lightweight Fireworks Engine (Canvas)
+        function initFireworks() {
+            const canvas = document.getElementById('fireworks-canvas');
+            const ctx = canvas.getContext('2d');
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+
+            let particles = [];
+
+            function Particle(x, y, color) {
+                this.x = x;
+                this.y = y;
+                this.color = color;
+                // Random velocity
+                this.vx = (Math.random() - 0.5) * 8;
+                this.vy = (Math.random() - 0.5) * 8;
+                this.alpha = 1;
+                this.friction = 0.96; // Slow down
+                this.gravity = 0.05; // Fall down
+            }
+
+            Particle.prototype.draw = function() {
+                ctx.globalAlpha = this.alpha;
+                ctx.fillStyle = this.color;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, 3, 0, Math.PI * 2);
+                ctx.fill();
+            }
+
+            Particle.prototype.update = function() {
+                this.vx *= this.friction;
+                this.vy *= this.friction;
+                this.vy += this.gravity;
+                this.x += this.vx;
+                this.y += this.vy;
+                this.alpha -= 0.015; // Fade out
+            }
+
+            function createFirework(x, y) {
+                const colors = ['#ff4d6d', '#ffd700', '#ffffff', '#ff8fa3'];
+                const color = colors[Math.floor(Math.random() * colors.length)];
+                for (let i = 0; i < 30; i++) {
+                    particles.push(new Particle(x, y, color));
+                }
+            }
+
+            function animate() {
+                requestAnimationFrame(animate);
                 
-                snowflake.style.left = Math.random() * 100 + 'vw';
-                snowflake.style.fontSize = (Math.random() * 10 + 10) + 'px';
-                snowflake.style.opacity = Math.random() * 0.5 + 0.3;
-                snowflake.style.animationDuration = (Math.random() * 3 + 4) + 's';
+                // --- FIX: Use destination-out to create transparent trails ---
+                // Instead of drawing black on top, we fade out existing pixels
+                ctx.globalCompositeOperation = 'destination-out';
+                ctx.fillStyle = 'rgba(0, 0, 0, 0.1)'; 
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
                 
-                container.appendChild(snowflake);
+                // Reset to draw new particles
+                ctx.globalCompositeOperation = 'source-over'; 
+                // -----------------------------------------------------------
 
-                setTimeout(() => { snowflake.remove(); }, 7000);
-            }, 300);
+                // Update particles
+                particles.forEach((p, index) => {
+                    p.update();
+                    p.draw();
+                    if (p.alpha <= 0) particles.splice(index, 1);
+                });
+
+                // Random explosions
+                if (Math.random() < 0.05) {
+                    createFirework(
+                        Math.random() * canvas.width, 
+                        Math.random() * canvas.height * 0.6 // Top 60% of screen
+                    );
+                }
+            }
+
+            animate();
+            
+            // Resize handler
+            window.addEventListener('resize', () => {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+            });
         }
-
-        window.onload = init;
-
     </script>
 </body>
 </html>
