@@ -53,6 +53,60 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
+        /* --- SHAKE ANIMATION (For uncompleted tasks) --- */
+        @keyframes shake {
+            0% { transform: translate(1px, 1px) rotate(0deg); }
+            10% { transform: translate(-1px, -2px) rotate(-1deg); }
+            20% { transform: translate(-3px, 0px) rotate(1deg); }
+            30% { transform: translate(3px, 2px) rotate(0deg); }
+            40% { transform: translate(1px, -1px) rotate(1deg); }
+            50% { transform: translate(-1px, 2px) rotate(-1deg); }
+            60% { transform: translate(-3px, 1px) rotate(0deg); }
+            70% { transform: translate(3px, 1px) rotate(-1deg); }
+            80% { transform: translate(-1px, -1px) rotate(1deg); }
+            90% { transform: translate(1px, 2px) rotate(0deg); }
+            100% { transform: translate(1px, -2px) rotate(-1deg); }
+        }
+
+        .shake-screen {
+            animation: shake 0.5s;
+            animation-iteration-count: 1;
+        }
+
+        /* --- TOAST NOTIFICATION --- */
+        #toast {
+            visibility: hidden;
+            min-width: 250px;
+            background-color: var(--primary-color);
+            color: #fff;
+            text-align: center;
+            border-radius: 50px;
+            padding: 16px;
+            position: fixed;
+            z-index: 200;
+            left: 50%;
+            bottom: 30px;
+            transform: translateX(-50%);
+            font-size: 1.1rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+            border: 2px solid white;
+        }
+
+        #toast.show {
+            visibility: visible;
+            animation: fadein 0.5s, fadeout 0.5s 2.5s;
+        }
+
+        @keyframes fadein {
+            from {bottom: 0; opacity: 0;}
+            to {bottom: 30px; opacity: 1;}
+        }
+
+        @keyframes fadeout {
+            from {bottom: 30px; opacity: 1;}
+            to {bottom: 0; opacity: 0;}
+        }
+
         /* --- PHASE 1: LANDING (GIFT BOX) --- */
         #phase-1 {
             height: 100vh;
@@ -115,10 +169,12 @@
         }
 
         .header-title {
-            font-size: 3.5rem;
+            /* ปรับขนาด font ลงเพื่อให้พอดีกับจอมือถือ */
+            font-size: 2.5rem; 
             color: var(--primary-color);
             margin-bottom: 10px;
             text-shadow: 0 0 10px rgba(255, 77, 109, 0.5);
+            line-height: 1.2;
         }
 
         .sub-title {
@@ -313,7 +369,7 @@
             text-shadow: 0 0 10px #000;
         }
 
-        /* --- PHASE 5: COUPONS --- */
+        /* --- PHASE 5: BUCKET LIST (REPLACED COUPONS) --- */
         #final-surprise {
             margin-top: 50px;
             width: 100%;
@@ -331,27 +387,57 @@
             box-shadow: 0 10px 20px rgba(0,0,0,0.3);
         }
 
-        .coupon-list {
+        /* New Bucket List Styles */
+        .bucket-list {
             list-style: none;
             display: flex;
             flex-direction: column;
             gap: 15px;
+            text-align: left;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            border: 2px dashed var(--secondary-color);
         }
 
-        .coupon {
-            background: linear-gradient(45deg, #000, #222);
-            border: 2px dashed var(--gold-color);
-            padding: 15px;
-            border-radius: 8px;
-            color: var(--gold-color);
-            font-family: 'Prompt', sans-serif;
+        .bucket-item {
+            font-size: 1.2rem;
+            color: var(--text-color);
             display: flex;
             align-items: center;
-            justify-content: space-between;
+            gap: 15px;
+            padding: 10px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 8px;
+            transition: transform 0.2s;
+            cursor: pointer; /* เพิ่ม cursor pointer */
+        }
+
+        .bucket-item:hover {
+            transform: translateX(5px);
+            background: rgba(0, 0, 0, 0.5);
+        }
+
+        .check-box {
+            width: 24px;
+            height: 24px;
+            border: 2px solid var(--primary-color);
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: transparent;
+        }
+
+        /* Mock Checked State */
+        .bucket-item.checked .check-box {
+            background-color: var(--primary-color);
+            color: white;
         }
         
-        .coupon-icon {
-            font-size: 1.5rem;
+        .bucket-item.checked span {
+            text-decoration: line-through;
+            opacity: 0.7;
         }
 
         .scroll-hint {
@@ -380,6 +466,9 @@
             <img id="lightbox-img" src="" alt="Zoomed Memory">
         </div>
     </div>
+
+    <!-- TOAST MESSAGE -->
+    <div id="toast">Not accomplished yet! 😜</div>
 
     <!-- PHASE 1: MYSTERY -->
     <div id="phase-1">
@@ -437,8 +526,10 @@
         <div id="final-surprise" class="hidden">
             <div class="message-card">
                 <h2>Happy New Year!</h2>
-                <p>You make my world brighter every single day. Here's to many more adventures together.</p>
-                <p style="margin-top:10px; font-weight:bold;">Love, Jack</p>
+                <p style="margin-top: 15px; font-size: 1.1rem; line-height: 1.6;">
+                    "Thank you, Nymph, for being the happiness in my life. Wishing you a wonderful year ahead. Let's stay together forever. Love you, Nymph."
+                </p>
+                <p style="margin-top:15px; font-weight:bold;">Love, Jack</p>
             </div>
 
             <!-- NEW: GALLERY SECTION -->
@@ -453,7 +544,6 @@
                     <img src="https://scontent.fbkk5-3.fna.fbcdn.net/v/t39.30808-6/603902658_25890105430620333_1252911019668480542_n.jpg?_nc_cat=105&ccb=1-7&_nc_sid=127cfc&_nc_eui2=AeHd72kfXr403IzkdmyuURkbyYv7DljcpQTJi_sOWNylBDaDkf4mDzKbxVkm-lFXHClFOH7eZ_tnWo0vJc1gxHnj&_nc_ohc=t9foykoVcT4Q7kNvwHGORRz&_nc_oc=AdkCOMFVb9X05kgZ8-8kWfzctHbSV5Vx9ne2BOlGdCOSEdtJgXqW7Flz3GncZNdYw7TSGm6p-UfIpnQmyZUH2OcH&_nc_zt=23&_nc_ht=scontent.fbkk5-3.fna&_nc_gid=twu7diwN6A13B32eq6thxw&oh=00_AfnJB3i6evRXRXs0AIw03ggJimy1GXyO2Q7fYJzxKTK5Bg&oe=695AD12D" alt="Memory 2">
                 </div>
                 <div class="polaroid" onclick="openLightbox(this.querySelector('img').src)">
-                    <!-- แก้ไขลิงก์รูปที่ 3 เรียบร้อยครับ -->
                     <img src="https://scontent.fbkk5-1.fna.fbcdn.net/v/t39.30808-6/603846946_25890105567286986_4530808047179501060_n.jpg?stp=cp6_dst-jpg_tt6&_nc_cat=109&ccb=1-7&_nc_sid=127cfc&_nc_eui2=AeEeVaT16hZVfTXKxtA7dsbK99Ulk_xxuaj31SWT_HG5qL9y0lWRXS1J9P4dLxAlxWAQHKLEiGZ1-sicXVN9-QKi&_nc_ohc=6WFyeSqyrY4Q7kNvwEO4PCc&_nc_oc=Adk7m9M6Zhs0DbxfMqtMRDO8NoL4PbS6IexUxlEFmlzL5PQZ50EwV066pFNFz8vgzArsDPXEctOLTcyp80uVmH-W&_nc_zt=23&_nc_ht=scontent.fbkk5-1.fna&_nc_gid=Yj8_X3XILL3spMifigm5tw&oh=00_Afl8Bw7PTk78vk7EGNnPhG6MKJoodwqTd83HG97rNo2PWQ&oe=695AE93F" alt="Memory 3">
                 </div>
                 <div class="polaroid" onclick="openLightbox(this.querySelector('img').src)">
@@ -467,19 +557,24 @@
                 </div>
             </div>
 
-            <h3>Your Love Coupons</h3>
-            <ul class="coupon-list">
-                <li class="coupon">
-                    <span>Free Hug (Unlimited)</span>
-                    <span class="coupon-icon">🤗</span>
+            <h3 style="font-size: 2rem; margin-bottom: 20px; color: var(--gold-color);">Our 2026 Bucket List</h3>
+            <ul class="bucket-list">
+                <li class="bucket-item checked">
+                    <div class="check-box">✓</div>
+                    <span>Staying together & happy</span>
                 </li>
-                <li class="coupon">
-                    <span>Romantic Dinner Date</span>
-                    <span class="coupon-icon">🍷</span>
+                <!-- เพิ่ม tryCheckItem และเปลี่ยนข้อความ -->
+                <li class="bucket-item" onclick="tryCheckItem(this)">
+                    <div class="check-box"></div>
+                    <span>Go on a Romantic Trip Upcountry 🚗</span>
                 </li>
-                <li class="coupon">
-                    <span>Trip to Japan</span>
-                    <span class="coupon-icon">✈️</span>
+                <li class="bucket-item" onclick="tryCheckItem(this)">
+                    <div class="check-box"></div>
+                    <span>Save money for Japan Trip ✈️</span>
+                </li>
+                <li class="bucket-item" onclick="tryCheckItem(this)">
+                    <div class="check-box"></div>
+                    <span>Eat lots of delicious food together 🍱</span>
                 </li>
             </ul>
         </div>
@@ -580,7 +675,30 @@
             lightbox.classList.remove('active');
         }
 
-        // 5. Lightweight Fireworks Engine (Canvas)
+        // 5. Bucket List Interaction Logic (Shake & Toast)
+        function tryCheckItem(element) {
+            // Add shake effect to the body (screenshake)
+            document.body.classList.add('shake-screen');
+            
+            // Show toast message
+            showToast("Not accomplished yet! 😜");
+
+            // Remove shake class after animation ends to allow it to be triggered again
+            setTimeout(() => {
+                document.body.classList.remove('shake-screen');
+            }, 500);
+        }
+
+        function showToast(message) {
+            const toast = document.getElementById("toast");
+            toast.innerText = message;
+            toast.className = "show";
+            
+            // Hide toast after 3 seconds
+            setTimeout(function(){ toast.className = toast.className.replace("show", ""); }, 3000);
+        }
+
+        // 6. Lightweight Fireworks Engine (Canvas)
         function initFireworks() {
             const canvas = document.getElementById('fireworks-canvas');
             const ctx = canvas.getContext('2d');
