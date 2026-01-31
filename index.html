@@ -3,497 +3,578 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hello February 💝</title>
+    <title>Hello February Surprise!</title>
+    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&family=Pacifico&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&family=Poppins:wght@600;800&family=Pacifico&display=swap" rel="stylesheet">
     
     <style>
+        :root {
+            --primary-pink: #FFC3C3;
+            --deep-pink: #FF8FAB;
+            --accent-red: #FB6F92;
+            --soft-purple: #DCD6F7;
+            --dark-purple: #424874;
+            --white: #FFFFFF;
+            --text-color: #590d22;
+            --box-color: #ff4d6d;
+            --ribbon-color: #fff0f3;
+        }
+
         * {
+            box-sizing: border-box;
             margin: 0;
             padding: 0;
-            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
         }
-        
+
         body {
-            font-family: 'Poppins', sans-serif;
+            font-family: 'Nunito', sans-serif;
+            background: linear-gradient(135deg, #ffe5ec 0%, #ffc2d1 100%);
+            color: var(--text-color);
             min-height: 100vh;
-            background: linear-gradient(135deg, #FFE5EC 0%, #FFC1D5 50%, #E5B8F4 100%);
             overflow-x: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
             position: relative;
         }
-        
-        /* Animated Background Hearts */
-        .hearts-container {
+
+        /* --- Floating Background Animation --- */
+        #bg-container {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
             pointer-events: none;
-            z-index: 1;
+            z-index: 0;
             overflow: hidden;
         }
-        
-        .heart {
+
+        .floating-element {
             position: absolute;
-            font-size: 20px;
-            animation: float 8s infinite ease-in-out;
+            font-size: 1.5rem;
+            animation: floatUp linear infinite;
             opacity: 0.6;
         }
-        
-        @keyframes float {
-            0% {
-                transform: translateY(100vh) rotate(0deg);
-                opacity: 0;
-            }
-            10% {
-                opacity: 0.6;
-            }
-            90% {
-                opacity: 0.6;
-            }
-            100% {
-                transform: translateY(-100px) rotate(360deg);
-                opacity: 0;
-            }
+
+        @keyframes floatUp {
+            0% { transform: translateY(100vh) rotate(0deg) scale(0.8); opacity: 0; }
+            10% { opacity: 0.7; }
+            90% { opacity: 0.7; }
+            100% { transform: translateY(-10vh) rotate(360deg) scale(1.2); opacity: 0; }
         }
-        
-        /* Main Container */
-        .container {
+
+        /* --- Main Layout --- */
+        .app-container {
             position: relative;
             z-index: 10;
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-        }
-        
-        .view {
-            display: none;
             width: 100%;
             max-width: 600px;
-            animation: fadeIn 0.6s ease-in-out;
+            padding: 20px;
+            min-height: 90vh; /* Ensure full height feel on mobile */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
         }
-        
-        .view.active {
-            display: block;
+
+        .view {
+            transition: opacity 0.5s ease, transform 0.5s ease;
+            width: 100%;
         }
-        
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+
+        .hidden {
+            display: none !important;
+            opacity: 0;
+            pointer-events: none;
         }
-        
-        /* View 1: Gifts */
-        .header {
-            text-align: center;
-            margin-bottom: 30px;
+
+        .fade-out {
+            opacity: 0;
+            transform: scale(0.95);
         }
-        
-        .main-title {
-            font-family: 'Pacifico', cursive;
+
+        .fade-in {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        /* --- Typography --- */
+        h1 {
+            font-family: 'Pacifico', cursive; /* Script font */
             font-size: 3.5rem;
-            color: #FF1493;
-            text-shadow: 3px 3px 6px rgba(255, 105, 180, 0.3);
-            margin-bottom: 15px;
+            color: var(--accent-red);
+            text-shadow: 2px 2px 0px #fff;
+            margin-bottom: 0.2em;
+            line-height: 1.2;
         }
-        
-        .badge {
-            display: inline-block;
-            background: linear-gradient(135deg, #FF69B4, #FF1493);
-            color: white;
-            padding: 12px 25px;
+
+        h2 {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 800;
+            font-size: 1.5rem;
+            color: var(--dark-purple);
+            margin-bottom: 10px;
+            background: rgba(255, 255, 255, 0.6);
+            padding: 8px 16px;
             border-radius: 50px;
-            font-weight: 700;
+            display: inline-block;
+        }
+
+        p.instruction {
             font-size: 1.1rem;
-            box-shadow: 0 4px 15px rgba(255, 20, 147, 0.4);
-            margin-bottom: 20px;
+            font-weight: 700;
+            margin-bottom: 30px;
+            color: var(--text-color);
+            animation: pulse 2s infinite;
         }
-        
-        .instruction {
-            font-size: 1.2rem;
-            color: #D946A6;
-            font-weight: 600;
-            margin-top: 15px;
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
         }
-        
-        .gifts-container {
+
+        /* --- Gift Boxes Layout --- */
+        .gift-grid {
             display: flex;
             flex-direction: column;
             gap: 25px;
-            margin: 40px 0;
+            align-items: center;
+            margin-bottom: 30px;
         }
-        
-        .gift-box {
-            background: white;
-            border-radius: 20px;
-            padding: 30px;
-            box-shadow: 0 8px 25px rgba(255, 105, 180, 0.2);
-            cursor: pointer;
-            transition: all 0.3s ease;
+
+        /* Tablet/Desktop adjustment */
+        @media (min-width: 600px) {
+            .gift-grid {
+                flex-direction: row;
+                justify-content: center;
+                align-items: flex-start;
+                gap: 20px;
+            }
+        }
+
+        /* --- The Interactive Gift Box --- */
+        .gift-wrapper {
             position: relative;
-            z-index: 100;
-            min-height: 150px;
+            width: 100%;
+            max-width: 280px; /* Wider on mobile for text readability */
+            height: 200px; /* Fixed height to hold content */
+            perspective: 1000px;
+            cursor: pointer;
+            /* Prevent tap highlighting on mobile */
+            -webkit-tap-highlight-color: transparent; 
+        }
+
+        .gift-box {
+            width: 140px;
+            height: 120px;
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            transition: transform 0.3s ease;
+            z-index: 5; /* Above content initially */
+        }
+
+        /* Hover effect only for unopened boxes on devices with hover */
+        @media (hover: hover) {
+            .gift-wrapper:not(.opened):hover .gift-box {
+                transform: translateX(-50%) scale(1.05) rotate(2deg);
+            }
+        }
+
+        .box-body {
+            width: 100%;
+            height: 100%;
+            background: var(--box-color);
+            border-radius: 10px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+            position: relative;
             display: flex;
-            flex-direction: column;
             justify-content: center;
             align-items: center;
+            border: 3px solid #c9184a;
         }
-        
-        .gift-box:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 12px 35px rgba(255, 105, 180, 0.3);
+
+        /* Ribbon Vertical */
+        .box-body::before {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 100%;
+            background: var(--ribbon-color);
+            left: 50%;
+            transform: translateX(-50%);
+            border-left: 2px solid rgba(0,0,0,0.05);
+            border-right: 2px solid rgba(0,0,0,0.05);
         }
-        
-        .gift-closed {
-            font-size: 4rem;
-            animation: bounce 2s infinite;
+
+        .box-lid {
+            width: 160px;
+            height: 40px;
+            background: #ff758f;
+            position: absolute;
+            top: -30px; /* Sits on top */
+            left: 50%;
+            transform: translateX(-50%);
+            border-radius: 6px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            z-index: 6;
+            border: 3px solid #a4133c;
+            transform-origin: top center;
+            transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.4s;
         }
-        
-        @keyframes bounce {
-            0%, 100% {
-                transform: translateY(0);
-            }
-            50% {
-                transform: translateY(-10px);
-            }
+
+        /* Ribbon on Lid */
+        .box-lid::before {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 100%;
+            background: var(--ribbon-color);
+            left: 50%;
+            transform: translateX(-50%);
         }
-        
+
+        /* Bow on top */
+        .box-lid::after {
+            content: '';
+            position: absolute;
+            width: 40px;
+            height: 30px;
+            background: radial-gradient(circle at center, var(--ribbon-color) 30%, transparent 35%);
+            border: 4px solid var(--ribbon-color);
+            border-radius: 50%;
+            top: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        /* --- Revealed Content --- */
         .gift-content {
-            display: none;
+            position: absolute;
+            bottom: 10px;
+            left: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 15px;
+            border-radius: 12px;
             text-align: center;
+            opacity: 0;
+            transform: translateY(20px) scale(0.8);
+            transition: all 0.5s ease 0.2s; /* Delay to wait for lid */
+            z-index: 2; /* Behind box initially, but we move it up via Z-index or just visual layering */
+            border: 2px dashed var(--accent-red);
+            pointer-events: none; /* Not clickable until opened */
         }
-        
-        .gift-box.opened .gift-closed {
-            display: none;
-        }
-        
-        .gift-box.opened .gift-content {
+
+        .emoji-icon {
+            font-size: 3rem;
             display: block;
-            animation: popIn 0.5s ease-out;
+            margin-bottom: 5px;
+            filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1));
         }
-        
-        .gift-box.opened {
-            background: linear-gradient(135deg, #FFE5EC, #FFF0F5);
-            cursor: default;
-        }
-        
-        @keyframes popIn {
-            0% {
-                transform: scale(0.5);
-                opacity: 0;
-            }
-            50% {
-                transform: scale(1.1);
-            }
-            100% {
-                transform: scale(1);
-                opacity: 1;
-            }
-        }
-        
-        .gift-emoji {
-            font-size: 4rem;
-            margin-bottom: 15px;
-        }
-        
+
         .gift-title {
-            font-size: 1.5rem;
+            font-family: 'Poppins', sans-serif;
             font-weight: 800;
-            color: #FF1493;
-            margin-bottom: 10px;
+            color: var(--accent-red);
+            font-size: 1.1rem;
+            line-height: 1.2;
+            margin-bottom: 5px;
         }
-        
-        .gift-description {
-            font-size: 1rem;
-            color: #D946A6;
-            font-weight: 600;
-            line-height: 1.5;
-        }
-        
-        .gift-note {
+
+        .gift-desc {
             font-size: 0.85rem;
-            color: #999;
+            color: var(--text-color);
+            line-height: 1.3;
+        }
+
+        .gift-desc span {
+            display: block;
+            margin-top: 4px;
+            font-size: 0.7rem;
+            color: #888;
             font-style: italic;
-            margin-top: 8px;
+        }
+
+        /* --- Animation States --- */
+        .gift-wrapper.opened .box-lid {
+            transform: translateX(-50%) translateY(-60px) rotate(-15deg) scale(0.9);
+            opacity: 0; /* Fade out lid or just fly away */
         }
         
-        /* Navigation Button */
-        .nav-button {
-            display: none;
-            background: linear-gradient(135deg, #FF69B4, #FF1493);
+        .gift-wrapper.opened .box-body {
+            transform: translateX(-50%) translateY(80px) scale(0.5); /* Shrink box body down */
+            opacity: 0; /* Fade it out to reveal card clearly */
+        }
+
+        /* Make content visible and interactive */
+        .gift-wrapper.opened .gift-content {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+            z-index: 20; /* Bring to front */
+            pointer-events: auto;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+        }
+
+        /* --- Navigation Buttons --- */
+        .btn {
+            background: var(--dark-purple);
             color: white;
             border: none;
-            padding: 18px 40px;
-            font-size: 1.2rem;
-            font-weight: 700;
+            padding: 15px 32px;
+            font-size: 1.1rem;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
             border-radius: 50px;
             cursor: pointer;
-            box-shadow: 0 6px 20px rgba(255, 20, 147, 0.4);
-            transition: all 0.3s ease;
-            font-family: 'Poppins', sans-serif;
-            margin: 30px auto;
-            position: relative;
-            z-index: 1000;
+            box-shadow: 0 8px 15px rgba(66, 72, 116, 0.3);
+            transition: transform 0.2s, background 0.2s, box-shadow 0.2s;
+            margin-top: 20px;
+            outline: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
         }
-        
-        .nav-button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(255, 20, 147, 0.5);
+
+        .btn:active {
+            transform: scale(0.96);
         }
-        
-        .nav-button:active {
-            transform: translateY(-1px);
+
+        .btn:hover {
+            background: #2e3252;
+            box-shadow: 0 10px 20px rgba(66, 72, 116, 0.4);
         }
-        
-        .nav-button.show {
-            display: block;
-            animation: slideUp 0.5s ease-out;
+
+        .btn.hidden-btn {
+            display: none;
+            animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
-        
-        @keyframes slideUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+
+        @keyframes popIn {
+            0% { transform: scale(0); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
         }
-        
-        .button-container {
-            text-align: center;
+
+        /* --- View 2 Specifics --- */
+        .wishes-card {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+            padding: 30px;
+            border-radius: 20px;
+            border: 2px solid var(--white);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            margin: 20px auto;
         }
-        
-        /* View 2: Wishes */
-        .wishes-container {
-            background: white;
-            border-radius: 25px;
-            padding: 40px;
-            box-shadow: 0 10px 40px rgba(255, 105, 180, 0.3);
-            text-align: center;
-        }
-        
-        .wishes-title {
-            font-family: 'Pacifico', cursive;
-            font-size: 3rem;
-            color: #FF1493;
-            margin-bottom: 30px;
-            text-shadow: 2px 2px 4px rgba(255, 105, 180, 0.2);
-        }
-        
-        .wishes-message {
+
+        .message-text {
             font-size: 1.3rem;
             line-height: 1.8;
-            color: #D946A6;
-            font-weight: 600;
-            margin-bottom: 30px;
+            color: var(--text-color);
+            margin-bottom: 20px;
         }
-        
-        .back-button {
-            background: linear-gradient(135deg, #E5B8F4, #D946A6);
-            color: white;
-            border: none;
-            padding: 15px 35px;
-            font-size: 1.1rem;
-            font-weight: 700;
-            border-radius: 50px;
-            cursor: pointer;
-            box-shadow: 0 6px 20px rgba(217, 70, 166, 0.4);
-            transition: all 0.3s ease;
-            font-family: 'Poppins', sans-serif;
+
+        .highlight {
+            color: var(--accent-red);
+            font-weight: bold;
         }
-        
-        .back-button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(217, 70, 166, 0.5);
+
+        /* Responsive Tweaks */
+        @media (max-width: 400px) {
+            h1 { font-size: 2.8rem; }
+            h2 { font-size: 1.2rem; }
+            .gift-wrapper { height: 180px; }
         }
-        
-        /* Responsive Design */
-        @media (max-width: 768px) {
-            .main-title {
-                font-size: 2.5rem;
-            }
-            
-            .badge {
-                font-size: 1rem;
-                padding: 10px 20px;
-            }
-            
-            .instruction {
-                font-size: 1rem;
-            }
-            
-            .gift-box {
-                padding: 25px;
-                min-height: 130px;
-            }
-            
-            .gift-emoji, .gift-closed {
-                font-size: 3rem;
-            }
-            
-            .gift-title {
-                font-size: 1.3rem;
-            }
-            
-            .gift-description {
-                font-size: 0.95rem;
-            }
-            
-            .wishes-title {
-                font-size: 2.2rem;
-            }
-            
-            .wishes-message {
-                font-size: 1.1rem;
-            }
-            
-            .wishes-container {
-                padding: 30px 25px;
-            }
-        }
-        
-        @media (max-width: 480px) {
-            .main-title {
-                font-size: 2rem;
-            }
-            
-            .wishes-title {
-                font-size: 1.8rem;
-            }
-        }
+
     </style>
 </head>
 <body>
-    <!-- Animated Hearts Background -->
-    <div class="hearts-container" id="heartsContainer"></div>
-    
-    <div class="container">
-        <!-- View 1: The Gifts -->
-        <div class="view active" id="view1">
-            <div class="header">
-                <h1 class="main-title">Hello February</h1>
-                <div class="badge">🎂 It's your birthday month!</div>
-                <p class="instruction">Tap the boxes to open your gifts!</p>
-            </div>
-            
-            <div class="gifts-container">
-                <!-- Gift Box 1 -->
-                <div class="gift-box" data-gift="1">
-                    <div class="gift-closed">🎁</div>
-                    <div class="gift-content">
-                        <div class="gift-emoji">🍰</div>
-                        <div class="gift-title">Strawberry Shortcake</div>
-                        <div class="gift-description">You got 1 free piece!</div>
-                        <div class="gift-note">*Coupon valid with your boyfriend only.</div>
-                    </div>
-                </div>
-                
-                <!-- Gift Box 2 -->
-                <div class="gift-box" data-gift="2">
-                    <div class="gift-closed">🎁</div>
-                    <div class="gift-content">
-                        <div class="gift-emoji">💐</div>
-                        <div class="gift-title">Flower Bouquet</div>
-                        <div class="gift-description">You got 1 free bouquet!</div>
-                        <div class="gift-note">*Coupon valid with your boyfriend only.</div>
-                    </div>
-                </div>
-                
-                <!-- Gift Box 3 -->
-                <div class="gift-box" data-gift="3">
-                    <div class="gift-closed">🎁</div>
-                    <div class="gift-content">
-                        <div class="gift-emoji">💑</div>
-                        <div class="gift-title">Date Coupon</div>
-                        <div class="gift-description">Let's go on a date!</div>
-                        <div class="gift-note">*You choose the place & time.</div>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="button-container">
-                <button class="nav-button" id="toWishes">Read Wishes →</button>
-            </div>
-        </div>
+
+    <!-- Background Animation Container -->
+    <div id="bg-container"></div>
+
+    <div class="app-container">
         
-        <!-- View 2: The Wishes -->
-        <div class="view" id="view2">
-            <div class="wishes-container">
-                <h2 class="wishes-title">Hello February</h2>
-                <p class="wishes-message">
-                    May this month be very kind to nymph. Wishing you lots of happiness, smiles, and love. Happy Birthday Month & Happy Valentine's!
-                </p>
-                <button class="back-button" id="backToGifts">← Back to Gifts</button>
+        <!-- VIEW 1: THE GIFTS -->
+        <div id="view-1" class="view">
+            <header>
+                <h1>Hello February</h1>
+                <h2>🎂 It's your birthday month!</h2>
+                <p class="instruction">Tap the boxes to open your gifts!</p>
+            </header>
+
+            <div class="gift-grid">
+                
+                <!-- Box 1 -->
+                <div class="gift-wrapper" onclick="openGift(this, 1)">
+                    <div class="gift-box">
+                        <div class="box-lid"></div>
+                        <div class="box-body"></div>
+                    </div>
+                    <div class="gift-content">
+                        <span class="emoji-icon">🍰</span>
+                        <div class="gift-title">Strawberry Shortcake</div>
+                        <div class="gift-desc">
+                            You got 1 free piece!
+                            <span>*Coupon valid with your boyfriend only.</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Box 2 -->
+                <div class="gift-wrapper" onclick="openGift(this, 2)">
+                    <div class="gift-box">
+                        <div class="box-lid"></div>
+                        <div class="box-body"></div>
+                    </div>
+                    <div class="gift-content">
+                        <span class="emoji-icon">💐</span>
+                        <div class="gift-title">Flower Bouquet</div>
+                        <div class="gift-desc">
+                            You got 1 free bouquet!
+                            <span>*Coupon valid with your boyfriend only.</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Box 3 -->
+                <div class="gift-wrapper" onclick="openGift(this, 3)">
+                    <div class="gift-box">
+                        <div class="box-lid"></div>
+                        <div class="box-body"></div>
+                    </div>
+                    <div class="gift-content">
+                        <span class="emoji-icon">💑</span>
+                        <div class="gift-title">Date Coupon</div>
+                        <div class="gift-desc">
+                            Let's go on a date!
+                            <span>*You choose the place & time.</span>
+                        </div>
+                    </div>
+                </div>
+
             </div>
+
+            <!-- Navigation to View 2 (Hidden initially) -->
+            <button id="btn-to-wishes" class="btn hidden-btn" onclick="goToWishes()">
+                Read Wishes &rarr;
+            </button>
         </div>
-    </div>
-    
-    <script>
-        // Create floating hearts animation
-        function createHearts() {
-            const heartsContainer = document.getElementById('heartsContainer');
-            const heartSymbols = ['💕', '💖', '💗', '💝', '💓', '💞'];
+
+        <!-- VIEW 2: THE WISHES -->
+        <div id="view-2" class="view hidden">
+            <header>
+                <h1>Hello February</h1>
+            </header>
             
-            for (let i = 0; i < 15; i++) {
-                const heart = document.createElement('div');
-                heart.className = 'heart';
-                heart.textContent = heartSymbols[Math.floor(Math.random() * heartSymbols.length)];
-                heart.style.left = Math.random() * 100 + '%';
-                heart.style.animationDelay = Math.random() * 8 + 's';
-                heart.style.animationDuration = (Math.random() * 4 + 6) + 's';
-                heartsContainer.appendChild(heart);
+            <div class="wishes-card">
+                <p class="message-text">
+                    May this month be very kind to <span class="highlight">nymph</span>. <br><br>
+                    Wishing you lots of happiness, smiles, and love.<br>
+                    <strong>Happy Birthday Month & Happy Valentine's!</strong>
+                </p>
+                <div style="font-size: 3rem;">💖</div>
+            </div>
+
+            <button class="btn" onclick="backToGifts()">
+                &larr; Back to Gifts
+            </button>
+        </div>
+
+    </div>
+
+    <script>
+        // State tracking
+        let openedCount = 0;
+        const totalGifts = 3;
+        
+        // DOM Elements
+        const view1 = document.getElementById('view-1');
+        const view2 = document.getElementById('view-2');
+        const toWishesBtn = document.getElementById('btn-to-wishes');
+
+        // Function to create background elements
+        function createBackground() {
+            const container = document.getElementById('bg-container');
+            const icons = ['❤️', '🎂', '✨', '🌸', '🧁'];
+            const colors = ['#FFC3C3', '#FF8FAB', '#DCD6F7'];
+            
+            // Create 15 floating elements
+            for (let i = 0; i < 20; i++) {
+                const el = document.createElement('div');
+                el.classList.add('floating-element');
+                el.textContent = icons[Math.floor(Math.random() * icons.length)];
+                
+                // Random positioning and timing
+                el.style.left = Math.random() * 100 + 'vw';
+                el.style.animationDuration = (Math.random() * 5 + 10) + 's'; // 10-15s duration
+                el.style.animationDelay = (Math.random() * 10) + 's';
+                el.style.fontSize = (Math.random() * 1.5 + 1) + 'rem';
+                
+                container.appendChild(el);
             }
         }
-        
-        // Gift box opening logic
-        const giftBoxes = document.querySelectorAll('.gift-box');
-        const toWishesButton = document.getElementById('toWishes');
-        let openedCount = 0;
-        
-        giftBoxes.forEach(box => {
-            box.addEventListener('click', function() {
-                if (!this.classList.contains('opened')) {
-                    this.classList.add('opened');
-                    openedCount++;
-                    
-                    // Show "Read Wishes" button when all boxes are opened
-                    if (openedCount === 3) {
-                        toWishesButton.classList.add('show');
-                    }
-                }
-            });
-        });
-        
-        // View navigation
-        const view1 = document.getElementById('view1');
-        const view2 = document.getElementById('view2');
-        const backButton = document.getElementById('backToGifts');
-        
-        toWishesButton.addEventListener('click', function() {
-            view1.classList.remove('active');
-            view2.classList.add('active');
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        });
-        
-        backButton.addEventListener('click', function() {
-            view2.classList.remove('active');
-            view1.classList.add('active');
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        });
-        
-        // Initialize
-        createHearts();
+
+        // Initialize Background
+        createBackground();
+
+        // Open Gift Function
+        function openGift(element, id) {
+            // Check if already opened to prevent double counting
+            if (element.classList.contains('opened')) return;
+
+            // Add opened class to trigger CSS animations
+            element.classList.add('opened');
+            
+            // Increment counter
+            openedCount++;
+
+            // Check if all gifts are opened
+            if (openedCount === totalGifts) {
+                setTimeout(() => {
+                    toWishesBtn.style.display = 'inline-flex';
+                    // Trigger reflow to restart animation if needed, or just let CSS animation run
+                }, 600); // Slight delay after last box opens
+            }
+        }
+
+        // Navigation Functions
+        function goToWishes() {
+            // Fade out View 1
+            view1.classList.add('fade-out');
+            
+            setTimeout(() => {
+                view1.classList.add('hidden');
+                view1.classList.remove('fade-out');
+                
+                // Show View 2
+                view2.classList.remove('hidden');
+                // Trigger reflow for animation
+                void view2.offsetWidth; 
+                view2.classList.add('fade-in');
+            }, 500);
+        }
+
+        function backToGifts() {
+            // Fade out View 2
+            view2.classList.remove('fade-in');
+            view2.classList.add('fade-out');
+
+            setTimeout(() => {
+                view2.classList.add('hidden');
+                view2.classList.remove('fade-out');
+
+                // Show View 1
+                view1.classList.remove('hidden');
+                void view1.offsetWidth;
+                view1.classList.add('fade-in');
+            }, 500);
+        }
     </script>
 </body>
 </html>
+
