@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hello February - For Nymph</title>
     <style>
-        /* Import fonts */
         @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@400;600;800&display=swap');
 
         :root {
@@ -35,6 +34,7 @@
             color: var(--text-color);
         }
 
+        /* Fixed: Add explicit Z-Index to container to ensure it's above background */
         .container {
             text-align: center;
             position: relative;
@@ -42,14 +42,13 @@
             max-width: 900px;
             padding: 20px;
             padding-bottom: 50px;
+            z-index: 10; /* Ensure content is clickable */
         }
 
-        /* Screens */
         #intro-screen, #final-screen {
             transition: opacity 0.5s ease;
         }
         
-        /* Hide final screen initially */
         #final-screen {
             display: none;
             opacity: 0;
@@ -94,7 +93,6 @@
             margin-bottom: 40px;
         }
 
-        /* Gift Boxes Container */
         .gift-container {
             display: flex;
             justify-content: center;
@@ -110,13 +108,13 @@
             cursor: pointer;
             transition: transform 0.3s ease;
             margin-bottom: 20px;
+            -webkit-tap-highlight-color: transparent; /* Remove blue highlight on mobile */
         }
 
         .gift-box-wrapper:hover {
             transform: scale(1.05);
         }
 
-        /* Disable pointer events once opened to prevent re-clicking animation issues */
         .gift-box-wrapper.opened {
             cursor: default;
             transform: scale(1);
@@ -133,6 +131,7 @@
             box-shadow: 0 10px 20px rgba(0,0,0,0.1);
             z-index: 2;
             border: 2px solid #ffb3c1;
+            pointer-events: none; /* Let click pass through to wrapper */
         }
 
         .lid {
@@ -150,6 +149,7 @@
             justify-content: center;
             align-items: center;
             border: 2px solid #ff99ac;
+            pointer-events: none; /* Let click pass through to wrapper */
         }
 
         .ribbon-vertical {
@@ -190,14 +190,12 @@
         .bow::before { left: -15px; }
         .bow::after { right: -15px; }
 
-        /* Animation when opened */
         .gift-box-wrapper.opened .lid {
             top: -60px;
             transform: rotate(-10deg);
             opacity: 0;
         }
 
-        /* Content inside */
         .gift-content {
             position: absolute;
             bottom: 20px;
@@ -226,7 +224,7 @@
         }
 
         .big-bouquet {
-            font-size: 5.5rem; /* Bigger for the bouquet */
+            font-size: 5.5rem;
             margin-bottom: 0px;
         }
 
@@ -242,7 +240,6 @@
             position: relative;
         }
 
-        /* Tooltip arrow */
         .gift-message::after {
             content: '';
             position: absolute;
@@ -272,7 +269,6 @@
             display: block;
         }
 
-        /* Buttons */
         .nav-btn {
             background-color: var(--btn-color);
             color: white;
@@ -295,7 +291,7 @@
         }
 
         #go-to-wishes-btn {
-            display: none; /* Hidden until all boxes opened */
+            display: none;
             animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
@@ -328,7 +324,6 @@
             font-size: 1.5rem;
         }
 
-        /* Floating Hearts Background */
         .hearts-bg {
             position: fixed;
             top: 0;
@@ -366,7 +361,6 @@
             100% { transform: translateY(-100vh) rotate(-45deg) scale(0.5); opacity: 0; }
         }
 
-        /* Mobile */
         @media (max-width: 600px) {
             h1 { font-size: 3.5rem; }
             .gift-container { flex-direction: column; align-items: center; gap: 80px; margin-bottom: 50px; }
@@ -392,15 +386,15 @@
 
             <div class="gift-container">
                 
-                <!-- BOX 1: Strawberry Shortcake -->
-                <div class="gift-box-wrapper" onclick="openBox(this, 1)">
+                <!-- BOX 1 -->
+                <!-- Removed onclick="openBox...", using ID for JS binding -->
+                <div class="gift-box-wrapper" id="box-1" data-id="1">
                     <div class="lid">
                         <div class="bow"></div>
                         <div class="ribbon-vertical"></div>
                         <div class="ribbon-horizontal"></div>
                     </div>
                     <div class="gift-box"></div>
-                    
                     <div class="gift-content">
                         <span class="item-emoji">🍰</span>
                         <div class="gift-message">
@@ -411,17 +405,15 @@
                     </div>
                 </div>
 
-                <!-- BOX 2: Flower Bouquet -->
-                <div class="gift-box-wrapper" onclick="openBox(this, 2)">
+                <!-- BOX 2 -->
+                <div class="gift-box-wrapper" id="box-2" data-id="2">
                     <div class="lid">
                         <div class="bow"></div>
                         <div class="ribbon-vertical"></div>
                         <div class="ribbon-horizontal"></div>
                     </div>
                     <div class="gift-box"></div>
-
                     <div class="gift-content">
-                        <!-- Big Bouquet Emoji -->
                         <span class="item-emoji big-bouquet">💐</span>
                         <div class="gift-message">
                             <strong class="purple-text">Flower Bouquet</strong>
@@ -431,15 +423,14 @@
                     </div>
                 </div>
 
-                <!-- BOX 3: Date Coupon -->
-                <div class="gift-box-wrapper" onclick="openBox(this, 3)">
+                <!-- BOX 3 -->
+                <div class="gift-box-wrapper" id="box-3" data-id="3">
                     <div class="lid">
                         <div class="bow"></div>
                         <div class="ribbon-vertical"></div>
                         <div class="ribbon-horizontal"></div>
                     </div>
                     <div class="gift-box"></div>
-
                     <div class="gift-content">
                         <span class="item-emoji">💑</span>
                         <div class="gift-message">
@@ -451,8 +442,7 @@
                 </div>
             </div>
 
-            <!-- Button to go to wishes (appears later) -->
-            <button id="go-to-wishes-btn" class="nav-btn" onclick="navigateToWishes()">Read Wishes &rarr;</button>
+            <button id="go-to-wishes-btn" class="nav-btn">Read Wishes &rarr;</button>
         </div>
 
         <!-- FINAL SCREEN (Wishes) -->
@@ -466,140 +456,135 @@
             </p>
             
             <br>
-            <button class="nav-btn" style="background-color: #ffccd5; color: #590d22;" onclick="navigateToGifts()">&larr; Back to Gifts</button>
+            <button class="nav-btn" style="background-color: #ffccd5; color: #590d22;" id="back-to-gifts-btn">&larr; Back to Gifts</button>
         </div>
 
     </div>
 
     <script>
-        let openedBoxes = 0;
-        const totalBoxes = 3; 
-        const heartsContainer = document.getElementById('hearts-bg');
-        let allOpened = false; // flag to check if completion logic already ran
+        // Ensure DOM is loaded before running script
+        document.addEventListener('DOMContentLoaded', () => {
+            let openedBoxes = 0;
+            const totalBoxes = 3; 
+            const heartsContainer = document.getElementById('hearts-bg');
+            let allOpened = false;
 
-        // Background Hearts
-        for (let i = 0; i < 15; i++) {
-            createHeart();
-        }
+            // Initialize Hearts
+            for (let i = 0; i < 15; i++) {
+                createHeart();
+            }
 
-        function createHeart() {
-            const heart = document.createElement('div');
-            heart.classList.add('heart');
-            heart.style.left = Math.random() * 100 + 'vw';
-            heart.style.animationDuration = Math.random() * 5 + 6 + 's'; 
-            heart.style.opacity = Math.random();
-            heart.style.transform = `scale(${Math.random()})`;
-            
-            const colors = ['rgba(255, 77, 109, 0.4)', 'rgba(255, 143, 163, 0.4)', 'rgba(201, 24, 74, 0.3)', 'rgba(157, 78, 221, 0.3)'];
-            heart.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
-            
-            heartsContainer.appendChild(heart);
-        }
+            // Bind Event Listeners
+            const boxes = document.querySelectorAll('.gift-box-wrapper');
+            boxes.forEach(box => {
+                box.addEventListener('click', function() {
+                    handleBoxClick(this);
+                });
+                // Add touchstart for better mobile responsiveness
+                box.addEventListener('touchstart', function(e) {
+                    // Prevent default only if needed, but usually click is fine. 
+                    // Keeping it simple to rely on click bubbling.
+                }, {passive: true});
+            });
 
-        function openBox(element, boxId) {
-            // Logic: Once opened, cannot be closed or re-opened (animation stays)
-            if (element.classList.contains('opened')) return;
+            document.getElementById('go-to-wishes-btn').addEventListener('click', navigateToWishes);
+            document.getElementById('back-to-gifts-btn').addEventListener('click', navigateToGifts);
 
-            element.classList.add('opened');
-            openedBoxes++;
-            createExplosion(element);
+            function handleBoxClick(element) {
+                if (element.classList.contains('opened')) return;
 
-            // Check if all boxes are opened
-            if (openedBoxes === totalBoxes && !allOpened) {
-                allOpened = true;
-                // Update instruction text
-                document.getElementById('instruction').innerText = "All gifts opened! Read your wishes below.";
-                // Show the button to go to next page
+                element.classList.add('opened');
+                openedBoxes++;
+                createExplosion(element);
+
+                if (openedBoxes === totalBoxes && !allOpened) {
+                    allOpened = true;
+                    document.getElementById('instruction').innerText = "All gifts opened! Read your wishes below.";
+                    
+                    setTimeout(() => {
+                        const btn = document.getElementById('go-to-wishes-btn');
+                        btn.style.display = 'inline-block';
+                        
+                        // Auto navigate logic
+                        setTimeout(navigateToWishes, 1500); 
+                    }, 500);
+                }
+            }
+
+            function navigateToWishes() {
+                const intro = document.getElementById('intro-screen');
+                const final = document.getElementById('final-screen');
+
+                intro.style.opacity = '0';
                 setTimeout(() => {
-                    document.getElementById('go-to-wishes-btn').style.display = 'inline-block';
-                    // Auto navigate after a short delay for smooth UX
-                    setTimeout(navigateToWishes, 1500); 
+                    intro.style.display = 'none';
+                    final.style.display = 'block';
+                    void final.offsetWidth; 
+                    final.style.opacity = '1';
+                    startConfetti();
                 }, 500);
             }
-        }
 
-        function navigateToWishes() {
-            const intro = document.getElementById('intro-screen');
-            const final = document.getElementById('final-screen');
+            function navigateToGifts() {
+                const intro = document.getElementById('intro-screen');
+                const final = document.getElementById('final-screen');
 
-            intro.style.opacity = '0';
-            setTimeout(() => {
-                intro.style.display = 'none';
-                final.style.display = 'block';
-                // Trigger reflow
-                void final.offsetWidth; 
-                final.style.opacity = '1';
-                startConfetti();
-            }, 500);
-        }
-
-        function navigateToGifts() {
-            const intro = document.getElementById('intro-screen');
-            const final = document.getElementById('final-screen');
-
-            final.style.opacity = '0';
-            setTimeout(() => {
-                final.style.display = 'none';
-                intro.style.display = 'block';
-                void intro.offsetWidth;
-                intro.style.opacity = '1';
-            }, 500);
-        }
-
-        function createExplosion(element) {
-            const rect = element.getBoundingClientRect();
-            const centerX = rect.left + rect.width / 2;
-            const centerY = rect.top + rect.height / 2;
-
-            for(let i=0; i<30; i++) {
-                const particle = document.createElement('div');
-                particle.style.position = 'fixed';
-                particle.style.width = '8px';
-                particle.style.height = '8px';
-                particle.style.backgroundColor = ['#ff4d6d', '#fff', '#ffd700', '#9d4edd'][Math.floor(Math.random()*4)];
-                particle.style.left = centerX + 'px';
-                particle.style.top = centerY + 'px';
-                particle.style.borderRadius = '50%';
-                particle.style.pointerEvents = 'none';
-                document.body.appendChild(particle);
-
-                const angle = Math.random() * Math.PI * 2;
-                const velocity = 5 + Math.random() * 10;
-                const dx = Math.cos(angle) * velocity;
-                const dy = Math.sin(angle) * velocity;
-
-                let opacity = 1;
-                const anim = setInterval(() => {
-                    const currentLeft = parseFloat(particle.style.left);
-                    const currentTop = parseFloat(particle.style.top);
-                    particle.style.left = (currentLeft + dx) + 'px';
-                    particle.style.top = (currentTop + dy) + 'px';
-                    particle.style.opacity = opacity;
-                    opacity -= 0.03;
-
-                    if (opacity <= 0) {
-                        clearInterval(anim);
-                        particle.remove();
-                    }
-                }, 20);
+                final.style.opacity = '0';
+                setTimeout(() => {
+                    final.style.display = 'none';
+                    intro.style.display = 'block';
+                    void intro.offsetWidth;
+                    intro.style.opacity = '1';
+                }, 500);
             }
-        }
 
-        function startConfetti() {
-            // Just a short burst of confetti when entering wishes page
-            const duration = 2000;
-            const end = Date.now() + duration;
-
-            const interval = setInterval(() => {
-                if (Date.now() > end) {
-                    return clearInterval(interval);
-                }
+            function createHeart() {
+                if(!heartsContainer) return;
+                const heart = document.createElement('div');
+                heart.classList.add('heart');
+                heart.style.left = Math.random() * 100 + 'vw';
+                heart.style.animationDuration = Math.random() * 5 + 6 + 's'; 
+                heart.style.opacity = Math.random();
+                heart.style.transform = `scale(${Math.random()})`;
                 
-                const conf = document.createElement('div');
-                conf.innerText = ['❤️', '✨', '🌸', '🥂'][Math.floor(Math.random()*4)];
-                conf.style.position = 'fixed';
-                conf.style.left = Math.random() * 100 + 'vw';
-                conf.style.top = '-50px';
-                conf.style.fontSize = Math.random() * 20 + 15 + 'px';
-                conf.style.transition = 'top 3s linear, transform 3s ease-in-out';
-                conf
+                const colors = ['rgba(255, 77, 109, 0.4)', 'rgba(255, 143, 163, 0.4)', 'rgba(201, 24, 74, 0.3)', 'rgba(157, 78, 221, 0.3)'];
+                heart.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                
+                heartsContainer.appendChild(heart);
+            }
+
+            function createExplosion(element) {
+                const rect = element.getBoundingClientRect();
+                const centerX = rect.left + rect.width / 2;
+                const centerY = rect.top + rect.height / 2;
+
+                for(let i=0; i<30; i++) {
+                    const particle = document.createElement('div');
+                    particle.style.position = 'fixed';
+                    particle.style.width = '8px';
+                    particle.style.height = '8px';
+                    particle.style.backgroundColor = ['#ff4d6d', '#fff', '#ffd700', '#9d4edd'][Math.floor(Math.random()*4)];
+                    particle.style.left = centerX + 'px';
+                    particle.style.top = centerY + 'px';
+                    particle.style.borderRadius = '50%';
+                    particle.style.pointerEvents = 'none';
+                    particle.style.zIndex = '9999'; /* Ensure sparkles are on top */
+                    document.body.appendChild(particle);
+
+                    const angle = Math.random() * Math.PI * 2;
+                    const velocity = 5 + Math.random() * 10;
+                    const dx = Math.cos(angle) * velocity;
+                    const dy = Math.sin(angle) * velocity;
+
+                    let opacity = 1;
+                    const anim = setInterval(() => {
+                        const currentLeft = parseFloat(particle.style.left);
+                        const currentTop = parseFloat(particle.style.top);
+                        particle.style.left = (currentLeft + dx) + 'px';
+                        particle.style.top = (currentTop + dy) + 'px';
+                        particle.style.opacity = opacity;
+                        opacity -= 0.03;
+
+                        if (opacity <= 0) {
+                            clearInterval(anim);
+                   
