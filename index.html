@@ -1,580 +1,634 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hello February Surprise!</title>
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&family=Poppins:wght@600;800&family=Pacifico&display=swap" rel="stylesheet">
-    
-    <style>
-        :root {
-            --primary-pink: #FFC3C3;
-            --deep-pink: #FF8FAB;
-            --accent-red: #FB6F92;
-            --soft-purple: #DCD6F7;
-            --dark-purple: #424874;
-            --white: #FFFFFF;
-            --text-color: #590d22;
-            --box-color: #ff4d6d;
-            --ribbon-color: #fff0f3;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Twelve Islanders</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;900&family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0d0a07;
+    --panel: #1a1208;
+    --gold: #c9933a;
+    --gold-light: #e8b86d;
+    --gold-dim: #7a5820;
+    --stone: #3d3028;
+    --stone-light: #5a4535;
+    --text: #e8d5b0;
+    --text-dim: #8a7055;
+    --left-col: #2a5c8f;
+    --right-col: #7a2a2a;
+    --left-col-light: #4a8cbf;
+    --right-col-light: #bf5a5a;
+    --success: #4a8c5a;
+    --danger: #8c3a3a;
+  }
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            -webkit-tap-highlight-color: transparent;
-        }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
 
-        body {
-            font-family: 'Nunito', sans-serif;
-            background: linear-gradient(135deg, #ffe5ec 0%, #ffc2d1 100%);
-            color: var(--text-color);
-            min-height: 100vh;
-            overflow-x: hidden;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            position: relative;
-        }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Crimson Text', serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+    background-image:
+      radial-gradient(ellipse at 20% 0%, #2a1a05 0%, transparent 50%),
+      radial-gradient(ellipse at 80% 100%, #1a0a20 0%, transparent 50%);
+  }
 
-        /* --- Floating Background Animation --- */
-        #bg-container {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 0;
-            overflow: hidden;
-        }
+  /* Stars */
+  .stars {
+    position: fixed; inset: 0; pointer-events: none; z-index: 0;
+    background-image:
+      radial-gradient(1px 1px at 10% 15%, rgba(255,240,200,.7) 0%, transparent 100%),
+      radial-gradient(1px 1px at 25% 40%, rgba(255,240,200,.5) 0%, transparent 100%),
+      radial-gradient(1px 1px at 60% 8%, rgba(255,240,200,.6) 0%, transparent 100%),
+      radial-gradient(1px 1px at 80% 22%, rgba(255,240,200,.4) 0%, transparent 100%),
+      radial-gradient(1px 1px at 45% 5%, rgba(255,240,200,.8) 0%, transparent 100%),
+      radial-gradient(1px 1px at 90% 35%, rgba(255,240,200,.5) 0%, transparent 100%),
+      radial-gradient(1px 1px at 5% 55%, rgba(255,240,200,.4) 0%, transparent 100%),
+      radial-gradient(1px 1px at 70% 70%, rgba(255,240,200,.3) 0%, transparent 100%),
+      radial-gradient(1px 1px at 35% 80%, rgba(255,240,200,.5) 0%, transparent 100%),
+      radial-gradient(1px 1px at 15% 90%, rgba(255,240,200,.6) 0%, transparent 100%),
+      radial-gradient(1px 1px at 55% 60%, rgba(255,240,200,.3) 0%, transparent 100%),
+      radial-gradient(1px 1px at 93% 12%, rgba(255,240,200,.7) 0%, transparent 100%),
+      radial-gradient(1px 1px at 3% 30%, rgba(255,240,200,.4) 0%, transparent 100%),
+      radial-gradient(1px 1px at 77% 88%, rgba(255,240,200,.5) 0%, transparent 100%),
+      radial-gradient(1px 1px at 40% 95%, rgba(255,240,200,.3) 0%, transparent 100%);
+  }
 
-        .floating-element {
-            position: absolute;
-            font-size: 1.5rem;
-            animation: floatUp linear infinite;
-            opacity: 0.6;
-        }
+  .container {
+    position: relative; z-index: 1;
+    max-width: 900px; margin: 0 auto; padding: 20px 16px 40px;
+  }
 
-        @keyframes floatUp {
-            0% { transform: translateY(100vh) rotate(0deg) scale(0.8); opacity: 0; }
-            10% { opacity: 0.7; }
-            90% { opacity: 0.7; }
-            100% { transform: translateY(-10vh) rotate(360deg) scale(1.2); opacity: 0; }
-        }
+  /* Header */
+  header { text-align: center; margin-bottom: 24px; }
+  header h1 {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(1.6rem, 4vw, 2.4rem);
+    font-weight: 900;
+    color: var(--gold);
+    letter-spacing: .08em;
+    text-shadow: 0 0 30px rgba(201,147,58,.5);
+    line-height: 1.1;
+  }
+  header p {
+    font-style: italic; color: var(--text-dim);
+    font-size: 1rem; margin-top: 6px;
+  }
 
-        /* --- Main Layout --- */
-        .app-container {
-            position: relative;
-            z-index: 10;
-            width: 100%;
-            max-width: 600px;
-            padding: 20px;
-            min-height: 90vh; /* Ensure full height feel on mobile */
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-        }
+  /* Weighing tracker */
+  .tracker {
+    display: flex; justify-content: center; gap: 10px;
+    margin-bottom: 20px;
+  }
+  .weigh-pip {
+    width: 14px; height: 14px; border-radius: 50%;
+    background: var(--stone-light);
+    border: 2px solid var(--gold-dim);
+    transition: all .4s;
+  }
+  .weigh-pip.used { background: var(--gold); border-color: var(--gold-light); box-shadow: 0 0 8px var(--gold); }
+  .tracker-label { font-family: 'Cinzel', serif; font-size: .75rem; color: var(--text-dim); letter-spacing:.1em; text-align:center; margin-bottom:6px; }
 
-        .view {
-            transition: opacity 0.5s ease, transform 0.5s ease;
-            width: 100%;
-        }
+  /* Seesaw area */
+  .seesaw-area {
+    position: relative; height: 220px;
+    margin-bottom: 14px;
+  }
 
-        .hidden {
-            display: none !important;
-            opacity: 0;
-            pointer-events: none;
-        }
+  /* Fulcrum */
+  .fulcrum {
+    position: absolute; bottom: 0; left: 50%;
+    transform: translateX(-50%);
+    width: 0; height: 0;
+    border-left: 22px solid transparent;
+    border-right: 22px solid transparent;
+    border-bottom: 48px solid var(--stone-light);
+    filter: drop-shadow(0 4px 8px rgba(0,0,0,.5));
+  }
+  .fulcrum::after {
+    content: '';
+    position: absolute; bottom: -56px; left: 50%;
+    transform: translateX(-50%);
+    width: 60px; height: 12px;
+    background: var(--stone-light);
+    border-radius: 4px;
+  }
+  .pivot-pin {
+    position: absolute; bottom: 39px; left: 50%;
+    transform: translateX(-50%);
+    width: 10px; height: 10px; border-radius: 50%;
+    background: var(--gold); z-index: 10;
+  }
 
-        .fade-out {
-            opacity: 0;
-            transform: scale(0.95);
-        }
+  /* Beam */
+  .beam-wrapper {
+    position: absolute;
+    bottom: 50px; left: 50%;
+    transform: translateX(-50%);
+    width: 100%; transform-origin: 50% 100%;
+    transition: transform .6s cubic-bezier(.34,1.56,.64,1);
+  }
+  .beam {
+    position: absolute; bottom: 0; left: 50%;
+    transform: translateX(-50%);
+    width: 88%; height: 14px;
+    background: linear-gradient(180deg, #8B6914 0%, #5a4010 60%, #3d2a08 100%);
+    border-radius: 7px;
+    box-shadow: 0 4px 16px rgba(0,0,0,.6), inset 0 2px 4px rgba(255,220,100,.15);
+  }
+  /* Grain lines */
+  .beam::before {
+    content: '';
+    position: absolute; inset: 0; border-radius: 7px;
+    background: repeating-linear-gradient(90deg, transparent, transparent 40px, rgba(0,0,0,.1) 41px);
+  }
 
-        .fade-in {
-            opacity: 1;
-            transform: scale(1);
-        }
+  /* Chains */
+  .chain {
+    position: absolute; bottom: 14px;
+    width: 2px;
+    background: repeating-linear-gradient(180deg, var(--gold-dim) 0px, var(--gold-dim) 4px, transparent 4px, transparent 8px);
+  }
+  .chain-left  { left: 8%; }
+  .chain-right { right: 8%; }
 
-        /* --- Typography --- */
-        h1 {
-            font-family: 'Pacifico', cursive; /* Script font */
-            font-size: 3.5rem;
-            color: var(--accent-red);
-            text-shadow: 2px 2px 0px #fff;
-            margin-bottom: 0.2em;
-            line-height: 1.2;
-        }
+  /* Pans */
+  .pan {
+    position: absolute; bottom: 0;
+    width: 110px; height: 18px;
+    background: linear-gradient(180deg, #9a7730 0%, #6b5020 100%);
+    border-radius: 50%;
+    box-shadow: 0 4px 12px rgba(0,0,0,.5);
+    display: flex; align-items: center; justify-content: center;
+    transform: translateX(-50%);
+  }
+  .pan-left  { left: 8%; }
+  .pan-right { right: 8%; transform: translateX(50%); }
 
-        h2 {
-            font-family: 'Poppins', sans-serif;
-            font-weight: 800;
-            font-size: 1.5rem;
-            color: var(--dark-purple);
-            margin-bottom: 10px;
-            background: rgba(255, 255, 255, 0.6);
-            padding: 8px 16px;
-            border-radius: 50px;
-            display: inline-block;
-        }
+  /* Figures on pans */
+  .pan-figures {
+    position: absolute;
+    bottom: 14px;
+    display: flex; gap: 2px; justify-content: center; flex-wrap: wrap;
+    width: 120px;
+  }
+  .pan-figures.left-figures { left: calc(8% - 60px); }
+  .pan-figures.right-figures { right: calc(8% - 60px); }
 
-        p.instruction {
-            font-size: 1.1rem;
-            font-weight: 700;
-            margin-bottom: 30px;
-            color: var(--text-color);
-            animation: pulse 2s infinite;
-        }
+  .pan-figure {
+    font-size: 18px; line-height: 1;
+    transition: all .3s;
+    cursor: pointer;
+    position: relative;
+  }
+  .pan-figure:hover { transform: scale(1.15); }
+  .pan-figure span.num {
+    position: absolute; top: -10px; left: 50%; transform: translateX(-50%);
+    font-size: 9px; font-family: 'Cinzel', serif;
+    color: var(--gold-light); white-space: nowrap;
+  }
 
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.7; }
-        }
+  /* Island grid */
+  .island-section {
+    background: var(--panel);
+    border: 1px solid var(--gold-dim);
+    border-radius: 12px;
+    padding: 14px;
+    margin-bottom: 14px;
+    box-shadow: inset 0 1px 0 rgba(201,147,58,.1), 0 4px 20px rgba(0,0,0,.4);
+  }
+  .section-label {
+    font-family: 'Cinzel', serif; font-size: .7rem; letter-spacing: .15em;
+    color: var(--text-dim); margin-bottom: 10px; text-transform: uppercase;
+  }
 
-        /* --- Gift Boxes Layout --- */
-        .gift-grid {
-            display: flex;
-            flex-direction: column;
-            gap: 25px;
-            align-items: center;
-            margin-bottom: 30px;
-        }
+  .islanders-grid {
+    display: flex; flex-wrap: wrap; gap: 8px; justify-content: center;
+  }
 
-        /* Tablet/Desktop adjustment */
-        @media (min-width: 600px) {
-            .gift-grid {
-                flex-direction: row;
-                justify-content: center;
-                align-items: flex-start;
-                gap: 20px;
-            }
-        }
+  .islander {
+    display: flex; flex-direction: column; align-items: center;
+    cursor: pointer; padding: 8px 6px; border-radius: 8px;
+    border: 2px solid var(--stone-light);
+    background: var(--stone);
+    transition: all .2s;
+    min-width: 54px;
+    user-select: none;
+  }
+  .islander:hover:not(.eliminated) { border-color: var(--gold-dim); transform: translateY(-2px); }
+  .islander .figure { font-size: 24px; line-height: 1; }
+  .islander .name {
+    font-family: 'Cinzel', serif; font-size: .6rem;
+    color: var(--text-dim); margin-top: 3px; letter-spacing: .05em;
+  }
+  .islander .side-badge {
+    font-size: .55rem; font-family: 'Cinzel', serif;
+    padding: 1px 5px; border-radius: 3px; margin-top: 3px;
+    font-weight: 600; letter-spacing: .05em;
+  }
 
-        /* --- The Interactive Gift Box --- */
-        .gift-wrapper {
-            position: relative;
-            width: 100%;
-            max-width: 280px; /* Wider on mobile for text readability */
-            height: 200px; /* Fixed height to hold content */
-            perspective: 1000px;
-            cursor: pointer;
-            /* Prevent tap highlighting on mobile */
-            -webkit-tap-highlight-color: transparent; 
-        }
+  .islander.on-left  { border-color: var(--left-col-light); background: rgba(42,92,143,.25); }
+  .islander.on-right { border-color: var(--right-col-light); background: rgba(122,42,42,.25); }
+  .islander.on-left  .side-badge { background: var(--left-col); color: #aed; }
+  .islander.on-right .side-badge { background: var(--right-col); color: #faa; }
+  .islander.eliminated { opacity: .3; cursor: default; filter: grayscale(1); }
+  .islander.suspect { border-color: var(--gold) !important; background: rgba(201,147,58,.15) !important; }
 
-        .gift-box {
-            width: 140px;
-            height: 120px;
-            position: absolute;
-            bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            transition: transform 0.3s ease;
-            z-index: 5; /* Above content initially */
-        }
+  /* Controls */
+  .controls { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin-bottom: 14px; }
 
-        /* Hover effect only for unopened boxes on devices with hover */
-        @media (hover: hover) {
-            .gift-wrapper:not(.opened):hover .gift-box {
-                transform: translateX(-50%) scale(1.05) rotate(2deg);
-            }
-        }
+  .btn {
+    font-family: 'Cinzel', serif; font-size: .85rem; letter-spacing: .08em;
+    padding: 10px 24px; border-radius: 6px; cursor: pointer;
+    border: 2px solid; transition: all .2s;
+    font-weight: 600;
+  }
+  .btn-weigh {
+    background: linear-gradient(135deg, #8B6914, #c9933a);
+    border-color: var(--gold-light); color: #1a0d00;
+    box-shadow: 0 4px 14px rgba(201,147,58,.35);
+  }
+  .btn-weigh:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(201,147,58,.5); }
+  .btn-weigh:disabled { opacity: .4; cursor: not-allowed; transform: none; }
+  .btn-clear {
+    background: transparent; border-color: var(--stone-light); color: var(--text-dim);
+  }
+  .btn-clear:hover { border-color: var(--gold-dim); color: var(--text); }
+  .btn-reset {
+    background: transparent; border-color: var(--stone-light); color: var(--text-dim);
+  }
+  .btn-reset:hover { border-color: #888; color: var(--text); }
 
-        .box-body {
-            width: 100%;
-            height: 100%;
-            background: var(--box-color);
-            border-radius: 10px;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.15);
-            position: relative;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            border: 3px solid #c9184a;
-        }
+  /* Log */
+  .log {
+    background: var(--panel); border: 1px solid var(--gold-dim);
+    border-radius: 10px; padding: 12px; margin-bottom: 14px;
+    min-height: 70px;
+    box-shadow: inset 0 1px 0 rgba(201,147,58,.1);
+  }
+  .log-entry {
+    padding: 6px 0; border-bottom: 1px solid rgba(201,147,58,.1);
+    font-size: .95rem; display: flex; align-items: center; gap: 8px;
+  }
+  .log-entry:last-child { border-bottom: none; }
+  .log-num { font-family:'Cinzel',serif; font-size:.7rem; color:var(--gold-dim); min-width:20px; }
+  .log-left { color: var(--left-col-light); font-weight: 600; }
+  .log-right { color: var(--right-col-light); font-weight: 600; }
+  .log-vs { color: var(--text-dim); font-style: italic; }
+  .result-icon { font-size: 1.1rem; }
+  .log-empty { color: var(--text-dim); font-style: italic; font-size: .95rem; }
 
-        /* Ribbon Vertical */
-        .box-body::before {
-            content: '';
-            position: absolute;
-            width: 20px;
-            height: 100%;
-            background: var(--ribbon-color);
-            left: 50%;
-            transform: translateX(-50%);
-            border-left: 2px solid rgba(0,0,0,0.05);
-            border-right: 2px solid rgba(0,0,0,0.05);
-        }
+  /* Guess panel */
+  .guess-panel {
+    background: var(--panel); border: 1px solid var(--gold-dim);
+    border-radius: 10px; padding: 14px; margin-bottom: 14px;
+  }
+  .guess-row { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+  .guess-label { font-family: 'Cinzel', serif; font-size: .75rem; color: var(--text-dim); letter-spacing: .1em; }
+  select {
+    background: var(--stone); border: 1px solid var(--stone-light);
+    color: var(--text); font-family: 'Crimson Text', serif; font-size: 1rem;
+    padding: 6px 10px; border-radius: 6px; cursor: pointer;
+  }
+  select:focus { outline: 1px solid var(--gold-dim); }
+  .btn-guess {
+    background: linear-gradient(135deg, #1a4a1a, #2e7a2e);
+    border-color: #4a9a4a; color: #c0ffc0;
+    font-family: 'Cinzel', serif; font-size: .8rem; letter-spacing: .08em;
+    padding: 8px 18px; border-radius: 6px; border-width: 2px;
+    cursor: pointer; transition: all .2s;
+  }
+  .btn-guess:hover:not(:disabled) { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(50,150,50,.4); }
+  .btn-guess:disabled { opacity: .4; cursor: not-allowed; }
 
-        .box-lid {
-            width: 160px;
-            height: 40px;
-            background: #ff758f;
-            position: absolute;
-            top: -30px; /* Sits on top */
-            left: 50%;
-            transform: translateX(-50%);
-            border-radius: 6px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-            z-index: 6;
-            border: 3px solid #a4133c;
-            transform-origin: top center;
-            transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.4s;
-        }
+  /* Result overlay */
+  .result-banner {
+    border-radius: 10px; padding: 16px 20px;
+    text-align: center; margin-bottom: 14px;
+    display: none;
+  }
+  .result-banner.win {
+    display: block;
+    background: linear-gradient(135deg, rgba(50,100,50,.4), rgba(30,80,30,.4));
+    border: 2px solid #4a9a4a;
+  }
+  .result-banner.lose {
+    display: block;
+    background: linear-gradient(135deg, rgba(100,30,30,.4), rgba(80,20,20,.4));
+    border: 2px solid #9a3a3a;
+  }
+  .result-banner h2 { font-family: 'Cinzel', serif; font-size: 1.4rem; margin-bottom: 6px; }
+  .result-banner.win h2 { color: #7fdf7f; }
+  .result-banner.lose h2 { color: #df7f7f; }
+  .result-banner p { color: var(--text); font-size: 1rem; }
 
-        /* Ribbon on Lid */
-        .box-lid::before {
-            content: '';
-            position: absolute;
-            width: 20px;
-            height: 100%;
-            background: var(--ribbon-color);
-            left: 50%;
-            transform: translateX(-50%);
-        }
+  /* Tip */
+  .tip {
+    text-align: center; font-style: italic; color: var(--text-dim);
+    font-size: .88rem; margin-bottom: 8px;
+  }
 
-        /* Bow on top */
-        .box-lid::after {
-            content: '';
-            position: absolute;
-            width: 40px;
-            height: 30px;
-            background: radial-gradient(circle at center, var(--ribbon-color) 30%, transparent 35%);
-            border: 4px solid var(--ribbon-color);
-            border-radius: 50%;
-            top: -20px;
-            left: 50%;
-            transform: translateX(-50%);
-        }
+  /* Beam tilt classes */
+  .tilt-left  { transform: translateX(-50%) rotate(-8deg); }
+  .tilt-right { transform: translateX(-50%) rotate(8deg); }
+  .tilt-none  { transform: translateX(-50%) rotate(0deg); }
 
-        /* --- Revealed Content --- */
-        .gift-content {
-            position: absolute;
-            bottom: 10px;
-            left: 0;
-            width: 100%;
-            background: rgba(255, 255, 255, 0.95);
-            padding: 15px;
-            border-radius: 12px;
-            text-align: center;
-            opacity: 0;
-            transform: translateY(20px) scale(0.8);
-            transition: all 0.5s ease 0.2s; /* Delay to wait for lid */
-            z-index: 2; /* Behind box initially, but we move it up via Z-index or just visual layering */
-            border: 2px dashed var(--accent-red);
-            pointer-events: none; /* Not clickable until opened */
-        }
+  /* Legend */
+  .legend {
+    display: flex; gap: 16px; justify-content: center; flex-wrap: wrap;
+    margin-bottom: 10px; font-size: .8rem; color: var(--text-dim);
+  }
+  .legend span { display: flex; align-items: center; gap: 4px; }
+  .legend .dot {
+    width: 10px; height: 10px; border-radius: 50%;
+    display: inline-block;
+  }
 
-        .emoji-icon {
-            font-size: 3rem;
-            display: block;
-            margin-bottom: 5px;
-            filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1));
-        }
-
-        .gift-title {
-            font-family: 'Poppins', sans-serif;
-            font-weight: 800;
-            color: var(--accent-red);
-            font-size: 1.1rem;
-            line-height: 1.2;
-            margin-bottom: 5px;
-        }
-
-        .gift-desc {
-            font-size: 0.85rem;
-            color: var(--text-color);
-            line-height: 1.3;
-        }
-
-        .gift-desc span {
-            display: block;
-            margin-top: 4px;
-            font-size: 0.7rem;
-            color: #888;
-            font-style: italic;
-        }
-
-        /* --- Animation States --- */
-        .gift-wrapper.opened .box-lid {
-            transform: translateX(-50%) translateY(-60px) rotate(-15deg) scale(0.9);
-            opacity: 0; /* Fade out lid or just fly away */
-        }
-        
-        .gift-wrapper.opened .box-body {
-            transform: translateX(-50%) translateY(80px) scale(0.5); /* Shrink box body down */
-            opacity: 0; /* Fade it out to reveal card clearly */
-        }
-
-        /* Make content visible and interactive */
-        .gift-wrapper.opened .gift-content {
-            opacity: 1;
-            transform: translateY(0) scale(1);
-            z-index: 20; /* Bring to front */
-            pointer-events: auto;
-            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
-        }
-
-        /* --- Navigation Buttons --- */
-        .btn {
-            background: var(--dark-purple);
-            color: white;
-            border: none;
-            padding: 15px 32px;
-            font-size: 1.1rem;
-            font-family: 'Poppins', sans-serif;
-            font-weight: 600;
-            border-radius: 50px;
-            cursor: pointer;
-            box-shadow: 0 8px 15px rgba(66, 72, 116, 0.3);
-            transition: transform 0.2s, background 0.2s, box-shadow 0.2s;
-            margin-top: 20px;
-            outline: none;
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .btn:active {
-            transform: scale(0.96);
-        }
-
-        .btn:hover {
-            background: #2e3252;
-            box-shadow: 0 10px 20px rgba(66, 72, 116, 0.4);
-        }
-
-        .btn.hidden-btn {
-            display: none;
-            animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-
-        @keyframes popIn {
-            0% { transform: scale(0); opacity: 0; }
-            100% { transform: scale(1); opacity: 1; }
-        }
-
-        /* --- View 2 Specifics --- */
-        .wishes-card {
-            background: rgba(255, 255, 255, 0.8);
-            backdrop-filter: blur(10px);
-            padding: 30px;
-            border-radius: 20px;
-            border: 2px solid var(--white);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            margin: 20px auto;
-        }
-
-        .message-text {
-            font-size: 1.3rem;
-            line-height: 1.8;
-            color: var(--text-color);
-            margin-bottom: 20px;
-        }
-
-        .highlight {
-            color: var(--accent-red);
-            font-weight: bold;
-        }
-
-        /* Responsive Tweaks */
-        @media (max-width: 400px) {
-            h1 { font-size: 2.8rem; }
-            h2 { font-size: 1.2rem; }
-            .gift-wrapper { height: 180px; }
-        }
-
-    </style>
+  @media (max-width: 600px) {
+    .seesaw-area { height: 180px; }
+    .pan { width: 80px; }
+    .pan-figures { width: 90px; }
+    .pan-figures.left-figures { left: calc(8% - 45px); }
+    .pan-figures.right-figures { right: calc(8% - 45px); }
+  }
+</style>
 </head>
 <body>
+<div class="stars"></div>
+<div class="container">
 
-    <!-- Background Animation Container -->
-    <div id="bg-container"></div>
+  <header>
+    <h1>⚖️ The Twelve Islanders</h1>
+    <p>One among twelve is unlike the rest — heavier or lighter. Find the impostor in three weighings.</p>
+  </header>
 
-    <div class="app-container">
-        
-        <!-- VIEW 1: THE GIFTS -->
-        <div id="view-1" class="view">
-            <header>
-                <h1>Hello February</h1>
-                <h2>🎂 It's your birthday month!</h2>
-                <p class="instruction">Tap the boxes to open your gifts!</p>
-            </header>
+  <!-- Weighing tracker -->
+  <div class="tracker-label">WEIGHINGS USED</div>
+  <div class="tracker">
+    <div class="weigh-pip" id="pip0"></div>
+    <div class="weigh-pip" id="pip1"></div>
+    <div class="weigh-pip" id="pip2"></div>
+  </div>
 
-            <div class="gift-grid">
-                
-                <!-- Box 1 -->
-                <div class="gift-wrapper" onclick="openGift(this, 1)">
-                    <div class="gift-box">
-                        <div class="box-lid"></div>
-                        <div class="box-body"></div>
-                    </div>
-                    <div class="gift-content">
-                        <span class="emoji-icon">🍰</span>
-                        <div class="gift-title">Strawberry Shortcake</div>
-                        <div class="gift-desc">
-                            You got 1 free piece!
-                            <span>*Coupon valid with your boyfriend only.</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Box 2 -->
-                <div class="gift-wrapper" onclick="openGift(this, 2)">
-                    <div class="gift-box">
-                        <div class="box-lid"></div>
-                        <div class="box-body"></div>
-                    </div>
-                    <div class="gift-content">
-                        <span class="emoji-icon">💐</span>
-                        <div class="gift-title">Flower Bouquet</div>
-                        <div class="gift-desc">
-                            You got 1 free bouquet!
-                            <span>*Coupon valid with your boyfriend only.</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Box 3 -->
-                <div class="gift-wrapper" onclick="openGift(this, 3)">
-                    <div class="gift-box">
-                        <div class="box-lid"></div>
-                        <div class="box-body"></div>
-                    </div>
-                    <div class="gift-content">
-                        <span class="emoji-icon">💑</span>
-                        <div class="gift-title">Date Coupon</div>
-                        <div class="gift-desc">
-                            Let's go on a date!
-                            <span>*You choose the place & time.</span>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-
-            <!-- Navigation to View 2 (Hidden initially) -->
-            <button id="btn-to-wishes" class="btn hidden-btn" onclick="goToWishes()">
-                Read Wishes &rarr;
-            </button>
-        </div>
-
-        <!-- VIEW 2: THE WISHES -->
-        <div id="view-2" class="view hidden">
-            <header>
-                <h1>Hello February</h1>
-            </header>
-            
-            <div class="wishes-card">
-                <p class="message-text">
-                    May this month be very kind to <span class="highlight">nymph</span>. <br><br>
-                    Wishing you lots of happiness, smiles, and love.<br>
-                    <strong>Happy Birthday Month & Happy Valentine's!</strong>
-                </p>
-                <div style="font-size: 3rem;">💖</div>
-            </div>
-
-            <button class="btn" onclick="backToGifts()">
-                &larr; Back to Gifts
-            </button>
-        </div>
-
+  <!-- Seesaw -->
+  <div class="seesaw-area">
+    <div class="beam-wrapper tilt-none" id="beamWrapper">
+      <!-- Chains -->
+      <div class="chain chain-left"  id="chainLeft"  style="height:80px; bottom:14px;"></div>
+      <div class="chain chain-right" id="chainRight" style="height:80px; bottom:14px;"></div>
+      <!-- Beam -->
+      <div class="beam"></div>
+      <!-- Pans -->
+      <div class="pan pan-left"></div>
+      <div class="pan pan-right"></div>
     </div>
+    <!-- Figures on pans (outside beam so they don't rotate weirdly) -->
+    <div class="pan-figures left-figures"  id="leftFigures"></div>
+    <div class="pan-figures right-figures" id="rightFigures"></div>
+    <!-- Pivot + fulcrum -->
+    <div class="fulcrum"></div>
+    <div class="pivot-pin"></div>
+  </div>
 
-    <script>
-        // State tracking
-        let openedCount = 0;
-        const totalGifts = 3;
-        
-        // DOM Elements
-        const view1 = document.getElementById('view-1');
-        const view2 = document.getElementById('view-2');
-        const toWishesBtn = document.getElementById('btn-to-wishes');
+  <!-- Legend -->
+  <div class="legend">
+    <span><span class="dot" style="background:var(--left-col-light)"></span> Left Pan</span>
+    <span><span class="dot" style="background:var(--right-col-light)"></span> Right Pan</span>
+    <span><span class="dot" style="background:var(--stone-light)"></span> Set Aside</span>
+  </div>
 
-        // Function to create background elements
-        function createBackground() {
-            const container = document.getElementById('bg-container');
-            const icons = ['❤️', '🎂', '✨', '🌸', '🧁'];
-            const colors = ['#FFC3C3', '#FF8FAB', '#DCD6F7'];
-            
-            // Create 15 floating elements
-            for (let i = 0; i < 20; i++) {
-                const el = document.createElement('div');
-                el.classList.add('floating-element');
-                el.textContent = icons[Math.floor(Math.random() * icons.length)];
-                
-                // Random positioning and timing
-                el.style.left = Math.random() * 100 + 'vw';
-                el.style.animationDuration = (Math.random() * 5 + 10) + 's'; // 10-15s duration
-                el.style.animationDelay = (Math.random() * 10) + 's';
-                el.style.fontSize = (Math.random() * 1.5 + 1) + 'rem';
-                
-                container.appendChild(el);
-            }
-        }
+  <!-- Islanders grid -->
+  <div class="island-section">
+    <div class="section-label">🏝️ The Islanders — click to cycle: aside → left pan → right pan → aside</div>
+    <div class="islanders-grid" id="islandersGrid"></div>
+  </div>
 
-        // Initialize Background
-        createBackground();
+  <!-- Controls -->
+  <div class="controls">
+    <button class="btn btn-clear" id="btnClear" onclick="clearPans()">Clear Pans</button>
+    <button class="btn btn-weigh" id="btnWeigh" onclick="doWeigh()">⚖ Weigh</button>
+    <button class="btn btn-reset" onclick="resetGame()">↺ New Game</button>
+  </div>
 
-        // Open Gift Function
-        function openGift(element, id) {
-            // Check if already opened to prevent double counting
-            if (element.classList.contains('opened')) return;
+  <!-- Log -->
+  <div class="island-section" style="margin-bottom:14px;">
+    <div class="section-label">📜 Weighing Record</div>
+    <div class="log" id="log"><span class="log-empty">No weighings yet.</span></div>
+  </div>
 
-            // Add opened class to trigger CSS animations
-            element.classList.add('opened');
-            
-            // Increment counter
-            openedCount++;
+  <!-- Guess -->
+  <div class="guess-panel" id="guessPanel">
+    <div class="section-label" style="margin-bottom:10px;">🔍 Make Your Accusation</div>
+    <div class="guess-row">
+      <span class="guess-label">ISLANDER</span>
+      <select id="guessWho"></select>
+      <span class="guess-label">IS</span>
+      <select id="guessHow">
+        <option value="heavier">Heavier</option>
+        <option value="lighter">Lighter</option>
+      </select>
+      <button class="btn-guess" id="btnGuess" onclick="makeGuess()">Accuse</button>
+    </div>
+  </div>
 
-            // Check if all gifts are opened
-            if (openedCount === totalGifts) {
-                setTimeout(() => {
-                    toWishesBtn.style.display = 'inline-flex';
-                    // Trigger reflow to restart animation if needed, or just let CSS animation run
-                }, 600); // Slight delay after last box opens
-            }
-        }
+  <!-- Result -->
+  <div class="result-banner" id="resultBanner">
+    <h2 id="resultTitle"></h2>
+    <p id="resultText"></p>
+  </div>
+  <div class="tip" id="tipText"></div>
 
-        // Navigation Functions
-        function goToWishes() {
-            // Fade out View 1
-            view1.classList.add('fade-out');
-            
-            setTimeout(() => {
-                view1.classList.add('hidden');
-                view1.classList.remove('fade-out');
-                
-                // Show View 2
-                view2.classList.remove('hidden');
-                // Trigger reflow for animation
-                void view2.offsetWidth; 
-                view2.classList.add('fade-in');
-            }, 500);
-        }
+</div>
 
-        function backToGifts() {
-            // Fade out View 2
-            view2.classList.remove('fade-in');
-            view2.classList.add('fade-out');
+<script>
+const EMOJI = ['🧑','👨','👩','🧔','👴','👵','🧕','👲','👳','🧙','🧝','🧚'];
+const NAMES = ['Arlo','Bea','Cruz','Dara','Enzo','Fira','Gull','Hana','Iro','Juno','Kael','Luma'];
 
-            setTimeout(() => {
-                view2.classList.add('hidden');
-                view2.classList.remove('fade-out');
+let oddOne, oddType, gameOver, weighCount, logEntries;
+let states = []; // 0=aside, 1=left, 2=right
 
-                // Show View 1
-                view1.classList.remove('hidden');
-                void view1.offsetWidth;
-                view1.classList.add('fade-in');
-            }, 500);
-        }
-    </script>
+function initState() {
+  oddOne  = Math.floor(Math.random() * 12);
+  oddType = Math.random() < 0.5 ? 'heavier' : 'lighter';
+  gameOver = false;
+  weighCount = 0;
+  logEntries = [];
+  states = new Array(12).fill(0);
+}
+
+function buildGrid() {
+  const grid = document.getElementById('islandersGrid');
+  grid.innerHTML = '';
+  for (let i = 0; i < 12; i++) {
+    const el = document.createElement('div');
+    el.className = 'islander';
+    el.id = `isl-${i}`;
+    el.innerHTML = `<span class="figure">${EMOJI[i]}</span><span class="name">${NAMES[i]}</span><span class="side-badge" id="badge-${i}">–</span>`;
+    el.onclick = () => cycleState(i);
+    grid.appendChild(el);
+  }
+  // Guess selects
+  const sel = document.getElementById('guessWho');
+  sel.innerHTML = NAMES.map((n,i) => `<option value="${i}">${n}</option>`).join('');
+}
+
+function cycleState(i) {
+  if (gameOver) return;
+  states[i] = (states[i] + 1) % 3;
+  renderAll();
+}
+
+function renderAll() {
+  // Update each islander card
+  for (let i = 0; i < 12; i++) {
+    const el = document.getElementById(`isl-${i}`);
+    const badge = document.getElementById(`badge-${i}`);
+    el.className = 'islander';
+    if (states[i] === 1) { el.classList.add('on-left');  badge.textContent = 'LEFT';  badge.style.display='block'; }
+    else if (states[i] === 2) { el.classList.add('on-right'); badge.textContent = 'RIGHT'; badge.style.display='block'; }
+    else { badge.textContent = '–'; badge.style.display='block'; }
+  }
+
+  // Update pan figures
+  const leftIdx  = states.map((s,i)=>s===1?i:-1).filter(x=>x>=0);
+  const rightIdx = states.map((s,i)=>s===2?i:-1).filter(x=>x>=0);
+
+  const lf = document.getElementById('leftFigures');
+  const rf = document.getElementById('rightFigures');
+  lf.innerHTML = leftIdx.map(i => `<div class="pan-figure" title="${NAMES[i]}" onclick="cycleState(${i})">${EMOJI[i]}<span class="num">${NAMES[i]}</span></div>`).join('');
+  rf.innerHTML = rightIdx.map(i => `<div class="pan-figure" title="${NAMES[i]}" onclick="cycleState(${i})">${EMOJI[i]}<span class="num">${NAMES[i]}</span></div>`).join('');
+
+  // Weigh button enable
+  document.getElementById('btnWeigh').disabled = gameOver || weighCount >= 3 || (leftIdx.length === 0 && rightIdx.length === 0) || leftIdx.length !== rightIdx.length;
+  document.getElementById('btnGuess').disabled = gameOver;
+}
+
+function updatePips() {
+  for (let i = 0; i < 3; i++) {
+    document.getElementById(`pip${i}`).className = 'weigh-pip' + (i < weighCount ? ' used' : '');
+  }
+}
+
+function doWeigh() {
+  if (gameOver || weighCount >= 3) return;
+  const leftIdx  = states.map((s,i)=>s===1?i:-1).filter(x=>x>=0);
+  const rightIdx = states.map((s,i)=>s===2?i:-1).filter(x=>x>=0);
+  if (leftIdx.length !== rightIdx.length || leftIdx.length === 0) return;
+
+  // Calculate weights
+  const leftWeight  = leftIdx.reduce((sum,i)  => sum + (i===oddOne ? (oddType==='heavier'?2:0) : 1), 0);
+  const rightWeight = rightIdx.reduce((sum,i) => sum + (i===oddOne ? (oddType==='heavier'?2:0) : 1), 0);
+
+  let result, icon, tilt;
+  if (leftWeight > rightWeight)       { result = 'left';    icon = '⬅️'; tilt = 'tilt-left'; }
+  else if (rightWeight > leftWeight)  { result = 'right';   icon = '➡️'; tilt = 'tilt-right'; }
+  else                                { result = 'balanced';icon = '⚖️'; tilt = 'tilt-none'; }
+
+  // Animate beam
+  const bw = document.getElementById('beamWrapper');
+  bw.className = `beam-wrapper ${tilt}`;
+
+  weighCount++;
+  updatePips();
+
+  // Log entry
+  const entry = { num: weighCount, left: leftIdx.map(i=>NAMES[i]), right: rightIdx.map(i=>NAMES[i]), result, icon };
+  logEntries.push(entry);
+  renderLog();
+
+  // Clear pans for next round
+  states = states.map(s => 0);
+  setTimeout(renderAll, 100);
+
+  if (weighCount >= 3) {
+    document.getElementById('btnWeigh').disabled = true;
+    document.getElementById('tipText').textContent = "All three weighings used — time to make your accusation!";
+  }
+}
+
+function renderLog() {
+  const log = document.getElementById('log');
+  if (logEntries.length === 0) { log.innerHTML = '<span class="log-empty">No weighings yet.</span>'; return; }
+  log.innerHTML = logEntries.map(e => {
+    const leftNames  = e.left.join(', ');
+    const rightNames = e.right.join(', ');
+    let resultText;
+    if (e.result === 'left')     resultText = `<span style="color:var(--left-col-light)">LEFT side heavier</span>`;
+    else if (e.result === 'right') resultText = `<span style="color:var(--right-col-light)">RIGHT side heavier</span>`;
+    else                           resultText = `<span style="color:var(--gold)">Perfectly balanced</span>`;
+    return `<div class="log-entry">
+      <span class="log-num">#${e.num}</span>
+      <span class="result-icon">${e.icon}</span>
+      <span>
+        <span class="log-left">[${leftNames}]</span>
+        <span class="log-vs"> vs </span>
+        <span class="log-right">[${rightNames}]</span>
+        → ${resultText}
+      </span>
+    </div>`;
+  }).join('');
+}
+
+function clearPans() {
+  if (gameOver) return;
+  states = new Array(12).fill(0);
+  renderAll();
+}
+
+function makeGuess() {
+  if (gameOver) return;
+  const who = parseInt(document.getElementById('guessWho').value);
+  const how = document.getElementById('guessHow').value;
+
+  gameOver = true;
+  document.getElementById('btnGuess').disabled = true;
+  document.getElementById('btnWeigh').disabled = true;
+  document.getElementById('tipText').textContent = '';
+
+  const banner = document.getElementById('resultBanner');
+  const title  = document.getElementById('resultTitle');
+  const text   = document.getElementById('resultText');
+
+  // Highlight the real odd islander
+  document.getElementById(`isl-${oddOne}`).classList.add('suspect');
+
+  if (who === oddOne && how === oddType) {
+    banner.className = 'result-banner win';
+    title.textContent = '✓ Correct!';
+    text.textContent = `${NAMES[oddOne]} was indeed ${oddType} than the others. The island is safe!`;
+  } else {
+    banner.className = 'result-banner lose';
+    title.textContent = '✗ Wrong!';
+    const realName = NAMES[oddOne];
+    text.textContent = `The truth: ${realName} was ${oddType}. Better luck next time, detective.`;
+    // Reset beam
+    document.getElementById('beamWrapper').className = 'beam-wrapper tilt-none';
+  }
+}
+
+function resetGame() {
+  document.getElementById('resultBanner').className = 'result-banner';
+  document.getElementById('beamWrapper').className = 'beam-wrapper tilt-none';
+  document.getElementById('leftFigures').innerHTML = '';
+  document.getElementById('rightFigures').innerHTML = '';
+  document.getElementById('tipText').textContent = '';
+  initState();
+  buildGrid();
+  renderLog();
+  updatePips();
+  renderAll();
+}
+
+// Boot
+initState();
+buildGrid();
+renderLog();
+updatePips();
+renderAll();
+</script>
 </body>
 </html>
-
