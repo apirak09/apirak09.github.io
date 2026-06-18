@@ -38,15 +38,30 @@
   const SLING_Y = 404;
   const MAX_DRAG = 115;
   const POWER = 0.23;
-  const GRAVITY = 0.36;
-  const SAVE_KEY = 'mini-angry-birds-v13-save';
-  const HELP_KEY = 'mini-angry-birds-v13-help-seen';
+  const GRAVITY = 0.34;
+  const SAVE_KEY = 'mini-angry-birds-v14-save';
+  const HELP_KEY = 'mini-angry-birds-v14-help-seen';
+
+  // v14 physics goal: structures should resist small nudges. Heavy stone and
+  // supported blocks behave like they have static friction/settled contact, so
+  // a weak tap no longer wakes the whole map or kills every pig.
+  const PHYSICS = {
+    sleepInvMassScale: 0.10,
+    contactPropagationImpulse: 7.2,
+    nearWakeRadius: 18,
+    pigImpactThreshold: 2.65,
+    crushVelocityThreshold: 0.95,
+    maxBlockSpeed: 8.2,
+    maxAngularSpeed: 0.040,
+    leverTorqueScale: 0.34,
+    staticBounce: 0.16
+  };
 
   const materials = {
-    wood:  { hp: 44, mass: 1.0,  fill: '#c78542', edge: '#7b4d23', light: '#e5b66f', name: 'Wood',  restitution: .24, friction: .62 },
-    stone: { hp: 92, mass: 2.2,  fill: '#87929a', edge: '#59656f', light: '#bac3c8', name: 'Stone', restitution: .14, friction: .80 },
-    ice:   { hp: 26, mass: 0.72, fill: '#8edff1', edge: '#3b9dc0', light: '#d7fbff', name: 'Ice',   restitution: .44, friction: .16 },
-    tnt:   { hp: 20, mass: 1.0,  fill: '#df5148', edge: '#8b2923', light: '#ffb0a2', name: 'TNT',   restitution: .30, friction: .52 }
+    wood:  { hp: 64,  mass: 1.30, fill: '#c78542', edge: '#7b4d23', light: '#e5b66f', name: 'Wood',  restitution: .16, friction: .78, wake: 3.4, damage: 6.0 },
+    stone: { hp: 170, mass: 4.80, fill: '#87929a', edge: '#59656f', light: '#bac3c8', name: 'Stone', restitution: .08, friction: .94, wake: 7.6, damage: 13.0 },
+    ice:   { hp: 34,  mass: 0.95, fill: '#8edff1', edge: '#3b9dc0', light: '#d7fbff', name: 'Ice',   restitution: .28, friction: .28, wake: 2.3, damage: 3.8 },
+    tnt:   { hp: 30,  mass: 1.25, fill: '#df5148', edge: '#8b2923', light: '#ffb0a2', name: 'TNT',   restitution: .18, friction: .68, wake: 3.6, damage: 5.2 }
   };
 
   const birds = {
@@ -94,7 +109,7 @@
   let audioCtx = null;
 
   function loadSave() {
-    // v13: every stage is selectable from the first load. Best stars are still
+    // v14: every stage is selectable from the first load. Best stars are still
     // stored per level, so reloads do not lock content again.
     const allUnlocked = Array.isArray(levels) ? levels.length : 25;
     try {
@@ -111,7 +126,8 @@
 
   function cloneBlock(t) {
     const m = materials[t.material] || materials.wood;
-    const mass = m.mass * Math.max(.75, (t.w * t.h) / 2600);
+    const areaScale = Math.max(.85, Math.pow((t.w * t.h) / 2500, 0.82));
+    const mass = m.mass * areaScale;
     return {
       ...t,
       x0: t.x,
@@ -397,16 +413,16 @@
   function updateBlocks(dt) {
     blocks.forEach(b => {
       if (b.destroyed || b.sleep) return;
-      b.vx = clamp(b.vx || 0, -13, 13);
-      b.vy = clamp(b.vy || 0, -13, 13);
-      b.av = clamp(b.av || 0, -.075, .075);
+      b.vx = clamp(b.vx || 0, -PHYSICS.maxBlockSpeed, PHYSICS.maxBlockSpeed);
+      b.vy = clamp(b.vy || 0, -PHYSICS.maxBlockSpeed, PHYSICS.maxBlockSpeed);
+      b.av = clamp(b.av || 0, -PHYSICS.maxAngularSpeed, PHYSICS.maxAngularSpeed);
       b.x += b.vx * dt;
       b.y += b.vy * dt;
       b.angle += (b.av || 0) * dt;
       b.vy += GRAVITY * dt;
-      b.vx *= Math.pow(.989, dt);
-      b.vy *= Math.pow(.997, dt);
-      b.av = (b.av || 0) * Math.pow(.978, dt);
+      b.vx *= Math.pow(.976, dt);
+      b.vy *= Math.pow(.992, dt);
+      b.av = (b.av || 0) * Math.pow(.945, dt);
       b.angle = clamp(b.angle, -1.20, 1.20);
 
       const corners = blockCorners(b);
@@ -415,14 +431,14 @@
       if (low.y > GROUND) {
         const impact = Math.abs(b.vy);
         b.y -= low.y - GROUND;
-        if (impact > 3.5) damageBlock(b, (impact - 3.5) * 3.2, low.x, GROUND);
+        if (impact > 5.2) damageBlock(b, (impact - 5.2) * 1.15, low.x, GROUND);
         const cx = b.x + b.w / 2;
         const torqueArm = (low.x - cx) / Math.max(24, b.w);
-        b.av += torqueArm * b.vy * .018;
-        b.vy *= -0.15;
+        b.av += torqueArm * b.vy * .006;
+        b.vy *= -0.10;
         if (Math.abs(b.vy) < .30) b.vy = 0;
-        b.vx *= Math.pow(.78, dt);
-        b.av *= .72;
+        b.vx *= Math.pow(.62, dt);
+        b.av *= .50;
       }
 
       const aabb = blockAABB(b);
@@ -522,8 +538,8 @@
 
       if (lever) {
         const strength = clamp(Math.abs(lever) / Math.max(30, b.w * .5), 0, 1);
-        b.av += (lever / Math.max(28, b.w)) * (0.020 + 0.038 * strength) * dt;
-        b.vy += GRAVITY * .06 * strength * dt;
+        b.av += (lever / Math.max(36, b.w)) * (0.010 + 0.018 * strength) * PHYSICS.leverTorqueScale * dt;
+        b.vy += GRAVITY * .018 * strength * dt;
         const px = cx + Math.cos(b.angle) * supportCenter;
         const py = cy + Math.sin(b.angle) * supportCenter;
         if (Math.abs(lever) > b.w * .18 && state.turnFrames % 9 < dt) {
@@ -568,9 +584,10 @@
     b.sleep = false;
     b.touched = true;
     b.restFrames = 0;
-    // Wake nearby pieces lightly so a struck wall can transfer force without
-    // instantly waking the whole level.
-    if (reason === 'hit' || reason === 'explode') wakeNearbyBlocks(b, reason);
+    // v14: do not wake adjacent structure from a light hit. Contact propagation
+    // is now impulse-gated inside resolveBodyImpulse; explosions/destruction
+    // still wake nearby pieces.
+    if (reason === 'explode') wakeNearbyBlocks(b, reason);
   }
 
   function wakeNearbyBlocks(src, reason = 'contact') {
@@ -605,11 +622,11 @@
       if (initial <= 0) return;
       const now = blockSupportCount(b);
       const longBeam = b.w > b.h * 2.25;
-      if (now <= 0 || (longBeam && now < initial)) {
+      if (now <= 0 || (longBeam && now <= Math.max(0, initial - 2))) {
         wakeBlock(b, 'support');
-        b.vy += .25;
+        b.vy += .12;
         const a = blockAABB(b);
-        const supportBias = now <= 0 ? 0 : .012;
+        const supportBias = now <= 0 ? 0 : .004;
         b.av += ((centerX(b) - (a.minX + a.maxX) / 2) >= 0 ? supportBias : -supportBias);
       }
     });
@@ -625,7 +642,6 @@
         if (a.sleep && b.sleep) continue;
         const hit = rectRectSAT(a, b);
         if (!hit.collided) continue;
-        if (!a.sleep || !b.sleep) { wakeBlock(a, 'contact'); wakeBlock(b, 'contact'); }
         resolveBodyImpulse(a, b, hit.nx, hit.ny, hit.depth, {
           restitution: Math.min(materials[a.material]?.restitution ?? .22, materials[b.material]?.restitution ?? .22),
           friction: Math.max(materials[a.material]?.friction ?? .55, materials[b.material]?.friction ?? .55),
@@ -670,18 +686,41 @@
     });
   }
 
+  function wakeImpulseThreshold(b) {
+    if (!b || !('w' in b)) return 0;
+    const m = materials[b.material] || materials.wood;
+    const supportBonus = 1 + Math.min(3, blockSupportCount(b)) * .16;
+    const sizeBonus = clamp(Math.sqrt((b.w * b.h) / 2600), .75, 2.2);
+    const stoneBonus = b.material === 'stone' ? 1.22 : 1;
+    return (m.wake || 3.4) * supportBonus * sizeBonus * stoneBonus;
+  }
+
+  function damageImpulseThreshold(b) {
+    if (!b || !('w' in b)) return 4;
+    const m = materials[b.material] || materials.wood;
+    const sizeBonus = clamp(Math.sqrt((b.w * b.h) / 2800), .78, 2.0);
+    const supportBonus = 1 + Math.min(3, blockSupportCount(b)) * .08;
+    return (m.damage || 6) * sizeBonus * supportBonus;
+  }
+
   function resolveBodyImpulse(a, b, nx, ny, depth, options = {}) {
-    if (a && a.sleep && !b?.sleep) wakeBlock(a, 'contact');
-    if (b && b.sleep && !a?.sleep) wakeBlock(b, 'contact');
-    const invA = 1 / Math.max(.12, a.mass || 1);
-    const invB = 1 / Math.max(.12, b.mass || 1);
+    const blockA = a && 'w' in a;
+    const blockB = b && 'w' in b;
+    const aWasSleep = !!(blockA && a.sleep);
+    const bWasSleep = !!(blockB && b.sleep);
+
+    const baseInvA = 1 / Math.max(.12, a.mass || 1);
+    const baseInvB = 1 / Math.max(.12, b.mass || 1);
+    // Sleeping structural blocks act like settled/heavy objects until hit hard.
+    const invA = aWasSleep ? baseInvA * PHYSICS.sleepInvMassScale : baseInvA;
+    const invB = bWasSleep ? baseInvB * PHYSICS.sleepInvMassScale : baseInvB;
     const invSum = invA + invB;
     if (invSum <= 0) return { impulse: 0, rel: 0 };
 
     const hitX = options.hitX ?? ((centerX(a) + centerX(b)) / 2);
     const hitY = options.hitY ?? ((centerY(a) + centerY(b)) / 2);
-    const slop = .02;
-    const percent = options.percent ?? .48;
+    const slop = .04;
+    const percent = options.percent ?? .34;
     const correction = Math.max(depth - slop, 0) / invSum * percent;
     a.x += nx * correction * invA;
     a.y += ny * correction * invA;
@@ -693,7 +732,7 @@
     const velAlongNormal = rvx * nx + rvy * ny;
     if (velAlongNormal > 0) return { impulse: 0, rel: velAlongNormal };
 
-    const e = clamp(options.restitution ?? .24, 0, .65);
+    const e = clamp(options.restitution ?? .18, 0, .45);
     const j = -(1 + e) * velAlongNormal / invSum;
     let px = nx * j;
     let py = ny * j;
@@ -709,7 +748,7 @@
     const tLen = Math.hypot(tx, ty);
     if (tLen > .0001) {
       tx /= tLen; ty /= tLen;
-      const mu = clamp(options.friction ?? .48, 0, 1.1);
+      const mu = clamp(options.friction ?? .62, 0, 1.25);
       let jt = -(rvx2 * tx + rvy2 * ty) / invSum;
       jt = clamp(jt, -Math.abs(j) * mu, Math.abs(j) * mu);
       px += tx * jt;
@@ -720,14 +759,33 @@
       b.vy -= ty * jt * invB;
     }
 
-    applyAngularImpulse(a, hitX, hitY, px, py);
-    applyAngularImpulse(b, hitX, hitY, -px, -py);
-
     const impulse = Math.abs(j);
-    if (impulse > 3.2 && options.damageScale !== 0) {
-      const dmg = (impulse - 3.2) * (options.damageScale ?? 1);
-      if ('hp' in a && 'w' in a) damageBlock(a, dmg, hitX, hitY);
-      if ('hp' in b && 'w' in b) damageBlock(b, dmg, hitX, hitY);
+    const thresholdA = blockA ? wakeImpulseThreshold(a) : 0;
+    const thresholdB = blockB ? wakeImpulseThreshold(b) : 0;
+
+    if (blockA) {
+      if (aWasSleep && impulse < thresholdA) { a.vx = 0; a.vy = 0; a.av = 0; }
+      else { wakeBlock(a, 'contact'); applyAngularImpulse(a, hitX, hitY, px * .55, py * .55); }
+    }
+    if (blockB) {
+      if (bWasSleep && impulse < thresholdB) { b.vx = 0; b.vy = 0; b.av = 0; }
+      else { wakeBlock(b, 'contact'); applyAngularImpulse(b, hitX, hitY, -px * .55, -py * .55); }
+    }
+
+    if (impulse > PHYSICS.contactPropagationImpulse) {
+      if (blockA) wakeNearbyBlocks(a, 'strong-contact');
+      if (blockB) wakeNearbyBlocks(b, 'strong-contact');
+    }
+
+    if (impulse > 2.4 && options.damageScale !== 0) {
+      if (blockA) {
+        const th = damageImpulseThreshold(a);
+        if (impulse > th) damageBlock(a, (impulse - th) * .55 * (options.damageScale ?? 1), hitX, hitY);
+      }
+      if (blockB) {
+        const th = damageImpulseThreshold(b);
+        if (impulse > th) damageBlock(b, (impulse - th) * .55 * (options.damageScale ?? 1), hitX, hitY);
+      }
     }
     return { impulse, rel: velAlongNormal };
   }
@@ -736,24 +794,51 @@
     const hit = circleRect(obj.x, obj.y, obj.r, b);
     if (!hit.collided) return null;
     const mat = materials[b.material] || materials.wood;
-    wakeBlock(b, 'hit');
+    const relN = ((obj.vx || 0) - (b.vx || 0)) * hit.nx + ((obj.vy || 0) - (b.vy || 0)) * hit.ny;
+    const closingSpeed = Math.max(0, -relN);
+    const impactMomentum = closingSpeed * Math.max(.2, obj.mass || 1);
+    const wakeThreshold = wakeImpulseThreshold(b);
+
+    // Static-friction gate: tiny bumps against settled/heavy structures bounce or slide,
+    // but they do not wake the whole stack. This is the main v14 fix.
+    if (b.sleep && impactMomentum < wakeThreshold) {
+      obj.x += hit.nx * Math.max(hit.depth, .6);
+      obj.y += hit.ny * Math.max(hit.depth, .6);
+      const vn = (obj.vx || 0) * hit.nx + (obj.vy || 0) * hit.ny;
+      if (vn < 0) {
+        obj.vx -= (1 + PHYSICS.staticBounce) * vn * hit.nx;
+        obj.vy -= (1 + PHYSICS.staticBounce) * vn * hit.ny;
+        // Tangential energy loss: bird scrapes the block instead of injecting chaos.
+        const tangentX = -hit.ny, tangentY = hit.nx;
+        const vt = obj.vx * tangentX + obj.vy * tangentY;
+        obj.vx -= vt * tangentX * .22;
+        obj.vy -= vt * tangentY * .22;
+      }
+      if (impactMomentum > wakeThreshold * .62 && impactMomentum > damageImpulseThreshold(b) * .45) {
+        chipBlock(b, (impactMomentum - wakeThreshold * .62) * .10 * (options.damageScale ?? 1), hit.x, hit.y);
+      }
+      return { impulse: impactMomentum, rel: -closingSpeed, resisted: true };
+    }
+
+    wakeBlock(b, 'direct-hit');
     const result = resolveBodyImpulse(obj, b, hit.nx, hit.ny, hit.depth, {
-      restitution: Math.min(options.restitution ?? .28, mat.restitution ?? .24),
-      friction: mat.friction ?? .48,
+      restitution: Math.min(options.restitution ?? .20, mat.restitution ?? .18),
+      friction: mat.friction ?? .62,
       damageScale: options.damageScale ?? 1,
       hitX: hit.x,
       hitY: hit.y,
-      percent: .88
+      percent: .62
     });
 
     const speed = Math.hypot(obj.vx || 0, obj.vy || 0);
     const impulse = result?.impulse || 0;
-    if (impulse > .25) {
-      const damage = Math.max(0, (impulse - .9) * 2.15 * (options.damageScale ?? 1));
+    const dmgThreshold = damageImpulseThreshold(b);
+    if (impulse > Math.max(1.4, dmgThreshold * .72)) {
+      const damage = Math.max(0, (impulse - dmgThreshold * .72) * .42 * (options.damageScale ?? 1));
       damageBlock(b, damage, hit.x, hit.y);
       const count = options.particleCount ?? 8;
-      if (count > 0) burst(hit.x, hit.y, Math.min(count, 4 + Math.floor(impulse)), options.particleColor || mat.fill, Math.min(5.2, .65 + impulse * .18));
-      shake = Math.max(shake, Math.min(12, impulse * (options.shakeScale ?? .8)));
+      if (count > 0) burst(hit.x, hit.y, Math.min(count, 3 + Math.floor(impulse * .45)), options.particleColor || mat.fill, Math.min(4.2, .45 + impulse * .09));
+      shake = Math.max(shake, Math.min(7, impulse * (options.shakeScale ?? .55)));
     }
 
     if (speed < .08 && obj.y + obj.r >= GROUND - 1) obj.asleep = true;
@@ -773,12 +858,14 @@
         const hit = circleRect(p.x, p.y, p.r, b);
         if (!hit.collided) return;
         const speed = Math.hypot(b.vx, b.vy);
-        const crush = hit.depth > p.r * .42 && b.y < p.y;
-        if (speed > .34 || crush) {
-          const dmg = Math.max(1, Math.round(speed * b.mass * .55 + (crush ? 1 : 0)));
+        const impactPower = speed * Math.sqrt(Math.max(.6, b.mass || 1));
+        const fallingCrush = hit.depth > p.r * .52 && b.y < p.y && Math.abs(b.vy || 0) > PHYSICS.crushVelocityThreshold;
+        // A sleeping/static block touching a pig is just structure, not damage.
+        if (!b.sleep && (impactPower > PHYSICS.pigImpactThreshold || fallingCrush)) {
+          const dmg = Math.max(1, Math.round((impactPower - PHYSICS.pigImpactThreshold) * .55 + (fallingCrush ? 1 : 0)));
           damagePig(p, dmg, p.x, p.y);
-          b.vx *= .74;
-          b.vy *= .74;
+          b.vx *= .56;
+          b.vy *= .56;
         }
       });
     });
@@ -795,7 +882,7 @@
 
     const velAlongNormal = (obj.vx || 0) * nx + (obj.vy || 0) * ny;
     const speed = Math.hypot(obj.vx || 0, obj.vy || 0);
-    if (speed > 1.1) damagePig(p, Math.max(1, Math.round(speed * scale / 3.4)), p.x, p.y);
+    if (speed > 1.7) damagePig(p, Math.max(1, Math.round((speed - .8) * scale / 3.8)), p.x, p.y);
     if (velAlongNormal < 0) {
       const e = .24;
       obj.vx -= (1 + e) * velAlongNormal * nx;
@@ -823,18 +910,23 @@
     }
   }
 
-  function damageBlock(b, amount, x, y) {
+  function chipBlock(b, amount, x, y) {
     if (!b || b.destroyed || amount <= 0) return;
-    wakeBlock(b, 'hit');
     b.hp -= amount;
-    if (b.material === 'tnt' && (b.hp <= 0 || amount > 13)) return explode(b.x + b.w / 2, b.y + b.h / 2);
+    if (b.material === 'tnt' && (b.hp <= 0 || amount > 18)) return explode(b.x + b.w / 2, b.y + b.h / 2);
     if (b.hp <= 0) {
       b.destroyed = true;
-      wakeNearbyBlocks(b, 'contact');
+      wakeNearbyBlocks(b, 'break');
       state.score += 80;
-      burst(b.x + b.w / 2, b.y + b.h / 2, 18, materials[b.material].fill, 4.5);
+      burst(b.x + b.w / 2, b.y + b.h / 2, 14, materials[b.material].fill, 3.6);
       sfx('break');
     }
+  }
+
+  function damageBlock(b, amount, x, y) {
+    if (!b || b.destroyed || amount <= 0) return;
+    if (amount > 1.0) wakeBlock(b, 'damage');
+    chipBlock(b, amount, x, y);
   }
 
   function explode(x, y) {
@@ -850,12 +942,12 @@
       const cx = b.x + b.w / 2, cy = b.y + b.h / 2;
       const dx = cx - x, dy = cy - y;
       const d = Math.hypot(dx, dy) || .001;
-      if (d > 126) return;
+      if (d > 112) return;
       wakeBlock(b, 'explode');
-      const power = (1 - d / 126) * 15;
-      b.vx += (dx / d) * power / Math.max(.6, b.mass);
-      b.vy += (dy / d) * power / Math.max(.6, b.mass) - power * .1;
-      damageBlock(b, power * 3.0, cx, cy);
+      const power = (1 - d / 112) * 10.5;
+      b.vx += (dx / d) * power / Math.max(1.2, b.mass * 1.35);
+      b.vy += (dy / d) * power / Math.max(1.2, b.mass * 1.35) - power * .045;
+      damageBlock(b, power * 1.55, cx, cy);
     });
 
     pigs.forEach(p => {
@@ -1336,7 +1428,7 @@
     ctx.font = 'bold 12px Arial';
     ctx.textAlign = 'left';
     ctx.fillStyle = 'rgba(33,49,60,.42)';
-    ctx.fillText('v13', 16, H - 16);
+    ctx.fillText('v14', 16, H - 16);
     ctx.restore();
     if (!bird || !state.dragging) return;
     const pull = Math.hypot(SLING_X - bird.x, SLING_Y - bird.y);

@@ -1,4 +1,4 @@
-# Mini Angry Birds v13 — 100 Level GitHub Build
+# Mini Angry Birds v14 — 100 Level GitHub Build
 
 เปิด `index.html` ได้ตรง ๆ หรือเอา repository นี้ขึ้น GitHub Pages ได้เลย
 
@@ -37,4 +37,4 @@ LEVEL_DESIGN_NOTES.md
 
 ## Design target
 
-v13 เน้นด่านหนักกว่า v12 มากขึ้น โดยเฉพาะหินหนัก / stone shell / separated pig rooms / protected TNT เพื่อไม่ให้ยิงนัดเดียวแล้วถล่มหมดง่าย ๆ
+v14 เน้นด่านหนักกว่า v12 มากขึ้น โดยเฉพาะหินหนัก / stone shell / separated pig rooms / protected TNT เพื่อไม่ให้ยิงนัดเดียวแล้วถล่มหมดง่าย ๆ
