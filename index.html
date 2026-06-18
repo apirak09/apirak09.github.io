@@ -1,634 +1,357 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="th">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>The Twelve Islanders</title>
-<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;900&family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
-<style>
-  :root {
-    --bg: #0d0a07;
-    --panel: #1a1208;
-    --gold: #c9933a;
-    --gold-light: #e8b86d;
-    --gold-dim: #7a5820;
-    --stone: #3d3028;
-    --stone-light: #5a4535;
-    --text: #e8d5b0;
-    --text-dim: #8a7055;
-    --left-col: #2a5c8f;
-    --right-col: #7a2a2a;
-    --left-col-light: #4a8cbf;
-    --right-col-light: #bf5a5a;
-    --success: #4a8c5a;
-    --danger: #8c3a3a;
-  }
-
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-
-  body {
-    background: var(--bg);
-    color: var(--text);
-    font-family: 'Crimson Text', serif;
-    min-height: 100vh;
-    overflow-x: hidden;
-    background-image:
-      radial-gradient(ellipse at 20% 0%, #2a1a05 0%, transparent 50%),
-      radial-gradient(ellipse at 80% 100%, #1a0a20 0%, transparent 50%);
-  }
-
-  /* Stars */
-  .stars {
-    position: fixed; inset: 0; pointer-events: none; z-index: 0;
-    background-image:
-      radial-gradient(1px 1px at 10% 15%, rgba(255,240,200,.7) 0%, transparent 100%),
-      radial-gradient(1px 1px at 25% 40%, rgba(255,240,200,.5) 0%, transparent 100%),
-      radial-gradient(1px 1px at 60% 8%, rgba(255,240,200,.6) 0%, transparent 100%),
-      radial-gradient(1px 1px at 80% 22%, rgba(255,240,200,.4) 0%, transparent 100%),
-      radial-gradient(1px 1px at 45% 5%, rgba(255,240,200,.8) 0%, transparent 100%),
-      radial-gradient(1px 1px at 90% 35%, rgba(255,240,200,.5) 0%, transparent 100%),
-      radial-gradient(1px 1px at 5% 55%, rgba(255,240,200,.4) 0%, transparent 100%),
-      radial-gradient(1px 1px at 70% 70%, rgba(255,240,200,.3) 0%, transparent 100%),
-      radial-gradient(1px 1px at 35% 80%, rgba(255,240,200,.5) 0%, transparent 100%),
-      radial-gradient(1px 1px at 15% 90%, rgba(255,240,200,.6) 0%, transparent 100%),
-      radial-gradient(1px 1px at 55% 60%, rgba(255,240,200,.3) 0%, transparent 100%),
-      radial-gradient(1px 1px at 93% 12%, rgba(255,240,200,.7) 0%, transparent 100%),
-      radial-gradient(1px 1px at 3% 30%, rgba(255,240,200,.4) 0%, transparent 100%),
-      radial-gradient(1px 1px at 77% 88%, rgba(255,240,200,.5) 0%, transparent 100%),
-      radial-gradient(1px 1px at 40% 95%, rgba(255,240,200,.3) 0%, transparent 100%);
-  }
-
-  .container {
-    position: relative; z-index: 1;
-    max-width: 900px; margin: 0 auto; padding: 20px 16px 40px;
-  }
-
-  /* Header */
-  header { text-align: center; margin-bottom: 24px; }
-  header h1 {
-    font-family: 'Cinzel', serif;
-    font-size: clamp(1.6rem, 4vw, 2.4rem);
-    font-weight: 900;
-    color: var(--gold);
-    letter-spacing: .08em;
-    text-shadow: 0 0 30px rgba(201,147,58,.5);
-    line-height: 1.1;
-  }
-  header p {
-    font-style: italic; color: var(--text-dim);
-    font-size: 1rem; margin-top: 6px;
-  }
-
-  /* Weighing tracker */
-  .tracker {
-    display: flex; justify-content: center; gap: 10px;
-    margin-bottom: 20px;
-  }
-  .weigh-pip {
-    width: 14px; height: 14px; border-radius: 50%;
-    background: var(--stone-light);
-    border: 2px solid var(--gold-dim);
-    transition: all .4s;
-  }
-  .weigh-pip.used { background: var(--gold); border-color: var(--gold-light); box-shadow: 0 0 8px var(--gold); }
-  .tracker-label { font-family: 'Cinzel', serif; font-size: .75rem; color: var(--text-dim); letter-spacing:.1em; text-align:center; margin-bottom:6px; }
-
-  /* Seesaw area */
-  .seesaw-area {
-    position: relative; height: 220px;
-    margin-bottom: 14px;
-  }
-
-  /* Fulcrum */
-  .fulcrum {
-    position: absolute; bottom: 0; left: 50%;
-    transform: translateX(-50%);
-    width: 0; height: 0;
-    border-left: 22px solid transparent;
-    border-right: 22px solid transparent;
-    border-bottom: 48px solid var(--stone-light);
-    filter: drop-shadow(0 4px 8px rgba(0,0,0,.5));
-  }
-  .fulcrum::after {
-    content: '';
-    position: absolute; bottom: -56px; left: 50%;
-    transform: translateX(-50%);
-    width: 60px; height: 12px;
-    background: var(--stone-light);
-    border-radius: 4px;
-  }
-  .pivot-pin {
-    position: absolute; bottom: 39px; left: 50%;
-    transform: translateX(-50%);
-    width: 10px; height: 10px; border-radius: 50%;
-    background: var(--gold); z-index: 10;
-  }
-
-  /* Beam */
-  .beam-wrapper {
-    position: absolute;
-    bottom: 50px; left: 50%;
-    transform: translateX(-50%);
-    width: 100%; transform-origin: 50% 100%;
-    transition: transform .6s cubic-bezier(.34,1.56,.64,1);
-  }
-  .beam {
-    position: absolute; bottom: 0; left: 50%;
-    transform: translateX(-50%);
-    width: 88%; height: 14px;
-    background: linear-gradient(180deg, #8B6914 0%, #5a4010 60%, #3d2a08 100%);
-    border-radius: 7px;
-    box-shadow: 0 4px 16px rgba(0,0,0,.6), inset 0 2px 4px rgba(255,220,100,.15);
-  }
-  /* Grain lines */
-  .beam::before {
-    content: '';
-    position: absolute; inset: 0; border-radius: 7px;
-    background: repeating-linear-gradient(90deg, transparent, transparent 40px, rgba(0,0,0,.1) 41px);
-  }
-
-  /* Chains */
-  .chain {
-    position: absolute; bottom: 14px;
-    width: 2px;
-    background: repeating-linear-gradient(180deg, var(--gold-dim) 0px, var(--gold-dim) 4px, transparent 4px, transparent 8px);
-  }
-  .chain-left  { left: 8%; }
-  .chain-right { right: 8%; }
-
-  /* Pans */
-  .pan {
-    position: absolute; bottom: 0;
-    width: 110px; height: 18px;
-    background: linear-gradient(180deg, #9a7730 0%, #6b5020 100%);
-    border-radius: 50%;
-    box-shadow: 0 4px 12px rgba(0,0,0,.5);
-    display: flex; align-items: center; justify-content: center;
-    transform: translateX(-50%);
-  }
-  .pan-left  { left: 8%; }
-  .pan-right { right: 8%; transform: translateX(50%); }
-
-  /* Figures on pans */
-  .pan-figures {
-    position: absolute;
-    bottom: 14px;
-    display: flex; gap: 2px; justify-content: center; flex-wrap: wrap;
-    width: 120px;
-  }
-  .pan-figures.left-figures { left: calc(8% - 60px); }
-  .pan-figures.right-figures { right: calc(8% - 60px); }
-
-  .pan-figure {
-    font-size: 18px; line-height: 1;
-    transition: all .3s;
-    cursor: pointer;
-    position: relative;
-  }
-  .pan-figure:hover { transform: scale(1.15); }
-  .pan-figure span.num {
-    position: absolute; top: -10px; left: 50%; transform: translateX(-50%);
-    font-size: 9px; font-family: 'Cinzel', serif;
-    color: var(--gold-light); white-space: nowrap;
-  }
-
-  /* Island grid */
-  .island-section {
-    background: var(--panel);
-    border: 1px solid var(--gold-dim);
-    border-radius: 12px;
-    padding: 14px;
-    margin-bottom: 14px;
-    box-shadow: inset 0 1px 0 rgba(201,147,58,.1), 0 4px 20px rgba(0,0,0,.4);
-  }
-  .section-label {
-    font-family: 'Cinzel', serif; font-size: .7rem; letter-spacing: .15em;
-    color: var(--text-dim); margin-bottom: 10px; text-transform: uppercase;
-  }
-
-  .islanders-grid {
-    display: flex; flex-wrap: wrap; gap: 8px; justify-content: center;
-  }
-
-  .islander {
-    display: flex; flex-direction: column; align-items: center;
-    cursor: pointer; padding: 8px 6px; border-radius: 8px;
-    border: 2px solid var(--stone-light);
-    background: var(--stone);
-    transition: all .2s;
-    min-width: 54px;
-    user-select: none;
-  }
-  .islander:hover:not(.eliminated) { border-color: var(--gold-dim); transform: translateY(-2px); }
-  .islander .figure { font-size: 24px; line-height: 1; }
-  .islander .name {
-    font-family: 'Cinzel', serif; font-size: .6rem;
-    color: var(--text-dim); margin-top: 3px; letter-spacing: .05em;
-  }
-  .islander .side-badge {
-    font-size: .55rem; font-family: 'Cinzel', serif;
-    padding: 1px 5px; border-radius: 3px; margin-top: 3px;
-    font-weight: 600; letter-spacing: .05em;
-  }
-
-  .islander.on-left  { border-color: var(--left-col-light); background: rgba(42,92,143,.25); }
-  .islander.on-right { border-color: var(--right-col-light); background: rgba(122,42,42,.25); }
-  .islander.on-left  .side-badge { background: var(--left-col); color: #aed; }
-  .islander.on-right .side-badge { background: var(--right-col); color: #faa; }
-  .islander.eliminated { opacity: .3; cursor: default; filter: grayscale(1); }
-  .islander.suspect { border-color: var(--gold) !important; background: rgba(201,147,58,.15) !important; }
-
-  /* Controls */
-  .controls { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin-bottom: 14px; }
-
-  .btn {
-    font-family: 'Cinzel', serif; font-size: .85rem; letter-spacing: .08em;
-    padding: 10px 24px; border-radius: 6px; cursor: pointer;
-    border: 2px solid; transition: all .2s;
-    font-weight: 600;
-  }
-  .btn-weigh {
-    background: linear-gradient(135deg, #8B6914, #c9933a);
-    border-color: var(--gold-light); color: #1a0d00;
-    box-shadow: 0 4px 14px rgba(201,147,58,.35);
-  }
-  .btn-weigh:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(201,147,58,.5); }
-  .btn-weigh:disabled { opacity: .4; cursor: not-allowed; transform: none; }
-  .btn-clear {
-    background: transparent; border-color: var(--stone-light); color: var(--text-dim);
-  }
-  .btn-clear:hover { border-color: var(--gold-dim); color: var(--text); }
-  .btn-reset {
-    background: transparent; border-color: var(--stone-light); color: var(--text-dim);
-  }
-  .btn-reset:hover { border-color: #888; color: var(--text); }
-
-  /* Log */
-  .log {
-    background: var(--panel); border: 1px solid var(--gold-dim);
-    border-radius: 10px; padding: 12px; margin-bottom: 14px;
-    min-height: 70px;
-    box-shadow: inset 0 1px 0 rgba(201,147,58,.1);
-  }
-  .log-entry {
-    padding: 6px 0; border-bottom: 1px solid rgba(201,147,58,.1);
-    font-size: .95rem; display: flex; align-items: center; gap: 8px;
-  }
-  .log-entry:last-child { border-bottom: none; }
-  .log-num { font-family:'Cinzel',serif; font-size:.7rem; color:var(--gold-dim); min-width:20px; }
-  .log-left { color: var(--left-col-light); font-weight: 600; }
-  .log-right { color: var(--right-col-light); font-weight: 600; }
-  .log-vs { color: var(--text-dim); font-style: italic; }
-  .result-icon { font-size: 1.1rem; }
-  .log-empty { color: var(--text-dim); font-style: italic; font-size: .95rem; }
-
-  /* Guess panel */
-  .guess-panel {
-    background: var(--panel); border: 1px solid var(--gold-dim);
-    border-radius: 10px; padding: 14px; margin-bottom: 14px;
-  }
-  .guess-row { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
-  .guess-label { font-family: 'Cinzel', serif; font-size: .75rem; color: var(--text-dim); letter-spacing: .1em; }
-  select {
-    background: var(--stone); border: 1px solid var(--stone-light);
-    color: var(--text); font-family: 'Crimson Text', serif; font-size: 1rem;
-    padding: 6px 10px; border-radius: 6px; cursor: pointer;
-  }
-  select:focus { outline: 1px solid var(--gold-dim); }
-  .btn-guess {
-    background: linear-gradient(135deg, #1a4a1a, #2e7a2e);
-    border-color: #4a9a4a; color: #c0ffc0;
-    font-family: 'Cinzel', serif; font-size: .8rem; letter-spacing: .08em;
-    padding: 8px 18px; border-radius: 6px; border-width: 2px;
-    cursor: pointer; transition: all .2s;
-  }
-  .btn-guess:hover:not(:disabled) { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(50,150,50,.4); }
-  .btn-guess:disabled { opacity: .4; cursor: not-allowed; }
-
-  /* Result overlay */
-  .result-banner {
-    border-radius: 10px; padding: 16px 20px;
-    text-align: center; margin-bottom: 14px;
-    display: none;
-  }
-  .result-banner.win {
-    display: block;
-    background: linear-gradient(135deg, rgba(50,100,50,.4), rgba(30,80,30,.4));
-    border: 2px solid #4a9a4a;
-  }
-  .result-banner.lose {
-    display: block;
-    background: linear-gradient(135deg, rgba(100,30,30,.4), rgba(80,20,20,.4));
-    border: 2px solid #9a3a3a;
-  }
-  .result-banner h2 { font-family: 'Cinzel', serif; font-size: 1.4rem; margin-bottom: 6px; }
-  .result-banner.win h2 { color: #7fdf7f; }
-  .result-banner.lose h2 { color: #df7f7f; }
-  .result-banner p { color: var(--text); font-size: 1rem; }
-
-  /* Tip */
-  .tip {
-    text-align: center; font-style: italic; color: var(--text-dim);
-    font-size: .88rem; margin-bottom: 8px;
-  }
-
-  /* Beam tilt classes */
-  .tilt-left  { transform: translateX(-50%) rotate(-8deg); }
-  .tilt-right { transform: translateX(-50%) rotate(8deg); }
-  .tilt-none  { transform: translateX(-50%) rotate(0deg); }
-
-  /* Legend */
-  .legend {
-    display: flex; gap: 16px; justify-content: center; flex-wrap: wrap;
-    margin-bottom: 10px; font-size: .8rem; color: var(--text-dim);
-  }
-  .legend span { display: flex; align-items: center; gap: 4px; }
-  .legend .dot {
-    width: 10px; height: 10px; border-radius: 50%;
-    display: inline-block;
-  }
-
-  @media (max-width: 600px) {
-    .seesaw-area { height: 180px; }
-    .pan { width: 80px; }
-    .pan-figures { width: 90px; }
-    .pan-figures.left-figures { left: calc(8% - 45px); }
-    .pan-figures.right-figures { right: calc(8% - 45px); }
-  }
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mini Angry Birds - 5 Stages</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: #2c3e50;
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            color: white;
+        }
+        h1 { margin: 5px 0; font-size: 24px; }
+        #gameUi {
+            margin-bottom: 10px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+        canvas {
+            background: linear-gradient(#70c5ce, #9cd2d6);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            border-radius: 8px;
+            cursor: pointer;
+        }
+        #resetBtn {
+            margin-top: 15px;
+            padding: 10px 20px;
+            font-size: 16px;
+            background: #e74c3c;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        #resetBtn:hover { background: #c0392b; }
+    </style>
 </head>
 <body>
-<div class="stars"></div>
-<div class="container">
 
-  <header>
-    <h1>⚖️ The Twelve Islanders</h1>
-    <p>One among twelve is unlike the rest — heavier or lighter. Find the impostor in three weighings.</p>
-  </header>
-
-  <!-- Weighing tracker -->
-  <div class="tracker-label">WEIGHINGS USED</div>
-  <div class="tracker">
-    <div class="weigh-pip" id="pip0"></div>
-    <div class="weigh-pip" id="pip1"></div>
-    <div class="weigh-pip" id="pip2"></div>
-  </div>
-
-  <!-- Seesaw -->
-  <div class="seesaw-area">
-    <div class="beam-wrapper tilt-none" id="beamWrapper">
-      <!-- Chains -->
-      <div class="chain chain-left"  id="chainLeft"  style="height:80px; bottom:14px;"></div>
-      <div class="chain chain-right" id="chainRight" style="height:80px; bottom:14px;"></div>
-      <!-- Beam -->
-      <div class="beam"></div>
-      <!-- Pans -->
-      <div class="pan pan-left"></div>
-      <div class="pan pan-right"></div>
-    </div>
-    <!-- Figures on pans (outside beam so they don't rotate weirdly) -->
-    <div class="pan-figures left-figures"  id="leftFigures"></div>
-    <div class="pan-figures right-figures" id="rightFigures"></div>
-    <!-- Pivot + fulcrum -->
-    <div class="fulcrum"></div>
-    <div class="pivot-pin"></div>
-  </div>
-
-  <!-- Legend -->
-  <div class="legend">
-    <span><span class="dot" style="background:var(--left-col-light)"></span> Left Pan</span>
-    <span><span class="dot" style="background:var(--right-col-light)"></span> Right Pan</span>
-    <span><span class="dot" style="background:var(--stone-light)"></span> Set Aside</span>
-  </div>
-
-  <!-- Islanders grid -->
-  <div class="island-section">
-    <div class="section-label">🏝️ The Islanders — click to cycle: aside → left pan → right pan → aside</div>
-    <div class="islanders-grid" id="islandersGrid"></div>
-  </div>
-
-  <!-- Controls -->
-  <div class="controls">
-    <button class="btn btn-clear" id="btnClear" onclick="clearPans()">Clear Pans</button>
-    <button class="btn btn-weigh" id="btnWeigh" onclick="doWeigh()">⚖ Weigh</button>
-    <button class="btn btn-reset" onclick="resetGame()">↺ New Game</button>
-  </div>
-
-  <!-- Log -->
-  <div class="island-section" style="margin-bottom:14px;">
-    <div class="section-label">📜 Weighing Record</div>
-    <div class="log" id="log"><span class="log-empty">No weighings yet.</span></div>
-  </div>
-
-  <!-- Guess -->
-  <div class="guess-panel" id="guessPanel">
-    <div class="section-label" style="margin-bottom:10px;">🔍 Make Your Accusation</div>
-    <div class="guess-row">
-      <span class="guess-label">ISLANDER</span>
-      <select id="guessWho"></select>
-      <span class="guess-label">IS</span>
-      <select id="guessHow">
-        <option value="heavier">Heavier</option>
-        <option value="lighter">Lighter</option>
-      </select>
-      <button class="btn-guess" id="btnGuess" onclick="makeGuess()">Accuse</button>
-    </div>
-  </div>
-
-  <!-- Result -->
-  <div class="result-banner" id="resultBanner">
-    <h2 id="resultTitle"></h2>
-    <p id="resultText"></p>
-  </div>
-  <div class="tip" id="tipText"></div>
-
-</div>
+    <h1>Mini Angry Birds (5 ด่าน)</h1>
+    <div id="gameUi">ด่าน: <span id="levelDisplay">1</span>/5 | คะแนน: <span id="scoreDisplay">0</span></div>
+    <canvas id="gameCanvas" width="800" height="400"></canvas>
+    <button id="resetBtn" onclick="resetLevel()">เริ่มด่านนี้ใหม่</button>
 
 <script>
-const EMOJI = ['🧑','👨','👩','🧔','👴','👵','🧕','👲','👳','🧙','🧝','🧚'];
-const NAMES = ['Arlo','Bea','Cruz','Dara','Enzo','Fira','Gull','Hana','Iro','Juno','Kael','Luma'];
+const canvas = document.getElementById('gameCanvas');
+const ctx = canvas.getContext('2d');
 
-let oddOne, oddType, gameOver, weighCount, logEntries;
-let states = []; // 0=aside, 1=left, 2=right
+const levelDisplay = document.getElementById('levelDisplay');
+const scoreDisplay = document.getElementById('scoreDisplay');
 
-function initState() {
-  oddOne  = Math.floor(Math.random() * 12);
-  oddType = Math.random() < 0.5 ? 'heavier' : 'lighter';
-  gameOver = false;
-  weighCount = 0;
-  logEntries = [];
-  states = new Array(12).fill(0);
+// สถานะเกม
+let currentLevel = 1;
+let score = 0;
+let isDragging = false;
+
+// พิกัดแท่นยิง (Slingshot)
+const slingX = 150;
+const slingY = 300;
+
+// โครงสร้างตัวละคร/วัตถุ
+let bird = { x: slingX, y: slingY, radius: 15, vx: 0, vy: 0, launched: false, inAir: false };
+let pigs = [];
+let blocks = [];
+
+// กำหนดข้อมูลทั้ง 5 ด่าน (ตำแหน่ง หมู และ กล่อง)
+const levelsData = {
+    1: {
+        pigs: [{ x: 650, y: 350, radius: 15, alive: true }],
+        blocks: [
+            { x: 600, y: 300, w: 20, h: 100 },
+            { x: 680, y: 300, w: 20, h: 100 }
+        ]
+    },
+    2: {
+        pigs: [{ x: 650, y: 270, radius: 15, alive: true }],
+        blocks: [
+            { x: 600, y: 300, w: 20, h: 100 },
+            { x: 680, y: 300, w: 20, h: 100 },
+            { x: 590, y: 280, w: 120, h: 20 } // หลังคาคาดสลับ
+        ]
+    },
+    3: {
+        pigs: [
+            { x: 600, y: 350, radius: 15, alive: true },
+            { x: 700, y: 350, radius: 15, alive: true }
+        ],
+        blocks: [
+            { x: 550, y: 300, w: 20, h: 100 },
+            { x: 650, y: 300, w: 20, h: 100 },
+            { x: 750, y: 300, w: 20, h: 100 }
+        ]
+    },
+    4: {
+        pigs: [
+            { x: 650, y: 350, radius: 15, alive: true },
+            { x: 650, y: 230, radius: 15, alive: true } // หมูสองชั้น
+        ],
+        blocks: [
+            { x: 600, y: 300, w: 20, h: 100 },
+            { x: 680, y: 300, w: 20, h: 100 },
+            { x: 590, y: 280, w: 120, h: 20 },
+            { x: 610, y: 180, w: 20, h: 100 },
+            { x: 670, y: 180, w: 20, h: 100 }
+        ]
+    },
+    5: {
+        pigs: [
+            { x: 550, y: 350, radius: 12, alive: true },
+            { x: 650, y: 350, radius: 15, alive: true },
+            { x: 750, y: 350, radius: 12, alive: true }
+        ],
+        blocks: [
+            { x: 500, y: 250, w: 20, h: 150 },
+            { x: 600, y: 250, w: 20, h: 150 },
+            { x: 700, y: 250, w: 20, h: 150 },
+            { x: 490, y: 230, w: 240, h: 20 }
+        ]
+    }
+};
+
+// โหลดด่าน
+function initLevel(lvl) {
+    if (lvl > 5) {
+        alert("ยินดีด้วย! คุณผ่านครบทั้ง 5 ด่านแล้ว!");
+        currentLevel = 1;
+        score = 0;
+        lvl = 1;
+    }
+    
+    currentLevel = lvl;
+    levelDisplay.textContent = currentLevel;
+    scoreDisplay.textContent = score;
+
+    // รีเซ็ตนก
+    bird.x = slingX;
+    bird.y = slingY;
+    bird.vx = 0;
+    bird.vy = 0;
+    bird.launched = false;
+    bird.inAir = false;
+
+    // ดึงข้อมูลด่าน (ใช้ Deep Copy ป้องกันบั๊กเวลาเล่นซ้ำ)
+    const data = levelsData[lvl];
+    pigs = data.pigs.map(p => ({ ...p }));
+    blocks = data.blocks.map(b => ({ ...b }));
 }
 
-function buildGrid() {
-  const grid = document.getElementById('islandersGrid');
-  grid.innerHTML = '';
-  for (let i = 0; i < 12; i++) {
-    const el = document.createElement('div');
-    el.className = 'islander';
-    el.id = `isl-${i}`;
-    el.innerHTML = `<span class="figure">${EMOJI[i]}</span><span class="name">${NAMES[i]}</span><span class="side-badge" id="badge-${i}">–</span>`;
-    el.onclick = () => cycleState(i);
-    grid.appendChild(el);
-  }
-  // Guess selects
-  const sel = document.getElementById('guessWho');
-  sel.innerHTML = NAMES.map((n,i) => `<option value="${i}">${n}</option>`).join('');
+function resetLevel() {
+    initLevel(currentLevel);
 }
 
-function cycleState(i) {
-  if (gameOver) return;
-  states[i] = (states[i] + 1) % 3;
-  renderAll();
+// ตรวจสอบการชน (Collision Detection)
+function checkCollision() {
+    // นกชนกล่อง
+    blocks.forEach(b => {
+        if (bird.x + bird.radius > b.x && bird.x - bird.radius < b.x + b.w &&
+            bird.y + bird.radius > b.y && bird.y - bird.radius < b.y + b.h) {
+            // ชนแล้วเด้งกลับแบบง่าย
+            bird.vx *= -0.6;
+            bird.vy *= -0.6;
+        }
+    });
+
+    // นกชนหมู
+    pigs.forEach(p => {
+        if (p.alive) {
+            let dx = bird.x - p.x;
+            let dy = bird.y - p.y;
+            let distance = Math.sqrt(dx * dx + dy * dy);
+
+            if (distance < bird.radius + p.radius) {
+                p.alive = false;
+                score += 100;
+                scoreDisplay.textContent = score;
+            }
+        }
+    });
 }
 
-function renderAll() {
-  // Update each islander card
-  for (let i = 0; i < 12; i++) {
-    const el = document.getElementById(`isl-${i}`);
-    const badge = document.getElementById(`badge-${i}`);
-    el.className = 'islander';
-    if (states[i] === 1) { el.classList.add('on-left');  badge.textContent = 'LEFT';  badge.style.display='block'; }
-    else if (states[i] === 2) { el.classList.add('on-right'); badge.textContent = 'RIGHT'; badge.style.display='block'; }
-    else { badge.textContent = '–'; badge.style.display='block'; }
-  }
+// อัปเดตตำแหน่งและการเคลื่อนที่
+function update() {
+    if (bird.inAir) {
+        bird.x += bird.vx;
+        bird.y += bird.vy;
+        bird.vy += 0.25; // แรงโน้มถ่วง (Gravity)
 
-  // Update pan figures
-  const leftIdx  = states.map((s,i)=>s===1?i:-1).filter(x=>x>=0);
-  const rightIdx = states.map((s,i)=>s===2?i:-1).filter(x=>x>=0);
+        checkCollision();
 
-  const lf = document.getElementById('leftFigures');
-  const rf = document.getElementById('rightFigures');
-  lf.innerHTML = leftIdx.map(i => `<div class="pan-figure" title="${NAMES[i]}" onclick="cycleState(${i})">${EMOJI[i]}<span class="num">${NAMES[i]}</span></div>`).join('');
-  rf.innerHTML = rightIdx.map(i => `<div class="pan-figure" title="${NAMES[i]}" onclick="cycleState(${i})">${EMOJI[i]}<span class="num">${NAMES[i]}</span></div>`).join('');
+        // นกตกพื้นหรือเลยขอบจอ -> รีเซ็ตนกใหม่ถ้าหมูยังไม่ตายหมด
+        if (bird.y > canvas.height - bird.radius || bird.x > canvas.width || bird.x < 0) {
+            bird.inAir = false;
+            setTimeout(() => {
+                if (pigs.some(p => p.alive)) {
+                    bird.x = slingX;
+                    bird.y = slingY;
+                    bird.vx = 0;
+                    bird.vy = 0;
+                    bird.launched = false;
+                }
+            }, 1000);
+        }
+    }
 
-  // Weigh button enable
-  document.getElementById('btnWeigh').disabled = gameOver || weighCount >= 3 || (leftIdx.length === 0 && rightIdx.length === 0) || leftIdx.length !== rightIdx.length;
-  document.getElementById('btnGuess').disabled = gameOver;
+    // ตรวจสอบว่าหมูตายหมดหรือยัง -> ขึ้นด่านใหม่
+    const allPigsDead = pigs.every(p => !p.alive);
+    if (allPigsDead && !bird.inAir) {
+        setTimeout(() => {
+            initLevel(currentLevel + 1);
+        }, 500);
+    }
 }
 
-function updatePips() {
-  for (let i = 0; i < 3; i++) {
-    document.getElementById(`pip${i}`).className = 'weigh-pip' + (i < weighCount ? ' used' : '');
-  }
+// วาดกราฟิกลง Canvas
+function draw() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    // วาดพื้นดิน
+    ctx.fillStyle = '#8bc34a';
+    ctx.fillRect(0, 370, canvas.width, 30);
+
+    // วาดหนังสติ๊ก (Slingshot)
+    ctx.fillStyle = '#795548';
+    ctx.fillRect(slingX - 5, slingY, 10, 70);
+
+    // วาดเส้นยางหนังสติ๊กตอนลาก
+    if (isDragging) {
+        ctx.strokeStyle = '#3e2723';
+        ctx.lineWidth = 4;
+        ctx.beginPath();
+        ctx.moveTo(slingX, slingY);
+        ctx.lineTo(bird.x, bird.y);
+        ctx.stroke();
+    }
+
+    // วาดกล่องไม้ (Blocks)
+    ctx.fillStyle = '#d7ccc8';
+    ctx.strokeStyle = '#5d4037';
+    ctx.lineWidth = 2;
+    blocks.forEach(b => {
+        ctx.fillRect(b.x, b.y, b.w, b.h);
+        ctx.strokeRect(b.x, b.y, b.w, b.h);
+    });
+
+    // วาดหมู (Pigs)
+    pigs.forEach(p => {
+        if (p.alive) {
+            ctx.fillStyle = '#4caf50';
+            ctx.beginPath();
+            ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+            ctx.fill();
+            // ลูกตาหมู
+            ctx.fillStyle = '#fff';
+            ctx.beginPath();
+            ctx.arc(p.x - 5, p.y - 3, 3, 0, Math.PI * 2);
+            ctx.arc(p.x + 5, p.y - 3, 3, 0, Math.PI * 2);
+            ctx.fill();
+        }
+    });
+
+    // วาดนก (Bird)
+    ctx.fillStyle = '#e53935';
+    ctx.beginPath();
+    ctx.arc(bird.x, bird.y, bird.radius, 0, Math.PI * 2);
+    ctx.fill();
+    // ตาและจะงอยปากนก
+    ctx.fillStyle = '#fff';
+    ctx.beginPath(); ctx.arc(bird.x + 5, bird.y - 4, 3, 0, Math.PI * 2); ctx.fill();
+    ctx.fillStyle = '#ffeb3b';
+    ctx.beginPath();
+    ctx.moveTo(bird.x + 10, bird.y);
+    ctx.lineTo(bird.x + 18, bird.y + 2);
+    ctx.lineTo(bird.x + 10, bird.y + 5);
+    ctx.fill();
 }
 
-function doWeigh() {
-  if (gameOver || weighCount >= 3) return;
-  const leftIdx  = states.map((s,i)=>s===1?i:-1).filter(x=>x>=0);
-  const rightIdx = states.map((s,i)=>s===2?i:-1).filter(x=>x>=0);
-  if (leftIdx.length !== rightIdx.length || leftIdx.length === 0) return;
-
-  // Calculate weights
-  const leftWeight  = leftIdx.reduce((sum,i)  => sum + (i===oddOne ? (oddType==='heavier'?2:0) : 1), 0);
-  const rightWeight = rightIdx.reduce((sum,i) => sum + (i===oddOne ? (oddType==='heavier'?2:0) : 1), 0);
-
-  let result, icon, tilt;
-  if (leftWeight > rightWeight)       { result = 'left';    icon = '⬅️'; tilt = 'tilt-left'; }
-  else if (rightWeight > leftWeight)  { result = 'right';   icon = '➡️'; tilt = 'tilt-right'; }
-  else                                { result = 'balanced';icon = '⚖️'; tilt = 'tilt-none'; }
-
-  // Animate beam
-  const bw = document.getElementById('beamWrapper');
-  bw.className = `beam-wrapper ${tilt}`;
-
-  weighCount++;
-  updatePips();
-
-  // Log entry
-  const entry = { num: weighCount, left: leftIdx.map(i=>NAMES[i]), right: rightIdx.map(i=>NAMES[i]), result, icon };
-  logEntries.push(entry);
-  renderLog();
-
-  // Clear pans for next round
-  states = states.map(s => 0);
-  setTimeout(renderAll, 100);
-
-  if (weighCount >= 3) {
-    document.getElementById('btnWeigh').disabled = true;
-    document.getElementById('tipText').textContent = "All three weighings used — time to make your accusation!";
-  }
+// ลูปหลักของเกม
+function gameLoop() {
+    update();
+    draw();
+    requestAnimationFrame(gameLoop);
 }
 
-function renderLog() {
-  const log = document.getElementById('log');
-  if (logEntries.length === 0) { log.innerHTML = '<span class="log-empty">No weighings yet.</span>'; return; }
-  log.innerHTML = logEntries.map(e => {
-    const leftNames  = e.left.join(', ');
-    const rightNames = e.right.join(', ');
-    let resultText;
-    if (e.result === 'left')     resultText = `<span style="color:var(--left-col-light)">LEFT side heavier</span>`;
-    else if (e.result === 'right') resultText = `<span style="color:var(--right-col-light)">RIGHT side heavier</span>`;
-    else                           resultText = `<span style="color:var(--gold)">Perfectly balanced</span>`;
-    return `<div class="log-entry">
-      <span class="log-num">#${e.num}</span>
-      <span class="result-icon">${e.icon}</span>
-      <span>
-        <span class="log-left">[${leftNames}]</span>
-        <span class="log-vs"> vs </span>
-        <span class="log-right">[${rightNames}]</span>
-        → ${resultText}
-      </span>
-    </div>`;
-  }).join('');
+// ส่วนควบคุมการลากและยิง (Mouse & Touch Events)
+function getMousePos(evt) {
+    const rect = canvas.getBoundingClientRect();
+    return {
+        x: (evt.clientX || evt.touches[0].clientX) - rect.left,
+        y: (evt.clientY || evt.touches[0].clientY) - rect.top
+    };
 }
 
-function clearPans() {
-  if (gameOver) return;
-  states = new Array(12).fill(0);
-  renderAll();
+function handleStart(e) {
+    if (bird.launched) return;
+    const pos = getMousePos(e);
+    let dx = pos.x - bird.x;
+    let dy = pos.y - bird.y;
+    if (Math.sqrt(dx*dx + dy*dy) < bird.radius + 10) {
+        isDragging = true;
+    }
 }
 
-function makeGuess() {
-  if (gameOver) return;
-  const who = parseInt(document.getElementById('guessWho').value);
-  const how = document.getElementById('guessHow').value;
+function handleMove(e) {
+    if (!isDragging) return;
+    const pos = getMousePos(e);
+    
+    // จำกัดระยะลากหนังสติ๊กไม่ให้ไกลเกินไป
+    let dx = pos.x - slingX;
+    let dy = pos.y - slingY;
+    let distance = Math.sqrt(dx * dx + dy * dy);
+    const maxDrag = 80;
 
-  gameOver = true;
-  document.getElementById('btnGuess').disabled = true;
-  document.getElementById('btnWeigh').disabled = true;
-  document.getElementById('tipText').textContent = '';
-
-  const banner = document.getElementById('resultBanner');
-  const title  = document.getElementById('resultTitle');
-  const text   = document.getElementById('resultText');
-
-  // Highlight the real odd islander
-  document.getElementById(`isl-${oddOne}`).classList.add('suspect');
-
-  if (who === oddOne && how === oddType) {
-    banner.className = 'result-banner win';
-    title.textContent = '✓ Correct!';
-    text.textContent = `${NAMES[oddOne]} was indeed ${oddType} than the others. The island is safe!`;
-  } else {
-    banner.className = 'result-banner lose';
-    title.textContent = '✗ Wrong!';
-    const realName = NAMES[oddOne];
-    text.textContent = `The truth: ${realName} was ${oddType}. Better luck next time, detective.`;
-    // Reset beam
-    document.getElementById('beamWrapper').className = 'beam-wrapper tilt-none';
-  }
+    if (distance > maxDrag) {
+        let angle = Math.atan2(dy, dx);
+        bird.x = slingX + Math.cos(angle) * maxDrag;
+        bird.y = slingY + Math.sin(angle) * maxDrag;
+    } else {
+        bird.x = pos.x;
+        bird.y = pos.y;
+    }
 }
 
-function resetGame() {
-  document.getElementById('resultBanner').className = 'result-banner';
-  document.getElementById('beamWrapper').className = 'beam-wrapper tilt-none';
-  document.getElementById('leftFigures').innerHTML = '';
-  document.getElementById('rightFigures').innerHTML = '';
-  document.getElementById('tipText').textContent = '';
-  initState();
-  buildGrid();
-  renderLog();
-  updatePips();
-  renderAll();
+function handleEnd() {
+    if (!isDragging) return;
+    isDragging = false;
+    bird.launched = true;
+    bird.inAir = true;
+
+    // คำนวณความเร็วจากการปล่อย (ยิ่งลากไกล ยิ่งยิงแรง)
+    bird.vx = (slingX - bird.x) * 0.15;
+    bird.vy = (slingY - bird.y) * 0.15;
 }
 
-// Boot
-initState();
-buildGrid();
-renderLog();
-updatePips();
-renderAll();
+// ผูก Event ทั้งเมาส์และจอสัมผัส (มือถือ)
+canvas.addEventListener('mousedown', handleStart);
+canvas.addEventListener('mousemove', handleMove);
+window.addEventListener('mouseup', handleEnd);
+
+canvas.addEventListener('touchstart', handleStart);
+canvas.addEventListener('touchmove', handleMove);
+window.addEventListener('touchend', handleEnd);
+
+// เริ่มเกมด่านแรก
+initLevel(1);
+gameLoop();
 </script>
+
 </body>
 </html>
