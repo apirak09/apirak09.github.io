@@ -1,419 +1,1476 @@
 <!DOCTYPE html>
 <html lang="th">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mini Angry Birds v2.0</title>
-    <style>
-        body {
-            margin: 0;
-            padding: 0;
-            background: #2c3e50;
-            font-family: 'Arial', sans-serif;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            min-height: 100vh;
-            color: white;
-            user-select: none;
-        }
-        h1 { margin: 5px 0; font-size: 24px; }
-        #gameUi {
-            margin-bottom: 10px;
-            font-size: 18px;
-            font-weight: bold;
-        }
-        canvas {
-            background: linear-gradient(#70c5ce, #9cd2d6);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-            border-radius: 8px;
-            cursor: pointer;
-        }
-        #resetBtn {
-            margin-top: 15px;
-            padding: 10px 20px;
-            font-size: 16px;
-            background: #e74c3c;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: 0.2s;
-        }
-        #resetBtn:hover { background: #c0392b; }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mini Angry Birds v3.0 — Enhanced Edition</title>
+  <style>
+    :root {
+      --panel: rgba(12, 30, 45, 0.78);
+      --panel-2: rgba(255, 255, 255, 0.12);
+      --text: #f7fbff;
+      --muted: #bdd3df;
+      --accent: #ffca28;
+      --danger: #ef5350;
+      --ok: #66bb6a;
+      --blue: #42a5f5;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background:
+        radial-gradient(circle at 20% 10%, rgba(255, 255, 255, 0.18), transparent 28%),
+        linear-gradient(135deg, #1f3144, #0e1725 68%);
+      color: var(--text);
+      font-family: Arial, Helvetica, sans-serif;
+      user-select: none;
+      overflow-x: hidden;
+    }
+
+    #app {
+      width: min(1060px, 96vw);
+      padding: 18px;
+    }
+
+    .top-card {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 12px;
+      align-items: center;
+      margin-bottom: 12px;
+      padding: 14px 16px;
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 18px;
+      background: var(--panel);
+      box-shadow: 0 16px 40px rgba(0,0,0,0.28);
+      backdrop-filter: blur(10px);
+    }
+
+    h1 {
+      margin: 0 0 6px;
+      font-size: clamp(22px, 3vw, 34px);
+      line-height: 1.05;
+      letter-spacing: 0.2px;
+    }
+
+    .subtitle {
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(5, auto);
+      gap: 8px;
+      align-items: center;
+      justify-content: end;
+    }
+
+    .pill {
+      padding: 8px 10px;
+      border-radius: 999px;
+      background: var(--panel-2);
+      border: 1px solid rgba(255,255,255,0.12);
+      font-size: 14px;
+      white-space: nowrap;
+    }
+
+    .pill strong { color: var(--accent); }
+
+    #gameShell {
+      position: relative;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 26px 70px rgba(0,0,0,0.48);
+      background: #6ec6d8;
+      border: 1px solid rgba(255,255,255,0.18);
+    }
+
+    canvas {
+      display: block;
+      width: 100%;
+      height: auto;
+      background: linear-gradient(#76d3f0 0%, #9de2ee 54%, #c8ecda 100%);
+      cursor: crosshair;
+      touch-action: none;
+    }
+
+    #overlay {
+      position: absolute;
+      inset: 0;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      background: rgba(5, 15, 24, 0.52);
+      backdrop-filter: blur(4px);
+    }
+
+    #overlay.show { display: flex; }
+
+    .modal {
+      width: min(520px, 92%);
+      padding: 22px;
+      border-radius: 20px;
+      background: rgba(12, 30, 45, 0.94);
+      border: 1px solid rgba(255,255,255,0.18);
+      box-shadow: 0 20px 70px rgba(0,0,0,0.45);
+      text-align: center;
+    }
+
+    .modal h2 {
+      margin: 0 0 8px;
+      font-size: 32px;
+    }
+
+    .modal p {
+      margin: 6px 0 14px;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    .stars {
+      font-size: 36px;
+      letter-spacing: 6px;
+      margin: 8px 0 14px;
+      color: var(--accent);
+      text-shadow: 0 2px 8px rgba(0,0,0,0.35);
+    }
+
+    .controls {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: center;
+      margin-top: 12px;
+    }
+
+    button {
+      border: 0;
+      color: white;
+      background: #2f80ed;
+      padding: 10px 14px;
+      border-radius: 12px;
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: transform 0.12s ease, filter 0.12s ease, opacity 0.12s ease;
+    }
+
+    button:hover { transform: translateY(-1px); filter: brightness(1.08); }
+    button:active { transform: translateY(1px); }
+    button:disabled { opacity: 0.45; cursor: not-allowed; transform: none; filter: none; }
+
+    .danger { background: #e53935; }
+    .ok { background: #43a047; }
+    .ghost { background: rgba(255,255,255,0.14); border: 1px solid rgba(255,255,255,0.16); }
+
+    .bottom-card {
+      margin-top: 12px;
+      padding: 12px 14px;
+      border-radius: 16px;
+      background: var(--panel);
+      border: 1px solid rgba(255,255,255,0.12);
+      display: grid;
+      gap: 10px;
+    }
+
+    .help {
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    #levelButtons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .level-btn {
+      min-width: 58px;
+      padding: 9px 10px;
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.16);
+    }
+
+    .level-btn.active { background: #ffb300; color: #1e1e1e; }
+    .level-btn.locked { opacity: 0.38; }
+
+    @media (max-width: 800px) {
+      .top-card { grid-template-columns: 1fr; }
+      .stats { justify-content: start; grid-template-columns: repeat(2, auto); }
+      #app { padding: 10px; }
+    }
+  </style>
 </head>
 <body>
+  <main id="app">
+    <section class="top-card">
+      <div>
+        <h1>Mini Angry Birds v3.0</h1>
+        <div class="subtitle">Enhanced Edition — มีหลายนก, สกิล, ดาว, เซฟด่าน, ฟิสิกส์เสถียรขึ้น และ UI ใหม่</div>
+      </div>
+      <div class="stats" aria-live="polite">
+        <div class="pill">ด่าน <strong id="levelLabel">1</strong>/<span id="totalLevelsLabel">8</span></div>
+        <div class="pill">คะแนน <strong id="scoreLabel">0</strong></div>
+        <div class="pill">นกเหลือ <strong id="birdsLabel">0</strong></div>
+        <div class="pill">ยิง <strong id="shotsLabel">0</strong></div>
+        <div class="pill">ดีที่สุด <strong id="bestLabel">0★</strong></div>
+      </div>
+    </section>
 
-    <h1>Mini Angry Birds (กล่องกระเด็นได้!)</h1>
-    <div id="gameUi">ด่าน: <span id="levelDisplay">1</span>/5 | คะแนน: <span id="scoreDisplay">0</span></div>
-    <canvas id="gameCanvas" width="800" height="400"></canvas>
-    <button id="resetBtn" onclick="resetLevel()">เริ่มด่านนี้ใหม่</button>
+    <section id="gameShell">
+      <canvas id="gameCanvas" width="960" height="540"></canvas>
+      <div id="overlay">
+        <div class="modal">
+          <h2 id="overlayTitle">Level Clear!</h2>
+          <div id="overlayStars" class="stars">★★★</div>
+          <p id="overlayText">คุณผ่านด่านแล้ว</p>
+          <div class="controls">
+            <button id="overlayNext" class="ok">ด่านถัดไป</button>
+            <button id="overlayRetry" class="danger">เล่นด่านนี้ใหม่</button>
+            <button id="overlayClose" class="ghost">ปิดหน้าต่าง</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="bottom-card">
+      <div class="controls">
+        <button id="resetBtn" class="danger">เริ่มด่านนี้ใหม่ (R)</button>
+        <button id="pauseBtn" class="ghost">หยุดชั่วคราว (P)</button>
+        <button id="abilityBtn" class="ok">ใช้สกิล (Space / คลิกตอนนกบิน)</button>
+        <button id="clearSaveBtn" class="ghost">ล้าง Save</button>
+      </div>
+      <div id="levelButtons"></div>
+      <div class="help">
+        วิธีเล่น: ลากนกจากหนังสติ๊กแล้วยิงให้หมูตายทั้งหมด | นกเหลืองใช้สกิลพุ่งเร็ว | นกระเบิดกดสกิลเพื่อระเบิดกลางอากาศ | ผ่านด่านด้วยจำนวนนกน้อยจะได้ดาวมากขึ้น
+      </div>
+    </section>
+  </main>
 
 <script>
-const canvas = document.getElementById('gameCanvas');
-const ctx = canvas.getContext('2d');
+(() => {
+  'use strict';
 
-const levelDisplay = document.getElementById('levelDisplay');
-const scoreDisplay = document.getElementById('scoreDisplay');
+  const canvas = document.getElementById('gameCanvas');
+  const ctx = canvas.getContext('2d');
 
-let currentLevel = 1;
-let score = 0;
-let isDragging = false;
+  const ui = {
+    level: document.getElementById('levelLabel'),
+    total: document.getElementById('totalLevelsLabel'),
+    score: document.getElementById('scoreLabel'),
+    birds: document.getElementById('birdsLabel'),
+    shots: document.getElementById('shotsLabel'),
+    best: document.getElementById('bestLabel'),
+    reset: document.getElementById('resetBtn'),
+    pause: document.getElementById('pauseBtn'),
+    ability: document.getElementById('abilityBtn'),
+    clearSave: document.getElementById('clearSaveBtn'),
+    levelButtons: document.getElementById('levelButtons'),
+    overlay: document.getElementById('overlay'),
+    overlayTitle: document.getElementById('overlayTitle'),
+    overlayStars: document.getElementById('overlayStars'),
+    overlayText: document.getElementById('overlayText'),
+    overlayNext: document.getElementById('overlayNext'),
+    overlayRetry: document.getElementById('overlayRetry'),
+    overlayClose: document.getElementById('overlayClose')
+  };
 
-const slingX = 150;
-const slingY = 300;
+  const W = canvas.width;
+  const H = canvas.height;
+  const GROUND_Y = 486;
+  const SLING_X = 155;
+  const SLING_Y = 400;
+  const GRAVITY = 0.34;
+  const MAX_DRAG = 112;
+  const POWER = 0.235;
+  const SAVE_KEY = 'mini-angry-birds-v3-save';
 
-// โครงสร้างวัตถุ
-let bird = { x: slingX, y: slingY, radius: 15, vx: 0, vy: 0, launched: false, inAir: false };
-let pigs = [];
-let blocks = [];
+  const materials = {
+    wood: { mass: 1.15, hp: 38, fill: '#c88742', edge: '#7a4a22', restitution: 0.26 },
+    stone: { mass: 2.35, hp: 86, fill: '#8e99a3', edge: '#59636b', restitution: 0.18 },
+    ice: { mass: 0.82, hp: 24, fill: '#9ee7ff', edge: '#4aa7cf', restitution: 0.36 },
+    tnt: { mass: 1.0, hp: 18, fill: '#d84034', edge: '#7c1f19', restitution: 0.22 }
+  };
 
-const gravity = 0.25;
+  const birdTypes = {
+    red: { label: 'แดง', radius: 16, color: '#e53935', accent: '#ffeb3b', mass: 1.0, ability: 'ไม่มีสกิลพิเศษ แต่ชนแรงและคุมง่าย' },
+    yellow: { label: 'เหลือง', radius: 14, color: '#fdd835', accent: '#fb8c00', mass: 0.9, ability: 'พุ่งเร็วตามทิศที่กำลังบิน' },
+    bomb: { label: 'ระเบิด', radius: 18, color: '#263238', accent: '#ff7043', mass: 1.3, ability: 'ระเบิดเป็นวงกว้าง' },
+    blue: { label: 'ฟ้า', radius: 13, color: '#42a5f5', accent: '#e3f2fd', mass: 0.75, ability: 'ชนเบาแต่เร็ว เหมาะกับน้ำแข็ง/โครงสร้างบาง' }
+  };
 
-// ข้อมูล 5 ด่าน
-const levelsData = {
-    1: {
-        pigs: [{ x: 650, y: 350, radius: 15, alive: true }],
-        blocks: [
-            { x: 600, y: 270, w: 20, h: 100, vx: 0, vy: 0 },
-            { x: 680, y: 270, w: 20, h: 100, vx: 0, vy: 0 }
-        ]
+  const levels = [
+    {
+      name: 'Warm Up', birds: ['red', 'red'], three: 1, two: 2,
+      pigs: [{ x: 742, y: 466, r: 16, hp: 1 }],
+      blocks: [
+        block(690, 382, 22, 104, 'wood'), block(790, 382, 22, 104, 'wood'), block(682, 360, 138, 22, 'wood')
+      ]
     },
-    2: {
-        pigs: [{ x: 650, y: 250, radius: 15, alive: true }],
-        blocks: [
-            { x: 600, y: 270, w: 20, h: 100, vx: 0, vy: 0 },
-            { x: 680, y: 270, w: 20, h: 100, vx: 0, vy: 0 },
-            { x: 590, y: 250, w: 120, h: 20, vx: 0, vy: 0 }
-        ]
+    {
+      name: 'First Tower', birds: ['red', 'yellow', 'red'], three: 1, two: 2,
+      pigs: [{ x: 742, y: 340, r: 16, hp: 1 }, { x: 742, y: 466, r: 16, hp: 1 }],
+      blocks: [
+        block(680, 382, 24, 104, 'wood'), block(780, 382, 24, 104, 'wood'), block(670, 356, 134, 24, 'wood'),
+        block(704, 272, 22, 84, 'wood'), block(758, 272, 22, 84, 'wood'), block(690, 248, 108, 22, 'ice')
+      ]
     },
-    3: {
-        pigs: [
-            { x: 600, y: 350, radius: 15, alive: true },
-            { x: 700, y: 350, radius: 15, alive: true }
-        ],
-        blocks: [
-            { x: 550, y: 270, w: 20, h: 100, vx: 0, vy: 0 },
-            { x: 650, y: 270, w: 20, h: 100, vx: 0, vy: 0 },
-            { x: 750, y: 270, w: 20, h: 100, vx: 0, vy: 0 }
-        ]
+    {
+      name: 'Heavy Stone', birds: ['yellow', 'red', 'bomb'], three: 2, two: 3,
+      pigs: [{ x: 660, y: 466, r: 15, hp: 1 }, { x: 800, y: 466, r: 15, hp: 1 }],
+      blocks: [
+        block(610, 380, 30, 106, 'stone'), block(700, 380, 24, 106, 'wood'), block(790, 380, 30, 106, 'stone'), block(590, 352, 230, 24, 'wood'),
+        block(700, 300, 26, 52, 'tnt')
+      ]
     },
-    4: {
-        pigs: [
-            { x: 650, y: 350, radius: 15, alive: true },
-            { x: 650, y: 230, radius: 15, alive: true }
-        ],
-        blocks: [
-            { x: 600, y: 270, w: 20, h: 100, vx: 0, vy: 0 },
-            { x: 680, y: 270, w: 20, h: 100, vx: 0, vy: 0 },
-            { x: 590, y: 250, w: 120, h: 20, vx: 0, vy: 0 },
-            { x: 610, y: 150, w: 20, h: 100, vx: 0, vy: 0 },
-            { x: 670, y: 150, w: 20, h: 100, vx: 0, vy: 0 }
-        ]
+    {
+      name: 'Glass House', birds: ['blue', 'yellow', 'red'], three: 2, two: 3,
+      pigs: [{ x: 710, y: 456, r: 15, hp: 1 }, { x: 770, y: 304, r: 15, hp: 1 }],
+      blocks: [
+        block(645, 384, 18, 102, 'ice'), block(735, 384, 18, 102, 'ice'), block(825, 384, 18, 102, 'ice'),
+        block(630, 360, 228, 18, 'ice'), block(690, 282, 18, 78, 'ice'), block(808, 282, 18, 78, 'ice'), block(675, 260, 166, 18, 'ice')
+      ]
     },
-    5: {
-        pigs: [
-            { x: 550, y: 350, radius: 12, alive: true },
-            { x: 650, y: 350, radius: 15, alive: true },
-            { x: 750, y: 350, radius: 12, alive: true }
-        ],
-        blocks: [
-            { x: 500, y: 220, w: 20, h: 150, vx: 0, vy: 0 },
-            { x: 600, y: 220, w: 20, h: 150, vx: 0, vy: 0 },
-            { x: 700, y: 220, w: 20, h: 150, vx: 0, vy: 0 },
-            { x: 490, y: 200, w: 240, h: 20, vx: 0, vy: 0 }
-        ]
+    {
+      name: 'Fortress', birds: ['red', 'yellow', 'bomb', 'red'], three: 2, two: 3,
+      pigs: [{ x: 635, y: 466, r: 15, hp: 1 }, { x: 740, y: 466, r: 17, hp: 2 }, { x: 835, y: 466, r: 15, hp: 1 }],
+      blocks: [
+        block(585, 350, 30, 136, 'stone'), block(680, 350, 26, 136, 'wood'), block(780, 350, 26, 136, 'wood'), block(875, 350, 30, 136, 'stone'),
+        block(565, 320, 338, 28, 'wood'), block(625, 260, 24, 60, 'wood'), block(820, 260, 24, 60, 'wood'), block(610, 238, 248, 22, 'stone')
+      ]
+    },
+    {
+      name: 'TNT Mine', birds: ['yellow', 'red', 'bomb'], three: 1, two: 2,
+      pigs: [{ x: 715, y: 466, r: 16, hp: 1 }, { x: 790, y: 385, r: 16, hp: 1 }],
+      blocks: [
+        block(650, 384, 24, 102, 'wood'), block(750, 384, 24, 102, 'wood'), block(850, 384, 24, 102, 'wood'), block(630, 360, 260, 22, 'wood'),
+        block(764, 318, 28, 42, 'tnt'), block(720, 280, 22, 80, 'ice'), block(820, 280, 22, 80, 'ice'), block(705, 258, 152, 20, 'ice')
+      ]
+    },
+    {
+      name: 'Split Defense', birds: ['blue', 'blue', 'yellow', 'bomb'], three: 2, two: 3,
+      pigs: [{ x: 610, y: 466, r: 14, hp: 1 }, { x: 750, y: 466, r: 16, hp: 1 }, { x: 870, y: 466, r: 14, hp: 1 }],
+      blocks: [
+        block(560, 394, 20, 92, 'ice'), block(640, 394, 20, 92, 'ice'), block(545, 372, 130, 20, 'ice'),
+        block(710, 376, 26, 110, 'wood'), block(805, 376, 26, 110, 'wood'), block(695, 350, 150, 24, 'wood'),
+        block(840, 396, 22, 90, 'stone'), block(905, 396, 22, 90, 'stone'), block(830, 374, 108, 22, 'stone')
+      ]
+    },
+    {
+      name: 'Final Castle', birds: ['yellow', 'red', 'bomb', 'blue', 'red'], three: 3, two: 4,
+      pigs: [{ x: 600, y: 466, r: 14, hp: 1 }, { x: 725, y: 466, r: 18, hp: 2 }, { x: 845, y: 466, r: 14, hp: 1 }, { x: 770, y: 252, r: 16, hp: 1 }],
+      blocks: [
+        block(545, 355, 28, 131, 'stone'), block(650, 355, 24, 131, 'wood'), block(760, 355, 24, 131, 'wood'), block(890, 355, 28, 131, 'stone'),
+        block(525, 326, 392, 28, 'wood'), block(595, 268, 22, 58, 'ice'), block(710, 268, 22, 58, 'ice'), block(825, 268, 22, 58, 'ice'), block(580, 246, 270, 22, 'ice'),
+        block(732, 200, 30, 46, 'tnt'), block(690, 178, 120, 22, 'stone')
+      ]
     }
-};
+  ];
 
-function initLevel(lvl) {
-    if (lvl > 5) {
-        alert("สุดยอดมาก! คุณเคลียร์ครบทั้ง 5 ด่านแล้ว!");
-        currentLevel = 1;
-        score = 0;
-        lvl = 1;
+  let bird = null;
+  let pigs = [];
+  let blocks = [];
+  let particles = [];
+  let floatTexts = [];
+  let trajectoryDots = [];
+
+  const game = {
+    levelIndex: 0,
+    score: 0,
+    shotsUsed: 0,
+    queue: [],
+    status: 'ready',
+    dragging: false,
+    paused: false,
+    settledFrames: 0,
+    lastTime: performance.now(),
+    shake: 0,
+    message: '',
+    messageFrames: 0,
+    abilityHintFrames: 0,
+    save: loadSave()
+  };
+
+  function block(x, y, w, h, material) {
+    return { x, y, w, h, material };
+  }
+
+  function cloneBlock(template) {
+    const mat = materials[template.material] || materials.wood;
+    return {
+      ...template,
+      vx: 0,
+      vy: 0,
+      hp: mat.hp,
+      maxHp: mat.hp,
+      mass: mat.mass * Math.max(1, (template.w * template.h) / 2300),
+      exploded: false,
+      asleep: false
+    };
+  }
+
+  function clonePig(template) {
+    return {
+      ...template,
+      x0: template.x,
+      y0: template.y,
+      alive: true,
+      hitFlash: 0,
+      vx: 0,
+      vy: 0
+    };
+  }
+
+  function loadSave() {
+    try {
+      const raw = localStorage.getItem(SAVE_KEY);
+      if (!raw) return { unlocked: 1, best: {} };
+      const parsed = JSON.parse(raw);
+      return {
+        unlocked: Math.max(1, Number(parsed.unlocked) || 1),
+        best: parsed.best && typeof parsed.best === 'object' ? parsed.best : {}
+      };
+    } catch (err) {
+      return { unlocked: 1, best: {} };
     }
-    
-    currentLevel = lvl;
-    levelDisplay.textContent = currentLevel;
-    scoreDisplay.textContent = score;
+  }
 
-    bird.x = slingX;
-    bird.y = slingY;
-    bird.vx = 0;
-    bird.vy = 0;
-    bird.launched = false;
-    bird.inAir = false;
+  function saveGame() {
+    try {
+      localStorage.setItem(SAVE_KEY, JSON.stringify(game.save));
+    } catch (err) {
+      // Ignore storage errors so the game still works in private mode.
+    }
+  }
 
-    const data = levelsData[lvl];
-    pigs = data.pigs.map(p => ({ ...p }));
-    blocks = data.blocks.map(b => ({ ...b }));
-}
+  function initLevel(index, keepScore = true) {
+    const safeIndex = clamp(index, 0, levels.length - 1);
+    game.levelIndex = safeIndex;
+    game.shotsUsed = 0;
+    game.queue = [...levels[safeIndex].birds];
+    game.status = 'ready';
+    game.dragging = false;
+    game.paused = false;
+    game.settledFrames = 0;
+    game.shake = 0;
+    game.message = `ด่าน ${safeIndex + 1}: ${levels[safeIndex].name}`;
+    game.messageFrames = 150;
+    game.abilityHintFrames = 0;
+    if (!keepScore) game.score = 0;
 
-function resetLevel() {
-    initLevel(currentLevel);
-}
+    pigs = levels[safeIndex].pigs.map(clonePig);
+    blocks = levels[safeIndex].blocks.map(cloneBlock);
+    particles = [];
+    floatTexts = [];
+    trajectoryDots = [];
+    spawnBird();
+    hideOverlay();
+    updateUi();
+    renderLevelButtons();
+  }
 
-// ฟังก์ชันจำลองฟิสิกส์และการชนกันขั้นสูงขึ้น
-function physicsUpdate() {
-    // 1. เคลื่อนที่นก
-    if (bird.inAir) {
-        bird.x += bird.vx;
-        bird.y += bird.vy;
-        bird.vy += gravity;
-
-        // นกชนขอบ
-        if (bird.y > 370 - bird.radius) {
-            bird.y = 370 - bird.radius;
-            bird.vx *= 0.5;
-            bird.vy *= -0.4;
-        }
+  function spawnBird() {
+    if (game.shotsUsed >= game.queue.length) {
+      bird = null;
+      game.status = pigs.some(p => p.alive) ? 'failed' : 'completed';
+      return;
     }
 
-    // 2. เคลื่อนที่กล่องไม้ และคำนวณแรงโน้มถ่วงของกล่อง
-    blocks.forEach(b => {
-        b.x += b.vx;
-        b.y += b.vy;
-        
-        if (b.y < 370 - b.h) {
-            b.vy += gravity; // ตกจากฟ้า
-        } else {
-            b.y = 370 - b.h; // ตั้งอยู่บนพื้น
-            b.vy = 0;
-            b.vx *= 0.85; // แรงเสียดทานพื้นดิน (ทำให้ค่อยๆ หยุดไถล)
-        }
+    const type = game.queue[game.shotsUsed];
+    const spec = birdTypes[type] || birdTypes.red;
+    bird = {
+      type,
+      x: SLING_X,
+      y: SLING_Y,
+      r: spec.radius,
+      vx: 0,
+      vy: 0,
+      mass: spec.mass,
+      launched: false,
+      abilityUsed: false,
+      sleep: false,
+      age: 0,
+      trail: []
+    };
+    game.status = 'ready';
+    game.settledFrames = 0;
+    game.abilityHintFrames = 90;
+    updateUi();
+  }
 
-        // จำกัดขอบจอซ้ายขวาให้กล่องไม่ทะลุหายไป
-        if (b.x < 0) { b.x = 0; b.vx *= -0.5; }
-        if (b.x + b.w > canvas.width) { b.x = canvas.width - b.w; b.vx *= -0.5; }
+  function updateUi() {
+    const level = levels[game.levelIndex];
+    ui.level.textContent = game.levelIndex + 1;
+    ui.total.textContent = levels.length;
+    ui.score.textContent = game.score;
+    ui.birds.textContent = Math.max(0, game.queue.length - game.shotsUsed);
+    ui.shots.textContent = game.shotsUsed;
+    const best = game.save.best[String(game.levelIndex + 1)] || 0;
+    ui.best.textContent = `${best}★`;
+    ui.pause.textContent = game.paused ? 'เล่นต่อ (P)' : 'หยุดชั่วคราว (P)';
+    const type = bird ? birdTypes[bird.type] : null;
+    ui.ability.textContent = type ? `ใช้สกิล: ${type.label} (${bird.abilityUsed ? 'ใช้แล้ว' : 'พร้อม'})` : 'ใช้สกิล';
+    ui.ability.disabled = !bird || !bird.launched || bird.abilityUsed || !['yellow', 'bomb'].includes(bird.type);
+    ui.overlayNext.disabled = game.levelIndex >= levels.length - 1;
+  }
+
+  function renderLevelButtons() {
+    ui.levelButtons.innerHTML = '';
+    levels.forEach((level, i) => {
+      const btn = document.createElement('button');
+      const best = game.save.best[String(i + 1)] || 0;
+      const locked = i + 1 > game.save.unlocked;
+      btn.className = `level-btn${i === game.levelIndex ? ' active' : ''}${locked ? ' locked' : ''}`;
+      btn.textContent = locked ? `🔒 ${i + 1}` : `${i + 1} ${'★'.repeat(best)}`;
+      btn.title = locked ? 'ต้องผ่านด่านก่อนหน้า' : level.name;
+      btn.disabled = locked;
+      btn.addEventListener('click', () => initLevel(i));
+      ui.levelButtons.appendChild(btn);
     });
+  }
 
-    // 3. ตรวจจับ นก ชน กล่อง
-    blocks.forEach(b => {
-        if (bird.x + bird.radius > b.x && bird.x - bird.radius < b.x + b.w &&
-            bird.y + bird.radius > b.y && bird.y - bird.radius < b.y + b.h) {
-            
-            // ส่งแรงกระแทกให้นกเด้ง และกล่องกระเด็นไปตามแรงนก
-            b.vx += bird.vx * 0.4;
-            b.vy += bird.vy * 0.4;
+  function gameLoop(now) {
+    const rawDt = Math.min(2.4, (now - game.lastTime) / 16.6667);
+    game.lastTime = now;
 
-            bird.vx *= -0.4;
-            bird.vy *= -0.4;
-        }
-    });
-
-    // 4. ตรวจจับ กล่อง ชน กล่อง กันเอง (ทำให้กล่องล้มระเนระนาดซ้อนกันได้)
-    for (let i = 0; i < blocks.length; i++) {
-        for (let j = i + 1; j < blocks.length; j++) {
-            let b1 = blocks[i];
-            let b2 = blocks[j];
-
-            if (b1.x < b2.x + b2.w && b1.x + b1.w > b2.x &&
-                b1.y < b2.y + b2.h && b1.y + b1.w > b2.y) {
-                // เฉลี่ยแรงกระแทกหากชนกัน
-                let tempVx = b1.vx;
-                let tempVy = b1.vy;
-                b1.vx = b2.vx * 0.6;
-                b1.vy = b2.vy * 0.6;
-                b2.vx = tempVx * 0.6;
-                b2.vy = tempVy * 0.6;
-            }
-        }
-    }
-
-    // 5. ตรวจจับ นก ชน หมู หรือ กล่องกระเด็น ชน หมู
-    pigs.forEach(p => {
-        if (!p.alive) return;
-
-        // นกชนหมู
-        let dx = bird.x - p.x;
-        let dy = bird.y - p.y;
-        if (Math.sqrt(dx * dx + dy * dy) < bird.radius + p.radius) {
-            p.alive = false;
-            score += 100;
-            scoreDisplay.textContent = score;
-        }
-
-        // กล่องกระเด็นชนหมู (เช็คความเร็วกล่องด้วยว่าต้องเร็วพอถึงจะตาย)
-        blocks.forEach(b => {
-            if (p.x + p.radius > b.x && p.x - p.radius < b.x + b.w &&
-                p.y + p.radius > b.y && p.y - p.radius < b.y + b.h) {
-                
-                let speed = Math.sqrt(b.vx*b.vx + b.vy*b.vy);
-                if (speed > 0.5 || b.vy > 0.5) { // ถ้ากล่องขยับหรือตกทับ
-                    p.alive = false;
-                    score += 100;
-                    scoreDisplay.textContent = score;
-                }
-            }
-        });
-    });
-
-    // ตรวจสอบเงื่อนไขจบตา/เปลี่ยนด่าน
-    if (bird.inAir && Math.abs(bird.vx) < 0.1 && Math.abs(bird.vy) < 0.1 && bird.y >= 370 - bird.radius) {
-        resetBirdDelay();
-    }
-    if (bird.inAir && (bird.x > canvas.width || bird.x < 0)) {
-        resetBirdDelay();
-    }
-}
-
-function resetBirdDelay() {
-    bird.inAir = false;
-    setTimeout(() => {
-        if (pigs.some(p => p.alive)) {
-            bird.x = slingX;
-            bird.y = slingY;
-            bird.vx = 0;
-            bird.vy = 0;
-            bird.launched = false;
-        }
-    }, 1200);
-}
-
-function update() {
-    physicsUpdate();
-
-    // เคลียร์ด่านเมื่อหมูตายหมด
-    const allPigsDead = pigs.every(p => !p.alive);
-    if (allPigsDead && !bird.inAir) {
-        let allBlocksStopped = blocks.every(b => Math.abs(b.vx) < 0.2 && Math.abs(b.vy) < 0.2);
-        if (allBlocksStopped) {
-            setTimeout(() => {
-                initLevel(currentLevel + 1);
-            }, 800);
-        }
-    }
-}
-
-function draw() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-    // พื้นดิน
-    ctx.fillStyle = '#8bc34a';
-    ctx.fillRect(0, 370, canvas.width, 30);
-
-    // หนังสติ๊ก
-    ctx.fillStyle = '#795548';
-    ctx.fillRect(slingX - 5, slingY, 10, 70);
-
-    if (isDragging) {
-        ctx.strokeStyle = '#3e2723';
-        ctx.lineWidth = 4;
-        ctx.beginPath();
-        ctx.moveTo(slingX, slingY);
-        ctx.lineTo(bird.x, bird.y);
-        ctx.stroke();
-    }
-
-    // วาดกล่องไม้
-    ctx.fillStyle = '#d7ccc8';
-    ctx.strokeStyle = '#5d4037';
-    ctx.lineWidth = 2;
-    blocks.forEach(b => {
-        ctx.fillRect(b.x, b.y, b.w, b.h);
-        ctx.strokeRect(b.x, b.y, b.w, b.h);
-    });
-
-    // วาดหมู
-    pigs.forEach(p => {
-        if (p.alive) {
-            ctx.fillStyle = '#4caf50';
-            ctx.beginPath();
-            ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
-            ctx.fill();
-            ctx.fillStyle = '#fff';
-            ctx.beginPath();
-            ctx.arc(p.x - 5, p.y - 3, 3, 0, Math.PI * 2);
-            ctx.arc(p.x + 5, p.y - 3, 3, 0, Math.PI * 2);
-            ctx.fill();
-        }
-    });
-
-    // วาดนก
-    ctx.fillStyle = '#e53935';
-    ctx.beginPath();
-    ctx.arc(bird.x, bird.y, bird.radius, 0, Math.PI * 2);
-    ctx.fill();
-    ctx.fillStyle = '#fff';
-    ctx.beginPath(); ctx.arc(bird.x + 5, bird.y - 4, 3, 0, Math.PI * 2); ctx.fill();
-    ctx.fillStyle = '#ffeb3b';
-    ctx.beginPath();
-    ctx.moveTo(bird.x + 10, bird.y);
-    ctx.lineTo(bird.x + 18, bird.y + 2);
-    ctx.lineTo(bird.x + 10, bird.y + 5);
-    ctx.fill();
-
-    // แสดงเลขเวอร์ชันล่างซ้าย (v2.0)
-    ctx.fillStyle = "rgba(0, 0, 0, 0.5)";
-    ctx.font = "bold 16px Arial";
-    ctx.fillText("v2.0", 15, canvas.height - 15);
-}
-
-function gameLoop() {
-    update();
+    if (!game.paused) update(rawDt);
     draw();
     requestAnimationFrame(gameLoop);
-}
+  }
 
-function getMousePos(evt) {
+  function update(dt) {
+    if (game.messageFrames > 0) game.messageFrames -= dt;
+    if (game.abilityHintFrames > 0) game.abilityHintFrames -= dt;
+    if (game.shake > 0) game.shake *= 0.88;
+
+    updateParticles(dt);
+    updateFloatTexts(dt);
+
+    if (game.status === 'completed' || game.status === 'failed') return;
+
+    if (bird && bird.launched) updateBird(dt);
+    updateBlocks(dt);
+    solveBlockCollisions(dt);
+    handleBirdBlockCollisions();
+    handlePigCollisions();
+    cleanupDestroyedBlocks();
+    checkLevelState(dt);
+    updateUi();
+  }
+
+  function updateBird(dt) {
+    if (!bird || bird.sleep) return;
+
+    bird.age += dt / 60;
+    bird.trail.push({ x: bird.x, y: bird.y, life: 35 });
+    if (bird.trail.length > 18) bird.trail.shift();
+    bird.trail.forEach(t => t.life -= dt);
+
+    bird.x += bird.vx * dt;
+    bird.y += bird.vy * dt;
+    bird.vy += GRAVITY * dt;
+    bird.vx *= Math.pow(0.997, dt);
+    bird.vy *= Math.pow(0.999, dt);
+
+    if (bird.y + bird.r > GROUND_Y) {
+      bird.y = GROUND_Y - bird.r;
+      if (Math.abs(bird.vy) > 1.25) spawnDust(bird.x, GROUND_Y, 8, '#c4a470');
+      bird.vy *= -0.28;
+      bird.vx *= 0.74;
+      if (Math.abs(bird.vy) < 0.55) bird.vy = 0;
+    }
+
+    if (bird.x < -90 || bird.x > W + 120 || bird.y > H + 120 || bird.age > 13) {
+      bird.sleep = true;
+    }
+
+    const speed = Math.hypot(bird.vx, bird.vy);
+    if (bird.age > 1.0 && speed < 0.12 && bird.y >= GROUND_Y - bird.r - 1) bird.sleep = true;
+  }
+
+  function updateBlocks(dt) {
+    blocks.forEach(b => {
+      if (b.destroyed) return;
+      b.x += b.vx * dt;
+      b.y += b.vy * dt;
+      b.vy += GRAVITY * dt;
+      b.vx *= Math.pow(0.995, dt);
+
+      if (b.y + b.h > GROUND_Y) {
+        const impact = Math.abs(b.vy);
+        b.y = GROUND_Y - b.h;
+        if (impact > 3.4) damageBlock(b, (impact - 3.4) * 4.5, b.x + b.w / 2, b.y + b.h);
+        b.vy *= -materials[b.material].restitution;
+        if (Math.abs(b.vy) < 0.35) b.vy = 0;
+        b.vx *= Math.pow(0.82, dt);
+      }
+
+      if (b.x < 0) { b.x = 0; b.vx = Math.abs(b.vx) * 0.35; }
+      if (b.x + b.w > W) { b.x = W - b.w; b.vx = -Math.abs(b.vx) * 0.35; }
+    });
+  }
+
+  function solveBlockCollisions(dt) {
+    for (let i = 0; i < blocks.length; i++) {
+      const a = blocks[i];
+      if (a.destroyed) continue;
+      for (let j = i + 1; j < blocks.length; j++) {
+        const b = blocks[j];
+        if (b.destroyed || !rectOverlap(a, b)) continue;
+
+        const ax = a.x + a.w / 2;
+        const ay = a.y + a.h / 2;
+        const bx = b.x + b.w / 2;
+        const by = b.y + b.h / 2;
+        const overlapX = (a.w + b.w) / 2 - Math.abs(ax - bx);
+        const overlapY = (a.h + b.h) / 2 - Math.abs(ay - by);
+        const relVx = a.vx - b.vx;
+        const relVy = a.vy - b.vy;
+        const energy = Math.hypot(relVx, relVy);
+
+        if (overlapX < overlapY) {
+          const dir = ax < bx ? -1 : 1;
+          a.x += dir * overlapX * 0.5;
+          b.x -= dir * overlapX * 0.5;
+          const impulse = (relVx * 0.55);
+          a.vx -= impulse / Math.max(0.4, a.mass);
+          b.vx += impulse / Math.max(0.4, b.mass);
+        } else {
+          const dir = ay < by ? -1 : 1;
+          a.y += dir * overlapY * 0.5;
+          b.y -= dir * overlapY * 0.5;
+          const impulse = (relVy * 0.55);
+          a.vy -= impulse / Math.max(0.4, a.mass);
+          b.vy += impulse / Math.max(0.4, b.mass);
+        }
+
+        if (energy > 2.4) {
+          const damage = (energy - 2.4) * 2.0;
+          damageBlock(a, damage, ax, ay);
+          damageBlock(b, damage, bx, by);
+        }
+      }
+    }
+  }
+
+  function handleBirdBlockCollisions() {
+    if (!bird || !bird.launched || bird.sleep) return;
+    for (const b of blocks) {
+      if (b.destroyed) continue;
+      const hit = circleRectCollision(bird.x, bird.y, bird.r, b);
+      if (!hit.collided) continue;
+
+      const speed = Math.hypot(bird.vx, bird.vy);
+      const normalSpeed = bird.vx * hit.nx + bird.vy * hit.ny;
+      const impact = Math.max(speed, Math.abs(normalSpeed));
+      const birdPower = bird.type === 'blue' && b.material === 'ice' ? 1.65 : 1;
+      const damage = Math.max(0, (impact - 1.0) * 5.0 * bird.mass * birdPower);
+
+      bird.x += hit.nx * hit.depth;
+      bird.y += hit.ny * hit.depth;
+
+      b.vx += bird.vx * 0.22 * bird.mass / Math.max(0.5, b.mass);
+      b.vy += bird.vy * 0.22 * bird.mass / Math.max(0.5, b.mass);
+      bird.vx -= hit.nx * Math.abs(normalSpeed) * 1.15;
+      bird.vy -= hit.ny * Math.abs(normalSpeed) * 1.15;
+      bird.vx *= 0.64;
+      bird.vy *= 0.64;
+
+      damageBlock(b, damage, hit.x, hit.y);
+      spawnDust(hit.x, hit.y, 10, materials[b.material].fill);
+      game.shake = Math.max(game.shake, Math.min(10, impact * 1.8));
+    }
+  }
+
+  function handlePigCollisions() {
+    pigs.forEach(p => {
+      if (!p.alive) return;
+      if (p.hitFlash > 0) p.hitFlash -= 1;
+
+      if (bird && bird.launched && !bird.sleep) {
+        const dx = bird.x - p.x;
+        const dy = bird.y - p.y;
+        const dist = Math.hypot(dx, dy) || 0.0001;
+        if (dist < bird.r + p.r) {
+          const speed = Math.hypot(bird.vx, bird.vy);
+          const damage = speed > 1.2 ? Math.max(1, Math.floor(speed / 4)) : 0;
+          if (damage > 0) damagePig(p, damage, 'นกชน', p.x, p.y);
+          const nx = dx / dist;
+          const ny = dy / dist;
+          bird.x += nx * (bird.r + p.r - dist);
+          bird.y += ny * (bird.r + p.r - dist);
+          bird.vx *= -0.25;
+          bird.vy *= -0.25;
+        }
+      }
+
+      blocks.forEach(b => {
+        if (!p.alive || b.destroyed) return;
+        const hit = circleRectCollision(p.x, p.y, p.r, b);
+        if (!hit.collided) return;
+        const speed = Math.hypot(b.vx, b.vy);
+        const crush = hit.depth > p.r * 0.45 && b.y < p.y;
+        if (speed > 0.45 || crush) {
+          const damage = Math.max(1, Math.floor(speed * b.mass * 0.65 + (crush ? 1 : 0)));
+          damagePig(p, damage, b.material === 'stone' ? 'หินทับ' : 'กล่องชน', p.x, p.y);
+          b.vx *= 0.72;
+          b.vy *= 0.72;
+        }
+      });
+    });
+  }
+
+  function damagePig(p, amount, reason, x, y) {
+    if (!p.alive) return;
+    p.hp -= amount;
+    p.hitFlash = 12;
+    if (p.hp <= 0) {
+      p.alive = false;
+      const gained = 1000 + Math.round(150 * amount);
+      game.score += gained;
+      floatText(`+${gained}`, x, y - 18, '#e8f5e9');
+      spawnPigPop(p.x, p.y);
+      game.shake = Math.max(game.shake, 7);
+    } else {
+      floatText(reason, x, y - 18, '#ffffff');
+    }
+  }
+
+  function damageBlock(b, amount, x, y) {
+    if (!b || b.destroyed || amount <= 0) return;
+    b.hp -= amount;
+    if (amount > 3) floatText('-', x, y, 'rgba(255,255,255,0.75)');
+    if (b.material === 'tnt' && (b.hp <= 0 || amount > 14)) explode(b.x + b.w / 2, b.y + b.h / 2, 102, 13);
+    if (b.hp <= 0 && b.material !== 'tnt') {
+      b.destroyed = true;
+      game.score += 60;
+      spawnDust(b.x + b.w / 2, b.y + b.h / 2, 18, materials[b.material].fill);
+    }
+  }
+
+  function explode(x, y, radius, force) {
+    const source = blocks.find(b => !b.destroyed && b.material === 'tnt' && Math.abs(b.x + b.w / 2 - x) < 8 && Math.abs(b.y + b.h / 2 - y) < 8);
+    if (source) {
+      source.destroyed = true;
+      source.exploded = true;
+    }
+
+    game.shake = Math.max(game.shake, 18);
+    spawnExplosion(x, y);
+    floatText('BOOM!', x, y - 24, '#ffeb3b');
+
+    blocks.forEach(b => {
+      if (b.destroyed) return;
+      const cx = b.x + b.w / 2;
+      const cy = b.y + b.h / 2;
+      const dx = cx - x;
+      const dy = cy - y;
+      const d = Math.hypot(dx, dy) || 0.001;
+      if (d > radius) return;
+      const power = (1 - d / radius) * force;
+      b.vx += (dx / d) * power / Math.max(0.6, b.mass);
+      b.vy += (dy / d) * power / Math.max(0.6, b.mass) - power * 0.08;
+      damageBlock(b, power * 3.2, cx, cy);
+    });
+
+    pigs.forEach(p => {
+      if (!p.alive) return;
+      const dx = p.x - x;
+      const dy = p.y - y;
+      const d = Math.hypot(dx, dy) || 0.001;
+      if (d <= radius * 0.9) damagePig(p, 5, 'ระเบิด', p.x, p.y);
+    });
+
+    if (bird && !bird.sleep) {
+      const dx = bird.x - x;
+      const dy = bird.y - y;
+      const d = Math.hypot(dx, dy) || 0.001;
+      if (d <= radius) {
+        bird.vx += (dx / d) * force * 0.35;
+        bird.vy += (dy / d) * force * 0.35;
+      }
+    }
+  }
+
+  function cleanupDestroyedBlocks() {
+    blocks = blocks.filter(b => !b.destroyed);
+  }
+
+  function checkLevelState(dt) {
+    const allPigsDead = pigs.every(p => !p.alive);
+    if (allPigsDead) {
+      finishLevel();
+      return;
+    }
+
+    if (!bird || !bird.launched) return;
+    const bodiesMoving = blocks.some(b => Math.hypot(b.vx, b.vy) > 0.28);
+    if (bird.sleep && !bodiesMoving) game.settledFrames += dt;
+    else game.settledFrames = 0;
+
+    if (game.settledFrames > 52) {
+      if (game.shotsUsed < game.queue.length) {
+        spawnBird();
+      } else {
+        failLevel();
+      }
+    }
+  }
+
+  function finishLevel() {
+    if (game.status === 'completed') return;
+    game.status = 'completed';
+    const level = levels[game.levelIndex];
+    const stars = game.shotsUsed <= level.three ? 3 : game.shotsUsed <= level.two ? 2 : 1;
+    const unused = Math.max(0, game.queue.length - game.shotsUsed);
+    const bonus = unused * 500 + stars * 250;
+    game.score += bonus;
+    floatText(`โบนัส +${bonus}`, W / 2, 110, '#ffeb3b');
+
+    const levelNumber = game.levelIndex + 1;
+    const key = String(levelNumber);
+    game.save.best[key] = Math.max(game.save.best[key] || 0, stars);
+    game.save.unlocked = Math.max(game.save.unlocked, Math.min(levels.length, levelNumber + 1));
+    saveGame();
+    renderLevelButtons();
+    updateUi();
+    showOverlay(true, stars, bonus);
+  }
+
+  function failLevel() {
+    if (game.status === 'failed') return;
+    game.status = 'failed';
+    showOverlay(false, 0, 0);
+  }
+
+  function showOverlay(success, stars, bonus) {
+    ui.overlay.classList.add('show');
+    if (success) {
+      ui.overlayTitle.textContent = 'ผ่านด่าน!';
+      ui.overlayStars.textContent = '★'.repeat(stars) + '☆'.repeat(3 - stars);
+      ui.overlayText.textContent = `คะแนนรวม ${game.score} | โบนัส ${bonus} | ยิงไป ${game.shotsUsed} นัด`;
+      ui.overlayNext.style.display = game.levelIndex < levels.length - 1 ? 'inline-block' : 'none';
+    } else {
+      ui.overlayTitle.textContent = 'ยังไม่ผ่าน';
+      ui.overlayStars.textContent = '☆☆☆';
+      ui.overlayText.textContent = 'นกหมดแล้ว แต่ยังมีหมูรอดอยู่ ลองยิงมุมใหม่หรือใช้สกิลให้ตรงจังหวะ';
+      ui.overlayNext.style.display = 'none';
+    }
+  }
+
+  function hideOverlay() {
+    ui.overlay.classList.remove('show');
+  }
+
+  function useAbility() {
+    if (!bird || !bird.launched || bird.abilityUsed || bird.sleep) return;
+    if (bird.type === 'yellow') {
+      const speed = Math.hypot(bird.vx, bird.vy) || 1;
+      bird.vx += (bird.vx / speed) * 7.2;
+      bird.vy += (bird.vy / speed) * 7.2;
+      bird.abilityUsed = true;
+      spawnBurst(bird.x, bird.y, '#ffd54f');
+      floatText('BOOST!', bird.x, bird.y - 28, '#ffeb3b');
+      game.shake = Math.max(game.shake, 5);
+    } else if (bird.type === 'bomb') {
+      bird.abilityUsed = true;
+      explode(bird.x, bird.y, 125, 15);
+      bird.sleep = true;
+    }
+    updateUi();
+  }
+
+  function predictTrajectory() {
+    trajectoryDots = [];
+    if (!bird || !game.dragging) return;
+    let x = bird.x;
+    let y = bird.y;
+    let vx = (SLING_X - bird.x) * POWER;
+    let vy = (SLING_Y - bird.y) * POWER;
+    for (let i = 0; i < 48; i++) {
+      x += vx;
+      y += vy;
+      vy += GRAVITY;
+      vx *= 0.997;
+      if (i % 4 === 0) trajectoryDots.push({ x, y, a: 1 - i / 48 });
+      if (y > GROUND_Y) break;
+    }
+  }
+
+  function draw() {
+    const shakeX = game.shake > 0 ? (Math.random() - 0.5) * game.shake : 0;
+    const shakeY = game.shake > 0 ? (Math.random() - 0.5) * game.shake : 0;
+
+    ctx.save();
+    ctx.clearRect(0, 0, W, H);
+    drawBackground();
+    ctx.translate(shakeX, shakeY);
+    drawSlingshotBack();
+    drawBlocks();
+    drawPigs();
+    drawParticles();
+    drawFloatTexts();
+    drawBirdTrail();
+    drawTrajectory();
+    drawSlingshotBands();
+    drawBird();
+    drawForeground();
+    ctx.restore();
+
+    drawHudLayer();
+    if (game.paused) drawPauseLayer();
+  }
+
+  function drawBackground() {
+    const sky = ctx.createLinearGradient(0, 0, 0, H);
+    sky.addColorStop(0, '#73d1f2');
+    sky.addColorStop(0.58, '#a8e6f0');
+    sky.addColorStop(1, '#d7f1d5');
+    ctx.fillStyle = sky;
+    ctx.fillRect(0, 0, W, H);
+
+    ctx.fillStyle = 'rgba(255, 255, 255, 0.82)';
+    cloud(120, 90, 1.0); cloud(460, 78, 0.72); cloud(760, 120, 0.9);
+
+    ctx.fillStyle = 'rgba(85, 154, 94, 0.45)';
+    hill(-80, GROUND_Y + 20, 260, 110); hill(300, GROUND_Y + 35, 330, 140); hill(700, GROUND_Y + 25, 260, 130);
+
+    ctx.fillStyle = '#7cb342';
+    ctx.fillRect(0, GROUND_Y, W, H - GROUND_Y);
+    ctx.fillStyle = '#5d8f2d';
+    ctx.fillRect(0, GROUND_Y + 20, W, 10);
+    ctx.fillStyle = 'rgba(0,0,0,0.08)';
+    for (let x = 0; x < W; x += 34) ctx.fillRect(x, GROUND_Y + 30 + ((x * 7) % 12), 18, 4);
+  }
+
+  function cloud(x, y, s) {
+    ctx.beginPath();
+    ctx.arc(x, y, 28 * s, 0, Math.PI * 2);
+    ctx.arc(x + 30 * s, y - 10 * s, 35 * s, 0, Math.PI * 2);
+    ctx.arc(x + 67 * s, y, 26 * s, 0, Math.PI * 2);
+    ctx.arc(x + 38 * s, y + 12 * s, 32 * s, 0, Math.PI * 2);
+    ctx.fill();
+  }
+
+  function hill(x, y, w, h) {
+    ctx.beginPath();
+    ctx.moveTo(x, y);
+    ctx.quadraticCurveTo(x + w / 2, y - h, x + w, y);
+    ctx.closePath();
+    ctx.fill();
+  }
+
+  function drawSlingshotBack() {
+    ctx.lineCap = 'round';
+    ctx.strokeStyle = '#5d3a1f';
+    ctx.lineWidth = 13;
+    ctx.beginPath();
+    ctx.moveTo(SLING_X - 19, SLING_Y + 78);
+    ctx.lineTo(SLING_X - 12, SLING_Y - 46);
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.moveTo(SLING_X + 18, SLING_Y + 78);
+    ctx.lineTo(SLING_X + 10, SLING_Y - 45);
+    ctx.stroke();
+  }
+
+  function drawSlingshotBands() {
+    if (!bird || bird.launched) return;
+    ctx.strokeStyle = '#3e2723';
+    ctx.lineWidth = 5;
+    ctx.beginPath();
+    ctx.moveTo(SLING_X - 14, SLING_Y - 40);
+    ctx.lineTo(bird.x, bird.y);
+    ctx.lineTo(SLING_X + 14, SLING_Y - 40);
+    ctx.stroke();
+  }
+
+  function drawBlocks() {
+    blocks.forEach(b => {
+      const mat = materials[b.material];
+      ctx.save();
+      ctx.fillStyle = mat.fill;
+      ctx.strokeStyle = mat.edge;
+      ctx.lineWidth = 3;
+      roundRect(b.x, b.y, b.w, b.h, 3);
+      ctx.fill();
+      ctx.stroke();
+
+      ctx.globalAlpha = 0.14;
+      ctx.strokeStyle = '#ffffff';
+      ctx.lineWidth = 1;
+      if (b.w > b.h) {
+        for (let x = b.x + 18; x < b.x + b.w; x += 32) {
+          ctx.beginPath(); ctx.moveTo(x, b.y + 4); ctx.lineTo(x - 10, b.y + b.h - 4); ctx.stroke();
+        }
+      } else {
+        for (let y = b.y + 18; y < b.y + b.h; y += 32) {
+          ctx.beginPath(); ctx.moveTo(b.x + 4, y); ctx.lineTo(b.x + b.w - 4, y - 10); ctx.stroke();
+        }
+      }
+      ctx.globalAlpha = 1;
+
+      const damageRatio = clamp(1 - b.hp / b.maxHp, 0, 1);
+      if (damageRatio > 0.25) {
+        ctx.strokeStyle = 'rgba(40, 25, 20, 0.65)';
+        ctx.lineWidth = 2;
+        const cracks = Math.floor(damageRatio * 4) + 1;
+        for (let i = 0; i < cracks; i++) {
+          const sx = b.x + b.w * (0.2 + ((i * 37) % 60) / 100);
+          const sy = b.y + b.h * (0.2 + ((i * 53) % 60) / 100);
+          ctx.beginPath();
+          ctx.moveTo(sx, sy);
+          ctx.lineTo(sx + 8 - i * 3, sy + 10);
+          ctx.lineTo(sx + 18 - i * 2, sy + 4);
+          ctx.stroke();
+        }
+      }
+
+      if (b.material === 'tnt') {
+        ctx.fillStyle = '#fff8e1';
+        ctx.font = 'bold 16px Arial';
+        ctx.textAlign = 'center';
+        ctx.fillText('TNT', b.x + b.w / 2, b.y + b.h / 2 + 5);
+      }
+      ctx.restore();
+    });
+  }
+
+  function drawPigs() {
+    pigs.forEach(p => {
+      if (!p.alive) return;
+      ctx.save();
+      ctx.translate(p.x, p.y);
+      if (p.hitFlash > 0) ctx.scale(1.08, 0.92);
+      ctx.fillStyle = p.hitFlash > 0 ? '#a5d66c' : '#65bd4c';
+      ctx.strokeStyle = '#2e7d32';
+      ctx.lineWidth = 3;
+      ctx.beginPath();
+      ctx.arc(0, 0, p.r, 0, Math.PI * 2);
+      ctx.fill(); ctx.stroke();
+      ctx.fillStyle = '#7ccc63';
+      ctx.beginPath();
+      ctx.arc(-p.r * 0.55, -p.r * 0.76, p.r * 0.32, 0, Math.PI * 2);
+      ctx.arc(p.r * 0.55, -p.r * 0.76, p.r * 0.32, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.fillStyle = '#ffffff';
+      ctx.beginPath();
+      ctx.arc(-p.r * 0.32, -p.r * 0.15, p.r * 0.18, 0, Math.PI * 2);
+      ctx.arc(p.r * 0.32, -p.r * 0.15, p.r * 0.18, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.fillStyle = '#1b5e20';
+      ctx.beginPath();
+      ctx.arc(-p.r * 0.32, -p.r * 0.15, p.r * 0.07, 0, Math.PI * 2);
+      ctx.arc(p.r * 0.32, -p.r * 0.15, p.r * 0.07, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.fillStyle = '#388e3c';
+      roundRect(-p.r * 0.42, p.r * 0.22, p.r * 0.84, p.r * 0.34, 8);
+      ctx.fill();
+      ctx.fillStyle = '#1b5e20';
+      ctx.beginPath();
+      ctx.arc(-p.r * 0.18, p.r * 0.39, p.r * 0.06, 0, Math.PI * 2);
+      ctx.arc(p.r * 0.18, p.r * 0.39, p.r * 0.06, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.restore();
+    });
+  }
+
+  function drawBirdTrail() {
+    if (!bird || !bird.trail) return;
+    bird.trail.forEach((t, i) => {
+      if (t.life <= 0) return;
+      ctx.globalAlpha = clamp(t.life / 35, 0, 0.55) * (i / bird.trail.length);
+      ctx.fillStyle = '#ffffff';
+      ctx.beginPath();
+      ctx.arc(t.x, t.y, 3 + i * 0.08, 0, Math.PI * 2);
+      ctx.fill();
+    });
+    ctx.globalAlpha = 1;
+  }
+
+  function drawBird() {
+    if (!bird) return;
+    const spec = birdTypes[bird.type] || birdTypes.red;
+    ctx.save();
+    ctx.translate(bird.x, bird.y);
+    const angle = bird.launched ? Math.atan2(bird.vy, bird.vx) * 0.18 : 0;
+    ctx.rotate(angle);
+    ctx.fillStyle = spec.color;
+    ctx.strokeStyle = 'rgba(0,0,0,0.32)';
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.arc(0, 0, bird.r, 0, Math.PI * 2);
+    ctx.fill(); ctx.stroke();
+
+    ctx.fillStyle = spec.accent;
+    ctx.beginPath();
+    ctx.moveTo(bird.r * 0.68, -1);
+    ctx.lineTo(bird.r * 1.28, bird.r * 0.12);
+    ctx.lineTo(bird.r * 0.68, bird.r * 0.38);
+    ctx.closePath();
+    ctx.fill();
+
+    ctx.fillStyle = '#ffffff';
+    ctx.beginPath();
+    ctx.arc(bird.r * 0.28, -bird.r * 0.25, bird.r * 0.2, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.fillStyle = '#263238';
+    ctx.beginPath();
+    ctx.arc(bird.r * 0.35, -bird.r * 0.23, bird.r * 0.07, 0, Math.PI * 2);
+    ctx.fill();
+
+    if (bird.type === 'bomb') {
+      ctx.strokeStyle = '#ffcc80';
+      ctx.lineWidth = 3;
+      ctx.beginPath();
+      ctx.moveTo(-bird.r * 0.35, -bird.r * 0.82);
+      ctx.quadraticCurveTo(-bird.r * 0.5, -bird.r * 1.35, bird.r * 0.1, -bird.r * 1.45);
+      ctx.stroke();
+    }
+    ctx.restore();
+  }
+
+  function drawTrajectory() {
+    trajectoryDots.forEach(d => {
+      ctx.globalAlpha = d.a * 0.65;
+      ctx.fillStyle = '#ffffff';
+      ctx.beginPath();
+      ctx.arc(d.x, d.y, 4, 0, Math.PI * 2);
+      ctx.fill();
+    });
+    ctx.globalAlpha = 1;
+  }
+
+  function drawParticles() {
+    particles.forEach(p => {
+      ctx.globalAlpha = clamp(p.life / p.maxLife, 0, 1);
+      ctx.fillStyle = p.color;
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+      ctx.fill();
+    });
+    ctx.globalAlpha = 1;
+  }
+
+  function drawFloatTexts() {
+    floatTexts.forEach(t => {
+      ctx.globalAlpha = clamp(t.life / t.maxLife, 0, 1);
+      ctx.fillStyle = t.color;
+      ctx.font = 'bold 18px Arial';
+      ctx.textAlign = 'center';
+      ctx.fillText(t.text, t.x, t.y);
+    });
+    ctx.globalAlpha = 1;
+  }
+
+  function drawForeground() {
+    ctx.fillStyle = 'rgba(0,0,0,0.18)';
+    ctx.fillRect(0, GROUND_Y, W, 4);
+    ctx.fillStyle = 'rgba(255,255,255,0.55)';
+    ctx.font = 'bold 15px Arial';
+    ctx.textAlign = 'left';
+    ctx.fillText('v3.0 Enhanced', 16, H - 18);
+  }
+
+  function drawHudLayer() {
+    const level = levels[game.levelIndex];
+    ctx.save();
+    ctx.fillStyle = 'rgba(6, 21, 35, 0.58)';
+    roundRect(14, 14, 330, 72, 14);
+    ctx.fill();
+    ctx.fillStyle = '#ffffff';
+    ctx.font = 'bold 18px Arial';
+    ctx.textAlign = 'left';
+    ctx.fillText(`ด่าน ${game.levelIndex + 1}: ${level.name}`, 30, 40);
+    ctx.font = '13px Arial';
+    ctx.fillStyle = '#d8eef7';
+    ctx.fillText('นกคิวถัดไป:', 30, 66);
+    drawBirdQueue(118, 62);
+
+    if (game.messageFrames > 0) {
+      ctx.globalAlpha = clamp(game.messageFrames / 30, 0, 1);
+      ctx.fillStyle = 'rgba(6, 21, 35, 0.68)';
+      roundRect(W / 2 - 210, 24, 420, 42, 16);
+      ctx.fill();
+      ctx.fillStyle = '#ffffff';
+      ctx.font = 'bold 18px Arial';
+      ctx.textAlign = 'center';
+      ctx.fillText(game.message, W / 2, 51);
+      ctx.globalAlpha = 1;
+    }
+
+    if (game.abilityHintFrames > 0 && bird) {
+      ctx.globalAlpha = clamp(game.abilityHintFrames / 30, 0, 1);
+      ctx.fillStyle = 'rgba(0, 0, 0, 0.45)';
+      roundRect(22, 96, 390, 38, 12);
+      ctx.fill();
+      ctx.fillStyle = '#fffde7';
+      ctx.font = 'bold 14px Arial';
+      ctx.textAlign = 'left';
+      const spec = birdTypes[bird.type];
+      ctx.fillText(`นก ${spec.label}: ${spec.ability}`, 38, 120);
+      ctx.globalAlpha = 1;
+    }
+    ctx.restore();
+  }
+
+  function drawBirdQueue(x, y) {
+    for (let i = game.shotsUsed; i < game.queue.length; i++) {
+      const type = game.queue[i];
+      const spec = birdTypes[type];
+      const px = x + (i - game.shotsUsed) * 32;
+      ctx.fillStyle = spec.color;
+      ctx.beginPath();
+      ctx.arc(px, y, 10, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.fillStyle = spec.accent;
+      ctx.beginPath();
+      ctx.arc(px + 5, y - 3, 3, 0, Math.PI * 2);
+      ctx.fill();
+    }
+  }
+
+  function drawPauseLayer() {
+    ctx.save();
+    ctx.fillStyle = 'rgba(0,0,0,0.42)';
+    ctx.fillRect(0, 0, W, H);
+    ctx.fillStyle = '#ffffff';
+    ctx.font = 'bold 48px Arial';
+    ctx.textAlign = 'center';
+    ctx.fillText('PAUSED', W / 2, H / 2);
+    ctx.font = '18px Arial';
+    ctx.fillText('กด P เพื่อเล่นต่อ', W / 2, H / 2 + 36);
+    ctx.restore();
+  }
+
+  function updateParticles(dt) {
+    particles.forEach(p => {
+      p.x += p.vx * dt;
+      p.y += p.vy * dt;
+      p.vy += 0.05 * dt;
+      p.life -= dt;
+      p.r *= Math.pow(0.992, dt);
+    });
+    particles = particles.filter(p => p.life > 0 && p.r > 0.3);
+  }
+
+  function updateFloatTexts(dt) {
+    floatTexts.forEach(t => {
+      t.y -= 0.55 * dt;
+      t.x += t.vx * dt;
+      t.life -= dt;
+    });
+    floatTexts = floatTexts.filter(t => t.life > 0);
+  }
+
+  function spawnDust(x, y, count, color) {
+    for (let i = 0; i < count; i++) {
+      particles.push({
+        x, y, color,
+        vx: rand(-1.8, 1.8), vy: rand(-2.0, 0.5),
+        r: rand(2, 5), life: rand(20, 42), maxLife: 42
+      });
+    }
+  }
+
+  function spawnBurst(x, y, color) {
+    for (let i = 0; i < 22; i++) {
+      const a = (Math.PI * 2 * i) / 22;
+      particles.push({
+        x, y, color,
+        vx: Math.cos(a) * rand(1.5, 4.4), vy: Math.sin(a) * rand(1.5, 4.4),
+        r: rand(2, 4), life: rand(18, 34), maxLife: 34
+      });
+    }
+  }
+
+  function spawnExplosion(x, y) {
+    for (let i = 0; i < 56; i++) {
+      const a = Math.random() * Math.PI * 2;
+      const speed = rand(1.2, 7.0);
+      particles.push({
+        x, y,
+        color: Math.random() > 0.5 ? '#ffeb3b' : '#ff7043',
+        vx: Math.cos(a) * speed, vy: Math.sin(a) * speed,
+        r: rand(2, 7), life: rand(24, 58), maxLife: 58
+      });
+    }
+  }
+
+  function spawnPigPop(x, y) {
+    for (let i = 0; i < 26; i++) {
+      particles.push({
+        x, y, color: Math.random() > 0.35 ? '#66bb6a' : '#e8f5e9',
+        vx: rand(-3.4, 3.4), vy: rand(-5.0, 1.0),
+        r: rand(2, 5), life: rand(28, 52), maxLife: 52
+      });
+    }
+  }
+
+  function floatText(text, x, y, color) {
+    floatTexts.push({ text, x, y, color, vx: rand(-0.2, 0.2), life: 52, maxLife: 52 });
+  }
+
+  function getPointerPos(evt) {
     const rect = canvas.getBoundingClientRect();
     return {
-        x: (evt.clientX || evt.touches[0].clientX) - rect.left,
-        y: (evt.clientY || evt.touches[0].clientY) - rect.top
+      x: (evt.clientX - rect.left) * (canvas.width / rect.width),
+      y: (evt.clientY - rect.top) * (canvas.height / rect.height)
     };
-}
+  }
 
-function handleStart(e) {
-    if (bird.launched) return;
-    const pos = getMousePos(e);
-    let dx = pos.x - bird.x;
-    let dy = pos.y - bird.y;
-    if (Math.sqrt(dx*dx + dy*dy) < bird.radius + 15) {
-        isDragging = true;
+  function pointerDown(evt) {
+    evt.preventDefault();
+    if (game.paused) return;
+
+    if (bird && bird.launched && !bird.abilityUsed) {
+      useAbility();
+      return;
     }
-}
 
-function handleMove(e) {
-    if (!isDragging) return;
-    const pos = getMousePos(e);
-    let dx = pos.x - slingX;
-    let dy = pos.y - slingY;
-    let distance = Math.sqrt(dx * dx + dy * dy);
-    const maxDrag = 90;
+    if (!bird || game.status !== 'ready') return;
+    const pos = getPointerPos(evt);
+    if (Math.hypot(pos.x - bird.x, pos.y - bird.y) <= bird.r + 24) {
+      game.dragging = true;
+      game.status = 'dragging';
+      canvas.setPointerCapture?.(evt.pointerId);
+    }
+  }
 
-    if (distance > maxDrag) {
-        let angle = Math.atan2(dy, dx);
-        bird.x = slingX + Math.cos(angle) * maxDrag;
-        bird.y = slingY + Math.sin(angle) * maxDrag;
+  function pointerMove(evt) {
+    if (!game.dragging || !bird) return;
+    evt.preventDefault();
+    const pos = getPointerPos(evt);
+    const dx = pos.x - SLING_X;
+    const dy = pos.y - SLING_Y;
+    const dist = Math.hypot(dx, dy);
+    if (dist > MAX_DRAG) {
+      const a = Math.atan2(dy, dx);
+      bird.x = SLING_X + Math.cos(a) * MAX_DRAG;
+      bird.y = SLING_Y + Math.sin(a) * MAX_DRAG;
     } else {
-        bird.x = pos.x;
-        bird.y = pos.y;
+      bird.x = pos.x;
+      bird.y = pos.y;
     }
-}
+    predictTrajectory();
+  }
 
-function handleEnd() {
-    if (!isDragging) return;
-    isDragging = false;
+  function pointerUp(evt) {
+    if (!game.dragging || !bird) return;
+    evt.preventDefault();
+    game.dragging = false;
+    trajectoryDots = [];
+    const pull = Math.hypot(SLING_X - bird.x, SLING_Y - bird.y);
+    if (pull < 12) {
+      bird.x = SLING_X;
+      bird.y = SLING_Y;
+      game.status = 'ready';
+      return;
+    }
+    bird.vx = (SLING_X - bird.x) * POWER;
+    bird.vy = (SLING_Y - bird.y) * POWER;
     bird.launched = true;
-    bird.inAir = true;
-    bird.vx = (slingX - bird.x) * 0.22; // เพิ่มความแรงในการยิงเล็กน้อย
-    bird.vy = (slingY - bird.y) * 0.22;
-}
+    bird.age = 0;
+    bird.sleep = false;
+    game.status = 'flying';
+    game.shotsUsed += 1;
+    spawnBurst(bird.x, bird.y, 'rgba(255,255,255,0.75)');
+    updateUi();
+  }
 
-canvas.addEventListener('mousedown', handleStart);
-canvas.addEventListener('mousemove', handleMove);
-window.addEventListener('mouseup', handleEnd);
+  function rectOverlap(a, b) {
+    return a.x < b.x + b.w && a.x + a.w > b.x && a.y < b.y + b.h && a.y + a.h > b.y;
+  }
 
-canvas.addEventListener('touchstart', handleStart, { passive: true });
-canvas.addEventListener('touchmove', handleMove, { passive: true });
-window.addEventListener('touchend', handleEnd);
+  function circleRectCollision(cx, cy, r, rect) {
+    const closestX = clamp(cx, rect.x, rect.x + rect.w);
+    const closestY = clamp(cy, rect.y, rect.y + rect.h);
+    let dx = cx - closestX;
+    let dy = cy - closestY;
+    let dist = Math.hypot(dx, dy);
 
-initLevel(1);
-gameLoop();
+    if (dist >= r) return { collided: false };
+
+    if (dist < 0.0001) {
+      const left = Math.abs(cx - rect.x);
+      const right = Math.abs(rect.x + rect.w - cx);
+      const top = Math.abs(cy - rect.y);
+      const bottom = Math.abs(rect.y + rect.h - cy);
+      const min = Math.min(left, right, top, bottom);
+      if (min === left) { dx = -1; dy = 0; }
+      else if (min === right) { dx = 1; dy = 0; }
+      else if (min === top) { dx = 0; dy = -1; }
+      else { dx = 0; dy = 1; }
+      dist = 1;
+    }
+
+    return {
+      collided: true,
+      x: closestX,
+      y: closestY,
+      nx: dx / dist,
+      ny: dy / dist,
+      depth: r - dist
+    };
+  }
+
+  function roundRect(x, y, w, h, r) {
+    const radius = Math.min(r, w / 2, h / 2);
+    ctx.beginPath();
+    ctx.moveTo(x + radius, y);
+    ctx.lineTo(x + w - radius, y);
+    ctx.quadraticCurveTo(x + w, y, x + w, y + radius);
+    ctx.lineTo(x + w, y + h - radius);
+    ctx.quadraticCurveTo(x + w, y + h, x + w - radius, y + h);
+    ctx.lineTo(x + radius, y + h);
+    ctx.quadraticCurveTo(x, y + h, x, y + h - radius);
+    ctx.lineTo(x, y + radius);
+    ctx.quadraticCurveTo(x, y, x + radius, y);
+  }
+
+  function clamp(v, min, max) { return Math.max(min, Math.min(max, v)); }
+  function rand(min, max) { return min + Math.random() * (max - min); }
+
+  ui.reset.addEventListener('click', () => initLevel(game.levelIndex));
+  ui.pause.addEventListener('click', () => {
+    game.paused = !game.paused;
+    updateUi();
+  });
+  ui.ability.addEventListener('click', useAbility);
+  ui.clearSave.addEventListener('click', () => {
+    game.save = { unlocked: 1, best: {} };
+    saveGame();
+    initLevel(0, false);
+  });
+  ui.overlayRetry.addEventListener('click', () => initLevel(game.levelIndex));
+  ui.overlayNext.addEventListener('click', () => initLevel(Math.min(levels.length - 1, game.levelIndex + 1)));
+  ui.overlayClose.addEventListener('click', hideOverlay);
+
+  canvas.addEventListener('pointerdown', pointerDown);
+  canvas.addEventListener('pointermove', pointerMove);
+  canvas.addEventListener('pointerup', pointerUp);
+  canvas.addEventListener('pointercancel', pointerUp);
+  canvas.addEventListener('contextmenu', e => e.preventDefault());
+
+  window.addEventListener('keydown', e => {
+    if (e.code === 'KeyR') initLevel(game.levelIndex);
+    if (e.code === 'KeyP') { game.paused = !game.paused; updateUi(); }
+    if (e.code === 'Space') { e.preventDefault(); useAbility(); }
+    if (e.code === 'Escape') hideOverlay();
+  });
+
+  initLevel(0, false);
+  requestAnimationFrame(gameLoop);
+})();
 </script>
-
 </body>
 </html>
