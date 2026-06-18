@@ -39,12 +39,12 @@
   const MAX_DRAG = 115;
   const POWER = 0.23;
   const GRAVITY = 0.34;
-  const SAVE_KEY = 'mini-angry-birds-v14-save';
-  const HELP_KEY = 'mini-angry-birds-v14-help-seen';
+  const SAVE_KEY = 'mini-angry-birds-v15-save';
+  const HELP_KEY = 'mini-angry-birds-v15-help-seen';
 
-  // v14 physics goal: structures should resist small nudges. Heavy stone and
-  // supported blocks behave like they have static friction/settled contact, so
-  // a weak tap no longer wakes the whole map or kills every pig.
+  // v15 physics goal: blocks absorb damage through visible HP states.
+  // A light hit chips/cracks a block instead of instantly waking the whole
+  // structure. Blocks only vanish when their HP is depleted.
   const PHYSICS = {
     sleepInvMassScale: 0.10,
     contactPropagationImpulse: 7.2,
@@ -52,16 +52,19 @@
     pigImpactThreshold: 2.65,
     crushVelocityThreshold: 0.95,
     maxBlockSpeed: 8.2,
-    maxAngularSpeed: 0.040,
-    leverTorqueScale: 0.34,
-    staticBounce: 0.16
+    maxAngularSpeed: 0.034,
+    leverTorqueScale: 0.28,
+    staticBounce: 0.12,
+    chipOnlyImpulseScale: 0.15,
+    stageWakeMultiplier: 0.78,
+    blockBreakWakeRadius: 34
   };
 
   const materials = {
-    wood:  { hp: 64,  mass: 1.30, fill: '#c78542', edge: '#7b4d23', light: '#e5b66f', name: 'Wood',  restitution: .16, friction: .78, wake: 3.4, damage: 6.0 },
-    stone: { hp: 170, mass: 4.80, fill: '#87929a', edge: '#59656f', light: '#bac3c8', name: 'Stone', restitution: .08, friction: .94, wake: 7.6, damage: 13.0 },
-    ice:   { hp: 34,  mass: 0.95, fill: '#8edff1', edge: '#3b9dc0', light: '#d7fbff', name: 'Ice',   restitution: .28, friction: .28, wake: 2.3, damage: 3.8 },
-    tnt:   { hp: 30,  mass: 1.25, fill: '#df5148', edge: '#8b2923', light: '#ffb0a2', name: 'TNT',   restitution: .18, friction: .68, wake: 3.6, damage: 5.2 }
+    wood:  { hp: 76,  mass: 1.34, fill: '#c78542', edge: '#7b4d23', light: '#e5b66f', name: 'Wood',  restitution: .13, friction: .82, wake: 3.9, damage: 6.8, crack1: .66, crack2: .34 },
+    stone: { hp: 245, mass: 5.65, fill: '#87929a', edge: '#59656f', light: '#bac3c8', name: 'Stone', restitution: .05, friction: .97, wake: 9.4, damage: 16.5, crack1: .60, crack2: .26 },
+    ice:   { hp: 46,  mass: 1.02, fill: '#8edff1', edge: '#3b9dc0', light: '#d7fbff', name: 'Ice',   restitution: .22, friction: .24, wake: 2.7, damage: 4.7, crack1: .72, crack2: .42 },
+    tnt:   { hp: 38,  mass: 1.30, fill: '#df5148', edge: '#8b2923', light: '#ffb0a2', name: 'TNT',   restitution: .14, friction: .72, wake: 4.2, damage: 6.0, crack1: .70, crack2: .36 }
   };
 
   const birds = {
@@ -109,7 +112,7 @@
   let audioCtx = null;
 
   function loadSave() {
-    // v14: every stage is selectable from the first load. Best stars are still
+    // v15: every stage is selectable from the first load. Best stars are still
     // stored per level, so reloads do not lock content again.
     const allUnlocked = Array.isArray(levels) ? levels.length : 25;
     try {
@@ -127,7 +130,9 @@
   function cloneBlock(t) {
     const m = materials[t.material] || materials.wood;
     const areaScale = Math.max(.85, Math.pow((t.w * t.h) / 2500, 0.82));
+    const hpScale = clamp(Math.pow((t.w * t.h) / 2100, 0.52), .72, 2.55) * (t.material === 'stone' ? 1.18 : t.material === 'ice' ? .94 : 1);
     const mass = m.mass * areaScale;
+    const maxHp = Math.max(8, Math.round((Number(t.hp) || m.hp) * hpScale));
     return {
       ...t,
       x0: t.x,
@@ -136,8 +141,11 @@
       vy: 0,
       angle: Number(t.angle) || 0,
       av: 0,
-      hp: m.hp,
-      maxHp: m.hp,
+      hp: maxHp,
+      maxHp,
+      damageStage: 0,
+      damageFlash: 0,
+      stageAwarded: 0,
       mass,
       inertia: Math.max(120, mass * (t.w * t.w + t.h * t.h) / 12),
       destroyed: false,
@@ -150,6 +158,38 @@
   }
 
   function clonePig(t) { return { ...t, x0: t.x, y0: t.y, vx: 0, vy: 0, alive: true, hp: t.hp || 1, flash: 0, scored: false }; }
+
+  function blockHpPct(b) {
+    if (!b || !b.maxHp) return 1;
+    return clamp(b.hp / b.maxHp, 0, 1);
+  }
+
+  function blockDamageStage(b) {
+    if (!b || b.destroyed) return 3;
+    const m = materials[b.material] || materials.wood;
+    const pct = blockHpPct(b);
+    if (pct <= 0) return 3;          // broken
+    if (pct <= (m.crack2 ?? .34)) return 2; // heavy cracks / near break
+    if (pct <= (m.crack1 ?? .66)) return 1; // cracked
+    return 0;                        // intact
+  }
+
+  function setBlockDamageStage(b, stage) {
+    b.damageStage = Math.max(b.damageStage || 0, stage);
+    b.damageFlash = Math.max(b.damageFlash || 0, stage === 1 ? 12 : 18);
+  }
+
+  function damageResistance(b) {
+    const stage = blockDamageStage(b);
+    const mat = materials[b.material] || materials.wood;
+    // Intact/sleeping blocks absorb small impacts as cracks. A badly cracked block
+    // becomes easier to wake and finally breaks, so damage is progressive.
+    const intactBonus = stage === 0 ? 1.18 : stage === 1 ? 1.0 : .80;
+    const sleepBonus = b.sleep ? 1.12 : 1;
+    const stoneBonus = b.material === 'stone' ? 1.22 : 1;
+    return (mat.damage || 6) * intactBonus * sleepBonus * stoneBonus;
+  }
+
 
   function startLevel(index, resetScore = false) {
     const i = clamp(index, 0, levels.length - 1);
@@ -327,6 +367,7 @@
   function calmBlocks() {
     blocks.forEach(b => {
       if (!b || b.destroyed) return;
+      if (b.damageFlash > 0) b.damageFlash -= 1;
       if (!Number.isFinite(b.x) || !Number.isFinite(b.y) || !Number.isFinite(b.vx) || !Number.isFinite(b.vy) || !Number.isFinite(b.angle) || !Number.isFinite(b.av)) {
         b.x = b.x0; b.y = b.y0; b.vx = 0; b.vy = 0; b.angle = 0; b.av = 0;
       }
@@ -584,29 +625,31 @@
     b.sleep = false;
     b.touched = true;
     b.restFrames = 0;
-    // v14: do not wake adjacent structure from a light hit. Contact propagation
+    // v15: do not wake adjacent structure from a light hit. Contact propagation
     // is now impulse-gated inside resolveBodyImpulse; explosions/destruction
     // still wake nearby pieces.
     if (reason === 'explode') wakeNearbyBlocks(b, reason);
   }
 
-  function wakeNearbyBlocks(src, reason = 'contact') {
+  function wakeNearbyBlocks(src, reason = 'contact', radius = PHYSICS.nearWakeRadius) {
     const sa = blockAABB(src);
     blocks.forEach(o => {
       if (!o || o === src || o.destroyed || !o.sleep) return;
       const oa = blockAABB(o);
       const overlapX = Math.min(sa.maxX, oa.maxX) - Math.max(sa.minX, oa.minX);
       const overlapY = Math.min(sa.maxY, oa.maxY) - Math.max(sa.minY, oa.minY);
-      const closeX = overlapX > -18;
-      const closeY = overlapY > -18;
+      const closeX = overlapX > -radius;
+      const closeY = overlapY > -radius;
       if (closeX && closeY) {
+        // Intact stone neighbors do not wake from a cosmetic crack/break nearby.
+        if (reason === 'local-break' && o.material === 'stone' && blockDamageStage(o) === 0) return;
         o.sleep = false;
         o.restFrames = 0;
         if (reason === 'explode') {
           const dx = centerX(o) - centerX(src), dy = centerY(o) - centerY(src);
           const d = Math.hypot(dx, dy) || 1;
-          o.vx += (dx / d) * .7;
-          o.vy += (dy / d) * .45;
+          o.vx += (dx / d) * .55;
+          o.vy += (dy / d) * .34;
         }
       }
     });
@@ -691,8 +734,9 @@
     const m = materials[b.material] || materials.wood;
     const supportBonus = 1 + Math.min(3, blockSupportCount(b)) * .16;
     const sizeBonus = clamp(Math.sqrt((b.w * b.h) / 2600), .75, 2.2);
-    const stoneBonus = b.material === 'stone' ? 1.22 : 1;
-    return (m.wake || 3.4) * supportBonus * sizeBonus * stoneBonus;
+    const stoneBonus = b.material === 'stone' ? 1.34 : 1;
+    const healthBonus = blockDamageStage(b) === 0 ? 1.18 : blockDamageStage(b) === 1 ? 1.0 : .72;
+    return (m.wake || 3.4) * supportBonus * sizeBonus * stoneBonus * healthBonus;
   }
 
   function damageImpulseThreshold(b) {
@@ -700,7 +744,7 @@
     const m = materials[b.material] || materials.wood;
     const sizeBonus = clamp(Math.sqrt((b.w * b.h) / 2800), .78, 2.0);
     const supportBonus = 1 + Math.min(3, blockSupportCount(b)) * .08;
-    return (m.damage || 6) * sizeBonus * supportBonus;
+    return (m.damage || 6) * sizeBonus * supportBonus * damageResistance(b) / Math.max(1, (m.damage || 6));
   }
 
   function resolveBodyImpulse(a, b, nx, ny, depth, options = {}) {
@@ -780,11 +824,11 @@
     if (impulse > 2.4 && options.damageScale !== 0) {
       if (blockA) {
         const th = damageImpulseThreshold(a);
-        if (impulse > th) damageBlock(a, (impulse - th) * .55 * (options.damageScale ?? 1), hitX, hitY);
+        if (impulse > th) damageBlock(a, (impulse - th) * .32 * (options.damageScale ?? 1), hitX, hitY);
       }
       if (blockB) {
         const th = damageImpulseThreshold(b);
-        if (impulse > th) damageBlock(b, (impulse - th) * .55 * (options.damageScale ?? 1), hitX, hitY);
+        if (impulse > th) damageBlock(b, (impulse - th) * .32 * (options.damageScale ?? 1), hitX, hitY);
       }
     }
     return { impulse, rel: velAlongNormal };
@@ -800,7 +844,7 @@
     const wakeThreshold = wakeImpulseThreshold(b);
 
     // Static-friction gate: tiny bumps against settled/heavy structures bounce or slide,
-    // but they do not wake the whole stack. This is the main v14 fix.
+    // but they do not wake the whole stack. This is the main v15 stability fix.
     if (b.sleep && impactMomentum < wakeThreshold) {
       obj.x += hit.nx * Math.max(hit.depth, .6);
       obj.y += hit.ny * Math.max(hit.depth, .6);
@@ -814,8 +858,8 @@
         obj.vx -= vt * tangentX * .22;
         obj.vy -= vt * tangentY * .22;
       }
-      if (impactMomentum > wakeThreshold * .62 && impactMomentum > damageImpulseThreshold(b) * .45) {
-        chipBlock(b, (impactMomentum - wakeThreshold * .62) * .10 * (options.damageScale ?? 1), hit.x, hit.y);
+      if (impactMomentum > damageImpulseThreshold(b) * .30) {
+        chipBlock(b, Math.max(.35, (impactMomentum - damageImpulseThreshold(b) * .30) * PHYSICS.chipOnlyImpulseScale * (options.damageScale ?? 1)), hit.x, hit.y, { chipOnly: true });
       }
       return { impulse: impactMomentum, rel: -closingSpeed, resisted: true };
     }
@@ -834,7 +878,7 @@
     const impulse = result?.impulse || 0;
     const dmgThreshold = damageImpulseThreshold(b);
     if (impulse > Math.max(1.4, dmgThreshold * .72)) {
-      const damage = Math.max(0, (impulse - dmgThreshold * .72) * .42 * (options.damageScale ?? 1));
+      const damage = Math.max(0, (impulse - dmgThreshold * .72) * .30 * (options.damageScale ?? 1));
       damageBlock(b, damage, hit.x, hit.y);
       const count = options.particleCount ?? 8;
       if (count > 0) burst(hit.x, hit.y, Math.min(count, 3 + Math.floor(impulse * .45)), options.particleColor || mat.fill, Math.min(4.2, .45 + impulse * .09));
@@ -910,23 +954,63 @@
     }
   }
 
-  function chipBlock(b, amount, x, y) {
+  function chipBlock(b, amount, x, y, options = {}) {
     if (!b || b.destroyed || amount <= 0) return;
-    b.hp -= amount;
-    if (b.material === 'tnt' && (b.hp <= 0 || amount > 18)) return explode(b.x + b.w / 2, b.y + b.h / 2);
-    if (b.hp <= 0) {
-      b.destroyed = true;
-      wakeNearbyBlocks(b, 'break');
-      state.score += 80;
-      burst(b.x + b.w / 2, b.y + b.h / 2, 14, materials[b.material].fill, 3.6);
-      sfx('break');
+    const mat = materials[b.material] || materials.wood;
+    const oldStage = blockDamageStage(b);
+    const supportShield = b.sleep && !options.force ? .82 : 1;
+    const severePenalty = oldStage >= 2 ? 1.18 : oldStage === 1 ? 1.0 : .88;
+    const finalDamage = Math.max(0, amount * supportShield * severePenalty);
+    if (finalDamage <= 0) return;
+
+    b.hp = Math.max(0, b.hp - finalDamage);
+    b.touched = true;
+    const newStage = blockDamageStage(b);
+
+    if (b.material === 'tnt' && (b.hp <= 0 || finalDamage > Math.max(20, b.maxHp * .48))) {
+      return explode(b.x + b.w / 2, b.y + b.h / 2);
+    }
+
+    if (newStage > oldStage && newStage < 3) {
+      setBlockDamageStage(b, newStage);
+      const label = newStage === 1 ? 'ร้าว' : 'ใกล้แตก';
+      floatText(label, x ?? (b.x + b.w / 2), (y ?? b.y) - 10, '#fff1c2');
+      const color = newStage === 1 ? mat.light : mat.edge;
+      burst(x ?? (b.x + b.w / 2), y ?? (b.y + b.h / 2), newStage === 1 ? 6 : 10, color, newStage === 1 ? 2.0 : 2.8);
+      state.score += newStage === 1 ? 20 : 35;
+      sfx('crack');
+      // Only severe damage wakes the object. Cosmetic cracks stay mostly static.
+      if (newStage >= 2 || finalDamage > damageImpulseThreshold(b) * PHYSICS.stageWakeMultiplier) {
+        wakeBlock(b, 'severe-crack');
+      }
+    } else if (newStage < 3) {
+      b.damageFlash = Math.max(b.damageFlash || 0, Math.min(8, 3 + finalDamage * .35));
+      if (!options.chipOnly && finalDamage > damageImpulseThreshold(b) * .72) wakeBlock(b, 'heavy-chip');
+    }
+
+    if (newStage >= 3) {
+      breakBlock(b, x, y);
     }
   }
 
-  function damageBlock(b, amount, x, y) {
+  function breakBlock(b, x, y) {
+    if (!b || b.destroyed) return;
+    b.destroyed = true;
+    state.score += b.material === 'stone' ? 120 : b.material === 'ice' ? 90 : 80;
+    const mat = materials[b.material] || materials.wood;
+    burst(b.x + b.w / 2, b.y + b.h / 2, b.material === 'stone' ? 12 : 16, mat.fill, b.material === 'stone' ? 2.4 : 3.4);
+    floatText('แตก', x ?? (b.x + b.w / 2), (y ?? b.y) - 12, '#fff');
+    sfx('break');
+    // A broken block can wake immediate unsupported neighbors, but not the whole map.
+    wakeNearbyBlocks(b, 'local-break', PHYSICS.blockBreakWakeRadius);
+  }
+
+  function damageBlock(b, amount, x, y, options = {}) {
     if (!b || b.destroyed || amount <= 0) return;
-    if (amount > 1.0) wakeBlock(b, 'damage');
-    chipBlock(b, amount, x, y);
+    // Damage is the main response; waking is secondary and only for sufficiently
+    // strong impacts or blocks already close to breaking.
+    if (amount > damageImpulseThreshold(b) * .58 || blockDamageStage(b) >= 2) wakeBlock(b, 'damage');
+    chipBlock(b, amount, x, y, options);
   }
 
   function explode(x, y) {
@@ -1322,6 +1406,40 @@
       ctx.fillStyle = '#81231f'; ctx.font = 'bold 12px Arial'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle'; ctx.fillText('TNT', 0, 1);
     }
 
+    const stage = blockDamageStage(b);
+    if (stage >= 1) {
+      ctx.save();
+      ctx.lineCap = 'round';
+      ctx.lineJoin = 'round';
+      ctx.strokeStyle = b.material === 'ice' ? 'rgba(255,255,255,.88)' : b.material === 'stone' ? 'rgba(44,54,62,.62)' : 'rgba(92,43,22,.58)';
+      ctx.lineWidth = stage === 1 ? 2 : 3;
+      const crackCount = stage === 1 ? 2 : 4;
+      for (let i = 0; i < crackCount; i++) {
+        const sx = x + b.w * (.22 + ((i * 37 + b.x) % 55) / 100);
+        const sy = y + b.h * (.20 + ((i * 29 + b.y) % 55) / 100);
+        ctx.beginPath();
+        ctx.moveTo(sx, sy);
+        ctx.lineTo(sx + (i % 2 ? -1 : 1) * b.w * .10, sy + b.h * .14);
+        ctx.lineTo(sx + (i % 2 ? 1 : -1) * b.w * .05, sy + b.h * .28);
+        ctx.stroke();
+      }
+      if (stage >= 2) {
+        ctx.strokeStyle = 'rgba(55,32,24,.36)';
+        ctx.lineWidth = 4;
+        strokeRoundRect(x + 2, y + 2, b.w - 4, b.h - 4, Math.min(8, Math.min(b.w, b.h) * .18));
+      }
+      ctx.restore();
+    }
+
+    if ((b.damageFlash || 0) > 0) {
+      ctx.save();
+      ctx.globalAlpha = Math.min(.42, (b.damageFlash || 0) / 24);
+      ctx.strokeStyle = '#fff5bd';
+      ctx.lineWidth = 4;
+      strokeRoundRect(x - 1, y - 1, b.w + 2, b.h + 2, Math.min(11, Math.min(b.w, b.h) * .24));
+      ctx.restore();
+    }
+
     if (Math.abs(b.av || 0) > .01) {
       ctx.strokeStyle = 'rgba(255,255,255,.35)';
       ctx.lineWidth = 2;
@@ -1428,7 +1546,7 @@
     ctx.font = 'bold 12px Arial';
     ctx.textAlign = 'left';
     ctx.fillStyle = 'rgba(33,49,60,.42)';
-    ctx.fillText('v14', 16, H - 16);
+    ctx.fillText('v15', 16, H - 16);
     ctx.restore();
     if (!bird || !state.dragging) return;
     const pull = Math.hypot(SLING_X - bird.x, SLING_Y - bird.y);
@@ -1597,6 +1715,7 @@
         launch: [220, 0.045, 'triangle', .035],
         pop: [520, 0.065, 'sine', .045],
         break: [150, 0.055, 'square', .026],
+        crack: [260, 0.040, 'triangle', .018],
         boom: [70, 0.18, 'sawtooth', .06],
         win: [660, 0.14, 'sine', .035],
         lose: [120, 0.11, 'triangle', .028]

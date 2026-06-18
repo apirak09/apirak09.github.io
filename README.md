@@ -1,4 +1,4 @@
-# Mini Angry Birds v14 — 100 Level GitHub Build
+# Mini Angry Birds v15 — 100 Level GitHub Build
 
 เปิด `index.html` ได้ตรง ๆ หรือเอา repository นี้ขึ้น GitHub Pages ได้เลย
 
@@ -37,4 +37,14 @@ LEVEL_DESIGN_NOTES.md
 
 ## Design target
 
-v14 เน้นด่านหนักกว่า v12 มากขึ้น โดยเฉพาะหินหนัก / stone shell / separated pig rooms / protected TNT เพื่อไม่ให้ยิงนัดเดียวแล้วถล่มหมดง่าย ๆ
+v15 เน้นด่านหนักกว่า v12 มากขึ้น โดยเฉพาะหินหนัก / stone shell / separated pig rooms / protected TNT เพื่อไม่ให้ยิงนัดเดียวแล้วถล่มหมดง่าย ๆ
+
+
+## v15 Block Damage System
+
+- ทุก block มี HP ตามวัสดุและขนาด
+- สถานะ block: intact → cracked → critical → broken
+- การชนเบา ๆ จะทำให้ block ร้าว/เสีย HP ก่อน ไม่ได้ปลุกทั้งโครงสร้างทันที
+- Stone มี HP และ static resistance สูงกว่าเดิม ต้องยิงซ้ำหรือใช้ weak point
+- Block ที่แตกจริง ๆ เท่านั้นจึงหายไปและทำให้ support ข้างเคียงตื่นแบบ local
+- TNT ระเบิดเมื่อ HP หมดหรือโดนแรงหนักมากเท่านั้น
