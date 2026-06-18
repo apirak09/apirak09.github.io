@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Mini Angry Birds v11 — Stable Awake Physics</title>
+  <title>Mini Angry Birds v12</title>
   <style>
     :root {
       --bg1: #eef7f7;
@@ -375,7 +375,7 @@
     blue:   { label: 'ฟ้า', icon: '🔵', r: 14, mass: .72, color: '#48aeea', belly: '#c9efff', beak: '#f2b84d', power: .82, hint: 'ฟ้า: แตะตอนบินเพื่อแยกร่างเป็น 3 ตัว' }
   };
 
-  function B(x, y, w, h, material) { return { x, y, w, h, material }; }
+  function B(x, y, w, h, material, angle = 0) { return { x, y, w, h, material, angle }; }
   function P(x, y, r = 16, hp = 1) { return { x, y, r, hp }; }
 
   const levels = [
@@ -438,7 +438,48 @@
       blocks: [B(560,390,28,110,'stone'), B(660,400,22,100,'wood'), B(760,380,30,120,'stone'), B(864,400,22,100,'wood'), B(964,390,28,110,'stone'), B(542,362,448,24,'wood'), B(606,314,22,48,'ice'), B(716,314,22,48,'ice'), B(826,314,22,48,'ice'), B(936,314,22,48,'ice'), B(584,292,374,20,'ice'), B(774,246,32,46,'tnt')] },
     { name: 'Crown Castle', birds: ['bomb','yellow','blue','red','yellow','red'], three: 4, two: 6,
       pigs: [P(600, 484, 14), P(704, 484, 16), P(836, 482, 18,2), P(916, 484, 16), P(946, 484, 14)],
-      blocks: [B(548,366,36,134,'stone'), B(656,394,24,106,'wood'), B(764,366,36,134,'stone'), B(872,394,24,106,'wood'), B(976,366,20,134,'stone'), B(528,338,462,28,'stone'), B(602,292,22,46,'ice'), B(710,292,22,46,'ice'), B(818,292,22,46,'ice'), B(926,292,22,46,'ice'), B(580,270,370,20,'wood'), B(708,222,22,48,'ice'), B(818,222,22,48,'ice'), B(684,200,158,20,'stone'), B(760,154,32,44,'tnt')] }
+      blocks: [B(548,366,36,134,'stone'), B(656,394,24,106,'wood'), B(764,366,36,134,'stone'), B(872,394,24,106,'wood'), B(976,366,20,134,'stone'), B(528,338,462,28,'stone'), B(602,292,22,46,'ice'), B(710,292,22,46,'ice'), B(818,292,22,46,'ice'), B(926,292,22,46,'ice'), B(580,270,370,20,'wood'), B(708,222,22,48,'ice'), B(818,222,22,48,'ice'), B(684,200,158,20,'stone'), B(760,154,32,44,'tnt')] },
+    { name: 'Highland Gate', birds: ['yellow','blue','red','bomb','yellow','red','blue'], three: 4, two: 6,
+      pigs: [P(602, 484, 14), P(700, 484, 16), P(798, 482, 18, 2), P(908, 484, 16), P(982, 484, 14), P(752, 168, 14)],
+      blocks: [
+        B(548,410,24,90,'wood'), B(646,390,28,110,'stone'), B(742,410,24,90,'wood'), B(842,390,28,110,'stone'), B(938,410,24,90,'wood'),
+        B(526,384,458,22,'wood'), B(574,340,20,44,'ice'), B(694,340,20,44,'ice'), B(814,340,20,44,'ice'), B(934,340,20,44,'ice'),
+        B(550,318,410,18,'ice'), B(636,274,26,44,'wood'), B(780,274,26,44,'wood'), B(914,274,26,44,'wood'), B(616,252,342,20,'wood'),
+        B(720,204,24,48,'ice'), B(826,204,24,48,'ice'), B(690,184,190,18,'ice'), B(770,136,32,44,'tnt')
+      ] },
+    { name: 'Glass Labyrinth', birds: ['blue','blue','yellow','red','bomb','yellow','red'], three: 4, two: 6,
+      pigs: [P(586, 484, 14), P(682, 484, 15), P(750, 484, 16), P(838, 482, 18, 2), P(940, 484, 14), P(750, 160, 14)],
+      blocks: [
+        B(540,404,18,96,'ice'), B(624,404,18,96,'ice'), B(708,404,18,96,'ice'), B(792,404,18,96,'ice'), B(876,404,18,96,'ice'), B(970,404,18,96,'ice'),
+        B(520,380,474,18,'ice'), B(584,332,18,48,'ice'), B(688,332,18,48,'ice'), B(790,332,18,48,'ice'), B(894,332,18,48,'ice'),
+        B(562,310,354,18,'ice'), B(620,262,18,48,'ice'), B(760,262,18,48,'ice'), B(900,262,18,48,'ice'), B(598,240,322,18,'wood'),
+        B(672,196,24,44,'wood', -0.22), B(820,196,24,44,'wood', 0.22), B(642,176,218,18,'stone'), B(746,128,30,44,'tnt'), B(890,452,28,42,'tnt')
+      ] },
+    { name: 'Stone Crown', birds: ['bomb','yellow','red','blue','bomb','yellow','red','blue'], three: 5, two: 7,
+      pigs: [P(586, 484, 14), P(674, 484, 16), P(782, 482, 18, 2), P(874, 482, 18, 2), P(970, 484, 15), P(720, 254, 14), P(842, 120, 14)],
+      blocks: [
+        B(520,366,34,134,'stone'), B(620,394,24,106,'wood'), B(720,366,34,134,'stone'), B(820,394,24,106,'wood'), B(920,366,34,134,'stone'), B(986,396,14,104,'stone'),
+        B(500,338,500,28,'stone'), B(568,292,22,46,'ice'), B(678,292,22,46,'ice'), B(788,292,22,46,'ice'), B(898,292,22,46,'ice'),
+        B(542,270,388,20,'wood'), B(624,226,24,44,'wood'), B(754,226,24,44,'wood'), B(884,226,24,44,'wood'), B(602,204,312,22,'stone'),
+        B(690,158,22,46,'ice'), B(808,158,22,46,'ice'), B(662,136,194,18,'ice'), B(742,92,32,44,'tnt')
+      ] },
+    { name: 'Twin Citadel', birds: ['yellow','blue','bomb','red','yellow','blue','bomb','red'], three: 5, two: 7,
+      pigs: [P(548, 484, 14), P(640, 484, 15), P(760, 482, 18, 2), P(842, 484, 16), P(590, 284, 14), P(910, 284, 14), P(640, 219, 14), P(878, 219, 14)],
+      blocks: [
+        B(504,396,24,104,'wood'), B(592,366,32,134,'stone'), B(682,396,24,104,'wood'), B(786,396,24,104,'wood'), B(878,366,32,134,'stone'), B(968,396,24,104,'wood'),
+        B(486,370,240,22,'wood'), B(764,370,236,22,'wood'), B(548,322,20,48,'ice'), B(654,322,20,48,'ice'), B(826,322,20,48,'ice'), B(932,322,20,48,'ice'),
+        B(526,300,150,18,'ice'), B(804,300,150,18,'ice'), B(616,254,24,46,'wood', -0.25), B(856,254,24,46,'wood', 0.25),
+        B(584,234,112,20,'stone'), B(824,234,112,20,'stone'), B(706,438,30,44,'tnt'), B(928,438,30,44,'tnt'), B(760,286,32,46,'tnt')
+      ] },
+    { name: 'Final Valley', birds: ['blue','yellow','bomb','red','blue','yellow','bomb','red','yellow'], three: 6, two: 8,
+      pigs: [P(532, 484, 14), P(620, 484, 15), P(704, 482, 18, 2), P(794, 484, 16), P(950, 484, 15), P(666, 228, 14), P(824, 228, 14), P(760, 160, 15), P(820, 91, 15)],
+      blocks: [
+        B(488,410,24,90,'wood'), B(568,386,28,114,'stone'), B(650,410,24,90,'wood'), B(736,386,28,114,'stone'), B(818,410,24,90,'wood'), B(902,386,28,114,'stone'), B(982,410,18,90,'wood'),
+        B(468,382,250,22,'wood'), B(752,382,248,22,'wood'), B(520,334,20,48,'ice'), B(618,334,20,48,'ice'), B(716,334,20,48,'ice'), B(814,334,20,48,'ice'), B(912,334,20,48,'ice'),
+        B(498,312,436,18,'ice'), B(560,266,24,46,'wood', -0.20), B(694,266,24,46,'wood', 0.18), B(830,266,24,46,'wood', -0.18), B(918,266,24,46,'wood', 0.22),
+        B(534,244,168,20,'stone'), B(746,244,210,20,'stone'), B(630,198,20,46,'ice'), B(758,198,20,46,'ice'), B(886,198,20,46,'ice'), B(604,176,306,18,'wood'),
+        B(690,130,24,46,'ice'), B(816,130,24,46,'ice'), B(668,108,194,18,'ice'), B(742,62,34,44,'tnt'), B(560,452,30,44,'tnt'), B(878,452,30,44,'tnt')
+      ] }
   ];
 
   let state = {
@@ -473,12 +514,15 @@
   let audioCtx = null;
 
   function loadSave() {
+    // v12: every stage is selectable from the first load. Best stars are still
+    // stored per level, so reloads do not lock content again.
+    const allUnlocked = Array.isArray(levels) ? levels.length : 25;
     try {
       const raw = localStorage.getItem(SAVE_KEY);
-      if (!raw) return { unlocked: 1, best: {} };
+      if (!raw) return { unlocked: allUnlocked, best: {} };
       const data = JSON.parse(raw);
-      return { unlocked: Math.max(1, Number(data.unlocked) || 1), best: data.best && typeof data.best === 'object' ? data.best : {} };
-    } catch { return { unlocked: 1, best: {} }; }
+      return { unlocked: allUnlocked, best: data.best && typeof data.best === 'object' ? data.best : {} };
+    } catch { return { unlocked: allUnlocked, best: {} }; }
   }
 
   function saveGame() {
@@ -623,11 +667,11 @@
     levels.forEach((level, i) => {
       const btn = document.createElement('button');
       const best = state.save.best[String(i + 1)] || 0;
-      const locked = i + 1 > state.save.unlocked;
+      const locked = false;
       btn.className = `levelDot ${i === state.levelIndex ? 'active' : ''} ${locked ? 'locked' : ''}`;
-      btn.disabled = locked;
-      btn.textContent = locked ? `🔒 ${i + 1}` : `${i + 1}\n${'★'.repeat(best) || '☆'}`;
-      btn.title = locked ? 'ผ่านด่านก่อนหน้าเพื่อปลดล็อก' : `${level.name} — ${best || 0} ดาว`;
+      btn.disabled = false;
+      btn.textContent = `${i + 1}\n${'★'.repeat(best) || '☆'}`;
+      btn.title = `${level.name} — ${best || 0} ดาว`;
       btn.addEventListener('click', () => startLevel(i));
       ui.levelGrid.appendChild(btn);
     });
@@ -1329,7 +1373,7 @@
     state.score += bonus;
     const key = String(state.levelIndex + 1);
     state.save.best[key] = Math.max(state.save.best[key] || 0, stars);
-    state.save.unlocked = Math.max(state.save.unlocked, Math.min(levels.length, state.levelIndex + 2));
+    state.save.unlocked = levels.length;
     saveGame();
     updateUI();
     renderLevelGrid();
@@ -1712,7 +1756,7 @@
     ctx.font = 'bold 12px Arial';
     ctx.textAlign = 'left';
     ctx.fillStyle = 'rgba(33,49,60,.42)';
-    ctx.fillText('v11 stable physics', 16, H - 16);
+    ctx.fillText('v12', 16, H - 16);
     ctx.restore();
     if (!bird || !state.dragging) return;
     const pull = Math.hypot(SLING_X - bird.x, SLING_Y - bird.y);
@@ -2028,7 +2072,7 @@
   ui.startHelp.addEventListener('click', () => { ui.helpModal.classList.remove('show'); try { localStorage.setItem(HELP_KEY, '1'); } catch {} });
 
   startLevel(0, true);
-  // v11: no tutorial popup on start. The compact ? button still keeps help available.
+  // v10: no tutorial popup on start. The compact ? button still keeps help available.
   requestAnimationFrame(loop);
 })();
 
