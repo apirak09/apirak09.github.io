@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mini Angry Birds - 5 Stages</title>
+    <title>Mini Angry Birds v2.0</title>
     <style>
         body {
             margin: 0;
@@ -16,6 +16,7 @@
             justify-content: center;
             min-height: 100vh;
             color: white;
+            user-select: none;
         }
         h1 { margin: 5px 0; font-size: 24px; }
         #gameUi {
@@ -45,7 +46,7 @@
 </head>
 <body>
 
-    <h1>Mini Angry Birds (5 ด่าน)</h1>
+    <h1>Mini Angry Birds (กล่องกระเด็นได้!)</h1>
     <div id="gameUi">ด่าน: <span id="levelDisplay">1</span>/5 | คะแนน: <span id="scoreDisplay">0</span></div>
     <canvas id="gameCanvas" width="800" height="400"></canvas>
     <button id="resetBtn" onclick="resetLevel()">เริ่มด่านนี้ใหม่</button>
@@ -57,35 +58,35 @@ const ctx = canvas.getContext('2d');
 const levelDisplay = document.getElementById('levelDisplay');
 const scoreDisplay = document.getElementById('scoreDisplay');
 
-// สถานะเกม
 let currentLevel = 1;
 let score = 0;
 let isDragging = false;
 
-// พิกัดแท่นยิง (Slingshot)
 const slingX = 150;
 const slingY = 300;
 
-// โครงสร้างตัวละคร/วัตถุ
+// โครงสร้างวัตถุ
 let bird = { x: slingX, y: slingY, radius: 15, vx: 0, vy: 0, launched: false, inAir: false };
 let pigs = [];
 let blocks = [];
 
-// กำหนดข้อมูลทั้ง 5 ด่าน (ตำแหน่ง หมู และ กล่อง)
+const gravity = 0.25;
+
+// ข้อมูล 5 ด่าน
 const levelsData = {
     1: {
         pigs: [{ x: 650, y: 350, radius: 15, alive: true }],
         blocks: [
-            { x: 600, y: 300, w: 20, h: 100 },
-            { x: 680, y: 300, w: 20, h: 100 }
+            { x: 600, y: 270, w: 20, h: 100, vx: 0, vy: 0 },
+            { x: 680, y: 270, w: 20, h: 100, vx: 0, vy: 0 }
         ]
     },
     2: {
-        pigs: [{ x: 650, y: 270, radius: 15, alive: true }],
+        pigs: [{ x: 650, y: 250, radius: 15, alive: true }],
         blocks: [
-            { x: 600, y: 300, w: 20, h: 100 },
-            { x: 680, y: 300, w: 20, h: 100 },
-            { x: 590, y: 280, w: 120, h: 20 } // หลังคาคาดสลับ
+            { x: 600, y: 270, w: 20, h: 100, vx: 0, vy: 0 },
+            { x: 680, y: 270, w: 20, h: 100, vx: 0, vy: 0 },
+            { x: 590, y: 250, w: 120, h: 20, vx: 0, vy: 0 }
         ]
     },
     3: {
@@ -94,22 +95,22 @@ const levelsData = {
             { x: 700, y: 350, radius: 15, alive: true }
         ],
         blocks: [
-            { x: 550, y: 300, w: 20, h: 100 },
-            { x: 650, y: 300, w: 20, h: 100 },
-            { x: 750, y: 300, w: 20, h: 100 }
+            { x: 550, y: 270, w: 20, h: 100, vx: 0, vy: 0 },
+            { x: 650, y: 270, w: 20, h: 100, vx: 0, vy: 0 },
+            { x: 750, y: 270, w: 20, h: 100, vx: 0, vy: 0 }
         ]
     },
     4: {
         pigs: [
             { x: 650, y: 350, radius: 15, alive: true },
-            { x: 650, y: 230, radius: 15, alive: true } // หมูสองชั้น
+            { x: 650, y: 230, radius: 15, alive: true }
         ],
         blocks: [
-            { x: 600, y: 300, w: 20, h: 100 },
-            { x: 680, y: 300, w: 20, h: 100 },
-            { x: 590, y: 280, w: 120, h: 20 },
-            { x: 610, y: 180, w: 20, h: 100 },
-            { x: 670, y: 180, w: 20, h: 100 }
+            { x: 600, y: 270, w: 20, h: 100, vx: 0, vy: 0 },
+            { x: 680, y: 270, w: 20, h: 100, vx: 0, vy: 0 },
+            { x: 590, y: 250, w: 120, h: 20, vx: 0, vy: 0 },
+            { x: 610, y: 150, w: 20, h: 100, vx: 0, vy: 0 },
+            { x: 670, y: 150, w: 20, h: 100, vx: 0, vy: 0 }
         ]
     },
     5: {
@@ -119,18 +120,17 @@ const levelsData = {
             { x: 750, y: 350, radius: 12, alive: true }
         ],
         blocks: [
-            { x: 500, y: 250, w: 20, h: 150 },
-            { x: 600, y: 250, w: 20, h: 150 },
-            { x: 700, y: 250, w: 20, h: 150 },
-            { x: 490, y: 230, w: 240, h: 20 }
+            { x: 500, y: 220, w: 20, h: 150, vx: 0, vy: 0 },
+            { x: 600, y: 220, w: 20, h: 150, vx: 0, vy: 0 },
+            { x: 700, y: 220, w: 20, h: 150, vx: 0, vy: 0 },
+            { x: 490, y: 200, w: 240, h: 20, vx: 0, vy: 0 }
         ]
     }
 };
 
-// โหลดด่าน
 function initLevel(lvl) {
     if (lvl > 5) {
-        alert("ยินดีด้วย! คุณผ่านครบทั้ง 5 ด่านแล้ว!");
+        alert("สุดยอดมาก! คุณเคลียร์ครบทั้ง 5 ด่านแล้ว!");
         currentLevel = 1;
         score = 0;
         lvl = 1;
@@ -140,7 +140,6 @@ function initLevel(lvl) {
     levelDisplay.textContent = currentLevel;
     scoreDisplay.textContent = score;
 
-    // รีเซ็ตนก
     bird.x = slingX;
     bird.y = slingY;
     bird.vx = 0;
@@ -148,7 +147,6 @@ function initLevel(lvl) {
     bird.launched = false;
     bird.inAir = false;
 
-    // ดึงข้อมูลด่าน (ใช้ Deep Copy ป้องกันบั๊กเวลาเล่นซ้ำ)
     const data = levelsData[lvl];
     pigs = data.pigs.map(p => ({ ...p }));
     blocks = data.blocks.map(b => ({ ...b }));
@@ -158,80 +156,149 @@ function resetLevel() {
     initLevel(currentLevel);
 }
 
-// ตรวจสอบการชน (Collision Detection)
-function checkCollision() {
-    // นกชนกล่อง
-    blocks.forEach(b => {
-        if (bird.x + bird.radius > b.x && bird.x - bird.radius < b.x + b.w &&
-            bird.y + bird.radius > b.y && bird.y - bird.radius < b.y + b.h) {
-            // ชนแล้วเด้งกลับแบบง่าย
-            bird.vx *= -0.6;
-            bird.vy *= -0.6;
-        }
-    });
-
-    // นกชนหมู
-    pigs.forEach(p => {
-        if (p.alive) {
-            let dx = bird.x - p.x;
-            let dy = bird.y - p.y;
-            let distance = Math.sqrt(dx * dx + dy * dy);
-
-            if (distance < bird.radius + p.radius) {
-                p.alive = false;
-                score += 100;
-                scoreDisplay.textContent = score;
-            }
-        }
-    });
-}
-
-// อัปเดตตำแหน่งและการเคลื่อนที่
-function update() {
+// ฟังก์ชันจำลองฟิสิกส์และการชนกันขั้นสูงขึ้น
+function physicsUpdate() {
+    // 1. เคลื่อนที่นก
     if (bird.inAir) {
         bird.x += bird.vx;
         bird.y += bird.vy;
-        bird.vy += 0.25; // แรงโน้มถ่วง (Gravity)
+        bird.vy += gravity;
 
-        checkCollision();
-
-        // นกตกพื้นหรือเลยขอบจอ -> รีเซ็ตนกใหม่ถ้าหมูยังไม่ตายหมด
-        if (bird.y > canvas.height - bird.radius || bird.x > canvas.width || bird.x < 0) {
-            bird.inAir = false;
-            setTimeout(() => {
-                if (pigs.some(p => p.alive)) {
-                    bird.x = slingX;
-                    bird.y = slingY;
-                    bird.vx = 0;
-                    bird.vy = 0;
-                    bird.launched = false;
-                }
-            }, 1000);
+        // นกชนขอบ
+        if (bird.y > 370 - bird.radius) {
+            bird.y = 370 - bird.radius;
+            bird.vx *= 0.5;
+            bird.vy *= -0.4;
         }
     }
 
-    // ตรวจสอบว่าหมูตายหมดหรือยัง -> ขึ้นด่านใหม่
-    const allPigsDead = pigs.every(p => !p.alive);
-    if (allPigsDead && !bird.inAir) {
-        setTimeout(() => {
-            initLevel(currentLevel + 1);
-        }, 500);
+    // 2. เคลื่อนที่กล่องไม้ และคำนวณแรงโน้มถ่วงของกล่อง
+    blocks.forEach(b => {
+        b.x += b.vx;
+        b.y += b.vy;
+        
+        if (b.y < 370 - b.h) {
+            b.vy += gravity; // ตกจากฟ้า
+        } else {
+            b.y = 370 - b.h; // ตั้งอยู่บนพื้น
+            b.vy = 0;
+            b.vx *= 0.85; // แรงเสียดทานพื้นดิน (ทำให้ค่อยๆ หยุดไถล)
+        }
+
+        // จำกัดขอบจอซ้ายขวาให้กล่องไม่ทะลุหายไป
+        if (b.x < 0) { b.x = 0; b.vx *= -0.5; }
+        if (b.x + b.w > canvas.width) { b.x = canvas.width - b.w; b.vx *= -0.5; }
+    });
+
+    // 3. ตรวจจับ นก ชน กล่อง
+    blocks.forEach(b => {
+        if (bird.x + bird.radius > b.x && bird.x - bird.radius < b.x + b.w &&
+            bird.y + bird.radius > b.y && bird.y - bird.radius < b.y + b.h) {
+            
+            // ส่งแรงกระแทกให้นกเด้ง และกล่องกระเด็นไปตามแรงนก
+            b.vx += bird.vx * 0.4;
+            b.vy += bird.vy * 0.4;
+
+            bird.vx *= -0.4;
+            bird.vy *= -0.4;
+        }
+    });
+
+    // 4. ตรวจจับ กล่อง ชน กล่อง กันเอง (ทำให้กล่องล้มระเนระนาดซ้อนกันได้)
+    for (let i = 0; i < blocks.length; i++) {
+        for (let j = i + 1; j < blocks.length; j++) {
+            let b1 = blocks[i];
+            let b2 = blocks[j];
+
+            if (b1.x < b2.x + b2.w && b1.x + b1.w > b2.x &&
+                b1.y < b2.y + b2.h && b1.y + b1.w > b2.y) {
+                // เฉลี่ยแรงกระแทกหากชนกัน
+                let tempVx = b1.vx;
+                let tempVy = b1.vy;
+                b1.vx = b2.vx * 0.6;
+                b1.vy = b2.vy * 0.6;
+                b2.vx = tempVx * 0.6;
+                b2.vy = tempVy * 0.6;
+            }
+        }
+    }
+
+    // 5. ตรวจจับ นก ชน หมู หรือ กล่องกระเด็น ชน หมู
+    pigs.forEach(p => {
+        if (!p.alive) return;
+
+        // นกชนหมู
+        let dx = bird.x - p.x;
+        let dy = bird.y - p.y;
+        if (Math.sqrt(dx * dx + dy * dy) < bird.radius + p.radius) {
+            p.alive = false;
+            score += 100;
+            scoreDisplay.textContent = score;
+        }
+
+        // กล่องกระเด็นชนหมู (เช็คความเร็วกล่องด้วยว่าต้องเร็วพอถึงจะตาย)
+        blocks.forEach(b => {
+            if (p.x + p.radius > b.x && p.x - p.radius < b.x + b.w &&
+                p.y + p.radius > b.y && p.y - p.radius < b.y + b.h) {
+                
+                let speed = Math.sqrt(b.vx*b.vx + b.vy*b.vy);
+                if (speed > 0.5 || b.vy > 0.5) { // ถ้ากล่องขยับหรือตกทับ
+                    p.alive = false;
+                    score += 100;
+                    scoreDisplay.textContent = score;
+                }
+            }
+        });
+    });
+
+    // ตรวจสอบเงื่อนไขจบตา/เปลี่ยนด่าน
+    if (bird.inAir && Math.abs(bird.vx) < 0.1 && Math.abs(bird.vy) < 0.1 && bird.y >= 370 - bird.radius) {
+        resetBirdDelay();
+    }
+    if (bird.inAir && (bird.x > canvas.width || bird.x < 0)) {
+        resetBirdDelay();
     }
 }
 
-// วาดกราฟิกลง Canvas
+function resetBirdDelay() {
+    bird.inAir = false;
+    setTimeout(() => {
+        if (pigs.some(p => p.alive)) {
+            bird.x = slingX;
+            bird.y = slingY;
+            bird.vx = 0;
+            bird.vy = 0;
+            bird.launched = false;
+        }
+    }, 1200);
+}
+
+function update() {
+    physicsUpdate();
+
+    // เคลียร์ด่านเมื่อหมูตายหมด
+    const allPigsDead = pigs.every(p => !p.alive);
+    if (allPigsDead && !bird.inAir) {
+        let allBlocksStopped = blocks.every(b => Math.abs(b.vx) < 0.2 && Math.abs(b.vy) < 0.2);
+        if (allBlocksStopped) {
+            setTimeout(() => {
+                initLevel(currentLevel + 1);
+            }, 800);
+        }
+    }
+}
+
 function draw() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-    // วาดพื้นดิน
+    // พื้นดิน
     ctx.fillStyle = '#8bc34a';
     ctx.fillRect(0, 370, canvas.width, 30);
 
-    // วาดหนังสติ๊ก (Slingshot)
+    // หนังสติ๊ก
     ctx.fillStyle = '#795548';
     ctx.fillRect(slingX - 5, slingY, 10, 70);
 
-    // วาดเส้นยางหนังสติ๊กตอนลาก
     if (isDragging) {
         ctx.strokeStyle = '#3e2723';
         ctx.lineWidth = 4;
@@ -241,7 +308,7 @@ function draw() {
         ctx.stroke();
     }
 
-    // วาดกล่องไม้ (Blocks)
+    // วาดกล่องไม้
     ctx.fillStyle = '#d7ccc8';
     ctx.strokeStyle = '#5d4037';
     ctx.lineWidth = 2;
@@ -250,14 +317,13 @@ function draw() {
         ctx.strokeRect(b.x, b.y, b.w, b.h);
     });
 
-    // วาดหมู (Pigs)
+    // วาดหมู
     pigs.forEach(p => {
         if (p.alive) {
             ctx.fillStyle = '#4caf50';
             ctx.beginPath();
             ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
             ctx.fill();
-            // ลูกตาหมู
             ctx.fillStyle = '#fff';
             ctx.beginPath();
             ctx.arc(p.x - 5, p.y - 3, 3, 0, Math.PI * 2);
@@ -266,12 +332,11 @@ function draw() {
         }
     });
 
-    // วาดนก (Bird)
+    // วาดนก
     ctx.fillStyle = '#e53935';
     ctx.beginPath();
     ctx.arc(bird.x, bird.y, bird.radius, 0, Math.PI * 2);
     ctx.fill();
-    // ตาและจะงอยปากนก
     ctx.fillStyle = '#fff';
     ctx.beginPath(); ctx.arc(bird.x + 5, bird.y - 4, 3, 0, Math.PI * 2); ctx.fill();
     ctx.fillStyle = '#ffeb3b';
@@ -280,16 +345,19 @@ function draw() {
     ctx.lineTo(bird.x + 18, bird.y + 2);
     ctx.lineTo(bird.x + 10, bird.y + 5);
     ctx.fill();
+
+    // แสดงเลขเวอร์ชันล่างซ้าย (v2.0)
+    ctx.fillStyle = "rgba(0, 0, 0, 0.5)";
+    ctx.font = "bold 16px Arial";
+    ctx.fillText("v2.0", 15, canvas.height - 15);
 }
 
-// ลูปหลักของเกม
 function gameLoop() {
     update();
     draw();
     requestAnimationFrame(gameLoop);
 }
 
-// ส่วนควบคุมการลากและยิง (Mouse & Touch Events)
 function getMousePos(evt) {
     const rect = canvas.getBoundingClientRect();
     return {
@@ -303,7 +371,7 @@ function handleStart(e) {
     const pos = getMousePos(e);
     let dx = pos.x - bird.x;
     let dy = pos.y - bird.y;
-    if (Math.sqrt(dx*dx + dy*dy) < bird.radius + 10) {
+    if (Math.sqrt(dx*dx + dy*dy) < bird.radius + 15) {
         isDragging = true;
     }
 }
@@ -311,12 +379,10 @@ function handleStart(e) {
 function handleMove(e) {
     if (!isDragging) return;
     const pos = getMousePos(e);
-    
-    // จำกัดระยะลากหนังสติ๊กไม่ให้ไกลเกินไป
     let dx = pos.x - slingX;
     let dy = pos.y - slingY;
     let distance = Math.sqrt(dx * dx + dy * dy);
-    const maxDrag = 80;
+    const maxDrag = 90;
 
     if (distance > maxDrag) {
         let angle = Math.atan2(dy, dx);
@@ -333,22 +399,18 @@ function handleEnd() {
     isDragging = false;
     bird.launched = true;
     bird.inAir = true;
-
-    // คำนวณความเร็วจากการปล่อย (ยิ่งลากไกล ยิ่งยิงแรง)
-    bird.vx = (slingX - bird.x) * 0.15;
-    bird.vy = (slingY - bird.y) * 0.15;
+    bird.vx = (slingX - bird.x) * 0.22; // เพิ่มความแรงในการยิงเล็กน้อย
+    bird.vy = (slingY - bird.y) * 0.22;
 }
 
-// ผูก Event ทั้งเมาส์และจอสัมผัส (มือถือ)
 canvas.addEventListener('mousedown', handleStart);
 canvas.addEventListener('mousemove', handleMove);
 window.addEventListener('mouseup', handleEnd);
 
-canvas.addEventListener('touchstart', handleStart);
-canvas.addEventListener('touchmove', handleMove);
+canvas.addEventListener('touchstart', handleStart, { passive: true });
+canvas.addEventListener('touchmove', handleMove, { passive: true });
 window.addEventListener('touchend', handleEnd);
 
-// เริ่มเกมด่านแรก
 initLevel(1);
 gameLoop();
 </script>
