@@ -39,10 +39,10 @@
   const MAX_DRAG = 115;
   const POWER = 0.23;
   const GRAVITY = 0.34;
-  const SAVE_KEY = 'mini-angry-birds-v16-save';
-  const HELP_KEY = 'mini-angry-birds-v16-help-seen';
+  const SAVE_KEY = 'mini-angry-birds-v17-save';
+  const HELP_KEY = 'mini-angry-birds-v17-help-seen';
 
-  // v16 damage goal: use calibrated HP/damage numbers instead of over-shielding blocks.
+  // v17 damage goal: use calibrated HP/damage numbers instead of over-shielding blocks.
   // Direct bird hits now subtract real HP damage, while sleep/friction still prevents
   // weak accidental taps from collapsing the whole structure.
   const PHYSICS = {
@@ -1130,6 +1130,21 @@
     });
   }
 
+
+  function cleanDestroyedBlocks() {
+    // v17 freeze fix: v16 called this during the first physics frame after launch,
+    // but the function was missing. That ReferenceError stopped requestAnimationFrame,
+    // so the screen looked frozen exactly when the mouse was released.
+    if (!blocks.length) return;
+    const before = blocks.length;
+    blocks = blocks.filter(b => b && !b.destroyed && Number.isFinite(b.x) && Number.isFinite(b.y));
+    if (blocks.length !== before) {
+      // Re-check support counts locally after pieces are removed, but do not wake
+      // the whole map. wakeUnsupportedBlocks() will decide what should move.
+      blocks.forEach(b => { if (!Number.isFinite(b.initialSupport)) b.initialSupport = blockSupportCount(b); });
+    }
+  }
+
   function handleTurnFlow(dt) {
     if (!bird || !bird.launched || state.turnLocked) return;
 
@@ -1619,7 +1634,7 @@
     ctx.font = 'bold 12px Arial';
     ctx.textAlign = 'left';
     ctx.fillStyle = 'rgba(33,49,60,.42)';
-    ctx.fillText('v16', 16, H - 16);
+    ctx.fillText('v17', 16, H - 16);
     ctx.restore();
     if (!bird || !state.dragging) return;
     const pull = Math.hypot(SLING_X - bird.x, SLING_Y - bird.y);
@@ -1941,6 +1956,8 @@
   canvas.addEventListener('pointermove', pointerMove);
   canvas.addEventListener('pointerup', pointerUp);
   canvas.addEventListener('pointercancel', pointerUp);
+  window.addEventListener('pointerup', pointerUp);
+  window.addEventListener('pointercancel', pointerUp);
   window.addEventListener('keydown', keyDown);
   document.addEventListener('visibilitychange', () => { if (document.hidden && state.mode === 'flying') { state.paused = true; updateUI(); } });
 
