@@ -104,3 +104,7 @@
 | 98 | Silent Castle | 8 | 8 | 16 |
 | 99 | Ten-Pig Vault | 8 | 7 | 16 |
 | 100 | Final Stonefield | 8 | 7 | 21 |
+
+## v16 Damage Calibration
+
+Block HP is now material-based rather than heavily size-scaled: glass/ice 40, wood 100, stone 250, TNT 10. Bird direct-hit damage is calibrated around full-charge values: red 300, yellow 300/500 boosted, blue 150, blue split shards 150 each, bomb 300 direct plus 500 explosion. TNT explosion uses the same 500-damage short-radius model.

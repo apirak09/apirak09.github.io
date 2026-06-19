@@ -39,12 +39,12 @@
   const MAX_DRAG = 115;
   const POWER = 0.23;
   const GRAVITY = 0.34;
-  const SAVE_KEY = 'mini-angry-birds-v15-save';
-  const HELP_KEY = 'mini-angry-birds-v15-help-seen';
+  const SAVE_KEY = 'mini-angry-birds-v16-save';
+  const HELP_KEY = 'mini-angry-birds-v16-help-seen';
 
-  // v15 physics goal: blocks absorb damage through visible HP states.
-  // A light hit chips/cracks a block instead of instantly waking the whole
-  // structure. Blocks only vanish when their HP is depleted.
+  // v16 damage goal: use calibrated HP/damage numbers instead of over-shielding blocks.
+  // Direct bird hits now subtract real HP damage, while sleep/friction still prevents
+  // weak accidental taps from collapsing the whole structure.
   const PHYSICS = {
     sleepInvMassScale: 0.10,
     contactPropagationImpulse: 7.2,
@@ -57,21 +57,28 @@
     staticBounce: 0.12,
     chipOnlyImpulseScale: 0.15,
     stageWakeMultiplier: 0.78,
-    blockBreakWakeRadius: 34
+    blockBreakWakeRadius: 34,
+    fullImpactSpeed: 18.0,
+    directHitCooldownFrames: 10,
+    explosionDamage: 500,
+    explosionRadius: 118
   };
 
   const materials = {
-    wood:  { hp: 76,  mass: 1.34, fill: '#c78542', edge: '#7b4d23', light: '#e5b66f', name: 'Wood',  restitution: .13, friction: .82, wake: 3.9, damage: 6.8, crack1: .66, crack2: .34 },
-    stone: { hp: 245, mass: 5.65, fill: '#87929a', edge: '#59656f', light: '#bac3c8', name: 'Stone', restitution: .05, friction: .97, wake: 9.4, damage: 16.5, crack1: .60, crack2: .26 },
-    ice:   { hp: 46,  mass: 1.02, fill: '#8edff1', edge: '#3b9dc0', light: '#d7fbff', name: 'Ice',   restitution: .22, friction: .24, wake: 2.7, damage: 4.7, crack1: .72, crack2: .42 },
-    tnt:   { hp: 38,  mass: 1.30, fill: '#df5148', edge: '#8b2923', light: '#ffb0a2', name: 'TNT',   restitution: .14, friction: .72, wake: 4.2, damage: 6.0, crack1: .70, crack2: .36 }
+    // HP follows the requested balance: glass/ice 40, wood 100, stone 250, TNT 10.
+    // `damage` is only a secondary threshold for debris/block-block impacts; direct
+    // bird and explosion damage subtracts from HP using the calibrated numbers below.
+    wood:  { hp: 100, mass: 1.34, fill: '#c78542', edge: '#7b4d23', light: '#e5b66f', name: 'Wood',  restitution: .13, friction: .82, wake: 3.6, damage: 18, crack1: .66, crack2: .34 },
+    stone: { hp: 250, mass: 5.65, fill: '#87929a', edge: '#59656f', light: '#bac3c8', name: 'Stone', restitution: .05, friction: .97, wake: 7.8, damage: 58, crack1: .60, crack2: .26 },
+    ice:   { hp: 40,  mass: 1.02, fill: '#8edff1', edge: '#3b9dc0', light: '#d7fbff', name: 'Glass', restitution: .22, friction: .24, wake: 2.3, damage: 9,  crack1: .72, crack2: .42 },
+    tnt:   { hp: 10,  mass: 1.30, fill: '#df5148', edge: '#8b2923', light: '#ffb0a2', name: 'TNT',   restitution: .14, friction: .72, wake: 2.4, damage: 3,  crack1: .70, crack2: .36 }
   };
 
   const birds = {
-    red:    { label: 'แดง', icon: '🔴', r: 17, mass: 1.08, color: '#e65245', belly: '#ffb19a', beak: '#f5b542', power: 1.08, hint: 'แดง: สมดุล ชนตรง ๆ ดี' },
-    yellow: { label: 'เหลือง', icon: '🟡', r: 15, mass: .9,  color: '#ffd34a', belly: '#fff0a6', beak: '#ef8d32', power: .92, hint: 'เหลือง: แตะตอนบินเพื่อพุ่งเร็ว' },
-    bomb:   { label: 'ระเบิด', icon: '⚫', r: 20, mass: 1.35, color: '#2c3338', belly: '#58646c', beak: '#ff8b50', power: 1.2, hint: 'ระเบิด: แตะตอนบินเพื่อระเบิด' },
-    blue:   { label: 'ฟ้า', icon: '🔵', r: 14, mass: .72, color: '#48aeea', belly: '#c9efff', beak: '#f2b84d', power: .82, hint: 'ฟ้า: แตะตอนบินเพื่อแยกร่างเป็น 3 ตัว' }
+    red:    { label: 'แดง', icon: '🔴', r: 17, mass: 1.08, color: '#e65245', belly: '#ffb19a', beak: '#f5b542', power: 1.08, impactDamage: 300, hint: 'แดง: ชาร์จเต็มชนตรง ๆ ≈ 300 ดาเมจ' },
+    yellow: { label: 'เหลือง', icon: '🟡', r: 15, mass: .9,  color: '#ffd34a', belly: '#fff0a6', beak: '#ef8d32', power: .92, impactDamage: 300, boostedDamage: 500, hint: 'เหลือง: ชาร์จเต็ม 300 / กดสกิล ≈ 500 ดาเมจ' },
+    bomb:   { label: 'ระเบิด', icon: '⚫', r: 20, mass: 1.35, color: '#2c3338', belly: '#58646c', beak: '#ff8b50', power: 1.2, impactDamage: 300, explosionDamage: 500, hint: 'ดำ: ชน 300 / กดสกิลระเบิด ≈ 500 ดาเมจ' },
+    blue:   { label: 'ฟ้า', icon: '🔵', r: 14, mass: .72, color: '#48aeea', belly: '#c9efff', beak: '#f2b84d', power: .82, impactDamage: 150, splitDamage: 150, hint: 'ฟ้า: ตัวหลัก 150 / แยกร่าง 3 ตัว ตัวละ 150' }
   };
 
   function B(x, y, w, h, material, angle = 0) { return { x, y, w, h, material, angle }; }
@@ -91,6 +98,7 @@
     lastTime: performance.now(),
     settleFrames: 0,
     turnFrames: 0,
+    physicsFrame: 0,
     turnLocked: false,
     turnId: 0,
     toastTimer: 0,
@@ -108,11 +116,13 @@
   let trajectory = [];
   let lastShotPath = [];
   let blueFragments = [];
+  let shockwaves = [];
   let shake = 0;
+  let nextBlockId = 1;
   let audioCtx = null;
 
   function loadSave() {
-    // v15: every stage is selectable from the first load. Best stars are still
+    // v16: every stage is selectable from the first load. Best stars are still
     // stored per level, so reloads do not lock content again.
     const allUnlocked = Array.isArray(levels) ? levels.length : 25;
     try {
@@ -130,11 +140,14 @@
   function cloneBlock(t) {
     const m = materials[t.material] || materials.wood;
     const areaScale = Math.max(.85, Math.pow((t.w * t.h) / 2500, 0.82));
-    const hpScale = clamp(Math.pow((t.w * t.h) / 2100, 0.52), .72, 2.55) * (t.material === 'stone' ? 1.18 : t.material === 'ice' ? .94 : 1);
     const mass = m.mass * areaScale;
-    const maxHp = Math.max(8, Math.round((Number(t.hp) || m.hp) * hpScale));
+    // Keep HP close to the requested game balance. Size affects mass/physics, not HP,
+    // otherwise long beams become practically unbreakable. Level data may still
+    // override hp for special pieces.
+    const maxHp = Math.max(1, Math.round(Number(t.hp) || m.hp));
     return {
       ...t,
+      id: nextBlockId++,
       x0: t.x,
       y0: t.y,
       vx: 0,
@@ -200,6 +213,7 @@
     state.paused = false;
     state.settleFrames = 0;
     state.turnFrames = 0;
+    state.physicsFrame = 0;
     state.turnLocked = false;
     state.turnId = 0;
     if (resetScore) state.score = 0;
@@ -210,6 +224,7 @@
     trajectory = [];
     lastShotPath = [];
     blueFragments = [];
+    shockwaves = [];
     shake = 0;
     sanitizeLevelObjects();
     captureInitialSupports();
@@ -225,6 +240,7 @@
     state.dragging = false;
     state.settleFrames = 0;
     state.turnFrames = 0;
+    state.physicsFrame = 0;
     state.turnLocked = false;
     state.turnId = 0;
     blueFragments = [];
@@ -328,6 +344,7 @@
     }
 
     updateParticles(dt);
+    updateShockwaves(dt);
     updateFloatTexts(dt);
     if (state.mode === 'won' || state.mode === 'lost') return;
 
@@ -345,6 +362,7 @@
     const steps = clamp(Math.ceil(dt * 1.35), 1, 4);
     const stepDt = dt / steps;
     for (let s = 0; s < steps; s++) {
+      state.physicsFrame += 1;
       updateBird(stepDt);
       updateBlueFragments(stepDt);
       updateLeverForces(stepDt);
@@ -625,7 +643,7 @@
     b.sleep = false;
     b.touched = true;
     b.restFrames = 0;
-    // v15: do not wake adjacent structure from a light hit. Contact propagation
+    // v16: do not wake adjacent structure from a light hit. Contact propagation
     // is now impulse-gated inside resolveBodyImpulse; explosions/destruction
     // still wake nearby pieces.
     if (reason === 'explode') wakeNearbyBlocks(b, reason);
@@ -703,7 +721,7 @@
       if (b.destroyed) continue;
       applyCircleBlockImpulse(bird, b, {
         restitution: bird.type === 'yellow' ? .22 : bird.type === 'bomb' ? .16 : .28,
-        damageScale: 1.0 * spec.power,
+        damageScale: 1.0,
         particleCount: 10,
         particleColor: materials[b.material].fill,
         shakeScale: 1.1
@@ -717,10 +735,9 @@
       if (f.asleep) return;
       for (const b of blocks) {
         if (b.destroyed) continue;
-        const matBonus = (b.material === 'ice' || b.material === 'wood') ? 1.65 : .85;
         applyCircleBlockImpulse(f, b, {
           restitution: .24,
-          damageScale: .78 * matBonus,
+          damageScale: 1.0,
           particleCount: 6,
           particleColor: '#7bd7ff',
           shakeScale: .55
@@ -745,6 +762,40 @@
     const sizeBonus = clamp(Math.sqrt((b.w * b.h) / 2800), .78, 2.0);
     const supportBonus = 1 + Math.min(3, blockSupportCount(b)) * .08;
     return (m.damage || 6) * sizeBonus * supportBonus * damageResistance(b) / Math.max(1, (m.damage || 6));
+  }
+
+
+  function calibratedProjectileDamage(obj, closingSpeed) {
+    if (!obj || closingSpeed < 1.2) return 0;
+    let maxDamage = obj.impactDamage || 0;
+    if (!maxDamage && obj.type) {
+      const spec = birds[obj.type] || birds.red;
+      maxDamage = spec.impactDamage || 0;
+      if (obj.type === 'yellow' && obj.boosted) maxDamage = spec.boostedDamage || maxDamage;
+    }
+    if (!maxDamage) return 0;
+    const charge = clamp(obj.chargePower ?? 1, .25, 1);
+    const speedFactor = clamp(closingSpeed / PHYSICS.fullImpactSpeed, .18, 1.08);
+    return maxDamage * charge * speedFactor;
+  }
+
+  function applyDirectProjectileDamage(obj, b, hit, closingSpeed) {
+    if (!obj || !b || b.destroyed) return 0;
+    const frame = Math.floor(state.physicsFrame || 0);
+    const key = b.id || blocks.indexOf(b);
+    if (!obj.hitCooldowns) obj.hitCooldowns = new Map();
+    const last = obj.hitCooldowns.get(key) ?? -9999;
+    if (frame - last < PHYSICS.directHitCooldownFrames) return 0;
+    const damage = calibratedProjectileDamage(obj, closingSpeed);
+    if (damage <= 0) return 0;
+    obj.hitCooldowns.set(key, frame);
+    damageBlock(b, damage, hit.x, hit.y, { force: true, raw: true, direct: true });
+    if (damage >= 25) {
+      const color = b.material === 'stone' ? '#d4dee4' : b.material === 'ice' ? '#d7fbff' : b.material === 'tnt' ? '#ffb0a2' : '#ffe0a1';
+      burst(hit.x, hit.y, Math.min(18, 5 + Math.floor(damage / 42)), color, Math.min(5.4, 1.8 + damage / 140));
+      shake = Math.max(shake, Math.min(9, damage / 70));
+    }
+    return damage;
   }
 
   function resolveBodyImpulse(a, b, nx, ny, depth, options = {}) {
@@ -842,10 +893,11 @@
     const closingSpeed = Math.max(0, -relN);
     const impactMomentum = closingSpeed * Math.max(.2, obj.mass || 1);
     const wakeThreshold = wakeImpulseThreshold(b);
+    const directDamage = applyDirectProjectileDamage(obj, b, hit, closingSpeed);
 
     // Static-friction gate: tiny bumps against settled/heavy structures bounce or slide,
-    // but they do not wake the whole stack. This is the main v15 stability fix.
-    if (b.sleep && impactMomentum < wakeThreshold) {
+    // but they do not wake the whole stack. This is the main v16 stability fix.
+    if (b.sleep && !b.destroyed && impactMomentum < wakeThreshold && directDamage < Math.max(18, b.maxHp * .28)) {
       obj.x += hit.nx * Math.max(hit.depth, .6);
       obj.y += hit.ny * Math.max(hit.depth, .6);
       const vn = (obj.vx || 0) * hit.nx + (obj.vy || 0) * hit.ny;
@@ -858,7 +910,7 @@
         obj.vx -= vt * tangentX * .22;
         obj.vy -= vt * tangentY * .22;
       }
-      if (impactMomentum > damageImpulseThreshold(b) * .30) {
+      if (directDamage <= 0 && impactMomentum > damageImpulseThreshold(b) * .30) {
         chipBlock(b, Math.max(.35, (impactMomentum - damageImpulseThreshold(b) * .30) * PHYSICS.chipOnlyImpulseScale * (options.damageScale ?? 1)), hit.x, hit.y, { chipOnly: true });
       }
       return { impulse: impactMomentum, rel: -closingSpeed, resisted: true };
@@ -877,7 +929,7 @@
     const speed = Math.hypot(obj.vx || 0, obj.vy || 0);
     const impulse = result?.impulse || 0;
     const dmgThreshold = damageImpulseThreshold(b);
-    if (impulse > Math.max(1.4, dmgThreshold * .72)) {
+    if (directDamage <= 0 && impulse > Math.max(1.4, dmgThreshold * .72)) {
       const damage = Math.max(0, (impulse - dmgThreshold * .72) * .30 * (options.damageScale ?? 1));
       damageBlock(b, damage, hit.x, hit.y);
       const count = options.particleCount ?? 8;
@@ -959,7 +1011,7 @@
     const mat = materials[b.material] || materials.wood;
     const oldStage = blockDamageStage(b);
     const supportShield = b.sleep && !options.force ? .82 : 1;
-    const severePenalty = oldStage >= 2 ? 1.18 : oldStage === 1 ? 1.0 : .88;
+    const severePenalty = options.raw ? 1 : (oldStage >= 2 ? 1.18 : oldStage === 1 ? 1.0 : .88);
     const finalDamage = Math.max(0, amount * supportShield * severePenalty);
     if (finalDamage <= 0) return;
 
@@ -967,7 +1019,7 @@
     b.touched = true;
     const newStage = blockDamageStage(b);
 
-    if (b.material === 'tnt' && (b.hp <= 0 || finalDamage > Math.max(20, b.maxHp * .48))) {
+    if (b.material === 'tnt' && (b.hp <= 0 || finalDamage >= Math.max(8, b.maxHp * .70))) {
       return explode(b.x + b.w / 2, b.y + b.h / 2);
     }
 
@@ -1009,15 +1061,30 @@
     if (!b || b.destroyed || amount <= 0) return;
     // Damage is the main response; waking is secondary and only for sufficiently
     // strong impacts or blocks already close to breaking.
-    if (amount > damageImpulseThreshold(b) * .58 || blockDamageStage(b) >= 2) wakeBlock(b, 'damage');
+    if (options.direct || amount > damageImpulseThreshold(b) * .58 || blockDamageStage(b) >= 2) wakeBlock(b, 'damage');
     chipBlock(b, amount, x, y, options);
+  }
+
+  function addExplosionEffect(x, y, radius = PHYSICS.explosionRadius) {
+    shockwaves.push({ x, y, r: 6, maxR: radius, life: 22, max: 22, color: 'rgba(255,244,177,.72)' });
+    shockwaves.push({ x, y, r: 2, maxR: radius * .62, life: 15, max: 15, color: 'rgba(255,116,64,.52)' });
+    burst(x, y, 54, '#ff8a4c', 10.5);
+    burst(x, y, 22, '#ffe071', 8.0);
+    burst(x, y, 14, '#44342d', 5.2);
+  }
+
+  function explosionDamageAtDistance(d, radius = PHYSICS.explosionRadius) {
+    if (d > radius) return 0;
+    const falloff = 1 - d / radius;
+    // Strong core, quick falloff: feels like Angry Birds TNT/bomb without deleting the whole map.
+    return PHYSICS.explosionDamage * Math.pow(falloff, 1.18);
   }
 
   function explode(x, y) {
     const source = blocks.find(b => !b.destroyed && b.material === 'tnt' && Math.abs(b.x + b.w / 2 - x) < 8 && Math.abs(b.y + b.h / 2 - y) < 8);
     if (source) { source.destroyed = true; source.exploded = true; }
-    shake = Math.max(shake, 18);
-    burst(x, y, 42, '#ff8a4c', 9);
+    shake = Math.max(shake, 20);
+    addExplosionEffect(x, y, PHYSICS.explosionRadius);
     floatText('BOOM', x, y - 26, '#e65245');
     sfx('boom');
 
@@ -1026,25 +1093,27 @@
       const cx = b.x + b.w / 2, cy = b.y + b.h / 2;
       const dx = cx - x, dy = cy - y;
       const d = Math.hypot(dx, dy) || .001;
-      if (d > 112) return;
+      const damage = explosionDamageAtDistance(d, PHYSICS.explosionRadius);
+      if (damage <= 0) return;
       wakeBlock(b, 'explode');
-      const power = (1 - d / 112) * 10.5;
-      b.vx += (dx / d) * power / Math.max(1.2, b.mass * 1.35);
-      b.vy += (dy / d) * power / Math.max(1.2, b.mass * 1.35) - power * .045;
-      damageBlock(b, power * 1.55, cx, cy);
+      const push = (1 - d / PHYSICS.explosionRadius) * 11.0;
+      b.vx += (dx / d) * push / Math.max(1.2, b.mass * 1.15);
+      b.vy += (dy / d) * push / Math.max(1.2, b.mass * 1.15) - push * .05;
+      damageBlock(b, damage, cx, cy, { force: true, raw: true, explosion: true });
     });
 
     pigs.forEach(p => {
       if (!p.alive) return;
       const d = Math.hypot(p.x - x, p.y - y);
-      if (d < 116) damagePig(p, 5, p.x, p.y);
+      const damage = explosionDamageAtDistance(d, PHYSICS.explosionRadius);
+      if (damage > 0) damagePig(p, Math.max(1, Math.ceil(damage / 100)), p.x, p.y);
     });
 
     if (bird && !bird.asleep && !bird.hidden) {
       const dx = bird.x - x, dy = bird.y - y;
       const d = Math.hypot(dx, dy) || .001;
-      if (d < 126) {
-        const power = (1 - d / 126) * 8;
+      if (d < PHYSICS.explosionRadius + 16) {
+        const power = (1 - Math.min(d, PHYSICS.explosionRadius) / PHYSICS.explosionRadius) * 9.5;
         bird.vx += (dx / d) * power;
         bird.vy += (dy / d) * power;
       }
@@ -1053,15 +1122,13 @@
       if (f.asleep) return;
       const dx = f.x - x, dy = f.y - y;
       const d = Math.hypot(dx, dy) || .001;
-      if (d < 126) {
-        const power = (1 - d / 126) * 8;
+      if (d < PHYSICS.explosionRadius + 16) {
+        const power = (1 - Math.min(d, PHYSICS.explosionRadius) / PHYSICS.explosionRadius) * 8.5;
         f.vx += (dx / d) * power;
         f.vy += (dy / d) * power;
       }
     });
   }
-
-  function cleanDestroyedBlocks() { const before = blocks.length; blocks = blocks.filter(b => !b.destroyed); if (blocks.length !== before) wakeUnsupportedBlocks(); }
 
   function handleTurnFlow(dt) {
     if (!bird || !bird.launched || state.turnLocked) return;
@@ -1162,6 +1229,8 @@
       const s = Math.hypot(bird.vx, bird.vy) || 1;
       bird.vx += (bird.vx / s) * 7.8;
       bird.vy += (bird.vy / s) * 7.8;
+      bird.boosted = true;
+      bird.impactDamage = birds.yellow.boostedDamage;
       burst(bird.x, bird.y, 18, '#ffd34a', 4.5);
       floatText('BOOST', bird.x, bird.y - 24, '#ffd34a');
     } else if (bird.type === 'bomb') {
@@ -1189,6 +1258,9 @@
         vx: Math.cos(a) * s,
         vy: Math.sin(a) * s,
         mass: .34,
+        impactDamage: birds.blue.splitDamage,
+        chargePower: 1,
+        hitCooldowns: new Map(),
         age: 0,
         asleep: false,
         trail: [],
@@ -1231,6 +1303,7 @@
     pigs.forEach(drawPig);
     drawBird();
     drawBlueFragments();
+    drawShockwaves();
     drawParticles();
     drawFloatTexts();
     drawCanvasHud();
@@ -1546,7 +1619,7 @@
     ctx.font = 'bold 12px Arial';
     ctx.textAlign = 'left';
     ctx.fillStyle = 'rgba(33,49,60,.42)';
-    ctx.fillText('v15', 16, H - 16);
+    ctx.fillText('v16', 16, H - 16);
     ctx.restore();
     if (!bird || !state.dragging) return;
     const pull = Math.hypot(SLING_X - bird.x, SLING_Y - bird.y);
@@ -1567,6 +1640,23 @@
   function updateFloatTexts(dt) {
     floats.forEach(f => { f.y -= .45 * dt; f.life -= dt; });
     floats = floats.filter(f => f.life > 0);
+  }
+  function updateShockwaves(dt) {
+    shockwaves.forEach(w => { w.life -= dt; w.r += (w.maxR - w.r) * .22 * dt; });
+    shockwaves = shockwaves.filter(w => w.life > 0);
+  }
+  function drawShockwaves() {
+    shockwaves.forEach(w => {
+      const a = clamp(w.life / w.max, 0, 1);
+      ctx.save();
+      ctx.globalAlpha = a;
+      ctx.strokeStyle = w.color;
+      ctx.lineWidth = 5 * a + 1;
+      ctx.beginPath();
+      ctx.arc(w.x, w.y, w.r, 0, Math.PI * 2);
+      ctx.stroke();
+      ctx.restore();
+    });
   }
   function drawParticles() {
     particles.forEach(p => {
@@ -1634,6 +1724,7 @@
       updateUI();
       return;
     }
+    bird.chargePower = clamp(pull / MAX_DRAG, .18, 1);
     bird.vx = (SLING_X - bird.x) * POWER;
     bird.vy = (SLING_Y - bird.y) * POWER;
     lastShotPath = [{ x: bird.x, y: bird.y }];

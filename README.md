@@ -1,8 +1,16 @@
-# Mini Angry Birds v15 — 100 Level GitHub Build
+# Mini Angry Birds v16 — Calibrated Block HP / Damage
 
-เปิด `index.html` ได้ตรง ๆ หรือเอา repository นี้ขึ้น GitHub Pages ได้เลย
+GitHub-ready HTML5 Canvas physics puzzle game.
 
-## โครงสร้างไฟล์
+## Run locally
+
+Open `index.html` directly in a browser, or serve the folder with any static server.
+
+## GitHub Pages
+
+Push the whole folder to a GitHub repository. GitHub Pages can use `index.html` at the repository root.
+
+## File structure
 
 ```text
 index.html
@@ -12,39 +20,48 @@ src/levels/levels-001-025.js
 src/levels/levels-026-050.js
 src/levels/levels-051-075.js
 src/levels/levels-076-100.js
+src/levels/README.md
 LEVEL_DESIGN_NOTES.md
+README.md
 ```
 
-## วิธีแก้ด่าน
+## v16 balance update
 
-แก้เฉพาะไฟล์ใน `src/levels/` ได้เลย แต่ละด่านเป็น object แบบนี้:
+This version keeps the 100 unlocked levels and minimal UI from the previous build, but replaces the over-tough block damage model with calibrated HP / damage values.
+
+### Block HP
+
+- Glass / Ice: 40 HP
+- Wood: 100 HP
+- Stone: 250 HP
+- TNT: 10 HP
+
+Block size still affects mass and physics behavior, but **does not multiply HP** anymore. This prevents long beams and large blocks from becoming nearly unbreakable.
+
+### Bird damage
+
+- Red bird: up to 300 direct hit damage at full charge
+- Yellow bird: up to 300 direct hit damage at full charge; up to 500 after boost skill
+- Blue bird: 150 direct hit damage; after splitting, each of the 3 fragments also deals up to 150
+- Bomb bird: up to 300 direct hit damage; skill explosion deals up to 500 in a short radius
+
+### TNT
+
+TNT has 10 HP and uses the same 500-damage explosion model as the bomb bird. Explosion radius is intentionally limited, so TNT breaks nearby targets without deleting the entire map.
+
+## Level editing
+
+Each level object contains:
 
 ```js
 {
-  name: 'Granite Lock',
-  birds: ['yellow','red','bomb','blue','red'],
-  three: 2,
-  two: 4,
+  name: 'Level name',
+  birds: ['red', 'yellow', 'blue', 'bomb'],
   pigs: [{ x: 632, y: 484, r: 15, hp: 1 }],
-  blocks: [{ x: 560, y: 364, w: 34, h: 136, material: 'stone', angle: 0 }]
+  blocks: [B(600, 430, 24, 70, 'stone')]
 }
 ```
 
-- `material`: `wood`, `stone`, `ice`, `tnt`
-- `angle`: radians; optional
-- ทุกด่านปลดล็อกตั้งแต่เริ่ม
-- ดาวและคะแนนดีที่สุดยังเก็บด้วย `localStorage` แยกตามด่าน
+Materials: `wood`, `stone`, `ice`, `tnt`.
 
-## Design target
-
-v15 เน้นด่านหนักกว่า v12 มากขึ้น โดยเฉพาะหินหนัก / stone shell / separated pig rooms / protected TNT เพื่อไม่ให้ยิงนัดเดียวแล้วถล่มหมดง่าย ๆ
-
-
-## v15 Block Damage System
-
-- ทุก block มี HP ตามวัสดุและขนาด
-- สถานะ block: intact → cracked → critical → broken
-- การชนเบา ๆ จะทำให้ block ร้าว/เสีย HP ก่อน ไม่ได้ปลุกทั้งโครงสร้างทันที
-- Stone มี HP และ static resistance สูงกว่าเดิม ต้องยิงซ้ำหรือใช้ weak point
-- Block ที่แตกจริง ๆ เท่านั้นจึงหายไปและทำให้ support ข้างเคียงตื่นแบบ local
-- TNT ระเบิดเมื่อ HP หมดหรือโดนแรงหนักมากเท่านั้น
+You can override a single block's HP by adding `hp` to that block object, but most blocks should use the default calibrated material HP.
