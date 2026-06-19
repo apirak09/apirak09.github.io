@@ -1,5 +1,14 @@
-# Levels
+# Level Packs
 
-เกมโหลดไฟล์ level pack ทั้ง 4 ไฟล์ผ่าน `<script>` ใน `index.html` ก่อนโหลด `src/game.js`
+The game loads every file in this folder through `index.html` before `src/game.js`.
 
-เพิ่มด่านได้โดยเพิ่ม object ใน pack ใดก็ได้ หรือสร้างไฟล์ pack ใหม่แล้วเพิ่ม `<script>` ใน `index.html`
+Current packs:
+
+- `levels-001-025.js`
+- `levels-026-050.js`
+- `levels-051-075.js`
+- `levels-076-100.js`
+- `levels-101-125.js`
+- `levels-126-150.js`
+
+Every pack pushes an array into `window.LEVEL_PACKS`.

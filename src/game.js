@@ -39,10 +39,10 @@
   const MAX_DRAG = 115;
   const POWER = 0.23;
   const GRAVITY = 0.34;
-  const SAVE_KEY = 'mini-angry-birds-v17-save';
-  const HELP_KEY = 'mini-angry-birds-v17-help-seen';
+  const SAVE_KEY = 'mini-angry-birds-v18-save';
+  const HELP_KEY = 'mini-angry-birds-v18-help-seen';
 
-  // v17 damage goal: use calibrated HP/damage numbers instead of over-shielding blocks.
+  // v18 damage goal: use calibrated HP/damage numbers instead of over-shielding blocks.
   // Direct bird hits now subtract real HP damage, while sleep/friction still prevents
   // weak accidental taps from collapsing the whole structure.
   const PHYSICS = {
@@ -117,6 +117,9 @@
   let lastShotPath = [];
   let blueFragments = [];
   let shockwaves = [];
+  let underseaLife = [];
+  let underseaBubbles = [];
+  let underseaT = 0;
   let shake = 0;
   let nextBlockId = 1;
   let audioCtx = null;
@@ -343,6 +346,7 @@
       if (state.toastTimer <= 0) ui.toast.classList.remove('show');
     }
 
+    updateUnderseaLife(dt);
     updateParticles(dt);
     updateShockwaves(dt);
     updateFloatTexts(dt);
@@ -1326,41 +1330,206 @@
   }
 
   function drawWorld() {
-    const sky = ctx.createLinearGradient(0, 0, 0, GROUND);
-    sky.addColorStop(0, '#a9e8ff');
-    sky.addColorStop(.68, '#d8f7fb');
-    sky.addColorStop(1, '#f7eed1');
-    ctx.fillStyle = sky;
+    // v18: Undersea background is fully decorative. It never touches pigs,
+    // blocks, birds, collision, score, or level logic.
+    const sea = ctx.createLinearGradient(0, 0, 0, H);
+    sea.addColorStop(0, '#3fb8d9');
+    sea.addColorStop(.38, '#147fa7');
+    sea.addColorStop(.78, '#07506f');
+    sea.addColorStop(1, '#043047');
+    ctx.fillStyle = sea;
     ctx.fillRect(0, 0, W, H);
 
-    // sun
-    const sun = ctx.createRadialGradient(100, 96, 8, 100, 96, 86);
-    sun.addColorStop(0, 'rgba(255,245,185,.96)');
-    sun.addColorStop(1, 'rgba(255,245,185,0)');
-    ctx.fillStyle = sun;
-    ctx.beginPath(); ctx.arc(100, 96, 86, 0, Math.PI * 2); ctx.fill();
-
-    drawCloud(238, 88, .9);
-    drawCloud(560, 72, .72);
-    drawCloud(826, 120, .62);
-
-    // distant hills
-    ctx.fillStyle = '#a8d8b4';
-    ctx.beginPath(); ctx.moveTo(0, 360); bezierHill(160, 250, 320, 365); bezierHill(520, 292, 740, 360); bezierHill(880, 285, W, 350); ctx.lineTo(W, GROUND); ctx.lineTo(0, GROUND); ctx.closePath(); ctx.fill();
-    ctx.fillStyle = '#88c796';
-    ctx.beginPath(); ctx.moveTo(0, 398); bezierHill(210, 310, 420, 402); bezierHill(640, 332, 850, 398); bezierHill(940, 348, W, 395); ctx.lineTo(W, GROUND); ctx.lineTo(0, GROUND); ctx.closePath(); ctx.fill();
-
-    // ground
-    const ground = ctx.createLinearGradient(0, GROUND, 0, H);
-    ground.addColorStop(0, '#75bd68');
-    ground.addColorStop(.16, '#62ad58');
-    ground.addColorStop(1, '#8e6f42');
-    ctx.fillStyle = ground;
-    ctx.fillRect(0, GROUND, W, H - GROUND);
-    ctx.fillStyle = 'rgba(255,255,255,.18)';
-    for (let x = 0; x < W; x += 22) {
-      ctx.fillRect(x, GROUND + 8 + Math.sin(x) * 2, 10, 2);
+    // soft light beams / caustics
+    ctx.save();
+    ctx.globalAlpha = .18;
+    for (let i = 0; i < 7; i++) {
+      const x = (i * 165 + Math.sin(underseaT * .006 + i) * 28) % (W + 130) - 60;
+      const beam = ctx.createLinearGradient(x, 0, x + 85, GROUND);
+      beam.addColorStop(0, 'rgba(210,255,255,.55)');
+      beam.addColorStop(1, 'rgba(210,255,255,0)');
+      ctx.fillStyle = beam;
+      ctx.beginPath();
+      ctx.moveTo(x, 0); ctx.lineTo(x + 58, 0); ctx.lineTo(x + 170, GROUND); ctx.lineTo(x - 80, GROUND); ctx.closePath();
+      ctx.fill();
     }
+    ctx.restore();
+
+    // distant water particles
+    ctx.save();
+    ctx.globalAlpha = .16;
+    ctx.fillStyle = '#d9fbff';
+    for (let i = 0; i < 52; i++) {
+      const x = (i * 97 + underseaT * (.035 + (i % 5) * .006)) % W;
+      const y = 34 + (i * 41) % 420 + Math.sin(underseaT * .012 + i) * 5;
+      ctx.beginPath(); ctx.arc(x, y, 1 + (i % 3) * .45, 0, Math.PI * 2); ctx.fill();
+    }
+    ctx.restore();
+
+    // far reef silhouettes
+    ctx.fillStyle = 'rgba(0,58,78,.28)';
+    ctx.beginPath(); ctx.moveTo(0, 405); bezierHill(160, 315, 320, 410); bezierHill(520, 342, 740, 405); bezierHill(880, 335, W, 398); ctx.lineTo(W, GROUND); ctx.lineTo(0, GROUND); ctx.closePath(); ctx.fill();
+    ctx.fillStyle = 'rgba(0,42,58,.34)';
+    ctx.beginPath(); ctx.moveTo(0, 445); bezierHill(210, 380, 420, 448); bezierHill(640, 385, 850, 440); bezierHill(940, 392, W, 435); ctx.lineTo(W, GROUND); ctx.lineTo(0, GROUND); ctx.closePath(); ctx.fill();
+
+    drawSeaweedAndCoral();
+    drawUnderseaLife();
+    drawUnderseaBubbles();
+
+    // seabed / playable ground. It is visual only; physics still uses GROUND.
+    const sand = ctx.createLinearGradient(0, GROUND, 0, H);
+    sand.addColorStop(0, '#d4b77d');
+    sand.addColorStop(.32, '#b99157');
+    sand.addColorStop(1, '#6f563b');
+    ctx.fillStyle = sand;
+    ctx.fillRect(0, GROUND, W, H - GROUND);
+    ctx.fillStyle = 'rgba(255,255,255,.16)';
+    for (let x = 0; x < W; x += 22) ctx.fillRect(x, GROUND + 8 + Math.sin(x * .17 + underseaT * .01) * 2, 10, 2);
+  }
+
+  function initUnderseaLife() {
+    underseaLife = [];
+    underseaBubbles = [];
+    const fishCount = 18;
+    for (let i = 0; i < fishCount; i++) {
+      const isSashimi = i % 5 === 0 || i % 11 === 0;
+      const dir = Math.random() < .5 ? -1 : 1;
+      underseaLife.push({
+        kind: isSashimi ? 'sashimi' : 'salmon',
+        x: Math.random() * W,
+        y: 58 + Math.random() * 365,
+        vx: dir * (.18 + Math.random() * .42),
+        vy: (Math.random() - .5) * .12,
+        targetVy: (Math.random() - .5) * .25,
+        scale: isSashimi ? .65 + Math.random() * .42 : .55 + Math.random() * .75,
+        phase: Math.random() * Math.PI * 2,
+        turn: 28 + Math.random() * 160,
+        depth: .38 + Math.random() * .48,
+        roll: (Math.random() - .5) * .18
+      });
+    }
+    for (let i = 0; i < 42; i++) {
+      underseaBubbles.push({ x: Math.random() * W, y: Math.random() * H, r: 1.4 + Math.random() * 3.8, vy: .18 + Math.random() * .72, drift: (Math.random() - .5) * .28, phase: Math.random() * 9 });
+    }
+  }
+
+  function updateUnderseaLife(dt) {
+    underseaT += dt;
+    if (!underseaLife.length) initUnderseaLife();
+    underseaLife.forEach(f => {
+      f.turn -= dt;
+      if (f.turn <= 0) {
+        // Random-wander, not fixed scripted path.
+        const keepDir = Math.random() < .84 ? Math.sign(f.vx || 1) : -Math.sign(f.vx || 1);
+        const speed = .15 + Math.random() * (f.kind === 'sashimi' ? .28 : .46);
+        f.vx = keepDir * speed;
+        f.targetVy = (Math.random() - .5) * .34;
+        f.turn = 32 + Math.random() * 175;
+      }
+      f.vy += (f.targetVy - f.vy) * .025 * dt;
+      f.x += f.vx * dt;
+      f.y += (f.vy + Math.sin(underseaT * .02 + f.phase) * .018) * dt;
+      if (f.x < -90) f.x = W + 90;
+      if (f.x > W + 90) f.x = -90;
+      if (f.y < 38) { f.y = 38; f.targetVy = Math.abs(f.targetVy); }
+      if (f.y > GROUND - 38) { f.y = GROUND - 38; f.targetVy = -Math.abs(f.targetVy); }
+    });
+    underseaBubbles.forEach(bu => {
+      bu.y -= bu.vy * dt;
+      bu.x += (bu.drift + Math.sin(underseaT * .02 + bu.phase) * .12) * dt;
+      if (bu.y < -12) { bu.y = GROUND + 30 + Math.random() * 80; bu.x = Math.random() * W; }
+      if (bu.x < -20) bu.x = W + 20;
+      if (bu.x > W + 20) bu.x = -20;
+    });
+  }
+
+  function drawSeaweedAndCoral() {
+    ctx.save();
+    for (let i = 0; i < 16; i++) {
+      const x = 22 + i * 66;
+      const h = 24 + (i * 17) % 58;
+      ctx.strokeStyle = i % 3 === 0 ? 'rgba(48,150,102,.42)' : 'rgba(32,122,96,.36)';
+      ctx.lineWidth = 3 + (i % 3);
+      ctx.beginPath();
+      ctx.moveTo(x, GROUND + 2);
+      ctx.quadraticCurveTo(x + Math.sin(underseaT * .018 + i) * 16, GROUND - h * .45, x + Math.sin(underseaT * .013 + i) * 10, GROUND - h);
+      ctx.stroke();
+    }
+    // small coral clusters away from main play information
+    ctx.fillStyle = 'rgba(238,125,112,.36)';
+    for (let i = 0; i < 8; i++) {
+      const x = 36 + i * 128;
+      ctx.beginPath(); ctx.arc(x, GROUND - 4, 7 + (i % 3), 0, Math.PI * 2); ctx.fill();
+      ctx.beginPath(); ctx.arc(x + 12, GROUND - 10, 5 + (i % 2), 0, Math.PI * 2); ctx.fill();
+    }
+    ctx.restore();
+  }
+
+  function drawUnderseaLife() {
+    ctx.save();
+    underseaLife.forEach(f => {
+      ctx.globalAlpha = .26 + f.depth * .34;
+      if (f.kind === 'sashimi') drawSashimiSwimmer(f);
+      else drawSalmon(f);
+    });
+    ctx.restore();
+  }
+
+  function drawSalmon(f) {
+    const dir = Math.sign(f.vx || 1);
+    ctx.save();
+    ctx.translate(f.x, f.y);
+    ctx.scale(dir * f.scale, f.scale);
+    ctx.rotate(Math.sin(underseaT * .025 + f.phase) * .05 + f.roll);
+    // body
+    ctx.fillStyle = '#f07855';
+    ctx.beginPath();
+    ctx.ellipse(0, 0, 32, 11, 0, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.fillStyle = '#f7b18d';
+    ctx.beginPath(); ctx.ellipse(-2, 4, 24, 5, 0, 0, Math.PI * 2); ctx.fill();
+    // tail
+    const flap = Math.sin(underseaT * .08 + f.phase) * 4;
+    ctx.fillStyle = '#d85d50';
+    ctx.beginPath(); ctx.moveTo(-31, 0); ctx.lineTo(-48, -12 + flap); ctx.lineTo(-43, 0); ctx.lineTo(-48, 12 - flap); ctx.closePath(); ctx.fill();
+    // fins
+    ctx.fillStyle = '#c84c43';
+    ctx.beginPath(); ctx.moveTo(-4, -9); ctx.lineTo(8, -21); ctx.lineTo(14, -8); ctx.fill();
+    ctx.beginPath(); ctx.moveTo(2, 8); ctx.lineTo(15, 16); ctx.lineTo(18, 6); ctx.fill();
+    // markings and eye
+    ctx.strokeStyle = 'rgba(255,255,255,.58)'; ctx.lineWidth = 2;
+    for (let i = -14; i <= 16; i += 10) { ctx.beginPath(); ctx.moveTo(i, -8); ctx.lineTo(i + 7, 7); ctx.stroke(); }
+    ctx.fillStyle = '#10202b'; ctx.beginPath(); ctx.arc(21, -3, 2.2, 0, Math.PI * 2); ctx.fill();
+    ctx.restore();
+  }
+
+  function drawSashimiSwimmer(f) {
+    const dir = Math.sign(f.vx || 1);
+    ctx.save();
+    ctx.translate(f.x, f.y);
+    ctx.scale(dir * f.scale, f.scale);
+    ctx.rotate(Math.sin(underseaT * .035 + f.phase) * .12 + f.roll);
+    // rice shadow
+    roundRect(-18, 4, 42, 14, 8, 'rgba(255,255,255,.78)');
+    // salmon slice
+    roundRect(-24, -10, 54, 20, 7, '#f36f5f');
+    ctx.strokeStyle = 'rgba(255,230,210,.72)'; ctx.lineWidth = 2;
+    for (let i = -15; i < 25; i += 12) { ctx.beginPath(); ctx.moveTo(i, -7); ctx.lineTo(i + 9, 7); ctx.stroke(); }
+    // tiny tail fins: absurd but readable as swimming sashimi
+    const flap = Math.sin(underseaT * .09 + f.phase) * 3;
+    ctx.fillStyle = '#e85b50';
+    ctx.beginPath(); ctx.moveTo(-25, 0); ctx.lineTo(-38, -8 + flap); ctx.lineTo(-34, 0); ctx.lineTo(-38, 8 - flap); ctx.closePath(); ctx.fill();
+    ctx.fillStyle = '#162d38'; ctx.beginPath(); ctx.arc(21, -4, 1.8, 0, Math.PI * 2); ctx.fill();
+    ctx.restore();
+  }
+
+  function drawUnderseaBubbles() {
+    ctx.save();
+    ctx.globalAlpha = .35;
+    ctx.strokeStyle = 'rgba(220,255,255,.72)';
+    ctx.lineWidth = 1.2;
+    underseaBubbles.forEach(bu => { ctx.beginPath(); ctx.arc(bu.x, bu.y, bu.r, 0, Math.PI * 2); ctx.stroke(); });
+    ctx.restore();
   }
 
   function bezierHill(cx, cy, x, y) { ctx.quadraticCurveTo(cx, cy, x, y); }
@@ -1634,7 +1803,7 @@
     ctx.font = 'bold 12px Arial';
     ctx.textAlign = 'left';
     ctx.fillStyle = 'rgba(33,49,60,.42)';
-    ctx.fillText('v17', 16, H - 16);
+    ctx.fillText('v18', 16, H - 16);
     ctx.restore();
     if (!bird || !state.dragging) return;
     const pull = Math.hypot(SLING_X - bird.x, SLING_Y - bird.y);
@@ -1970,8 +2139,9 @@
   ui.closeLevel.addEventListener('click', () => ui.levelModal.classList.remove('show'));
   ui.startHelp.addEventListener('click', () => { ui.helpModal.classList.remove('show'); try { localStorage.setItem(HELP_KEY, '1'); } catch {} });
 
+  initUnderseaLife();
   startLevel(0, true);
-  // v10: no tutorial popup on start. The compact ? button still keeps help available.
+  // v18: no tutorial popup on start. The compact ? button still keeps help available.
   requestAnimationFrame(loop);
 })();
 
