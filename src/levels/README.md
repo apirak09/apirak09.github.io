@@ -1,6 +1,6 @@
 # Level Packs
 
-The game loads every file in this folder through `index.html` before `src/game.js`.
+The game loads level packs in `index.html` before `src/game.js`.
 
 Current packs:
 
@@ -11,4 +11,6 @@ Current packs:
 - `levels-101-125.js`
 - `levels-126-150.js`
 
-Every pack pushes an array into `window.LEVEL_PACKS`.
+Each file appends one array to `window.LEVEL_PACKS`.
+
+v20 includes static pre-settle and pig physics, but level data should still be designed as physically supported structures.

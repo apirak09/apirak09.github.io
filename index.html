@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Mini Angry Birds v18 — 150 Levels — Undersea</title>
+  <title>Mini Angry Birds v20 — Physics & Graphics Update</title>
   <link rel="stylesheet" href="src/styles.css" />
 </head>
 <body>
@@ -14,17 +14,19 @@
         <div class="sub" id="statusText">ลากนกไปด้านหลัง แล้วปล่อยเพื่อยิง</div>
       </div>
       <div class="hud">
-        <span class="chip">ด่าน <b id="levelText">1/150</b></span>
+        <span class="chip">ด่าน <b id="levelText">1/100</b></span>
         <span class="chip">คะแนน <b id="scoreText">0</b></span>
         <span class="chip">นกเหลือ <b id="birdsText">0</b></span>
         <span class="chip">หมู <b id="pigsText">0</b></span>
         <span class="chip">ดีที่สุด <b id="bestText">☆☆☆</b></span>
+        <span class="chip" id="debugChip" style="display:none">Debug <b id="debugText">off</b></span>
       </div>
     </section>
 
     <section class="stage">
       <canvas id="game" width="1000" height="560" aria-label="Mini Angry Birds game canvas"></canvas>
       <div id="toast" role="status" aria-live="polite"></div>
+      <div id="debugPanel" aria-hidden="true"></div>
 
       <div class="modalWrap" id="resultModal" role="dialog" aria-modal="true">
         <div class="modal">
@@ -58,8 +60,11 @@
             <div><b>แตะ/คลิกระหว่างบิน</b> หรือกด Space เพื่อใช้สกิลของนก</div>
             <div><b>R</b> เริ่มด่านใหม่, <b>G</b> เปิด/ปิดเส้นเล็ง, <b>P</b> หยุดชั่วคราว, <b>M</b> เปิด/ปิดเสียง</div>
             <div><b>ด่านทั้งหมดปลดล็อกแล้ว</b> แต่คะแนนและดาวดีที่สุดจะถูกจำแยกตามด่าน</div>
+            <div><b>D</b> เปิด/ปิด debug overlay สำหรับดู HP, support, sleep state และ collision info</div>
           </div>
           <div class="actions" style="justify-content:center; margin-top:14px">
+            <button class="ghost" id="exportSaveBtn">Export Save</button>
+            <button class="ghost" id="importSaveBtn">Import Save</button>
             <button class="green" id="startHelpBtn">เริ่มเล่น</button>
           </div>
         </div>

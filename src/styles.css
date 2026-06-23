@@ -245,3 +245,22 @@
 .levelDot { font-size: 12px; padding: 8px 6px; }
 @media (max-width: 760px) { .levelGrid { grid-template-columns: repeat(5, 1fr); } }
 @media (max-width: 460px) { .levelGrid { grid-template-columns: repeat(4, 1fr); } }
+
+/* v20: hidden debug overlay, only visible with D. */
+#debugPanel {
+  pointer-events: none;
+  position: absolute;
+  left: 14px;
+  top: 14px;
+  display: none;
+  padding: 9px 11px;
+  border-radius: 14px;
+  background: rgba(10, 25, 35, .62);
+  color: rgba(255,255,255,.92);
+  font: 700 12px/1.35 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  text-align: left;
+  box-shadow: 0 12px 32px rgba(0,0,0,.18);
+  backdrop-filter: blur(10px);
+  z-index: 4;
+}
+#debugPanel.show { display: block; }

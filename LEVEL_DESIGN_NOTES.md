@@ -1,20 +1,53 @@
-# Level Design Notes — v18
+# Level Design Notes — v20
 
-## Current level count
+This build keeps the 150-level set and focuses on system quality rather than adding more stages.
 
-150 total levels.
+## v20 system changes affecting levels
 
-## Level packs
+### 1. Static pre-settle
 
-- 001–025: early progression
-- 026–050: intermediate stone/wood/ice structures
-- 051–075: hard layouts
-- 076–100: very hard heavy-stone layouts
-- 101–125: undersea themed advanced structures
-- 126–150: late-game heavy stone challenge structures
+At level load, unsupported blocks and pigs are dropped vertically onto the closest support or ground before support data is captured. This prevents a level from visually starting with floating objects.
 
-## v18 design request
+### 2. Pig physics
 
-Levels 101–150 are designed to feel like new end-game layouts, with more heavy stone, separated pig chambers, guarded TNT, weak glass pins, high pig pockets, tiered roofs, bridges, vaults, ribs, cathedrals, ladders, and asymmetrical structures.
+Pigs now have lightweight gravity, horizontal damping, ground collision, and block collision. If a support is destroyed, pigs can fall naturally instead of hovering in the air.
 
-The undersea background is decorative only. Salmon and sashimi pieces use randomized wandering behavior and do not affect gameplay.
+### 3. Turn flow
+
+The game waits for active pigs and blocks to settle before spawning the next bird. This prevents the mid-turn state where structures or pigs appear suspended while the next bird is already ready.
+
+### 4. Debug overlay
+
+Press `D` to evaluate a level quickly:
+
+- Awake blocks
+- Damaged blocks
+- Unsupported blocks
+- Unsupported pigs
+- Turn frames
+
+Use it to find bad level layouts before publishing.
+
+## Recommended level rules going forward
+
+- Avoid floating blocks unless they are meant to be decorative background objects. All gameplay blocks should touch the ground or another block.
+- For hard levels, prefer stone protection plus small glass/wood weak points instead of huge TNT chain reactions.
+- Make TNT useful but not an instant full-map clear.
+- Give each stage one or two intended solution patterns.
+- Keep pigs physically supported by platforms, not embedded inside blocks.
+- Test each stage with debug overlay after edits.
+
+## Material balance
+
+- Glass / ice: 40 HP
+- Wood: 100 HP
+- Stone: 250 HP
+- TNT: 10 HP
+
+Bird damage is calibrated around the v16 system:
+
+- Red: up to ~300 direct impact
+- Yellow: up to ~300 direct, ~500 boosted
+- Blue: ~150 per body, split into 3 bodies
+- Bomb: ~300 direct, ~500 explosion
+- TNT: ~500 explosion in a compact radius

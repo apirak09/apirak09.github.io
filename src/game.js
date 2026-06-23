@@ -28,7 +28,12 @@
     startHelp: document.getElementById('startHelpBtn'),
     restart: document.getElementById('restartBtn'),
     levels: document.getElementById('levelsBtn'),
-    help: document.getElementById('helpBtn')
+    help: document.getElementById('helpBtn'),
+    debugPanel: document.getElementById('debugPanel'),
+    debugChip: document.getElementById('debugChip'),
+    debugText: document.getElementById('debugText'),
+    exportSave: document.getElementById('exportSaveBtn'),
+    importSave: document.getElementById('importSaveBtn')
   };
 
   const W = canvas.width;
@@ -39,12 +44,19 @@
   const MAX_DRAG = 115;
   const POWER = 0.23;
   const GRAVITY = 0.34;
-  const SAVE_KEY = 'mini-angry-birds-v18-save';
-  const HELP_KEY = 'mini-angry-birds-v18-help-seen';
+  const SAVE_KEY = 'mini-angry-birds-save-v1';
+  const HELP_KEY = 'mini-angry-birds-help-seen';
+  // Stable save key: do not change this on future updates, or local progress will reset.
+  // Legacy keys are read once and merged into SAVE_KEY so scores/stars survive v16-v18 upgrades.
+  const LEGACY_SAVE_KEYS = [
+    'mini-angry-birds-v16-save',
+    'mini-angry-birds-v17-save',
+    'mini-angry-birds-v18-save'
+  ];
 
-  // v18 damage goal: use calibrated HP/damage numbers instead of over-shielding blocks.
-  // Direct bird hits now subtract real HP damage, while sleep/friction still prevents
-  // weak accidental taps from collapsing the whole structure.
+  // v20 goal: keep the game stable but physically readable.
+  // Blocks/pigs settle under support-aware gravity instead of floating during reloads
+  // or between birds. Damage remains HP-based so weak taps crack, not delete, structures.
   const PHYSICS = {
     sleepInvMassScale: 0.10,
     contactPropagationImpulse: 7.2,
@@ -61,7 +73,13 @@
     fullImpactSpeed: 18.0,
     directHitCooldownFrames: 10,
     explosionDamage: 500,
-    explosionRadius: 118
+    explosionRadius: 118,
+    pigGravity: 0.34,
+    pigFriction: 0.86,
+    pigRestSpeed: 0.08,
+    passiveSettleFrames: 16,
+    staticSettleIterations: 7,
+    maxPassiveFallSpeed: 4.2
   };
 
   const materials = {
@@ -104,6 +122,7 @@
     toastTimer: 0,
     toastText: '',
     sound: true,
+    debug: false,
     failCount: 0,
     save: loadSave()
   };
@@ -124,20 +143,74 @@
   let nextBlockId = 1;
   let audioCtx = null;
 
-  function loadSave() {
-    // v16: every stage is selectable from the first load. Best stars are still
-    // stored per level, so reloads do not lock content again.
-    const allUnlocked = Array.isArray(levels) ? levels.length : 25;
+  function emptySave() {
+    return {
+      schema: 1,
+      unlocked: Array.isArray(levels) ? levels.length : 150,
+      best: {},
+      bestScore: {},
+      updatedAt: Date.now()
+    };
+  }
+
+  function normalizeSave(data) {
+    const base = emptySave();
+    if (!data || typeof data !== 'object') return base;
+    base.best = data.best && typeof data.best === 'object' ? data.best : {};
+    base.bestScore = data.bestScore && typeof data.bestScore === 'object' ? data.bestScore : {};
+    base.unlocked = Array.isArray(levels) ? levels.length : Math.max(base.unlocked, Number(data.unlocked) || 0);
+    base.updatedAt = Number(data.updatedAt) || Date.now();
+    return base;
+  }
+
+  function mergeSaves(target, source) {
+    const out = normalizeSave(target);
+    const src = normalizeSave(source);
+    Object.keys(src.best || {}).forEach(key => {
+      out.best[key] = Math.max(Number(out.best[key]) || 0, Number(src.best[key]) || 0);
+    });
+    Object.keys(src.bestScore || {}).forEach(key => {
+      out.bestScore[key] = Math.max(Number(out.bestScore[key]) || 0, Number(src.bestScore[key]) || 0);
+    });
+    out.unlocked = Array.isArray(levels) ? levels.length : Math.max(Number(out.unlocked) || 0, Number(src.unlocked) || 0);
+    out.updatedAt = Math.max(Number(out.updatedAt) || 0, Number(src.updatedAt) || 0, Date.now());
+    return out;
+  }
+
+  function readSaveKey(key) {
     try {
-      const raw = localStorage.getItem(SAVE_KEY);
-      if (!raw) return { unlocked: allUnlocked, best: {} };
-      const data = JSON.parse(raw);
-      return { unlocked: allUnlocked, best: data.best && typeof data.best === 'object' ? data.best : {} };
-    } catch { return { unlocked: allUnlocked, best: {} }; }
+      const raw = localStorage.getItem(key);
+      return raw ? JSON.parse(raw) : null;
+    } catch {
+      return null;
+    }
+  }
+
+  function loadSave() {
+    // v19: stable local save. SAVE_KEY must remain the same across future releases.
+    // Every stage is selectable from the first load, but best stars/scores survive updates.
+    let merged = normalizeSave(readSaveKey(SAVE_KEY));
+    let migrated = false;
+    LEGACY_SAVE_KEYS.forEach(key => {
+      const legacy = readSaveKey(key);
+      if (legacy) {
+        merged = mergeSaves(merged, legacy);
+        migrated = true;
+      }
+    });
+    if (migrated) {
+      try { localStorage.setItem(SAVE_KEY, JSON.stringify(merged)); } catch { /* ignore private mode */ }
+    }
+    return merged;
   }
 
   function saveGame() {
-    try { localStorage.setItem(SAVE_KEY, JSON.stringify(state.save)); } catch { /* ignore private mode */ }
+    try {
+      state.save.schema = 1;
+      state.save.unlocked = levels.length;
+      state.save.updatedAt = Date.now();
+      localStorage.setItem(SAVE_KEY, JSON.stringify(state.save));
+    } catch { /* ignore private mode */ }
   }
 
   function cloneBlock(t) {
@@ -173,7 +246,7 @@
     };
   }
 
-  function clonePig(t) { return { ...t, x0: t.x, y0: t.y, vx: 0, vy: 0, alive: true, hp: t.hp || 1, flash: 0, scored: false }; }
+  function clonePig(t) { return { ...t, x0: t.x, y0: t.y, vx: 0, vy: 0, alive: true, hp: t.hp || 1, maxHp: t.hp || 1, flash: 0, scored: false, restFrames: 0 }; }
 
   function blockHpPct(b) {
     if (!b || !b.maxHp) return 1;
@@ -230,6 +303,8 @@
     shockwaves = [];
     shake = 0;
     sanitizeLevelObjects();
+    staticSettleScene(PHYSICS.staticSettleIterations);
+    resetBodyVelocities(true);
     captureInitialSupports();
     closeAllModals();
     spawnNextBird(true);
@@ -247,6 +322,8 @@
     state.turnLocked = false;
     state.turnId = 0;
     blueFragments = [];
+    staticSettleScene(2);
+    resetBodyVelocities(false);
 
     if (alivePigs() === 0 && !initial) return finishLevel();
     const level = levels[state.levelIndex];
@@ -300,6 +377,8 @@
     else if (state.mode === 'won') ui.status.textContent = 'ผ่านด่านแล้ว';
     else if (state.mode === 'lost') ui.status.textContent = 'นกหมดแล้ว ลองใหม่อีกครั้ง';
 
+    if (ui.debugChip) ui.debugChip.style.display = state.debug ? 'inline-flex' : 'none';
+    if (ui.debugText) ui.debugText.textContent = state.debug ? `${blocks.filter(b=>!b.destroyed && !b.sleep).length} awake` : 'off';
     renderQueue();
   }
 
@@ -356,14 +435,17 @@
     // Blocks start asleep. They only become dynamic after a bird/explosion hits them
     // or after a support that existed at level start is removed. This prevents the
     // whole castle from collapsing by itself before the first shot.
-    const physicsActive = !!(bird && bird.launched) || blueFragments.some(f => !f.asleep) || state.mode === 'flying' || state.mode === 'settling';
+    const passiveNeedsSettle = sceneHasUnsupportedBodies();
+    const physicsActive = !!(bird && bird.launched) || blueFragments.some(f => !f.asleep) || state.mode === 'flying' || state.mode === 'settling' || passiveNeedsSettle;
     if (!physicsActive) {
       calmBlocks();
+      calmPigs();
+      updateDebugPanel();
       updateUI();
       return;
     }
 
-    const steps = clamp(Math.ceil(dt * 1.35), 1, 4);
+    const steps = clamp(Math.ceil(dt * 1.45), 1, 5);
     const stepDt = dt / steps;
     for (let s = 0; s < steps; s++) {
       state.physicsFrame += 1;
@@ -371,7 +453,9 @@
       updateBlueFragments(stepDt);
       updateLeverForces(stepDt);
       updateBlocks(stepDt);
+      updatePigs(stepDt, !state.shotsUsed && !bird?.launched);
       solveBlockCollisions(stepDt);
+      resolvePigBlockContacts(false);
       birdBlockCollisions();
       blueFragmentBlockCollisions();
       pigCollisions();
@@ -380,6 +464,8 @@
       if (alivePigs() === 0 && state.shotsUsed > 0) break;
     }
     calmBlocks();
+    calmPigs();
+    updateDebugPanel();
 
     if (alivePigs() === 0 && state.shotsUsed > 0) return finishLevel();
     handleTurnFlow(dt);
@@ -409,6 +495,104 @@
         b.restFrames = 0;
       }
       if (Math.abs(b.angle) > 1.20) b.angle = clamp(b.angle, -1.20, 1.20);
+    });
+  }
+
+
+
+  function calmPigs() {
+    pigs.forEach(p => {
+      if (!p.alive) return;
+      if (!Number.isFinite(p.x) || !Number.isFinite(p.y) || !Number.isFinite(p.vx) || !Number.isFinite(p.vy)) {
+        p.x = p.x0 || 700; p.y = p.y0 || (GROUND - p.r); p.vx = 0; p.vy = 0;
+      }
+      p.x = clamp(p.x, p.r + 3, W - p.r - 3);
+      if (p.y + p.r > GROUND) { p.y = GROUND - p.r; p.vy = 0; }
+      if (Math.hypot(p.vx || 0, p.vy || 0) < PHYSICS.pigRestSpeed) { p.vx = 0; p.vy = 0; p.restFrames = (p.restFrames || 0) + 1; }
+      else p.restFrames = 0;
+    });
+  }
+
+  function isPigSupported(p, tolerance = 4) {
+    if (!p || !p.alive) return true;
+    if (p.y + p.r >= GROUND - tolerance) return true;
+    return blocks.some(b => {
+      if (!b || b.destroyed) return false;
+      const a = blockAABB(b);
+      const horizontallyInside = p.x >= a.minX - p.r * .65 && p.x <= a.maxX + p.r * .65;
+      const bottomGap = a.minY - (p.y + p.r);
+      return horizontallyInside && bottomGap > -tolerance && bottomGap < tolerance + 6;
+    });
+  }
+
+  function isBlockSupportedNow(b, tolerance = 5) {
+    if (!b || b.destroyed) return true;
+    const a = blockAABB(b);
+    if (a.maxY >= GROUND - tolerance) return true;
+    return blocks.some(o => {
+      if (!o || o === b || o.destroyed) return false;
+      const oa = blockAABB(o);
+      const overlap = Math.min(a.maxX, oa.maxX) - Math.max(a.minX, oa.minX);
+      if (overlap < 8) return false;
+      const gap = oa.minY - a.maxY;
+      return gap > -tolerance && gap < tolerance + 7 && (oa.minY + oa.maxY) / 2 > (a.minY + a.maxY) / 2;
+    });
+  }
+
+  function sceneHasUnsupportedBodies() {
+    const unsupportedPig = pigs.some(p => p.alive && !isPigSupported(p, 6));
+    const unsupportedAwakeBlock = blocks.some(b => !b.destroyed && !b.sleep && !isBlockSupportedNow(b, 6));
+    const movingPig = pigs.some(p => p.alive && Math.hypot(p.vx || 0, p.vy || 0) > .12);
+    return unsupportedPig || unsupportedAwakeBlock || movingPig;
+  }
+
+  function updatePigs(dt, passiveOnly = false) {
+    pigs.forEach(p => {
+      if (!p.alive) return;
+      if (p.flash > 0) p.flash -= 1;
+      const supported = isPigSupported(p, 5);
+      if (!supported || Math.abs(p.vy || 0) > .02 || Math.abs(p.vx || 0) > .02) {
+        p.vy = clamp((p.vy || 0) + PHYSICS.pigGravity * dt, -PHYSICS.maxPassiveFallSpeed, PHYSICS.maxPassiveFallSpeed);
+        p.x += (p.vx || 0) * dt;
+        p.y += (p.vy || 0) * dt;
+        p.vx *= Math.pow(PHYSICS.pigFriction, dt);
+        if (passiveOnly) p.vy *= Math.pow(.998, dt);
+      }
+      if (p.y + p.r > GROUND) {
+        p.y = GROUND - p.r;
+        if (Math.abs(p.vy || 0) > 2.2) burst(p.x, GROUND, 4, 'rgba(125,105,70,.18)', 2);
+        p.vy = 0;
+        p.vx *= Math.pow(.70, dt);
+      }
+      p.x = clamp(p.x, p.r + 3, W - p.r - 3);
+    });
+    resolvePigBlockContacts(passiveOnly);
+  }
+
+  function resolvePigBlockContacts(passiveOnly = false) {
+    pigs.forEach(p => {
+      if (!p.alive) return;
+      blocks.forEach(b => {
+        if (!b || b.destroyed) return;
+        const hit = circleRect(p.x, p.y, p.r, b);
+        if (!hit.collided) return;
+        const push = Math.min(hit.depth + .25, p.r * .82);
+        p.x += hit.nx * push;
+        p.y += hit.ny * push;
+
+        // hit.ny < 0 means the pig is above the block top in this collision helper.
+        if (hit.ny < -0.32) {
+          if (p.vy > 1.8 && !passiveOnly && !b.sleep) damageBlock(b, Math.max(0, (p.vy - 1.8) * .55), hit.x, hit.y);
+          p.vy = Math.min(0, (b.vy || 0) * .15);
+          p.vx += (b.vx || 0) * .035;
+          p.vx *= .82;
+        } else if (hit.ny > .45) {
+          p.vy = Math.max(0, p.vy || 0);
+        } else {
+          p.vx *= .72;
+        }
+      });
+      if (p.y + p.r > GROUND) { p.y = GROUND - p.r; p.vy = 0; }
     });
   }
 
@@ -1169,8 +1353,9 @@
 
     if (birdTimedOut) { bird.asleep = true; blueFragments.forEach(f => f.asleep = true); }
 
-    const movingBlocks = blocks.some(b => !b.destroyed && (Math.hypot(b.vx, b.vy) > .38 || Math.abs(b.vy) > .28));
-    const structureCanKeepMoving = (movingBlocks || fragmentsActive) && state.turnFrames < 360;
+    const movingBlocks = blocks.some(b => !b.destroyed && (Math.hypot(b.vx, b.vy) > .30 || Math.abs(b.vy) > .22 || Math.abs(b.av || 0) > .004));
+    const movingPigs = pigs.some(p => p.alive && (!isPigSupported(p, 7) || Math.hypot(p.vx || 0, p.vy || 0) > .14));
+    const structureCanKeepMoving = (movingBlocks || movingPigs || fragmentsActive) && state.turnFrames < 390;
 
     if (birdDone && !structureCanKeepMoving) {
       state.mode = 'settling';
@@ -1197,6 +1382,8 @@
     const totalBirds = levels[state.levelIndex].birds.length;
     if (state.shotsUsed < totalBirds) {
       bird = null;
+      staticSettleScene(2);
+      resetBodyVelocities(false);
       spawnNextBird(false);
     } else {
       bird = null;
@@ -1215,6 +1402,8 @@
     state.score += bonus;
     const key = String(state.levelIndex + 1);
     state.save.best[key] = Math.max(state.save.best[key] || 0, stars);
+    state.save.bestScore = state.save.bestScore && typeof state.save.bestScore === 'object' ? state.save.bestScore : {};
+    state.save.bestScore[key] = Math.max(Number(state.save.bestScore[key]) || 0, Math.round(state.score));
     state.save.unlocked = levels.length;
     saveGame();
     updateUI();
@@ -1330,7 +1519,7 @@
   }
 
   function drawWorld() {
-    // v18: Undersea background is fully decorative. It never touches pigs,
+    // v19: Undersea background is fully decorative. It never touches pigs,
     // blocks, birds, collision, score, or level logic.
     const sea = ctx.createLinearGradient(0, 0, 0, H);
     sea.addColorStop(0, '#3fb8d9');
@@ -1621,46 +1810,100 @@
     });
   }
 
+
+  function drawWoodGrain(x, y, w, h, seed = 1) {
+    const horizontal = w >= h;
+    ctx.save();
+    ctx.lineCap = 'round';
+    ctx.strokeStyle = 'rgba(76,42,20,.30)';
+    ctx.lineWidth = Math.max(1.4, Math.min(2.5, Math.min(w, h) / 10));
+    if (horizontal) {
+      for (let yy = y + 8; yy < y + h - 5; yy += 9) {
+        ctx.beginPath();
+        ctx.moveTo(x + 7, yy);
+        for (let xx = x + 18; xx < x + w - 8; xx += 18) ctx.lineTo(xx, yy + Math.sin((xx + seed) * .05) * 2.4);
+        ctx.stroke();
+      }
+      ctx.strokeStyle = 'rgba(255,222,150,.22)';
+      ctx.lineWidth = 1.2;
+      ctx.beginPath(); ctx.moveTo(x + 10, y + 5); ctx.lineTo(x + w - 10, y + 5); ctx.stroke();
+    } else {
+      for (let xx = x + 7; xx < x + w - 5; xx += 8) {
+        ctx.beginPath();
+        ctx.moveTo(xx, y + 7);
+        for (let yy = y + 18; yy < y + h - 8; yy += 18) ctx.lineTo(xx + Math.sin((yy + seed) * .07) * 2.0, yy);
+        ctx.stroke();
+      }
+    }
+    // knots
+    ctx.strokeStyle = 'rgba(83,45,22,.28)';
+    for (let i = 0; i < Math.max(1, Math.floor((w * h) / 3400)); i++) {
+      const kx = x + w * (.28 + ((seed * 13 + i * 31) % 42) / 100);
+      const ky = y + h * (.30 + ((seed * 17 + i * 29) % 40) / 100);
+      ctx.beginPath(); ctx.ellipse(kx, ky, Math.min(9, w * .12), Math.min(5, h * .18), .2, 0, Math.PI * 2); ctx.stroke();
+    }
+    ctx.restore();
+  }
+
   function drawBlock(b) {
     if (b.destroyed) return;
     const m = materials[b.material] || materials.wood;
     const cx = b.x + b.w / 2, cy = b.y + b.h / 2;
     const x = -b.w / 2, y = -b.h / 2;
+    const aabb = blockAABB(b);
     ctx.save();
-    ctx.fillStyle = 'rgba(31,42,47,.18)';
-    ellipse(cx, Math.min(GROUND + 2, blockAABB(b).maxY + 4), b.w * .50, 5);
+    ctx.fillStyle = 'rgba(18,31,38,.16)';
+    ellipse(cx, Math.min(GROUND + 2, aabb.maxY + 4), Math.max(10, (aabb.maxX - aabb.minX) * .38), 5);
     ctx.restore();
 
     ctx.save();
     ctx.translate(cx, cy);
     ctx.rotate(b.angle || 0);
-
+    const r = Math.min(11, Math.min(b.w, b.h) * .24);
     const hpPct = clamp(b.hp / b.maxHp, 0, 1);
-    ctx.globalAlpha = .72 + hpPct * .28;
-    roundRect(x, y, b.w, b.h, Math.min(10, Math.min(b.w, b.h) * .22), m.fill);
-    ctx.strokeStyle = m.edge; ctx.lineWidth = 2; strokeRoundRect(x, y, b.w, b.h, Math.min(10, Math.min(b.w, b.h) * .22));
+    const grad = ctx.createLinearGradient(x, y, x, y + b.h);
+    if (b.material === 'wood') { grad.addColorStop(0, '#e3a653'); grad.addColorStop(.52, m.fill); grad.addColorStop(1, '#a7652e'); }
+    else if (b.material === 'stone') { grad.addColorStop(0, '#b8c2c9'); grad.addColorStop(.55, m.fill); grad.addColorStop(1, '#66727b'); }
+    else if (b.material === 'ice') { grad.addColorStop(0, '#d9fbff'); grad.addColorStop(.46, m.fill); grad.addColorStop(1, '#55b7d5'); }
+    else { grad.addColorStop(0, '#ff796d'); grad.addColorStop(.5, m.fill); grad.addColorStop(1, '#ae3029'); }
 
-    ctx.globalAlpha = .38;
-    ctx.fillStyle = m.light;
-    roundRect(x + 4, y + 4, Math.max(2, b.w - 8), Math.max(2, Math.min(9, b.h * .18)), 8, m.light);
+    ctx.globalAlpha = .78 + hpPct * .22;
+    roundRect(x, y, b.w, b.h, r, grad);
     ctx.globalAlpha = 1;
+    ctx.strokeStyle = m.edge; ctx.lineWidth = Math.max(1.8, Math.min(3.4, Math.min(b.w, b.h) / 12));
+    strokeRoundRect(x, y, b.w, b.h, r);
+
+    ctx.save();
+    ctx.globalAlpha = .42;
+    roundRect(x + 4, y + 4, Math.max(2, b.w - 8), Math.max(2, Math.min(10, b.h * .20)), Math.min(7, r), 'rgba(255,255,255,.55)');
+    ctx.restore();
 
     if (b.material === 'wood') {
-      ctx.strokeStyle = 'rgba(90,50,24,.22)'; ctx.lineWidth = 2;
-      const horizontal = b.w > b.h;
-      if (horizontal) for (let yy = y + 8; yy < y + b.h; yy += 10) { ctx.beginPath(); ctx.moveTo(x + 6, yy); ctx.lineTo(x + b.w - 6, yy + Math.sin(yy + b.x) * 2); ctx.stroke(); }
-      else for (let xx = x + 7; xx < x + b.w; xx += 8) { ctx.beginPath(); ctx.moveTo(xx, y + 7); ctx.lineTo(xx + Math.sin(xx + b.y) * 2, y + b.h - 7); ctx.stroke(); }
+      drawWoodGrain(x, y, b.w, b.h, b.id || b.x);
+      ctx.strokeStyle = 'rgba(85,48,24,.38)'; ctx.lineWidth = 1.2;
+      ctx.beginPath(); ctx.moveTo(x + 5, y + b.h - 6); ctx.lineTo(x + b.w - 6, y + b.h - 7); ctx.stroke();
     } else if (b.material === 'stone') {
-      ctx.strokeStyle = 'rgba(45,55,63,.28)'; ctx.lineWidth = 2;
-      ctx.beginPath(); ctx.moveTo(x + b.w*.22, y + 8); ctx.lineTo(x + b.w*.5, y + b.h*.4); ctx.lineTo(x + b.w*.36, y + b.h - 8); ctx.stroke();
-      ctx.beginPath(); ctx.moveTo(x + b.w*.62, y + 10); ctx.lineTo(x + b.w*.78, y + b.h*.55); ctx.stroke();
+      ctx.save();
+      ctx.lineCap = 'round'; ctx.strokeStyle = 'rgba(43,53,60,.30)'; ctx.lineWidth = 2;
+      const cells = Math.max(2, Math.floor(b.w / 34));
+      for (let i = 1; i < cells; i++) { const xx = x + b.w * i / cells; ctx.beginPath(); ctx.moveTo(xx, y + 5); ctx.lineTo(xx + Math.sin(i + b.id) * 7, y + b.h - 6); ctx.stroke(); }
+      const rows = Math.max(1, Math.floor(b.h / 22));
+      for (let j = 1; j <= rows; j++) { const yy = y + b.h * j / (rows + 1); ctx.beginPath(); ctx.moveTo(x + 7, yy); ctx.lineTo(x + b.w - 7, yy + Math.sin(j + b.id) * 2); ctx.stroke(); }
+      ctx.fillStyle = 'rgba(255,255,255,.18)'; ctx.beginPath(); ctx.ellipse(x + b.w*.28, y + b.h*.25, Math.min(10,b.w*.08), Math.min(5,b.h*.10), -.2, 0, Math.PI*2); ctx.fill();
+      ctx.restore();
     } else if (b.material === 'ice') {
-      ctx.strokeStyle = 'rgba(255,255,255,.66)'; ctx.lineWidth = 2;
-      ctx.beginPath(); ctx.moveTo(x + 6, y + b.h - 7); ctx.lineTo(x + b.w - 8, y + 8); ctx.stroke();
-      ctx.fillStyle = 'rgba(255,255,255,.36)'; ctx.beginPath(); ctx.arc(x + b.w*.72, y + b.h*.24, 3, 0, Math.PI*2); ctx.fill();
+      ctx.save();
+      ctx.strokeStyle = 'rgba(255,255,255,.78)'; ctx.lineWidth = 2;
+      ctx.beginPath(); ctx.moveTo(x + 7, y + b.h - 8); ctx.lineTo(x + b.w - 8, y + 8); ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(x + b.w*.35, y + b.h - 6); ctx.lineTo(x + b.w*.80, y + b.h*.22); ctx.stroke();
+      ctx.fillStyle = 'rgba(255,255,255,.48)'; ctx.beginPath(); ctx.arc(x + b.w*.72, y + b.h*.24, 3.8, 0, Math.PI*2); ctx.arc(x + b.w*.28, y + b.h*.38, 2.4, 0, Math.PI*2); ctx.fill();
+      ctx.restore();
     } else if (b.material === 'tnt') {
-      roundRect(x + 3, y + b.h*.38, b.w - 6, b.h*.25, 4, '#fff2d6');
-      ctx.fillStyle = '#81231f'; ctx.font = 'bold 12px Arial'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle'; ctx.fillText('TNT', 0, 1);
+      ctx.save();
+      roundRect(x + 4, y + b.h*.36, b.w - 8, b.h*.30, 5, '#fff2d6');
+      ctx.fillStyle = '#81231f'; ctx.font = `900 ${Math.max(11, Math.min(16, b.h*.32))}px Arial`; ctx.textAlign = 'center'; ctx.textBaseline = 'middle'; ctx.fillText('TNT', 0, 1);
+      ctx.strokeStyle = 'rgba(255,220,100,.8)'; ctx.lineWidth = 2; ctx.beginPath(); ctx.moveTo(x+b.w*.70, y+3); ctx.quadraticCurveTo(x+b.w*.83, y-5, x+b.w*.92, y+2); ctx.stroke();
+      ctx.restore();
     }
 
     const stage = blockDamageStage(b);
@@ -1668,41 +1911,32 @@
       ctx.save();
       ctx.lineCap = 'round';
       ctx.lineJoin = 'round';
-      ctx.strokeStyle = b.material === 'ice' ? 'rgba(255,255,255,.88)' : b.material === 'stone' ? 'rgba(44,54,62,.62)' : 'rgba(92,43,22,.58)';
-      ctx.lineWidth = stage === 1 ? 2 : 3;
-      const crackCount = stage === 1 ? 2 : 4;
+      ctx.strokeStyle = b.material === 'ice' ? 'rgba(255,255,255,.90)' : b.material === 'stone' ? 'rgba(32,41,48,.68)' : 'rgba(90,42,20,.64)';
+      ctx.lineWidth = stage === 1 ? 2.2 : 3.4;
+      const crackCount = stage === 1 ? 3 : 6;
       for (let i = 0; i < crackCount; i++) {
-        const sx = x + b.w * (.22 + ((i * 37 + b.x) % 55) / 100);
-        const sy = y + b.h * (.20 + ((i * 29 + b.y) % 55) / 100);
+        const sx = x + b.w * (.18 + ((i * 37 + b.id * 9) % 62) / 100);
+        const sy = y + b.h * (.18 + ((i * 29 + b.id * 7) % 60) / 100);
         ctx.beginPath();
         ctx.moveTo(sx, sy);
-        ctx.lineTo(sx + (i % 2 ? -1 : 1) * b.w * .10, sy + b.h * .14);
-        ctx.lineTo(sx + (i % 2 ? 1 : -1) * b.w * .05, sy + b.h * .28);
+        ctx.lineTo(sx + (i % 2 ? -1 : 1) * b.w * .12, sy + b.h * .12);
+        ctx.lineTo(sx + (i % 2 ? 1 : -1) * b.w * .055, sy + b.h * .27);
+        if (stage >= 2) ctx.lineTo(sx + (i % 2 ? -1 : 1) * b.w * .18, sy + b.h * .40);
         ctx.stroke();
       }
-      if (stage >= 2) {
-        ctx.strokeStyle = 'rgba(55,32,24,.36)';
-        ctx.lineWidth = 4;
-        strokeRoundRect(x + 2, y + 2, b.w - 4, b.h - 4, Math.min(8, Math.min(b.w, b.h) * .18));
-      }
+      if (stage >= 2) { ctx.strokeStyle = 'rgba(55,32,24,.30)'; ctx.lineWidth = 4.5; strokeRoundRect(x + 2, y + 2, b.w - 4, b.h - 4, Math.max(3, r-2)); }
       ctx.restore();
     }
 
     if ((b.damageFlash || 0) > 0) {
       ctx.save();
-      ctx.globalAlpha = Math.min(.42, (b.damageFlash || 0) / 24);
-      ctx.strokeStyle = '#fff5bd';
-      ctx.lineWidth = 4;
-      strokeRoundRect(x - 1, y - 1, b.w + 2, b.h + 2, Math.min(11, Math.min(b.w, b.h) * .24));
+      ctx.globalAlpha = Math.min(.46, (b.damageFlash || 0) / 24);
+      ctx.strokeStyle = '#fff5bd'; ctx.lineWidth = 4;
+      strokeRoundRect(x - 1, y - 1, b.w + 2, b.h + 2, r + 1);
       ctx.restore();
     }
-
-    if (Math.abs(b.av || 0) > .01) {
-      ctx.strokeStyle = 'rgba(255,255,255,.35)';
-      ctx.lineWidth = 2;
-      ctx.beginPath();
-      ctx.arc(0, 0, Math.min(42, Math.max(18, Math.min(b.w, b.h) + 16)), 0, Math.PI * 1.4);
-      ctx.stroke();
+    if (state.debug) {
+      ctx.save(); ctx.rotate(-(b.angle || 0)); ctx.font = 'bold 10px Arial'; ctx.textAlign = 'center'; ctx.fillStyle = b.sleep ? '#1b5e20' : '#b71c1c'; ctx.fillText(`${Math.round(b.hp)}/${b.maxHp}${b.sleep?' S':' A'}`, 0, -b.h/2 - 6); ctx.restore();
     }
     ctx.restore();
   }
@@ -1710,91 +1944,83 @@
   function drawPig(p) {
     if (!p.alive) return;
     ctx.save();
-    ctx.fillStyle = 'rgba(31,42,47,.18)'; ellipse(p.x, GROUND + 2, p.r * 1.15, 5);
-    const bob = Math.sin(performance.now() / 420 + p.x) * 1.1;
+    ctx.fillStyle = 'rgba(18,31,38,.18)'; ellipse(p.x, Math.min(GROUND + 2, p.y + p.r + 5), p.r * 1.18, 5);
+    const bob = Math.sin(performance.now() / 420 + p.x) * (Math.hypot(p.vx||0,p.vy||0) > .1 ? .2 : 1.0);
     ctx.translate(p.x, p.y + bob);
-    if (p.flash > 0) ctx.globalAlpha = .72;
-    ctx.fillStyle = '#64bd5a';
-    ctx.strokeStyle = '#2e7d32'; ctx.lineWidth = 2;
+    if (p.flash > 0) ctx.globalAlpha = .74;
+    const body = ctx.createRadialGradient(-p.r*.35, -p.r*.45, p.r*.15, 0, 0, p.r*1.2);
+    body.addColorStop(0, '#b7f59f'); body.addColorStop(.55, '#66c75d'); body.addColorStop(1, '#3a9b43');
+    ctx.fillStyle = body;
+    ctx.strokeStyle = '#2d7c36'; ctx.lineWidth = 2.4;
     ctx.beginPath(); ctx.arc(0, 0, p.r, 0, Math.PI * 2); ctx.fill(); ctx.stroke();
-    ctx.fillStyle = '#78cf70';
+    // ears
+    ctx.fillStyle = '#72d36a';
     ctx.beginPath(); ctx.arc(-p.r*.55, -p.r*.72, p.r*.34, 0, Math.PI*2); ctx.arc(p.r*.55, -p.r*.72, p.r*.34, 0, Math.PI*2); ctx.fill(); ctx.stroke();
-    ctx.fillStyle = '#9ee092';
-    ctx.beginPath(); ctx.ellipse(0, p.r*.15, p.r*.55, p.r*.38, 0, 0, Math.PI*2); ctx.fill();
+    ctx.fillStyle = '#9eea92'; ctx.beginPath(); ctx.arc(-p.r*.55, -p.r*.72, p.r*.17, 0, Math.PI*2); ctx.arc(p.r*.55, -p.r*.72, p.r*.17, 0, Math.PI*2); ctx.fill();
+    // snout
+    ctx.fillStyle = '#a8ee98'; ctx.strokeStyle = 'rgba(46,125,50,.55)'; ctx.lineWidth = 1.5;
+    ctx.beginPath(); ctx.ellipse(0, p.r*.18, p.r*.56, p.r*.39, 0, 0, Math.PI*2); ctx.fill(); ctx.stroke();
     ctx.fillStyle = '#2b5130';
-    ctx.beginPath(); ctx.arc(-p.r*.27, -p.r*.16, 2.4, 0, Math.PI*2); ctx.arc(p.r*.27, -p.r*.16, 2.4, 0, Math.PI*2); ctx.fill();
-    ctx.fillStyle = '#2e7d32';
-    ctx.beginPath(); ctx.arc(-p.r*.17, p.r*.18, 2.3, 0, Math.PI*2); ctx.arc(p.r*.17, p.r*.18, 2.3, 0, Math.PI*2); ctx.fill();
-    if (p.hp > 1) { ctx.fillStyle = '#fff'; ctx.font = 'bold 12px Arial'; ctx.textAlign = 'center'; ctx.fillText(p.hp, 0, -p.r - 8); }
+    ctx.beginPath(); ctx.arc(-p.r*.28, -p.r*.17, p.r*.11, 0, Math.PI*2); ctx.arc(p.r*.28, -p.r*.17, p.r*.11, 0, Math.PI*2); ctx.fill();
+    ctx.fillStyle = '#287331'; ctx.beginPath(); ctx.arc(-p.r*.18, p.r*.19, p.r*.10, 0, Math.PI*2); ctx.arc(p.r*.18, p.r*.19, p.r*.10, 0, Math.PI*2); ctx.fill();
+    ctx.strokeStyle = 'rgba(30,80,34,.55)'; ctx.lineWidth = 1.4;
+    ctx.beginPath(); ctx.arc(0, p.r*.40, p.r*.18, .12, Math.PI - .12); ctx.stroke();
+    ctx.fillStyle = 'rgba(255,255,255,.48)'; ctx.beginPath(); ctx.arc(-p.r*.38, -p.r*.50, p.r*.16, 0, Math.PI*2); ctx.fill();
+    if (p.hp > 1 || state.debug) { ctx.fillStyle = '#fff'; ctx.strokeStyle = 'rgba(33,49,60,.55)'; ctx.lineWidth = 3; ctx.font = '900 12px Arial'; ctx.textAlign = 'center'; const txt = `${p.hp}/${p.maxHp||p.hp}`; ctx.strokeText(txt, 0, -p.r - 8); ctx.fillText(txt, 0, -p.r - 8); }
+    ctx.restore();
+  }
+
+  function drawBirdShape(x, y, r, spec, type, vx = 0, vy = 0, abilityReady = false, trail = []) {
+    trail?.forEach(t => {
+      if (t.life <= 0) return;
+      ctx.fillStyle = `rgba(255,255,255,${t.life / 70})`;
+      ctx.beginPath(); ctx.arc(t.x, t.y, Math.max(2, r * t.life / 55), 0, Math.PI*2); ctx.fill();
+    });
+    ctx.save();
+    ctx.fillStyle = 'rgba(18,31,38,.18)'; ellipse(x, GROUND + 2, r * 1.15, 5);
+    ctx.translate(x, y);
+    const angle = Math.atan2(vy || 0, vx || 1) * .09;
+    ctx.rotate(angle);
+    const grad = ctx.createRadialGradient(-r*.40, -r*.45, r*.12, 0, 0, r*1.15);
+    grad.addColorStop(0, '#fff8'); grad.addColorStop(.23, spec.color); grad.addColorStop(1, shadeColor(spec.color, -18));
+    ctx.fillStyle = grad; ctx.strokeStyle = 'rgba(70,45,38,.38)'; ctx.lineWidth = 2.2;
+    ctx.beginPath(); ctx.arc(0, 0, r, 0, Math.PI*2); ctx.fill(); ctx.stroke();
+    ctx.fillStyle = spec.belly; ctx.beginPath(); ctx.ellipse(2, r*.37, r*.58, r*.36, 0, 0, Math.PI*2); ctx.fill();
+    // tail feathers
+    ctx.fillStyle = shadeColor(spec.color, -32);
+    ctx.beginPath(); ctx.moveTo(-r*.82, -r*.18); ctx.lineTo(-r*1.34, -r*.45); ctx.lineTo(-r*1.05, 0); ctx.closePath(); ctx.fill();
+    ctx.beginPath(); ctx.moveTo(-r*.82, r*.10); ctx.lineTo(-r*1.30, r*.28); ctx.lineTo(-r*.98, r*.42); ctx.closePath(); ctx.fill();
+    // eyes + angry brows
+    ctx.fillStyle = '#fff'; ctx.beginPath(); ctx.arc(r*.19, -r*.24, r*.22, 0, Math.PI*2); ctx.arc(r*.48, -r*.20, r*.19, 0, Math.PI*2); ctx.fill();
+    ctx.fillStyle = '#18242b'; ctx.beginPath(); ctx.arc(r*.25, -r*.22, r*.075, 0, Math.PI*2); ctx.arc(r*.53, -r*.19, r*.065, 0, Math.PI*2); ctx.fill();
+    ctx.strokeStyle = '#18242b'; ctx.lineWidth = 2.2; ctx.beginPath(); ctx.moveTo(-r*.02, -r*.48); ctx.lineTo(r*.38, -r*.35); ctx.lineTo(r*.70, -r*.44); ctx.stroke();
+    ctx.fillStyle = spec.beak;
+    ctx.beginPath(); ctx.moveTo(r*.78, -r*.06); ctx.lineTo(r*1.48, r*.08); ctx.lineTo(r*.79, r*.34); ctx.closePath(); ctx.fill();
+    ctx.strokeStyle = 'rgba(118,65,18,.30)'; ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(r*.92, r*.12); ctx.lineTo(r*1.36, r*.10); ctx.stroke();
+    if (type === 'yellow') {
+      ctx.fillStyle = '#ffd34a'; ctx.beginPath(); ctx.moveTo(-r*.55, -r*.64); ctx.lineTo(0, -r*1.32); ctx.lineTo(r*.44, -r*.65); ctx.closePath(); ctx.fill();
+    }
+    if (type === 'bomb') {
+      ctx.strokeStyle = '#222'; ctx.lineWidth = 3; ctx.beginPath(); ctx.moveTo(-r*.2, -r*.96); ctx.quadraticCurveTo(-r*.42, -r*1.35, -r*.05, -r*1.55); ctx.stroke();
+      ctx.fillStyle = '#ffbd4d'; ctx.beginPath(); ctx.arc(-r*.02, -r*1.58, 4, 0, Math.PI*2); ctx.fill();
+    }
+    if (abilityReady) { ctx.strokeStyle = 'rgba(255,255,255,.65)'; ctx.lineWidth = 2; ctx.beginPath(); ctx.arc(0, 0, r + 8 + Math.sin(performance.now()/110)*2, 0, Math.PI*2); ctx.stroke(); }
     ctx.restore();
   }
 
   function drawBird() {
     if (!bird || bird.hidden) return;
-    bird.trail?.forEach(t => {
-      if (t.life <= 0) return;
-      ctx.fillStyle = `rgba(255,255,255,${t.life / 70})`;
-      ctx.beginPath(); ctx.arc(t.x, t.y, Math.max(2, bird.r * t.life / 55), 0, Math.PI*2); ctx.fill();
-    });
-
     const spec = birds[bird.type] || birds.red;
-    ctx.save();
-    ctx.fillStyle = 'rgba(31,42,47,.20)'; ellipse(bird.x, GROUND + 2, bird.r * 1.15, 5);
-    ctx.translate(bird.x, bird.y);
-    const angle = bird.launched ? Math.atan2(bird.vy, bird.vx) * .08 : 0;
-    ctx.rotate(angle);
-
-    ctx.fillStyle = spec.color;
-    ctx.strokeStyle = 'rgba(78,49,40,.35)'; ctx.lineWidth = 2;
-    ctx.beginPath(); ctx.arc(0, 0, bird.r, 0, Math.PI*2); ctx.fill(); ctx.stroke();
-    ctx.fillStyle = spec.belly;
-    ctx.beginPath(); ctx.ellipse(2, bird.r*.35, bird.r*.58, bird.r*.35, 0, 0, Math.PI*2); ctx.fill();
-
-    // brows / eyes
-    ctx.fillStyle = '#fff';
-    ctx.beginPath(); ctx.arc(bird.r*.25, -bird.r*.22, bird.r*.22, 0, Math.PI*2); ctx.fill();
-    ctx.fillStyle = '#1f2c35';
-    ctx.beginPath(); ctx.arc(bird.r*.31, -bird.r*.20, bird.r*.085, 0, Math.PI*2); ctx.fill();
-    ctx.strokeStyle = '#1f2c35'; ctx.lineWidth = 2;
-    ctx.beginPath(); ctx.moveTo(bird.r*.02, -bird.r*.42); ctx.lineTo(bird.r*.46, -bird.r*.35); ctx.stroke();
-
-    ctx.fillStyle = spec.beak;
-    ctx.beginPath(); ctx.moveTo(bird.r*.82, -2); ctx.lineTo(bird.r*1.46, 3); ctx.lineTo(bird.r*.80, bird.r*.30); ctx.closePath(); ctx.fill();
-
-    if (bird.type === 'bomb') {
-      ctx.strokeStyle = '#222'; ctx.lineWidth = 3; ctx.beginPath(); ctx.moveTo(-bird.r*.2, -bird.r*.96); ctx.quadraticCurveTo(-bird.r*.42, -bird.r*1.35, -bird.r*.05, -bird.r*1.55); ctx.stroke();
-      ctx.fillStyle = '#ffbd4d'; ctx.beginPath(); ctx.arc(-bird.r*.02, -bird.r*1.58, 4, 0, Math.PI*2); ctx.fill();
-    }
-    if (bird.type !== 'red' && bird.launched && !bird.abilityUsed) {
-      ctx.strokeStyle = 'rgba(255,255,255,.65)'; ctx.lineWidth = 2;
-      ctx.beginPath(); ctx.arc(0, 0, bird.r + 8 + Math.sin(performance.now()/110)*2, 0, Math.PI*2); ctx.stroke();
-    }
-    ctx.restore();
+    drawBirdShape(bird.x, bird.y, bird.r, spec, bird.type, bird.vx, bird.vy, bird.type !== 'red' && bird.launched && !bird.abilityUsed, bird.trail || []);
   }
+
 
   function drawBlueFragments() {
     if (!blueFragments.length) return;
     blueFragments.forEach(f => {
-      f.trail?.forEach(t => {
-        if (t.life <= 0) return;
-        ctx.fillStyle = `rgba(121,213,255,${t.life / 42})`;
-        ctx.beginPath(); ctx.arc(t.x, t.y, Math.max(1.5, f.r * t.life / 34), 0, Math.PI*2); ctx.fill();
-      });
       if (f.asleep) return;
-      ctx.save();
-      ctx.fillStyle = 'rgba(31,42,47,.16)'; ellipse(f.x, GROUND + 2, f.r * 1.05, 4);
-      ctx.translate(f.x, f.y);
-      ctx.rotate(Math.atan2(f.vy, f.vx) * .08);
-      ctx.fillStyle = '#48aeea';
-      ctx.strokeStyle = 'rgba(42,120,160,.35)'; ctx.lineWidth = 1.5;
-      ctx.beginPath(); ctx.arc(0, 0, f.r, 0, Math.PI*2); ctx.fill(); ctx.stroke();
-      ctx.fillStyle = '#c9efff';
-      ctx.beginPath(); ctx.ellipse(1, f.r*.32, f.r*.50, f.r*.30, 0, 0, Math.PI*2); ctx.fill();
-      ctx.fillStyle = '#fff'; ctx.beginPath(); ctx.arc(f.r*.25, -f.r*.22, f.r*.20, 0, Math.PI*2); ctx.fill();
-      ctx.fillStyle = '#1f2c35'; ctx.beginPath(); ctx.arc(f.r*.31, -f.r*.20, f.r*.08, 0, Math.PI*2); ctx.fill();
-      ctx.fillStyle = '#f2b84d';
-      ctx.beginPath(); ctx.moveTo(f.r*.78, -1); ctx.lineTo(f.r*1.34, 2); ctx.lineTo(f.r*.78, f.r*.25); ctx.closePath(); ctx.fill();
-      ctx.restore();
+      const spec = birds.blue;
+      drawBirdShape(f.x, f.y, f.r, spec, 'blue', f.vx, f.vy, false, f.trail || []);
     });
   }
 
@@ -1803,7 +2029,7 @@
     ctx.font = 'bold 12px Arial';
     ctx.textAlign = 'left';
     ctx.fillStyle = 'rgba(33,49,60,.42)';
-    ctx.fillText('v18', 16, H - 16);
+    ctx.fillText('v19', 16, H - 16);
     ctx.restore();
     if (!bird || !state.dragging) return;
     const pull = Math.hypot(SLING_X - bird.x, SLING_Y - bird.y);
@@ -1931,6 +2157,7 @@
     else if (e.key === 'g' || e.key === 'G') { state.aimGuide = !state.aimGuide; toast(`เส้นเล็ง: ${state.aimGuide ? 'เปิด' : 'ปิด'}`); }
     else if (e.key === 'p' || e.key === 'P') { state.paused = !state.paused; toast(state.paused ? 'หยุดชั่วคราว' : 'เล่นต่อ'); updateUI(); }
     else if (e.key === 'm' || e.key === 'M') { state.sound = !state.sound; toast(`เสียง: ${state.sound ? 'เปิด' : 'ปิด'}`); }
+    else if (e.key === 'd' || e.key === 'D') { state.debug = !state.debug; toast(`Debug: ${state.debug ? 'เปิด' : 'ปิด'}`); updateDebugPanel(); updateUI(); }
     else if (e.code === 'Space') { e.preventDefault(); useAbility(); }
     else if (e.key === 'Escape') closeAllModals();
   }
@@ -1974,6 +2201,99 @@
       }
       p.x0 = p.x; p.y0 = p.y;
     });
+  }
+
+
+  function resetBodyVelocities(resetOrigin = false) {
+    blocks.forEach(b => { if (!b || b.destroyed) return; b.vx = 0; b.vy = 0; b.av = 0; b.sleep = true; b.restFrames = 0; if (resetOrigin) { b.x0 = b.x; b.y0 = b.y; } });
+    pigs.forEach(p => { if (!p || !p.alive) return; p.vx = 0; p.vy = 0; p.restFrames = 0; if (resetOrigin) { p.x0 = p.x; p.y0 = p.y; } });
+  }
+
+  function staticSettleScene(iterations = 4) {
+    // Deterministic pre-settle pass. It only drops unsupported objects vertically onto
+    // the nearest support/ground; it does not apply destructive physics or damage.
+    for (let pass = 0; pass < iterations; pass++) {
+      const ordered = [...blocks].filter(b => b && !b.destroyed).sort((a, b) => blockAABB(b).maxY - blockAABB(a).maxY);
+      ordered.forEach(b => staticDropBlock(b));
+      pigs.filter(p => p.alive).forEach(p => staticDropPig(p));
+    }
+  }
+
+  function staticDropBlock(b) {
+    const a = blockAABB(b);
+    if (a.maxY > GROUND) { b.y -= a.maxY - GROUND; return; }
+    let target = GROUND;
+    blocks.forEach(o => {
+      if (!o || o === b || o.destroyed) return;
+      const oa = blockAABB(o);
+      const overlap = Math.min(a.maxX, oa.maxX) - Math.max(a.minX, oa.minX);
+      if (overlap < Math.max(7, Math.min(20, Math.min(a.maxX-a.minX, oa.maxX-oa.minX)*.16))) return;
+      if (oa.minY >= a.maxY - 1 && oa.minY < target) target = oa.minY;
+    });
+    const drop = target - a.maxY;
+    if (drop > .8) b.y += drop;
+    if (drop < -1.5) b.y += drop;
+  }
+
+  function staticDropPig(p) {
+    let targetY = GROUND - p.r;
+    blocks.forEach(b => {
+      if (!b || b.destroyed) return;
+      const a = blockAABB(b);
+      const inX = p.x >= a.minX - p.r * .65 && p.x <= a.maxX + p.r * .65;
+      if (!inX) return;
+      const topY = a.minY - p.r;
+      if (topY >= p.y - 2 && topY < targetY) targetY = topY;
+    });
+    if (targetY > p.y + .8) p.y = targetY;
+    // If a pig spawned slightly inside a block, lift it to the nearest safe top.
+    for (let guard = 0; guard < 18; guard++) {
+      const hitBlock = blocks.find(b => !b.destroyed && circleRect(p.x, p.y, p.r + 1, b).collided);
+      if (!hitBlock) break;
+      const a = blockAABB(hitBlock);
+      if (p.x >= a.minX - p.r && p.x <= a.maxX + p.r && p.y > a.minY - p.r - 10) p.y = a.minY - p.r - 1;
+      else p.x = clamp(p.x + (p.x < (a.minX+a.maxX)/2 ? -2 : 2), p.r + 3, W - p.r - 3);
+    }
+    p.y = clamp(p.y, p.r + 3, GROUND - p.r);
+  }
+
+  function updateDebugPanel() {
+    if (!ui.debugPanel) return;
+    if (!state.debug) { ui.debugPanel.classList.remove('show'); ui.debugPanel.innerHTML = ''; return; }
+    const awake = blocks.filter(b => !b.destroyed && !b.sleep).length;
+    const unsupportedBlocks = blocks.filter(b => !b.destroyed && !isBlockSupportedNow(b, 7)).length;
+    const unsupportedPigs = pigs.filter(p => p.alive && !isPigSupported(p, 7)).length;
+    const hpLow = blocks.filter(b => !b.destroyed && b.hp < b.maxHp).length;
+    ui.debugPanel.innerHTML = `Level ${state.levelIndex + 1}/${levels.length}<br>Mode: ${state.mode}<br>Awake blocks: ${awake}<br>Damaged blocks: ${hpLow}<br>Unsupported blocks: ${unsupportedBlocks}<br>Unsupported pigs: ${unsupportedPigs}<br>Frames: ${Math.round(state.turnFrames)}`;
+    ui.debugPanel.classList.add('show');
+  }
+
+  function exportSave() {
+    try {
+      const payload = JSON.stringify(normalizeSave(state.save));
+      if (navigator.clipboard?.writeText) navigator.clipboard.writeText(payload);
+      window.prompt('Copy save JSON:', payload);
+    } catch { toast('Export ไม่สำเร็จ'); }
+  }
+
+  function importSave() {
+    const raw = window.prompt('Paste save JSON:');
+    if (!raw) return;
+    try {
+      const imported = normalizeSave(JSON.parse(raw));
+      state.save = mergeSaves(state.save, imported);
+      saveGame();
+      renderLevelGrid();
+      updateUI();
+      toast('Import save สำเร็จ');
+    } catch { toast('Save JSON ไม่ถูกต้อง'); }
+  }
+
+  function shadeColor(hex, amt) {
+    const n = parseInt(String(hex).replace('#',''), 16);
+    if (!Number.isFinite(n)) return hex;
+    const r = clamp((n >> 16) + amt, 0, 255), g = clamp(((n >> 8) & 255) + amt, 0, 255), b = clamp((n & 255) + amt, 0, 255);
+    return `rgb(${r},${g},${b})`;
   }
 
   function sfx(type) {
@@ -2138,10 +2458,12 @@
   ui.closeModal.addEventListener('click', () => ui.resultModal.classList.remove('show'));
   ui.closeLevel.addEventListener('click', () => ui.levelModal.classList.remove('show'));
   ui.startHelp.addEventListener('click', () => { ui.helpModal.classList.remove('show'); try { localStorage.setItem(HELP_KEY, '1'); } catch {} });
+  ui.exportSave?.addEventListener('click', exportSave);
+  ui.importSave?.addEventListener('click', importSave);
 
   initUnderseaLife();
   startLevel(0, true);
-  // v18: no tutorial popup on start. The compact ? button still keeps help available.
+  // v20: no tutorial popup on start. The compact ? button keeps help/export/import available.
   requestAnimationFrame(loop);
 })();
 
