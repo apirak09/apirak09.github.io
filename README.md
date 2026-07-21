@@ -1,62 +1,74 @@
-# Mini Angry Birds v20 — Physics & Graphics Update
+# Mini Angry Birds: Reforged (v32 Crush & Cinematic)
 
-Static GitHub Pages build for a Mini Angry Birds-style canvas game.
+A complete rebuild of the v21 prototype focused on better physics, stronger game feel, clearer UX, and ten deliberately designed levels.
 
-## What's new in v20
+## Run
 
-- Keeps the stable local save key: `mini-angry-birds-save-v1`.
-- Loads all level packs from 001–150.
-- Adds support-aware static settling at level start so objects do not visibly float before the first shot.
-- Adds pig gravity and pig-block collision resolution so pigs fall with the structure instead of hovering between birds.
-- Extends turn resolution: the next bird waits for moving/falling pigs and blocks, not just the bird projectile.
-- Adds a hidden debug overlay: press `D` to show HP, awake blocks, damaged blocks, unsupported blocks, unsupported pigs, and turn frames.
-- Adds save Export/Import inside the `?` help modal.
-- Improves graphics for birds, pigs, wood, stone, glass, TNT, cracks, highlights, and shadows.
+Open `index.html` in a modern browser. The build is fully static and works on GitHub Pages. Matter.js is included locally under `src/vendor/`; no internet connection is required after downloading the folder.
 
-## Deploying to GitHub Pages
+## Controls
 
-Upload the whole folder contents to the root of your repository. GitHub Pages will load `index.html` first.
+- Drag and release the loaded bird to shoot.
+- Click/tap the playfield or press `Space` while flying to use an ability.
+- `R`: restart level
+- `G`: toggle trajectory guide
+- `P`: pause/resume
+- `M`: mute/unmute
+- `Esc`: close an open menu or pause
 
-Important: do not rename the repository/domain/path if you want localStorage progress to remain available in the same browser. Also do not change this save key in future versions:
+## What changed from v21
 
-```js
-const SAVE_KEY = 'mini-angry-birds-save-v1';
-```
+### Physics
 
-## Editing levels
+- Replaced the custom collision and support solver with Matter.js rigid-body physics.
+- Added real mass, inertia, angular momentum, friction, restitution, improved contact handling, and more stable stacking.
+- Added material-specific durability and impact response.
+- Added localized TNT/bomb blast force, damage falloff, and chain reactions.
+- Added pig damage from direct hits, falling structures, crushing impacts, and explosions.
+- Prevented setup settling from damaging structures before the first shot.
 
-Level data lives in:
+### Graphics and game feel
 
-```text
-src/levels/levels-001-025.js
-src/levels/levels-026-050.js
-src/levels/levels-051-075.js
-src/levels/levels-076-100.js
-src/levels/levels-101-125.js
-src/levels/levels-126-150.js
-```
+- New high-resolution responsive canvas with device-pixel-ratio rendering.
+- Original vector-drawn birds, pigs, slingshot, materials, terrain, and layered backgrounds.
+- Material cracks, damage flashes, debris, dust, glass shards, sparks, smoke, shockwaves, score floaters, trails, and camera shake.
+- Procedural Web Audio sound effects; no audio files required.
 
-Block materials:
+### Level design
 
-- `ice` = glass, 40 HP
-- `wood` = 100 HP
-- `stone` = 250 HP
-- `tnt` = 10 HP, explodes when broken
+- Replaced 150 repetitive stages with a ten-level campaign.
+- Each level teaches or combines a distinct solution pattern: support cutting, glass splitting, long-range boost, TNT chains, lever rotation, stone bunker demolition, controlled collapse, precision tunnel shots, and a mixed-material finale.
+- Sequential unlocks, per-level best score, best stars, par targets, contextual tutorials, and failure tips.
 
-## Debug controls
+### UX/UI
 
-- `R` restart level
-- `G` toggle aim guide
-- `P` pause
-- `M` sound on/off
-- `D` debug overlay
-- `Space` use bird ability
+- Redesigned HUD, bird queue, power meter, ability button, pause menu, results breakdown, level selection, help panel, fullscreen support, responsive mobile layout, and persistent settings.
+- Progress is stored under `mini-angry-birds-reforged-save-v1`.
+- Existing v21 scores for the first ten levels are migrated when available.
 
-## Save backup
+## Main files
 
-Open `?` and use:
+- `index.html`: application shell and UI
+- `src/styles.css`: responsive interface styling
+- `src/levels.js`: all ten level definitions
+- `src/game.js`: physics integration, rendering, input, scoring, audio, saves, and game flow
+- `src/vendor/matter.min.js`: local Matter.js runtime
 
-- `Export Save` to copy/backup local progress as JSON
-- `Import Save` to restore/merge progress from JSON
 
-This is still offline/local save, not cloud login.
+## v31 stability hotfix
+
+- Reduced UI repaint churn that could cause stutter or apparent frame freezes on some machines.
+- Disabled aggressive body sleeping and retuned friction/restitution so stacked objects respond more naturally instead of looking stuck or floating.
+- Increased solver quality and sub-stepping for more reliable launches and collision resolution.
+- Added extra guards against invalid projectile state, missed pointer release, and disappearing birds.
+
+
+## v32 crush and cinematic update
+
+- Added a 16-second skippable opening cinematic shown when the game starts.
+- The cinematic uses original vector animation, film-strip presentation, Thai captions, and a short egg-theft story; it does not embed external video or copyrighted audio.
+- Added a replay button for the opening cinematic in the Help menu.
+- Added impact crushing: a falling block now damages pigs according to mass, downward speed, and contact geometry.
+- Added sustained crushing: blocks that have actually moved and continue pressing down can kill a pig even after the initial impact has ended.
+- Added safeguards so stable starting contacts are not automatically treated as crushing before the physics system is armed by the first launch.
+- Added CRUSH feedback, dust, and score effects when a pig is defeated by falling debris.

@@ -1,53 +1,32 @@
-# Level Design Notes — v20
+# Level Design Notes
 
-This build keeps the 150-level set and focuses on system quality rather than adding more stages.
+| Level | Core lesson | Bird focus | Par |
+|---|---|---|---:|
+| 1. Woodland Welcome | Remove load-bearing wood | Red | 2 |
+| 2. Crystal Feet | Brittle glass foundations | Blue split | 2 |
+| 3. Three Little Rooms | Time a split across multiple supports | Blue split | 2 |
+| 4. High Perch | Long-range arc and mid-flight acceleration | Yellow boost | 2 |
+| 5. Fuse Lesson | Trigger a TNT chain efficiently | Red / Bomb | 1 |
+| 6. Counterweight | Use torque and a long beam | Red / Yellow | 2 |
+| 7. Stone Shell | Detonate inside a heavy bunker | Bomb | 2 |
+| 8. Twin Collapse | Make one tower fall into another | Yellow / Blue / Bomb | 2 |
+| 9. Needle Thread | Control power through a narrow corridor | Yellow boost | 2 |
+| 10. The Last Fortress | Combine glass, TNT, stone, and bird abilities | Mixed roster | 4 |
 
-## v20 system changes affecting levels
+## Balance rules
 
-### 1. Static pre-settle
+- Three stars: clear at or below par.
+- Two stars: clear at par + 1.
+- One star: any clear above par + 1.
+- Unused birds grant 10,000 points each.
+- Destruction combos increase block and pig point values when events occur within 0.9 seconds.
 
-At level load, unsupported blocks and pigs are dropped vertically onto the closest support or ground before support data is captured. This prevents a level from visually starting with floating objects.
+## QA performed
 
-### 2. Pig physics
-
-Pigs now have lightweight gravity, horizontal damping, ground collision, and block collision. If a support is destroyed, pigs can fall naturally instead of hovering in the air.
-
-### 3. Turn flow
-
-The game waits for active pigs and blocks to settle before spawning the next bird. This prevents the mid-turn state where structures or pigs appear suspended while the next bird is already ready.
-
-### 4. Debug overlay
-
-Press `D` to evaluate a level quickly:
-
-- Awake blocks
-- Damaged blocks
-- Unsupported blocks
-- Unsupported pigs
-- Turn frames
-
-Use it to find bad level layouts before publishing.
-
-## Recommended level rules going forward
-
-- Avoid floating blocks unless they are meant to be decorative background objects. All gameplay blocks should touch the ground or another block.
-- For hard levels, prefer stone protection plus small glass/wood weak points instead of huge TNT chain reactions.
-- Make TNT useful but not an instant full-map clear.
-- Give each stage one or two intended solution patterns.
-- Keep pigs physically supported by platforms, not embedded inside blocks.
-- Test each stage with debug overlay after edits.
-
-## Material balance
-
-- Glass / ice: 40 HP
-- Wood: 100 HP
-- Stone: 250 HP
-- TNT: 10 HP
-
-Bird damage is calibrated around the v16 system:
-
-- Red: up to ~300 direct impact
-- Yellow: up to ~300 direct, ~500 boosted
-- Blue: ~150 per body, split into 3 bodies
-- Bomb: ~300 direct, ~500 explosion
-- TNT: ~500 explosion in a compact radius
+- JavaScript syntax validation for all source files.
+- Runtime initialization through a mocked DOM/canvas environment.
+- Repeated launch simulation and next-bird flow tests.
+- Ability tests for blue split, yellow boost, and bomb detonation.
+- Static-settle tests across all ten stages: no stage loses pigs or blocks before the first shot.
+- Multi-shot stress tests across all levels with checks for non-finite positions/velocities.
+- Automated shot-search passes confirming executable win paths, including the precision stage and finale.
