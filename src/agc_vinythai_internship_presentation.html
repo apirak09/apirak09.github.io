@@ -1,573 +1,232 @@
 <!doctype html>
-<html lang="th">
+<html lang="en">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>AGC Vinythai Internship Presentation · HTML Slide Deck</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#111827">
+<title>AGC Vinythai Project 1 — Interactive HTML Slides</title>
 <style>
-  :root {
-    --bg: #f7f4ef;
-    --paper: #fffdf8;
-    --ink: #151515;
-    --muted: #606060;
-    --line: #d8d0c3;
-    --accent: #a51f1f;
-    --accent2: #24586a;
-    --gold: #c49a43;
-    --soft: #eee7dc;
-    --shadow: 0 22px 60px rgba(20, 20, 20, .12);
-  }
-  * { box-sizing: border-box; }
-  html, body { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background: var(--bg); color: var(--ink); font-family: "Aptos", "Noto Sans Thai", "Leelawadee UI", "Tahoma", sans-serif; }
-  body { counter-reset: slide; }
-  .deck { width: 100vw; height: 100vh; position: relative; }
-  .slide { display: none; position: absolute; inset: 0; padding: 5.1vh 6.2vw 6.2vh; background:
-      radial-gradient(circle at 92% 6%, rgba(165,31,31,.08), transparent 24%),
-      linear-gradient(180deg, rgba(255,255,255,.55), rgba(247,244,239,.45));
-      overflow: hidden; }
-  .slide.active { display: flex; flex-direction: column; justify-content: flex-start; }
-  .slide::after { content: attr(data-title) " · " counter(slide); counter-increment: slide; position: absolute; bottom: 2.3vh; right: 3.1vw; font-size: 1.6vh; letter-spacing: .04em; color: #8a8174; }
-  .title-slide::after, .section::after { color: rgba(255,255,255,.55); }
-  .eyebrow, .kicker { text-transform: uppercase; letter-spacing: .13em; color: var(--accent); font-weight: 700; font-size: 1.8vh; margin-bottom: 1.6vh; }
-  h1, h2, h3, p { margin: 0; }
-  h1 { font-size: 8.7vh; line-height: .96; letter-spacing: -.04em; }
-  h1 span { color: var(--accent); }
-  h2 { font-size: 5.2vh; line-height: 1.05; letter-spacing: -.035em; max-width: 1120px; margin-bottom: 3vh; }
-  h3 { font-size: 3.1vh; letter-spacing: -.025em; margin-bottom: 1.1vh; }
-  p, li, td, th { font-size: 2.2vh; line-height: 1.45; }
-  ul { margin: 1.5vh 0 0 1.5em; padding: 0; }
-  li { margin-bottom: .75vh; }
-  sup { color: var(--accent); font-weight: 800; }
-  .lead { margin-top: 3vh; font-size: 2.7vh; color: #302b27; line-height: 1.45; }
-  .author { margin-top: 5.5vh; font-size: 2vh; color: var(--muted); }
-  .title-grid { display: grid; grid-template-columns: 1.35fr .65fr; gap: 5vw; align-items: center; width: 100%; height: 100%; }
-  .title-card { min-height: 58vh; border: 1px solid rgba(255,255,255,.28); background: linear-gradient(145deg, #1b1b1b, #751515); color: #fff; border-radius: 2.2vh; box-shadow: var(--shadow); padding: 4vh; display: flex; flex-direction: column; justify-content: flex-end; }
-  .bigmark { font-size: 18vh; line-height: .8; font-weight: 900; letter-spacing: -.08em; color: rgba(255,255,255,.9); }
-  .mini { font-size: 3vh; margin-top: 2.5vh; line-height: 1.15; color: rgba(255,255,255,.85); }
-  .answer-box { border-left: .7vh solid var(--accent); background: var(--paper); padding: 2.8vh 3.2vh; box-shadow: var(--shadow); max-width: 1050px; margin-top: 1vh; }
-  .answer-box p { font-size: 3.2vh; line-height: 1.35; }
-  .outcomes { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5vw; margin-top: 5vh; }
-  .outcomes div { background: var(--soft); border: 1px solid var(--line); border-radius: 1.2vh; padding: 2.2vh; min-height: 15vh; }
-  .outcomes b { display: block; color: var(--accent); font-size: 4.6vh; line-height: 1; }
-  .outcomes span { display: block; margin-top: 1.2vh; font-size: 2vh; line-height: 1.35; }
-  .agenda { display: grid; gap: 1.8vh; margin-top: 1vh; max-width: 1150px; }
-  .agenda a { display: block; padding: 2vh 2.5vh; border-bottom: 1px solid var(--line); font-size: 3vh; line-height: 1.15; color: var(--ink); text-decoration: none; background: linear-gradient(90deg, rgba(165,31,31,.08), transparent); }
-  .cols.two { display: grid; grid-template-columns: 1.05fr .95fr; gap: 4vw; align-items: start; }
-  .large { font-size: 2.75vh; line-height: 1.38; margin-bottom: 2.4vh; }
-  .fact-stack { display: grid; gap: 1.7vh; }
-  .fact-stack div, .summary-cards div, .rec-grid div { background: var(--paper); border: 1px solid var(--line); border-radius: 1.4vh; padding: 2.4vh; box-shadow: 0 10px 30px rgba(0,0,0,.06); }
-  .fact-stack span, .kpi-card span, .final-grid span, .problem-line span, .pump-facts span { display: block; font-size: 1.6vh; text-transform: uppercase; letter-spacing: .09em; color: var(--muted); margin-bottom: .7vh; }
-  .fact-stack b { font-size: 2.55vh; line-height: 1.25; }
-  .plant-map { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.4vw; margin-top: 1.2vh; }
-  .site { border-radius: 1.6vh; background: var(--paper); border: 1px solid var(--line); padding: 2.4vh; min-height: 42vh; display: flex; flex-direction: column; justify-content: flex-start; }
-  .site.primary { background: linear-gradient(180deg, #fffdf8, #f3e5dd); border-top: .7vh solid var(--accent); }
-  .site.ghost { opacity: .72; }
-  .site b { font-size: 5vh; color: var(--accent); line-height: 1; margin-bottom: 2vh; }
-  .site span { font-size: 2.1vh; line-height: 1.3; font-weight: 700; }
-  .site em { margin-top: auto; font-style: normal; color: var(--muted); font-size: 1.8vh; line-height: 1.35; }
-  .split-cases { display: grid; grid-template-columns: 1fr 1fr; gap: 3vw; margin-top: 1vh; }
-  .split-cases > div { background: var(--paper); padding: 3vh; border-radius: 1.6vh; border-top: .65vh solid var(--accent2); box-shadow: var(--shadow); min-height: 55vh; }
-  .split-cases > div:first-child { border-top-color: var(--accent); }
-  .split-cases p { font-size: 2.45vh; }
-  .timeline { display: grid; grid-template-columns: repeat(6, 1fr); gap: 1vw; margin-top: 5vh; position: relative; }
-  .timeline::before { content: ""; position: absolute; left: 4%; right: 4%; top: 3.8vh; height: .35vh; background: var(--accent); z-index: 0; }
-  .timeline div { z-index: 1; background: var(--paper); border: 1px solid var(--line); border-radius: 1.2vh; padding: 2vh; min-height: 28vh; }
-  .timeline b { display: inline-flex; width: 7vh; height: 7vh; align-items: center; justify-content: center; border-radius: 50%; background: var(--accent); color: #fff; font-size: 2.3vh; margin-bottom: 2vh; }
-  .timeline span { display: block; font-size: 1.9vh; line-height: 1.35; }
-  .section { justify-content: center !important; background: linear-gradient(135deg, #161616, #5c1212); color: #fff; }
-  .section h2 { color: rgba(255,255,255,.72); font-size: 3.5vh; margin-bottom: 1.4vh; }
-  .section h1 { font-size: 7.8vh; max-width: 1120px; }
-  .section h1 span { color: #f3d1b2; }
-  .section-num { position: absolute; right: 6vw; top: 8vh; font-size: 31vh; font-weight: 900; color: rgba(255,255,255,.08); line-height: .8; }
-  .problem-line, .pump-facts { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.2vw; margin: 4vh 0 3vh; }
-  .problem-line div, .pump-facts div { background: var(--paper); border: 1px solid var(--line); border-radius: 1.3vh; padding: 2.3vh; min-height: 18vh; }
-  .problem-line b, .pump-facts b { font-size: 3.2vh; line-height: 1.12; display: block; }
-  .problem-line em, .pump-facts em { display: block; margin-top: 1.2vh; font-size: 1.8vh; color: var(--muted); font-style: normal; }
-  .callout { background: #fff; border-left: .65vh solid var(--accent2); border-radius: .8vh; padding: 2vh 2.4vh; margin-top: 2vh; box-shadow: 0 10px 28px rgba(0,0,0,.055); font-size: 2.25vh; }
-  .callout.warning { border-left-color: var(--accent); background: #fff8f5; }
-  .evap-wrap { display: grid; grid-template-columns: 1.25fr .75fr; gap: 3vw; align-items: center; }
-  .evap-diagram { position: relative; min-height: 48vh; background: var(--paper); border: 1px solid var(--line); border-radius: 1.6vh; padding: 3vh; box-shadow: var(--shadow); }
-  .effect { position: absolute; bottom: 8vh; width: 17%; border-radius: 1.2vh 1.2vh .6vh .6vh; color: #fff; padding: 1.5vh; text-align: center; box-shadow: 0 14px 28px rgba(0,0,0,.16); }
-  .effect span { font-weight: 900; display: block; font-size: 3.4vh; }
-  .effect b { display: block; font-size: 1.8vh; }
-  .effect em { display: block; font-size: 1.55vh; margin-top: 1vh; font-style: normal; opacity: .9; }
-  .effect.hot { left: 12%; height: 32vh; background: #a51f1f; }
-  .effect.mid { left: 41%; height: 25vh; background: #6b5b34; }
-  .effect.cold { right: 12%; height: 19vh; background: #24586a; }
-  .stream { position: absolute; left: 10%; right: 10%; padding: 1vh 1.4vh; background: var(--soft); border: 1px solid var(--line); border-radius: 999px; text-align: center; font-size: 1.8vh; }
-  .stream.liquid { bottom: 2vh; }
-  .stream.vapor { top: 3vh; }
-  .notes p { margin-bottom: 2.4vh; font-size: 2.5vh; }
-  .method-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.6vw; margin-top: 1vh; }
-  .method-grid div { background: var(--paper); border-left: .6vh solid var(--accent); border-radius: 1.2vh; padding: 2.5vh; min-height: 18vh; box-shadow: 0 8px 24px rgba(0,0,0,.055); }
-  .method-grid b { display: block; font-size: 2.7vh; margin-bottom: 1vh; }
-  .method-grid span { font-size: 2.15vh; color: #343434; line-height: 1.35; }
-  .clean-table { width: 100%; border-collapse: collapse; background: var(--paper); box-shadow: var(--shadow); border-radius: 1.4vh; overflow: hidden; }
-  .clean-table th { text-align: left; background: #1e1e1e; color: #fff; font-size: 2vh; padding: 1.6vh 1.8vh; }
-  .clean-table td { border-top: 1px solid var(--line); padding: 1.55vh 1.8vh; vertical-align: top; font-size: 1.95vh; }
-  .clean-table.narrow td { font-size: 1.85vh; }
-  .kpi-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.6vw; margin-top: 1vh; }
-  .kpi-card { background: var(--paper); border: 1px solid var(--line); border-radius: 1.6vh; padding: 3vh; min-height: 52vh; display: flex; flex-direction: column; box-shadow: var(--shadow); }
-  .kpi-card b { font-size: 7.2vh; color: var(--accent); line-height: .95; letter-spacing: -.06em; margin: 2vh 0 1.4vh; }
-  .kpi-card em { font-style: normal; color: var(--muted); font-size: 1.8vh; margin-bottom: 2.2vh; }
-  .kpi-card p { margin-top: auto; font-size: 2.1vh; }
-  .kpi-card.strong { background: #161616; color: #fff; }
-  .kpi-card.strong span, .kpi-card.strong em { color: rgba(255,255,255,.65); }
-  .kpi-card.strong b { color: #f2c47b; font-size: 6.1vh; }
-  .c3-layout { display: grid; grid-template-columns: 1.1fr .9fr; gap: 3vw; align-items: center; }
-  .mini-flow { background: var(--paper); border: 1px solid var(--line); border-radius: 1.5vh; padding: 3vh; box-shadow: var(--shadow); display: flex; align-items: center; gap: 1vw; min-height: 42vh; }
-  .mini-flow div { flex: 1; background: var(--soft); padding: 2vh; border-radius: 1.2vh; min-height: 20vh; display: flex; align-items: center; justify-content: center; text-align: center; font-weight: 800; font-size: 2.2vh; }
-  .mini-flow .focus { background: #fff5ef; border: 2px solid var(--accent); color: var(--accent); }
-  .mini-flow span { color: var(--accent); font-size: 3vh; font-weight: 900; }
-  .c3-text p { margin-bottom: 2.2vh; font-size: 2.45vh; }
-  .summary-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5vw; margin-top: 2vh; }
-  .summary-cards div { min-height: 28vh; }
-  .summary-cards b, .rec-grid b { display: block; font-size: 2.7vh; color: var(--accent); margin-bottom: 1.2vh; }
-  .summary-cards span, .rec-grid span { display: block; font-size: 2.05vh; line-height: 1.38; }
-  .pid-strip { display: flex; align-items: stretch; gap: .8vw; margin-top: 3vh; }
-  .pid-node { flex: 1; background: var(--paper); border: 1px solid var(--line); border-radius: 1.3vh; min-height: 22vh; padding: 2.2vh; font-size: 2.4vh; font-weight: 800; line-height: 1.25; display: flex; flex-direction: column; justify-content: center; text-align: center; }
-  .pid-node small { display: block; margin-top: 1.4vh; font-size: 1.55vh; font-weight: 500; color: var(--muted); line-height: 1.3; }
-  .pid-node.emphasis { border: 2px solid var(--accent); color: var(--accent); }
-  .pid-strip span { align-self: center; font-size: 4vh; color: var(--accent); font-weight: 900; }
-  .chain { display: flex; align-items: stretch; gap: .8vw; margin-top: 4vh; }
-  .chain div { flex: 1; background: var(--paper); border: 1px solid var(--line); border-radius: 1.3vh; min-height: 22vh; padding: 2vh; display: flex; align-items: center; justify-content: center; text-align: center; font-size: 2.35vh; font-weight: 800; line-height: 1.25; }
-  .chain div.danger { background: #641515; color: #fff; }
-  .chain span { align-self: center; color: var(--accent); font-size: 3.2vh; font-weight: 900; }
-  .note { margin-top: 3vh; color: var(--muted); font-size: 2.25vh; }
-  .npsh { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.8vw; margin: 4vh 0 2vh; }
-  .gauge { background: var(--paper); border: 1px solid var(--line); border-radius: 1.6vh; padding: 4vh 2vh; text-align: center; box-shadow: var(--shadow); }
-  .gauge b { display: block; font-size: 8vh; line-height: .92; color: var(--accent2); letter-spacing: -.06em; }
-  .gauge span { display: block; margin-top: 1.4vh; font-size: 2.2vh; color: var(--muted); }
-  .gauge.low b { color: #78632d; }
-  .gauge.result b { color: var(--accent); }
-  .fishbone { position: relative; height: 48vh; background: var(--paper); border: 1px solid var(--line); border-radius: 1.6vh; box-shadow: var(--shadow); margin-top: 1vh; overflow: hidden; }
-  .spine { position: absolute; left: 10%; right: 20%; top: 50%; height: .45vh; background: var(--ink); }
-  .head { position: absolute; right: 5%; top: 41%; width: 16%; background: var(--accent); color: #fff; border-radius: 1vh; padding: 2vh; font-size: 2.4vh; text-align: center; font-weight: 900; }
-  .bone { position: absolute; width: 25%; background: var(--soft); border-left: .5vh solid var(--accent2); padding: 1.5vh; border-radius: 1vh; }
-  .bone b { display: block; font-size: 2.4vh; color: var(--accent); margin-bottom: .5vh; }
-  .bone span { font-size: 1.7vh; line-height: 1.3; display: block; }
-  .bone.top { top: 7%; } .bone.bot { bottom: 7%; }
-  .b1 { left: 7%; } .b2 { left: 36%; } .b3 { left: 65%; } .b4 { left: 7%; } .b5 { left: 36%; } .b6 { left: 65%; }
-  .rec-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.3vw; margin-top: 1vh; }
-  .rec-grid div { min-height: 22vh; }
-  .compare { display: grid; grid-template-columns: 1fr 1fr; gap: 2vw; margin-top: 1vh; }
-  .compare div { background: var(--paper); border: 1px solid var(--line); border-radius: 1.5vh; padding: 3vh; min-height: 24vh; box-shadow: var(--shadow); }
-  .compare h3 { color: var(--accent); font-size: 4.2vh; }
-  .compare p { font-size: 2.8vh; line-height: 1.35; }
-  .three-lines { margin-top: 4vh; display: grid; gap: 1.4vh; }
-  .three-lines p { background: var(--soft); padding: 1.6vh 2vh; border-radius: 1vh; font-size: 2.5vh; }
-  .final-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 2vw; margin-top: 2vh; }
-  .final-grid div { background: #151515; color: #fff; border-radius: 1.8vh; padding: 4vh; min-height: 30vh; display: flex; flex-direction: column; justify-content: center; box-shadow: var(--shadow); }
-  .final-grid span { color: #f2c47b; }
-  .final-grid b { font-size: 3.8vh; line-height: 1.18; }
-  .bigline { margin-top: 4vh; font-size: 3.2vh; line-height: 1.35; border-left: .7vh solid var(--accent); padding-left: 2.2vh; }
-  .refs ol { margin: 2vh 0 0 2.5vw; }
-  .refs li { font-size: 2.0vh; margin-bottom: 1.2vh; line-height: 1.3; }
-  .small { margin-top: 3vh; color: var(--muted); font-size: 1.8vh; }
-  .nav { position: fixed; left: 0; right: 0; bottom: 0; height: .65vh; background: rgba(0,0,0,.08); z-index: 100; }
-  .progress { height: 100%; width: 0; background: var(--accent); transition: width .18s ease; }
-  .hint { position: fixed; left: 2vw; bottom: 2.1vh; color: #8a8174; font-size: 1.5vh; z-index: 99; }
-  @page { size: 16in 9in; margin: 0; }
-  @media print {
-    html, body { width: 16in; height: auto; overflow: visible; background: #fff; }
-    .deck { width: 16in; height: auto; }
-    .slide, .slide.active { display: flex !important; position: relative; width: 16in; height: 9in; page-break-after: always; break-after: page; }
-    .nav, .hint { display: none; }
-  }
+:root {
+  --bg:#f3efe6; --paper:#fffaf0; --ink:#141414; --muted:#66605a; --line:#ddd3c4;
+  --red:#c3152b; --red2:#e04b5d; --blue:#1c355e; --green:#16864e; --teal:#087c8f;
+  --shadow:0 22px 70px rgba(20,20,20,.18); --radius:28px; --slide-w:min(96vw,1280px); --slide-h:min(78dvh,720px);
+  --safe-top:env(safe-area-inset-top); --safe-bottom:env(safe-area-inset-bottom);
+}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:radial-gradient(circle at 100% 0,#ffffff 0,#f4efe5 42%,#e9dfd1 100%);color:var(--ink);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,"Noto Sans Thai",sans-serif;}
+body{overflow:hidden}
+button,input{font:inherit}
+#app{min-height:100dvh;display:grid;grid-template-rows:auto 1fr auto;padding:calc(10px + var(--safe-top)) 16px calc(10px + var(--safe-bottom));gap:10px}
+.topbar{height:38px;display:flex;align-items:center;justify-content:space-between;gap:12px;color:#241f1b}
+.topbar .brand{display:flex;align-items:center;gap:10px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;font-size:12px}
+.brand-dot{width:34px;height:12px;background:var(--red);border-radius:999px;box-shadow:18px 0 0 #111}
+.topbar .hint{font-size:12px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.stage-wrap{display:grid;place-items:center;min-height:0;position:relative}
+.stage{width:var(--slide-w);height:var(--slide-h);aspect-ratio:16/9;max-height:calc(100dvh - 116px - var(--safe-top) - var(--safe-bottom));background:var(--paper);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden;position:relative;border:1px solid rgba(18,18,18,.08)}
+.slide{position:absolute;inset:0;padding:54px 64px 46px;display:none;overflow:auto;scrollbar-width:thin;background:linear-gradient(90deg,#fffaf0 0,#fffaf0 70%,#f8f0e6 100%)}
+.slide.active{display:block}
+.slide::before{content:"";position:absolute;left:0;top:0;right:0;height:14px;background:#111}
+.slide::after{content:"";position:absolute;right:-70px;top:0;width:290px;height:100%;background:linear-gradient(135deg,transparent 12%,rgba(195,21,43,.06) 12% 28%,transparent 28% 42%,rgba(195,21,43,.10) 42% 58%,transparent 58%);pointer-events:none}
+.slide h1,.slide h2,.slide h3,.slide p{margin-top:0}
+.eyebrow{font-size:14px;text-transform:uppercase;letter-spacing:.16em;color:var(--red);font-weight:800;margin-bottom:12px}
+h1{font-size:clamp(40px,6vw,84px);line-height:.98;letter-spacing:-.05em;margin-bottom:22px}
+h1 span{color:var(--blue)}
+h2{font-size:clamp(34px,4.2vw,60px);line-height:1;letter-spacing:-.045em;margin-bottom:18px;max-width:1000px}
+h3{font-size:clamp(18px,2vw,26px);line-height:1.08;margin-bottom:10px;letter-spacing:-.02em}
+p,li,td,th{font-size:clamp(15px,1.35vw,21px);line-height:1.35}
+.small,small{font-size:clamp(13px,1.05vw,16px)!important}
+.message{font-size:clamp(22px,2.1vw,34px);line-height:1.18;letter-spacing:-.025em;max-width:1040px;color:#1b1a18;margin-bottom:26px}
+.lead{font-size:clamp(19px,1.8vw,27px);color:#4d463f;max-width:620px;line-height:1.3}
+.footer{position:absolute;bottom:18px;left:64px;right:64px;display:flex;align-items:center;gap:16px;color:#6c6258;font-size:13px;font-weight:700;letter-spacing:.02em}
+.footer::before{content:"";height:2px;background:var(--red);flex:1;order:2;opacity:.95}
+.footer span{order:1;white-space:nowrap}
+.footer b{order:3;color:#111;white-space:nowrap}
+.card{background:rgba(255,255,255,.82);border:1px solid var(--line);border-radius:22px;padding:22px;box-shadow:0 10px 28px rgba(0,0,0,.05)}
+.card h3{color:var(--blue)}
+.card p{color:#37322d}
+.grid-3,.summary-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.grid-3.tight .card{padding:18px}
+.split{display:grid;grid-template-columns:1.1fr .9fr;gap:28px;align-items:center}
+.split-40{display:grid;grid-template-columns:1.25fr .75fr;gap:28px;align-items:center}
+.stack{display:grid;gap:18px}
+.callout{border-left:8px solid var(--red);background:#fff;border-radius:16px;padding:16px 18px;font-size:clamp(18px,1.7vw,26px);line-height:1.25;box-shadow:0 8px 22px rgba(0,0,0,.05)}
+.definition,.source-note,.temporary{font-size:clamp(13px,1.05vw,16px);color:#5d554e;background:rgba(255,255,255,.62);border:1px solid var(--line);border-radius:14px;padding:10px 13px;margin-top:16px}
+.source-note{font-style:italic}
+.equation{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;background:#111;color:#fff;border-radius:16px;padding:15px 18px;margin:10px 0;font-size:clamp(16px,1.5vw,22px);line-height:1.35;box-shadow:0 10px 24px rgba(0,0,0,.18);overflow:auto}
+.table-wrap{max-width:100%;overflow:auto;border-radius:16px;border:1px solid var(--line);background:#fff}
+table{width:100%;border-collapse:collapse;min-width:560px}
+th,td{padding:12px 14px;border-bottom:1px solid #e3d9cb;text-align:left;vertical-align:top}
+th{background:#f2e7d9;color:#201b16;font-weight:800;font-size:clamp(13px,1vw,16px)}
+td{font-size:clamp(13px,1.1vw,18px)}
+tr:last-child td{border-bottom:0}
+.micro td,.micro th{font-size:clamp(12px,.95vw,14px);padding:8px 10px}
+.compact td,.compact th{padding:9px 11px}
+.data-table td:nth-child(4),.data-table td:nth-child(5),.case-table td:last-child,.decision-table td:nth-child(2){font-weight:700;color:var(--blue)}
+.cover-grid{display:grid;grid-template-columns:1.3fr .7fr;gap:30px;height:100%;align-items:center}
+.meta-block{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:34px}
+.meta-block div{background:#fff;border:1px solid var(--line);border-radius:16px;padding:14px}
+.meta-block b{display:block;font-size:12px;text-transform:uppercase;letter-spacing:.12em;color:var(--red);margin-bottom:6px}
+.meta-block span{font-size:16px;font-weight:700}
+.brand-mark{position:relative;height:480px;display:flex;align-items:center;justify-content:center}
+.wave{position:absolute;right:20px;width:380px;height:380px;border-radius:48% 52% 46% 54%;background:rgba(195,21,43,.16);transform:rotate(28deg)}
+.w2{width:320px;height:320px;background:rgba(195,21,43,.24);right:70px;transform:rotate(40deg)}.w3{width:230px;height:230px;background:var(--red);right:125px;transform:rotate(50deg)}
+.brand-text{position:relative;z-index:2;background:#fff;border-radius:24px;padding:24px 28px;text-align:center;box-shadow:0 22px 50px rgba(0,0,0,.14)}
+.brand-text b{display:block;font-size:48px;letter-spacing:-.08em}.brand-text span{font-size:20px;color:var(--red);font-weight:800}
+.process-flow,.big-flow,.workflow,.summary-flow{display:flex;align-items:stretch;gap:14px}
+.process-flow>div,.big-flow>div,.workflow>div,.summary-flow>div{background:#fff;border:1px solid var(--line);border-radius:22px;padding:20px;flex:1;box-shadow:0 10px 24px rgba(0,0,0,.04)}
+.process-flow b{display:inline-grid;place-items:center;width:36px;height:36px;border-radius:999px;background:#111;color:#fff;margin-bottom:8px}
+.process-flow span,.big-flow i,.workflow i,.summary-flow i{align-self:center;font-size:34px;color:var(--red);font-weight:800}
+.product-row{display:flex;gap:18px;margin-top:18px}
+.bubble{width:96px;height:96px;border-radius:999px;color:#fff;display:grid;place-items:center;font-size:28px;font-weight:900;box-shadow:0 14px 30px rgba(0,0,0,.14)}.green{background:var(--green)}.blue{background:var(--blue)}.red{background:var(--red)}
+.two-projects,.two-metrics,.compare-columns{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+.status{display:inline-block;margin-top:10px;border-radius:999px;padding:8px 13px;font-size:13px;font-weight:800;background:#f0fff4;color:var(--green)}.status.muted{background:#f4f0eb;color:#746b63}
+.section-hero{display:grid;place-items:start;align-content:center;min-height:240px}
+.section-num{width:82px;height:82px;border-radius:50%;background:var(--red);color:#fff;display:grid;place-items:center;font-size:42px;font-weight:900;margin-bottom:18px}
+.section-hero p{font-size:clamp(20px,1.7vw,30px);color:#5d554e}
+.warning .section-num{background:#111}
+.evap-diagram{position:relative;height:210px;margin-top:10px;display:grid;grid-template-columns:.7fr 1fr 1fr 1fr .8fr;gap:16px;align-items:center}
+.ev,.steam,.product{background:#fff;border:1px solid var(--line);border-radius:24px;padding:22px;text-align:center;font-size:28px;font-weight:900;box-shadow:0 10px 24px rgba(0,0,0,.06)}.ev small{font-size:13px;color:#6b6258}.steam{background:#111;color:#fff}.product{background:var(--red);color:#fff}
+.big-flow div span{display:block;font-size:14px;text-transform:uppercase;letter-spacing:.1em;color:var(--red);font-weight:800}.big-flow div b{font-size:clamp(22px,2.1vw,34px)}
+.pfd-simple{position:relative;height:360px;border-radius:24px;background:linear-gradient(135deg,#fff,#f7ede1);border:1px solid var(--line);padding:20px}
+.pfd-simple div{position:absolute;background:#fff;border:1px solid var(--line);border-radius:14px;padding:10px 14px;font-weight:800;box-shadow:0 8px 20px rgba(0,0,0,.05)}
+.feed{left:18px;top:145px}.prod{right:18px;top:145px;background:var(--red)!important;color:#fff}.unit{width:78px;height:78px;border-radius:50%!important;display:grid;place-items:center;padding:0!important;background:#111!important;color:#fff}.e3{left:150px;top:140px}.e2{left:260px;top:108px}.e1{left:370px;top:76px}.hx{background:#fef3c7!important}.c1{left:175px;bottom:36px}.c2{left:280px;bottom:60px}.c3{left:385px;bottom:84px}.c4{left:490px;bottom:108px}
+.objective-box{background:#111;color:#fff;border-radius:32px;padding:34px 38px;margin-bottom:22px;box-shadow:0 20px 50px rgba(0,0,0,.18)}.objective-box h1{font-size:clamp(36px,4.4vw,66px);margin:0}.objective-box span{color:#ffb3bd}
+.kpi-box{display:flex;align-items:center;gap:18px;background:var(--red);color:#fff;border-radius:20px;padding:18px 22px;margin-top:20px;box-shadow:0 15px 34px rgba(195,21,43,.22)}.kpi-box span{font-size:13px;text-transform:uppercase;letter-spacing:.12em;font-weight:800;opacity:.9}.kpi-box b{font-size:clamp(22px,2.2vw,32px)}
+.theory-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}.theory-grid .card{min-height:250px;position:relative}.icon{position:absolute;right:18px;bottom:14px;font-size:42px;font-weight:900;color:rgba(195,21,43,.25)}
+.vessel-graphic,.heat-vessel{position:relative;height:360px;border-radius:24px;background:#fff;border:1px solid var(--line);overflow:hidden}
+.vessel-graphic .vessel,.heat-vessel .vessel{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:170px;height:210px;border-radius:48% 48% 30% 30%;background:linear-gradient(#fff,#f3d1a5);border:5px solid #111;display:grid;place-items:center;font-weight:900}
+.stream{position:absolute;background:#111;color:#fff;border-radius:14px;padding:10px;text-align:center;font-weight:700}.s-left{left:20px;top:150px}.s-right{right:20px;top:150px}.s-top{left:50%;top:24px;transform:translateX(-50%);background:var(--red)}
+.calc-layout{display:grid;grid-template-columns:1.2fr .8fr;gap:24px;align-items:center}.result-stack{display:grid;gap:16px}.result-stack div,.case-card{background:#fff;border:1px solid var(--line);border-radius:22px;padding:20px;box-shadow:0 10px 24px rgba(0,0,0,.05)}.result-stack span,.case-card span,.cost-summary span{display:block;color:var(--muted);font-size:14px;text-transform:uppercase;letter-spacing:.1em;font-weight:800;margin-bottom:6px}.result-stack b,.case-card b,.cost-summary b{font-size:clamp(26px,2.8vw,42px);letter-spacing:-.04em;color:var(--blue)}.inline{grid-template-columns:1fr 1fr}
+.mass-bars{display:grid;gap:20px}.mass-bars div{display:grid;grid-template-columns:110px 1fr;align-items:center;gap:12px}.mass-bars label{font-weight:800}.mass-bars span{display:block;width:var(--w);min-width:70px;background:var(--red);color:#fff;border-radius:999px;padding:12px 18px;font-weight:900;text-align:right}
+.heat-vessel>div:not(.vessel){position:absolute;background:#fff;border:1px solid var(--line);border-radius:14px;padding:12px;font-weight:800}.heat-vessel>div:first-child{left:18px;top:150px}.heat-vessel>div:nth-child(3){right:18px;top:70px}.heat-vessel .heat{left:50%;bottom:22px;transform:translateX(-50%);background:var(--red)!important;color:#fff!important}
+.heating-curve,.duhring-plot,.hx-graphic{height:330px;background:#fff;border:1px solid var(--line);border-radius:24px;position:relative;overflow:hidden}.heating-curve .axis{position:absolute;left:46px;bottom:50px;right:35px;height:2px;background:#111}.heating-curve .axis:before{content:"";position:absolute;left:0;bottom:0;width:2px;height:235px;background:#111}.heating-curve .curve{position:absolute;left:70px;bottom:60px;width:250px;height:160px;border-left:7px solid transparent;border-bottom:7px solid transparent;border-radius:20px;transform:skewX(-24deg);border-top:7px solid var(--red);border-right:7px solid var(--red)}.heating-curve span{position:absolute;font-weight:900;color:var(--blue)}.sens{left:86px;bottom:126px}.lat{right:70px;top:80px}
+.compare-flow{display:grid;grid-template-columns:1fr 1fr;gap:24px}.single-effect,.triple-effect{background:#fff;border:1px solid var(--line);border-radius:24px;padding:22px;box-shadow:0 10px 28px rgba(0,0,0,.05)}.mini-vessel,.mini-chain{background:#111;color:#fff;border-radius:20px;padding:25px;font-size:24px;font-weight:900;text-align:center;margin:15px 0}.mini-chain b{background:#fff;color:#111;border-radius:12px;padding:10px;margin:0 5px;display:inline-block}.mini-chain span{color:#ffb3bd}
+.pressure-cascade{display:grid;grid-template-columns:1fr auto 1fr auto 1fr;gap:14px;align-items:center;margin-top:30px}.pressure-cascade div{background:#fff;border:1px solid var(--line);border-radius:28px;padding:30px;text-align:center;box-shadow:0 12px 30px rgba(0,0,0,.06)}.pressure-cascade b{display:block;font-size:42px;color:var(--blue)}.pressure-cascade span,.pressure-cascade em{display:block;margin-top:8px;font-size:20px}.pressure-cascade i{font-weight:900;color:var(--red);text-align:center}
+.thermo-pair{display:grid;grid-template-columns:1fr 1fr;gap:18px;height:300px;align-items:end}.thermo-pair div{height:70%;background:#fff;border:1px solid var(--line);border-radius:24px;padding:22px;text-align:center;font-weight:800;box-shadow:0 12px 28px rgba(0,0,0,.05)}.thermo-pair div:nth-child(2){height:92%;background:#fff0f0;border-color:#f0bbc3}
+.duhring-plot svg{width:100%;height:100%}.duhring-plot line{stroke:#111;stroke-width:3}.duhring-plot path{fill:none;stroke:var(--red);stroke-width:6;stroke-linecap:round}.duhring-plot path:nth-of-type(2){stroke:var(--blue)}.duhring-plot text{font-size:18px;font-weight:800;fill:#111}
+.hx-graphic .hotline,.hx-graphic .coldline{position:absolute;left:50px;right:50px;height:42px;border-radius:999px;color:#fff;padding:9px 24px;font-weight:900}.hotline{top:90px;background:var(--red)}.coldline{bottom:90px;background:var(--blue)}.hx-graphic span{position:absolute;background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px;font-weight:900}.hx-graphic span:nth-child(3){left:70px;top:145px}.hx-graphic span:nth-child(4){right:70px;top:145px}
+.metric-eq{font-family:ui-monospace,SFMono-Regular,Consolas,monospace;background:#f5efe7;border-radius:12px;padding:12px;font-size:18px!important}
+.workflow div,.summary-flow div{display:grid;place-items:center;text-align:center;font-weight:900;color:var(--blue)}.workflow i,.summary-flow i{display:grid;place-items:center}
+.chips{display:flex;flex-wrap:wrap;gap:10px;margin:18px 0}.chips span{background:#111;color:#fff;border-radius:999px;padding:10px 14px;font-size:14px;font-weight:800}
+.compare-columns>div{background:#fff;border:1px solid var(--line);border-radius:24px;padding:24px}.compare-columns h3{color:var(--red)}.compare-columns li{margin-bottom:8px}
+.kpi-chart{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;align-items:end;height:250px;margin:10px 0 20px}.kpi-chart div{height:100%;display:flex;flex-direction:column;justify-content:flex-end;gap:8px}.kpi-chart label{font-size:13px;font-weight:900;text-transform:uppercase;color:#5b5149;text-align:center}.kpi-chart span{height:calc(var(--v)*1%);min-height:80px;background:linear-gradient(180deg,var(--blue),#0e1f39);border-radius:16px 16px 6px 6px;display:grid;place-items:center;color:#fff;font-size:20px;font-weight:900;box-shadow:0 10px 26px rgba(28,53,94,.2)}.kpi-chart div:nth-child(4) span{background:linear-gradient(180deg,var(--green),#0b5030)}.kpi-chart div:nth-child(5) span{background:linear-gradient(180deg,var(--red),#7b0d1b)}.kpi-chart .tbd span{background:repeating-linear-gradient(45deg,#d8d0c4 0 8px,#eee6dc 8px 16px);color:#514941}
+.cost-summary{background:#111;color:#fff;border-radius:26px;padding:24px;display:grid;grid-template-columns:1fr;gap:6px;box-shadow:0 18px 42px rgba(0,0,0,.18)}.cost-summary span{color:#c9c3bd}.cost-summary b{color:#fff}.cost-summary.warn{background:var(--red)}
+.correction{background:#fff;border:1px solid var(--line);border-radius:20px;padding:18px;display:grid;gap:8px;margin-bottom:12px}.correction b{color:var(--red)}.correction span{font-weight:800}
+.calc-panel{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:10px 0 18px}.calc-panel label{background:#fff;border:1px solid var(--line);border-radius:16px;padding:12px;font-size:13px;font-weight:800;color:#5a5149;text-transform:uppercase;letter-spacing:.06em}.calc-panel input{display:block;width:100%;margin-top:7px;border:1px solid #d6cab9;border-radius:12px;padding:10px;font-size:18px;font-weight:900;background:#fffaf5;color:#111}
+.payback-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:18px}.case-card em{display:block;margin-top:8px;color:var(--muted);font-size:13px}.case-card.live{border-color:#efb2bd;background:#fff7f8}
+.decision-box{background:linear-gradient(135deg,#111,#22304a);color:#fff;border-radius:26px;padding:24px;margin-top:18px;box-shadow:0 18px 42px rgba(0,0,0,.16)}.decision-box b{font-size:clamp(22px,2.2vw,36px)}.decision-box p{color:#e9e4dd;margin:8px 0 0}
+.before-after{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-bottom:24px}.before-after div{background:#fff;border:1px solid var(--line);border-radius:24px;padding:24px}.before-after p{font-size:24px;font-weight:900;color:var(--blue)}.before-after span{color:var(--red)}
+.checklist{background:#fff;border:1px solid var(--line);border-radius:24px;padding:22px;max-height:390px;overflow:auto}.checklist li{margin-bottom:5px}
+.data-request .chips span{font-size:16px;padding:12px 16px;background:var(--blue)}
+.controls{height:46px;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:12px}
+.nav-buttons{display:flex;gap:8px;justify-content:center}
+.btn{border:1px solid rgba(0,0,0,.12);background:rgba(255,255,255,.82);backdrop-filter:blur(10px);border-radius:999px;padding:10px 14px;font-weight:800;color:#111;cursor:pointer;box-shadow:0 8px 18px rgba(0,0,0,.06)}.btn:hover{background:#fff}.btn.primary{background:#111;color:#fff}.btn.red{background:var(--red);color:#fff}
+.progress-wrap{display:flex;align-items:center;gap:10px;min-width:0}.progress{height:8px;background:#d8d0c4;border-radius:999px;overflow:hidden;flex:1}.progress span{display:block;height:100%;width:0;background:var(--red);transition:width .2s}.counter{font-weight:900;font-size:13px;color:#342f2a;white-space:nowrap}
+#menu,#notes{position:fixed;z-index:50;inset:0;background:rgba(13,13,13,.46);display:none;align-items:center;justify-content:center;padding:20px}
+#menu.open,#notes.open{display:flex}
+.panel{width:min(920px,94vw);max-height:min(820px,88dvh);overflow:auto;background:#fffaf0;border-radius:28px;padding:24px;box-shadow:0 30px 80px rgba(0,0,0,.32);border:1px solid var(--line)}.panel h2{font-size:34px;margin-bottom:12px}
+.menu-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:10px}.menu-item{text-align:left;border:1px solid var(--line);background:#fff;border-radius:16px;padding:12px;cursor:pointer}.menu-item b{display:block;color:var(--red);font-size:12px;text-transform:uppercase;letter-spacing:.08em}.menu-item span{font-weight:800}
+.notes-text{font-size:20px;line-height:1.45;color:#342f2a;background:#fff;border:1px solid var(--line);border-radius:16px;padding:18px;white-space:pre-wrap}
+.mobile-tip{display:none}
+@media (max-width: 920px){
+  body{overflow:hidden}#app{padding:calc(8px + var(--safe-top)) 8px calc(8px + var(--safe-bottom));gap:8px}
+  .topbar{height:34px}.topbar .hint{display:none}.mobile-tip{display:block;font-size:11px;color:var(--muted)}
+  .stage{width:100%;height:calc(100dvh - 102px - var(--safe-top) - var(--safe-bottom));max-height:none;aspect-ratio:auto;border-radius:18px}
+  .slide{padding:38px 22px 54px;background:#fffaf0}
+  .slide::after{display:none}h1{font-size:42px}h2{font-size:34px}.message{font-size:23px}
+  .footer{left:22px;right:22px;bottom:14px}
+  .cover-grid,.split,.split-40,.calc-layout,.two-projects,.two-metrics,.compare-columns,.compare-flow,.before-after{grid-template-columns:1fr}
+  .grid-3,.summary-cards,.theory-grid,.payback-grid,.calc-panel{grid-template-columns:1fr}
+  .process-flow,.big-flow,.workflow,.summary-flow{flex-direction:column}.process-flow span,.big-flow i,.workflow i,.summary-flow i{transform:rotate(90deg);align-self:center}
+  .meta-block{grid-template-columns:1fr}.brand-mark{height:220px}.wave{width:220px;height:220px}.w2{width:180px;height:180px}.w3{width:120px;height:120px}
+  .pfd-simple{height:300px;overflow:auto}.pfd-simple div{position:static;display:inline-block;margin:6px}
+  .evap-diagram{grid-template-columns:1fr;height:auto}.evap-diagram>*{min-height:80px}
+  .pressure-cascade{grid-template-columns:1fr}.pressure-cascade i{transform:rotate(90deg)}.product-row{justify-content:center}.bubble{width:74px;height:74px;font-size:22px}
+  .kpi-chart{height:220px;grid-template-columns:repeat(5,minmax(80px,1fr));overflow:auto}.calc-panel{position:sticky;top:0;z-index:5;background:#fffaf0;padding-bottom:8px}
+  .controls{grid-template-columns:auto 1fr auto;height:44px}.btn{padding:9px 11px;font-size:13px}.progress-wrap{display:none}
+}
+@media (max-width: 430px){h1{font-size:36px}h2{font-size:30px}p,li{font-size:16px}.message{font-size:21px}.slide{padding-left:18px;padding-right:18px}.nav-buttons .btn:nth-child(2),.nav-buttons .btn:nth-child(3){display:none}}
+@media (prefers-reduced-motion: reduce){*{transition:none!important;animation:none!important;scroll-behavior:auto!important}}
+@media print{body{overflow:auto;background:white}#app{display:block;padding:0}.topbar,.controls,#menu,#notes{display:none!important}.stage{width:100%;height:auto;max-height:none;aspect-ratio:auto;box-shadow:none;border:0;border-radius:0;overflow:visible}.slide{position:relative;display:block!important;page-break-after:always;min-height:100vh;overflow:visible;border-bottom:1px solid #ddd}}
 </style>
 </head>
 <body>
-<div class="deck" id="deck">
-
-<section class="slide title-slide" data-title="Title">
-  <div class="title-grid">
-    <div>
-      <div class="kicker">Internship Final Presentation · Chemical Engineering</div>
-      <h1>AGC VINYTHAI<br><span>Internship Work Summary</span></h1>
-      <p class="lead">CA Production · Manufacturing Technology / CA<br>18 May – 31 July 2026 · 11 weeks · 400 hours</p>
-      <p class="author">Apirak Santiweerawong · Chulalongkorn University</p>
-    </div>
-    <div class="title-card">
-      <div class="bigmark">CA</div>
-      <div class="mini">NaOH evaporation<br>+</div>
-      <div class="mini">Pump RCA</div>
-    </div>
+<div id="app">
+  <div class="topbar"><div class="brand"><span class="brand-dot"></span>AGC Vinythai · Project 1</div><div class="hint">←/→ navigate · M outline · N notes · F fullscreen · P print</div><div class="mobile-tip">Swipe / buttons</div></div>
+  <div class="stage-wrap"><main class="stage" id="stage" aria-live="polite"></main></div>
+  <div class="controls">
+    <div class="progress-wrap"><span class="counter" id="counterLeft">01 / 40</span><div class="progress"><span id="progress"></span></div></div>
+    <div class="nav-buttons"><button class="btn" id="prevBtn">← Prev</button><button class="btn primary" id="menuBtn">Outline</button><button class="btn" id="notesBtn">Notes</button><button class="btn red" id="nextBtn">Next →</button></div>
+    <div class="progress-wrap"><div class="progress"><span id="sectionProgress"></span></div><span class="counter" id="sectionName">Opening</span></div>
   </div>
-</section>
-
-<section class="slide" data-title="Question">
-  <div class="eyebrow">The question this presentation answers</div>
-  <h2>What did the internship change from “student knowledge” into “plant engineering judgment”?</h2>
-  <div class="answer-box">
-    <p>Not only building an Aspen model or drawing RCA tools, but learning to separate <b>plant facts</b>, <b>simulation assumptions</b>, and <b>engineering decisions</b>.</p>
-  </div>
-  <div class="outcomes compact">
-    <div><b>1</b><span>Model a real caustic evaporation system</span></div>
-    <div><b>2</b><span>Evaluate heat recovery under plant constraints</span></div>
-    <div><b>3</b><span>Analyze magnetic-drive pump shroud damage</span></div>
-    <div><b>4</b><span>Translate findings into plant-readable recommendations</span></div>
-  </div>
-</section>
-
-<section class="slide" data-title="Today">
-  <div class="eyebrow">Today</div>
-  <h2>Five questions this presentation answers</h2>
-  <div class="agenda">
-    <a>1 · Where was the internship located in the business?</a>
-    <a>2 · What was the CA Production work scope?</a>
-    <a>3 · How was the triple-effect evaporator modeled and improved?</a>
-    <a>4 · What mechanism could explain C663 pump shroud damage?</a>
-    <a>5 · What should be carried forward after the internship?</a>
-  </div>
-</section>
-
-<section class="slide" data-title="Company context">
-  <div class="eyebrow">Company context</div>
-  <h2>AGC Vinythai: chlor-alkali integrated with PVC and bio-based ECH</h2>
-  <div class="cols two">
-    <div>
-      <p class="large">AGC Vinythai was established on <b>1 July 2022</b> from the integration of AGC Chemicals (Thailand) and Vinythai, with AGC Inc. and PTT Global Chemical as major shareholders. <sup>[1]</sup></p>
-      <p>The company manufactures and distributes chlor-alkali products, PVC resins under SIAMVIC®, and epichlorohydrin. <sup>[1][2]</sup></p>
-    </div>
-    <div class="fact-stack">
-      <div><span>Core chemistry</span><b>Salt electrolysis → Cl₂ + NaOH + H₂</b></div>
-      <div><span>Key products</span><b>Caustic soda · Chlorine derivatives · PVC · ECH</b></div>
-      <div><span>Plant footprint</span><b>Rayong + Samut Prakan production sites</b></div>
-    </div>
-  </div>
-</section>
-
-<section class="slide" data-title="Site map">
-  <div class="eyebrow">Production footprint</div>
-  <h2>Where the internship work connects to the production system</h2>
-  <div class="plant-map">
-    <div class="site primary"><b>MTP 1</b><span>Headquarters · CA + VCM + EDC + PVC + Bio-ECH</span><em>Fully integrated plant in Map Ta Phut Industrial Estate <sup>[3]</sup></em></div>
-    <div class="site"><b>MTP 2</b><span>Chlor-alkali · NaOH · KOH · K₂CO₃</span><em>Located in WHA Eastern Industrial Estate <sup>[4]</sup></em></div>
-    <div class="site"><b>PPD 1</b><span>Chlor-alkali · NaOH flake · liquid Cl₂ · HCl · NaOCl · H₂</span><em>Started operation in 1966 <sup>[4]</sup></em></div>
-    <div class="site ghost"><b>PPD 2</b><span>Supporting plant area</span><em>Part of AGC Vinythai production footprint <sup>[1]</sup></em></div>
-  </div>
-</section>
-
-<section class="slide" data-title="Scope">
-  <div class="eyebrow">Internship scope</div>
-  <h2>Work scope: two plant problems, one common logic</h2>
-  <div class="split-cases">
-    <div>
-      <h3>Project 1 · NaOH evaporation</h3>
-      <p>Build and use an Aspen model for a backward-feed triple-effect evaporator concentrating <b>NaOH 32 wt% → 50 wt%</b>.</p>
-      <ul>
-        <li>Model actual operation at 40 m³/h feed basis</li>
-        <li>Assess steam KPI and heat recovery opportunities</li>
-        <li>Separate design-flow sensitivity from final operating basis</li>
-      </ul>
-    </div>
-    <div>
-      <h3>Project 2 · Pump shroud damage RCA</h3>
-      <p>Analyze C663 magnetic-drive pump system handling <b>98 wt% H₂SO₄</b> and build RCA / FTA / Fishbone tools.</p>
-      <ul>
-        <li>Identify possible mechanisms, not a single unsupported cause</li>
-        <li>Evaluate monitoring, interlock, and operating gaps</li>
-        <li>Recommend practical prevention actions</li>
-      </ul>
-    </div>
-  </div>
-</section>
-
-<section class="slide" data-title="Timeline">
-  <div class="eyebrow">11-week learning path</div>
-  <h2>The work moved from “reading plant documents” to “defending assumptions”</h2>
-  <div class="timeline">
-    <div><b>W1</b><span>Orientation, safety, P&ID, isometric familiarization</span></div>
-    <div><b>W2</b><span>Caustic evaporation data collection, Excel/Aspen preparation</span></div>
-    <div><b>W3–4</b><span>Aspen model build, pump system review, NPSH and RCA framing</span></div>
-    <div><b>W5</b><span>Heat recovery scenarios and bypass / optimization thinking</span></div>
-    <div><b>W6–9</b><span>RCA tools, monitoring logic, shroud damage mechanism review</span></div>
-    <div><b>W10–11</b><span>Final deck, report, and handover files</span></div>
-  </div>
-</section>
-
-<section class="slide section" data-title="Project 1">
-  <div class="section-num">1</div>
-  <h2>Project 1</h2>
-  <h1>Triple-effect NaOH Evaporator<br><span>Steam KPI and heat recovery study</span></h1>
-</section>
-
-<section class="slide" data-title="Project 1 question">
-  <div class="eyebrow">Project 1 · problem statement</div>
-  <h2>Can the plant reduce fresh steam without breaking the real operating basis?</h2>
-  <div class="problem-line">
-    <div><span>Feed</span><b>32 wt% NaOH</b></div>
-    <div><span>Product</span><b>50 wt% NaOH</b></div>
-    <div><span>Actual basis</span><b>40 m³/h</b></div>
-    <div><span>KPI</span><b>kg steam / 1000 kg NaOH(100%)</b></div>
-  </div>
-  <p class="callout warning"><b>Critical check:</b> comparisons must not mix 55.2 m³/h design-flow results with 40 m³/h actual-operation results. This deck separates those two bases.</p>
-</section>
-
-<section class="slide" data-title="Evaporator schematic">
-  <div class="eyebrow">System overview</div>
-  <h2>Backward-feed triple-effect evaporator: pressure and temperature are linked</h2>
-  <div class="evap-wrap">
-    <div class="evap-diagram">
-      <div class="effect hot"><span>EV1</span><b>highest T</b><em>final 50 wt%</em></div>
-      <div class="effect mid"><span>EV2</span><b>middle</b><em>~41.9 wt%</em></div>
-      <div class="effect cold"><span>EV3</span><b>vacuum side</b><em>~36.6 wt%</em></div>
-      <div class="stream liquid">NaOH solution moves backward<br>EV3 → EV2 → EV1</div>
-      <div class="stream vapor">Vapor heat cascades<br>EV1 → EV2 → EV3</div>
-    </div>
-    <div class="notes">
-      <p><b>Plant reference pressures:</b> EV1 ≈ 0.42 barg, EV2 ≈ −0.7 barg, EV3 ≈ −0.94 barg.</p>
-      <p><b>Why it matters:</b> lowering one effect is not isolated; boiling point, vapor duty, and exchanger ΔT move together.</p>
-    </div>
-  </div>
-</section>
-
-<section class="slide" data-title="Model method">
-  <div class="eyebrow">Model method</div>
-  <h2>The Aspen model was treated as a plant argument, not as a black box</h2>
-  <div class="method-grid">
-    <div><b>Property method</b><span>ELECNRTL / electrolyte model for NaOH–water behavior</span></div>
-    <div><b>Physical anchors</b><span>NaOH concentration, Cp/enthalpy trends, boiling behavior</span></div>
-    <div><b>Operating anchors</b><span>EV pressures, feed temperature, product concentration, cooler target</span></div>
-    <div><b>Equipment anchors</b><span>Economizer network C1–C6, fixed-area logic, vapor fraction constraints</span></div>
-  </div>
-  <p class="callout">The useful model is not the one that converges once; it is the one whose assumptions can survive questions from plant engineers.</p>
-</section>
-
-<section class="slide" data-title="Model checks">
-  <div class="eyebrow">Model checks</div>
-  <h2>Two checks prevented the model from giving a “nice but wrong” answer</h2>
-  <table class="clean-table">
-    <thead><tr><th>Check</th><th>Risk if ignored</th><th>Decision in this deck</th></tr></thead>
-    <tbody>
-      <tr><td>Feed basis</td><td>Optimization looks better because feed is higher or design-like</td><td>Main narrative uses actual 40 m³/h basis; design-flow results are labeled separately</td></tr>
-      <tr><td>Pressure coupling</td><td>Changing one evaporator independently violates plant physics</td><td>EV1/EV2/EV3 pressure behavior is kept as a linked system</td></tr>
-      <tr><td>Heat exchanger ΔT</td><td>Required area explodes if ΔTlm becomes too small</td><td>Any “saving” must be checked against practical heat-transfer area</td></tr>
-      <tr><td>Result meaning</td><td>Steam KPI improvement is mistaken for installable solution</td><td>KPI, area, controllability, and operability are reported together</td></tr>
-    </tbody>
-  </table>
-</section>
-
-<section class="slide" data-title="Steam KPI">
-  <div class="eyebrow">Key result logic</div>
-  <h2>Steam KPI changes for two different reasons — do not collapse them</h2>
-  <div class="kpi-grid">
-    <div class="kpi-card"><span>Low-flow operation</span><b>474 → 494</b><em>kg steam / ton NaOH(100%)</em><p>When operating below design flow, fixed heat-transfer area and ΔT distribution can make specific steam worse.</p></div>
-    <div class="kpi-card"><span>C3 heat recovery sensitivity</span><b>474 → 452.7</b><em>kg steam / ton NaOH(100%)</em><p>At the design-basis sensitivity, adding heat recovery at C3 reduced KPI by 21.3 kg/ton.</p></div>
-    <div class="kpi-card strong"><span>Final engineering rule</span><b>Same basis only</b><em>otherwise the comparison is misleading</em><p>Final ranking should compare all cases at the same 40 m³/h actual feed basis.</p></div>
-  </div>
-</section>
-
-<section class="slide" data-title="C3 idea">
-  <div class="eyebrow">Heat recovery opportunity</div>
-  <h2>The attractive idea was not “add more heat exchanger”; it was “increase useful ΔT where it actually helps”</h2>
-  <div class="c3-layout">
-    <div class="mini-flow">
-      <div>Hot NaOH / vapor-side heat</div>
-      <span>→</span>
-      <div class="focus">C3 added plate HX</div>
-      <span>→</span>
-      <div>Feed preheat before evaporation</div>
-    </div>
-    <div class="c3-text">
-      <p><b>What worked:</b> recovering heat before the evaporator reduced fresh steam demand in the simulated sensitivity case.</p>
-      <p><b>What still limits it:</b> if the hot and cold streams approach too closely, ΔTlm collapses and required heat-transfer area becomes impractical.</p>
-      <p><b>Therefore:</b> the next model update should report KPI and required area on the same slide, not KPI alone.</p>
-    </div>
-  </div>
-</section>
-
-<section class="slide" data-title="Project 1 conclusion">
-  <div class="eyebrow">Project 1 · conclusion</div>
-  <h2>The best engineering conclusion is more cautious than the best-looking KPI</h2>
-  <div class="summary-cards">
-    <div><b>Model completed</b><span>Aspen model can reproduce the logic of the triple-effect evaporator and heat recovery network.</span></div>
-    <div><b>Optimization direction found</b><span>C3-side heat recovery is a credible direction for reducing steam demand.</span></div>
-    <div><b>Final proof still needs one basis</b><span>All candidate cases must be re-simulated at 40 m³/h before being treated as final plant ranking.</span></div>
-  </div>
-  <p class="callout">The value of the project is not only the C3 result; it is the discipline of preventing basis mixing.</p>
-</section>
-
-<section class="slide section" data-title="Project 2">
-  <div class="section-num">2</div>
-  <h2>Project 2</h2>
-  <h1>C663 Pump Shroud Damage RCA<br><span>Magnetic-drive pump system review</span></h1>
-</section>
-
-<section class="slide" data-title="Project 2 question">
-  <div class="eyebrow">Project 2 · problem statement</div>
-  <h2>What conditions could damage the containment shroud, and which ones are actually testable?</h2>
-  <div class="pump-facts">
-    <div><span>Fluid</span><b>98 wt% H₂SO₄</b><em>~20 °C reference condition</em></div>
-    <div><span>Equipment</span><b>C6631 / C6632</b><em>one duty, one standby</em></div>
-    <div><span>Shroud</span><b>PTFE + CFK bonded layers</b><em>adhesive layer treated as separate risk</em></div>
-    <div><span>Protection</span><b>FT after HX</b><em>low-flow interlock exists, but effectiveness must be checked</em></div>
-  </div>
-</section>
-
-<section class="slide" data-title="Pump system">
-  <div class="eyebrow">System view</div>
-  <h2>The pump is not protected by the pump alone</h2>
-  <div class="pid-strip">
-    <div class="pid-node">Tank / suction<br><small>no confirmed LT/LSL/LSLL</small></div>
-    <span>→</span>
-    <div class="pid-node emphasis">C663 pump<br><small>magnetic drive</small></div>
-    <span>→</span>
-    <div class="pid-node">Heat exchanger<br><small>flow restriction possible</small></div>
-    <span>→</span>
-    <div class="pid-node">FT / FI<br><small>after HX</small></div>
-    <span>→</span>
-    <div class="pid-node">Downstream users</div>
-  </div>
-  <p class="callout warning"><b>Skeptical point:</b> a flow interlock after the exchanger may detect low downstream flow, but it may not fully describe what is happening at the pump suction, internal circulation, or shroud heat-removal zone.</p>
-</section>
-
-<section class="slide" data-title="Shroud mechanism">
-  <div class="eyebrow">Damage mechanism</div>
-  <h2>The strongest mechanism is a chain, not a single event</h2>
-  <div class="chain">
-    <div>Low / no flow</div><span>→</span>
-    <div>Less lubrication<br>and heat removal</div><span>→</span>
-    <div>Bearing wear<br>or heat build-up</div><span>→</span>
-    <div>Rotor–shroud contact<br>or bond degradation</div><span>→</span>
-    <div class="danger">Shroud damage risk</div>
-  </div>
-  <p class="note">This does not prove the final root cause by itself. It gives the most testable hypothesis family and tells the team what data to collect next.</p>
-</section>
-
-<section class="slide" data-title="Not a single cause">
-  <div class="eyebrow">Fact vs hypothesis</div>
-  <h2>Do not over-claim cavitation, material attack, or human error without evidence</h2>
-  <table class="clean-table narrow">
-    <thead><tr><th>Candidate</th><th>Why plausible</th><th>What would confirm / weaken it</th></tr></thead>
-    <tbody>
-      <tr><td>Low-flow heat build-up</td><td>Mag-drive pumps rely on internal circulation for heat removal and bearing lubrication</td><td>Flow trend, trip timing, pump temperature, bearing condition</td></tr>
-      <tr><td>Cavitation / vapor ingress</td><td>NPSH margin was thin in available calculation</td><td>Suction pressure trend, noise/vibration, vapor source, operating temperature</td></tr>
-      <tr><td>Chemical / adhesive compatibility</td><td>PTFE/CFK bonded layer includes adhesive interface</td><td>Surface inspection, chemical exposure history, layer orientation confirmation</td></tr>
-      <tr><td>Installation / alignment issue</td><td>Reduced clearance can increase rubbing risk</td><td>Maintenance record, runout, assembly inspection, repeat damage pattern</td></tr>
-    </tbody>
-  </table>
-</section>
-
-<section class="slide" data-title="NPSH">
-  <div class="eyebrow">Hydraulic check</div>
-  <h2>NPSH margin is a warning flag, not a verdict</h2>
-  <div class="npsh">
-    <div class="gauge"><b>5.91 m</b><span>NPSHa</span></div>
-    <div class="gauge low"><b>5.20 m</b><span>NPSHr datasheet</span></div>
-    <div class="gauge result"><b>0.71 m</b><span>margin</span></div>
-  </div>
-  <p class="callout"><b>Interpretation:</b> the margin is narrow, so cavitation/vapor risk deserves attention. But NPSH alone cannot explain shroud damage unless it is linked to actual suction pressure, temperature, gas entrainment, and vibration evidence.</p>
-</section>
-
-<section class="slide" data-title="Fishbone">
-  <div class="eyebrow">RCA structure</div>
-  <h2>Fishbone result: the useful output is a test plan, not a long list</h2>
-  <div class="fishbone">
-    <div class="spine"></div>
-    <div class="head">Shroud damage</div>
-    <div class="bone top b1"><b>Man</b><span>wrong setpoint · delayed stop · lineup error</span></div>
-    <div class="bone top b2"><b>Method</b><span>stop timing · changeover steps · restoration check</span></div>
-    <div class="bone top b3"><b>Machine</b><span>standby logic · bearing/clearance · pump protection</span></div>
-    <div class="bone bot b4"><b>Measurement</b><span>FT after HX · no suction pressure · no confirmed level trip</span></div>
-    <div class="bone bot b5"><b>Material</b><span>PTFE/CFK/adhesive · particle/crystal · acid compatibility</span></div>
-    <div class="bone bot b6"><b>Environment</b><span>low-flow heat · cold acid to hot pump · vibration</span></div>
-  </div>
-</section>
-
-<section class="slide" data-title="RCA recommendations">
-  <div class="eyebrow">Recommendations</div>
-  <h2>Prevention should close the monitoring-to-action gap</h2>
-  <div class="rec-grid">
-    <div><b>1 · Measure near the cause</b><span>Add or trend suction pressure / level / pump-side indicators, not only downstream FT.</span></div>
-    <div><b>2 · Define stop timing</b><span>Low-flow or abnormal condition should trigger action before heat build-up becomes damaging.</span></div>
-    <div><b>3 · Verify standby logic</b><span>Confirm automatic or operator changeover pathway and failed-start response.</span></div>
-    <div><b>4 · Inspect material interface</b><span>Treat adhesive bond as its own failure mode, not only PTFE or CFK.</span></div>
-    <div><b>5 · Preserve evidence</b><span>Keep damaged shroud, bearing, and trend history tied to the same event timeline.</span></div>
-    <div><b>6 · Avoid single-cause closure</b><span>Close only hypotheses that are contradicted by evidence; do not close because they are inconvenient.</span></div>
-  </div>
-</section>
-
-<section class="slide" data-title="What changed">
-  <div class="eyebrow">What changed in my engineering thinking</div>
-  <h2>The internship changed how I treat numbers</h2>
-  <div class="compare">
-    <div><h3>Before</h3><p>Find the equation, solve it, and present the result.</p></div>
-    <div><h3>After</h3><p>Define the operating basis, test the assumption, and explain what the number does and does not prove.</p></div>
-  </div>
-  <div class="three-lines">
-    <p><b>Aspen:</b> a convergence result is not a plant answer.</p>
-    <p><b>RCA:</b> a plausible story is not a root cause.</p>
-    <p><b>Engineering:</b> the first job is to protect the basis of comparison.</p>
-  </div>
-</section>
-
-<section class="slide" data-title="Final takeaway">
-  <div class="eyebrow">Final takeaway</div>
-  <h2>Two projects, one operating principle</h2>
-  <div class="final-grid">
-    <div><span>Project 1</span><b>Do not compare energy cases unless the basis is identical.</b></div>
-    <div><span>Project 2</span><b>Do not close RCA unless the mechanism is testable and evidence-linked.</b></div>
-  </div>
-  <p class="bigline">Plant engineering is less about producing one perfect answer and more about making decisions that survive cross-checking.</p>
-</section>
-
-<section class="slide" data-title="Data audit">
-  <div class="eyebrow">Data audit · two-pass check</div>
-  <h2>What was checked before finalizing this HTML deck</h2>
-  <table class="clean-table narrow">
-    <thead><tr><th>Round</th><th>Checked item</th><th>Outcome</th></tr></thead>
-    <tbody>
-      <tr><td>1</td><td>Public AGC Vinythai facts</td><td>Company establishment, products, plants, and MTP/PPD descriptions checked against official AGC Vinythai pages. <sup>[1]–[5]</sup></td></tr>
-      <tr><td>1</td><td>Project facts from prior AGC internship context</td><td>Feed basis, evaporator target, pump system facts, and RCA branches kept consistent with the working project context.</td></tr>
-      <tr><td>2</td><td>Basis consistency</td><td>40 m³/h actual basis is protected; 55.2/design-basis C3 result is explicitly labeled as sensitivity, not final 40 m³/h proof.</td></tr>
-      <tr><td>2</td><td>Claim strength</td><td>RCA slides use “plausible / testable mechanism” language and avoid unsupported single-cause closure.</td></tr>
-    </tbody>
-  </table>
-</section>
-
-<section class="slide refs" data-title="References">
-  <div class="eyebrow">References</div>
-  <h2>External references used for public information</h2>
-  <ol>
-    <li>AGC Vinythai, “Overview,” official company profile: establishment, shareholders, products, production plants.</li>
-    <li>AGC Vinythai, “Products,” official product categories: chlor-alkali, epichlorohydrin, PVC.</li>
-    <li>AGC Vinythai, “Map Ta Phut Plant 1,” official production site description.</li>
-    <li>AGC Vinythai, “Productions Archive,” official production footprint including PPD1 and MTP2.</li>
-    <li>AGC Vinythai, “Supply of Raw Materials,” official supply-chain and plant integration description.</li>
-    <li>Apinan Soottitantawat, 2105412 Process Engineering Problem Solving Lecture 1, used as HTML slide-style reference.</li>
-  </ol>
-  <p class="small">Plant-specific process numbers and RCA observations come from the internship working context and are not treated as public-source facts.</p>
-</section>
-
 </div>
-<div class="hint">← / → navigate · P print/save PDF · #/slide-number</div>
-<div class="nav"><div class="progress" id="progress"></div></div>
+<div id="menu"><div class="panel"><h2>Slide outline</h2><div class="menu-grid" id="menuGrid"></div><p class="small">Click a slide to jump. Press Esc to close.</p></div></div>
+<div id="notes"><div class="panel"><h2>Speaker intent</h2><div class="notes-text" id="notesText"></div><p><button class="btn primary" onclick="closePanels()">Close</button></p></div></div>
 <script>
-(function() {
-  const slides = Array.from(document.querySelectorAll('.slide'));
-  let index = 0;
-  function parseHash() {
-    const m = location.hash.match(/#\/(\d+)/);
-    return m ? Math.max(0, Math.min(slides.length - 1, parseInt(m[1], 10) - 1)) : 0;
-  }
-  function show(i, push=true) {
-    index = Math.max(0, Math.min(slides.length - 1, i));
-    slides.forEach((s, n) => s.classList.toggle('active', n === index));
-    document.getElementById('progress').style.width = ((index + 1) / slides.length * 100) + '%';
-    document.title = 'AGC Vinythai Internship · ' + (index + 1) + '/' + slides.length;
-    if (push) history.replaceState(null, '', '#/' + (index + 1));
-  }
-  window.addEventListener('hashchange', () => show(parseHash(), false));
-  window.addEventListener('keydown', (e) => {
-    if (['ArrowRight','PageDown',' '].includes(e.key)) { e.preventDefault(); show(index + 1); }
-    if (['ArrowLeft','PageUp','Backspace'].includes(e.key)) { e.preventDefault(); show(index - 1); }
-    if (e.key.toLowerCase() === 'p') window.print();
-    if (e.key === 'Home') show(0);
-    if (e.key === 'End') show(slides.length - 1);
+const slides = [{"footer": "00 - Cover", "title": "4-weeks Internship Presentation", "eyebrow": "CA Production Internship / 11 June 2026", "body": "\n<div class=\"cover-grid\">\n  <div>\n    <h1>3-Effect NaOH<br><span>(Bertrams) Evaporation Optimization</span></h1>\n    <p class=\"lead\">Interactive technical deck for Project 1 — steam-intensity reduction and equipment feasibility.</p>\n    <div class=\"meta-block\">\n      <div><b>Presented by</b><span>Apirak Santiweerawong</span></div>\n      <div><b>Company</b><span>AGC Vinythai PLC.</span></div>\n      <div><b>University</b><span>Chulalongkorn University</span></div>\n    </div>\n  </div>\n  <div class=\"brand-mark\">\n    <div class=\"wave w1\"></div><div class=\"wave w2\"></div><div class=\"wave w3\"></div>\n    <div class=\"brand-text\"><b>AGC</b><span>Vinythai</span></div>\n  </div>\n</div>\n", "notes": "Open as an internship progress / project presentation under CA Production. Keep the introduction brief.", "section": "Opening", "layout": "cover"}, {"footer": "01 - CA Overview", "title": "CA Process Overview", "eyebrow": "Plant context before the evaporator", "body": "\n<p class=\"message\">Chlor-alkali production converts brine into chlorine, hydrogen, and caustic soda.</p>\n<div class=\"process-flow three\">\n  <div><b>1</b><h3>Brine Preparation</h3><p>Purified salt solution enters the electrolysis section.</p></div>\n  <span>→</span>\n  <div><b>2</b><h3>Electrolysis</h3><p>Electric current splits brine into product streams.</p></div>\n  <span>→</span>\n  <div><b>3</b><h3>Product Handling</h3><p>Cl₂, H₂ and NaOH are handled in separate downstream sections.</p></div>\n</div>\n<div class=\"product-row\">\n  <div class=\"bubble green\">Cl₂</div><div class=\"bubble blue\">H₂</div><div class=\"bubble red\">NaOH</div>\n</div>\n<p class=\"definition\"><b>Definition.</b> CA Production: chlor-alkali production section where brine is converted into Cl₂, H₂ and NaOH.</p>\n", "notes": "Start from the plant/process context before jumping into the evaporator project.", "section": "Opening", "layout": ""}, {"footer": "02 - Roadmap", "title": "Two Projects", "eyebrow": "Internship workstream map", "body": "\n<p class=\"message\">The internship work is divided into two engineering projects.</p>\n<div class=\"two-projects\">\n  <div class=\"card \"><h3>Project 1</h3><p><b>3-Effect NaOH (Bertrams) Evaporation Optimization</b></p><p>Improve evaporation efficiency and reduce steam consumption.</p><span class=\"status full\">Developed in this deck</span></div>\n  <div class=\"card \"><h3>Project 2</h3><p><b>H₂SO₄ Pump (C663) Shroud Damage RCA</b></p><p>Identify root-cause candidates of shroud damage and prevent recurrence.</p><span class=\"status muted\">Rebuilt later</span></div>\n</div>\n<p class=\"callout small\">This deck develops Project 1 fully. Project 2 is shown only as the second internship workstream.</p>\n", "notes": "Tell the audience that the presentation has two main workstreams, but Project 1 is the detailed section here.", "section": "Opening", "layout": ""}, {"footer": "03 - Project 1", "title": "Project 1", "eyebrow": "Section divider", "body": "\n<div class=\"section-hero\">\n  <div class=\"section-num\">1</div>\n  <h1>3-Effect NaOH (Bertrams)<br><span>Evaporation Optimization</span></h1>\n  <p>Reducing steam intensity in caustic soda concentration.</p>\n</div>\n<div class=\"evap-diagram\">\n  <div class=\"steam\">Live steam</div><div class=\"ev ev1\">EV1<br><small>highest P</small></div><div class=\"ev ev2\">EV2<br><small>medium P</small></div><div class=\"ev ev3\">EV3<br><small>lowest P</small></div><div class=\"product\">50 wt% NaOH</div>\n  <i class=\"arrow a1\"></i><i class=\"arrow a2\"></i><i class=\"arrow a3\"></i><i class=\"arrow a4\"></i>\n</div>\n<p class=\"definition\"><b>Definition.</b> Steam intensity: kg steam required per 1,000 kg NaOH solids.</p>\n", "notes": "Open Project 1 clearly and define the performance metric early.", "section": "Project 1", "layout": "section"}, {"footer": "04 - Introduction", "title": "Why Caustic Soda Needs Evaporation", "eyebrow": "Project need", "body": "\n<p class=\"message\">Electrolysis produces dilute caustic soda; evaporation removes water to reach the required product concentration.</p>\n<div class=\"big-flow\">\n  <div><span>Electrolysis Output</span><b>NaOH ~32 wt%</b></div>\n  <i>→</i>\n  <div><span>Evaporation Section</span><b>Remove water</b></div>\n  <i>→</i>\n  <div><span>Delivered Product</span><b>NaOH ~50 wt%</b></div>\n</div>\n<div class=\"grid-3 tight\">\n  <div class=\"card \"><h3>Why not deliver 32 wt%?</h3><p>Too much water remains in product; transport and downstream specifications require concentration.</p></div>\n  <div class=\"card \"><h3>What changes?</h3><p>Water is vaporized; NaOH is treated as non-volatile in the simplified balance.</p></div>\n  <div class=\"card \"><h3>Main cost driver</h3><p>Steam supplies the heat required for evaporation.</p></div>\n</div>\n<p class=\"definition\"><b>Definition.</b> wt%: mass percent of NaOH in the solution.</p>\n", "notes": "Explain why this unit operation exists before discussing optimization.", "section": "Project 1", "layout": ""}, {"footer": "05 - Equipment Name", "title": "Equipment Names Used in This Project", "eyebrow": "Read this once before results", "body": "\n<div class=\"split\">\n  <div class=\"pfd-simple\">\n    <div class=\"feed\">32 wt% feed</div><div class=\"unit e3\">EV3</div><div class=\"unit e2\">EV2</div><div class=\"unit e1\">EV1</div><div class=\"prod\">50 wt% product</div>\n    <div class=\"hx c1\">C1</div><div class=\"hx c2\">C2</div><div class=\"hx c3\">C3</div><div class=\"hx c4\">C4</div>\n  </div>\n  <div class=\"stack\">\n    <div class=\"card \"><h3>EV1–EV3</h3><p><b>Evaporation effects</b></p><p>EV1 = first effect; EV2 = second effect; EV3 = third effect.</p></div>\n    <div class=\"card \"><h3>C1–C4</h3><p><b>Economizer / heat-recovery units</b></p><p>Used to preheat or recover heat between NaOH / condensate streams.</p></div>\n  </div>\n</div>\n<p class=\"source-note\">Source note from handout: Noppasak V. (2026, May 15), CA Overview Process Information, AGC Vinythai PLC., p. 17.</p>\n", "notes": "Prepare the audience to understand later duty tables. Use the corrected footer spelling “Equipment Name”.", "section": "Project 1", "layout": ""}, {"footer": "06 - Objective", "title": "Project 1 Objective", "eyebrow": "Measurable target", "body": "\n<div class=\"objective-box\">\n  <h1>Minimize steam use<br><span>without losing product specification.</span></h1>\n</div>\n<div class=\"grid-3 tight\">\n  <div class=\"card \"><h3>Product spec</h3><p>Maintain final product at <b>50 wt% NaOH</b>.</p></div>\n  <div class=\"card \"><h3>Comparison method</h3><p>Compare base case and optimization cases using a consistent basis.</p></div>\n  <div class=\"card \"><h3>Engineering output</h3><p>Identify feasible opportunities for steam reduction.</p></div>\n</div>\n<div class=\"kpi-box\"><span>KPI used in this project</span><b>kg steam / 1,000 kg NaOH solids</b></div>\n<p class=\"definition\"><b>Definition.</b> KPI: key performance indicator used to compare operating cases.</p>\n", "notes": "Make the objective measurable before entering theory.", "section": "Project 1", "layout": ""}, {"footer": "07 - Theory", "title": "Theory", "eyebrow": "From material balance to steam consumption", "body": "\n<p class=\"message\">The calculation is built from four theory blocks.</p>\n<div class=\"theory-grid\">\n  <div class=\"card \"><h3>Mass balance</h3><p>NaOH is conserved while water is removed.</p><span class=\"icon\">Σm</span></div>\n  <div class=\"card \"><h3>Energy balance</h3><p>Heat is used for sensible heating and vaporization.</p><span class=\"icon\">Q</span></div>\n  <div class=\"card \"><h3>Boiling behavior</h3><p>Pressure and concentration control boiling temperature.</p><span class=\"icon\">Tᵦ</span></div>\n  <div class=\"card \"><h3>Heat transfer</h3><p>Duty depends on area and temperature driving force.</p><span class=\"icon\">UAΔT</span></div>\n</div>\n", "notes": "Show the theory map before equations.", "section": "Theory", "layout": "section"}, {"footer": "08 - Theory", "title": "Mass balance: NaOH is Conserved", "eyebrow": "NaOH stays in the liquid phase", "body": "\n<div class=\"split-40\">\n  <div>\n    <p class=\"message\">Evaporation removes water, but NaOH is assumed to remain in the liquid phase.</p>\n    <div class=\"equation\">F x<sub>F</sub> = P x<sub>P</sub></div>\n    <div class=\"table-wrap\"><table class=\"compact\"><thead><tr><th>Symbol</th><th>Meaning</th><th>Unit</th></tr></thead><tbody><tr><td>F</td><td>Feed mass flow rate</td><td>kg/hr</td></tr><tr><td>xF</td><td>NaOH mass fraction in feed</td><td>kg NaOH/kg solution</td></tr><tr><td>P</td><td>Product mass flow rate</td><td>kg/hr</td></tr><tr><td>xP</td><td>NaOH mass fraction in product</td><td>kg NaOH/kg solution</td></tr></tbody></table></div>\n  </div>\n  <div class=\"vessel-graphic\">\n    <div class=\"vessel\">Evaporator</div>\n    <div class=\"stream s-left\">Feed<br><b>32 wt%</b></div>\n    <div class=\"stream s-right\">Product<br><b>50 wt%</b></div>\n    <div class=\"stream s-top\">Water vapor</div>\n  </div>\n</div>\n", "notes": "Start calculation from the simplest conservation principle.", "section": "Theory", "layout": ""}, {"footer": "09 - Theory", "title": "From 32 wt% to 50 wt%: Product Flow", "eyebrow": "One feed-basis example", "body": "\n<p class=\"message\">If NaOH solids are conserved, product flow is determined by target concentration.</p>\n<div class=\"calc-layout\">\n  <div class=\"formula-steps\">\n    <p><b>Feed basis:</b> F = 10,000 kg/hr, x<sub>F</sub> = 32 wt%, x<sub>P</sub> = 50 wt%</p>\n    <div class=\"equation\">NaOH solids = F x<sub>F</sub> = 10,000 × 0.32 = 3,200 kg/hr</div>\n    <div class=\"equation\">P = F x<sub>F</sub> / x<sub>P</sub> = 3,200 / 0.50 = 6,400 kg/hr</div>\n  </div>\n  <div class=\"result-stack\">\n    <div><span>NaOH solids</span><b>3,200 kg/hr</b></div>\n    <div><span>Product at 50 wt%</span><b>6,400 kg/hr</b></div>\n  </div>\n</div>\n<p class=\"callout small\">The concentration increase is water removal, not NaOH creation.</p>\n", "notes": "Show that concentration increase is water removal, not NaOH creation.", "section": "Theory", "layout": ""}, {"footer": "10 - Theory", "title": "Water Evaporation Requirement", "eyebrow": "Evaporation load", "body": "\n<div class=\"split\">\n  <div>\n    <p class=\"message\">The evaporation load is the water removed from the feed solution.</p>\n    <div class=\"equation\">V<sub>total</sub> = F − P = 10,000 − 6,400 = 3,600 kg/hr</div>\n    <div class=\"table-wrap\"><table class=\"compact\"><thead><tr><th>Stream</th><th>Solution</th><th>NaOH</th><th>Water</th></tr></thead><tbody><tr><td>Feed</td><td>10,000 kg/hr</td><td>3,200</td><td>6,800</td></tr><tr><td>Product</td><td>6,400 kg/hr</td><td>3,200</td><td>3,200</td></tr><tr><td>Removed vapor</td><td>—</td><td>—</td><td>3,600</td></tr></tbody></table></div>\n  </div>\n  <div class=\"mass-bars\">\n    <div><label>Feed</label><span style=\"--w:100%\">10,000</span></div>\n    <div><label>Product</label><span style=\"--w:64%\">6,400</span></div>\n    <div><label>Removed water</label><span style=\"--w:36%\">3,600</span></div>\n  </div>\n</div>\n", "notes": "Connect material balance to the required evaporation load.", "section": "Theory", "layout": ""}, {"footer": "11 - Theory", "title": "Energy balance: heat in = heat used", "eyebrow": "Heat duty logic", "body": "\n<div class=\"split-40\">\n  <div>\n    <p class=\"message\">Heat supplied to the evaporator is used to raise liquid temperature and evaporate water.</p>\n    <div class=\"equation\">Q<sub>in</sub> = Q<sub>sensible</sub> + Q<sub>latent</sub></div>\n    <ul class=\"bullets\"><li>Heat is supplied by steam or vapor from another effect.</li><li>Part of the heat raises liquid temperature.</li><li>Most of the heat is used to evaporate water.</li><li>Heat losses are neglected in the simplified model.</li></ul>\n  </div>\n  <div class=\"heat-vessel\"><div>Liquid in</div><div class=\"vessel hot\">EV</div><div>Vapor out</div><div class=\"heat\">Heat in</div></div>\n</div>\n", "notes": "Move from mass requirement to heat requirement.", "section": "Theory", "layout": ""}, {"footer": "12 - Theory", "title": "Sensible Heat vs Latent Heat", "eyebrow": "Temperature change vs phase change", "body": "\n<div class=\"split\">\n  <div>\n    <div class=\"equation\">Q<sub>sensible</sub> = m C<sub>p</sub> ΔT</div>\n    <div class=\"equation\">Q<sub>latent</sub> = m<sub>v</sub> λ</div>\n    <div class=\"table-wrap\"><table class=\"compact\"><thead><tr><th>Term</th><th>Meaning</th></tr></thead><tbody><tr><td>Sensible heat</td><td>Heat used for temperature change without phase change</td></tr><tr><td>Latent heat</td><td>Heat used for phase change</td></tr></tbody></table></div>\n    <div class=\"table-wrap\"><table class=\"compact micro\"><thead><tr><th>Symbol</th><th>Meaning</th><th>Unit</th></tr></thead><tbody><tr><td>m</td><td>Liquid mass flow</td><td>kg/hr</td></tr><tr><td>Cp</td><td>Heat capacity</td><td>kJ/kg·K</td></tr><tr><td>ΔT</td><td>Temperature change</td><td>K</td></tr><tr><td>mv</td><td>Vaporized water</td><td>kg/hr</td></tr><tr><td>λ</td><td>Latent heat</td><td>kJ/kg</td></tr></tbody></table></div>\n  </div>\n  <div class=\"heating-curve\"><div class=\"axis\"></div><div class=\"curve\"></div><span class=\"sens\">Sensible</span><span class=\"lat\">Latent</span></div>\n</div>\n<p class=\"source-note\">Source note from handout: Urone & Hinrichs (2022), College Physics 2e, OpenStax, Section 14.3.</p>\n", "notes": "Explain the difference between heating liquid and evaporating water.", "section": "Theory", "layout": ""}, {"footer": "13 - Theory", "title": "Why Multi-Effect Evaporation Saves Steam", "eyebrow": "Vapor energy reuse", "body": "\n<p class=\"message\">Multi-effect evaporation saves steam because vapor energy is reused.</p>\n<div class=\"compare-flow\">\n  <div class=\"single-effect\"><h3>Single-effect</h3><div class=\"mini-vessel\">Steam → EV → Vapor</div><p>Steam used once.</p></div>\n  <div class=\"triple-effect\"><h3>Triple-effect</h3><div class=\"mini-chain\"><span>Steam</span>→<b>EV1</b>→<b>EV2</b>→<b>EV3</b></div><p>Vapor from one effect becomes heating medium for the next effect.</p></div>\n</div>\n<p class=\"callout small\">This allows more water to be evaporated per kg of live steam.</p>\n<p class=\"source-note\">Source note from handout: Geankoplis (2003), Transport Processes and Separation Process Principles, Chapter 8: Evaporation.</p>\n", "notes": "Explain why the plant uses a multi-effect system instead of a single evaporator.", "section": "Theory", "layout": ""}, {"footer": "14 - Theory", "title": "Pressure Controls Boiling Temperature", "eyebrow": "Pressure cascade", "body": "\n<p class=\"message\">Lower pressure gives lower boiling temperature, allowing vapor reuse between effects.</p>\n<div class=\"pressure-cascade\">\n  <div><b>EV1</b><span>P₁ high</span><em>Tboil high</em></div>\n  <i>pressure drop</i>\n  <div><b>EV2</b><span>P₂ medium</span><em>Tboil medium</em></div>\n  <i>pressure drop</i>\n  <div><b>EV3</b><span>P₃ low</span><em>Tboil low</em></div>\n</div>\n<p class=\"definition\"><b>Engineering reason.</b> Vapor can flow as useful heat only when the receiving effect boils at a lower temperature.</p>\n", "notes": "Explain why pressure cascade is necessary in multi-effect evaporation.", "section": "Theory", "layout": ""}, {"footer": "15 - Theory", "title": "Boiling Point Elevation: NaOH ≠ Water", "eyebrow": "Solution boiling behavior", "body": "\n<div class=\"split\">\n  <div>\n    <p class=\"message\">NaOH solution boils at a higher temperature than pure water at the same pressure.</p>\n    <div class=\"equation\">BPE = T<sub>boil, solution</sub> − T<sub>sat, water</sub></div>\n    <ul class=\"bullets\"><li>Pure water boiling temperature depends on pressure.</li><li>NaOH solution has a higher boiling temperature.</li><li>The difference is called boiling point elevation.</li><li>Higher concentration usually increases BPE.</li></ul>\n  </div>\n  <div class=\"thermo-pair\"><div>Pure water<br><b>T<sub>sat</sub></b></div><div>NaOH solution<br><b>T<sub>boil</sub> > T<sub>sat</sub></b></div></div>\n</div>\n", "notes": "Clarify why water steam tables alone are not enough for NaOH solution.", "section": "Theory", "layout": ""}, {"footer": "16 - Theory", "title": "Dühring Correlation: Estimating NaOH BP", "eyebrow": "Concentration-dependent boiling point", "body": "\n<div class=\"split\">\n  <div>\n    <p class=\"message\">Dühring correlation estimates NaOH solution boiling point from water saturation temperature.</p>\n    <div class=\"equation\">T<sub>boil</sub> = m T<sub>sat</sub> + b</div>\n    <div class=\"equation\">BPE = T<sub>boil</sub> − T<sub>sat</sub></div>\n    <div class=\"table-wrap\"><table class=\"compact\"><thead><tr><th>Symbol</th><th>Meaning</th></tr></thead><tbody><tr><td>Tsat</td><td>Water saturated temperature</td></tr><tr><td>m, b</td><td>Gradient and intercept depending on NaOH concentration</td></tr></tbody></table></div>\n  </div>\n  <div class=\"duhring-plot\"><svg viewBox=\"0 0 420 260\" role=\"img\" aria-label=\"Dühring correlation plot\"><line x1=\"55\" y1=\"215\" x2=\"390\" y2=\"215\"/><line x1=\"55\" y1=\"215\" x2=\"55\" y2=\"25\"/><path d=\"M70 190 C150 148 235 102 365 44\"/><path d=\"M70 210 C160 172 260 132 365 96\"/><text x=\"175\" y=\"248\">T sat water</text><text x=\"8\" y=\"32\">T boil solution</text><text x=\"275\" y=\"58\">50 wt%</text><text x=\"280\" y=\"110\">32 wt%</text></svg></div>\n</div>\n<p class=\"source-note\">Source note from handout: Garcia-Herrera & Moreno (2019), Journal of Chemical & Engineering Data, DOI: 10.1021/acs.jced.9b00536.</p>\n", "notes": "Explain how boiling temperature is estimated for concentrated NaOH.", "section": "Theory", "layout": ""}, {"footer": "17 - Theory", "title": "Heat Transfer Duty", "eyebrow": "UAΔTlm", "body": "\n<div class=\"split\">\n  <div>\n    <p class=\"message\">Heat duty depends on heat-transfer coefficient, area, and temperature driving force.</p>\n    <div class=\"equation\">Q = U A ΔT<sub>lm</sub></div>\n    <div class=\"equation\">ΔT<sub>lm</sub> = (ΔT₁ − ΔT₂) / ln(ΔT₁ / ΔT₂)</div>\n    <div class=\"table-wrap\"><table class=\"compact\"><thead><tr><th>Symbol</th><th>Meaning</th><th>Unit</th></tr></thead><tbody><tr><td>Q</td><td>Heat duty</td><td>kW</td></tr><tr><td>U</td><td>Heat-transfer coefficient</td><td>kW/m²·K</td></tr><tr><td>A</td><td>Heat-transfer area</td><td>m²</td></tr><tr><td>ΔTlm</td><td>Log mean temperature difference</td><td>K</td></tr></tbody></table></div>\n  </div>\n  <div class=\"hx-graphic\"><div class=\"hotline\">Hot stream</div><div class=\"coldline\">Cold stream</div><span>ΔT₁</span><span>ΔT₂</span></div>\n</div>\n<p class=\"source-note\">Source note from handout: Çengel (2004), Heat Transfer: A Practical Approach, 2nd ed. Unit corrected to kW/m²·K.</p>\n", "notes": "Prepare the audience for duty and area comparison in the result section.", "section": "Theory", "layout": ""}, {"footer": "18 - Theory", "title": "Steam Economy vs Steam Intensity", "eyebrow": "Two directions of the same performance issue", "body": "\n<p class=\"message\">Steam economy and steam intensity measure steam performance from opposite directions.</p>\n<div class=\"two-metrics\">\n  <div class=\"card \"><h3>Steam economy</h3><p class=\"metric-eq\">Water evaporated / Steam used</p><p><b>Higher is better</b></p><p>Unit: kg water / kg steam</p></div>\n  <div class=\"card \"><h3>Steam intensity</h3><p class=\"metric-eq\">Steam used / NaOH solids × 1000</p><p><b>Lower is better</b></p><p>Unit: kg steam / 1000 kg NaOH solids</p></div>\n</div>\n<div class=\"kpi-box\"><span>KPI used in this project</span><b>kg steam / 1,000 kg NaOH solids</b></div>\n", "notes": "Make the KPI definition clear before showing result comparison.", "section": "Theory", "layout": ""}, {"footer": "19 - Theory", "title": "Theory Summary", "eyebrow": "From equations to decision data", "body": "\n<p class=\"message\">The model connects material balance to steam KPI.</p>\n<div class=\"summary-flow\">\n  <div>Mass balance</div><i>→</i><div>Evaporation load</div><i>→</i><div>Energy balance</div><i>→</i><div>BPE / boiling T</div><i>→</i><div>Heat duty</div><i>→</i><div>Steam KPI</div>\n</div>\n<div class=\"questions\"><h3>Questions answered by the model</h3><ol><li>How much product is produced?</li><li>How much water must be evaporated?</li><li>How much heat is required?</li><li>What is the boiling temperature in each effect?</li><li>How much steam is required?</li><li>How efficient is the case compared with another case?</li></ol></div>\n", "notes": "Close the theory section and transition into calculation/result.", "section": "Theory", "layout": ""}, {"footer": "20 - Result", "title": "From Theory to Calculation Cases", "eyebrow": "Excel + Aspen workflow", "body": "\n<p class=\"message\">The theory is applied through Excel and Aspen to compare current operation and optimized cases.</p>\n<div class=\"workflow\">\n  <div>Theory</div><i>→</i><div>Excel check</div><i>→</i><div>Aspen model</div><i>→</i><div>Case comparison</div><i>→</i><div>Economic result</div>\n</div>\n<div class=\"chips\"><span>Sheet</span><span>Real Operate</span><span>Aspen Base</span><span>Aspen A</span><span>Aspen B</span></div>\n<p class=\"definition\"><b>Definition.</b> Calculation case: one defined set of operating conditions used for model comparison.</p>\n", "notes": "Replace a long Method section with a short transition into results.", "section": "Result", "layout": "section"}, {"footer": "21 - Result", "title": "Five Case Definition", "eyebrow": "Do not mix bases", "body": "\n<p class=\"message\">The study separates design data, real operation, baseline simulation, and optimized cases.</p>\n<div class=\"table-wrap\"><table class=\"case-table\"><thead><tr><th>Case</th><th>Description</th><th>Main use</th></tr></thead><tbody><tr><td>Sheet / Datasheet</td><td>Duty sheet and design basis</td><td>Equipment capacity reference</td></tr><tr><td>Real Operate</td><td>Current actual plant operation</td><td>Main baseline for saving / payback</td></tr><tr><td>Aspen Base</td><td>Aspen model representing baseline condition</td><td>Model validation</td></tr><tr><td>Aspen A</td><td>Optimized case A</td><td>Improvement candidate</td></tr><tr><td>Aspen B</td><td>Optimized case B</td><td>Alternative with extra equipment cost</td></tr></tbody></table></div>\n<p class=\"definition\"><b>Definition.</b> Real operate case: actual current plant operating condition used as the main baseline for improvement.</p>\n", "notes": "Prevent confusion between datasheet, real operation, and Aspen cases.", "section": "Result", "layout": ""}, {"footer": "22 - Result", "title": "Why Real Operate Case Is the Baseline", "eyebrow": "Economic baseline rule", "body": "\n<p class=\"message\">Savings must be calculated against how the plant actually operates, not only against the datasheet.</p>\n<div class=\"compare-columns\">\n  <div><h3>Datasheet / Sheet Case</h3><ul><li>Design reference</li><li>Equipment capacity check</li><li>Vendor / duty basis</li><li>Not always equal to plant condition</li></ul></div>\n  <div><h3>Real Operate Case</h3><ul><li>Actual baseline</li><li>Economic comparison</li><li>Daily operation</li><li>Reflects actual steam and production</li></ul></div>\n</div>\n<p class=\"callout\">Final saving and payback must be based on Real Operate Case.</p>\n<p class=\"definition\"><b>Definition.</b> Baseline: reference condition used to calculate improvement.</p>\n", "notes": "Explain why the economic comparison changed from datasheet to real operation.", "section": "Result", "layout": ""}, {"footer": "23 - Result", "title": "KPI Comparison Across Five Cases", "eyebrow": "Main performance metric", "body": "\n<p class=\"message\">Aspen A and Aspen B should be evaluated by steam intensity reduction from the real operating baseline.</p>\n<div class=\"kpi-chart\" aria-label=\"KPI comparison bars\">\n  <div><label>Sheet</label><span style=\"--v:100\"><b>523.20</b></span></div>\n  <div class=\"tbd\"><label>Real Operate</label><span style=\"--v:72\"><b>TBD</b></span></div>\n  <div class=\"tbd\"><label>Aspen Base</label><span style=\"--v:72\"><b>TBD</b></span></div>\n  <div><label>Aspen A</label><span style=\"--v:86.9\"><b>454.57</b></span></div>\n  <div><label>Aspen B</label><span style=\"--v:87.3\"><b>456.62</b></span></div>\n</div>\n<div class=\"table-wrap\"><table class=\"compact\"><thead><tr><th>Case</th><th>KPI</th><th>Change vs Real Operate</th><th>Role</th></tr></thead><tbody><tr><td>Sheet / Datasheet</td><td>523.20</td><td>Not main baseline</td><td>Design reference</td></tr><tr><td>Real Operate</td><td>TBD</td><td>0%</td><td>Actual baseline</td></tr><tr><td>Aspen Base</td><td>TBD</td><td>Model check</td><td>Baseline simulation</td></tr><tr><td>Aspen A</td><td>454.57</td><td>TBD</td><td>Optimized case</td></tr><tr><td>Aspen B</td><td>456.62</td><td>TBD</td><td>Optimized case</td></tr></tbody></table></div>\n<p class=\"definition\"><b>Definition.</b> Steam intensity: kg steam required per 1,000 kg NaOH solids.</p>\n", "notes": "Show the main performance metric before discussing equipment and payback. If real operating KPI is unavailable, keep it visibly marked as “TBD”.", "section": "Result", "layout": ""}, {"footer": "24 - Result", "title": "Overall Duty Summary Across Five Cases", "eyebrow": "Separate design, real, model and optimized duty", "body": "\n<p class=\"message\">The result table separates design duty, actual operation, baseline simulation, and optimized cases.</p>\n<div class=\"table-wrap\"><table class=\"data-table\"><thead><tr><th>Unit</th><th>Sheet Duty</th><th>Real Operate</th><th>Aspen Base</th><th>Aspen A</th><th>Aspen B</th></tr></thead><tbody><tr><td>EV1</td><td>6,700.00 kW</td><td>TBD</td><td>TBD</td><td>5,952.13 kW</td><td>5,978.90 kW</td></tr><tr><td>EV2</td><td>5,726.00 kW</td><td>TBD</td><td>TBD</td><td>5,395.91 kW</td><td>5,393.69 kW</td></tr><tr><td>EV3</td><td>5,591.00 kW</td><td>TBD</td><td>TBD</td><td>5,449.14 kW</td><td>5,147.45 kW</td></tr><tr><td>C1</td><td>1,572.00 kW</td><td>TBD</td><td>TBD</td><td>1,726.05 kW</td><td>1,802.55 kW</td></tr><tr><td>C2</td><td>776.00 kW</td><td>TBD</td><td>TBD</td><td>869.04 kW</td><td>772.52 kW</td></tr><tr><td>C3</td><td>1,403.00 kW</td><td>TBD</td><td>TBD</td><td>2,017.45 kW</td><td>2,016.16 kW</td></tr><tr><td>C4</td><td>766.00 kW</td><td>TBD</td><td>TBD</td><td>451.01 kW</td><td>710.38 kW</td></tr></tbody></table></div>\n<p class=\"callout small\">C5/C6 are coolers and are treated separately.</p>\n<p class=\"definition\"><b>Definition.</b> Duty: rate of heat transferred in an evaporator or heat exchanger.</p>\n", "notes": "Show all important duty results in one consolidated table.", "section": "Result", "layout": ""}, {"footer": "25 - Result", "title": "Economizer Duty Increase vs Current Capacity", "eyebrow": "Capacity check is not the same as saving calculation", "body": "\n<p class=\"message\">Plate addition is checked against existing installed capacity, while savings are checked against real operation.</p>\n<div class=\"table-wrap\"><table class=\"data-table\"><thead><tr><th>Unit</th><th>Sheet Duty</th><th>Aspen A Duty</th><th>A Δ vs Sheet</th><th>Aspen B Duty</th><th>B Δ vs Sheet</th><th>Action</th></tr></thead><tbody><tr><td>C1</td><td>1,572 kW</td><td>1,726 kW</td><td>+154 kW</td><td>1,803 kW</td><td>+231 kW</td><td>Add plates</td></tr><tr><td>C2</td><td>776 kW</td><td>869 kW</td><td>+93 kW</td><td>773 kW</td><td>−3 kW</td><td>Case A check only</td></tr><tr><td>C3</td><td>1,403 kW</td><td>2,017 kW</td><td>+614 kW</td><td>2,016 kW</td><td>+613 kW</td><td>Main bottleneck</td></tr><tr><td>C4</td><td>766 kW</td><td>451 kW</td><td>−315 kW</td><td>710 kW</td><td>−56 kW</td><td>No increase</td></tr></tbody></table></div>\n<p class=\"callout\">C3 is the main economizer bottleneck in both Aspen A and Aspen B.</p>\n<p class=\"definition\"><b>Definition.</b> Equipment capacity: maximum practical duty or load that existing equipment can handle.</p>\n", "notes": "Explain why some economizers may require additional plates.", "section": "Result", "layout": ""}, {"footer": "26 - Result", "title": "Estimated Plate Addition — Aspen A", "eyebrow": "Approximate modification requirement", "body": "\n<p class=\"message\">Aspen A requires additional heat-transfer area mainly at C1, C2, and C3.</p>\n<div class=\"split\">\n  <div>\n    <div class=\"equation\">A<sub>new</sub> ≈ A<sub>old</sub> × Q<sub>new</sub> / Q<sub>old</sub></div>\n    <div class=\"table-wrap\"><table class=\"compact micro\"><thead><tr><th>Assumption</th><th>Value</th></tr></thead><tbody><tr><td>Plate material</td><td>2.4819 Hastelloy / Alloy C-276</td></tr><tr><td>Effective area per plate</td><td>0.85 m²/plate</td></tr><tr><td>Plate price placeholder</td><td>45,000 THB/plate</td></tr><tr><td>Installation / gasket / contingency</td><td>20%</td></tr><tr><td>C2 status</td><td>Equivalent plate estimate only</td></tr></tbody></table></div>\n  </div>\n  <div class=\"cost-summary\"><span>Additional plates</span><b>26 plates eq.</b><span>Plate cost</span><b>1.17 M THB</b><span>Installed cost</span><b>1.40 M THB</b></div>\n</div>\n<div class=\"table-wrap\"><table class=\"compact micro\"><thead><tr><th>Unit</th><th>Old Area</th><th>Sheet Duty</th><th>Aspen A Duty</th><th>Est. New Area</th><th>Extra Plates</th><th>Cost</th></tr></thead><tbody><tr><td>C1</td><td>54.4 m²</td><td>1,572</td><td>1,726</td><td>59.7 m²</td><td>7</td><td>315k THB</td></tr><tr><td>C2</td><td>52.0 m²</td><td>776</td><td>869</td><td>58.2 m²</td><td>8 eq.</td><td>360k THB</td></tr><tr><td>C3</td><td>20.0 m²</td><td>1,403</td><td>2,017</td><td>28.8 m²</td><td>11</td><td>495k THB</td></tr><tr><td>C4</td><td>13.4 m²</td><td>766</td><td>451</td><td>7.9 m²</td><td>0</td><td>0</td></tr></tbody></table></div>\n", "notes": "Show approximate modification requirement for Aspen A.", "section": "Result", "layout": ""}, {"footer": "27 - Result", "title": "Estimated Plate Addition — Aspen B", "eyebrow": "Lower plate count, higher system cost", "body": "\n<p class=\"message\">Aspen B requires fewer economizer plates than Aspen A, but adds EV3 pump and condenser-related cost.</p>\n<div class=\"split\">\n  <div>\n    <div class=\"table-wrap\"><table class=\"compact micro\"><thead><tr><th>Assumption</th><th>Value</th></tr></thead><tbody><tr><td>Plate material</td><td>2.4819 Hastelloy / Alloy C-276</td></tr><tr><td>Effective area per plate</td><td>0.85 m²/plate</td></tr><tr><td>EV3 pump price</td><td>3.00 M THB placeholder</td></tr><tr><td>EV3 vapor condenser / C6 package</td><td>5.00 M THB placeholder</td></tr></tbody></table></div>\n  </div>\n  <div class=\"cost-summary warn\"><span>Additional plates</span><b>21 plates</b><span>Installed plate cost</span><b>1.13 M THB</b><span>Total cost impact</span><b>11.25 M THB</b></div>\n</div>\n<div class=\"table-wrap\"><table class=\"compact micro\"><thead><tr><th>Unit</th><th>Old Area</th><th>Sheet Duty</th><th>Aspen B Duty</th><th>Est. New Area</th><th>Extra Plates</th><th>Cost</th></tr></thead><tbody><tr><td>C1</td><td>54.4 m²</td><td>1,572</td><td>1,803</td><td>62.4 m²</td><td>10</td><td>450k THB</td></tr><tr><td>C2</td><td>52.0 m²</td><td>776</td><td>773</td><td>51.8 m²</td><td>0</td><td>0</td></tr><tr><td>C3</td><td>20.0 m²</td><td>1,403</td><td>2,016</td><td>28.7 m²</td><td>11</td><td>495k THB</td></tr><tr><td>C4</td><td>13.4 m²</td><td>766</td><td>710</td><td>12.4 m²</td><td>0</td><td>0</td></tr></tbody></table></div>\n<p class=\"definition\"><b>Definition.</b> Placeholder cost: temporary cost assumption used until vendor quotation is confirmed.</p>\n", "notes": "Show why Aspen B has higher implementation cost even if plate addition is lower.", "section": "Result", "layout": ""}, {"footer": "28 - Result", "title": "Cooler / Condenser Requirement Placeholder", "eyebrow": "C5/C6 treated separately", "body": "\n<p class=\"message\">Cooling duty must be handled separately in C5/C6, not in C1–C4.</p>\n<div class=\"split\">\n  <div>\n    <div class=\"correction\"><b>Important correction</b><span>C1–C4 = economizer / heat-recovery units</span><span>C5–C6 = cooler / condenser section</span></div>\n    <div class=\"equation\">m<sub>CW</sub> = Q<sub>cool</sub> / (C<sub>p</sub> × ΔT)</div>\n    <div class=\"equation\">Q ≈ 450,000 × 4.184 × 7 / 3,600 ≈ 3,660 kW ≈ 3.66 MW</div>\n  </div>\n  <div>\n    <div class=\"table-wrap\"><table class=\"compact\"><thead><tr><th>Item</th><th>Value</th></tr></thead><tbody><tr><td>Cooling water inlet</td><td>32°C</td></tr><tr><td>Cooling water outlet</td><td>39°C</td></tr><tr><td>ΔT</td><td>7°C</td></tr><tr><td>Cp water</td><td>4.184 kJ/kg·K</td></tr><tr><td>Coolant flow placeholder</td><td>450,000 kg/hr</td></tr></tbody></table></div>\n    <div class=\"chips\"><span>C5 duty</span><span>C6 duty</span><span>EV3 condenser duty</span><span>Existing CW capacity</span><span>Condenser cost</span></div>\n  </div>\n</div>\n<p class=\"definition\"><b>Definition.</b> Cooling duty: heat that must be removed by cooling water or condenser service.</p>\n", "notes": "Reserve cooling calculation until C5/C6 data is confirmed.", "section": "Result", "layout": ""}, {"footer": "29 - Economic", "title": "Steam Saving Basis vs Real Operate Case", "eyebrow": "Interactive calculation basis", "body": "\n<p class=\"message\">Economic saving is calculated from the real current operation.</p>\n<div class=\"calc-panel\">\n  <label>Real Operate KPI <input id=\"realKPI\" type=\"number\" value=\"523.20\" step=\"0.01\"></label>\n  <label>Product flow, ton/hr <input id=\"productFlow\" type=\"number\" value=\"38.41862\" step=\"0.00001\"></label>\n  <label>Steam price, THB/ton <input id=\"steamPrice\" type=\"number\" value=\"1300\" step=\"100\"></label>\n  <label>Operating hr/year <input id=\"hoursYear\" type=\"number\" value=\"8640\" step=\"10\"></label>\n</div>\n<div class=\"formula-steps\">\n  <div class=\"equation\">Steam saving = (KPI<sub>real operate</sub> − KPI<sub>case</sub>) × NaOH solids flow / 1000</div>\n  <div class=\"equation\">Annual money saving = Steam saving × operating hours × steam price</div>\n</div>\n<div class=\"result-stack inline\"><div><span>NaOH solids flow</span><b><span data-calc=\"solids\">19.20931</span> ton/hr</b></div><div><span>Main baseline</span><b>Real Operate Case</b></div></div>\n<p class=\"callout small\">If real product flow differs from the temporary value, update NaOH solids flow = real product flow × 0.50.</p>\n<p class=\"definition\"><b>Definition.</b> Steam saving: reduction in live steam consumption compared with current real operation.</p>\n", "notes": "Explain economic calculation basis before showing payback. Do not use datasheet as final economic baseline.", "section": "Economic", "layout": "interactive"}, {"footer": "30 - Economic", "title": "Aspen A Payback Estimate", "eyebrow": "Recalculate against real baseline", "body": "\n<p class=\"message\">Aspen A payback should be recalculated against Real Operate Case.</p>\n<div class=\"payback-grid\">\n  <div class=\"case-card\"><span>Aspen A KPI</span><b>454.57</b><em>kg steam / 1000 kg NaOH solids</em></div>\n  <div class=\"case-card\"><span>Total installed CAPEX</span><b>1.40 M THB</b><em>plate addition + 20% contingency</em></div>\n  <div class=\"case-card live\"><span>Annual saving</span><b><span data-calc=\"saveA\">—</span> M THB/year</b><em>from inputs on slide 29</em></div>\n  <div class=\"case-card live\"><span>Payback</span><b><span data-calc=\"paybackA\">—</span> months</b><em>temporary until real data is confirmed</em></div>\n</div>\n<div class=\"equation\">Steam saving<sub>A</sub> = (KPI<sub>real operate</sub> − 454.57) × Real NaOH solids flow / 1000</div>\n<p class=\"temporary\">Temporary example only — replace with Real Operate Case.</p>\n<p class=\"definition\"><b>Definition.</b> Payback period: time required for savings to recover the investment cost.</p>\n", "notes": "Show Case A economic potential while making clear that real operation data is required.", "section": "Economic", "layout": ""}, {"footer": "31 - Economic", "title": "Aspen B Payback Estimate", "eyebrow": "Cost + shutdown risk", "body": "\n<p class=\"message\">Aspen B includes steam saving, equipment cost, and shutdown opportunity loss.</p>\n<div class=\"payback-grid\">\n  <div class=\"case-card\"><span>Aspen B KPI</span><b>456.62</b><em>kg steam / 1000 kg NaOH solids</em></div>\n  <div class=\"case-card\"><span>Total cost impact</span><b>11.25 M THB</b><em>plates + pump + condenser + shutdown loss</em></div>\n  <div class=\"case-card live\"><span>Annual saving</span><b><span data-calc=\"saveB\">—</span> M THB/year</b><em>from inputs on slide 29</em></div>\n  <div class=\"case-card live\"><span>Payback</span><b><span data-calc=\"paybackB\">—</span> months</b><em>temporary until real data is confirmed</em></div>\n</div>\n<div class=\"table-wrap\"><table class=\"compact micro\"><thead><tr><th>Shutdown assumption</th><th>Value</th></tr></thead><tbody><tr><td>Shutdown duration</td><td>3 days</td></tr><tr><td>Production loss</td><td>40 m³/day of 50 wt% NaOH</td></tr><tr><td>50 wt% NaOH density</td><td>1.467 ton/m³</td></tr><tr><td>NaOH product price</td><td>12,000 THB/ton</td></tr><tr><td>Shutdown loss</td><td>≈ 2.11 M THB</td></tr></tbody></table></div>\n<p class=\"definition\"><b>Definition.</b> Opportunity loss: revenue lost because production is reduced during shutdown.</p>\n", "notes": "Show why Case B has much higher economic risk than Case A.", "section": "Economic", "layout": ""}, {"footer": "32 - Decision", "title": "Aspen A vs Aspen B Decision", "eyebrow": "Recommendation logic", "body": "\n<p class=\"message\">Final selection should compare Aspen A and Aspen B against Real Operate Case, while checking equipment feasibility against installed capacity.</p>\n<div class=\"table-wrap\"><table class=\"decision-table\"><thead><tr><th>Decision factor</th><th>Aspen A</th><th>Aspen B</th></tr></thead><tbody><tr><td>KPI</td><td>454.57</td><td>456.62</td></tr><tr><td>Steam saving vs Real Operate</td><td>TBD</td><td>TBD</td></tr><tr><td>Economizer plate addition</td><td>26 plates eq.</td><td>21 plates</td></tr><tr><td>EV3 pump replacement</td><td>No</td><td>Yes</td></tr><tr><td>EV3 condenser / C6 package</td><td>Not assumed</td><td>Required / placeholder</td></tr><tr><td>Shutdown opportunity loss</td><td>Low / not assumed</td><td>2.11 M THB placeholder</td></tr><tr><td>Implementation risk</td><td>Lower</td><td>Higher</td></tr><tr><td>Payback vs Real Operate</td><td>TBD</td><td>TBD</td></tr></tbody></table></div>\n<div class=\"decision-box\"><b>Current recommended direction: Aspen A</b><p>Lower modification cost and lower implementation risk, provided real baseline and equipment capacity are confirmed.</p></div>\n<p class=\"definition\"><b>Definition.</b> Decision factor: criterion used to compare engineering alternatives.</p>\n", "notes": "Convert calculations into an engineering recommendation.", "section": "Decision", "layout": ""}, {"footer": "33 - Problem", "title": "Problem", "eyebrow": "Model limits and validation gaps", "body": "\n<div class=\"section-hero warning\">\n  <div class=\"section-num\">!</div>\n  <h1>What the model revealed<br><span>and what still needs validation</span></h1>\n  <p>The model gives useful improvement directions, but several engineering gaps must be closed before final recommendation.</p>\n</div>\n<p class=\"definition\"><b>Definition.</b> Problem: limitation, inconsistency, or unresolved issue that must be addressed before final recommendation.</p>\n", "notes": "Transition from calculated results to limitations and next work.", "section": "Problem", "layout": "section"}, {"footer": "34 - Problem", "title": "Model Problem: Recycle / Circulation Was Required", "eyebrow": "Aspen representation issue", "body": "\n<p class=\"message\">When moving from simplified Excel calculation to Aspen representation, recycle / circulation handling was required to represent the real process behavior.</p>\n<div class=\"before-after\">\n  <div><h3>Before</h3><p>Feed → EV3 → EV2 → EV1 → Product</p></div>\n  <div><h3>After</h3><p>Feed + recycle → EV3 → EV2 → EV1 → Product<br><span>↖ circulation return</span></p></div>\n</div>\n<div class=\"grid-3 tight\">\n  <div class=\"card \"><h3>Excel can close</h3><p>Main material and energy balances.</p></div>\n  <div class=\"card \"><h3>Aspen must represent</h3><p>Heat recovery, vapor handling, preheating and circulation behavior.</p></div>\n  <div class=\"card \"><h3>Data to confirm</h3><p>Recycle start, return point, flow rate and whether it is physical or only modeling device.</p></div>\n</div>\n<p class=\"definition\"><b>Definition.</b> Recycle: process stream returned to an earlier point in the system to represent circulation or reuse.</p>\n", "notes": "Explain the main modeling issue without overwhelming the audience.", "section": "Problem", "layout": ""}, {"footer": "35 - Problem", "title": "Remaining Data Gaps and Next Actions", "eyebrow": "Validation checklist", "body": "\n<p class=\"message\">The most important missing data is now the Real Operate Case.</p>\n<div class=\"split\">\n  <div>\n    <div class=\"table-wrap\"><table class=\"compact micro\"><thead><tr><th>Data item</th><th>Status</th><th>Needed for</th></tr></thead><tbody><tr><td>Real steam flow</td><td>TBD</td><td>Real KPI</td></tr><tr><td>Real product flow</td><td>TBD</td><td>NaOH solids flow</td></tr><tr><td>Feed flow / concentration</td><td>TBD</td><td>Mass balance</td></tr><tr><td>EV1–EV3 duty</td><td>TBD</td><td>Duty comparison</td></tr><tr><td>C1–C6 duty</td><td>TBD</td><td>Equipment check</td></tr><tr><td>Cooling water flow</td><td>TBD</td><td>Cooling system check</td></tr><tr><td>Actual prices</td><td>Placeholder</td><td>CAPEX</td></tr><tr><td>Shutdown availability</td><td>TBD</td><td>Case B feasibility</td></tr></tbody></table></div>\n  </div>\n  <div class=\"checklist\">\n    <h3>Next actions</h3>\n    <ol><li>Collect Real Operate data.</li><li>Calculate Real Operate KPI.</li><li>Adjust Aspen Base Case to match real operation.</li><li>Compare Aspen A/B against Real Operate Case.</li><li>Check C1–C6 capacity.</li><li>Replace cost placeholders.</li><li>Recalculate final payback.</li><li>Select preferred case.</li></ol>\n  </div>\n</div>\n<p class=\"definition\"><b>Definition.</b> Validation gap: information that must be confirmed before a model result can be used as final engineering basis.</p>\n", "notes": "Be transparent about confirmed information and remaining real plant data needs.", "section": "Problem", "layout": ""}, {"footer": "36 - Project 1 Summary", "title": "Project 1 Summary", "eyebrow": "Close Project 1", "body": "\n<p class=\"message\">Project 1 shows a possible pathway to reduce steam intensity, but final recommendation requires real operating data and equipment validation.</p>\n<div class=\"summary-cards\">\n  <div class=\"card \"><h3>1. Process understanding</h3><p>The 3-effect evaporator concentrates NaOH from ~32 wt% to ~50 wt%.</p></div>\n  <div class=\"card \"><h3>2. Optimization potential</h3><p>Aspen A and Aspen B reduce steam intensity compared with current reference numbers.</p></div>\n  <div class=\"card \"><h3>3. Validation required</h3><p>Real Operate Case, C5/C6 cooling duty, equipment capacity and cost data must be confirmed.</p></div>\n</div>\n<div class=\"decision-box\"><b>Current preferred direction: Aspen A</b><p>Lower steam intensity with lower modification cost and lower implementation risk.</p></div>\n<p class=\"definition\"><b>Definition.</b> Final recommendation: selected operating proposal after results, constraints and economics are fully validated.</p>\n", "notes": "Close Project 1 clearly before moving to the next project later.", "section": "Summary", "layout": ""}, {"footer": "37 - Appendix", "title": "Appendix A — Five-Case Data Table Template", "eyebrow": "Full reference table", "body": "\n<div class=\"table-wrap\"><table class=\"appendix-table micro\"><thead><tr><th>Unit / Metric</th><th>Sheet</th><th>Real Operate</th><th>Aspen Base</th><th>Aspen A</th><th>Aspen B</th></tr></thead><tbody><tr><td>KPI, kg steam / 1000 kg NaOH solids</td><td>523.20</td><td>TBD</td><td>TBD</td><td>454.57</td><td>456.62</td></tr><tr><td>Steam flow, ton/hr</td><td>TBD</td><td>TBD</td><td>TBD</td><td>TBD</td><td>TBD</td></tr><tr><td>Product flow, ton/hr</td><td>TBD</td><td>TBD</td><td>TBD</td><td>38.41862</td><td>38.41862</td></tr><tr><td>NaOH solids flow, ton/hr</td><td>TBD</td><td>TBD</td><td>TBD</td><td>19.20931</td><td>19.20931</td></tr><tr><td>EV1 duty, kW</td><td>6,700.00</td><td>TBD</td><td>TBD</td><td>5,952.13</td><td>5,978.90</td></tr><tr><td>EV2 duty, kW</td><td>5,726.00</td><td>TBD</td><td>TBD</td><td>5,395.91</td><td>5,393.69</td></tr><tr><td>EV3 duty, kW</td><td>5,591.00</td><td>TBD</td><td>TBD</td><td>5,449.14</td><td>5,147.45</td></tr><tr><td>C1 duty, kW</td><td>1,572.00</td><td>TBD</td><td>TBD</td><td>1,726.05</td><td>1,802.55</td></tr><tr><td>C2 duty, kW</td><td>776.00</td><td>TBD</td><td>TBD</td><td>869.04</td><td>772.52</td></tr><tr><td>C3 duty, kW</td><td>1,403.00</td><td>TBD</td><td>TBD</td><td>2,017.45</td><td>2,016.16</td></tr><tr><td>C4 duty, kW</td><td>766.00</td><td>TBD</td><td>TBD</td><td>451.01</td><td>710.38</td></tr><tr><td>Additional plates</td><td>0</td><td>TBD</td><td>TBD</td><td>26 eq.</td><td>21</td></tr><tr><td>Total cost impact</td><td>0</td><td>0</td><td>0</td><td>1.40 M THB</td><td>11.25 M THB</td></tr><tr><td>Annual saving</td><td>0</td><td>0</td><td>0</td><td>TBD vs Real</td><td>TBD vs Real</td></tr><tr><td>Payback</td><td>—</td><td>—</td><td>—</td><td>TBD</td><td>TBD</td></tr></tbody></table></div>\n", "notes": "Use only when the audience asks for detailed case values.", "section": "Appendix", "layout": ""}, {"footer": "38 - Appendix", "title": "Appendix B — Placeholder Assumptions", "eyebrow": "Cost and operating assumptions", "body": "\n<div class=\"split\">\n  <div>\n    <h3>Cost assumptions</h3>\n    <div class=\"table-wrap\"><table class=\"compact micro\"><thead><tr><th>Item</th><th>Placeholder</th></tr></thead><tbody><tr><td>Hastelloy / 2.4819 plate price</td><td>45,000 THB/plate</td></tr><tr><td>Installation / gasket / contingency</td><td>20%</td></tr><tr><td>EV3 pump replacement</td><td>3.00 M THB</td></tr><tr><td>EV3 vapor condenser / C6 package</td><td>5.00 M THB</td></tr><tr><td>Steam price</td><td>1,300 THB/ton</td></tr><tr><td>NaOH 50 wt% price</td><td>12,000 THB/ton</td></tr></tbody></table></div>\n  </div>\n  <div>\n    <h3>Operating assumptions</h3>\n    <div class=\"table-wrap\"><table class=\"compact micro\"><thead><tr><th>Item</th><th>Value</th></tr></thead><tbody><tr><td>Operation</td><td>360 days/year</td></tr><tr><td>Operating hours</td><td>8,640 hr/year</td></tr><tr><td>Product flow</td><td>38.41862 ton/hr temporary</td></tr><tr><td>NaOH product concentration</td><td>50 wt%</td></tr><tr><td>NaOH solids flow</td><td>19.20931 ton/hr temporary</td></tr><tr><td>50 wt% NaOH density</td><td>1.467 ton/m³</td></tr><tr><td>Shutdown duration for Aspen B</td><td>3 days</td></tr></tbody></table></div>\n  </div>\n</div>\n<div class=\"callout small\"><b>Plate-estimation method:</b> effective area 0.85 m²/plate; Anew ≈ Aold × Qnew / Qold; C2 remains equivalent plate estimate until exchanger type is confirmed.</div>\n", "notes": "Keep all placeholder costs clearly labeled as placeholders.", "section": "Appendix", "layout": ""}, {"footer": "39 - Appendix", "title": "Appendix C — Real Operate Data Request", "eyebrow": "Data needed for final baseline", "body": "\n<p class=\"message\">To calculate the real baseline, collect the following data.</p>\n<div class=\"data-request\">\n  <div class=\"chips\"><span>Live steam flow</span><span>50 wt% product flow</span><span>Product concentration</span><span>Feed flow</span><span>Feed concentration</span><span>EV1–EV3 pressure</span><span>EV1–EV3 temperature</span><span>C1–C6 inlet/outlet T</span><span>C1–C6 flow rates</span><span>Cooling water flow</span><span>Cooling water inlet/outlet T</span><span>Split fractions</span><span>Pump limitation</span><span>Plant constraints</span></div>\n</div>\n<p class=\"callout\">This data converts the deck from an improvement-screening story into a final engineering recommendation.</p>\n", "notes": "End appendix with a practical request list.", "section": "Appendix", "layout": ""}];
+const state = { index: 0, inputs: {realKPI:523.20, productFlow:38.41862, steamPrice:1300, hoursYear:8640} };
+const stage = document.getElementById('stage');
+const menu = document.getElementById('menu');
+const notes = document.getElementById('notes');
+function renderSlides(){
+  stage.innerHTML = slides.map((s,i)=>`<section class="slide ${i===state.index?'active':''} ${s.layout||''}" data-i="${i}"><div class="eyebrow">${s.eyebrow}</div><h2>${s.title}</h2>${s.body}<div class="footer"><span>${s.footer}</span><b>${String(i+1).padStart(2,'0')} / ${slides.length}</b></div></section>`).join('');
+  document.getElementById('menuGrid').innerHTML = slides.map((s,i)=>`<button class="menu-item" onclick="go(${i});closePanels()"><b>${String(i+1).padStart(2,'0')} · ${s.section}</b><span>${s.title}</span></button>`).join('');
+  bindInputs(); update();
+}
+function go(i){ state.index = Math.max(0, Math.min(slides.length-1, i)); update(); }
+function next(){ go(state.index+1); } function prev(){ go(state.index-1); }
+function update(){
+  document.querySelectorAll('.slide').forEach((el,i)=>el.classList.toggle('active', i===state.index));
+  document.getElementById('counterLeft').textContent = `${String(state.index+1).padStart(2,'0')} / ${slides.length}`;
+  document.getElementById('progress').style.width = `${((state.index+1)/slides.length)*100}%`;
+  document.getElementById('sectionName').textContent = slides[state.index].section;
+  const sectionSlides = slides.filter(s=>s.section===slides[state.index].section);
+  const pos = slides.slice(0,state.index+1).filter(s=>s.section===slides[state.index].section).length;
+  document.getElementById('sectionProgress').style.width = `${(pos/sectionSlides.length)*100}%`;
+  document.getElementById('notesText').textContent = slides[state.index].notes || 'No speaker notes.';
+  location.hash = `/${state.index+1}`;
+  updateCalc();
+}
+function bindInputs(){
+  ['realKPI','productFlow','steamPrice','hoursYear'].forEach(id=>{
+    document.querySelectorAll('#'+id).forEach(input=>{
+      input.value = state.inputs[id]; input.addEventListener('input', e=>{ state.inputs[id] = parseFloat(e.target.value)||0; updateCalc(); });
+    });
   });
-  show(parseHash(), false);
-})();
+}
+function updateCalc(){
+  const {realKPI, productFlow, steamPrice, hoursYear} = state.inputs;
+  const solids = productFlow * 0.50;
+  const calc = (kpi, capexM) => {
+    const steamSave = Math.max(0, (realKPI - kpi) * solids / 1000);
+    const saveM = steamSave * hoursYear * steamPrice / 1e6;
+    const paybackMonths = saveM > 0 ? capexM / saveM * 12 : Infinity;
+    return {saveM, paybackMonths};
+  };
+  const A = calc(454.57, 1.40), B = calc(456.62, 11.25);
+  setCalc('solids', solids.toFixed(5));
+  setCalc('saveA', A.saveM.toFixed(2)); setCalc('saveB', B.saveM.toFixed(2));
+  setCalc('paybackA', isFinite(A.paybackMonths)?A.paybackMonths.toFixed(1):'—');
+  setCalc('paybackB', isFinite(B.paybackMonths)?B.paybackMonths.toFixed(1):'—');
+}
+function setCalc(key,val){ document.querySelectorAll(`[data-calc="${key}"]`).forEach(el=>el.textContent=val); }
+function closePanels(){menu.classList.remove('open'); notes.classList.remove('open');}
+document.getElementById('nextBtn').onclick=next; document.getElementById('prevBtn').onclick=prev;
+document.getElementById('menuBtn').onclick=()=>menu.classList.add('open'); document.getElementById('notesBtn').onclick=()=>notes.classList.add('open');
+menu.addEventListener('click',e=>{if(e.target===menu)closePanels()}); notes.addEventListener('click',e=>{if(e.target===notes)closePanels()});
+document.addEventListener('keydown',e=>{
+  if(e.key==='Escape') closePanels();
+  if(['ArrowRight','PageDown',' '].includes(e.key)) { e.preventDefault(); next(); }
+  if(['ArrowLeft','PageUp'].includes(e.key)) { e.preventDefault(); prev(); }
+  if(e.key.toLowerCase()==='m') menu.classList.add('open');
+  if(e.key.toLowerCase()==='n') notes.classList.add('open');
+  if(e.key.toLowerCase()==='p') window.print();
+  if(e.key.toLowerCase()==='f') document.documentElement.requestFullscreen?.();
+});
+let touchStart=null; stage.addEventListener('touchstart',e=>{touchStart=e.changedTouches[0].clientX},{passive:true}); stage.addEventListener('touchend',e=>{ if(touchStart===null)return; const dx=e.changedTouches[0].clientX-touchStart; if(Math.abs(dx)>50){dx<0?next():prev();} touchStart=null; },{passive:true});
+window.addEventListener('hashchange',()=>{ const m=location.hash.match(/\/(\d+)/); if(m) go(parseInt(m[1])-1); });
+const m=location.hash.match(/\/(\d+)/); if(m) state.index=Math.max(0,Math.min(slides.length-1,parseInt(m[1])-1));
+renderSlides();
 </script>
 </body>
 </html>
