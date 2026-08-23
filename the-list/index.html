@@ -1,0 +1,760 @@
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#22251d">
+  <meta name="color-scheme" content="light">
+  <meta name="referrer" content="no-referrer">
+  <meta name="robots" content="noindex,nofollow,noarchive">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; script-src 'unsafe-inline'; img-src data:; connect-src 'none'; object-src 'none'; frame-src 'none'; base-uri 'none'; form-action 'none'">
+  <title>Private note</title>
+  <style>
+    :root {
+      --white: oklch(1 0 0);
+      --ink: oklch(0.19 0.018 110);
+      --ink-soft: oklch(0.46 0.025 110);
+      --olive: oklch(0.50 0.105 110);
+      --olive-deep: oklch(0.25 0.036 110);
+      --olive-pale: oklch(0.955 0.026 110);
+      --coral: oklch(0.62 0.185 28);
+      --coral-pale: oklch(0.96 0.028 28);
+      --line: oklch(0.89 0.012 110);
+      --surface: oklch(0.965 0.008 110);
+      --focus: oklch(0.80 0.15 95);
+      --font: ui-sans-serif, "Leelawadee UI", Tahoma, "Noto Sans Thai", sans-serif;
+      --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+    html { background: var(--ink); scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      color: var(--ink);
+      background: var(--white);
+      font-family: var(--font);
+      font-size: 16px;
+      line-height: 1.65;
+      text-rendering: optimizeLegibility;
+      -webkit-font-smoothing: antialiased;
+    }
+    button { font: inherit; }
+    button:focus-visible {
+      outline: 3px solid var(--focus);
+      outline-offset: 3px;
+    }
+    [hidden] { display: none !important; }
+
+    .gate {
+      min-height: 100svh;
+      overflow: hidden;
+      color: var(--white);
+      background: var(--ink);
+      padding: max(24px, env(safe-area-inset-top)) max(18px, env(safe-area-inset-right)) max(24px, env(safe-area-inset-bottom)) max(18px, env(safe-area-inset-left));
+    }
+    .gate-shell {
+      width: min(1060px, 100%);
+      min-height: calc(100svh - 48px);
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: minmax(0, 1.1fr) minmax(320px, 0.72fr);
+      align-items: center;
+      gap: clamp(40px, 8vw, 112px);
+    }
+    .gate-copy { align-self: center; }
+    .gate-mark {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      margin: 0 0 clamp(44px, 9vh, 92px);
+      color: oklch(0.88 0.02 110);
+      font-size: 0.78rem;
+      font-weight: 700;
+    }
+    .gate-mark::before {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--olive);
+      content: "";
+    }
+    .gate h1 {
+      max-width: 9ch;
+      margin: 0;
+      font-size: clamp(3.2rem, 8vw, 5.8rem);
+      line-height: 0.96;
+      letter-spacing: -0.038em;
+      text-wrap: balance;
+    }
+    .gate-intro {
+      max-width: 43ch;
+      margin: 28px 0 0;
+      color: oklch(0.79 0.018 110);
+      font-size: clamp(1rem, 1.6vw, 1.12rem);
+      text-wrap: pretty;
+    }
+
+    .pin-panel {
+      width: min(390px, 100%);
+      justify-self: end;
+      padding: clamp(24px, 4vw, 34px);
+      border-radius: 16px;
+      color: var(--ink);
+      background: var(--white);
+    }
+    .pin-panel h2 {
+      margin: 0;
+      font-size: 1.28rem;
+      line-height: 1.3;
+      letter-spacing: -0.018em;
+    }
+    .pin-helper {
+      margin: 8px 0 22px;
+      color: var(--ink-soft);
+      font-size: 0.92rem;
+    }
+    .pin-dots {
+      min-height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 18px;
+      margin-bottom: 20px;
+    }
+    .pin-dot {
+      width: 14px;
+      height: 14px;
+      border: 2px solid oklch(0.71 0.018 110);
+      border-radius: 50%;
+      background: transparent;
+      transition: background 160ms ease, border-color 160ms ease, transform 160ms var(--ease-out);
+    }
+    .pin-dot.filled {
+      border-color: var(--olive-deep);
+      background: var(--olive-deep);
+      transform: scale(1.08);
+    }
+    .pin-dots.is-error { animation: shake 340ms ease-in-out; }
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      25% { transform: translateX(-8px); }
+      50% { transform: translateX(7px); }
+      75% { transform: translateX(-4px); }
+    }
+
+    .keypad {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+    }
+    .key {
+      min-width: 0;
+      min-height: 60px;
+      border: 0;
+      border-radius: 12px;
+      color: var(--ink);
+      background: var(--surface);
+      cursor: pointer;
+      font-size: 1.18rem;
+      font-weight: 760;
+      font-variant-numeric: tabular-nums;
+      transition: transform 160ms var(--ease-out), background 160ms ease, color 160ms ease;
+      -webkit-tap-highlight-color: transparent;
+      touch-action: manipulation;
+    }
+    .key:hover { background: var(--olive-pale); }
+    .key:active { transform: translateY(2px) scale(0.98); }
+    .key:disabled { cursor: wait; opacity: 0.56; }
+    .key--control {
+      border: 1px solid var(--line);
+      color: var(--ink-soft);
+      background: var(--white);
+      font-size: 0.86rem;
+      font-weight: 700;
+    }
+    .key svg {
+      width: 22px;
+      height: 22px;
+      display: block;
+      margin: auto;
+      fill: none;
+      stroke: currentColor;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      stroke-width: 1.8;
+    }
+
+    .pin-alert {
+      margin: 16px 0 0;
+      padding: 14px 15px;
+      border-radius: 12px;
+      color: oklch(0.34 0.095 28);
+      background: var(--coral-pale);
+    }
+    .pin-alert strong { display: block; margin-bottom: 4px; }
+    .pin-alert p { margin: 0; font-size: 0.88rem; line-height: 1.5; }
+    .pin-alert small {
+      display: block;
+      margin-top: 8px;
+      color: oklch(0.48 0.06 28);
+      font-size: 0.72rem;
+      line-height: 1.4;
+    }
+    .pin-state {
+      min-height: 20px;
+      margin: 13px 0 0;
+      color: var(--ink-soft);
+      font-size: 0.78rem;
+      text-align: center;
+    }
+
+    .page { min-height: 100vh; background: var(--white); }
+    .hero {
+      color: var(--white);
+      background: var(--olive);
+      padding: max(56px, env(safe-area-inset-top)) max(20px, env(safe-area-inset-right)) 64px max(20px, env(safe-area-inset-left));
+    }
+    .hero-inner {
+      width: min(1120px, 100%);
+      min-height: min(680px, 78svh);
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: minmax(0, 1.45fr) minmax(280px, 0.75fr);
+      align-items: end;
+      gap: clamp(40px, 8vw, 120px);
+    }
+    .hero h1 {
+      max-width: 10ch;
+      margin: 0;
+      font-size: clamp(3.4rem, 9vw, 5.9rem);
+      line-height: 0.96;
+      letter-spacing: -0.038em;
+      text-wrap: balance;
+    }
+    .hero-copy {
+      align-self: end;
+      padding-bottom: 4px;
+    }
+    .hero-copy p {
+      max-width: 37ch;
+      margin: 0;
+      color: oklch(0.95 0.016 110);
+      font-size: clamp(1.05rem, 1.9vw, 1.28rem);
+      line-height: 1.6;
+      text-wrap: pretty;
+    }
+    .hero-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px 20px;
+      margin: 26px 0 0;
+      color: oklch(0.91 0.025 110);
+      font-size: 0.82rem;
+      font-weight: 700;
+    }
+    .hero-meta span + span::before {
+      margin-right: 20px;
+      color: oklch(0.77 0.06 110);
+      content: "•";
+    }
+
+    .reading {
+      width: min(1120px, calc(100% - 40px));
+      margin: 0 auto;
+      padding: clamp(68px, 10vw, 124px) 0 96px;
+    }
+    .opening {
+      display: grid;
+      grid-template-columns: minmax(180px, 0.72fr) minmax(0, 1.7fr);
+      gap: clamp(30px, 7vw, 96px);
+      margin-bottom: clamp(76px, 11vw, 132px);
+    }
+    .opening-label {
+      margin: 6px 0 0;
+      color: var(--olive);
+      font-weight: 780;
+    }
+    .opening p {
+      max-width: 61ch;
+      margin: 0;
+      font-size: clamp(1.3rem, 2.8vw, 2rem);
+      line-height: 1.45;
+      letter-spacing: -0.022em;
+      text-wrap: pretty;
+    }
+
+    .criteria-section {
+      display: grid;
+      grid-template-columns: minmax(180px, 0.72fr) minmax(0, 1.7fr);
+      gap: clamp(30px, 7vw, 96px);
+      padding: clamp(44px, 6vw, 72px) 0;
+      border-top: 1px solid var(--line);
+    }
+    .criteria-title { align-self: start; }
+    .criteria-title h2 {
+      max-width: 11ch;
+      margin: 0;
+      font-size: clamp(1.35rem, 2.5vw, 1.9rem);
+      line-height: 1.25;
+      letter-spacing: -0.025em;
+      text-wrap: balance;
+    }
+    .criteria-title p {
+      max-width: 24ch;
+      margin: 10px 0 0;
+      color: var(--ink-soft);
+      font-size: 0.88rem;
+      line-height: 1.55;
+    }
+    .criteria-list {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 0 clamp(28px, 5vw, 64px);
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+    .criteria-list li {
+      position: relative;
+      min-width: 0;
+      padding: 0 0 22px 22px;
+      color: oklch(0.27 0.02 110);
+      line-height: 1.6;
+      text-wrap: pretty;
+    }
+    .criteria-list li::before {
+      position: absolute;
+      top: 0.7em;
+      left: 0;
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--olive);
+      content: "";
+    }
+    .criteria-list strong { color: var(--ink); font-weight: 780; }
+    .aside-note {
+      display: inline;
+      color: var(--olive);
+      font-size: 0.88em;
+      font-weight: 720;
+    }
+
+    .closing {
+      color: var(--white);
+      background: var(--ink);
+      padding: clamp(72px, 11vw, 132px) max(20px, env(safe-area-inset-right)) max(72px, env(safe-area-inset-bottom)) max(20px, env(safe-area-inset-left));
+    }
+    .closing-inner {
+      width: min(1120px, 100%);
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: minmax(0, 1.3fr) minmax(230px, 0.7fr);
+      gap: 40px;
+      align-items: end;
+    }
+    .closing p {
+      max-width: 15ch;
+      margin: 0;
+      font-size: clamp(2.5rem, 6vw, 5rem);
+      line-height: 1.02;
+      letter-spacing: -0.035em;
+      text-wrap: balance;
+    }
+    .closing small {
+      justify-self: end;
+      color: oklch(0.72 0.02 110);
+      text-align: right;
+    }
+
+    @media (max-width: 760px) {
+      .gate-shell { grid-template-columns: 1fr; gap: 38px; padding: 16px 0; }
+      .gate-mark { margin-bottom: 40px; }
+      .gate h1 { max-width: 10ch; font-size: clamp(3rem, 16vw, 4.8rem); }
+      .pin-panel { justify-self: stretch; width: 100%; }
+      .hero-inner { min-height: 72svh; grid-template-columns: 1fr; align-content: end; gap: 38px; }
+      .hero h1 { font-size: clamp(3.2rem, 16vw, 5rem); }
+      .hero-copy { max-width: 520px; }
+      .opening,
+      .criteria-section,
+      .closing-inner { grid-template-columns: 1fr; }
+      .opening { gap: 20px; }
+      .criteria-section { gap: 28px; }
+      .criteria-title h2 { max-width: none; }
+      .criteria-title p { max-width: 42ch; }
+      .criteria-list { grid-template-columns: 1fr; }
+      .closing small { justify-self: start; text-align: left; }
+    }
+
+    @media (max-width: 390px) {
+      .gate { padding-left: 14px; padding-right: 14px; }
+      .pin-panel { padding: 21px 18px; }
+      .key { min-height: 56px; }
+      .reading { width: min(100% - 28px, 1120px); }
+      .hero { padding-left: 16px; padding-right: 16px; }
+      .hero-meta { gap: 5px 12px; }
+      .hero-meta span + span::before { margin-right: 12px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after {
+        animation-duration: 0.001ms !important;
+        animation-iteration-count: 1 !important;
+        scroll-behavior: auto !important;
+        transition-duration: 0.001ms !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main id="gate" class="gate" aria-labelledby="gate-title">
+    <div class="gate-shell">
+      <section class="gate-copy">
+        <p class="gate-mark">private note / read-only</p>
+        <h1 id="gate-title">not for everyone.</h1>
+        <p class="gate-intro">ถ้ามีรหัส ก็กดเข้ามาอ่านได้เลย หน้านี้ไม่มีช่องพิมพ์และไม่เรียกคีย์บอร์ดของอุปกรณ์</p>
+      </section>
+
+      <section id="pinPanel" class="pin-panel" aria-labelledby="pin-title">
+        <h2 id="pin-title">ใส่ PIN 4 หลัก</h2>
+        <p class="pin-helper">แตะตัวเลขบนหน้าจอเพื่อเปิดโน้ต</p>
+
+        <div id="pinDots" class="pin-dots" aria-label="ใส่แล้ว 0 จาก 4 หลัก">
+          <span class="pin-dot" aria-hidden="true"></span>
+          <span class="pin-dot" aria-hidden="true"></span>
+          <span class="pin-dot" aria-hidden="true"></span>
+          <span class="pin-dot" aria-hidden="true"></span>
+        </div>
+
+        <div id="keypad" class="keypad" aria-label="แป้นตัวเลข PIN">
+          <button class="key" type="button" data-digit="1" aria-label="เลข 1">1</button>
+          <button class="key" type="button" data-digit="2" aria-label="เลข 2">2</button>
+          <button class="key" type="button" data-digit="3" aria-label="เลข 3">3</button>
+          <button class="key" type="button" data-digit="4" aria-label="เลข 4">4</button>
+          <button class="key" type="button" data-digit="5" aria-label="เลข 5">5</button>
+          <button class="key" type="button" data-digit="6" aria-label="เลข 6">6</button>
+          <button class="key" type="button" data-digit="7" aria-label="เลข 7">7</button>
+          <button class="key" type="button" data-digit="8" aria-label="เลข 8">8</button>
+          <button class="key" type="button" data-digit="9" aria-label="เลข 9">9</button>
+          <button id="clearPin" class="key key--control" type="button" aria-label="ล้าง PIN ทั้งหมด">ล้าง</button>
+          <button class="key" type="button" data-digit="0" aria-label="เลข 0">0</button>
+          <button id="deletePin" class="key key--control" type="button" aria-label="ลบตัวเลขล่าสุด">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 6.5H9.2L3 12l6.2 5.5H21V6.5Z"></path><path d="m11 9.5 5 5m0-5-5 5"></path></svg>
+          </button>
+        </div>
+
+        <div id="pinAlert" class="pin-alert" role="alert" hidden>
+          <strong>PIN ไม่ถูกต้อง</strong>
+          <p>กำลังส่งบันทึกให้แจ๊คว่า IP <b id="fakeIp"></b> พยายามเข้าเว็บ…</p>
+          <small>ระบบจำลองเท่านั้น: ไม่มีการอ่าน เก็บ หรือส่ง IP จริง</small>
+        </div>
+        <p id="pinState" class="pin-state" aria-live="polite">รอ PIN</p>
+      </section>
+    </div>
+  </main>
+
+  <main id="page" class="page" tabindex="-1" hidden>
+    <header class="hero">
+      <div class="hero-inner">
+        <h1>คนที่กุอยากคบแบบจริงจัง</h1>
+        <div class="hero-copy">
+          <p>นี่ไม่ใช่คะแนนเต็มร้อยของใคร แค่ภาพของคนและความสัมพันธ์ที่กุอยากสร้างด้วยจริง ๆ</p>
+          <div class="hero-meta" aria-label="ข้อมูลสรุป">
+            <span>42 notes</span><span>long-term only</span><span>childfree</span>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <article class="reading">
+      <section class="opening" aria-labelledby="opening-title">
+        <h2 id="opening-title" class="opening-label">ก่อนอ่าน</h2>
+        <p>ไม่ต้อง perfect แต่ต้อง fit มีทั้งสิ่งที่ชอบ สิ่งที่คุยกันได้ และบางเรื่องที่ไม่ใช่ของต่อรอง</p>
+      </section>
+
+      <section class="criteria-section" aria-labelledby="visible-title">
+        <div class="criteria-title">
+          <h2 id="visible-title">สเปกที่มองเห็นก่อน</h2>
+          <p>แรงดึงดูดมีจริง และความเอ็นดูก็สำคัญพอ ๆ กัน</p>
+        </div>
+        <ul class="criteria-list">
+          <li><strong>พี่คนสวย</strong> อายุ 22–32</li>
+          <li>สูง 155–170 cm</li>
+          <li>dom ที่เอ็นดูม๋าเด้ก</li>
+          <li>เชื้อสายจีน <span class="aside-note">optional but prefer</span> เพราะวัฒนธรรมการเลี้ยงดูน่าจะคล้าย ๆ กัน</li>
+          <li>เก่งในสายตากุ</li>
+        </ul>
+      </section>
+
+      <section class="criteria-section" aria-labelledby="mind-title">
+        <div class="criteria-title">
+          <h2 id="mind-title">เรียนรู้และคุยกันรู้เรื่อง</h2>
+          <p>ฉลาดไม่ใช่รู้ทุกเรื่อง แต่รู้ว่าตอนไหนควรถามและตอนไหนควรอัปเดตความเชื่อ</p>
+        </div>
+        <ul class="criteria-list">
+          <li>เรียนสายวิทย์ จะได้คุยกันรู้เรื่อง</li>
+          <li>มหาลัยชั้นนำในสายตากุ</li>
+          <li>อย่างน้อย Bachelor degree</li>
+          <li>Bilingual</li>
+          <li>รับ fact ที่มีข้อมูลอ้างอิงได้ แม้ไม่ตรงกับสิ่งที่อยากเชื่อ</li>
+          <li>ไม่ ego เรื่องที่ตัวเองไม่รู้</li>
+        </ul>
+      </section>
+
+      <section class="criteria-section" aria-labelledby="life-title">
+        <div class="criteria-title">
+          <h2 id="life-title">ไลฟ์สไตล์ที่ไปด้วยกันได้</h2>
+          <p>มีโลกของตัวเอง แต่ยังมีเรื่องสนุกที่แชร์กันได้เรื่อย ๆ</p>
+        </div>
+        <ul class="criteria-list">
+          <li>ชอบเที่ยว และเที่ยวด้วยกันได้</li>
+          <li>ดูอนิเมะ: เทสเดียวกันจะดีมาก หรือดูเรื่องใหม่ ๆ เพิ่มด้วยกันได้</li>
+          <li>ไม่เล่น Free Fire</li>
+          <li>เชื่อเรื่องดวง พลังงาน หรือโหราศาสตร์ได้ประมาณนึง แต่ไม่ใช้เป็นปัจจัย 4</li>
+          <li>สะอาด รกได้แต่ขอสะอาด</li>
+          <li>มีมารยาท</li>
+        </ul>
+      </section>
+
+      <section class="criteria-section" aria-labelledby="money-title">
+        <div class="criteria-title">
+          <h2 id="money-title">เงินและทิศทางชีวิต</h2>
+          <p>เงินไม่ใช่ทุกอย่าง แต่การรับผิดชอบชีวิตตัวเองเป็นเรื่องใหญ่</p>
+        </div>
+        <ul class="criteria-list">
+          <li>บริหารเงินเป็น</li>
+          <li>ชอบการลงทุน</li>
+          <li>พึ่งตัวเองได้ ไม่จน และไม่มีหนี้ที่ควบคุมไม่ได้</li>
+          <li>มีเป้าหมายชีวิต</li>
+        </ul>
+      </section>
+
+      <section class="criteria-section" aria-labelledby="health-title">
+        <div class="criteria-title">
+          <h2 id="health-title">สุขภาพและเส้นแดง</h2>
+          <p>สิ่งที่กระทบความปลอดภัยและความสัมพันธ์ต้องคุยกันแบบตรงไปตรงมา</p>
+        </div>
+        <ul class="criteria-list">
+          <li>ไม่สูบบุหรี่</li>
+          <li>ไม่ใช้ยาเสพติด</li>
+          <li>ดูแลสุขภาพใจตัวเองได้ ถ้ามีภาวะหรืออยู่ระหว่างรักษา ต้องสื่อสารตรงไปตรงมา รับผิดชอบต่อการรักษา และไม่ใช้มันทำร้ายกัน</li>
+        </ul>
+      </section>
+
+      <section class="criteria-section" aria-labelledby="future-title">
+        <div class="criteria-title">
+          <h2 id="future-title">อนาคตที่ต้องตรงกัน</h2>
+          <p>รักกันอย่างเดียวไม่พอ ถ้าภาพชีวิตปลายทางไปคนละทาง</p>
+        </div>
+        <ul class="criteria-list">
+          <li>อยากได้ Long-term relationship</li>
+          <li>ไม่อยากมีลูก</li>
+          <li>ไม่ LDR</li>
+          <li>ไม่ติดกับการทำงานหรือการเรียนต่อของกุ</li>
+        </ul>
+      </section>
+
+      <section class="criteria-section" aria-labelledby="space-title">
+        <div class="criteria-title">
+          <h2 id="space-title">พื้นที่และความใกล้ชิด</h2>
+          <p>อยู่ใกล้กันได้โดยไม่ต้องละลายตัวตนของใครทิ้ง</p>
+        </div>
+        <ul class="criteria-list">
+          <li>มีพื้นที่ส่วนตัวให้กัน</li>
+          <li>อยู่ด้วยกันได้แบบไม่ต้องทำไรกันได้</li>
+          <li>รักกุ</li>
+          <li>ชอบ Skinship</li>
+        </ul>
+      </section>
+
+      <section class="criteria-section" aria-labelledby="trust-title">
+        <div class="criteria-title">
+          <h2 id="trust-title">ความไว้ใจและความปลอดภัยทางใจ</h2>
+          <p>ไม่ต้องเดา ไม่ต้องแข่ง และไม่ต้องเจ็บเพื่อพิสูจน์ว่ารัก</p>
+        </div>
+        <ul class="criteria-list">
+          <li>ไม่นอกใจ</li>
+          <li>ไม่โกหกเรื่องใหญ่ ๆ หรือหลอกกัน</li>
+          <li>ไม่หลอกตัวเอง หรือพยายามเป็นคนอื่น</li>
+          <li>ไม่ judge กุ และไม่เอากุไปเปรียบเทียบกับใคร</li>
+          <li>ไม่ตั้งใจทำให้กุหึงหรือหวง และไม่ประชดเพื่อเรียกร้องปฏิกิริยา</li>
+          <li>ไม่กีดกันกุจากเพื่อนหรือสังคม</li>
+          <li>เข้ากับเพื่อนกุได้ในระดับที่เคารพกัน</li>
+          <li>ไม่ลงโน้ตด่ากุ</li>
+          <li>ควบคุมอารมณ์ได้ประมาณนึง</li>
+          <li>ไม่เล่นสงครามประสาท</li>
+        </ul>
+      </section>
+    </article>
+
+    <footer class="closing">
+      <div class="closing-inner">
+        <p>ไม่ต้อง perfect แต่ต้อง fit.</p>
+        <small>read-only note<br>no scores, no quiz</small>
+      </div>
+    </footer>
+  </main>
+
+  <script>
+    (() => {
+      "use strict";
+
+      const CORRECT_PIN = "1597";
+      const gate = document.getElementById("gate");
+      const page = document.getElementById("page");
+      const panel = document.getElementById("pinPanel");
+      const keypad = document.getElementById("keypad");
+      const pinDots = document.getElementById("pinDots");
+      const dots = Array.from(pinDots.querySelectorAll(".pin-dot"));
+      const pinAlert = document.getElementById("pinAlert");
+      const fakeIp = document.getElementById("fakeIp");
+      const pinState = document.getElementById("pinState");
+      const allKeys = Array.from(keypad.querySelectorAll("button"));
+      const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+
+      let digits = "";
+      let checking = false;
+      let resetTimer = null;
+
+      function randomInt(max) {
+        const values = new Uint32Array(1);
+        crypto.getRandomValues(values);
+        return values[0] % max;
+      }
+
+      function makeFakeIp() {
+        const blocks = ["192.0.2", "198.51.100", "203.0.113"];
+        return `${blocks[randomInt(blocks.length)]}.${randomInt(254) + 1}`;
+      }
+
+      function renderDots() {
+        dots.forEach((dot, index) => dot.classList.toggle("filled", index < digits.length));
+        pinDots.setAttribute("aria-label", `ใส่แล้ว ${digits.length} จาก 4 หลัก`);
+      }
+
+      function setBusy(value) {
+        checking = value;
+        panel.setAttribute("aria-busy", String(value));
+        allKeys.forEach((key) => { key.disabled = value; });
+      }
+
+      function clearPendingReset() {
+        if (resetTimer !== null) {
+          window.clearTimeout(resetTimer);
+          resetTimer = null;
+        }
+      }
+
+      function clearPin() {
+        if (checking) return;
+        clearPendingReset();
+        digits = "";
+        pinAlert.hidden = true;
+        pinState.textContent = "รอ PIN";
+        renderDots();
+      }
+
+      function showWrongPin() {
+        fakeIp.textContent = makeFakeIp();
+        pinAlert.hidden = false;
+        pinState.textContent = "รหัสผิด — ระบบจะล้าง PIN ให้อัตโนมัติ";
+        pinDots.classList.remove("is-error");
+        void pinDots.offsetWidth;
+        pinDots.classList.add("is-error");
+        setBusy(false);
+        pinAlert.scrollIntoView({
+          behavior: reduceMotion.matches ? "auto" : "smooth",
+          block: "nearest"
+        });
+
+        resetTimer = window.setTimeout(() => {
+          digits = "";
+          pinAlert.hidden = true;
+          pinState.textContent = "ลองใหม่ได้เลย";
+          pinDots.classList.remove("is-error");
+          renderDots();
+          resetTimer = null;
+        }, 2600);
+      }
+
+      function unlock() {
+        pinAlert.hidden = true;
+        pinState.textContent = "รหัสถูกต้อง — กำลังเปิดโน้ต";
+        const delay = reduceMotion.matches ? 0 : 260;
+
+        window.setTimeout(() => {
+          gate.hidden = true;
+          page.hidden = false;
+          document.title = "the list. — คนที่กุอยากคบแบบจริงจัง";
+          window.scrollTo(0, 0);
+          page.focus({ preventScroll: true });
+          setBusy(false);
+        }, delay);
+      }
+
+      function verifyPin() {
+        if (checking || digits.length !== 4) return;
+        setBusy(true);
+        pinState.textContent = "กำลังตรวจ PIN…";
+        window.setTimeout(() => {
+          if (digits === CORRECT_PIN) unlock();
+          else showWrongPin();
+        }, reduceMotion.matches ? 0 : 220);
+      }
+
+      keypad.addEventListener("click", (event) => {
+        const button = event.target.closest("button");
+        if (!button || checking) return;
+
+        const digit = button.dataset.digit;
+        if (digit !== undefined) {
+          clearPendingReset();
+          pinAlert.hidden = true;
+          if (digits.length >= 4) {
+            digits = "";
+            pinDots.classList.remove("is-error");
+          }
+          digits += digit;
+          pinState.textContent = `ใส่แล้ว ${digits.length} จาก 4 หลัก`;
+          renderDots();
+          if (digits.length === 4) verifyPin();
+          return;
+        }
+
+        if (button.id === "clearPin") {
+          clearPin();
+          return;
+        }
+
+        if (button.id === "deletePin") {
+          clearPendingReset();
+          pinAlert.hidden = true;
+          digits = digits.slice(0, -1);
+          pinState.textContent = digits.length ? `ใส่แล้ว ${digits.length} จาก 4 หลัก` : "รอ PIN";
+          renderDots();
+        }
+      });
+
+      window.addEventListener("pageshow", (event) => {
+        if (!event.persisted) return;
+        clearPendingReset();
+        digits = "";
+        checking = false;
+        page.hidden = true;
+        gate.hidden = false;
+        pinAlert.hidden = true;
+        allKeys.forEach((key) => { key.disabled = false; });
+        panel.setAttribute("aria-busy", "false");
+        pinState.textContent = "รอ PIN";
+        document.title = "Private note";
+        renderDots();
+      });
+
+      renderDots();
+    })();
+  </script>
+</body>
+</html>
+
