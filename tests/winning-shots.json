@@ -1,0 +1,137 @@
+[
+  {
+    "level": 1,
+    "sequence": [
+      [
+        6,
+        0.9,
+        null
+      ]
+    ],
+    "mode": "won",
+    "pigs": 0
+  },
+  {
+    "level": 2,
+    "sequence": [
+      [
+        6,
+        0.9,
+        42
+      ]
+    ],
+    "mode": "won",
+    "pigs": 0
+  },
+  {
+    "level": 3,
+    "sequence": [
+      [
+        0,
+        0.78,
+        28
+      ],
+      [
+        6,
+        0.9,
+        42
+      ]
+    ],
+    "mode": "won",
+    "pigs": 0
+  },
+  {
+    "level": 4,
+    "sequence": [
+      [
+        56,
+        0.78,
+        null
+      ],
+      [
+        18,
+        0.9,
+        28
+      ]
+    ],
+    "mode": "won",
+    "pigs": 0
+  },
+  {
+    "level": 5,
+    "sequence": [
+      [
+        6,
+        0.9,
+        null
+      ]
+    ],
+    "mode": "won",
+    "pigs": 0
+  },
+  {
+    "level": 6,
+    "sequence": [
+      [
+        65,
+        1,
+        null
+      ]
+    ],
+    "mode": "won",
+    "pigs": 0
+  },
+  {
+    "level": 7,
+    "sequence": [
+      [
+        6,
+        0.9,
+        null
+      ]
+    ],
+    "mode": "won",
+    "pigs": 0
+  },
+  {
+    "level": 8,
+    "sequence": [
+      [
+        0,
+        0.9,
+        null
+      ]
+    ],
+    "mode": "won",
+    "pigs": 0
+  },
+  {
+    "level": 9,
+    "sequence": [
+      [
+        6,
+        0.9,
+        28
+      ],
+      [
+        30,
+        0.9,
+        null
+      ]
+    ],
+    "mode": "won",
+    "pigs": 0
+  },
+  {
+    "level": 10,
+    "sequence": [
+      [
+        38,
+        0.9,
+        42
+      ]
+    ],
+    "mode": "won",
+    "pigs": 0
+  }
+]

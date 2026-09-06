@@ -1,0 +1,10 @@
+{
+  "name": "mini-angry-birds-reforged",
+  "version": "33.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "node scripts/serve.mjs",
+    "test": "node --test tests/game.test.cjs",
+    "check": "node --check src/game.js && node --check src/levels.js"
+  }
+}
