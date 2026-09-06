@@ -1,74 +1,64 @@
-# Mini Angry Birds: Reforged (v32 Crush & Cinematic)
+# Mini Angry Birds: Reforged — The Egg Heist (v33)
 
-A complete rebuild of the v21 prototype focused on better physics, stronger game feel, clearer UX, and ten deliberately designed levels.
+A static, Thai-language slingshot physics game with ten levels, four bird types, destructible structures, TNT chains, and 30 campaign stars. Runs on GitHub Pages or directly from `index.html`; Matter.js is bundled locally.
 
-## Run
+## Play
 
-Open `index.html` in a modern browser. The build is fully static and works on GitHub Pages. Matter.js is included locally under `src/vendor/`; no internet connection is required after downloading the folder.
+- **Drag** the loaded bird backward and release. The dotted guide follows the bird's actual starting position, air resistance, and gravity.
+- **Precision aiming:** open **เล็งละเอียด**, adjust the angle and power, then press **ยิง!**. These controls are always visible on portrait phones.
+- **Keyboard:** focus the playfield; ↑/↓ adjust angle, ←/→ adjust power, and Space launches or activates an airborne ability. Hold Shift for larger adjustments. Esc cancels aiming or closes a menu. R restarts, P pauses, G toggles the guide, M toggles sound.
+- **Birds:** Red pushes wood, Blue splits into three and breaks glass, Yellow boosts in its flight direction, and Bomb detonates on command or 0.85 seconds after impact.
+- Defeat every pig to advance. Clear within par for three stars; unused birds earn bonus points.
+- Progress and preferences save on this device. Existing v1 saves are retained and validated on load.
 
-## Controls
+The game opens directly on the playfield. The original animated opening is available from **วิธีเล่น → ดูฉากเปิดอีกครั้ง**. Landscape orientation gives a larger view on phones. Sound starts after interaction; reduced shake/flash is available in Help and follows the operating-system preference by default.
 
-- Drag and release the loaded bird to shoot.
-- Click/tap the playfield or press `Space` while flying to use an ability.
-- `R`: restart level
-- `G`: toggle trajectory guide
-- `P`: pause/resume
-- `M`: mute/unmute
-- `Esc`: close an open menu or pause
+## What v33 fixes
 
-## What changed from v21
+The previous layouts could overlap or collapse before the first shot, the aiming preview started at the wrong position, and endless debris motion could prevent a new turn. This version:
 
-### Physics
+- Rebuilds all ten levels with supported beams and non-overlapping pigs, preserving their original themes and mechanics.
+- Uses a simulation clock for shots, damage, combos, explosion fuses, and score timing. Pausing, reading Help, and aiming do not consume those timers.
+- Waits for TNT chains and the last shot to resolve, bounds the settling period, and offers a next-bird button once the current projectile is finished.
+- Cancels interrupted/cancelled drags safely and ignores duplicate or unrelated pointer releases.
+- Spawns Blue fragments outside one another, adds Bomb's impact fuse, and measures blast distance to block surfaces.
+- Adds precise touch/keyboard aiming, accessible modal focus handling, full-screen menus, visible previous-shot settings, campaign star totals, and a compact responsive interface.
+- Keeps result menus recoverable, sanitizes malformed saves, and confirms progress resets.
 
-- Replaced the custom collision and support solver with Matter.js rigid-body physics.
-- Added real mass, inertia, angular momentum, friction, restitution, improved contact handling, and more stable stacking.
-- Added material-specific durability and impact response.
-- Added localized TNT/bomb blast force, damage falloff, and chain reactions.
-- Added pig damage from direct hits, falling structures, crushing impacts, and explosions.
-- Prevented setup settling from damaging structures before the first shot.
+## Development
 
-### Graphics and game feel
+No packages need to be installed. Use a current Node.js runtime:
 
-- New high-resolution responsive canvas with device-pixel-ratio rendering.
-- Original vector-drawn birds, pigs, slingshot, materials, terrain, and layered backgrounds.
-- Material cracks, damage flashes, debris, dust, glass shards, sparks, smoke, shockwaves, score floaters, trails, and camera shake.
-- Procedural Web Audio sound effects; no audio files required.
+```sh
+npm run dev
+npm test
+npm run check
+```
 
-### Level design
+The development server listens on port 4173, with `--port` or `PORT` overrides. Direct `file://` play and GitHub Pages require no server or build step.
 
-- Replaced 150 repetitive stages with a ten-level campaign.
-- Each level teaches or combines a distinct solution pattern: support cutting, glass splitting, long-range boost, TNT chains, lever rotation, stone bunker demolition, controlled collapse, precision tunnel shots, and a mixed-material finale.
-- Sequential unlocks, per-level best score, best stars, par targets, contextual tutorials, and failure tips.
+## Verification
 
-### UX/UI
+`npm test` runs **40 automated checks** using the real bundled Matter.js and production game code. Browser presentation APIs are stubbed for these tests; physics is not mocked. Coverage includes:
 
-- Redesigned HUD, bird queue, power meter, ability button, pause menu, results breakdown, level selection, help panel, fullscreen support, responsive mobile layout, and persistent settings.
-- Progress is stored under `mini-angry-birds-reforged-save-v1`.
-- Existing v21 scores for the first ten levels are migrated when available.
+- Ten seconds of gravity on every starting structure, independently of pre-launch freezing.
+- A recorded legal winning sequence for every level, repeated with three visual random seeds.
+- Exhausted-bird loss and retry on all ten levels; finite physics state throughout.
+- Trajectory/launch agreement for all four birds.
+- Pointer cancellation and duplicate releases; pause/menu clocks and explosion fuses; abilities; bounded turn flow; saves, unlocks, and result recovery.
 
-## Main files
+Winning shots are recorded in `tests/winning-shots.json` for reproducible regression checks, not fed into the game. `scripts/search-shots.cjs` searches legal shots for level balancing. `tests/viewports.html` renders portrait and landscape browser fixtures. Automated physics checks do not replace playtesting on physical devices.
 
-- `index.html`: application shell and UI
-- `src/styles.css`: responsive interface styling
-- `src/levels.js`: all ten level definitions
-- `src/game.js`: physics integration, rendering, input, scoring, audio, saves, and game flow
-- `src/vendor/matter.min.js`: local Matter.js runtime
+## Source map
 
+| Path | Purpose |
+| --- | --- |
+| `index.html` | Game shell and controls |
+| `src/game.js` | Physics, rendering, input, scoring, audio, saves, game flow |
+| `src/levels.js` | Ten supported level layouts |
+| `src/styles.css` | Responsive game and dialog styling |
+| `src/vendor/matter.min.js` | Unmodified Matter.js 0.20.0; license in `MATTER-JS-LICENSE.txt` |
+| `tests/` | Physics regression tests and responsive fixtures |
+| `scripts/` | Dependency-free development server and shot search |
 
-## v31 stability hotfix
-
-- Reduced UI repaint churn that could cause stutter or apparent frame freezes on some machines.
-- Disabled aggressive body sleeping and retuned friction/restitution so stacked objects respond more naturally instead of looking stuck or floating.
-- Increased solver quality and sub-stepping for more reliable launches and collision resolution.
-- Added extra guards against invalid projectile state, missed pointer release, and disappearing birds.
-
-
-## v32 crush and cinematic update
-
-- Added a 16-second skippable opening cinematic shown when the game starts.
-- The cinematic uses original vector animation, film-strip presentation, Thai captions, and a short egg-theft story; it does not embed external video or copyrighted audio.
-- Added a replay button for the opening cinematic in the Help menu.
-- Added impact crushing: a falling block now damages pigs according to mass, downward speed, and contact geometry.
-- Added sustained crushing: blocks that have actually moved and continue pressing down can kill a pig even after the initial impact has ended.
-- Added safeguards so stable starting contacts are not automatically treated as crushing before the physics system is armed by the first launch.
-- Added CRUSH feedback, dust, and score effects when a pig is defeated by falling debris.
+The separate internship presentation, `the-list/` page, and existing `music.mp3` asset are retained unchanged. The game uses procedural Web Audio effects. A development inspector is available only with `?debug=1`.

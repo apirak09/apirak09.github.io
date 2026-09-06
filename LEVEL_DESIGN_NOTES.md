@@ -1,32 +1,30 @@
-# Level Design Notes
+# Level Design Notes — v33
 
-| Level | Core lesson | Bird focus | Par |
-|---|---|---|---:|
-| 1. Woodland Welcome | Remove load-bearing wood | Red | 2 |
-| 2. Crystal Feet | Brittle glass foundations | Blue split | 2 |
-| 3. Three Little Rooms | Time a split across multiple supports | Blue split | 2 |
-| 4. High Perch | Long-range arc and mid-flight acceleration | Yellow boost | 2 |
-| 5. Fuse Lesson | Trigger a TNT chain efficiently | Red / Bomb | 1 |
-| 6. Counterweight | Use torque and a long beam | Red / Yellow | 2 |
-| 7. Stone Shell | Detonate inside a heavy bunker | Bomb | 2 |
-| 8. Twin Collapse | Make one tower fall into another | Yellow / Blue / Bomb | 2 |
-| 9. Needle Thread | Control power through a narrow corridor | Yellow boost | 2 |
-| 10. The Last Fortress | Combine glass, TNT, stone, and bird abilities | Mixed roster | 4 |
+All ten layouts use exact support surfaces. The `room` helper places a roof on two posts; pig positions are derived from their floor and radius. The layout is frozen while aiming, and independent gravity tests verify that it also remains stable without that freeze.
 
-## Balance rules
+| Level | Core lesson | Par | Verified shots to clear |
+| --- | --- | ---: | ---: |
+| Woodland Welcome | Remove a wooden support | 2 | 1 |
+| Crystal Feet | Split across glass supports | 2 | 1 |
+| Three Little Rooms | Sweep separate glass rooms | 3 | 2 |
+| High Perch | Reach an elevated target, then boost | 2 | 2 |
+| Fuse Lesson | Start a TNT chain | 1 | 1 |
+| Counterweight | Rotate a beam around its support | 2 | 1 |
+| Stone Shell | Detonate near a stone bunker | 2 | 1 |
+| Twin Collapse | Collapse connected towers | 2 | 1 |
+| Needle Thread | Mix low tunnel and high shots | 2 | 2 |
+| The Last Fortress | Combine glass, stone and TNT | 4 | 1 |
 
-- Three stars: clear at or below par.
-- Two stars: clear at par + 1.
-- One star: any clear above par + 1.
-- Unused birds grant 10,000 points each.
-- Destruction combos increase block and pig point values when events occur within 0.9 seconds.
+The recorded solutions are examples, not claims of minimum shot counts. Clever chain reactions can clear a level below par. Pars leave room for exploration; the campaign is intended to be approachable.
 
-## QA performed
+## Scoring
 
-- JavaScript syntax validation for all source files.
-- Runtime initialization through a mocked DOM/canvas environment.
-- Repeated launch simulation and next-bird flow tests.
-- Ability tests for blue split, yellow boost, and bomb detonation.
-- Static-settle tests across all ten stages: no stage loses pigs or blocks before the first shot.
-- Multi-shot stress tests across all levels with checks for non-finite positions/velocities.
-- Automated shot-search passes confirming executable win paths, including the precision stage and finale.
+Three stars at or below par, two at par + 1, one for any other clear. Unused birds earn 10,000 points each. Destruction within 0.9 simulation seconds builds a combo, with a maximum 1.8× multiplier. Par and active simulation time also contribute to the result bonus; menu and aiming time are excluded.
+
+## Reproducible validation
+
+Run `npm test`. Every starting layout moves less than two world pixels under ten seconds of gravity. Every level has a legal winning-shot fixture replayed at three visual random seeds. Miss-only runs must reach loss and retry; a separate stress case keeps debris rotating to verify the bounded turn transition.
+
+`tests/winning-shots.json` stores `[angleDegrees, powerFraction, abilityFrame]`, with frames measured at 60 Hz. `null` means no manual ability (Bomb may auto-detonate). These fixtures remain outside production gameplay.
+
+Browser checks cover an opening-level clear, drag/precision controls, result navigation, and 390 × 780 / 844 × 390 responsive fixtures. Phone fixtures test layout and controls, not physical-device performance or touch hardware.

@@ -1,184 +1,107 @@
 (() => {
   'use strict';
-
-  const B = (x, y, w, h, material = 'wood', angle = 0, extra = {}) => ({ x, y, w, h, material, angle, ...extra });
-  const P = (x, y, r = 18, hp = 100, extra = {}) => ({ x, y, r, hp, ...extra });
-  const T = (x, y, w, h, angle = 0, extra = {}) => ({ x, y, w, h, material: 'terrain', angle, static: true, ...extra });
+  const B = (x, y, w, h, material = 'wood', extra = {}) => ({ x, y, w, h, material, ...extra });
+  const P = (x, floor = 650, r = 20, hp = 100) => ({ x, y: floor - r, r, hp });
+  const T = (x, top, w, h) => ({ x, y: top + h / 2, w, h, material: 'terrain', static: true });
+  // Every beam rests on two posts, every pig has a floor. Coordinates share
+  // exact supporting surfaces instead of relying on invisible setup settling.
+  const room = (x, floor = 650, width = 160, height = 112, material = 'wood', roof = 'wood') => [
+    B(x - width / 2 + 14, floor - height / 2, 26, height, material),
+    B(x + width / 2 - 14, floor - height / 2, 26, height, material),
+    B(x, floor - height - 12, width + 8, 24, roof)
+  ];
+  const hint = (step, title, text) => ({ step, title, text });
 
   window.GAME_LEVELS = [
     {
-      name: 'Woodland Welcome',
-      subtitle: 'ฐานไม้และแรงโน้มถ่วง',
-      birds: ['red', 'red', 'yellow'],
-      par: 2,
-      backdrop: 'meadow',
-      tutorial: { step: 1, title: 'เริ่มจากฐาน', text: 'ยิงเสาไม้ด้านล่างเพื่อให้โครงสร้างถล่ม การตัดจุดรับน้ำหนักคุ้มกว่ายิงหมูตรง ๆ' },
-      pigs: [P(782, 628), P(914, 484)],
+      name: 'Woodland Welcome', subtitle: 'ตัดฐานไม้ให้หลังคาถล่ม',
+      birds: ['red', 'red', 'yellow'], par: 2, backdrop: 'meadow',
+      tutorial: hint(1, 'เริ่มจากเสาด้านซ้าย', 'ลากนกถอยหลังแล้วปล่อย ยิงเสาไม้ด้านซ้ายให้หลังคาถล่มลงมา ถ้าเล็งยาก ลองปุ่มเล็งละเอียดด้านล่าง'),
+      pigs: [P(830), P(830, 514)],
+      blocks: room(830)
+    },
+    {
+      name: 'Crystal Feet', subtitle: 'ฐานกระจกใต้หลังคาหนัก',
+      birds: ['blue', 'red', 'yellow'], par: 2, backdrop: 'coast',
+      tutorial: hint(2, 'กระจกแพ้นกฟ้า', 'กด Space หรือแตะสนามระหว่างบินเพื่อแยกร่าง แยกก่อนถึงเสากระจกเพื่อเปิดฐานหลายจุด'),
+      pigs: [P(810), P(890), P(850, 500)],
+      blocks: room(850, 650, 240, 126, 'glass', 'wood')
+    },
+    {
+      name: 'Three Little Rooms', subtitle: 'สามห้อง สามเป้าหมาย',
+      birds: ['blue', 'yellow', 'blue', 'red'], par: 3, backdrop: 'meadow',
+      tutorial: hint(3, 'กวาดผ่านทั้งสามห้อง', 'ตัดเสากระจกให้หลังคากระแทกหมู แล้วใช้นกที่เหลือเก็บห้องถัดไป'),
+      pigs: [P(710), P(890), P(1070)],
+      blocks: [...room(710, 650, 128, 100, 'glass'), ...room(890, 650, 128, 100, 'glass'), ...room(1070, 650, 128, 100, 'glass')]
+    },
+    {
+      name: 'High Perch', subtitle: 'ป้อมบนหน้าผา',
+      birds: ['yellow', 'yellow', 'red', 'blue'], par: 2, backdrop: 'canyon',
+      tutorial: hint(4, 'เร่งเข้าหาเป้าหมาย', 'เพิ่มมุมยิงเพื่อขึ้นหน้าผา ใช้ Boost ขณะนกกำลังพุ่งเข้าหาเสาไม้หรือหลังคา'),
+      terrain: [T(990, 548, 360, 102)],
+      pigs: [P(990, 548), P(1117, 548), P(990, 408)],
+      blocks: room(990, 548, 220, 116, 'wood', 'glass')
+    },
+    {
+      name: 'Fuse Lesson', subtitle: 'จุดชนวนแล้วดูลูกโซ่',
+      birds: ['red', 'yellow', 'bomb'], par: 1, backdrop: 'sunset',
+      tutorial: hint(5, 'เล็งลังแดงใบแรก', 'ยิง TNT หน้าป้อม ระเบิดจะส่งแรงต่อไปตามแนวฐาน ให้เวลาลูกโซ่ทำงานก่อนยิงนัดถัดไป'),
+      pigs: [P(740), P(900), P(1060)],
       blocks: [
-        B(860, 588, 30, 124, 'wood'),
-        B(966, 588, 30, 124, 'wood'),
-        B(913, 516, 146, 24, 'wood'),
-        B(913, 452, 28, 104, 'wood'),
-        B(913, 391, 116, 22, 'wood')
+        ...room(740, 650, 112, 116), ...room(900, 650, 112, 116), ...room(1060, 650, 112, 116),
+        B(660, 629, 42, 42, 'tnt'), B(820, 629, 42, 42, 'tnt'), B(980, 629, 42, 42, 'tnt'), B(1140, 629, 42, 42, 'tnt')
       ]
     },
     {
-      name: 'Crystal Feet',
-      subtitle: 'กระจกเปราะ รับน้ำหนักมาก',
-      birds: ['blue', 'red', 'yellow'],
-      par: 2,
-      backdrop: 'coast',
-      tutorial: { step: 2, title: 'วัสดุมีบุคลิก', text: 'นกฟ้าทำลายกระจกได้ดี กด Space ระหว่างบินเพื่อแยกร่างและโจมตีหลายจุด' },
-      pigs: [P(740, 606), P(912, 606), P(826, 446)],
+      name: 'Counterweight', subtitle: 'คานและจุดหมุน',
+      birds: ['red', 'yellow', 'blue', 'red'], par: 2, backdrop: 'coast',
+      tutorial: hint(6, 'พลิกคานจากด้านล่าง', 'คานยาววางบนฐานกลาง ยิงปลายด้านซ้ายให้คานหมุนไปกระแทกห้องขวา'),
+      terrain: [T(835, 560, 46, 90)],
+      pigs: [P(928), P(1090), P(1070, 510)],
       blocks: [
-        B(714, 590, 24, 120, 'glass'),
-        B(938, 590, 24, 120, 'glass'),
-        B(826, 522, 250, 24, 'wood'),
-        B(768, 468, 26, 84, 'wood'),
-        B(884, 468, 26, 84, 'wood'),
-        B(826, 418, 152, 22, 'glass'),
-        B(826, 362, 26, 88, 'glass'),
-        B(826, 310, 128, 22, 'wood')
+        B(835, 548, 286, 24, 'wood'),
+        ...room(1070, 650, 172, 116, 'glass', 'wood')
       ]
     },
     {
-      name: 'Three Little Rooms',
-      subtitle: 'แยกร่างและเจาะหลายช่อง',
-      birds: ['blue', 'blue', 'red', 'yellow'],
-      par: 2,
-      backdrop: 'meadow',
-      tutorial: { step: 3, title: 'เลือกจังหวะแยกร่าง', text: 'แยกนกฟ้าก่อนถึงฐาน เพื่อให้ทั้งสามตัวกระจายตัดเสากระจกของห้องแต่ละช่อง' },
-      pigs: [P(720, 530), P(868, 530), P(1016, 530)],
+      name: 'Stone Shell', subtitle: 'เจาะบังเกอร์หิน',
+      birds: ['bomb', 'yellow', 'red', 'bomb'], par: 2, backdrop: 'canyon',
+      tutorial: hint(7, 'ระเบิดใกล้กำแพง', 'พานกระเบิดเข้าใกล้บังเกอร์แล้วกดสกิล หรือรอชนแล้วระเบิดอัตโนมัติ หินทนแรงชนแต่แพ้ระเบิดใกล้ ๆ'),
+      pigs: [P(866, 650, 20, 110), P(974, 650, 20, 110), P(920, 492)],
+      blocks: [...room(920, 650, 286, 134, 'stone', 'stone'), B(920, 629, 42, 42, 'tnt')]
+    },
+    {
+      name: 'Twin Collapse', subtitle: 'หอคู่เชื่อมสะพาน',
+      birds: ['yellow', 'blue', 'bomb', 'red'], par: 2, backdrop: 'sunset',
+      tutorial: hint(8, 'ล้มจากซ้ายไปขวา', 'ตัดฐานหอซ้ายให้คานเชื่อมดึงหอขวา TNT บนสะพานช่วยเปิดทาง'),
+      pigs: [P(760), P(1060), P(760, 514), P(1060, 514)],
       blocks: [
-        B(690, 610, 22, 80, 'glass'), B(750, 610, 22, 80, 'glass'), B(720, 558, 100, 20, 'wood'),
-        B(838, 610, 22, 80, 'glass'), B(898, 610, 22, 80, 'glass'), B(868, 558, 100, 20, 'wood'),
-        B(986, 610, 22, 80, 'glass'), B(1046, 610, 22, 80, 'glass'), B(1016, 558, 100, 20, 'wood'),
-        B(868, 452, 390, 22, 'glass'), B(720, 500, 18, 76, 'glass'), B(1016, 500, 18, 76, 'glass')
+        ...room(760, 650, 160, 112, 'glass'), ...room(1060, 650, 160, 112, 'wood'),
+        ...room(760, 514, 140, 98), ...room(1060, 514, 140, 98, 'glass'),
+        B(910, 380, 328, 24, 'wood'), B(910, 347, 42, 42, 'tnt')
       ]
     },
     {
-      name: 'High Perch',
-      subtitle: 'ยิงไกลและเร่งความเร็ว',
-      birds: ['yellow', 'yellow', 'red'],
-      par: 2,
-      backdrop: 'canyon',
-      tutorial: { step: 4, title: 'เร่งหลังพ้นยอดโค้ง', text: 'นกเหลืองเร่งความเร็วตามทิศทางที่กำลังบิน ใช้หลังวิถีกำลังลดระดับเพื่อเจาะหลังคาไม้' },
-      terrain: [T(955, 603, 360, 26, -0.08)],
-      pigs: [P(922, 548), P(1058, 514), P(1002, 348)],
+      name: 'Needle Thread', subtitle: 'ผ่านช่องเข้าสู่คลัง TNT',
+      birds: ['yellow', 'red', 'blue', 'bomb'], par: 2, backdrop: 'meadow',
+      tutorial: hint(9, 'ยิงต่ำผ่านช่อง', 'ช่องอยู่ระหว่างพื้นกับแผ่นหินสูง เล็งนกให้ผ่านใต้แผ่นแล้วเร่งชน TNT หรือใช้วิถีสูงจัดการหมูด้านบน'),
+      terrain: [T(754, 462, 100, 26)],
+      pigs: [P(878), P(1058), P(754, 462)],
       blocks: [
-        B(900, 530, 28, 118, 'stone', -0.08),
-        B(1080, 516, 28, 118, 'stone', -0.08),
-        B(990, 454, 220, 24, 'wood', -0.08),
-        B(954, 396, 24, 96, 'wood', -0.08),
-        B(1048, 388, 24, 96, 'wood', -0.08),
-        B(1002, 332, 142, 22, 'glass', -0.08),
-        B(1002, 286, 24, 70, 'glass', -0.08)
+        ...room(900, 650, 174, 112, 'glass'), ...room(1080, 650, 148, 112, 'wood'),
+        B(920, 629, 38, 42, 'tnt'), B(1105, 629, 38, 42, 'tnt')
       ]
     },
     {
-      name: 'Fuse Lesson',
-      subtitle: 'TNT และปฏิกิริยาลูกโซ่',
-      birds: ['red', 'yellow', 'bomb'],
-      par: 1,
-      backdrop: 'sunset',
-      tutorial: { step: 5, title: 'หนึ่งนัดที่ถูกจุด', text: 'TNT ส่งแรงและความเสียหายแบบรัศมี ยิงให้โดนลังแดงโดยตรงเพื่อเปิดปฏิกิริยาลูกโซ่' },
-      pigs: [P(758, 610), P(926, 610), P(1094, 610), P(926, 430)],
+      name: 'The Last Fortress', subtitle: 'ชิงไข่คืนจากป้อมสุดท้าย',
+      birds: ['blue', 'yellow', 'bomb', 'red', 'yellow', 'bomb'], par: 4, backdrop: 'finale',
+      tutorial: hint(10, 'ใช้ทุกอย่างที่เรียนมา', 'เจาะกระจกซ้าย จุด TNT กลางป้อม แล้วใช้ระเบิดเก็บฝั่งหิน มีนก 6 ตัวให้วางแผน'),
+      pigs: [P(704), P(704, 514), P(920), P(1130), P(1130, 514)],
       blocks: [
-        B(716, 580, 26, 140, 'stone'), B(800, 580, 26, 140, 'stone'), B(758, 500, 112, 22, 'wood'),
-        B(884, 580, 26, 140, 'wood'), B(968, 580, 26, 140, 'wood'), B(926, 500, 112, 22, 'wood'),
-        B(1052, 580, 26, 140, 'stone'), B(1136, 580, 26, 140, 'stone'), B(1094, 500, 112, 22, 'wood'),
-        B(842, 620, 42, 42, 'tnt'), B(1010, 620, 42, 42, 'tnt'),
-        B(926, 462, 28, 74, 'glass'), B(926, 414, 142, 22, 'wood'), B(926, 372, 42, 42, 'tnt')
-      ]
-    },
-    {
-      name: 'Counterweight',
-      subtitle: 'คาน หมุน และโมเมนตัม',
-      birds: ['red', 'yellow', 'blue', 'red'],
-      par: 2,
-      backdrop: 'coast',
-      tutorial: { step: 6, title: 'ใช้คานให้ทำงานแทน', text: 'แท่งยาวถ่ายทอดโมเมนตัมได้ดี ยิงปลายคานด้านซ้ายให้หมุนและกวาดเสารับน้ำหนักด้านขวา' },
-      terrain: [T(860, 612, 34, 76, 0), T(1035, 610, 210, 20, 0.12)],
-      pigs: [P(892, 568), P(1030, 552), P(1120, 524)],
-      blocks: [
-        B(856, 546, 380, 24, 'wood', -0.04),
-        B(705, 494, 24, 96, 'glass'),
-        B(1002, 510, 28, 104, 'wood', 0.12),
-        B(1110, 496, 28, 104, 'wood', 0.12),
-        B(1056, 440, 154, 22, 'stone', 0.12),
-        B(1056, 392, 24, 70, 'glass', 0.12)
-      ]
-    },
-    {
-      name: 'Stone Shell',
-      subtitle: 'บังเกอร์หินและนกระเบิด',
-      birds: ['bomb', 'red', 'yellow', 'bomb'],
-      par: 2,
-      backdrop: 'canyon',
-      tutorial: { step: 7, title: 'หินต้องใช้แรงจริง', text: 'หินรับแรงชนเบาได้ดี ใช้นกระเบิดเข้าใกล้ใจกลางแล้วกด Space เพื่อเปิดบังเกอร์จากภายใน' },
-      pigs: [P(824, 596, 19, 120), P(964, 596, 19, 120), P(894, 438, 18, 120)],
-      blocks: [
-        B(748, 568, 34, 164, 'stone'), B(1040, 568, 34, 164, 'stone'),
-        B(894, 474, 326, 32, 'stone'),
-        B(814, 570, 26, 136, 'wood'), B(974, 570, 26, 136, 'wood'),
-        B(894, 494, 186, 22, 'wood'),
-        B(846, 430, 26, 96, 'stone'), B(942, 430, 26, 96, 'stone'),
-        B(894, 374, 130, 26, 'stone'),
-        B(894, 532, 42, 42, 'tnt')
-      ]
-    },
-    {
-      name: 'Twin Collapse',
-      subtitle: 'เลือกหอที่เริ่มปฏิกิริยา',
-      birds: ['yellow', 'blue', 'bomb', 'red'],
-      par: 2,
-      backdrop: 'sunset',
-      tutorial: { step: 8, title: 'มองเส้นทางการถล่ม', text: 'สองหอเชื่อมกันด้วยสะพาน กระตุ้นหอซ้ายให้ล้มเข้าหาหอขวาเพื่อประหยัดนก' },
-      pigs: [P(704, 602), P(820, 393), P(996, 602), P(1082, 393)],
-      blocks: [
-        B(662, 558, 26, 184, 'glass'), B(746, 558, 26, 184, 'wood'), B(704, 454, 112, 24, 'wood'),
-        B(780, 498, 24, 128, 'wood'), B(860, 498, 24, 128, 'wood'), B(820, 422, 110, 22, 'glass'),
-        B(954, 558, 26, 184, 'wood'), B(1038, 558, 26, 184, 'glass'), B(996, 454, 112, 24, 'wood'),
-        B(1042, 498, 24, 128, 'wood'), B(1122, 498, 24, 128, 'wood'), B(1082, 422, 110, 22, 'glass'),
-        B(780, 388.5, 18, 45, 'glass'), B(1122, 388.5, 18, 45, 'glass'),
-        B(951, 354, 360, 24, 'stone'), B(951, 321, 42, 42, 'tnt')
-      ]
-    },
-    {
-      name: 'Needle Thread',
-      subtitle: 'ช่องยิงแคบและการควบคุมแรง',
-      birds: ['yellow', 'red', 'blue'],
-      par: 2,
-      backdrop: 'meadow',
-      tutorial: { step: 9, title: 'แรงเต็มไม่ใช่คำตอบเสมอ', text: 'ช่องกลางแคบเกินสำหรับวิถีสูง ลดแรงยิงและเร่งนกเหลืองหลังลอดช่องเพื่อชน TNT ด้านใน' },
-      pigs: [P(870, 628), P(1020, 628), P(970, 350)],
-      blocks: [
-        B(970, 400, 380, 32, 'stone'),
-        B(820, 575, 30, 150, 'stone'), B(1120, 575, 30, 150, 'stone'),
-        B(856, 604, 22, 92, 'wood'), B(884, 604, 22, 92, 'wood'), B(870, 548, 74, 20, 'glass'),
-        B(1006, 604, 22, 92, 'wood'), B(1034, 604, 22, 92, 'wood'), B(1020, 548, 74, 20, 'glass'),
-        B(945, 612, 18, 76, 'glass'), B(945, 565, 84, 18, 'glass'), B(945, 537, 34, 34, 'tnt'),
-        B(970, 311, 24, 60, 'glass')
-      ]
-    },
-    {
-      name: 'The Last Fortress',
-      subtitle: 'บททดสอบรวมทุกระบบ',
-      birds: ['blue', 'yellow', 'bomb', 'red', 'yellow', 'bomb'],
-      par: 4,
-      backdrop: 'finale',
-      tutorial: { step: 10, title: 'ไม่มีคำตอบเดียว', text: 'ด่านสุดท้ายเปิดทางได้หลายแบบ เลือกตัดกระจก จุด TNT หรือใช้ระเบิดเจาะแกนหิน แล้วบริหารนกที่เหลือ' },
-      terrain: [T(720, 628, 250, 22, -0.03), T(1070, 628, 250, 22, 0.03)],
-      pigs: [P(704, 578), P(822, 456), P(920, 606, 20, 110), P(1020, 456), P(1134, 578)],
-      blocks: [
-        B(650, 542, 28, 170, 'glass', -0.03), B(758, 538, 28, 170, 'wood', -0.03), B(704, 444, 138, 24, 'wood', -0.03),
-        B(788, 494, 28, 120, 'stone'), B(856, 494, 28, 120, 'glass'), B(822, 426, 110, 22, 'wood'),
-        B(884, 566, 32, 168, 'stone'), B(956, 566, 32, 168, 'stone'), B(920, 470, 112, 26, 'stone'), B(920, 420, 42, 42, 'tnt'),
-        B(984, 494, 28, 120, 'glass'), B(1052, 494, 28, 120, 'stone'), B(1018, 426, 110, 22, 'wood'),
-        B(1080, 538, 28, 170, 'wood', 0.03), B(1188, 542, 28, 170, 'glass', 0.03), B(1134, 444, 138, 24, 'wood', 0.03),
-        B(760, 628, 34, 34, 'tnt'), B(1080, 628, 34, 34, 'tnt'),
-        B(760, 338, 196, 24, 'stone'), B(1080, 338, 196, 24, 'stone'),
-        B(920, 310, 240, 24, 'wood'), B(920, 270, 42, 42, 'tnt')
+        ...room(704, 650, 144, 112, 'glass'), ...room(704, 514, 124, 98, 'wood'),
+        ...room(920, 650, 160, 138, 'wood', 'stone'),
+        ...room(1130, 650, 156, 112, 'stone'), ...room(1130, 514, 132, 98, 'glass'),
+        B(812, 629, 40, 42, 'tnt'), B(1028, 629, 40, 42, 'tnt'), B(920, 467, 42, 42, 'tnt')
       ]
     }
   ];

@@ -3,15 +3,16 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-  <meta name="theme-color" content="#78cceb">
-  <title>Mini Angry Birds: Reforged — Cinematic Edition</title>
+  <meta name="theme-color" content="#142d3b">
+  <meta name="description" content="เกมฟิสิกส์ยิงนก 10 ด่าน: เล็งให้แม่น ทำลายป้อมหมู ใช้สกิล และเก็บ 30 ดาว เล่นได้ด้วยเมาส์ สัมผัส หรือคีย์บอร์ด">
+  <title>Mini Angry Birds: Reforged — The Egg Heist</title>
   <link rel="stylesheet" href="src/styles.css">
 </head>
 <body>
   <main class="game-shell">
     <header class="topbar">
       <div class="brand-block">
-        <div class="brand-kicker">PHYSICS PUZZLE</div>
+        <div class="brand-kicker">THE EGG HEIST <span id="campaignProgress">0 / 30 ★</span></div>
         <h1>Mini Angry Birds <span>Reforged</span></h1>
         <p id="statusText">ลากนกถอยหลังจากหนังสติ๊ก แล้วปล่อยเพื่อยิง</p>
       </div>
@@ -24,9 +25,9 @@
     </header>
 
     <section class="stage-wrap" id="stageWrap">
-      <canvas id="game" width="1280" height="720" aria-label="เกมยิงนกทำลายสิ่งปลูกสร้าง"></canvas>
+      <canvas id="game" width="1280" height="720" tabindex="0" aria-label="เกมยิงนกทำลายสิ่งปลูกสร้าง" aria-describedby="shotReadout">ใช้ปุ่มเล็งละเอียดเพื่อปรับมุมและแรง จากนั้นกดยิง</canvas>
 
-      <div id="introOverlay" class="intro-overlay" role="dialog" aria-modal="true" aria-label="ฉากเปิดเกม">
+      <div id="introOverlay" class="intro-overlay hidden" role="dialog" aria-modal="true" aria-label="ฉากเปิดเกม">
         <canvas id="introCanvas" width="1280" height="720" aria-label="ฉากเปิดเรื่อง"></canvas>
         <div class="intro-vignette" aria-hidden="true"></div>
         <div class="intro-film-label">A MINI ANGRY BIRDS STORY</div>
@@ -54,6 +55,7 @@
         <strong id="abilityText">BOOST</strong>
         <small>SPACE</small>
       </button>
+      <button id="nextBirdBtn" class="next-bird-btn">นกตัวถัดไป →</button>
 
       <div id="toast" class="toast" role="status" aria-live="polite"></div>
 
@@ -66,7 +68,7 @@
         </div>
       </div>
 
-      <div id="pauseOverlay" class="overlay hidden" role="dialog" aria-modal="true">
+      <div id="pauseOverlay" class="overlay hidden" role="dialog" aria-modal="true" aria-label="หยุดชั่วคราว">
         <div class="panel pause-panel">
           <div class="panel-kicker">PAUSED</div>
           <h2>หยุดชั่วคราว</h2>
@@ -79,7 +81,7 @@
         </div>
       </div>
 
-      <div id="resultOverlay" class="overlay hidden" role="dialog" aria-modal="true">
+      <div id="resultOverlay" class="overlay hidden" role="dialog" aria-modal="true" aria-labelledby="resultTitle">
         <div class="panel result-panel">
           <div id="resultKicker" class="panel-kicker">LEVEL CLEARED</div>
           <h2 id="resultTitle">ผ่านด่าน</h2>
@@ -95,7 +97,7 @@
         </div>
       </div>
 
-      <div id="levelOverlay" class="overlay hidden" role="dialog" aria-modal="true">
+      <div id="levelOverlay" class="overlay hidden" role="dialog" aria-modal="true" aria-label="เลือกด่าน">
         <div class="panel level-panel">
           <div class="panel-kicker">CAMPAIGN</div>
           <h2>เลือกด่าน</h2>
@@ -107,7 +109,7 @@
         </div>
       </div>
 
-      <div id="helpOverlay" class="overlay hidden" role="dialog" aria-modal="true">
+      <div id="helpOverlay" class="overlay hidden" role="dialog" aria-modal="true" aria-label="วิธีเล่น">
         <div class="panel help-panel">
           <div class="panel-kicker">HOW TO PLAY</div>
           <h2>วิธีเล่น</h2>
@@ -115,11 +117,12 @@
             <article><b>ลากและปล่อย</b><p>ลากนกถอยหลังจากหนังสติ๊กเพื่อกำหนดแรงและมุมยิง</p></article>
             <article><b>ใช้สกิล</b><p>คลิกสนามหรือกด Space ระหว่างบินเพื่อใช้ความสามารถพิเศษ</p></article>
             <article><b>อ่านโครงสร้าง</b><p>กระจกเปราะ ไม้ยืดหยุ่น หินหนัก และ TNT ทำลายพื้นที่รอบตัว</p></article>
-            <article><b>คีย์ลัด</b><p>R เริ่มใหม่, G เส้นเล็ง, P หยุด, M ปิดเสียง</p></article>
+            <article><b>เล็งด้วยคีย์บอร์ด</b><p>↑ ↓ ปรับมุม · ← → ปรับแรง · Space ยิง/ใช้สกิล · Esc ยกเลิกเล็ง · R เริ่มใหม่ · P หยุด</p></article>
           </div>
           <div class="button-row centered">
             <button id="closeHelpBtn" class="primary-btn">เข้าใจแล้ว</button>
             <button id="replayIntroBtn" class="secondary-btn">ดูฉากเปิดอีกครั้ง</button>
+            <button id="motionBtn" class="secondary-btn" aria-pressed="false">ลดการสั่นและแสงวาบ</button>
             <button id="resetSaveBtn" class="danger-btn">ล้างความคืบหน้า</button>
           </div>
         </div>
@@ -138,6 +141,18 @@
         <button id="helpBtn" class="footer-btn">? <span>วิธีเล่น</span></button>
       </div>
     </footer>
+    <section class="aim-dock" aria-label="ปรับการยิง">
+      <div class="aim-summary">
+        <p id="shotReadout">ลากนกเพื่อยิง หรือใช้ปุ่มเล็งละเอียด</p>
+        <button id="aimToggleBtn" class="footer-btn" aria-expanded="false" aria-controls="precisionControls">◎ เล็งละเอียด</button>
+      </div>
+      <div id="precisionControls" class="precision-controls">
+        <label for="aimAngle">มุมยิง <output id="angleValue" for="aimAngle">6°</output><input id="aimAngle" type="range" min="0" max="65" value="6" step="1"></label>
+        <label for="aimPower">แรงยิง <output id="powerValue" for="aimPower">90%</output><input id="aimPower" type="range" min="20" max="100" value="90" step="1"></label>
+        <button id="launchBtn" class="primary-btn">ยิง! <span>SPACE</span></button>
+      </div>
+      <p class="rotate-tip">เล่นแนวนอนเพื่อเห็นเป้าหมายใหญ่ขึ้น</p>
+    </section>
   </main>
 
   <script src="src/vendor/matter.min.js"></script>

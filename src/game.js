@@ -10,6 +10,7 @@
   const GROUND_Y = 650;
   const SLING = { x: 188, y: 526 };
   const MAX_DRAG = 138;
+  const LAUNCH_SCALE = 0.178;
   const STEP = 1000 / 60;
   const SAVE_KEY = 'mini-angry-birds-reforged-save-v1';
   const LEGACY_SAVE_KEY = 'mini-angry-birds-save-v1';
@@ -32,7 +33,9 @@
     'pauseBtn', 'guideBtn', 'muteBtn', 'fullscreenBtn', 'resumeBtn', 'pauseRestartBtn',
     'introOverlay', 'introSkipBtn', 'introCaption', 'introProgressFill', 'replayIntroBtn',
     'pauseLevelsBtn', 'nextBtn', 'retryBtn', 'resultLevelsBtn', 'closeLevelsBtn',
-    'closeHelpBtn', 'resetSaveBtn', 'restartBtn', 'levelsBtn', 'helpBtn'
+    'closeHelpBtn', 'resetSaveBtn', 'restartBtn', 'levelsBtn', 'helpBtn',
+    'aimAngle', 'aimPower', 'angleValue', 'powerValue', 'launchBtn', 'aimToggleBtn',
+    'precisionControls', 'nextBirdBtn', 'shotReadout', 'campaignProgress', 'motionBtn'
   ].map(id => [id, document.getElementById(id)]));
 
   const MATERIALS = {
@@ -96,6 +99,14 @@
   const state = {
     levelIndex: 0,
     mode: 'ready',
+    simTime: 0,
+    runId: 0,
+    victoryAt: null,
+    aimAngle: 6,
+    aimPower: 90,
+    aimPreview: false,
+    lastShot: null,
+    reducedMotion: window.matchMedia?.('(prefers-reduced-motion: reduce)').matches || false,
     paused: false,
     aimGuide: true,
     muted: false,
@@ -165,16 +176,27 @@
         }
       }
     } catch { /* localStorage can be unavailable */ }
-    base.unlocked = clamp(Number(base.unlocked) || 1, 1, levels.length);
+    base.unlocked = Math.floor(clamp(Number(base.unlocked) || 1, 1, levels.length));
+    // Corrupt or old local records must never prevent the game from opening.
+    for (const field of ['bestStars', 'bestScore', 'tutorialSeen']) {
+      const source = base[field];
+      base[field] = {};
+      for (let i = 1; i <= levels.length; i++) {
+        const value = source && typeof source === 'object' ? source[String(i)] : null;
+        if (field === 'tutorialSeen') base[field][i] = value === true;
+        else base[field][i] = Number.isFinite(Number(value)) ? Math.floor(clamp(Number(value), 0, field === 'bestStars' ? 3 : 1e9)) : 0;
+      }
+    }
     return base;
   }
 
   function saveGame() {
-    state.save.settings = { muted: state.muted, guide: state.aimGuide };
+    state.save.settings = { muted: state.muted, guide: state.aimGuide, reducedMotion: state.reducedMotion };
     try { localStorage.setItem(SAVE_KEY, JSON.stringify(state.save)); } catch { /* ignore */ }
   }
 
   function resetProgress() {
+    if (!window.confirm('ล้างดาว คะแนน และด่านที่ปลดล็อกทั้งหมดในเครื่องนี้?')) return;
     state.save = defaultSave();
     state.muted = false;
     state.aimGuide = true;
@@ -305,6 +327,7 @@
   }
 
   function startLevel(index) {
+    cancelAim();
     index = clamp(index, 0, levels.length - 1);
     if (index + 1 > state.save.unlocked) index = state.save.unlocked - 1;
     closeOverlays();
@@ -317,6 +340,13 @@
     level.pigs.forEach(createPig);
 
     state.levelIndex = index;
+    state.runId++;
+    state.simTime = 0;
+    state.victoryAt = null;
+    state.lastShot = null;
+    state.aimPreview = false;
+    state.accumulator = 0;
+    state.lastDestroyAt = -Infinity;
     state.mode = 'ready';
     state.paused = false;
     state.dragging = false;
@@ -325,7 +355,7 @@
     state.score = 0;
     state.scoreVisual = 0;
     state.combo = 0;
-    state.levelStartAt = performance.now();
+    state.levelStartAt = 0;
     state.shotStartedAt = 0;
     state.settleSince = 0;
     state.shake = 0;
@@ -335,6 +365,10 @@
     engine.timing.timestamp = 0;
 
     spawnBird();
+    ui.nextBirdBtn.classList.remove('show');
+    ui.powerWrap.classList.remove('show');
+    ui.introOverlay.classList.add('hidden');
+    state.introActive = false;
     showTutorial(level);
     updateUI();
     renderLevelGrid();
@@ -405,6 +439,17 @@
     setTextCached('pigsText', alivePigs());
     setTextCached('levelName', level.name);
     setTextCached('levelGoal', `${level.subtitle} • พาร์ ${level.par} นัด`);
+    const stars = Object.values(state.save.bestStars).reduce((sum, n) => sum + Number(n || 0), 0);
+    setTextCached('campaignProgress', `${stars} / ${levels.length * 3} ★`);
+    const canAim = state.mode === 'ready' || state.mode === 'aiming';
+    ui.launchBtn.disabled = !canAim || state.paused || anyOverlayOpen();
+    ui.aimAngle.disabled = ui.aimPower.disabled = !canAim;
+    setTextCached('angleValue', `${state.aimAngle}°`);
+    setTextCached('powerValue', `${state.aimPower}%`);
+    setTextCached('shotReadout', state.lastShot ? `นัดก่อน ${state.lastShot.angle}° / ${state.lastShot.power}%` : 'ลากนกเพื่อยิง หรือใช้ปุ่มเล็งละเอียด');
+    ui.guideBtn.setAttribute('aria-pressed', String(state.aimGuide));
+    ui.muteBtn.setAttribute('aria-pressed', String(state.muted));
+    ui.motionBtn.setAttribute('aria-pressed', String(state.reducedMotion));
 
     let status = 'ลากนกถอยหลังจากหนังสติ๊ก แล้วปล่อยเพื่อยิง';
     if (state.paused) status = 'หยุดชั่วคราว';
@@ -465,6 +510,7 @@
   }
 
   function onPointerDown(event) {
+    if (event.button != null && event.button !== 0) return;
     ensureAudio();
     if (state.paused || anyOverlayOpen()) return;
     const p = pointerPosition(event);
@@ -474,12 +520,13 @@
       return;
     }
     if (state.mode !== 'ready' || !currentBird) return;
-    if (Vector.magnitude(Vector.sub(p, currentBird.position)) > currentBird.game.radius + 28) return;
+    const hitRadius = Math.max(currentBird.game.radius + 28, 24 * W / canvas.getBoundingClientRect().width);
+    if (Vector.magnitude(Vector.sub(p, currentBird.position)) > hitRadius) return;
 
     state.dragging = true;
     state.pointerId = event.pointerId;
     state.mode = 'aiming';
-    canvas.setPointerCapture?.(event.pointerId);
+    try { canvas.setPointerCapture?.(event.pointerId); } catch { /* global release still handles this drag */ }
     ui.powerWrap.classList.add('show');
     closeTutorial();
     sfx('grab');
@@ -500,6 +547,41 @@
     Body.setVelocity(currentBird, { x: 0, y: 0 });
     const power = clamp(Vector.magnitude(delta) / MAX_DRAG, 0, 1);
     ui.powerFill.style.width = `${Math.round(power * 100)}%`;
+    state.aimPreview = true;
+  }
+
+  function cancelAim() {
+    const pointerId = state.pointerId;
+    state.dragging = false;
+    state.pointerId = null;
+    state.aimPreview = false;
+    if (currentBird && (state.mode === 'aiming' || state.mode === 'ready')) {
+      Body.setPosition(currentBird, SLING);
+      Body.setVelocity(currentBird, { x: 0, y: 0 });
+      state.mode = 'ready';
+    }
+    try { if (pointerId != null) canvas.releasePointerCapture?.(pointerId); } catch { /* capture already lost */ }
+    ui.powerWrap.classList.remove('show');
+  }
+
+  function previewPrecisionAim() {
+    if (!currentBird || state.paused || anyOverlayOpen() || !['ready', 'aiming'].includes(state.mode)) return;
+    state.aimAngle = clamp(Number(ui.aimAngle.value) || 0, 0, 65);
+    state.aimPower = clamp(Number(ui.aimPower.value) || 20, 20, 100);
+    const radians = state.aimAngle * Math.PI / 180;
+    moveAim({ x: SLING.x - Math.cos(radians) * MAX_DRAG * state.aimPower / 100,
+      y: SLING.y + Math.sin(radians) * MAX_DRAG * state.aimPower / 100 });
+    updateUI();
+  }
+
+  function launchPrecisionAim() {
+    previewPrecisionAim();
+    if (state.paused || anyOverlayOpen() || !['ready', 'aiming'].includes(state.mode)) return;
+    state.dragging = true;
+    state.pointerId = -1;
+    onPointerUp({ pointerId: -1 });
+    closeTutorial();
+    canvas.focus({ preventScroll: true });
   }
 
   function armPhysicsDamage() {
@@ -520,8 +602,9 @@
     if (!state.dragging || event.pointerId !== state.pointerId || !currentBird) return;
     state.dragging = false;
     state.pointerId = null;
-    canvas.releasePointerCapture?.(event.pointerId);
+    try { canvas.releasePointerCapture?.(event.pointerId); } catch { /* keyboard launch has no pointer capture */ }
     ui.powerWrap.classList.remove('show');
+    if (state.paused || anyOverlayOpen()) { cancelAim(); return; }
 
     if (!isFiniteBody(currentBird)) {
       if (Composite.get(world, currentBird.id, 'body')) World.remove(world, currentBird);
@@ -540,7 +623,13 @@
       return;
     }
 
-    const launchVelocity = Vector.mult(pull, 0.178);
+    const launchVelocity = Vector.mult(pull, LAUNCH_SCALE);
+    state.lastShot = { angle: Math.round(Math.atan2(-pull.y, pull.x) * 180 / Math.PI), power: Math.round(power / MAX_DRAG * 100) };
+    state.aimAngle = state.lastShot.angle;
+    state.aimPower = state.lastShot.power;
+    ui.aimAngle.value = state.aimAngle;
+    ui.aimPower.value = state.aimPower;
+    state.aimPreview = false;
     armPhysicsDamage();
     Body.setStatic(currentBird, false);
     Sleeping.set(currentBird, false);
@@ -548,11 +637,11 @@
     Body.setAngularVelocity(currentBird, launchVelocity.x * 0.004);
     Body.setVelocity(currentBird, launchVelocity);
     currentBird.game.launched = true;
-    currentBird.game.bornAt = performance.now();
+    currentBird.game.bornAt = state.simTime;
     currentBird.game.trail = [];
     state.shotsUsed += 1;
     state.mode = 'flying';
-    state.shotStartedAt = performance.now();
+    state.shotStartedAt = state.simTime;
     state.settleSince = 0;
     const spec = BIRDS[currentBird.game.birdType];
     if (spec.ability) {
@@ -565,6 +654,7 @@
   }
 
   function useAbility() {
+    if (state.paused || anyOverlayOpen()) return;
     if (state.mode !== 'flying' || !currentBird || currentBird.game.abilityUsed || currentBird.game.dead) return;
     const type = currentBird.game.birdType;
     const spec = BIRDS[type];
@@ -575,7 +665,7 @@
     if (spec.ability === 'boost') {
       const v = currentBird.velocity;
       const speed = Math.max(6, Vector.magnitude(v));
-      const dir = speed > 0 ? Vector.normalise(v) : { x: 1, y: 0 };
+      const dir = Vector.magnitude(v) > 0.01 ? Vector.normalise(v) : { x: 1, y: 0 };
       Body.setVelocity(currentBird, Vector.mult(dir, Math.min(32, speed * 1.72)));
       currentBird.game.power = 1.78;
       currentBird.game.boostGlow = 28;
@@ -586,7 +676,7 @@
       splitBlueBird();
       sfx('split');
     } else if (spec.ability === 'explode') {
-      explodeAt(currentBird.position.x, currentBird.position.y, 142, 430, currentBird);
+      explodeAt(currentBird.position.x, currentBird.position.y, 166, 680, currentBird);
       currentBird.game.dead = true;
       pendingRemovals.push(currentBird);
       sfx('boom');
@@ -598,8 +688,11 @@
     const speed = Math.max(8, Vector.magnitude(baseV));
     const angle = Math.atan2(baseV.y, baseV.x);
     [-0.22, 0.22].forEach(offset => {
-      const f = createBird('blue', currentBird.position.x, currentBird.position.y, true);
       const a = angle + offset;
+      const separation = currentBird.game.radius + Math.round(BIRDS.blue.radius * 0.72) + 2;
+      const side = Math.sign(offset);
+      const f = createBird('blue', currentBird.position.x - Math.sin(angle) * separation * side,
+        currentBird.position.y + Math.cos(angle) * separation * side, true);
       Body.setVelocity(f, { x: Math.cos(a) * speed * 1.04, y: Math.sin(a) * speed * 1.04 });
       Body.setAngularVelocity(f, offset * 0.1);
       f.game.power = 0.64;
@@ -617,7 +710,7 @@
   function collisionKind(body) { return body?.game?.type || 'other'; }
 
   Events.on(engine, 'collisionStart', event => {
-    const now = performance.now();
+    const now = state.simTime;
     for (const pair of event.pairs) {
       const a = pair.bodyA;
       const b = pair.bodyB;
@@ -625,6 +718,11 @@
       const kb = collisionKind(b);
       const impact = relativeImpact(a, b, pair.collision.normal);
       if (impact < 0.7 || state.shotsUsed === 0) continue;
+      for (const body of [a, b]) {
+        if (body.game?.birdType === 'bomb' && body.game.launched && !body.game.abilityUsed && impact > 1.5) {
+          body.game.impactAt ??= state.simTime;
+        }
+      }
 
       handleCollisionDamage(a, b, impact, now);
       handleCollisionDamage(b, a, impact, now);
@@ -675,7 +773,7 @@
     }
   }
 
-  function damageBlock(block, rawDamage, sourcePos, now = performance.now()) {
+  function damageBlock(block, rawDamage, sourcePos, now = state.simTime) {
     if (!block || block.game.destroyed) return;
     const mat = MATERIALS[block.game.material];
     const cooldown = block.game.lastDamageAt || 0;
@@ -694,7 +792,7 @@
     else if (damage > 24) sfx('crack', Math.min(1, damage / 90));
   }
 
-  function damagePig(pig, amount, sourcePos, now = performance.now()) {
+  function damagePig(pig, amount, sourcePos, now = state.simTime) {
     if (!pig || pig.game.dead) return;
     if (now - (pig.game.lastDamageAt || 0) < 65) amount *= 0.42;
     pig.game.lastDamageAt = now;
@@ -709,7 +807,7 @@
   }
 
   function comboMultiplier() {
-    const now = performance.now();
+    const now = state.simTime;
     if (now - state.lastDestroyAt < 900) state.combo = Math.min(5, state.combo + 1);
     else state.combo = 1;
     state.lastDestroyAt = now;
@@ -746,7 +844,7 @@
   function queueExplosion(x, y, source, delay = 0) {
     if (source?.game?.explosionQueued) return;
     if (source?.game) source.game.explosionQueued = true;
-    pendingExplosions.push({ x, y, source, at: performance.now() + delay });
+    pendingExplosions.push({ x, y, source, at: state.simTime + delay });
   }
 
   function explodeAt(x, y, radius = 138, maxDamage = 430, source = null) {
@@ -767,16 +865,20 @@
     affected.forEach(body => {
       if (!body || body === source || body.game?.dead || body.game?.destroyed) return;
       const delta = Vector.sub(body.position, { x, y });
-      const distance = Math.max(1, Vector.magnitude(delta));
-      if (distance > radius + (body.circleRadius || 20)) return;
+      let distance = Math.max(0, Vector.magnitude(delta) - (body.circleRadius || 0));
+      if (body.game.type === 'block') {
+        const local = Vector.rotate(Vector.sub({ x, y }, body.position), -body.angle);
+        distance = Math.hypot(Math.max(0, Math.abs(local.x) - body.game.w / 2), Math.max(0, Math.abs(local.y) - body.game.h / 2));
+      }
+      if (distance > radius) return;
       const falloff = Math.pow(clamp(1 - distance / radius, 0, 1), 0.92);
       const dir = Vector.normalise(delta);
       Body.applyForce(body, body.position, Vector.mult(dir, 0.04 * body.mass * falloff));
-      Body.setAngularVelocity(body, body.angularVelocity + (Math.random() - 0.5) * 0.16 * falloff);
+      Body.setAngularVelocity(body, body.angularVelocity + Math.sign(delta.x || 1) * 0.08 * falloff);
       Sleeping.set(body, false);
       if (body.game.type === 'block') {
-        const damage = maxDamage * Math.pow(falloff, 1.15);
-        if (body.game.material === 'tnt' && damage > 18) queueExplosion(body.position.x, body.position.y, body, 120 + Math.random() * 90);
+        const damage = maxDamage * Math.pow(falloff, 1.15) * (body.game.material === 'stone' ? 1.75 : 1);
+        if (body.game.material === 'tnt' && damage > 18) queueExplosion(body.position.x, body.position.y, body, 150);
         else damageBlock(body, damage, { x, y });
       } else if (body.game.type === 'pig') {
         damagePig(body, maxDamage * 0.48 * falloff + (falloff > 0.45 ? 45 : 0), { x, y });
@@ -795,11 +897,12 @@
       pigs = pigs.filter(p => !p.game.dead);
       fragments = fragments.filter(f => !f.game.dead && Composite.get(world, f.id, 'body'));
     }
-    const now = performance.now();
+    const now = state.simTime;
     const due = pendingExplosions.filter(e => e.at <= now);
     pendingExplosions = pendingExplosions.filter(e => e.at > now);
     due.forEach(e => {
-      explodeAt(e.x, e.y, 138, 430, e.source);
+      // A moving TNT crate explodes where it is now, not where it was hit.
+      explodeAt(e.source?.position.x ?? e.x, e.source?.position.y ?? e.y, 185, 520, e.source);
       sfx('boom');
     });
   }
@@ -817,11 +920,12 @@
     if (state.mode === 'won') return;
     state.mode = 'won';
     ui.abilityBtn.classList.remove('show');
+    ui.nextBirdBtn.classList.remove('show');
     const level = levels[state.levelIndex];
     const unused = Math.max(0, level.birds.length - state.shotsUsed);
     const birdBonus = unused * 10000;
     const parBonus = Math.max(0, (level.par + 1 - state.shotsUsed)) * 3500;
-    const timeSeconds = (performance.now() - state.levelStartAt) / 1000;
+    const timeSeconds = (state.simTime - state.levelStartAt) / 1000;
     const speedBonus = Math.max(0, Math.round(3500 - timeSeconds * 35));
     const bonus = birdBonus + parBonus + speedBonus;
     addScore(bonus, 'bonus');
@@ -836,10 +940,11 @@
     updateUI();
 
     const finishedIndex = state.levelIndex;
+    const finishedRun = state.runId;
     setTimeout(() => {
-      if (state.mode !== 'won' || state.levelIndex !== finishedIndex) return;
+      if (state.mode !== 'won' || state.levelIndex !== finishedIndex || state.runId !== finishedRun) return;
       ui.resultKicker.textContent = 'LEVEL CLEARED';
-      ui.resultTitle.textContent = 'ผ่านด่าน';
+      ui.resultTitle.textContent = state.levelIndex === levels.length - 1 ? 'นำไข่กลับมาได้แล้ว!' : 'ผ่านด่าน';
       ui.resultStars.textContent = '★'.repeat(stars) + '☆'.repeat(3 - stars);
       ui.resultScore.textContent = Math.round(state.score).toLocaleString('th-TH');
       ui.scoreBreakdown.innerHTML = `
@@ -848,7 +953,7 @@
         <div><span>โบนัสนก/เวลา</span><b>${state.scoreParts.bonus.toLocaleString('th-TH')}</b></div>`;
       ui.resultMessage.textContent = stars === 3 ? 'แก้โครงสร้างได้อย่างมีประสิทธิภาพ' : 'ผ่านแล้ว แต่ยังลดจำนวนนกเพื่อเพิ่มดาวได้';
       ui.nextBtn.style.display = state.levelIndex < levels.length - 1 ? '' : 'none';
-      ui.resultOverlay.classList.remove('hidden');
+      openDialog(ui.resultOverlay);
       sfx('win');
     }, 650);
   }
@@ -857,10 +962,12 @@
     if (state.mode === 'lost') return;
     state.mode = 'lost';
     ui.abilityBtn.classList.remove('show');
+    ui.nextBirdBtn.classList.remove('show');
     updateUI();
     const failedIndex = state.levelIndex;
+    const failedRun = state.runId;
     setTimeout(() => {
-      if (state.mode !== 'lost' || state.levelIndex !== failedIndex) return;
+      if (state.mode !== 'lost' || state.levelIndex !== failedIndex || state.runId !== failedRun) return;
       ui.resultKicker.textContent = 'OUT OF BIRDS';
       ui.resultTitle.textContent = 'ยังไม่ผ่าน';
       ui.resultStars.textContent = '☆☆☆';
@@ -871,7 +978,7 @@
         <div><span>หมูเหลือ</span><b>${alivePigs()}</b></div>`;
       ui.resultMessage.textContent = levelFailureTip();
       ui.nextBtn.style.display = 'none';
-      ui.resultOverlay.classList.remove('hidden');
+      openDialog(ui.resultOverlay);
       sfx('fail');
     }, 500);
   }
@@ -905,7 +1012,8 @@
     return [...blocks, ...pigs, ...fragments].filter(b => Composite.get(world, b.id, 'body') && !b.game?.dead && !b.game?.destroyed);
   }
 
-  function updateTurnFlow(now) {
+  function updateTurnFlow(now = state.simTime) {
+    if (state.paused || anyOverlayOpen()) return;
     if ((state.mode !== 'flying' && state.mode !== 'settling') || !currentBird) return;
     const age = now - state.shotStartedAt;
     const bodyExists = !!Composite.get(world, currentBird.id, 'body');
@@ -915,14 +1023,20 @@
     const birdDone = currentBird.game.dead || offscreen || birdSlow || age > 10000;
 
     const dynamicBodies = activeDynamicBodies();
-    const moving = dynamicBodies.some(b => !isBodyStill(b, 0.22, 0.025));
-
-    if (birdDone && !moving && pendingExplosions.length === 0) {
+    const moving = dynamicBodies.some(b => !isBodyStill(b, 0.28, 0.035));
+    const pending = pendingExplosions.length > 0;
+    // Tiny rolling fragments must not strand the turn. Live explosions and the
+    // final-shot grace period are still allowed to finish before a loss.
+    const quietEnough = !moving || age > 9000;
+    ui.nextBirdBtn.classList.toggle('show', birdDone && age > 2200 && birdsRemaining() > 0 && !pending && alivePigs() > 0);
+    if (alivePigs() === 0) return;
+    if ((birdDone && quietEnough && !pending) || (age > 14000 && !pending)) {
       if (!state.settleSince) state.settleSince = now;
       state.mode = 'settling';
-      if (now - state.settleSince > 720) {
-        if (alivePigs() === 0) finishLevel();
-        else if (state.shotsUsed >= levels[state.levelIndex].birds.length) failLevel();
+      ui.abilityBtn.classList.remove('show');
+      if (now - state.settleSince > 650) {
+        ui.nextBirdBtn.classList.remove('show');
+        if (state.shotsUsed >= levels[state.levelIndex].birds.length) failLevel();
         else spawnBird();
       }
     } else {
@@ -931,7 +1045,7 @@
     }
   }
 
-  function updateCrushDamage(now = performance.now()) {
+  function updateCrushDamage(now = state.simTime) {
     if (!state.physicsArmed || state.shotsUsed === 0 || state.mode === 'ready' || state.mode === 'aiming') return;
 
     pigs.forEach(pig => {
@@ -1015,6 +1129,8 @@
   }
 
   function updateBodies() {
+    if (currentBird?.game.birdType === 'bomb' && currentBird.game.impactAt != null &&
+      !currentBird.game.abilityUsed && !currentBird.game.dead && state.simTime - currentBird.game.impactAt >= 850) useAbility();
     const allProjectiles = [...fragments, ...(currentBird ? [currentBird] : [])];
     allProjectiles.forEach(body => {
       if (!Composite.get(world, body.id, 'body')) return;
@@ -1053,13 +1169,22 @@
 
   function fixedUpdate() {
     if (state.paused || anyOverlayOpen() || state.mode === 'won' || state.mode === 'lost') return;
-    Engine.update(engine, STEP / 2);
-    Engine.update(engine, STEP / 2);
-    updateCrushDamage(performance.now());
-    processPending();
+    // The authored layout stays exact until launch; all gameplay clocks advance
+    // with simulation time, never with time spent in a menu or another tab.
+    if (state.mode === 'ready' || state.mode === 'aiming') return;
+    for (let i = 0; i < 2; i++) {
+      state.simTime += STEP / 2;
+      Engine.update(engine, STEP / 2);
+      processPending();
+    }
+    updateCrushDamage(state.simTime);
     updateBodies();
-    updateParticles();
-    if (alivePigs() === 0 && state.shotsUsed > 0) finishLevel();
+    processPending();
+    if (alivePigs() === 0 && state.shotsUsed > 0) {
+      state.victoryAt ??= state.simTime;
+      if (state.simTime - state.victoryAt >= 1000 && pendingExplosions.length === 0) finishLevel();
+    }
+    updateTurnFlow(state.simTime);
   }
 
   function frame(now) {
@@ -1074,7 +1199,7 @@
         state.accumulator -= STEP;
         loops++;
       }
-      updateTurnFlow(now);
+      updateTurnFlow(state.simTime);
     }
     updateVisualEffects(elapsed / 16.667);
     updateUI();
@@ -1095,6 +1220,8 @@
   }
 
   function updateVisualEffects(dt) {
+    if (state.paused || anyOverlayOpen()) return;
+    updateParticles(dt);
     shockwaves.forEach(s => { s.life -= dt; s.r += (s.max - s.r) * 0.18 * dt; });
     shockwaves = shockwaves.filter(s => s.life > 0);
     floaters.forEach(f => { f.life -= dt; f.y -= 0.72 * dt; f.x += f.vx * dt; });
@@ -1154,6 +1281,7 @@
   ];
 
   function playIntro() {
+    cancelAim();
     closeOverlays();
     state.introActive = true;
     state.introStartedAt = performance.now();
@@ -1161,6 +1289,7 @@
     state.accumulator = 0;
     ui.introOverlay.classList.remove('hidden');
     ui.introProgressFill.style.width = '0%';
+    ui.introSkipBtn.focus({ preventScroll: true });
     drawIntroFrame(0);
   }
 
@@ -1171,6 +1300,8 @@
     state.lastFrame = performance.now();
     state.accumulator = 0;
     updateUI(true);
+    if (state.mode === 'won' || state.mode === 'lost') openDialog(ui.resultOverlay);
+    else canvas.focus({ preventScroll: true });
     if (!skipped) toast('นำไข่กลับคืนมาให้ได้');
   }
 
@@ -1487,8 +1618,8 @@
   function draw(now) {
     ctx.save();
     ctx.clearRect(0, 0, W, H);
-    const shakeX = state.shake > 0.15 ? (Math.random() - 0.5) * state.shake : 0;
-    const shakeY = state.shake > 0.15 ? (Math.random() - 0.5) * state.shake * 0.65 : 0;
+    const shakeX = !state.reducedMotion && state.shake > 0.15 ? (Math.random() - 0.5) * state.shake : 0;
+    const shakeY = !state.reducedMotion && state.shake > 0.15 ? (Math.random() - 0.5) * state.shake * 0.65 : 0;
     ctx.translate(shakeX, shakeY);
 
     drawBackground(now);
@@ -1507,7 +1638,7 @@
     drawFloaters();
 
     ctx.restore();
-    if (state.flash > 0.015) {
+    if (!state.reducedMotion && state.flash > 0.015) {
       ctx.fillStyle = `rgba(255,246,201,${state.flash * 0.42})`;
       ctx.fillRect(0, 0, W, H);
     }
@@ -1634,12 +1765,12 @@
     ctx.strokeStyle = '#5a2d1c';
     ctx.lineWidth = 10;
     ctx.lineCap = 'round';
-    ctx.beginPath(); ctx.moveTo(212, 516); ctx.lineTo(birdPos.x, birdPos.y); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(212, 516); ctx.lineTo(birdPos.x + 12, birdPos.y + 12); ctx.stroke();
     ctx.fillStyle = '#2d1b16';
     ctx.save();
     ctx.translate(birdPos.x, birdPos.y);
     ctx.rotate(Math.atan2(SLING.y - birdPos.y, SLING.x - birdPos.x));
-    roundedRect(-12, -18, 24, 36, 7); ctx.fill();
+    roundedRect(-25, -12, 8, 24, 3); ctx.fill();
     ctx.restore();
   }
 
@@ -1660,28 +1791,34 @@
   }
 
   function drawTrajectory() {
-    if (!state.aimGuide || state.mode !== 'aiming' || !currentBird) return;
-    const pull = Vector.sub(SLING, currentBird.position);
-    let vx = pull.x * 0.178;
-    let vy = pull.y * 0.178;
-    let x = SLING.x;
-    let y = SLING.y;
-    const air = 1 - BIRDS[currentBird.game.birdType].frictionAir;
-    for (let i = 0; i < 90; i++) {
-      x += vx;
-      y += vy;
-      vy += 0.292;
-      vx *= air;
-      vy *= air;
-      if (i % 5 === 0) {
-        const alpha = 0.88 * (1 - i / 95);
-        ctx.fillStyle = `rgba(255,255,255,${alpha})`;
-        ctx.beginPath();
-        ctx.arc(x, y, 5 - i * 0.022, 0, Math.PI * 2);
-        ctx.fill();
-      }
-      if (y > GROUND_Y || x > W) break;
+    if (!state.aimGuide || !state.aimPreview || !currentBird || !['ready', 'aiming'].includes(state.mode)) return;
+    const points = predictTrajectory();
+    points.forEach((p, i) => {
+      if (i % 8 !== 0) return;
+      ctx.fillStyle = `rgba(255,255,255,${0.94 * (1 - i / 220)})`;
+      ctx.strokeStyle = 'rgba(31,64,65,.35)';
+      ctx.lineWidth = 1.5;
+      ctx.beginPath(); ctx.arc(p.x, p.y, 4.8 - i * 0.014, 0, Math.PI * 2); ctx.fill(); ctx.stroke();
+    });
+  }
+
+  function predictTrajectory(steps = 180) {
+    if (!currentBird) return [];
+    // Matter's Verlet integrator uses the previous substep displacement. Match
+    // the real 120 Hz substeps, air friction and launch position exactly.
+    const velocity = Vector.mult(Vector.sub(SLING, currentBird.position), LAUNCH_SCALE);
+    let x = currentBird.position.x, y = currentBird.position.y;
+    let dx = velocity.x * 0.5, dy = velocity.y * 0.5;
+    const air = 1 - currentBird.frictionAir * 0.5;
+    const gravity = engine.gravity.y * engine.gravity.scale * (STEP / 2) ** 2;
+    const points = [];
+    for (let i = 0; i < steps; i++) {
+      dx *= air; dy = dy * air + gravity;
+      x += dx; y += dy;
+      points.push({ x, y });
+      if (y + currentBird.game.radius >= GROUND_Y || x > W || x < 0) break;
     }
+    return points;
   }
 
   function drawProjectileTrails() {
@@ -2046,15 +2183,16 @@
 
   function openPause() {
     if (state.mode === 'won' || state.mode === 'lost') return;
+    cancelAim();
     state.paused = true;
-    ui.pauseOverlay.classList.remove('hidden');
+    openDialog(ui.pauseOverlay);
     updateUI();
   }
 
   function resume() {
     state.paused = false;
     state.lastFrame = performance.now();
-    ui.pauseOverlay.classList.add('hidden');
+    closeDialog(ui.pauseOverlay);
     updateUI();
   }
 
@@ -2070,6 +2208,26 @@
     ui.helpOverlay.classList.add('hidden');
   }
 
+  let dialogReturnFocus = null;
+  function openDialog(dialog) {
+    cancelAim();
+    dialogReturnFocus = document.activeElement;
+    closeOverlays();
+    dialog.classList.remove('hidden');
+    const button = [...dialog.querySelectorAll('button:not(:disabled)')].find(el => el.getClientRects().length);
+    button?.focus({ preventScroll: true });
+  }
+
+  function closeDialog(dialog) {
+    dialog.classList.add('hidden');
+    state.accumulator = 0;
+    state.lastFrame = performance.now();
+    if ((state.mode === 'won' || state.mode === 'lost') && dialog !== ui.resultOverlay) {
+      ui.resultOverlay.classList.remove('hidden');
+      ui.retryBtn.focus({ preventScroll: true });
+    } else (dialogReturnFocus || canvas).focus({ preventScroll: true });
+  }
+
   function anyOverlayOpen() {
     return !ui.pauseOverlay.classList.contains('hidden') ||
       !ui.resultOverlay.classList.contains('hidden') ||
@@ -2079,11 +2237,12 @@
   }
 
   function openLevels() {
+    state.paused = false;
     renderLevelGrid();
-    ui.levelOverlay.classList.remove('hidden');
+    openDialog(ui.levelOverlay);
   }
 
-  function openHelp() { ui.helpOverlay.classList.remove('hidden'); }
+  function openHelp() { state.paused = false; openDialog(ui.helpOverlay); }
 
   function toggleGuide() {
     state.aimGuide = !state.aimGuide;
@@ -2100,8 +2259,8 @@
   }
 
   function toggleFullscreen() {
-    if (!document.fullscreenElement) stageWrap.requestFullscreen?.();
-    else document.exitFullscreen?.();
+    const request = !document.fullscreenElement ? document.querySelector('.game-shell')?.requestFullscreen?.() : document.exitFullscreen?.();
+    request?.catch(() => toast('เบราว์เซอร์นี้ไม่รองรับโหมดเต็มหน้าจอ'));
   }
 
   function ensureAudio() {
@@ -2166,17 +2325,44 @@
   }
 
   function onKeyDown(event) {
-    if (event.repeat) return;
     const key = event.key.toLowerCase();
-    if (event.code === 'Space') { event.preventDefault(); useAbility(); }
+    if (event.key === 'Tab' && anyOverlayOpen()) {
+      const overlay = [ui.introOverlay, ui.pauseOverlay, ui.resultOverlay, ui.levelOverlay, ui.helpOverlay].find(el => !el.classList.contains('hidden'));
+      const buttons = [...overlay.querySelectorAll('button:not(:disabled)')].filter(el => el.getClientRects().length);
+      const first = buttons[0], last = buttons.at(-1);
+      if (!overlay.contains(document.activeElement)) { event.preventDefault(); first?.focus(); }
+      else if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last?.focus(); }
+      else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first?.focus(); }
+      return;
+    }
+    if (event.key === 'Escape') {
+      if (state.introActive) endIntro(true);
+      else if (!ui.helpOverlay.classList.contains('hidden')) closeDialog(ui.helpOverlay);
+      else if (!ui.levelOverlay.classList.contains('hidden')) closeDialog(ui.levelOverlay);
+      else if (state.dragging || state.aimPreview) cancelAim();
+      else togglePause();
+      return;
+    }
+    if (event.target?.tagName === 'INPUT' || event.target?.isContentEditable) return;
+    if (key === 'p' && (!anyOverlayOpen() || state.paused)) { if (!event.repeat) togglePause(); return; }
+    if (anyOverlayOpen()) return;
+    if (event.code === 'Space' && event.target?.tagName !== 'BUTTON') {
+      event.preventDefault();
+      if (event.repeat) return;
+      if (state.mode === 'ready') launchPrecisionAim(); else useAbility();
+    } else if (key.startsWith('arrow') && state.mode === 'ready') {
+      event.preventDefault();
+      const amount = event.shiftKey ? 5 : 1;
+      if (key === 'arrowup') state.aimAngle = clamp(state.aimAngle + amount, 0, 65);
+      if (key === 'arrowdown') state.aimAngle = clamp(state.aimAngle - amount, 0, 65);
+      if (key === 'arrowright') state.aimPower = clamp(state.aimPower + amount, 20, 100);
+      if (key === 'arrowleft') state.aimPower = clamp(state.aimPower - amount, 20, 100);
+      ui.aimAngle.value = state.aimAngle;
+      ui.aimPower.value = state.aimPower;
+      previewPrecisionAim();
+    } else if (event.repeat) return;
     else if (key === 'r') startLevel(state.levelIndex);
     else if (key === 'g') toggleGuide();
-    else if (event.key === 'Escape') {
-      if (!ui.helpOverlay.classList.contains('hidden')) ui.helpOverlay.classList.add('hidden');
-      else if (!ui.levelOverlay.classList.contains('hidden')) ui.levelOverlay.classList.add('hidden');
-      else togglePause();
-    }
-    else if (key === 'p') togglePause();
     else if (key === 'm') toggleMute();
   }
 
@@ -2192,29 +2378,39 @@
   ui.nextBtn.addEventListener('click', () => startLevel(state.levelIndex + 1));
   ui.retryBtn.addEventListener('click', () => startLevel(state.levelIndex));
   ui.resultLevelsBtn.addEventListener('click', () => { ui.resultOverlay.classList.add('hidden'); openLevels(); });
-  ui.closeLevelsBtn.addEventListener('click', () => ui.levelOverlay.classList.add('hidden'));
-  ui.closeHelpBtn.addEventListener('click', () => ui.helpOverlay.classList.add('hidden'));
+  ui.closeLevelsBtn.addEventListener('click', () => closeDialog(ui.levelOverlay));
+  ui.closeHelpBtn.addEventListener('click', () => closeDialog(ui.helpOverlay));
   ui.resetSaveBtn.addEventListener('click', resetProgress);
   ui.introSkipBtn.addEventListener('click', () => { ensureAudio(); endIntro(true); });
   ui.replayIntroBtn.addEventListener('click', playIntro);
   ui.restartBtn.addEventListener('click', () => startLevel(state.levelIndex));
   ui.levelsBtn.addEventListener('click', openLevels);
   ui.helpBtn.addEventListener('click', openHelp);
+  ui.aimAngle.addEventListener('input', previewPrecisionAim);
+  ui.aimPower.addEventListener('input', previewPrecisionAim);
+  ui.launchBtn.addEventListener('click', launchPrecisionAim);
+  ui.aimToggleBtn.addEventListener('click', () => {
+    const open = ui.precisionControls.classList.toggle('expanded');
+    ui.aimToggleBtn.setAttribute('aria-expanded', String(open));
+    if (open) previewPrecisionAim(); else cancelAim();
+  });
+  ui.nextBirdBtn.addEventListener('click', () => {
+    if (state.paused || anyOverlayOpen() || !ui.nextBirdBtn.classList.contains('show') || pendingExplosions.length || birdsRemaining() === 0) return;
+    ui.nextBirdBtn.classList.remove('show');
+    fragments.forEach(f => { f.game.dead = true; pendingRemovals.push(f); });
+    processPending();
+    spawnBird();
+  });
+  ui.motionBtn.addEventListener('click', () => {
+    state.reducedMotion = !state.reducedMotion;
+    saveGame(); updateUI();
+  });
 
   canvas.addEventListener('pointerdown', onPointerDown);
   canvas.addEventListener('pointermove', onPointerMove);
   canvas.addEventListener('pointerup', onPointerUp);
-  canvas.addEventListener('pointercancel', onPointerUp);
-  canvas.addEventListener('lostpointercapture', () => {
-    if (!state.dragging || !currentBird) return;
-    state.dragging = false;
-    state.pointerId = null;
-    Body.setPosition(currentBird, SLING);
-    Body.setVelocity(currentBird, { x: 0, y: 0 });
-    state.mode = 'ready';
-    ui.powerWrap.classList.remove('show');
-    updateUI(true);
-  });
+  canvas.addEventListener('pointercancel', event => { if (event.pointerId === state.pointerId) cancelAim(); });
+  canvas.addEventListener('lostpointercapture', event => { if (state.dragging && event.pointerId === state.pointerId) cancelAim(); });
   window.addEventListener('pointerup', onPointerUp);
   window.addEventListener('keydown', onKeyDown);
   window.addEventListener('resize', resizeCanvas);
@@ -2222,17 +2418,20 @@
 
   state.muted = !!state.save.settings?.muted;
   state.aimGuide = state.save.settings?.guide !== false;
+  state.reducedMotion = state.save.settings?.reducedMotion ?? state.reducedMotion;
   resizeCanvas();
   initClouds();
   startLevel(Math.min(state.save.unlocked - 1, levels.length - 1));
-  playIntro();
-  window.__GAME_DEBUG__ = {
+  ui.aimAngle.value = state.aimAngle;
+  ui.aimPower.value = state.aimPower;
+  if (new URLSearchParams(window.location.search).has('debug')) window.__GAME_DEBUG__ = {
     state, engine, levels,
     get currentBird() { return currentBird; },
     get pigs() { return pigs; },
     get blocks() { return blocks; },
     get fragments() { return fragments; },
-    startLevel, useAbility, fixedUpdate, updateTurnFlow, armPhysicsDamage
+    startLevel, useAbility, fixedUpdate, updateTurnFlow, armPhysicsDamage, predictTrajectory,
+    get pendingExplosions() { return pendingExplosions; }
   };
   requestAnimationFrame(frame);
 
