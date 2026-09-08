@@ -1,0 +1,15 @@
+{
+  "id": "./",
+  "name": "Flappy Bird — Sky Club",
+  "short_name": "Flappy Bird",
+  "description": "An endless arcade flight with three difficulties.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#102c3d",
+  "theme_color": "#102c3d",
+  "icons": [
+    { "src": "assets/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "assets/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" }
+  ]
+}

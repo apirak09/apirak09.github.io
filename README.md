@@ -1,3 +1,8 @@
+# Games
+
+- **[Flappy Bird — Sky Club](https://apirak09.github.io/flappy/)**: three difficulties, touch and keyboard controls, original sound effects, saved best scores, and offline play. [Game details](flappy/README.md).
+- **[Mini Angry Birds: Reforged](https://apirak09.github.io/)**: the physics puzzle game below.
+
 # Mini Angry Birds: Reforged (v32 Crush & Cinematic)
 
 A complete rebuild of the v21 prototype focused on better physics, stronger game feel, clearer UX, and ten deliberately designed levels.

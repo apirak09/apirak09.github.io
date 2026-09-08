@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#102c3d">
+  <meta name="description" content="One little bird. One more try. Play Flappy Bird with three difficulties, crisp arcade sounds, and touch or keyboard controls.">
+  <title>Flappy Bird — Sky Club</title>
+  <link rel="icon" href="assets/bird.png" type="image/png">
+  <link rel="apple-touch-icon" href="assets/bird.png">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <svg class="icon-library" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><defs>
+    <symbol id="i-sound" viewBox="0 0 24 24"><path d="M11 4 6 8H3v8h3l5 4V4Zm4 4a6 6 0 0 1 0 8m3-11a10 10 0 0 1 0 14"/></symbol>
+    <symbol id="i-muted" viewBox="0 0 24 24"><path d="M11 4 6 8H3v8h3l5 4V4Zm5 5 5 6m0-6-5 6"/></symbol>
+    <symbol id="i-pause" viewBox="0 0 24 24"><path d="M8 5v14M16 5v14"/></symbol>
+    <symbol id="i-play" viewBox="0 0 24 24"><path d="m8 5 11 7-11 7V5Z"/></symbol>
+    <symbol id="i-settings" viewBox="0 0 24 24"><path d="M4 7h16M4 17h16"/><circle cx="9" cy="7" r="3"/><circle cx="15" cy="17" r="3"/></symbol>
+    <symbol id="i-expand" viewBox="0 0 24 24"><path d="M8 3H3v5m13-5h5v5M3 16v5h5m13-5v5h-5"/></symbol>
+    <symbol id="i-trophy" viewBox="0 0 24 24"><path d="M7 3h10v6a5 5 0 0 1-10 0V3Zm0 2H3v3a4 4 0 0 0 4 4m10-7h4v3a4 4 0 0 1-4 4m-5 2v6m-5 0h10"/></symbol>
+    <symbol id="i-retry" viewBox="0 0 24 24"><path d="M4 10a8 8 0 1 1 1 7M4 4v6h6"/></symbol>
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M4 12h16m-6-6 6 6-6 6"/></symbol>
+    <symbol id="i-close" viewBox="0 0 24 24"><path d="m6 6 12 12M6 18 18 6"/></symbol>
+  </defs></svg>
+  <main id="app" class="app">
+    <header class="topbar">
+      <a class="brand" href="./" aria-label="Flappy Bird home"><img src="assets/bird.png" width="48" height="48" alt=""><span>flappy bird<span class="brand-edition">SKY CLUB</span></span></a>
+      <div class="header-actions">
+        <button id="helpButton" class="text-button" type="button" aria-label="How to play"><span class="help-label">How to play</span><span class="help-mark" aria-hidden="true">?</span></button>
+        <span class="header-divider"></span>
+        <button id="soundButton" class="icon-button" type="button" aria-label="Mute sound" aria-pressed="false" title="Mute sound (M)"><svg><use href="#i-sound"/></svg></button>
+        <button id="settingsButton" class="icon-button" type="button" aria-label="Settings" title="Settings"><svg><use href="#i-settings"/></svg></button>
+        <button id="fullscreenButton" class="icon-button fullscreen-button" type="button" aria-label="Enter fullscreen" title="Fullscreen (F)"><svg><use href="#i-expand"/></svg></button>
+      </div>
+    </header>
+
+    <section id="stage" class="stage" data-state="menu" aria-label="Flappy Bird game">
+      <div class="scenery" aria-hidden="true"></div>
+      <div class="scenery-tint" aria-hidden="true"></div>
+      <aside class="side-panel left-panel" aria-label="Personal best">
+        <span class="eyebrow">PERSONAL BEST</span>
+        <div class="side-best"><svg class="icon"><use href="#i-trophy"/></svg><strong id="sideBest">0</strong></div>
+        <span id="sideDifficulty" class="mode-tag">NORMAL</span>
+        <div class="side-rule"></div>
+        <p>A little rhythm.<br>A little courage.</p>
+      </aside>
+      <div id="arena" class="arena">
+        <canvas id="game" width="480" height="680" tabindex="0" aria-label="Flappy Bird playfield. Press Space or Up Arrow to flap. P pauses." aria-describedby="controlsText">Your browser needs HTML Canvas to play Flappy Bird. Try a current version of Safari, Chrome, Firefox, or Edge.</canvas>
+        <div class="flight-hud" id="flightHud" hidden><span class="eyebrow">SCORE</span><strong id="score">0</strong><span id="scorePop" class="score-pop" aria-hidden="true">+1</span></div>
+        <div id="countdown" class="countdown" hidden aria-live="assertive">3</div>
+      </div>
+      <aside class="side-panel right-panel" aria-label="Next medal">
+        <div class="medal-outline"><svg class="icon"><use href="#i-trophy"/></svg></div>
+        <span class="eyebrow" id="nextMedalTitle">FIRST MEDAL</span>
+        <strong id="nextMedalScore">5 pipes</strong>
+        <p id="medalHint">Small wings.<br>Big possibilities.</p>
+      </aside>
+      <button id="pauseButton" class="stage-pause icon-button" type="button" aria-label="Pause game" title="Pause (P / Esc)" hidden><svg><use href="#i-pause"/></svg></button>
+      <div id="milestone" class="milestone" role="status" hidden></div>
+
+      <div id="menuOverlay" class="overlay">
+        <section class="menu-card" aria-labelledby="menuTitle">
+          <div class="menu-intro"><span class="eyebrow">WELCOME TO THE SKY CLUB</span><img class="menu-bird" src="assets/bird.png" width="112" height="112" alt="A little yellow bird ready to fly"></div>
+          <h1 id="menuTitle">flappy<span>bird.</span></h1>
+          <p class="menu-description">Find your rhythm. Keep flying.</p>
+          <fieldset class="difficulty"><legend>CHOOSE YOUR PACE</legend>
+            <label><input type="radio" name="difficulty" value="easy"><span><b>Easy</b><small>Take it easy</small></span></label>
+            <label><input type="radio" name="difficulty" value="normal" checked><span><b>Normal</b><small>The classic</small></span></label>
+            <label><input type="radio" name="difficulty" value="hard"><span><b>Hard</b><small>Stay sharp</small></span></label>
+          </fieldset>
+          <p id="difficultyDescription" class="difficulty-description">Balanced speed. Room to find your flow.</p>
+          <button id="playButton" class="primary-button" type="button"><svg class="icon"><use href="#i-play"/></svg><span>Let's fly</span><kbd>SPACE</kbd></button>
+          <div class="menu-hint"><span class="tap-dot" aria-hidden="true"></span>Tap, click, or press space to flap</div>
+        </section>
+      </div>
+
+      <div id="pauseOverlay" class="overlay dimmed" hidden>
+        <section class="compact-card" aria-labelledby="pauseTitle"><span class="eyebrow">TAKE A BREATHER</span><h2 id="pauseTitle">Flight paused.</h2><p>Your bird will wait right here.</p>
+          <button id="resumeButton" class="primary-button" type="button"><svg class="icon"><use href="#i-play"/></svg>Keep flying</button>
+          <button id="pauseMenuButton" class="secondary-button" type="button">Back to menu</button>
+        </section>
+      </div>
+
+      <div id="resultOverlay" class="overlay dimmed" hidden>
+        <section class="compact-card result-card" aria-labelledby="resultTitle">
+          <span id="resultKicker" class="eyebrow">EVERY FLIGHT COUNTS</span><h2 id="resultTitle">One more try?</h2>
+          <div class="result-numbers"><div><span>SCORE</span><strong id="resultScore">0</strong></div><div><span>BEST</span><strong id="resultBest">0</strong></div></div>
+          <div id="resultMedal" class="result-medal"><svg class="icon"><use href="#i-trophy"/></svg><span>5 pipes to your first medal</span></div>
+          <p id="resultTip" class="result-tip">Short, steady taps are the secret.</p>
+          <button id="retryButton" class="primary-button" type="button"><svg class="icon"><use href="#i-retry"/></svg>Fly again<kbd>R</kbd></button>
+          <button id="resultMenuButton" class="secondary-button" type="button">Change difficulty</button>
+        </section>
+      </div>
+      <div class="ground-edge" aria-hidden="true"></div>
+    </section>
+
+    <footer class="footer"><span class="footer-mode"><span class="mode-dot"></span><b id="footerDifficulty">Normal</b><span class="footer-separator">/</span><span>Endless flight</span></span><p id="controlsText"><kbd>SPACE</kbd><span>or</span><kbd>↑</kbd><span>to flap</span><span class="footer-separator">·</span><kbd>P</kbd><span>to pause</span></p><span class="mobile-controls">Tap anywhere to flap</span><span class="save-note" id="saveNote">Best scores saved on this device</span></footer>
+    <div id="announcer" class="sr-only" role="status" aria-live="polite" aria-atomic="true"></div>
+    <div id="notice" class="notice" role="status" hidden></div>
+  </main>
+
+  <dialog id="settingsDialog" class="dialog" aria-labelledby="settingsTitle">
+    <div class="dialog-top"><span class="eyebrow">MAKE IT YOURS</span><button class="icon-button close-dialog" type="button" aria-label="Close settings"><svg><use href="#i-close"/></svg></button></div>
+    <h2 id="settingsTitle">Flight settings</h2>
+    <label class="setting-row"><span><b>Sound effects</b><small>Flaps, chimes, and little victories</small></span><input id="effectsSetting" type="checkbox" role="switch" checked></label>
+    <label class="setting-row"><span><b>Background music</b><small>A light arcade soundtrack</small></span><input id="musicSetting" type="checkbox" role="switch"></label>
+    <label class="volume-setting" for="volumeSetting"><span>Volume</span><output id="volumeValue">60%</output></label><input id="volumeSetting" type="range" min="0" max="100" value="60" aria-label="Audio volume">
+    <label class="setting-row"><span><b>Reduce motion</b><small>Less shake, trails, and animation</small></span><input id="motionSetting" type="checkbox" role="switch"></label>
+    <p class="dialog-note">Settings and best scores stay on this device.</p>
+  </dialog>
+  <dialog id="helpDialog" class="dialog" aria-labelledby="helpTitle">
+    <div class="dialog-top"><span class="eyebrow">FLIGHT SCHOOL</span><button class="icon-button close-dialog" type="button" aria-label="Close help"><svg><use href="#i-close"/></svg></button></div>
+    <h2 id="helpTitle">Small taps. Big flight.</h2>
+    <ol class="help-list"><li><span>01</span><div><b>Tap to climb</b><p>Tap or click the sky. On a keyboard, use Space or ↑. Each press gives one flap.</p></div></li><li><span>02</span><div><b>Find the gap</b><p>Fly between the pipes. Pass a pair for one point. Keep clear of the pipes, ground, and ceiling.</p></div></li><li><span>03</span><div><b>Beat your best</b><p>Each difficulty has its own record. Earn medals at 5, 15, 30, and 50 pipes.</p></div></li></ol>
+    <div class="help-shortcuts"><span><kbd>P</kbd> Pause</span><span><kbd>M</kbd> Sound</span><span><kbd>R</kbd> Retry after a crash</span></div>
+    <button class="primary-button close-dialog" type="button">Got it. Let's fly.</button>
+  </dialog>
+  <noscript><div class="noscript">Please enable JavaScript to play Flappy Bird.</div></noscript>
+  <script src="core.js"></script><script src="audio.js"></script><script src="game.js"></script>
+</body>
+</html>
