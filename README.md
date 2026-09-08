@@ -1,5 +1,6 @@
 # Games
 
+- **[12 Islander – The Broken Seesaw](https://apirak09.github.io/islander/)**: a three-weighing adversarial logic mystery with twelve rendered islanders, touch controls, evidence hints, and atmospheric sound. [Rules, architecture, and reference strategy](islander/README.md).
 - **[Flappy Bird — Sky Club](https://apirak09.github.io/flappy/)**: three difficulties, touch and keyboard controls, original sound effects, saved best scores, and offline play. [Game details](flappy/README.md).
 - **[Mini Angry Birds: Reforged](https://apirak09.github.io/)**: the physics puzzle game below.
 

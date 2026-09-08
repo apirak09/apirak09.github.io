@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#101a20">
+  <meta name="description" content="Twelve islanders. One subtle difference. Three weighings. Outsmart an adversarial mystery on a seesaw that is falling apart.">
+  <title>12 Islander – The Broken Seesaw</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%23101a20'/%3E%3Ctext x='32' y='43' text-anchor='middle' font-family='Georgia' font-size='38' fill='%23e8bd7d'%3E12%3C/text%3E%3C/svg%3E">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="preload" href="assets/island.webp" as="image">
+  <link rel="preload" href="assets/islanders.webp" as="image">
+</head>
+<body>
+  <a class="skip-link" href="#ground">Skip to islanders</a>
+  <div class="app-shell">
+    <header class="masthead">
+      <a class="brand" href="./" aria-label="12 Islander home"><span class="brand-seal">12</span><span><strong>ISLANDER</strong><small>THE BROKEN SEESAW</small></span></a>
+      <nav aria-label="Game controls">
+        <button id="guideButton" class="quiet-button"><span aria-hidden="true">?</span> Field guide</button>
+        <button id="soundButton" class="quiet-button" aria-pressed="false"><span aria-hidden="true">♫</span> <span id="soundLabel">Sound off</span></button>
+        <button id="restartButton" class="quiet-button" aria-label="Start a new investigation"><span aria-hidden="true">↻</span><span class="desktop-label"> Restart</span></button>
+      </nav>
+    </header>
+
+    <main>
+      <div class="intro-line"><div><p class="eyebrow">AN ISLAND. A VIRUS. ONE IMPOSSIBLE CHOICE.</p><h1>Everyone looks innocent.</h1></div><p>One islander is heavier or lighter.<br>Prove who, before the seesaw breaks.</p></div>
+      <div class="game-layout">
+        <section class="play-column" aria-label="Seesaw puzzle">
+          <div id="scene" class="scene" data-damage="0">
+            <div class="scene-shade" aria-hidden="true"></div>
+            <div class="scene-topline"><div class="round-label"><span class="eyebrow">WEIGHING</span><strong id="roundLabel">01 <span>/ 03</span></strong></div><div class="integrity"><span id="integrityLabel">Fragile, but holding</span><div id="integrityBars" class="integrity-bars" aria-label="3 uses remaining"><i></i><i></i><i></i></div></div></div>
+            <div id="outcomeBanner" class="outcome-banner" role="status"><span class="outcome-symbol" aria-hidden="true">◇</span><strong id="outcomeText">Arrange your first weighing</strong><span id="outcomeSub">Equal numbers. Different answers.</span></div>
+            <div id="seesawAssembly" class="seesaw-assembly" aria-hidden="true">
+              <img class="seesaw-art seesaw-whole" src="assets/seesaw.webp" alt="" draggable="false">
+              <img class="seesaw-art seesaw-half seesaw-left" src="assets/seesaw.webp" alt="" draggable="false">
+              <img class="seesaw-art seesaw-half seesaw-right" src="assets/seesaw.webp" alt="" draggable="false">
+              <svg class="cracks" viewBox="0 0 1000 360" preserveAspectRatio="none"><path class="crack-one" d="M495 140l-10 18 20 10-23 20 17 14"/><path class="crack-two" d="M375 155l14 15-21 17 11 13M603 145l-17 17 14 11-21 25"/></svg>
+            </div>
+            <div class="platform platform-left" data-zone="L" role="group" aria-label="Left platform"><button type="button" class="platform-label" aria-label="Move selected islander to the left platform"><span>LEFT</span><span id="leftCount">0 islanders</span></button><div id="leftPeople" class="platform-people"></div><div class="drop-prompt">Drop islanders here</div></div>
+            <div class="platform platform-right" data-zone="R" role="group" aria-label="Right platform"><button type="button" class="platform-label" aria-label="Move selected islander to the right platform"><span>RIGHT</span><span id="rightCount">0 islanders</span></button><div id="rightPeople" class="platform-people"></div><div class="drop-prompt">Drop islanders here</div></div>
+            <div class="scene-caption"><span aria-hidden="true">✦</span> The island keeps its secrets.</div>
+          </div>
+
+          <div class="weigh-bar"><div class="weigh-help"><strong id="placementCount">0 on the left · 0 on the right</strong><span id="placementHint">Place the same number on each side.</span></div><button id="clearButton" class="quiet-button" disabled>Clear</button><button id="weighButton" class="primary-button" disabled><span aria-hidden="true">⚖</span> Weigh <span id="usesLeft">3 left</span></button></div>
+
+          <section id="ground" class="ground" data-zone="-" tabindex="-1" aria-label="Islanders on the ground">
+            <div class="section-header"><div><h2>The islanders <span id="groundCount">12 on shore</span></h2><p>Drag onto a platform, or tap a doll to move them.</p></div><label class="assist-control"><input type="checkbox" id="assistToggle" checked><span class="switch" aria-hidden="true"></span> Visual hints</label></div>
+            <div id="roster" class="roster"></div>
+            <div id="moveBar" class="move-bar" hidden><span id="selectedName"></span><div><button data-move="L">← Left</button><button data-move="-">↓ Ground</button><button data-move="R">Right →</button></div><button id="deselectButton" class="quiet-button" aria-label="Cancel islander selection">×</button></div>
+            <div class="legend" id="legend"><span><i class="red-dot"></i> ↑ Could be heavier</span><span><i class="blue-dot"></i> ↓ Could be lighter</span><span><i class="white-dot"></i> Normal</span></div>
+          </section>
+        </section>
+
+        <aside class="investigation" aria-label="Evidence and weighing history">
+          <div class="evidence-heading"><span class="eyebrow">YOUR INVESTIGATION</span><span class="case-number">CASE / 012</span></div>
+          <section class="possibilities-panel"><div class="possibilities-stat"><strong id="truthCount">24</strong><span>possible<br>truths remain</span><span class="stat-mark" aria-hidden="true">◈</span></div><div class="uncertainty-track" aria-hidden="true"><div id="uncertaintyFill"></div></div><p id="evidenceMessage">12 people. Each could be heavier or lighter. Your first weighing changes that.</p></section>
+          <section class="history-panel"><div class="section-header"><h2>Weighing journal</h2><span id="journalCount">0 / 3</span></div><ol id="history" class="history"></ol></section>
+          <div class="adversary-note"><span aria-hidden="true">◇</span><div><strong>The truth moves.</strong><p>No impostor is chosen in advance. Every weighing keeps the most possibilities alive.</p></div></div>
+          <button id="accuseButton" class="outline-button" disabled>Identify the impostor <span aria-hidden="true">↗</span></button>
+          <p id="accuseHint" class="accuse-hint">One person. One weight difference. No guesses.</p>
+        </aside>
+      </div>
+      <footer class="footer"><span>12 ISLANDER <i>—</i> THE BROKEN SEESAW</span><span>Three weighings. Make them count.</span></footer>
+    </main>
+  </div>
+
+  <dialog id="guideDialog" aria-labelledby="guideTitle"><div class="dialog-top"><span class="eyebrow">FIELD GUIDE / 012</span><button class="close-dialog" aria-label="Close field guide">×</button></div><h2 id="guideTitle">Trust the balance.<br>Question everyone.</h2><p>A mysterious virus changes one islander’s weight very slightly. The other eleven weigh exactly the same. Appearances reveal nothing.</p><ol class="guide-steps"><li><b>Arrange.</b> Put equal numbers on the left and right. Use normal islanders as counterweights, too.</li><li><b>Weigh.</b> The seesaw tips left, tips right, or balances. The game chooses the outcome with the most explanations left.</li><li><b>Deduce.</b> Red ↑ means possibly heavier; blue ↓ means possibly lighter. Both colors mean either is still possible. White means proved normal.</li><li><b>Prove.</b> After three weighings the seesaw breaks. Exactly one truth must remain. Name the islander and the weight difference to win.</li></ol><p class="guide-warning">More than one truth after round three is a loss. The game never invents an impostor to reward a guess. Tied worst-case outcomes are chosen randomly.</p>
+    <details class="reference-guide"><summary>Reveal the guaranteed reference strategy</summary><p>This fixed pattern distinguishes all 24 truths. Other sound strategies work, too. Letters always refer to the same islanders.</p><div class="table-scroll"><table id="referenceTable"><caption>L = left · R = right · – = ground</caption><thead></thead><tbody></tbody></table></div><p>Read each person’s column downwards. Your three results match that column if they are <b>heavier</b>. Swap L ↔ R, keeping – unchanged, if they are <b>lighter</b>.</p><p class="small-note">This decoder is valid only if you used all three reference arrangements in order. The evidence engine works for every legal arrangement.</p></details>
+    <details class="keyboard-guide"><summary>Keyboard & accessibility</summary><p>Tab to a doll and press Enter to select. Use the move buttons, or ← / → / ↓ for left / right / ground. Escape cancels selection. W weighs. Color hints always include arrow symbols and accessible text. Reduced-motion preferences are respected.</p></details><button class="primary-button close-guide">Back to the island</button></dialog>
+
+  <dialog id="accuseDialog" aria-labelledby="accuseTitle"><div class="dialog-top"><span class="eyebrow">THE FINAL DEDUCTION</span><button class="close-dialog" aria-label="Close accusation">×</button></div><h2 id="accuseTitle">Who carries the virus?</h2><p>The seesaw is broken, but your evidence points to one truth. Make your final deduction.</p><form id="accusationForm"><label class="input-label" for="suspectSelect">Islander</label><select id="suspectSelect" required><option value="">Choose an islander</option></select><fieldset><legend>Their weight is…</legend><label><input type="radio" name="kind" value="heavy" required><span class="weight-choice heavy">↑ Heavier</span></label><label><input type="radio" name="kind" value="light" required><span class="weight-choice light">↓ Lighter</span></label></fieldset><p class="small-note">A wrong deduction ends this investigation.</p><button class="primary-button" type="submit">Confirm deduction →</button></form></dialog>
+
+  <dialog id="resultDialog" aria-labelledby="resultTitle"><div class="dialog-top"><span id="resultKicker" class="eyebrow"></span><button class="close-dialog" aria-label="Close result and review evidence">×</button></div><div id="resultSymbol" class="result-symbol" aria-hidden="true"></div><h2 id="resultTitle"></h2><p id="resultDescription"></p><div id="resultEvidence" class="result-evidence"></div><div class="result-actions"><button id="playAgainButton" class="primary-button">New investigation ↻</button><button class="close-dialog outline-button">Review evidence</button></div></dialog>
+
+  <dialog id="restartDialog" aria-labelledby="restartTitle"><div class="dialog-top"><span class="eyebrow">A FRESH INVESTIGATION</span><button class="close-dialog" aria-label="Keep playing">×</button></div><h2 id="restartTitle">Return to the beginning?</h2><p>Your current evidence will be cleared. All 24 truths will be possible again.</p><div class="result-actions"><button id="confirmRestartButton" class="primary-button">Restart investigation</button><button class="close-dialog outline-button">Keep playing</button></div></dialog>
+  <div id="announcement" class="sr-only" role="status" aria-live="polite" aria-atomic="true"></div>
+  <div id="toast" class="toast" role="status" hidden></div>
+  <noscript><div class="noscript-message">Enable JavaScript to play 12 Islander.</div></noscript>
+  <script type="module" src="game.mjs"></script>
+</body>
+</html>
