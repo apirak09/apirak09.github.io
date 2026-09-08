@@ -1,5 +1,7 @@
 # Games
 
+- **[The Infinite Hotel](https://apirak09.github.io/infinite-hotel/)**: a playable Hilbert’s Hotel lab with six shifts, animated room assignments, custom rules, infinite buses, and Cantor’s diagonal argument. [Play guide and mathematical model](infinite-hotel/README.md).
+
 - **[Liar Table](https://apirak09.github.io/liar/)**: classic bluffing cards for 2–4 friends with room codes, hidden hands, and cross-device play. Owner preview available; guest access awaits approval. [Game and source](liar/README.md).
 - **[12 Islander – The Broken Seesaw](https://apirak09.github.io/islander/)**: a three-weighing adversarial logic mystery with twelve rendered islanders, touch controls, evidence hints, and atmospheric sound. [Rules, architecture, and reference strategy](islander/README.md).
 - **[Flappy Bird — Sky Club](https://apirak09.github.io/flappy/)**: three difficulties, touch and keyboard controls, original sound effects, saved best scores, and offline play. [Game details](flappy/README.md).
