@@ -2,7 +2,7 @@
   "id": "./",
   "name": "Flappy Bird — Sky Club",
   "short_name": "Flappy Bird",
-  "description": "Four arcade difficulties, including Nightmare under the Blood Moon.",
+  "description": "Four arcade difficulties, including an endlessly escalating Nightmare under the Blood Moon.",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",

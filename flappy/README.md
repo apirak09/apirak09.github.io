@@ -22,26 +22,38 @@ The logical playfield stays 480 × 680 on every screen; resizing does not change
 | Easy | 150 | 220 | 1160 | -365 |
 | Normal | 185 | 182 | 1320 | -385 |
 | Hard | 225 | 150 | 1450 | -405 |
-| Nightmare | 245 | 126–158, varied per gate | 1450 | -405 |
+| Nightmare | Starts at 300, rises every point | Starts at 112–136, shrinks with score | 1450 | -405 |
 
 Collision checks include the pipe lips, use a forgiving bird hit circle, and award each passed pair only once. Gap centers are bounded and successive height changes are limited. Medals are awarded at 5, 15, 30, and 50 points.
 
-## Nightmare — Blood Moon update
+## Nightmare — Endless escalation update
 
 A prominent crimson fourth mode switches the scene to an original Blood Moon landscape, blood-stained metal gates, a darker interface, demon-bat artwork, warning sounds, laser/volley effects, and an optional minor-key soundtrack. Controls remain the same.
 
 Each endless round alternates between:
 
-1. **Six blood gates.** Gaps vary from 126 to 158 units and spacing from 250 to 332 units. Close pairs reduce the allowed height change; maximum center displacement is 76 units. The speed stays capped at 245 units/s rather than accelerating into an impossible state.
-2. **Bat arrival.** Every pipe must leave the entire playfield before a 1.35-second arrival begins. Attacks cannot overlap pipes.
-3. **Three attacks.** Laser and blood-volley patterns alternate. Every attack has a 1.1-second visual/audio warning. A laser locks its horizontal sightline once, then fires for 0.42 seconds; it does not track the bird after the lock. A volley marks a 186-unit open corridor and launches finite, non-homing bolts from the right. The next attack waits for all bolts or the beam to clear, plus 0.72 seconds of recovery.
-4. **Return to gates.** A 1.25-second breather precedes the next set. Its first pipe starts offscreen with more than 1.4 seconds before it can reach the bird.
+1. **Six blood gates.** The opening speed is 300 units/s, up from 245. Initial gaps vary from 112 to 136 units and center-to-center spacing from 220 to 276 units. Every point increases speed and reduces the bounds for newly spawned gates. Early height changes retain some recovery allowance; later gates become more aggressive.
+2. **Bat arrival.** Every pipe must leave the playfield before bats enter. Arrival time gets shorter as the threat rises. Bats cannot attack among pipes.
+3. **An expanding swarm.** Another bat joins every five points, up to eight actual shooters. Each bat has its own locked laser height and staggered firing time, or launches its own column of non-homing bolts through a shared open corridor. Warnings and recovery shrink; beams get wider, bolts get faster, and the corridor narrows. Each room snapshots its wave count on entry, so it can finish even while the threat rises. The first room has five waves; later rooms grow to twelve. All beams or bolts clear before the next wave begins.
+4. **Return to gates.** A shortening breather precedes the next set. The first gate starts offscreen; the growing speed keeps reducing the time available to react.
+
+At score `p`, target speed is `300 + 9p + 0.18p²` units/s, approached smoothly after each point. It has no gameplay cap. The HUD shows threat level, current speed multiplier, bat count, and progress through the current room.
+
+| Points | Target speed | Gap range | Gate spacing | Bats | First shot warning |
+| ---: | ---: | ---: | ---: | ---: | ---: |
+| 0 | 300 | 112–136 | 220–276 | 1 | 0.95 s |
+| 6 | 360 | 107–130 | 213–268 | 2 | 0.81 s |
+| 12 | 434 | 102–125 | 207–259 | 3 | 0.71 s |
+| 24 | 620 | 92–113 | 194–242 | 5 | 0.57 s |
+| 36 | 857 | 81–102 | 180–226 | 8 | 0.47 s |
+
+Late play intentionally becomes overwhelming. There is no timer that forces a loss: pipes, beams, bolts, ground, and ceiling remain the only causes of death. Bat count and minimum geometric sizes are bounded for finite rendering work, while scene and projectile speeds continue increasing. Swept collisions prevent high-speed gates and bolts from skipping over the bird between physics updates.
 
 Each gate or attack survived awards one point. Nightmare has its own record and run count. Existing saved classic scores/settings are retained automatically. Pausing freezes the attack warning, beam timer, projectiles, and encounter state. Reduced motion keeps the essential warnings and collision geometry visible while removing decorative glow/motion where appropriate.
 
-The engine tests include 96 complete simulations (32 seeds at 30/60/120 FPS), each surviving five rounds and scoring 45 points. The simulation reads visible cues at 100 ms intervals and allows no more than one flap per 160 ms. These are practical solvability checks, not a proof that every player state or every conceivable random sequence is survivable. Separate tests cover warning-only immunity, fixed laser targeting, live attack collisions, corridor clearance, pause/resume, reset cleanup, and old-save migration.
+The engine tests include 48 simulations (16 seeds at 30/60/120 FPS) using visible cues, decisions at 50 ms intervals, and at least 140 ms between flaps. They check that the harder opening remains playable; they do not promise survival in later rounds. Separate tests cover continuous escalation, independent bat targeting/firing, truthful warnings, corridor clearance, fixed room targets, high-speed collisions, pause/resume, retry cleanup, and old-save migration. All 25 tests pass with `node --test flappy/tests/*.test.cjs`.
 
-The new HTML references versioned code/styles and the offline cache has its own update version, avoiding mixed old/new game scripts. The direct update link is https://apirak09.github.io/flappy/?v=nightmare-1.
+The HTML references versioned code/styles and the offline cache has its own update version, avoiding mixed old/new game scripts. The direct update link is https://apirak09.github.io/flappy/?v=nightmare-2.
 
 ## Compatibility and saves
 

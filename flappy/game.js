@@ -42,7 +42,7 @@
     const c = DIFFICULTIES[settings.difficulty];
     const nightmare = settings.difficulty === 'nightmare';
     document.documentElement.classList.toggle('nightmare-theme', nightmare);
-    $('menuDescription').textContent = nightmare ? 'Keep your nerve. Watch the warning lines.' : 'Find your rhythm. Keep flying.';
+    $('menuDescription').textContent = nightmare ? 'Every gate makes the night more dangerous.' : 'Find your rhythm. Keep flying.';
     $('playButtonText').textContent = nightmare ? 'Enter the nightmare' : "Let's fly";
     audio.update(settings);
     document.querySelectorAll('input[name="difficulty"]').forEach(input => { input.checked = input.value === settings.difficulty; });
@@ -122,11 +122,11 @@
     $('resultMedal').querySelector('span').textContent = earned ? `${earned.name} flight · ${DIFFICULTIES[settings.difficulty].name}` : `${5 - flight.score} more ${unit}${5 - flight.score === 1 ? '' : 's'} to your first medal`;
     $('resultTip').textContent = flight.reason === 'ceiling' ? 'Give your wings a rest before the ceiling.' : flight.reason === 'ground' ? 'A little tap before you fall too far.' : 'Aim for the middle. Keep your taps steady.';
     if (flight.nightmare) {
-      $('resultKicker').textContent = newRecord ? 'NIGHTMARE · NEW RECORD' : `BLOOD MOON · ROUND ${flight.round}`;
+      $('resultKicker').textContent = `${newRecord ? 'NEW RECORD' : 'NIGHTMARE'} · THREAT ${flight.threat.level}`;
       $('resultTitle').textContent = newRecord ? 'You defied the night.' : 'The night wins.';
-      if (flight.reason === 'laser') $('resultTip').textContent = 'The dashed line locks first. Change height before the beam fires.';
+      if (flight.reason === 'laser') $('resultTip').textContent = 'Every bat locks a different height. Move clear of all the dashed lines.';
       if (flight.reason === 'bolt') $('resultTip').textContent = 'Move into the marked open lane, then keep a steady rhythm.';
-      if (flight.reason === 'pipe') $('resultTip').textContent = 'Read each gap. The distance between gates changes.';
+      if (flight.reason === 'pipe') $('resultTip').textContent = `You reached ${(flight.speed / DIFFICULTIES.nightmare.speed).toFixed(1)}× speed. Read the next gap early: every point accelerates the night.`;
     }
     showScreen('result'); $('retryButton').focus({ preventScroll: true });
     if (newRecord && flight.score >= 5) audio.effect('medal');
@@ -156,12 +156,12 @@
       }
       if (event.type === 'crash') finishRun();
       if (event.type === 'phase') {
-        if (event.phase === 'arrival') { banner('DEMON BATS · OPEN SKY', 1600); audio.effect('bat'); }
+        if (event.phase === 'arrival') { banner(`${flight.threat.bats} DEMON BATS · OPEN SKY`, 1300); audio.effect('bat'); }
         if (event.phase === 'recovery') { banner('HUNT SURVIVED · GATES RETURN', 1500); audio.effect('clear'); }
         if (event.phase === 'gates') banner(`BLOOD GATES · ROUND ${event.round}`, 1300);
       }
-      if (event.type === 'warning') { audio.effect('warning'); announce(event.kind === 'laser' ? 'Laser sightline locked. Change height now.' : 'Blood volley. Fly into the marked open lane.'); }
-      if (event.type === 'fire') audio.effect(event.kind);
+      if (event.type === 'warning') { audio.effect('warning', flight.attack?.warning); announce(event.kind === 'laser' ? 'Laser sightlines locked. Move clear of every line.' : 'Blood volley. Fly into the marked open lane.'); }
+      if (event.type === 'fire') audio.effect(event.kind, event.bat);
     }
     updateNightmareHud();
   }
@@ -173,10 +173,12 @@
   function updateNightmareHud() {
     if (!flight.nightmare) return;
     const labels = { gates: `GATES · ${flight.cleared} / ${NIGHTMARE.pipesPerRound}`, arrival: 'BATS APPROACHING', recovery: 'HUNT SURVIVED',
-      hunt: flight.attack ? `${flight.attack.kind === 'laser' ? 'LASER' : 'VOLLEY'} · ${flight.attack.index} / ${NIGHTMARE.attacksPerRound}` : `EVADED · ${flight.attacksCleared} / ${NIGHTMARE.attacksPerRound}` };
-    const round = `BLOOD MOON · ${flight.round}`, phase = labels[flight.phase];
+      hunt: flight.attack ? `${flight.attack.kind === 'laser' ? 'LASER' : 'VOLLEY'} · ${flight.attack.index} / ${flight.huntTarget}` : `EVADED · ${flight.attacksCleared} / ${flight.huntTarget}` };
+    const round = `THREAT ${flight.threat.level} · ROUND ${flight.round}`, phase = labels[flight.phase];
+    const threat = `${(flight.speed / DIFFICULTIES.nightmare.speed).toFixed(1)}× SPEED · ${flight.threat.bats} BAT${flight.threat.bats === 1 ? '' : 'S'}`;
     if ($('roundLabel').textContent !== round) $('roundLabel').textContent = round;
     if ($('phaseLabel').textContent !== phase) $('phaseLabel').textContent = phase;
+    if ($('threatLabel').textContent !== threat) $('threatLabel').textContent = threat;
   }
 
   function burst(x, y, color, count) {
@@ -228,29 +230,33 @@
     const showBat = flight.phase !== 'gates';
     if (a) {
       ctx.save();
-      if (a.kind === 'laser' && a.age < a.warning + NIGHTMARE.laserTime) {
-        const warm = Math.min(1, a.age / a.warning), active = a.fired;
-        ctx.fillStyle = active ? '#fd28433d' : '#fd284316'; ctx.fillRect(0, a.aimY - NIGHTMARE.laserHalfWidth, NIGHTMARE.enemyX - 10, NIGHTMARE.laserHalfWidth * 2);
-        ctx.strokeStyle = active ? '#ff4266' : '#ffc0c5'; ctx.lineWidth = active ? NIGHTMARE.laserHalfWidth * 2 : 2;
-        ctx.setLineDash(active ? [] : [9, 8]); ctx.shadowColor = '#ff244f'; ctx.shadowBlur = settings.reducedMotion ? 0 : active ? 18 : 5;
-        ctx.beginPath(); ctx.moveTo(0, a.aimY); ctx.lineTo(NIGHTMARE.enemyX - 15, a.aimY); ctx.stroke(); ctx.setLineDash([]);
-        if (active) { ctx.strokeStyle = '#fff7e9'; ctx.lineWidth = 4; ctx.stroke(); }
-        else {
-          ctx.shadowBlur = 0; ctx.fillStyle = '#ffd1d5'; ctx.font = '800 12px system-ui'; ctx.textAlign = 'center';
-          ctx.fillText('LOCKED · CHANGE HEIGHT', 260, a.aimY - 18);
-          ctx.strokeStyle = '#ff7792'; ctx.lineWidth = 3; ctx.beginPath(); ctx.arc(NIGHTMARE.enemyX - 18, a.aimY, 19, -Math.PI / 2, -Math.PI / 2 + warm * Math.PI * 2); ctx.stroke();
+      if (a.kind === 'laser') {
+        for (const bat of a.shooters) {
+          if (a.age >= bat.fireAt + a.tuning.laserTime) continue;
+          const warm = Math.min(1, a.age / bat.fireAt), active = bat.fired, half = a.tuning.laserHalfWidth;
+          ctx.fillStyle = active ? '#fd28433d' : '#fd284316'; ctx.fillRect(0, bat.aimY - half, bat.x - 10, half * 2);
+          ctx.strokeStyle = active ? '#ff4266' : '#ffc0c5'; ctx.lineWidth = active ? half * 2 : 2;
+          ctx.setLineDash(active ? [] : [9, 8]); ctx.shadowColor = '#ff244f'; ctx.shadowBlur = settings.reducedMotion ? 0 : active ? 12 : 3;
+          ctx.beginPath(); ctx.moveTo(0, bat.aimY); ctx.lineTo(bat.x - 15, bat.aimY); ctx.stroke(); ctx.setLineDash([]);
+          if (active) { ctx.strokeStyle = '#fff7e9'; ctx.lineWidth = 4; ctx.stroke(); }
+          else {
+            ctx.shadowBlur = 0;
+            if (bat.index === 0) { ctx.fillStyle = '#ffd1d5'; ctx.font = '800 12px system-ui'; ctx.textAlign = 'center'; ctx.fillText('LOCKED · MOVE CLEAR', 255, bat.aimY - half - 10); }
+            ctx.strokeStyle = '#ff7792'; ctx.lineWidth = 3; ctx.beginPath(); ctx.arc(bat.x - 18, bat.aimY, 19, -Math.PI / 2, -Math.PI / 2 + warm * Math.PI * 2); ctx.stroke();
+          }
         }
       }
       if (a.kind === 'volley') {
-        const half = NIGHTMARE.corridorHalfWidth;
+        const half = a.tuning.corridorHalfWidth;
         ctx.fillStyle = '#ffd19912'; ctx.fillRect(0, a.safeY - half, WIDTH, half * 2);
         ctx.setLineDash([7, 9]); ctx.lineWidth = 1.5; ctx.strokeStyle = '#fcd6a982';
         for (const y of [a.safeY - half, a.safeY + half]) { ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(WIDTH, y); ctx.stroke(); }
         ctx.setLineDash([]); ctx.fillStyle = '#ffe2b9'; ctx.font = '800 12px system-ui'; ctx.textAlign = 'center'; ctx.fillText('OPEN LANE', 276, a.safeY + 4);
-        if (!a.fired) {
-          for (let y = 62; y < FLOOR - 35; y += 68) {
-            if (Math.abs(y - a.safeY) < half + NIGHTMARE.boltRadius) continue;
-            ctx.strokeStyle = '#fd698b'; ctx.lineWidth = 2; ctx.beginPath(); ctx.arc(NIGHTMARE.enemyX - 22, y, 6 + a.age / a.warning * 8, 0, Math.PI * 2); ctx.stroke();
+        for (const bat of a.shooters) {
+          if (bat.fired) continue;
+          for (let y = 42 + bat.index * a.tuning.volleyStep / a.shooters.length; y < FLOOR - 30; y += a.tuning.volleyStep) {
+            if (Math.abs(y - a.safeY) < half + a.tuning.boltRadius) continue;
+            ctx.strokeStyle = '#fd698b'; ctx.lineWidth = 2; ctx.beginPath(); ctx.arc(bat.x - 22, y, 5 + a.age / bat.fireAt * 7, 0, Math.PI * 2); ctx.stroke();
           }
         }
       }
@@ -263,16 +269,21 @@
       ctx.fillStyle = '#fff4db'; ctx.beginPath(); ctx.arc(bolt.x - 1, bolt.y, 4, 0, Math.PI * 2); ctx.fill(); ctx.restore();
     }
     if (showBat) {
-      const entrance = flight.phase === 'arrival' ? clamp(flight.phaseTime / NIGHTMARE.entryTime, 0, 1) : 1;
-      const exit = flight.phase === 'recovery' ? clamp(flight.phaseTime / NIGHTMARE.recoveryTime, 0, 1) : 0;
-      const x = NIGHTMARE.enemyX + 140 * ((1 - entrance) ** 2 + exit ** 2);
-      const travel = a ? clamp(a.age / .65, 0, 1) : 1;
-      const y = a ? a.fromY + (a.enemyY - a.fromY) * (1 - (1 - travel) ** 3) : flight.enemyY;
-      ctx.save(); ctx.translate(x, y); ctx.scale(1, settings.reducedMotion ? 1 : .91 + Math.sin(flight.elapsed * 11) * .09);
-      ctx.shadowColor = '#df275c'; ctx.shadowBlur = settings.reducedMotion ? 0 : 12;
-      if (batImage.complete && batImage.naturalWidth) ctx.drawImage(batImage, -58, -40, 116, 80);
-      else { ctx.fillStyle = '#ed4d78'; ctx.font = '48px system-ui'; ctx.textAlign = 'center'; ctx.fillText('🦇', 0, 10); }
-      ctx.restore();
+      const entrance = flight.phase === 'arrival' ? clamp(flight.phaseTime / flight.entryDuration, 0, 1) : 1;
+      const exit = flight.phase === 'recovery' ? clamp(flight.phaseTime / flight.recoveryDuration, 0, 1) : 0;
+      const bats = flight.phase === 'arrival' || !flight.enemies.length
+        ? Array.from({ length: flight.threat.bats }, (_, i) => ({ index: i, x: NIGHTMARE.enemyX - i % 3 * 29, y: 68 + i * (FLOOR - 136) / Math.max(1, flight.threat.bats - 1) }))
+        : flight.enemies;
+      for (const bat of bats) {
+        const x = bat.x + 165 * ((1 - entrance) ** 2 + exit ** 2);
+        const travel = a ? clamp(a.age / Math.min(.5, a.warning * .8), 0, 1) : 1;
+        const y = a ? bat.fromY + (bat.y - bat.fromY) * (1 - (1 - travel) ** 3) : bat.y;
+        ctx.save(); ctx.translate(x, y); ctx.scale(1, settings.reducedMotion ? 1 : .91 + Math.sin(flight.elapsed * 11 + bat.index * 1.4) * .09);
+        ctx.shadowColor = '#df275c'; ctx.shadowBlur = settings.reducedMotion ? 0 : 7;
+        if (batImage.complete && batImage.naturalWidth) ctx.drawImage(batImage, -49, -34, 98, 68);
+        else { ctx.fillStyle = '#ed4d78'; ctx.font = '42px system-ui'; ctx.textAlign = 'center'; ctx.fillText('🦇', 0, 10); }
+        ctx.restore();
+      }
     }
   }
   function drawBird(y, angle, time) {
@@ -334,7 +345,7 @@
         wing = Math.max(0, wing - dt * 5); shake *= Math.exp(-dt * 14); flash = Math.max(0, flash - dt); scoreTime = Math.max(0, scoreTime - dt);
         for (const p of particles) { p.x += p.vx * dt; p.y += p.vy * dt; p.vy += 90 * dt; p.life -= dt; }
         particles = particles.filter(p => p.life > 0);
-        for (const t of trail) { t.x -= flight.config.speed * dt; t.life -= dt * 2.5; }
+        for (const t of trail) { t.x -= flight.speed * dt; t.life -= dt * 2.5; }
         trail = trail.filter(t => t.life > 0);
         if (screen === 'playing' && !settings.reducedMotion && animationTime - lastTrail > .04) { trail.push({ x: BIRD_X - 18, y: flight.y + 3, life: .8 }); lastTrail = animationTime; }
       }

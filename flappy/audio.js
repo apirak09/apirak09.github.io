@@ -47,9 +47,10 @@
       if (name === 'tick') this.tone(700, 700, .06, .08);
       if (name === 'select') this.tone(520, 590, .055, .06);
       if (name === 'bat') { this.tone(260, 110, .48, .13, 'triangle'); this.tone(700, 220, .33, .055, 'sine', .1); }
-      if (name === 'warning') { this.tone(440, 440, .12, .12, 'triangle'); this.tone(587.33, 587.33, .17, .1, 'triangle', .19); }
-      if (name === 'laser') { this.tone(1700, 170, .38, .17, 'sawtooth'); this.tone(110, 65, .32, .13, 'triangle'); }
-      if (name === 'volley') { [0, .045, .09].forEach(delay => this.tone(680, 180, .15, .105, 'triangle', delay)); }
+      if (name === 'warning') { const warning = score || .95; this.tone(440, 440, Math.min(.12, warning * .4), .12, 'triangle'); this.tone(587.33, 587.33, Math.min(.17, warning * .5), .1, 'triangle', Math.min(.19, warning * .24)); }
+      // Additional bats add audible layers without multiplying the full volume.
+      if (name === 'laser') { const level = 1 / (1 + score * .3); this.tone(1700 - score * 80, 170, .38, .17 * level, 'sawtooth'); this.tone(110, 65, .32, .13 * level, 'triangle'); }
+      if (name === 'volley') { const level = 1 / (1 + score * .3); [0, .045, .09].forEach(delay => this.tone(680, 180, .15, .105 * level, 'triangle', delay)); }
       if (name === 'clear') { [329.63, 392, 493.88].forEach((f, i) => this.tone(f, f, .28, .1, 'sine', i * .09)); }
     }
     setActive(active) { this.active = active; this.syncMusic(); }
