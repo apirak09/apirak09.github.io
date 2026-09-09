@@ -23,3 +23,38 @@
 @media(max-width:390px){:root{--header-height:70px;--footer-height:49px}}
 @media(max-height:600px) and (min-width:600px){:root{--header-height:58px;--footer-height:38px}}
 @media(prefers-reduced-motion:reduce){*,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+
+/* Nightmare keeps the familiar controls, but changes the entire atmosphere. */
+.menu-card h1{font-size:46px;line-height:1.05;letter-spacing:-2px;max-width:none;margin:15px 0 10px;white-space:nowrap}.menu-card h1 span{display:inline;margin-left:7px}.menu-card .menu-bird{width:69px;height:69px;top:-21px;right:-7px}.menu-card .menu-description{margin:8px 0 20px}
+.difficulty{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.difficulty .nightmare-choice{grid-column:1/-1;text-align:left}
+.difficulty .nightmare-choice>span{display:flex;align-items:center;gap:12px;padding:10px 15px;min-height:68px;border:1px solid #a73149;background:linear-gradient(115deg,#270e1c,#520e22 64%,#210e1b);box-shadow:inset 0 0 24px #d7284220;color:#fff1e7;overflow:hidden}
+.nightmare-choice img{object-fit:contain;filter:drop-shadow(0 0 6px #ff1b4744);flex:none}
+.difficulty .nightmare-choice b{font-size:17px;letter-spacing:2px;font-weight:900;color:#ffacb9}
+.difficulty .nightmare-choice small{font-size:12px;color:#dcacb8;margin-top:5px}
+.nightmare-choice-copy{flex:1}.nightmare-choice-mark{font-size:27px;line-height:1;font-weight:300;font-family:Georgia,serif;color:#e17489;opacity:.7}
+.difficulty .nightmare-choice input:checked+span{background:linear-gradient(115deg,#71142b,#b0263c 64%,#59152c);border-color:#ff9da9;box-shadow:0 0 0 2px #e44466,0 0 24px #df26544d}
+.difficulty .nightmare-choice input:checked+span b{color:#fff1df}.nightmare-choice input:checked+span small{color:#ffdae0}
+.nightmare-hud{position:absolute;top:20px;left:20px;z-index:2;padding:11px 13px;border-left:2px solid #f34d65;background:#210d25d9;border-radius:0 8px 8px 0;color:#ffe4d6;pointer-events:none}
+.nightmare-hud>span{display:block;font-size:10px;letter-spacing:1.3px;color:#db9caf;line-height:1.5}.nightmare-hud strong{display:block;font-size:12px;letter-spacing:.6px;line-height:1.6;margin-top:3px}
+.nightmare-help{border:1px solid #e1bdc6;border-radius:13px;padding:16px;margin-bottom:19px;background:#f3e6ea;color:#6c253d}.nightmare-help>b{font-size:16px}.nightmare-help>p{font-size:14px;line-height:1.65;margin:9px 0 0}
+html.nightmare-theme{--navy:#180c1a;--ink:#ffe8df;--muted:#cba6b5;--yellow:#ed526a;--paper:#26111f;--teal:#ffa1ad;color-scheme:dark}
+.nightmare-theme body{background:#100b18}.nightmare-theme .brand-edition{color:#ff8d9f}.nightmare-theme .stage{background:#160d21;border-color:#873749;box-shadow:0 18px 65px #02000999,0 0 24px #a8203f1a}
+.nightmare-theme .scenery{background-image:url("assets/blood-moon.webp");background-color:#170f22;background-position:center center}
+.nightmare-theme .scenery-tint{background:linear-gradient(90deg,#15071055,transparent 33%,transparent 67%,#15071055)}
+.nightmare-theme .arena{border-color:#e7849326;background:linear-gradient(90deg,#30051910,transparent 30%,transparent 70%,#30051910)}
+.nightmare-theme .ground-edge{background:repeating-linear-gradient(120deg,#2b1729 0 12px,#3e2032 12px 24px);border-color:#8e3044;box-shadow:0 -3px 0 #ea5b67}
+.nightmare-theme .menu-card,.nightmare-theme .compact-card{background:linear-gradient(160deg,#321420,#1c1226);border-color:#ae45634d;box-shadow:0 10px 0 #1408156b,0 20px 65px #03021188;transform:none}
+.nightmare-theme .menu-card h1{color:#ffecd9;text-shadow:0 3px 0 #9f2448}.nightmare-theme .menu-card h1 span{color:#fc607b}.nightmare-theme .menu-bird{filter:drop-shadow(0 0 14px #f8415460)}
+.nightmare-theme .primary-button{background:linear-gradient(#f26776,#d93557);border-color:#fd95a2;color:#fff3e5;box-shadow:0 4px 0 #861a38;text-shadow:0 1px 0 #60142555}.nightmare-theme .primary-button:hover{background:linear-gradient(#ff8290,#e54166)}
+.nightmare-theme .difficulty label:not(.nightmare-choice)>span{background:#321e32;border-color:#66404f}.nightmare-theme .difficulty small{color:#c7a3b5}.nightmare-theme .secondary-button{border-color:#694152;color:#e9c3cd}.nightmare-theme .secondary-button:hover{background:#422133}
+.nightmare-theme .flight-hud .eyebrow{color:#f7bec9}.nightmare-theme .flight-hud strong{text-shadow:0 3px 0 #950d39,0 0 22px #e6305350}.nightmare-theme .stage-pause{background:#271123df;color:#ffe0df;border-color:#855063}
+.nightmare-theme .side-panel,.nightmare-theme .side-panel p{color:#dbaaaf}.nightmare-theme .side-best .icon,.nightmare-theme .medal-outline .icon{color:#ff7b8f}.nightmare-theme .medal-outline,.nightmare-theme .mode-tag{border-color:#de63795e}.nightmare-theme .side-rule{background:#de637955}
+.nightmare-theme .milestone{background:#3d1732;color:#ffc8d3;border:1px solid #e56182}.nightmare-theme .result-numbers,.nightmare-theme .result-numbers>div+div{border-color:#66354b}.nightmare-theme .result-medal{background:#472039;color:#ffd0cd}.nightmare-theme .result-medal[data-earned="true"]{background:#652739;color:#ffdbb7}
+.nightmare-theme .overlay.dimmed{background:#14051988}.nightmare-theme .countdown{background:#1e061430;color:#ffe1d8;text-shadow:0 4px 0 #ac2043}.nightmare-theme .header-actions .icon-button{border-color:#713147}.nightmare-theme .dialog{background:#251324;border-color:#813f54}.nightmare-theme .dialog-note{color:#cba6b5}.nightmare-theme .setting-row{border-color:#623345}.nightmare-theme .nightmare-help{background:#3a172c;border-color:#79354b;color:#ffcad2}
+.nightmare-theme .difficulty input:focus-visible+span,.nightmare-theme button:focus-visible,.nightmare-theme input:focus-visible{outline-color:#ffe1ad}
+@media(max-width:760px){.nightmare-hud{top:13px;left:11px;padding:7px 8px;max-width:116px}.nightmare-hud>span{font-size:9px;letter-spacing:.5px}.nightmare-hud strong{font-size:10px}.difficulty .nightmare-choice>span{min-height:62px;padding:8px 12px;gap:9px}.difficulty .nightmare-choice b{font-size:16px}.nightmare-choice img{width:51px;height:35px}.menu-description{margin-top:12px;margin-bottom:18px}.menu-card h1{margin-top:14px;margin-bottom:12px}.difficulty-description{margin-top:10px;margin-bottom:14px}}
+@media(max-height:600px) and (min-width:600px){.menu-card{width:min(620px,100%);grid-template-columns:1fr 1.65fr;gap:0 20px}.difficulty .nightmare-choice>span{min-height:50px;padding:6px 10px}.nightmare-choice img{width:44px;height:28px}.difficulty .nightmare-choice b{font-size:14px;letter-spacing:1.5px}.difficulty .nightmare-choice small{font-size:10px;margin-top:2px}.nightmare-choice-mark{font-size:20px}.nightmare-hud{top:10px;left:10px;padding:6px 9px}.nightmare-hud>span{font-size:9px}.nightmare-hud strong{font-size:10px}}
+@media(max-width:760px) and (min-height:601px){.menu-card{padding:20px}.menu-card h1{font-size:42px;margin:9px 0 15px}.menu-card .menu-description{display:none}.difficulty label:not(.nightmare-choice) small{display:none}.difficulty label:not(.nightmare-choice)>span{min-height:44px;padding:11px 3px}.difficulty .nightmare-choice>span{min-height:57px}.menu-hint{margin-top:15px}}
+@media(max-width:360px) and (min-height:601px){.menu-card{padding:18px}.menu-card .menu-intro{display:none}.menu-card h1{font-size:38px;margin:2px 0 15px}}
+@media(max-height:600px) and (min-width:600px){.menu-card h1{font-size:58px;line-height:.91;white-space:normal}.menu-card h1 span{display:block;margin-left:0}.menu-card .menu-description{display:none}.menu-card .menu-bird{display:none}}

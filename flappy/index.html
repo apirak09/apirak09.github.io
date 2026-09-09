@@ -4,12 +4,12 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#102c3d">
-  <meta name="description" content="One little bird. One more try. Play Flappy Bird with three difficulties, crisp arcade sounds, and touch or keyboard controls.">
+  <meta name="description" content="Play Flappy Bird with four difficulties, including Nightmare: a Blood Moon, shifting pipe gaps, and demon-bat attacks. Touch or keyboard controls.">
   <title>Flappy Bird — Sky Club</title>
   <link rel="icon" href="assets/bird.png" type="image/png">
   <link rel="apple-touch-icon" href="assets/bird.png">
-  <link rel="manifest" href="manifest.webmanifest">
-  <link rel="stylesheet" href="styles.css">
+  <link rel="manifest" href="manifest.webmanifest?v=nightmare-1">
+  <link rel="stylesheet" href="styles.css?v=nightmare-1">
 </head>
 <body>
   <svg class="icon-library" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><defs>
@@ -39,6 +39,7 @@
     <section id="stage" class="stage" data-state="menu" aria-label="Flappy Bird game">
       <div class="scenery" aria-hidden="true"></div>
       <div class="scenery-tint" aria-hidden="true"></div>
+      <div id="nightmareHud" class="nightmare-hud" hidden><span id="roundLabel">BLOOD MOON · I</span><strong id="phaseLabel">GATES · 0 / 6</strong></div>
       <aside class="side-panel left-panel" aria-label="Personal best">
         <span class="eyebrow">PERSONAL BEST</span>
         <div class="side-best"><svg class="icon"><use href="#i-trophy"/></svg><strong id="sideBest">0</strong></div>
@@ -64,14 +65,15 @@
         <section class="menu-card" aria-labelledby="menuTitle">
           <div class="menu-intro"><span class="eyebrow">WELCOME TO THE SKY CLUB</span><img class="menu-bird" src="assets/bird.png" width="112" height="112" alt="A little yellow bird ready to fly"></div>
           <h1 id="menuTitle">flappy<span>bird.</span></h1>
-          <p class="menu-description">Find your rhythm. Keep flying.</p>
+          <p id="menuDescription" class="menu-description">Find your rhythm. Keep flying.</p>
           <fieldset class="difficulty"><legend>CHOOSE YOUR PACE</legend>
             <label><input type="radio" name="difficulty" value="easy"><span><b>Easy</b><small>Take it easy</small></span></label>
             <label><input type="radio" name="difficulty" value="normal" checked><span><b>Normal</b><small>The classic</small></span></label>
             <label><input type="radio" name="difficulty" value="hard"><span><b>Hard</b><small>Stay sharp</small></span></label>
+            <label class="nightmare-choice"><input type="radio" name="difficulty" value="nightmare"><span><img src="assets/bat.png" width="60" height="40" alt=""><span class="nightmare-choice-copy"><b>NIGHTMARE</b><small>Blood Moon · Extreme</small></span><span class="nightmare-choice-mark" aria-hidden="true">IV</span></span></label>
           </fieldset>
           <p id="difficultyDescription" class="difficulty-description">Balanced speed. Room to find your flow.</p>
-          <button id="playButton" class="primary-button" type="button"><svg class="icon"><use href="#i-play"/></svg><span>Let's fly</span><kbd>SPACE</kbd></button>
+          <button id="playButton" class="primary-button" type="button"><svg class="icon"><use href="#i-play"/></svg><span id="playButtonText">Let's fly</span><kbd>SPACE</kbd></button>
           <div class="menu-hint"><span class="tap-dot" aria-hidden="true"></span>Tap, click, or press space to flap</div>
         </section>
       </div>
@@ -114,10 +116,11 @@
     <div class="dialog-top"><span class="eyebrow">FLIGHT SCHOOL</span><button class="icon-button close-dialog" type="button" aria-label="Close help"><svg><use href="#i-close"/></svg></button></div>
     <h2 id="helpTitle">Small taps. Big flight.</h2>
     <ol class="help-list"><li><span>01</span><div><b>Tap to climb</b><p>Tap or click the sky. On a keyboard, use Space or ↑. Each press gives one flap.</p></div></li><li><span>02</span><div><b>Find the gap</b><p>Fly between the pipes. Pass a pair for one point. Keep clear of the pipes, ground, and ceiling.</p></div></li><li><span>03</span><div><b>Beat your best</b><p>Each difficulty has its own record. Earn medals at 5, 15, 30, and 50 pipes.</p></div></li></ol>
+    <section class="nightmare-help"><b>Nightmare · Blood Moon</b><p>Six unpredictable gates, then a demon-bat encounter in open sky. A dashed sightline locks your height: move before the solid laser fires. For a volley, fly into the marked open lane. Each gate or attack survived earns one point.</p><p>Warnings last 1.1 seconds. Bats never attack while pipes are on screen. The same flap controls apply.</p></section>
     <div class="help-shortcuts"><span><kbd>P</kbd> Pause</span><span><kbd>M</kbd> Sound</span><span><kbd>R</kbd> Retry after a crash</span></div>
     <button class="primary-button close-dialog" type="button">Got it. Let's fly.</button>
   </dialog>
   <noscript><div class="noscript">Please enable JavaScript to play Flappy Bird.</div></noscript>
-  <script src="core.js"></script><script src="audio.js"></script><script src="game.js"></script>
+  <script src="core.js?v=nightmare-1"></script><script src="audio.js?v=nightmare-1"></script><script src="game.js?v=nightmare-1"></script>
 </body>
 </html>

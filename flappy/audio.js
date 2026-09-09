@@ -19,6 +19,11 @@
     }
     update(settings) {
       this.settings = settings;
+      const nightmare = settings.difficulty === 'nightmare';
+      if (nightmare !== this.nightmare) {
+        this.nightmare = nightmare; this.musicStep = 0;
+        if (this.musicTimer) { clearInterval(this.musicTimer); this.musicTimer = null; }
+      }
       if (this.master) this.master.gain.setTargetAtTime(settings.muted ? 0 : settings.volume * .65, this.context.currentTime, .02);
       this.syncMusic();
     }
@@ -37,10 +42,15 @@
       if (name === 'flap') { this.tone(480, 860, .075, .1, 'sine'); this.tone(220, 160, .055, .035, 'triangle'); }
       if (name === 'score') { const pitch = [784, 880, 988, 1046][score % 4]; this.tone(pitch, pitch, .19, .14); this.tone(pitch * 1.5, pitch * 1.5, .22, .065, 'sine', .07); }
       if (name === 'crash') { this.tone(170, 42, .26, .26, 'triangle'); this.tone(80, 30, .22, .2); }
-      if (name === 'start') { [523.25, 659.25, 783.99].forEach((f, i) => this.tone(f, f, .15, .095, 'sine', i * .055)); }
+      if (name === 'start') { (this.nightmare ? [220, 261.63, 329.63] : [523.25, 659.25, 783.99]).forEach((f, i) => this.tone(f, f, this.nightmare ? .3 : .15, .095, 'sine', i * .055)); }
       if (name === 'medal') { [523.25, 659.25, 783.99, 1046.5].forEach((f, i) => this.tone(f, f, .24, .12, 'triangle', i * .085)); }
       if (name === 'tick') this.tone(700, 700, .06, .08);
       if (name === 'select') this.tone(520, 590, .055, .06);
+      if (name === 'bat') { this.tone(260, 110, .48, .13, 'triangle'); this.tone(700, 220, .33, .055, 'sine', .1); }
+      if (name === 'warning') { this.tone(440, 440, .12, .12, 'triangle'); this.tone(587.33, 587.33, .17, .1, 'triangle', .19); }
+      if (name === 'laser') { this.tone(1700, 170, .38, .17, 'sawtooth'); this.tone(110, 65, .32, .13, 'triangle'); }
+      if (name === 'volley') { [0, .045, .09].forEach(delay => this.tone(680, 180, .15, .105, 'triangle', delay)); }
+      if (name === 'clear') { [329.63, 392, 493.88].forEach((f, i) => this.tone(f, f, .28, .1, 'sine', i * .09)); }
     }
     setActive(active) { this.active = active; this.syncMusic(); }
     syncMusic() {
@@ -48,12 +58,12 @@
       if (!shouldPlay && this.musicTimer) { clearInterval(this.musicTimer); this.musicTimer = null; }
       if (shouldPlay && !this.musicTimer) {
         // Original sparse pentatonic loop, deliberately quieter than effects.
-        const notes = [523.25, 0, 659.25, 783.99, 0, 659.25, 587.33, 0, 440, 0, 523.25, 659.25, 0, 587.33, 523.25, 0];
+        const notes = this.nightmare ? [220, 0, 261.63, 0, 329.63, 0, 311.13, 0, 196, 0, 246.94, 0, 293.66, 0, 220, 0] : [523.25, 0, 659.25, 783.99, 0, 659.25, 587.33, 0, 440, 0, 523.25, 659.25, 0, 587.33, 523.25, 0];
         this.musicTimer = setInterval(() => {
           const n = notes[this.musicStep % notes.length]; if (n) this.tone(n, n, .24, .032, 'triangle');
-          if (this.musicStep % 4 === 0) this.tone(this.musicStep % 16 < 8 ? 130.81 : 110, this.musicStep % 16 < 8 ? 130.81 : 110, .32, .035);
+          if (this.musicStep % 4 === 0) { const bass = this.nightmare ? (this.musicStep % 16 < 8 ? 55 : 49) : (this.musicStep % 16 < 8 ? 130.81 : 110); this.tone(bass, bass, this.nightmare ? .65 : .32, .035); }
           this.musicStep++;
-        }, 230);
+        }, this.nightmare ? 290 : 230);
       }
     }
     suspend() { this.setActive(false); if (this.context?.state === 'running') this.context.suspend().catch(() => {}); }

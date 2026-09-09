@@ -1,6 +1,6 @@
 'use strict';
-const CACHE = 'flappy-sky-club-v1';
-const FILES = ['./', './index.html', './styles.css', './core.js', './audio.js', './game.js', './manifest.webmanifest', './assets/bird.png', './assets/sky.webp', './assets/icon-192.png', './assets/icon-512.png'];
+const CACHE = 'flappy-sky-club-nightmare-1';
+const FILES = ['./', './index.html', './styles.css?v=nightmare-1', './core.js?v=nightmare-1', './audio.js?v=nightmare-1', './game.js?v=nightmare-1', './manifest.webmanifest?v=nightmare-1', './assets/bird.png', './assets/sky.webp', './assets/icon-192.png', './assets/icon-512.png', './assets/blood-moon.webp', './assets/bat.png'];
 self.addEventListener('install', event => {
   event.waitUntil(caches.open(CACHE).then(cache => cache.addAll(FILES)));
 });
@@ -10,12 +10,22 @@ self.addEventListener('activate', event => {
 self.addEventListener('fetch', event => {
   const url = new URL(event.request.url);
   if (event.request.method !== 'GET' || url.origin !== self.location.origin || !url.href.startsWith(self.registration.scope)) return;
-  event.respondWith(caches.match(event.request).then(cached => {
-    const fresh = fetch(event.request).then(response => {
-      if (response.ok && response.type === 'basic') { const copy = response.clone(); event.waitUntil(caches.open(CACHE).then(cache => cache.put(event.request, copy))); }
+  event.respondWith((async () => {
+    const cache = await caches.open(CACHE);
+    // HTML checks for updates; versioned code always stays a coherent set.
+    if (event.request.mode === 'navigate') {
+      try {
+        const response = await fetch(event.request);
+        if (response.ok) { event.waitUntil(cache.put('./index.html', response.clone())); return response; }
+        return await cache.match('./index.html') || response;
+      } catch (_) { return await cache.match('./index.html') || Response.error(); }
+    }
+    const cached = await cache.match(event.request);
+    if (cached) return cached;
+    try {
+      const response = await fetch(event.request);
+      if (response.ok && response.type === 'basic') event.waitUntil(cache.put(event.request, response.clone()));
       return response;
-    });
-    if (cached) { event.waitUntil(fresh.catch(() => {})); return cached; }
-    return fresh.catch(() => { if (event.request.mode === 'navigate') return caches.match('./index.html'); return Response.error(); });
-  }));
+    } catch (_) { return Response.error(); }
+  })());
 });

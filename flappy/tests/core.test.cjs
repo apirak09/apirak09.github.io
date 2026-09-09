@@ -25,16 +25,17 @@ function pilot(flight, seconds = 180, fps = 120, goal = 60) {
   return { scores, maxPipes };
 }
 
-test('three distinct difficulties become progressively faster and tighter', () => {
+test('four difficulties include a faster Nightmare without changing classic tuning', () => {
   const [easy, normal, hard] = Object.values(DIFFICULTIES);
-  assert.equal(Object.keys(DIFFICULTIES).length, 3);
+  assert.equal(Object.keys(DIFFICULTIES).length, 4);
   assert.ok(easy.speed < normal.speed && normal.speed < hard.speed);
   assert.ok(easy.gap > normal.gap && normal.gap > hard.gap);
+  assert.ok(DIFFICULTIES.nightmare.speed > hard.speed);
   assert.equal(new Flight('unrecognized').difficulty, 'normal');
 });
 
 test('all modes have playable, bounded endless obstacle sequences', () => {
-  for (const mode of Object.keys(DIFFICULTIES)) for (const seed of [1, 42, 100, 98765]) {
+  for (const mode of ['easy', 'normal', 'hard']) for (const seed of [1, 42, 100, 98765]) {
     const flight = new Flight(mode, seeded(seed));
     const result = pilot(flight);
     assert.equal(flight.score, 60, `${mode}, seed ${seed}: ${flight.reason} at ${flight.score}`);
@@ -44,7 +45,7 @@ test('all modes have playable, bounded endless obstacle sequences', () => {
 });
 
 test('30, 60, and 120 FPS remain playable with the same obstacle generation', () => {
-  for (const fps of [30, 60, 120]) for (const mode of Object.keys(DIFFICULTIES)) {
+  for (const fps of [30, 60, 120]) for (const mode of ['easy', 'normal', 'hard']) {
     const flight = new Flight(mode, seeded(77)); pilot(flight, 180, fps, 40);
     assert.equal(flight.score, 40, `${mode} at ${fps} FPS should remain playable`);
   }
@@ -93,11 +94,11 @@ test('invalid timing inputs cannot corrupt physics or teleport the bird', () => 
 
 test('corrupt, hostile, and old saves recover with isolated valid defaults', () => {
   for (const value of ['invalid', 'null', '42', '"text"', '[]', null]) {
-    const save = safeSave(value, true); assert.deepEqual(save.best, { easy: 0, normal: 0, hard: 0 });
+    const save = safeSave(value, true); assert.deepEqual(save.best, { easy: 0, normal: 0, hard: 0, nightmare: 0 });
     assert.equal(save.difficulty, 'normal'); assert.equal(save.reducedMotion, true);
   }
   const save = safeSave({ difficulty: '__proto__', best: { easy: -3, normal: Infinity, hard: 45 }, volume: 99, effects: false, music: true, runs: { hard: 2.5 } });
-  assert.equal(save.difficulty, 'normal'); assert.deepEqual(save.best, { easy: 0, normal: 0, hard: 45 });
+  assert.equal(save.difficulty, 'normal'); assert.deepEqual(save.best, { easy: 0, normal: 0, hard: 45, nightmare: 0 });
   assert.equal(save.volume, 1); assert.equal(save.effects, false); assert.equal(save.music, true); assert.equal(save.runs.hard, 0);
   assert.deepEqual(safeSave(JSON.stringify(save)), save);
 });
@@ -112,7 +113,7 @@ test('every local HTML, stylesheet, manifest, and offline-cache asset exists', (
   const sw = fs.readFileSync(path.join(root, 'sw.js'), 'utf8');
   const cached = sw.match(/const FILES = \[([^\]]+)\]/)[1];
   refs.push(...[...cached.matchAll(/'([^']+)'/g)].map(m => m[1]));
-  for (const ref of refs) if (!/^(https?:|data:)/.test(ref)) assert.ok(fs.existsSync(path.resolve(root, ref)), `Missing ${ref}`);
+  for (const ref of refs) if (!/^(https?:|data:)/.test(ref)) assert.ok(fs.existsSync(path.resolve(root, ref.split('?')[0])), `Missing ${ref}`);
   const ids = [...html.matchAll(/\bid="([^"]+)"/g)].map(m => m[1]);
   assert.equal(new Set(ids).size, ids.length, 'element IDs must be unique');
   const game = fs.readFileSync(path.join(root, 'game.js'), 'utf8');
@@ -127,7 +128,7 @@ test('audio gracefully tolerates missing or interrupted Web Audio support', asyn
   vm.runInContext(fs.readFileSync(path.join(__dirname, '../audio.js'), 'utf8'), context);
   const audio = new context.window.FlightAudio(safeSave(null));
   assert.equal(await audio.unlock(), false);
-  for (const name of ['flap', 'score', 'crash', 'start', 'medal', 'tick', 'select']) assert.doesNotThrow(() => audio.effect(name));
+  for (const name of ['flap', 'score', 'crash', 'start', 'medal', 'tick', 'select', 'bat', 'warning', 'laser', 'volley', 'clear']) assert.doesNotThrow(() => audio.effect(name));
   assert.doesNotThrow(() => audio.suspend());
   context.window.AudioContext = class { constructor() { throw new Error('audio blocked'); } };
   assert.equal(await audio.unlock(), false);

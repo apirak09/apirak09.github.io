@@ -1,6 +1,6 @@
 (function () {
   'use strict';
-  const { Flight, DIFFICULTIES, MEDALS, WIDTH, HEIGHT, FLOOR, BIRD_X, PIPE_WIDTH, safeSave, clamp } = window.FlappyCore;
+  const { Flight, DIFFICULTIES, MEDALS, NIGHTMARE, WIDTH, HEIGHT, FLOOR, BIRD_X, PIPE_WIDTH, safeSave, clamp } = window.FlappyCore;
   const $ = id => document.getElementById(id);
   const canvas = $('game'), ctx = canvas.getContext('2d', { alpha: true });
   if (!ctx) { $('menuTitle').textContent = 'Canvas unavailable'; $('playButton').disabled = true; return; }
@@ -11,6 +11,7 @@
   const settings = safeSave(rawSave, !!reducedQuery?.matches);
   const audio = new window.FlightAudio(settings), flight = new Flight(settings.difficulty);
   const birdImage = new Image(); birdImage.src = 'assets/bird.png';
+  const batImage = new Image(); batImage.src = 'assets/bat.png';
   let screen = 'menu', lastTime = null, animationTime = 0, deadTime = 0, deathY = 0, deathV = 0;
   let resumeTime = 0, lastCount = 0, shake = 0, flash = 0, wing = 0, scoreTime = 0;
   let particles = [], trail = [], lastTrail = 0, milestoneTimer = 0, noticeTimer = 0, openDialog = null, dialogOpener = null;
@@ -39,6 +40,11 @@
   }
   function syncDifficulty() {
     const c = DIFFICULTIES[settings.difficulty];
+    const nightmare = settings.difficulty === 'nightmare';
+    document.documentElement.classList.toggle('nightmare-theme', nightmare);
+    $('menuDescription').textContent = nightmare ? 'Keep your nerve. Watch the warning lines.' : 'Find your rhythm. Keep flying.';
+    $('playButtonText').textContent = nightmare ? 'Enter the nightmare' : "Let's fly";
+    audio.update(settings);
     document.querySelectorAll('input[name="difficulty"]').forEach(input => { input.checked = input.value === settings.difficulty; });
     $('difficultyDescription').textContent = c.description;
     $('sideDifficulty').textContent = c.name.toUpperCase(); $('footerDifficulty').textContent = c.name;
@@ -49,7 +55,8 @@
   function updateMedal(score) {
     const next = MEDALS.find(medal => medal.score > score);
     $('nextMedalTitle').textContent = next ? (score < 5 ? 'FIRST MEDAL' : `NEXT: ${next.name.toUpperCase()}`) : 'SKY LEGEND';
-    $('nextMedalScore').textContent = next ? `${next.score - score} ${next.score - score === 1 ? 'pipe' : 'pipes'}` : 'Keep soaring';
+    const unit = settings.difficulty === 'nightmare' ? 'point' : 'pipe';
+    $('nextMedalScore').textContent = next ? `${next.score - score} ${unit}${next.score - score === 1 ? '' : 's'}` : 'Keep soaring';
     $('medalHint').textContent = score ? 'One gap at a time.' : 'Small wings. Big possibilities.';
   }
   function showScreen(next) {
@@ -57,6 +64,7 @@
     $('menuOverlay').hidden = next !== 'menu'; $('pauseOverlay').hidden = next !== 'paused'; $('resultOverlay').hidden = next !== 'result';
     $('flightHud').hidden = next === 'menu' || next === 'result';
     $('pauseButton').hidden = next !== 'playing'; $('countdown').hidden = next !== 'countdown';
+    $('nightmareHud').hidden = !flight.nightmare || ['menu', 'result', 'dying'].includes(next);
     canvas.tabIndex = next === 'playing' ? 0 : -1;
     audio.setActive(next === 'playing');
   }
@@ -67,7 +75,7 @@
     particles = []; trail = []; shake = 0; flash = 0; wing = 1; deadTime = 0;
     $('score').textContent = '0'; $('scorePop').classList.remove('animate');
     showScreen('playing'); flight.flap(); flight.drainEvents();
-    updateMedal(0); canvas.focus({ preventScroll: true });
+    updateMedal(0); updateNightmareHud(); canvas.focus({ preventScroll: true });
     lastTime = null; announce(`${DIFFICULTIES[settings.difficulty].name} flight started. Tap or press Space to flap.`);
   }
   function flap() {
@@ -110,8 +118,16 @@
     $('resultTitle').textContent = newRecord ? 'Look at you fly.' : 'One more try?';
     const earned = [...MEDALS].reverse().find(medal => flight.score >= medal.score);
     $('resultMedal').dataset.earned = String(!!earned);
-    $('resultMedal').querySelector('span').textContent = earned ? `${earned.name} flight · ${DIFFICULTIES[settings.difficulty].name}` : `${5 - flight.score} more ${5 - flight.score === 1 ? 'pipe' : 'pipes'} to your first medal`;
+    const unit = flight.nightmare ? 'point' : 'pipe';
+    $('resultMedal').querySelector('span').textContent = earned ? `${earned.name} flight · ${DIFFICULTIES[settings.difficulty].name}` : `${5 - flight.score} more ${unit}${5 - flight.score === 1 ? '' : 's'} to your first medal`;
     $('resultTip').textContent = flight.reason === 'ceiling' ? 'Give your wings a rest before the ceiling.' : flight.reason === 'ground' ? 'A little tap before you fall too far.' : 'Aim for the middle. Keep your taps steady.';
+    if (flight.nightmare) {
+      $('resultKicker').textContent = newRecord ? 'NIGHTMARE · NEW RECORD' : `BLOOD MOON · ROUND ${flight.round}`;
+      $('resultTitle').textContent = newRecord ? 'You defied the night.' : 'The night wins.';
+      if (flight.reason === 'laser') $('resultTip').textContent = 'The dashed line locks first. Change height before the beam fires.';
+      if (flight.reason === 'bolt') $('resultTip').textContent = 'Move into the marked open lane, then keep a steady rhythm.';
+      if (flight.reason === 'pipe') $('resultTip').textContent = 'Read each gap. The distance between gates changes.';
+    }
     showScreen('result'); $('retryButton').focus({ preventScroll: true });
     if (newRecord && flight.score >= 5) audio.effect('medal');
     announce(`Flight over. Score ${flight.score}. ${newRecord ? 'New personal best!' : `Best ${settings.best[settings.difficulty]}.`} Press R to fly again.`);
@@ -139,7 +155,28 @@
         }
       }
       if (event.type === 'crash') finishRun();
+      if (event.type === 'phase') {
+        if (event.phase === 'arrival') { banner('DEMON BATS · OPEN SKY', 1600); audio.effect('bat'); }
+        if (event.phase === 'recovery') { banner('HUNT SURVIVED · GATES RETURN', 1500); audio.effect('clear'); }
+        if (event.phase === 'gates') banner(`BLOOD GATES · ROUND ${event.round}`, 1300);
+      }
+      if (event.type === 'warning') { audio.effect('warning'); announce(event.kind === 'laser' ? 'Laser sightline locked. Change height now.' : 'Blood volley. Fly into the marked open lane.'); }
+      if (event.type === 'fire') audio.effect(event.kind);
     }
+    updateNightmareHud();
+  }
+
+  function banner(text, duration) {
+    $('milestone').textContent = text; $('milestone').hidden = false; announce(text);
+    clearTimeout(milestoneTimer); milestoneTimer = setTimeout(() => { $('milestone').hidden = true; }, duration);
+  }
+  function updateNightmareHud() {
+    if (!flight.nightmare) return;
+    const labels = { gates: `GATES · ${flight.cleared} / ${NIGHTMARE.pipesPerRound}`, arrival: 'BATS APPROACHING', recovery: 'HUNT SURVIVED',
+      hunt: flight.attack ? `${flight.attack.kind === 'laser' ? 'LASER' : 'VOLLEY'} · ${flight.attack.index} / ${NIGHTMARE.attacksPerRound}` : `EVADED · ${flight.attacksCleared} / ${NIGHTMARE.attacksPerRound}` };
+    const round = `BLOOD MOON · ${flight.round}`, phase = labels[flight.phase];
+    if ($('roundLabel').textContent !== round) $('roundLabel').textContent = round;
+    if ($('phaseLabel').textContent !== phase) $('phaseLabel').textContent = phase;
   }
 
   function burst(x, y, color, count) {
@@ -163,14 +200,80 @@
   function drawPipe(x, y, h, upper) {
     if (h <= 0) return;
     const gradient = ctx.createLinearGradient(x, 0, x + PIPE_WIDTH, 0);
-    gradient.addColorStop(0, '#167a69'); gradient.addColorStop(.15, '#5dbe86'); gradient.addColorStop(.35, '#6fca91'); gradient.addColorStop(.8, '#34a47c'); gradient.addColorStop(1, '#248b6b');
+    const colors = flight.nightmare ? ['#311a32', '#774150', '#9c5160', '#5b293e', '#341a30'] : ['#167a69', '#5dbe86', '#6fca91', '#34a47c', '#248b6b'];
+    [0, .15, .35, .8, 1].forEach((stop, i) => gradient.addColorStop(stop, colors[i]));
     ctx.fillStyle = '#144c5530'; ctx.fillRect(x + 6, y + 4, PIPE_WIDTH + 3, h);
-    ctx.fillStyle = gradient; ctx.fillRect(x, y, PIPE_WIDTH, h); ctx.strokeStyle = '#1b675b'; ctx.lineWidth = 2.5; ctx.strokeRect(x, y - (upper ? 3 : 0), PIPE_WIDTH, h + 3);
-    ctx.fillStyle = '#e3ffb63c'; ctx.fillRect(x + 10, y, 7, h); ctx.fillStyle = '#0e745338'; ctx.fillRect(x + PIPE_WIDTH - 12, y, 5, h);
+    ctx.fillStyle = gradient; ctx.fillRect(x, y, PIPE_WIDTH, h); ctx.strokeStyle = flight.nightmare ? '#d46476' : '#1b675b'; ctx.lineWidth = 2.5; ctx.strokeRect(x, y - (upper ? 3 : 0), PIPE_WIDTH, h + 3);
+    ctx.fillStyle = flight.nightmare ? '#ffb4bb35' : '#e3ffb63c'; ctx.fillRect(x + 10, y, 7, h); ctx.fillStyle = '#00031c26'; ctx.fillRect(x + PIPE_WIDTH - 12, y, 5, h);
     const capY = upper ? y + h - 25 : y;
     ctx.fillStyle = gradient; roundedRect(x - 5, capY, PIPE_WIDTH + 10, 25, 4); ctx.fill(); ctx.stroke();
-    ctx.fillStyle = '#d6fca965'; ctx.fillRect(x - 1, capY + 4, PIPE_WIDTH + 2, 4);
-    ctx.fillStyle = '#0e715337'; ctx.fillRect(x, capY + 20, PIPE_WIDTH, 3);
+    ctx.fillStyle = flight.nightmare ? '#ffb6af75' : '#d6fca965'; ctx.fillRect(x - 1, capY + 4, PIPE_WIDTH + 2, 4);
+    ctx.fillStyle = flight.nightmare ? '#490c2855' : '#0e715337'; ctx.fillRect(x, capY + 20, PIPE_WIDTH, 3);
+    if (flight.nightmare) {
+      // Blood-stained metal; all marks stay inside the existing collision shape.
+      ctx.save(); ctx.beginPath(); ctx.rect(x, y, PIPE_WIDTH, h); ctx.clip();
+      ctx.fillStyle = '#970d35';
+      for (let i = 0; i < 4; i++) {
+        const dx = x + 6 + i * 17, length = 17 + (i * 23) % 46;
+        const start = upper ? Math.max(y, capY - length + 15) : y + 12;
+        roundedRect(dx, start, 5 + i % 2 * 3, length, 3); ctx.fill();
+      }
+      ctx.strokeStyle = '#e96b7850'; ctx.lineWidth = 1;
+      ctx.beginPath(); ctx.moveTo(x + 23, upper ? h - 72 : y + 78); ctx.lineTo(x + 40, upper ? h - 47 : y + 52); ctx.lineTo(x + 34, upper ? h - 31 : y + 35); ctx.stroke(); ctx.restore();
+    }
+  }
+  function drawNightmareEncounter() {
+    if (!flight.nightmare) return;
+    const a = flight.attack;
+    const showBat = flight.phase !== 'gates';
+    if (a) {
+      ctx.save();
+      if (a.kind === 'laser' && a.age < a.warning + NIGHTMARE.laserTime) {
+        const warm = Math.min(1, a.age / a.warning), active = a.fired;
+        ctx.fillStyle = active ? '#fd28433d' : '#fd284316'; ctx.fillRect(0, a.aimY - NIGHTMARE.laserHalfWidth, NIGHTMARE.enemyX - 10, NIGHTMARE.laserHalfWidth * 2);
+        ctx.strokeStyle = active ? '#ff4266' : '#ffc0c5'; ctx.lineWidth = active ? NIGHTMARE.laserHalfWidth * 2 : 2;
+        ctx.setLineDash(active ? [] : [9, 8]); ctx.shadowColor = '#ff244f'; ctx.shadowBlur = settings.reducedMotion ? 0 : active ? 18 : 5;
+        ctx.beginPath(); ctx.moveTo(0, a.aimY); ctx.lineTo(NIGHTMARE.enemyX - 15, a.aimY); ctx.stroke(); ctx.setLineDash([]);
+        if (active) { ctx.strokeStyle = '#fff7e9'; ctx.lineWidth = 4; ctx.stroke(); }
+        else {
+          ctx.shadowBlur = 0; ctx.fillStyle = '#ffd1d5'; ctx.font = '800 12px system-ui'; ctx.textAlign = 'center';
+          ctx.fillText('LOCKED · CHANGE HEIGHT', 260, a.aimY - 18);
+          ctx.strokeStyle = '#ff7792'; ctx.lineWidth = 3; ctx.beginPath(); ctx.arc(NIGHTMARE.enemyX - 18, a.aimY, 19, -Math.PI / 2, -Math.PI / 2 + warm * Math.PI * 2); ctx.stroke();
+        }
+      }
+      if (a.kind === 'volley') {
+        const half = NIGHTMARE.corridorHalfWidth;
+        ctx.fillStyle = '#ffd19912'; ctx.fillRect(0, a.safeY - half, WIDTH, half * 2);
+        ctx.setLineDash([7, 9]); ctx.lineWidth = 1.5; ctx.strokeStyle = '#fcd6a982';
+        for (const y of [a.safeY - half, a.safeY + half]) { ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(WIDTH, y); ctx.stroke(); }
+        ctx.setLineDash([]); ctx.fillStyle = '#ffe2b9'; ctx.font = '800 12px system-ui'; ctx.textAlign = 'center'; ctx.fillText('OPEN LANE', 276, a.safeY + 4);
+        if (!a.fired) {
+          for (let y = 62; y < FLOOR - 35; y += 68) {
+            if (Math.abs(y - a.safeY) < half + NIGHTMARE.boltRadius) continue;
+            ctx.strokeStyle = '#fd698b'; ctx.lineWidth = 2; ctx.beginPath(); ctx.arc(NIGHTMARE.enemyX - 22, y, 6 + a.age / a.warning * 8, 0, Math.PI * 2); ctx.stroke();
+          }
+        }
+      }
+      ctx.restore();
+    }
+    for (const bolt of flight.projectiles) {
+      ctx.save(); ctx.strokeStyle = '#ff326dbb'; ctx.lineWidth = 6; ctx.shadowColor = '#ff2455'; ctx.shadowBlur = settings.reducedMotion ? 0 : 13;
+      ctx.beginPath(); ctx.moveTo(bolt.x, bolt.y); ctx.lineTo(bolt.x + 24, bolt.y); ctx.stroke();
+      ctx.fillStyle = '#ff6683'; ctx.beginPath(); ctx.arc(bolt.x, bolt.y, bolt.radius, 0, Math.PI * 2); ctx.fill();
+      ctx.fillStyle = '#fff4db'; ctx.beginPath(); ctx.arc(bolt.x - 1, bolt.y, 4, 0, Math.PI * 2); ctx.fill(); ctx.restore();
+    }
+    if (showBat) {
+      const entrance = flight.phase === 'arrival' ? clamp(flight.phaseTime / NIGHTMARE.entryTime, 0, 1) : 1;
+      const exit = flight.phase === 'recovery' ? clamp(flight.phaseTime / NIGHTMARE.recoveryTime, 0, 1) : 0;
+      const x = NIGHTMARE.enemyX + 140 * ((1 - entrance) ** 2 + exit ** 2);
+      const travel = a ? clamp(a.age / .65, 0, 1) : 1;
+      const y = a ? a.fromY + (a.enemyY - a.fromY) * (1 - (1 - travel) ** 3) : flight.enemyY;
+      ctx.save(); ctx.translate(x, y); ctx.scale(1, settings.reducedMotion ? 1 : .91 + Math.sin(flight.elapsed * 11) * .09);
+      ctx.shadowColor = '#df275c'; ctx.shadowBlur = settings.reducedMotion ? 0 : 12;
+      if (batImage.complete && batImage.naturalWidth) ctx.drawImage(batImage, -58, -40, 116, 80);
+      else { ctx.fillStyle = '#ed4d78'; ctx.font = '48px system-ui'; ctx.textAlign = 'center'; ctx.fillText('🦇', 0, 10); }
+      ctx.restore();
+    }
   }
   function drawBird(y, angle, time) {
     ctx.save(); ctx.translate(BIRD_X, y); ctx.rotate(angle);
@@ -187,10 +290,11 @@
     const pipes = ambient ? [{ x: 350, center: 290 }, { x: 630, center: 340 }] : flight.pipes;
     if (ambient) ctx.globalAlpha = .55;
     for (const pipe of pipes) {
-      const top = pipe.center - flight.config.gap / 2, bottom = pipe.center + flight.config.gap / 2;
+      const top = pipe.center - (pipe.gap || flight.config.gap) / 2, bottom = pipe.center + (pipe.gap || flight.config.gap) / 2;
       drawPipe(pipe.x, 0, top, true); drawPipe(pipe.x, bottom, FLOOR - bottom, false);
     }
     ctx.globalAlpha = 1;
+    drawNightmareEncounter();
     if (!settings.reducedMotion) {
       for (let i = 0; i < trail.length; i++) {
         const t = trail[i]; ctx.globalAlpha = t.life * .2; ctx.fillStyle = '#fffbea'; ctx.beginPath(); ctx.arc(t.x, t.y, t.life * 5, 0, Math.PI * 2); ctx.fill();
@@ -203,11 +307,11 @@
       const angle = ambient ? -.08 : screen === 'dying' ? Math.min(1.4, deadTime * 4) : clamp(flight.vy / 570, -.4, 1.15);
       drawBird(y, angle, animationTime);
     }
-    ctx.fillStyle = '#236958'; ctx.fillRect(0, FLOOR, WIDTH, 3);
-    ctx.fillStyle = '#cfefa5'; ctx.fillRect(0, FLOOR + 3, WIDTH, 5);
-    ctx.fillStyle = '#4b9e7d'; ctx.fillRect(0, FLOOR + 8, WIDTH, 7);
-    ctx.fillStyle = '#eacb93'; ctx.fillRect(0, FLOOR + 15, WIDTH, HEIGHT - FLOOR - 15);
-    ctx.fillStyle = '#dcb77e';
+    ctx.fillStyle = flight.nightmare ? '#662137' : '#236958'; ctx.fillRect(0, FLOOR, WIDTH, 3);
+    ctx.fillStyle = flight.nightmare ? '#e96575' : '#cfefa5'; ctx.fillRect(0, FLOOR + 3, WIDTH, 5);
+    ctx.fillStyle = flight.nightmare ? '#8b2b45' : '#4b9e7d'; ctx.fillRect(0, FLOOR + 8, WIDTH, 7);
+    ctx.fillStyle = flight.nightmare ? '#32192a' : '#eacb93'; ctx.fillRect(0, FLOOR + 15, WIDTH, HEIGHT - FLOOR - 15);
+    ctx.fillStyle = flight.nightmare ? '#4c2537' : '#dcb77e';
     const offset = (ambient ? (settings.reducedMotion ? 0 : animationTime * 24) : flight.distance) % 28;
     for (let x = -28 - offset; x < WIDTH; x += 28) {
       ctx.beginPath(); ctx.moveTo(x, FLOOR + 16); ctx.lineTo(x + 12, FLOOR + 16); ctx.lineTo(x - 6, HEIGHT); ctx.lineTo(x - 18, HEIGHT); ctx.closePath(); ctx.fill();
