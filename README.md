@@ -1,3 +1,7 @@
+# Learning
+
+- **[Ennea — Enneagram Learning](https://apirak09.github.io/enneagram/)**: interactive lessons covering nine core types, all 27 subtypes, 18 wing combinations, arrows, and four triad frameworks. Includes source-linked explanations, practice questions, and saved learning progress. [Course and sources](enneagram/README.md).
+
 # Games
 
 - **[Killer Sudoku](https://apirak09.github.io/killer-sudoku/)**: unlimited uniquely solvable puzzles, four difficulty levels, pencil notes, hints, undo/redo, light and dark themes, and saved progress. [Rules and generator details](killer-sudoku/README.md).
