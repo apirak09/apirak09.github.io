@@ -1,5 +1,7 @@
 # Games
 
+- **[Killer Sudoku](https://apirak09.github.io/killer-sudoku/)**: unlimited uniquely solvable puzzles, four difficulty levels, pencil notes, hints, undo/redo, light and dark themes, and saved progress. [Rules and generator details](killer-sudoku/README.md).
+
 - **[The Infinite Hotel](https://apirak09.github.io/infinite-hotel/)**: a playable Hilbert’s Hotel lab with six shifts, animated room assignments, custom rules, infinite buses, and Cantor’s diagonal argument. [Play guide and mathematical model](infinite-hotel/README.md).
 
 - **[Liar Table](https://apirak09.github.io/liar/)**: classic bluffing cards for 2–4 friends with room codes, hidden hands, and cross-device play. Owner preview available; guest access awaits approval. [Game and source](liar/README.md).

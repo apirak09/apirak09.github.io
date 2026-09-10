@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#f7f8fa">
+  <meta name="description" content="A quiet place for a clever puzzle. Play fresh, uniquely solvable Killer Sudoku at four difficulty levels, with notes, hints, and saved progress.">
+  <title>Killer Sudoku — a little daily logic</title>
+  <link rel="icon" href="./icon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <header class="site-header">
+    <a class="wordmark" href="./" aria-label="Killer Sudoku home"><span class="brand-icon" aria-hidden="true"><i></i><i></i><i></i><i></i></span><span>killer<span class="brand-light">sudoku</span><span class="brand-period">.</span></span></a>
+    <div class="header-actions"><button class="text-button" id="how-to"><span class="icon" data-icon="help"></span><span>How to play</span></button><span class="header-divider"></span><button class="icon-button" id="theme-button" aria-label="Switch to dark theme" title="Switch theme"><span class="icon" data-icon="moon"></span></button></div>
+  </header>
+
+  <main class="workspace">
+    <section class="play-area" aria-label="Killer Sudoku game">
+      <div class="game-heading"><div><p class="eyebrow">A LITTLE DAILY LOGIC</p><h1>Killer Sudoku</h1></div><button class="new-game-button" id="new-game"><span class="icon" data-icon="plus"></span>New puzzle</button></div>
+      <div class="board-toolbar"><div class="puzzle-label"><span class="level-pill" id="level-label">Medium</span><span class="puzzle-id" id="puzzle-id">New puzzle</span></div><div class="timer-group"><span class="icon" data-icon="clock"></span><span id="timer" aria-label="Elapsed time">00:00</span><button class="small-icon-button" id="pause-button" aria-label="Pause game" title="Pause (Space)"><span class="icon" data-icon="pause"></span></button></div></div>
+      <div class="board-wrap" id="board-wrap">
+        <div id="board" class="board" role="grid" aria-label="Sudoku grid. Use arrow keys to move, 1 through 9 to enter numbers." aria-rowcount="9" aria-colcount="9"></div>
+        <svg id="cage-lines" class="cage-lines" viewBox="0 0 900 900" aria-hidden="true"></svg>
+        <div class="board-overlay" id="board-overlay"><div class="overlay-inner"><div class="loading-mark" aria-hidden="true"></div><h2 id="overlay-title">Making your puzzle</h2><p id="overlay-description">Finding one perfect solution…</p><button id="overlay-action" class="primary-button" hidden>Resume game</button></div></div>
+      </div>
+      <div class="board-caption"><span id="board-status" role="status">Creating a fresh challenge</span><span id="filled-label">0 / 81</span></div>
+      <div class="mobile-keypad" id="mobile-keypad"></div>
+    </section>
+
+    <aside class="game-panel" aria-label="Game controls">
+      <div class="panel-heading"><span class="eyebrow">YOUR NEXT MOVE</span><span class="tiny-square" aria-hidden="true"></span></div>
+      <div class="selection-panel" id="selection-panel"><div class="selection-top"><span id="selection-title">Select a cell</span><span class="selection-coordinate" id="selection-coordinate">—</span></div><div class="cage-equation"><span id="cage-entered">—</span><span class="equation-slash">/</span><strong id="cage-target">—</strong><span class="sum-label">cage sum</span></div><div class="sum-track"><span id="sum-progress"></span></div><p id="cage-description">Tap a cell to explore its cage.</p><button class="combination-toggle" id="combination-toggle" aria-expanded="false">Show combinations<span class="icon" data-icon="chevron"></span></button><div id="combinations" class="combinations" hidden></div></div>
+      <div id="desktop-keypad" class="desktop-keypad"></div>
+      <div class="tools" id="tools">
+        <button class="tool-button" id="notes-button" aria-pressed="false" title="Pencil notes (N)"><span class="icon" data-icon="pencil"></span><span>Notes</span><span class="tool-badge" id="notes-state">OFF</span></button>
+        <button class="tool-button" id="erase-button" title="Erase (Backspace)"><span class="icon" data-icon="erase"></span><span>Erase</span></button>
+        <button class="tool-button" id="undo-button" title="Undo (Ctrl/⌘ Z)" disabled><span class="icon" data-icon="undo"></span><span>Undo</span></button>
+        <button class="tool-button" id="hint-button" title="Get a hint (H)"><span class="icon" data-icon="bulb"></span><span>Hint</span></button>
+      </div>
+      <div class="hint-card" id="hint-card" hidden><div class="hint-heading"><span class="icon" data-icon="bulb"></span><strong>A small nudge</strong><button id="dismiss-hint" class="small-icon-button" aria-label="Dismiss hint"><span class="icon" data-icon="close"></span></button></div><p id="hint-text"></p><button class="text-button" id="apply-hint">Fill this cell</button></div>
+      <div class="panel-bottom"><button id="check-button" class="check-button"><span class="icon" data-icon="check"></span>Check my puzzle</button><div class="save-state"><span class="icon" data-icon="cloud"></span><span id="save-status">Progress saved on this device</span></div></div>
+    </aside>
+
+    <footer class="game-footer"><p><strong>1–9.</strong> Every row, column, and box. Each cage adds up to its total.</p><button class="text-button" id="shortcuts-button">Keyboard shortcuts<span class="icon" data-icon="keyboard"></span></button></footer>
+  </main>
+
+  <dialog id="new-dialog" class="modal"><form method="dialog"><div class="modal-top"><span class="eyebrow">A FRESH START</span><button class="icon-button" value="cancel" aria-label="Close"><span class="icon" data-icon="close"></span></button></div><h2>Find your flow.</h2><p class="modal-intro">Choose a challenge. Every puzzle is freshly made with exactly one solution.</p><fieldset class="difficulty-options"><legend class="sr-only">Puzzle difficulty</legend>
+    <label><input type="radio" name="difficulty" value="easy"><span><strong>Easy</strong><small>Small cages. More places to begin.</small></span><span class="difficulty-bars" aria-hidden="true"><i></i></span></label>
+    <label><input type="radio" name="difficulty" value="medium" checked><span><strong>Medium</strong><small>A balanced mix of sums and Sudoku.</small></span><span class="difficulty-bars" aria-hidden="true"><i></i><i></i></span></label>
+    <label><input type="radio" name="difficulty" value="hard"><span><strong>Hard</strong><small>Larger cages. Fewer obvious answers.</small></span><span class="difficulty-bars" aria-hidden="true"><i></i><i></i><i></i></span></label>
+    <label><input type="radio" name="difficulty" value="expert"><span><strong>Expert</strong><small>Sparse clues for a longer challenge.</small></span><span class="difficulty-bars" aria-hidden="true"><i></i><i></i><i></i><i></i></span></label>
+  </fieldset><p class="replace-note" id="replace-note">Your current puzzle will be replaced.</p><button type="button" id="start-puzzle" class="primary-button full-width">Create puzzle<span class="icon" data-icon="arrow"></span></button></form></dialog>
+
+  <dialog id="help-dialog" class="modal"><div class="modal-top"><span class="eyebrow">THE RULES</span><button class="icon-button" data-close="help-dialog" aria-label="Close"><span class="icon" data-icon="close"></span></button></div><h2>A familiar grid.<br>A clever little twist.</h2><ol class="rules-list"><li><strong>Start with Sudoku.</strong><p>Fill each row, column, and 3 × 3 box with the numbers 1–9, without repeating a number.</p></li><li><strong>Follow the cage sums.</strong><p>The small number in a dotted cage is its total. A cage marked 10 with two cells could contain 1 + 9, 2 + 8, 3 + 7, or 4 + 6.</p></li><li><strong>No repeats inside a cage.</strong><p>Even if its cells are in different rows or boxes. A one-cell cage tells you that cell’s number.</p></li></ol><div class="help-tip"><span class="icon" data-icon="bulb"></span><p>Every row, column, and box adds up to <strong>45</strong>. Use that to find missing cage totals.</p></div><p class="help-fine">Notes let you pencil in possibilities. Hints explain simple deductions; when one isn’t available, a reveal is clearly labeled. Levels change cage size and clue density, so human difficulty can vary.</p><button class="primary-button full-width" data-close="help-dialog">Let’s play</button></dialog>
+
+  <dialog id="shortcuts-dialog" class="modal compact-modal"><div class="modal-top"><span class="eyebrow">KEYBOARD SHORTCUTS</span><button class="icon-button" data-close="shortcuts-dialog" aria-label="Close"><span class="icon" data-icon="close"></span></button></div><h2>Keep your rhythm.</h2><dl class="shortcut-list"><div><dt>Enter a number</dt><dd><kbd>1</kbd>–<kbd>9</kbd></dd></div><div><dt>Move between cells</dt><dd><kbd>↑</kbd><kbd>↓</kbd><kbd>←</kbd><kbd>→</kbd></dd></div><div><dt>Toggle pencil notes</dt><dd><kbd>N</kbd></dd></div><div><dt>Erase a cell</dt><dd><kbd>⌫</kbd></dd></div><div><dt>Undo / redo</dt><dd><kbd>⌘/Ctrl Z</kbd> / <kbd>⇧ Z</kbd></dd></div><div><dt>Hint</dt><dd><kbd>H</kbd></dd></div><div><dt>Pause / resume</dt><dd><kbd>Space</kbd></dd></div></dl></dialog>
+  <dialog id="win-dialog" class="modal win-modal"><div class="win-symbol" aria-hidden="true"><span class="icon" data-icon="check"></span></div><p class="eyebrow">EVERY NUMBER IN ITS PLACE</p><h2>Beautifully solved.</h2><p>You found the one perfect solution.</p><div class="win-stats"><div><span>Difficulty</span><strong id="win-level"></strong></div><div><span>Time</span><strong id="win-time"></strong></div><div><span>Hints used</span><strong id="win-hints"></strong></div></div><button id="win-new" class="primary-button full-width">One more puzzle<span class="icon" data-icon="arrow"></span></button><button class="text-button" data-close="win-dialog">Admire the grid</button></dialog>
+  <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+  <noscript><p class="noscript">Please enable JavaScript to generate and play Killer Sudoku.</p></noscript>
+  <script type="module" src="./app.mjs"></script>
+</body>
+</html>
