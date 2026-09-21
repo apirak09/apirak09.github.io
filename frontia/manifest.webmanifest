@@ -1,10 +1,11 @@
 {
-  "name": "Cinematic Play",
+  "name": "Cinematic Play — นิยาย AI ส่วนตัว",
   "short_name": "Cinematic",
+  "lang": "th",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
   "background_color": "#0b0b0d",
   "theme_color": "#0b0b0d",
-  "description": "Private cinematic roleplay web app"
+  "description": "นิยายโต้ตอบแบบ cinematic พร้อมบันทึกอัตโนมัติ"
 }
