@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0b0b0d">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>Cinematic Play</title>
+<link rel="manifest" href="./manifest.webmanifest">
+<style>
+:root{--bg:#0b0b0d;--s1:#16171a;--s2:#1c1e22;--s3:#202226;--line:#2b2d33;--text:#f5f5f6;--text2:#d5d7dc;--muted:#8b8e98;--faint:#5f626c;--accent:#ffb726;--ink:#231600;--ok:#61d095}
+*{box-sizing:border-box}html,body{margin:0;background:#050506;color:var(--text);font-family:Inter,ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;min-height:100%}
+button,input,select,textarea{font:inherit}.shell{min-height:100dvh;max-width:520px;margin:auto;background:var(--bg);position:relative;overflow:hidden;box-shadow:0 0 70px #000}
+.page{min-height:100dvh;padding:18px 18px 96px}.top{height:50px;display:flex;align-items:center;gap:10px}.brand{font-weight:950;letter-spacing:-1.1px;font-size:22px}.brand i{font-style:normal;color:var(--accent)}
+.iconbtn{border:0;background:var(--s1);color:var(--text);width:40px;height:40px;border-radius:14px;display:grid;place-items:center;cursor:pointer}.spacer{flex:1}
+h1{font-size:29px;line-height:1.05;letter-spacing:-1.2px;margin:24px 0 8px}h2{font-size:18px;letter-spacing:-.4px;margin:26px 0 12px}.sub{color:var(--muted);font-size:13px;line-height:1.55}
+.hero{height:330px;border-radius:26px;overflow:hidden;position:relative;padding:24px;display:flex;flex-direction:column;justify-content:flex-end;background:radial-gradient(circle at 72% 22%,#735166 0 8%,transparent 32%),linear-gradient(145deg,#172641,#543049 78%)}
+.hero:before,.art:before,.stage:before{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 25%,rgba(4,4,6,.88));pointer-events:none}.hero>*{position:relative}
+.badge{align-self:flex-start;padding:6px 9px;border-radius:8px;background:var(--accent);color:var(--ink);font-size:9px;font-weight:900;letter-spacing:.6px}.hero h1{margin:10px 0 7px;font-size:31px}.hero .sub{color:#dddde5}
+.cta{border:0;background:var(--accent);color:var(--ink);height:48px;border-radius:15px;font-weight:900;margin-top:17px;cursor:pointer}.cards{display:flex;gap:12px;overflow:auto;padding-bottom:4px;scrollbar-width:none}.cards::-webkit-scrollbar{display:none}
+.card{min-width:170px;width:170px;cursor:pointer}.art{height:220px;border-radius:20px;position:relative;overflow:hidden;background:linear-gradient(145deg,#102a34,#352253)}.art .play{position:absolute;right:12px;bottom:12px;width:38px;height:38px;border-radius:19px;background:#0008;display:grid;place-items:center}
+.cardtitle{font-weight:850;font-size:13px;margin:9px 2px 3px}.cardmeta{font-size:11px;color:var(--muted)}
+.tabs{position:fixed;z-index:20;bottom:0;left:50%;transform:translateX(-50%);width:min(520px,100%);height:74px;padding:7px 10px max(7px,env(safe-area-inset-bottom));background:#0b0b0df5;border-top:1px solid var(--s2);display:flex;backdrop-filter:blur(18px)}
+.tab{flex:1;border:0;background:none;color:var(--faint);display:grid;place-items:center;align-content:center;gap:3px;font-size:10px;font-weight:800;cursor:pointer}.tab .ico{font-size:21px}.tab.on{color:var(--text)}
+.row{display:flex;align-items:center;gap:12px;padding:13px 0;border-bottom:1px solid #1d1f23}.avatar{width:46px;height:46px;border-radius:23px;background:#34384b;display:grid;place-items:center;font-weight:900}.grow{flex:1;min-width:0}.rowtitle{font-size:13px;font-weight:820}.rowsub{font-size:11px;color:var(--muted);margin-top:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.panel{background:var(--s1);border:1px solid var(--line);border-radius:22px;padding:18px}.newchat{height:46px;width:100%;border:0;border-radius:14px;background:var(--accent);font-weight:900;color:var(--ink);margin-top:18px}
+.library{display:flex;gap:12px;align-items:center;padding:12px;border-radius:18px;background:var(--s1);border:1px solid var(--line);margin:10px 0}.libart{width:68px;height:82px;border-radius:13px;background:linear-gradient(145deg,#172641,#543049)}
+.progress{height:5px;background:var(--line);border-radius:5px;margin-top:9px;overflow:hidden}.fill{height:100%;background:var(--accent)}
+.settingsGroup{font-size:10px;font-weight:900;color:var(--muted);letter-spacing:.8px;margin:28px 0 7px}.setting{min-height:54px;display:flex;align-items:center;gap:10px;border-bottom:1px solid #1d1f23}.setting .value{margin-left:auto;color:var(--muted);font-size:12px}
+.field{width:100%;background:var(--s2);border:1px solid var(--line);color:var(--text);padding:13px;border-radius:13px;outline:none}.field:focus{border-color:#675125}.hint{font-size:10px;color:var(--muted);line-height:1.5;margin-top:7px}
+.btnrow{display:flex;gap:8px;margin-top:11px}.btn{flex:1;min-height:42px;border-radius:12px;border:1px solid var(--line);background:var(--s2);color:var(--text);font-weight:800;cursor:pointer}.btn.primary{background:var(--accent);color:var(--ink);border-color:var(--accent)}.status{display:inline-flex;align-items:center;gap:7px;padding:7px 10px;border-radius:10px;background:var(--s2);font-size:11px;color:var(--muted)}.dot{width:7px;height:7px;border-radius:50%;background:#646773}.dot.ok{background:var(--ok)}
+.back{position:absolute;top:18px;left:18px;z-index:5}.detailCover{height:47dvh;min-height:330px;position:relative;background:radial-gradient(circle at 65% 25%,#86566f 0 7%,transparent 32%),linear-gradient(145deg,#172641,#543049)}.detailCover:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 30%,var(--bg))}
+.detail{position:relative;margin-top:-110px;padding:0 18px 100px;z-index:2}.chips{display:flex;gap:7px;flex-wrap:wrap}.chip{font-size:10px;color:var(--text2);background:var(--s2);padding:6px 9px;border-radius:9px}.bigcta{position:fixed;left:50%;transform:translateX(-50%);bottom:18px;z-index:25;width:min(484px,calc(100% - 36px));height:52px;border:0;border-radius:16px;background:var(--accent);color:var(--ink);font-weight:950}
+.player{min-height:100dvh;background:var(--bg)}.stage{height:43dvh;min-height:300px;padding:18px;position:relative;background:radial-gradient(circle at 50% 45%,#27324d 0 8%,transparent 29%),linear-gradient(145deg,#131a2a,#442838)}.stage:before{background:linear-gradient(180deg,rgba(0,0,0,.1),rgba(0,0,0,.45))}
+.stageTop{position:relative;z-index:2;display:flex;align-items:center;justify-content:space-between}.chapter{padding:8px 12px;border-radius:16px;background:#0007;font-size:10px;font-weight:850}.location{position:absolute;left:0;right:0;bottom:52px;text-align:center;color:#ffffff8e;font-size:11px;text-transform:uppercase;letter-spacing:1px}
+.story{position:relative;margin-top:-26px;min-height:60dvh;border-radius:28px 28px 0 0;background:var(--bg);z-index:2;padding-bottom:35px}.tools{height:58px;display:flex;gap:8px;align-items:center;padding:0 18px;border-bottom:1px solid var(--s2)}.tool{flex:1;border:0;background:var(--s1);color:var(--text2);height:36px;border-radius:12px;font-size:11px;font-weight:800}.storybody{padding:20px 18px}.speaker{font-size:12px;color:var(--accent);font-weight:900;margin-bottom:8px}.narrative{font-size:16px;line-height:1.62;color:var(--text)}.prompt{margin:24px 0 10px;color:var(--muted);font-size:10px;font-weight:900;letter-spacing:.8px}
+.choice{width:100%;min-height:58px;margin:7px 0;padding:11px 12px;border:1px solid var(--line);border-radius:15px;background:var(--s1);color:var(--text2);display:flex;gap:11px;align-items:center;text-align:left;cursor:pointer}.num{width:28px;height:28px;border-radius:50%;background:var(--s3);display:grid;place-items:center;font-size:11px;font-weight:900;flex:none}
+.reply{margin-top:12px;border:1px solid var(--line);border-radius:16px;background:var(--s1);display:flex;align-items:flex-end;padding:7px}.reply textarea{flex:1;resize:none;min-height:38px;max-height:100px;border:0;background:none;color:var(--text);padding:9px;outline:none}.send{width:40px;height:40px;border:0;border-radius:13px;background:var(--accent);font-weight:900;cursor:pointer}
+.busy{position:fixed;z-index:30;left:50%;transform:translateX(-50%);bottom:20px;padding:10px 15px;border-radius:20px;background:var(--s3);font-size:11px;color:var(--text2);box-shadow:0 10px 35px #0008}
+.modal{position:fixed;z-index:50;inset:0;background:#000c;display:grid;place-items:end center}.sheet{width:min(520px,100%);background:var(--s1);border-radius:25px 25px 0 0;padding:20px 18px max(25px,env(safe-area-inset-bottom));max-height:80dvh;overflow:auto}.sheet h2{margin:0 0 12px}.code{font-size:29px;font-weight:950;letter-spacing:4px;text-align:center;padding:18px;background:var(--s2);border-radius:16px;margin:14px 0}.error{color:#ff8d96;font-size:11px;line-height:1.45;margin-top:9px}.hidden{display:none!important}
+@media(min-width:700px){body{padding:18px 0}.shell{min-height:calc(100dvh - 36px);border-radius:26px}.tabs{bottom:18px;border-radius:0 0 26px 26px}.bigcta{bottom:36px}}
+</style>
+</head>
+<body>
+<div id="app" class="shell"></div>
+<script>
+(function(){
+var EPISODES=[
+{id:"ep-midnight",title:"Midnight Signal",subtitle:"A city that remembers your choices",description:"A cinematic mystery where every conversation changes who trusts you, what you discover, and which ending becomes possible.",tags:["Mystery","Modern","Choice-driven"],badge:"NEW",grad:"linear-gradient(145deg,#172641,#543049)"},
+{id:"ep-summer",title:"After the Last Summer",subtitle:"Reconnect before everyone leaves",description:"Seven days, one old friend group, and a secret nobody wanted to bring up again.",tags:["Romance","Drama"],grad:"linear-gradient(145deg,#50372d,#242a3c)"},
+{id:"ep-orbit",title:"Orbit 17",subtitle:"The station says you arrived alone",description:"An isolated sci-fi thriller about memory, identity, and a distress call carrying your own voice.",tags:["Sci-fi","Thriller"],badge:"HOT",grad:"linear-gradient(145deg,#102a34,#352253)"},
+{id:"ep-house",title:"The House Next Door",subtitle:"Someone has been waiting for you",description:"A slow-burn supernatural story that adapts to what you fear and what you refuse to say.",tags:["Horror","Psychological"],grad:"linear-gradient(145deg,#26252a,#441e24)"}
+];
+var FIRST={id:"scene-1",chapter:"CHAPTER 1 · 00:17",location:"Platform 4",speaker:"Mina",body:"The final train should have passed twelve minutes ago. Mina keeps staring at the dark tunnel, phone light trembling in her hand. “You heard it too, right? That announcement said your name.”",choices:[{id:"c1",label:"Tell her the truth: you have heard the voice before."},{id:"c2",label:"Pretend it was only interference."},{id:"c3",label:"Ask why she came to the station this late."}]};
+var KEY="cinematic-play-v3";
+var blank={tab:"home",screen:"tabs",episodeId:null,scene:null,progress:{},recent:[],backendUrl:"",vault:"",model:"gpt-5.6-luna",auth:null};
+var state=Object.assign({},blank,load());
+var password=sessionStorage.getItem("frontia-app-password")||"";
+var app=document.getElementById("app");
+function load(){try{return JSON.parse(localStorage.getItem(KEY)||"{}")}catch(e){return {}}}
+function save(){localStorage.setItem(KEY,JSON.stringify(state))}
+function esc(s){return String(s==null?"":s).replace(/[&<>"']/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]})}
+function ep(id){return EPISODES.find(function(x){return x.id===id})||EPISODES[0]}
+function setTab(t){state.tab=t;state.screen="tabs";save();render()}
+function openEpisode(id){state.episodeId=id;state.screen="episode";save();render()}
+function startEpisode(id){state.episodeId=id;state.scene=JSON.parse(JSON.stringify(FIRST));state.recent=[];state.screen="player";state.progress[id]=state.progress[id]||.08;save();render()}
+function icon(n){return '<span class="ico">'+n+'</span>'}
+function tabs(){var xs=[["home","⌂","Home"],["chat","◌","Chat"],["play","▶","Play"],["settings","⚙","Settings"]];return '<nav class="tabs">'+xs.map(function(x){return '<button class="tab '+(state.tab===x[0]?"on":"")+'" data-tab="'+x[0]+'">'+icon(x[1])+'<span>'+x[2]+'</span></button>'}).join("")+'</nav>'}
+function header(){return '<div class="top"><div class="brand">cinematic<i>play</i></div><div class="spacer"></div><button class="iconbtn" data-goto="settings">⚙</button></div>'}
+function card(x){return '<div class="card" data-episode="'+x.id+'"><div class="art" style="background:'+x.grad+'"><span class="play">▶</span></div><div class="cardtitle">'+esc(x.title)+'</div><div class="cardmeta">'+esc(x.subtitle)+'</div></div>'}
+function renderHome(){
+var f=EPISODES[0];return '<main class="page">'+header()+'<div class="hero"><span class="badge">'+esc(f.badge||"FEATURED")+'</span><h1>'+esc(f.title)+'</h1><div class="sub">'+esc(f.subtitle)+'</div><button class="cta" data-episode="'+f.id+'">View story</button></div><h2>Recommended for you</h2><div class="cards">'+EPISODES.slice(1).map(card).join("")+'</div><h2>Continue playing</h2>'+libraryRows(true)+'</main>'+tabs()}
+function renderChat(){return '<main class="page">'+header()+'<h1>Chat</h1><section class="panel"><div style="font-size:29px">✦</div><h2 style="font-size:24px;margin:15px 0 5px">Characters who remember</h2><div class="sub">Continue a conversation or create a character with its own memory and personality.</div><button class="newchat">New chat</button></section><h2>Recent chats</h2>'+["Mina · Midnight Signal","Noah · Orbit 17","Eun · After the Last Summer"].map(function(n,i){return '<div class="row"><div class="avatar">'+esc(n[0])+'</div><div class="grow"><div class="rowtitle">'+esc(n)+'</div><div class="rowsub">'+(i?"Continue your conversation…":"That message was not sent by me.")+'</div></div><span class="cardmeta">'+(i?"1d":"2m")+'</span></div>'}).join("")+'</main>'+tabs()}
+function libraryRows(onlyStarted){var xs=onlyStarted?EPISODES.slice(0,2):EPISODES.slice(0,3);return xs.map(function(x){var p=state.progress[x.id]||0;return '<div class="library" data-episode="'+x.id+'"><div class="libart" style="background:'+x.grad+'"></div><div class="grow"><div class="rowtitle">'+esc(x.title)+'</div><div class="rowsub">'+(p?Math.round(p*100)+"% complete":"Not started")+'</div><div class="progress"><div class="fill" style="width:'+Math.round(p*100)+'%"></div></div></div><span>›</span></div>'}).join("")}
+function renderPlay(){return '<main class="page">'+header()+'<h1>My stories</h1><div class="sub">Episodes you started, saved, or created.</div><div style="margin-top:20px">'+libraryRows(false)+'</div></main>'+tabs()}
+function renderSettings(){
+var connected=state.auth&&state.auth.connected;return '<main class="page">'+header()+'<h1>Settings</h1><div class="row"><div class="avatar">J</div><div class="grow"><div class="rowtitle">Private Player</div><div class="rowsub">Personal clean-room build</div></div></div>'+
+'<div class="settingsGroup">AI BACKEND</div><div class="setting"><div class="grow"><div class="rowtitle">Backend URL</div><div class="rowsub">Render / your Node backend</div></div></div><input id="backendUrl" class="field" placeholder="https://your-service.onrender.com" value="'+esc(state.backendUrl||"")+'">'+
+'<div style="height:10px"></div><input id="appPassword" class="field" type="password" placeholder="Private app password" value="'+esc(password)+'"><div class="hint">Password stays in this browser session only. The encrypted Codex credential vault is stored locally on this device.</div>'+
+'<div style="height:12px"></div><select id="model" class="field"><option value="gpt-5.6-luna" '+(state.model==="gpt-5.6-luna"?"selected":"")+'>GPT-5.6 Luna</option><option value="gpt-5.6-terra" '+(state.model==="gpt-5.6-terra"?"selected":"")+'>GPT-5.6 Terra</option><option value="gpt-5.6-sol" '+(state.model==="gpt-5.6-sol"?"selected":"")+'>GPT-5.6 Sol</option></select>'+
+'<div class="btnrow"><button class="btn" id="testBackend">Test backend</button><button class="btn primary" id="connectChatGPT">'+(connected?"Reconnect ChatGPT":"Connect ChatGPT")+'</button></div>'+
+'<div style="margin-top:12px"><span class="status"><span class="dot '+(connected?"ok":"")+'"></span>'+(connected?("ChatGPT "+esc(state.auth.plan||"connected")):"Not connected")+'</span></div><div id="settingsError" class="error"></div>'+
+'<div class="settingsGroup">DATA</div><div class="setting"><span>Local progress</span><span class="value">Auto-save</span></div><div class="btnrow"><button class="btn" id="exportSave">Export save</button><button class="btn" id="importSave">Import save</button></div><input id="importFile" class="hidden" type="file" accept="application/json">'+
+'<div class="settingsGroup">ABOUT</div><div class="setting"><span>Version</span><span class="value">0.3.0 web</span></div></main>'+tabs()}
+function renderEpisode(){
+var x=ep(state.episodeId);return '<div><div class="detailCover" style="background:radial-gradient(circle at 65% 25%,#86566f 0 7%,transparent 32%),'+x.grad+'"></div><button class="iconbtn back" data-back="1">←</button><main class="detail"><span class="badge">'+esc(x.badge||"STORY")+'</span><h1>'+esc(x.title)+'</h1><div class="sub">'+esc(x.subtitle)+'</div><div class="chips" style="margin:14px 0">'+x.tags.map(function(t){return '<span class="chip">'+esc(t)+'</span>'}).join("")+'</div><p class="sub" style="font-size:14px;color:var(--text2)">'+esc(x.description)+'</p></main><button class="bigcta" data-start="'+x.id+'">'+((state.progress[x.id]||0)?"Continue story":"Start story")+'</button></div>'}
+function renderPlayer(){
+var s=state.scene||FIRST;return '<div class="player"><section class="stage"><div class="stageTop"><button class="iconbtn" data-playerback="1">←</button><span class="chapter">'+esc(s.chapter||"NEXT SCENE")+'</span><button class="iconbtn">•••</button></div><div class="location">'+esc(s.location||"Unknown")+'</div></section><section class="story"><div class="tools"><button class="tool" data-sheet="journal">▤ Journal</button><button class="tool" data-sheet="map">⌘ Map</button><button class="tool" data-sheet="state">◎ State</button></div><div class="storybody">'+(s.speaker?'<div class="speaker">'+esc(s.speaker)+'</div>':'')+'<div class="narrative">'+esc(s.body)+'</div><div class="prompt">What do you do?</div>'+s.choices.map(function(c,i){return '<button class="choice" data-choice="'+esc(c.id)+'"><span class="num">'+(i+1)+'</span><span class="grow">'+esc(c.label)+'</span><span>›</span></button>'}).join("")+'<div class="reply"><textarea id="freeText" placeholder="Say or do something else…"></textarea><button class="send" id="sendFree">↑</button></div></div></section></div>'}
+function render(){if(state.screen==="episode")app.innerHTML=renderEpisode();else if(state.screen==="player")app.innerHTML=renderPlayer();else if(state.tab==="chat")app.innerHTML=renderChat();else if(state.tab==="play")app.innerHTML=renderPlay();else if(state.tab==="settings")app.innerHTML=renderSettings();else app.innerHTML=renderHome();bind()}
+function bind(){
+document.querySelectorAll("[data-tab]").forEach(function(b){b.onclick=function(){setTab(b.dataset.tab)}});
+document.querySelectorAll("[data-episode]").forEach(function(b){b.onclick=function(){openEpisode(b.dataset.episode)}});
+document.querySelectorAll("[data-start]").forEach(function(b){b.onclick=function(){startEpisode(b.dataset.start)}});
+document.querySelectorAll("[data-back]").forEach(function(b){b.onclick=function(){state.screen="tabs";save();render()}});
+document.querySelectorAll("[data-playerback]").forEach(function(b){b.onclick=function(){state.screen="tabs";state.tab="play";save();render()}});
+document.querySelectorAll("[data-goto]").forEach(function(b){b.onclick=function(){state.tab=b.dataset.goto;state.screen="tabs";save();render()}});
+document.querySelectorAll("[data-choice]").forEach(function(b){b.onclick=function(){advance(b.parentNode?b.dataset.choice:b.dataset.choice)}});
+var sf=document.getElementById("sendFree");if(sf)sf.onclick=function(){var t=document.getElementById("freeText").value.trim();if(t)advance(null,t)};
+var bu=document.getElementById("backendUrl");if(bu)bu.onchange=function(){state.backendUrl=bu.value.trim().replace(/\/$/,"");save()};
+var ap=document.getElementById("appPassword");if(ap)ap.onchange=function(){password=ap.value;sessionStorage.setItem("frontia-app-password",password)};
+var mo=document.getElementById("model");if(mo)mo.onchange=function(){state.model=mo.value;save()};
+var tb=document.getElementById("testBackend");if(tb)tb.onclick=testBackend;
+var cc=document.getElementById("connectChatGPT");if(cc)cc.onclick=connectChatGPT;
+var ex=document.getElementById("exportSave");if(ex)ex.onclick=exportSave;
+var im=document.getElementById("importSave");if(im)im.onclick=function(){document.getElementById("importFile").click()};
+var fi=document.getElementById("importFile");if(fi)fi.onchange=importSave;
+document.querySelectorAll("[data-sheet]").forEach(function(b){b.onclick=function(){showInfo(b.dataset.sheet)}});
+}
+function getInputForChoice(id){var s=state.scene||FIRST;var c=(s.choices||[]).find(function(x){return x.id===id});return c?c.label:id}
+function mockNext(input){
+return {id:"scene-"+Date.now(),chapter:"CHAPTER 1 · 00:21",location:"Platform 4",speaker:"Mina",body:"Mina studies your reaction. The station lights flicker twice. Your decision — “"+input+"” — changes her expression before a notification appears on her phone. The timestamp is tomorrow morning.",choices:[{id:"c1",label:"Ask to read the message."},{id:"c2",label:"Tell Mina not to open it yet."},{id:"c3",label:"Check the platform cameras."}]}
+async function advance(choiceId,free){
+var input=free||getInputForChoice(choiceId);var busy=document.createElement("div");busy.className="busy";busy.textContent="Generating the next scene…";document.body.appendChild(busy);
+try{
+var old=state.scene||FIRST;var next;
+if(state.backendUrl&&state.auth&&state.auth.connected){
+var result=await api("/api/roleplay",{model:state.model,episode:ep(state.episodeId),scene:old,input:input,recent:state.recent.slice(-8)});
+next=result.scene;
+}else{await new Promise(function(r){setTimeout(r,500)});next=mockNext(input)}
+state.recent.push({player:input,scene:next.body});state.recent=state.recent.slice(-12);state.scene=next;state.progress[state.episodeId]=Math.min(.98,(state.progress[state.episodeId]||.08)+.05);save();render()
+}catch(e){alert("Generation failed: "+e.message)}finally{busy.remove()}
+}
+async function api(path,body){
+if(!state.backendUrl)throw new Error("Set Backend URL in Settings first.");
+if(!password)throw new Error("Enter your private app password in Settings.");
+var r=await fetch(state.backendUrl+path,{method:"POST",headers:{"content-type":"application/json","x-app-password":password},body:JSON.stringify(Object.assign({},body||{},{vault:state.vault||""}))});
+var data={};try{data=await r.json()}catch(e){}
+if(data.vault){state.vault=data.vault;save()}
+if(!r.ok)throw new Error(data.message||data.error||("HTTP "+r.status));
+return data
+}
+async function testBackend(){setErr("");try{var d=await api("/api/auth/status",{});if(d.connected){state.auth={connected:true,plan:d.plan||""};save();render()}else setErr("Backend is reachable. ChatGPT is not connected yet.")}catch(e){setErr(e.message)}}
+function setErr(x){var n=document.getElementById("settingsError");if(n)n.textContent=x}
+async function connectChatGPT(){
+setErr("");try{var d=await api("/api/auth/chatgpt/start",{});showLogin(d);pollLogin()}catch(e){setErr(e.message)}
+}
+function showLogin(d){
+var m=document.createElement("div");m.className="modal";m.id="loginModal";m.innerHTML='<div class="sheet"><h2>Connect ChatGPT</h2><div class="sub">Open the OpenAI device page and enter this one-time code.</div><div class="code">'+esc(d.userCode||"")+'</div><button class="btn primary" id="openVerify">Open ChatGPT login</button><button class="btn" style="margin-top:8px" id="closeLogin">Close</button><div class="hint" id="loginHint">Waiting for authorization…</div></div>';document.body.appendChild(m);
+document.getElementById("openVerify").onclick=function(){window.open(d.verificationUrl,"_blank","noopener")};document.getElementById("closeLogin").onclick=function(){m.remove()}
+}
+async function pollLogin(){
+for(var i=0;i<90;i++){await new Promise(function(r){setTimeout(r,2000)});try{var d=await api("/api/auth/status",{});if(d.connected){state.auth={connected:true,plan:d.plan||"Plus"};save();var h=document.getElementById("loginHint");if(h)h.textContent="Connected. You can close this window.";setTimeout(function(){var m=document.getElementById("loginModal");if(m)m.remove();render()},700);return}}catch(e){}}
+var h=document.getElementById("loginHint");if(h)h.textContent="Login timed out. Start Connect ChatGPT again."
+}
+function exportSave(){
+var copy=JSON.parse(JSON.stringify(state));delete copy.vault;delete copy.auth;var blob=new Blob([JSON.stringify(copy,null,2)],{type:"application/json"});var a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="cinematic-play-save-"+new Date().toISOString().slice(0,10)+".json";a.click();setTimeout(function(){URL.revokeObjectURL(a.href)},1000)
+}
+function importSave(ev){var f=ev.target.files[0];if(!f)return;var rd=new FileReader();rd.onload=function(){try{var d=JSON.parse(rd.result);var vault=state.vault,auth=state.auth;state=Object.assign({},blank,d,{vault:vault,auth:auth});save();render()}catch(e){alert("Invalid save file")}};rd.readAsText(f)}
+function showInfo(kind){
+var title=kind==="journal"?"Journal":kind==="map"?"Event Map":"Character State";var body=kind==="journal"?"Your choices and discoveries are saved locally as the story progresses.":kind==="map"?"Platform 4 → Future message → Maintenance door":"Mina · Trust 62 · Curiosity 81";
+var m=document.createElement("div");m.className="modal";m.innerHTML='<div class="sheet"><h2>'+title+'</h2><div class="panel sub" style="font-size:13px;color:var(--text2)">'+esc(body)+'</div><button class="btn" style="margin-top:14px">Close</button></div>';document.body.appendChild(m);m.querySelector("button").onclick=function(){m.remove()}
+}
+var qp=new URLSearchParams(location.search);if(qp.get("backend")){state.backendUrl=qp.get("backend").replace(/\/$/,"");save();history.replaceState(null,"",location.pathname)}
+render();
+if("serviceWorker" in navigator)navigator.serviceWorker.register("./sw.js").catch(function(){});
+})();
+</script>
+</body>
+</html>
