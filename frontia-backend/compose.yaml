@@ -1,0 +1,34 @@
+services:
+  backend:
+    build: .
+    restart: unless-stopped
+    environment:
+      PORT: "8000"
+      APP_PASSWORD: "${APP_PASSWORD}"
+      ALLOWED_ORIGIN: "${ALLOWED_ORIGIN:-https://apirak09.github.io}"
+      CODEX_HOME: /data/codex
+      FRONTIA_WORKSPACE: /data/workspace
+    volumes:
+      - codex_data:/data/codex
+      - workspace_data:/data/workspace
+
+  caddy:
+    image: caddy:2-alpine
+    restart: unless-stopped
+    depends_on:
+      - backend
+    environment:
+      DOMAIN: "${DOMAIN}"
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+      - caddy_config:/config
+
+volumes:
+  codex_data:
+  workspace_data:
+  caddy_data:
+  caddy_config:
