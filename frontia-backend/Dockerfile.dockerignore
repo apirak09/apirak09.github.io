@@ -1,0 +1,8 @@
+**
+!frontia-backend/
+!frontia-backend/package.json
+!frontia-backend/*.mjs
+!frontia-backend/entrypoint.sh
+!frontia/
+!frontia/shared.mjs
+!frontia/stories.mjs

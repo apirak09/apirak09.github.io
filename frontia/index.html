@@ -3,12 +3,16 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="description" content="นิยาย AI ภาษาไทย เลือกเส้นเรื่องของคุณ พร้อมบันทึกอัตโนมัติ">
+<meta name="referrer" content="no-referrer">
+<link rel="icon" href="./icons/icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="./icons/icon-192.png">
 <meta name="theme-color" content="#0b0b0d">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <title>Cinematic Play</title>
-<link rel="manifest" href="./manifest.webmanifest?v=5">
-<link rel="stylesheet" href="./styles.css?v=5">
+<link rel="manifest" href="./manifest.webmanifest">
+<link rel="stylesheet" href="./styles.css">
 </head>
 <body>
 <div id="app" class="shell">
@@ -16,19 +20,19 @@
     <div class="top">
       <div class="brand">cinematic<i>play</i></div>
       <div class="spacer"></div>
-      <button class="iconbtn" type="button" data-nav="settings">⚙</button>
+      <button class="iconbtn" type="button" data-nav="settings" aria-label="ตั้งค่า">⚙</button>
     </div>
     <div class="hero">
       <span class="badge">เรื่องแนะนำ</span>
       <h1>สัญญาณเที่ยงคืน</h1>
       <div class="sub">เมืองที่จดจำทุกการตัดสินใจของคุณ</div>
-      <button class="cta" type="button" data-open="ep-midnight">ดูเรื่องนี้</button>
+      <button class="cta" type="button" data-talk="ep-midnight">ดูเรื่องนี้</button>
     </div>
     <h2>แนะนำสำหรับคุณ</h2>
     <div class="cards">
-      <button class="card" type="button" data-open="ep-summer"><span class="art summer"></span><span class="cardtitle">ฤดูร้อนครั้งสุดท้าย</span><span class="cardmeta">กลับมาเจอกันอีกครั้ง ก่อนทุกคนจะแยกย้าย</span></button>
-      <button class="card" type="button" data-open="ep-orbit"><span class="art orbit"></span><span class="cardtitle">วงโคจร 17</span><span class="cardmeta">สถานีบอกว่าคุณเดินทางมาถึงเพียงลำพัง</span></button>
-      <button class="card" type="button" data-open="ep-house"><span class="art house"></span><span class="cardtitle">บ้านข้าง ๆ</span><span class="cardmeta">มีใครบางคนรอคุณอยู่ที่นั่น</span></button>
+      <button class="card" type="button" data-talk="ep-summer"><span class="art summer"></span><span class="cardtitle">ฤดูร้อนครั้งสุดท้าย</span><span class="cardmeta">กลับมาเจอกันอีกครั้ง ก่อนทุกคนจะแยกย้าย</span></button>
+      <button class="card" type="button" data-talk="ep-orbit"><span class="art orbit"></span><span class="cardtitle">วงโคจร 17</span><span class="cardmeta">สถานีบอกว่าคุณเดินทางมาถึงเพียงลำพัง</span></button>
+      <button class="card" type="button" data-talk="ep-house"><span class="art house"></span><span class="cardtitle">บ้านข้าง ๆ</span><span class="cardmeta">มีใครบางคนรอคุณอยู่ที่นั่น</span></button>
     </div>
   </main>
   <nav class="tabs">
@@ -38,7 +42,9 @@
     <button class="tab" type="button" data-nav="settings"><span>⚙</span><small>ตั้งค่า</small></button>
   </nav>
 </div>
+<noscript><p class="notice">กรุณาเปิด JavaScript เพื่อเล่นและบันทึกนิยาย</p></noscript>
 <div id="fatal" class="fatal hidden"></div>
-<script src="./app.js?v=5" defer></script>
+<dialog id="dialog" class="sheet" aria-labelledby="dialogTitle"></dialog>
+<script type="module" src="./app.js"></script>
 </body>
 </html>

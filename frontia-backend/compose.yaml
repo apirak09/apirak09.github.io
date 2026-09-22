@@ -1,13 +1,18 @@
 services:
   backend:
-    build: .
+    build:
+      context: ..
+      dockerfile: frontia-backend/Dockerfile
+    init: true
     restart: unless-stopped
     environment:
       PORT: "8000"
-      APP_PASSWORD: "${APP_PASSWORD}"
+      APP_PASSWORD: "${APP_PASSWORD:?Set APP_PASSWORD in .env}"
       ALLOWED_ORIGIN: "${ALLOWED_ORIGIN:-https://apirak09.github.io}"
       CODEX_HOME: /data/codex
       FRONTIA_WORKSPACE: /data/workspace
+    security_opt:
+      - no-new-privileges:true
     volumes:
       - codex_data:/data/codex
       - workspace_data:/data/workspace
@@ -16,9 +21,10 @@ services:
     image: caddy:2-alpine
     restart: unless-stopped
     depends_on:
-      - backend
+      backend:
+        condition: service_healthy
     environment:
-      DOMAIN: "${DOMAIN}"
+      DOMAIN: "${DOMAIN:?Set DOMAIN in .env}"
     ports:
       - "80:80"
       - "443:443"
