@@ -48,6 +48,12 @@ test('visual beats change background, character expression and resume at the sav
   const a = await app(t); await start(a, 'ep-midnight');
   assert.match(a.doc.querySelector('.cinematic-stage').getAttribute('style'), /platform.webp/);
   assert.equal(a.doc.querySelectorAll('[data-choice]').length, 0);
+  a.doc.querySelector('[data-action="journal"]').click(); await until(() => a.doc.querySelector('.journal-entry'));
+  assert.doesNotMatch(a.doc.querySelector('#dialog').textContent, /ลำโพงที่ถูกถอดสาย/);
+  a.doc.querySelector('[data-action="close-dialog"]').click();
+  a.doc.querySelector('[data-action="locations"]').click(); await until(() => a.doc.querySelector('#dialog').textContent.includes('ชานชาลาที่ 4'));
+  assert.doesNotMatch(a.doc.querySelector('#dialog').textContent, /ปากอุโมงค์/);
+  a.doc.querySelector('[data-action="close-dialog"]').click();
   a.doc.querySelector('[data-action="next-beat"]').click(); await until(() => a.doc.querySelector('.scene-portrait')?.getAttribute('src').includes('mina-worried.webp'));
   a.doc.querySelector('[data-action="next-beat"]').click(); await until(() => a.doc.querySelector('.cinematic-stage').getAttribute('style').includes('tunnel.webp'));
   assert.equal((await saved(a.factory)).save.stories['ep-midnight'].beatIndex, 2);

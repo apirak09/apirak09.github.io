@@ -314,7 +314,7 @@ async function action(name) {
       if (item.beatIndex === item.scene.beats.length - 1) item.status = applyEffects(item.status, item.scene.effects);
       item.revision = newId(); item.updatedAt = Date.now();
     });
-    render(); scheduleSync();
+    render(); scheduleSync(); window.scrollTo({ top: 0, behavior: 'instant' });
     document.querySelector('[data-action="next-beat"]')?.focus({ preventScroll: true });
     return;
   }
@@ -347,11 +347,15 @@ async function action(name) {
   }
   if (name === 'update') { await flushDraft(); await mutationQueue; if (!busy && !storageProblem) registration?.waiting?.postMessage({ type: 'SKIP_WAITING' }); return; }
   if (!story || story.deleted) return;
-  if (name === 'journal') return openDialog('บันทึกเรื่องราว', story.history.map((entry, i) => `<article class="journal-entry"><h3>ฉาก ${i + 1} · ${esc(entry.scene.chapter)}</h3>${entry.player ? `<p class="player-action">คุณ: ${esc(entry.player)}</p>` : ''}<p class="narrative">${esc(entry.scene.body)}</p></article>`).join(''));
-  if (name === 'locations') return openDialog('สถานที่ในเรื่อง', [...new Set(story.history.flatMap(entry => entry.scene.beats?.map(beat => PLACE_NAMES[beat.background]) || [entry.scene.location]).filter(Boolean))].map(location => `<div class="row"><span>${esc(location)}</span>${location === (PLACE_NAMES[story.scene.beats?.[story.beatIndex]?.background] || story.scene.location) ? '<span class="badge">ปัจจุบัน</span>' : ''}</div>`).join(''));
+  if (name === 'journal') return openDialog('บันทึกเรื่องราว', story.history.map((entry, i) => {
+    const visible = i === story.history.length - 1 && entry.scene.beats ? entry.scene.beats.slice(0, (story.beatIndex ?? 0) + 1).map(beat => beat.text).join('\n\n') : entry.scene.body;
+    return `<article class="journal-entry"><h3>ช่วงที่ ${i + 1} · ${esc(entry.scene.chapter)}</h3>${entry.player ? `<p class="player-action">คุณ: ${esc(entry.player)}</p>` : ''}<p class="narrative">${esc(visible)}</p></article>`;
+  }).join(''));
+  if (name === 'locations') return openDialog('สถานที่ในเรื่อง', [...new Set(story.history.flatMap((entry, i) => (i === story.history.length - 1 ? entry.scene.beats?.slice(0, (story.beatIndex ?? 0) + 1) : entry.scene.beats)?.map(beat => PLACE_NAMES[beat.background]) || [entry.scene.location]).filter(Boolean))].map(location => `<div class="row"><span>${esc(location)}</span>${location === (PLACE_NAMES[story.scene.beats?.[story.beatIndex]?.background] || story.scene.location) ? '<span class="badge">ปัจจุบัน</span>' : ''}</div>`).join(''));
   if (name === 'story-status') {
     const state = story.status;
-    return openDialog('สถานะเรื่อง', `<p class="sub">${esc(EPISODES[id].title)} · ${story.history.length} ช่วง<br>ล่าสุด ${esc(dateText(story.updatedAt))}<br>${esc(cloud)}</p>${id === ACTIVE_EPISODE ? `<h3>เวลาและเบาะแส</h3><p class="sub">◷ ${String(Math.floor(state.minute / 60)).padStart(2, '0')}:${String(state.minute % 60).padStart(2, '0')} น. · ${state.clues.length} เบาะแส</p>${state.clues.length ? state.clues.map(clue => `<div class="row">◇ ${esc(CLUE_NAMES[clue])}</div>`).join('') : '<p class="hint">ยังไม่มีเบาะแสที่บันทึกไว้</p>'}<h3>ความสัมพันธ์</h3>${Object.entries(CAST).map(([actor, person]) => `<div class="row"><span class="grow">${esc(person.name)}<span class="rowsub">${esc(person.role)}</span></span><strong>${state.relationships[actor] > 0 ? '+' : ''}${state.relationships[actor]}</strong></div>`).join('')}` : ''}<h3>ความทรงจำของเรื่อง</h3><p class="narrative">${esc(story.memory || 'ยังไม่มีสรุปจาก AI ประวัติฉากทั้งหมดเก็บอยู่ในบันทึก')}</p>`);
+    const reading = (story.beatIndex ?? 0) < (story.scene.beats?.length || 1) - 1;
+    return openDialog('สถานะเรื่อง', `<p class="sub">${esc(EPISODES[id].title)} · ${story.history.length} ช่วง<br>ล่าสุด ${esc(dateText(story.updatedAt))}<br>${esc(cloud)}</p>${id === ACTIVE_EPISODE ? `<h3>เวลาและเบาะแส</h3><p class="sub">◷ ${String(Math.floor(state.minute / 60)).padStart(2, '0')}:${String(state.minute % 60).padStart(2, '0')} น. · ${state.clues.length} เบาะแส</p>${state.clues.length ? state.clues.map(clue => `<div class="row">◇ ${esc(CLUE_NAMES[clue])}</div>`).join('') : '<p class="hint">ยังไม่มีเบาะแสที่บันทึกไว้</p>'}<h3>ความสัมพันธ์</h3>${Object.entries(CAST).map(([actor, person]) => `<div class="row"><span class="grow">${esc(person.name)}<span class="rowsub">${esc(person.role)}</span></span><strong>${state.relationships[actor] > 0 ? '+' : ''}${state.relationships[actor]}</strong></div>`).join('')}` : ''}<h3>ความทรงจำของเรื่อง</h3><p class="narrative">${esc(reading ? 'อ่านช่วงนี้ให้จบก่อนดูความทรงจำล่าสุด' : story.memory || 'ยังไม่มีสรุปจาก AI ประวัติฉากทั้งหมดเก็บอยู่ในบันทึก')}</p>`);
   }
   if (name === 'story-menu') return openDialog(EPISODES[id].title, `<div class="btnrow"><button class="btn" data-nav="settings">ตั้งค่า AI</button><button class="btn" data-action="export">สำรองเซฟ</button></div><div class="btnrow"><button class="btn danger" data-action="reset-story" ${busy ? 'disabled' : ''}>เริ่มเรื่องนี้ใหม่</button></div>`);
 }
