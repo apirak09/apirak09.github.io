@@ -44,6 +44,17 @@ async function saved(factory) {
   const value = await new Promise(resolve => { const r = db.transaction('app').objectStore('app').get('state'); r.onsuccess = () => resolve(r.result); });
   db.close(); return value;
 }
+test('home onboarding presents the single prototype clearly and starts it in one tap', async t => {
+  const a = await app(t);
+  assert.ok(a.doc.querySelector('.home-portal'));
+  assert.equal(a.doc.querySelectorAll('.location-card').length, 3);
+  assert.equal(a.doc.querySelectorAll('.home-cast-card').length, 3);
+  assert.equal(a.doc.querySelectorAll('.onboarding-steps li').length, 3);
+  assert.match(a.doc.querySelector('.portal-cta').textContent, /เริ่มอ่านเรื่องนี้/);
+  a.doc.querySelector('.portal-cta').click();
+  await until(() => a.doc.querySelector('.cinematic-stage'), 'homepage start button');
+  assert.equal((await saved(a.factory)).save.stories['ep-midnight'].history.length, 1);
+});
 test('visual beats change background, character expression and resume at the saved shot', async t => {
   const a = await app(t); await start(a, 'ep-midnight');
   assert.match(a.doc.querySelector('.cinematic-stage').getAttribute('style'), /platform.webp/);
@@ -61,6 +72,66 @@ test('visual beats change background, character expression and resume at the sav
   assert.match(b.doc.querySelector('.beat-progress').textContent, /3\/4/);
   assert.equal(b.doc.querySelectorAll('[data-choice]').length, 0);
   await readAll(b); assert.equal(b.doc.querySelectorAll('[data-choice]').length, 3);
+});
+test('in-story choices, status and transcript stay inside the scene without revealing unread shots', async t => {
+  const a = await app(t);
+  a.doc.querySelector('.tabs [data-talk="ep-midnight"]').click();
+  await until(() => a.doc.querySelector('.cinematic-stage'), 'chat tab opens the actual reader');
+  assert.equal(a.doc.querySelectorAll('.scene-hud .hud-chip').length, 2);
+  a.doc.querySelector('[data-action="journal"]').click();
+  await until(() => a.doc.querySelectorAll('.journal-beat').length === 1);
+  assert.equal(a.doc.querySelectorAll('.journal-beat').length, 1);
+  a.doc.querySelector('[data-action="close-dialog"]').click();
+  await readAll(a);
+  const stage = a.doc.querySelector('.cinematic-stage');
+  assert.equal(stage.querySelectorAll('[data-choice]').length, 3);
+  assert.ok(stage.querySelector('#freeText'));
+  assert.equal(a.doc.querySelector('.readout-track').getAttribute('aria-valuenow'), '4');
+  a.doc.querySelector('[data-action="journal"]').click();
+  await until(() => a.doc.querySelectorAll('.journal-beat').length === 4);
+  assert.match(a.doc.querySelector('.journal-beat:last-child .journal-speaker').textContent, /มีนา/);
+});
+test('reader offers an unobstructed art view and keeps choices separate from the dialogue', async t => {
+  const a = await app(t); await start(a, 'ep-midnight');
+  a.doc.querySelector('[data-action="hide-ui"]').click();
+  assert.ok(a.doc.querySelector('.cinematic-stage').classList.contains('ui-hidden'));
+  assert.ok(a.doc.querySelector('[data-action="show-ui"]'));
+  a.w.document.dispatchEvent(new a.w.KeyboardEvent('keydown', { key: 'Escape', bubbles: true }));
+  assert.ok(!a.doc.querySelector('.cinematic-stage').classList.contains('ui-hidden'));
+  assert.equal((await saved(a.factory)).save.stories['ep-midnight'].beatIndex, 0);
+  await readAll(a);
+  assert.equal(a.doc.querySelectorAll('.scene-choice-tray [data-choice]').length, 3);
+  assert.equal(a.doc.querySelectorAll('.visual-dialogue [data-choice]').length, 0);
+  assert.ok(a.doc.querySelector('.visual-dialogue #freeText'));
+});
+test('automatic reading advances shots but waits for the player at a choice', async t => {
+  const a = await app(t); await start(a, 'ep-midnight');
+  const nativeTimer = a.w.setTimeout.bind(a.w);
+  a.w.setTimeout = (fn, delay, ...args) => nativeTimer(fn, delay >= 2700 && delay <= 9000 ? 1 : delay, ...args);
+  a.doc.querySelector('[data-action="auto-play"]').click();
+  await until(() => a.doc.querySelector('.beat-progress')?.textContent.includes('4/4'), 'automatic reading reaches the choice');
+  assert.equal(a.doc.querySelector('[data-action="auto-play"]').getAttribute('aria-pressed'), 'true');
+  assert.equal(a.doc.querySelectorAll('[data-choice]').length, 3);
+  assert.equal((await saved(a.factory)).save.stories['ep-midnight'].history.length, 1);
+  a.doc.querySelector('[data-action="auto-play"]').click();
+  assert.equal(a.doc.querySelector('[data-action="auto-play"]').getAttribute('aria-pressed'), 'false');
+});
+test('rewinding an already read shot does not change saved progress or apply effects twice', async t => {
+  const a = await app(t); await start(a, 'ep-midnight'); await readAll(a);
+  a.doc.querySelector('[data-choice="0"]').click();
+  await until(() => a.doc.querySelector('.beat-progress')?.textContent.includes('1/5'));
+  await readAll(a);
+  const before = await saved(a.factory);
+  assert.equal(before.save.stories['ep-midnight'].status.relationships.mina, 2);
+  assert.match(a.doc.querySelector('.scene-effects').textContent, /มีนา \+2/);
+  a.doc.querySelector('[data-action="previous-beat"]').click();
+  assert.match(a.doc.querySelector('.beat-progress').textContent, /4\/5/);
+  assert.equal(a.doc.querySelectorAll('[data-choice]').length, 0);
+  assert.equal((await saved(a.factory)).save.stories['ep-midnight'].beatIndex, 4);
+  a.doc.querySelector('[data-action="next-beat"]').click();
+  assert.match(a.doc.querySelector('.beat-progress').textContent, /5\/5/);
+  assert.equal(a.doc.querySelectorAll('[data-choice]').length, 3);
+  assert.equal((await saved(a.factory)).save.stories['ep-midnight'].status.relationships.mina, 2);
 });
 test('rapid repeated choice clicks create only one next scene', async t => {
   const a = await app(t); await start(a, 'ep-midnight'); await readAll(a); const choice = a.doc.querySelector('[data-choice="0"]');
