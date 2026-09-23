@@ -1,4 +1,4 @@
-const CACHE = 'cinematic-play-shell-v7.0.1';
+const CACHE = 'cinematic-play-shell-v7.0.4';
 const ART = ['./platform.webp', './tunnel.webp', './control.webp', ...['mina', 'tara', 'arun'].flatMap(actor => ['neutral', 'warm', 'worried', 'resolved'].map(expression => `./${actor}-${expression}.webp`))].map(name => `./assets/midnight/${name.slice(2)}`);
 const CORE = ['./index.html', './styles.css', './reader.css', './app.js', './shared.mjs', './stories.mjs', './storage.mjs', './sync.mjs', './ui.mjs', './manifest.webmanifest', './icons/icon.svg', './icons/icon-192.png', './icons/icon-512.png', './icons/maskable-512.png', ...ART];
 const urls = new Set(CORE.map(file => new URL(file, self.registration.scope).href));

@@ -15,6 +15,8 @@ let storageProblem = false, mutationQueue = Promise.resolve(), writes = 0;
 let draftTimer, draftDirty = false, draftCache = {};
 let loginSession = null, loginTimer, connecting = false, dialogReturnFocus, installPrompt, registration, updateReady = false;
 let renderedStoryRevision = '';
+let reviewBeatIndex = null;
+let uiHidden = false, autoPlay = false, autoTimer;
 const channel = (() => {
   try { return typeof BroadcastChannel === 'function' ? new BroadcastChannel('cinematic-play') : null; }
   catch { return null; }
@@ -31,7 +33,7 @@ function render() {
   const active = document.activeElement;
   const editing = active?.id === 'freeText';
   const selection = editing ? [active.selectionStart, active.selectionEnd] : null;
-  APP.innerHTML = renderView({ record: { ...record, drafts: { ...record.drafts, ...draftCache } }, route: route(), busy: !!busy, auth, models: [...models], cloud, message, remember, conflict, updateReady, offline: !navigator.onLine });
+  APP.innerHTML = renderView({ record: { ...record, drafts: { ...record.drafts, ...draftCache } }, route: route(), reviewBeatIndex, uiHidden, autoPlay, busy: !!busy, auth, models: [...models], cloud, message, remember, conflict, updateReady, offline: !navigator.onLine });
   const pw = document.getElementById('appPassword');
   if (pw) pw.value = password;
   if (editing && document.getElementById('freeText')) {
@@ -40,17 +42,30 @@ function render() {
   }
   renderedStoryRevision = record.save.stories[storyId()]?.revision || '';
   document.title = EPISODES[storyId()] ? `${EPISODES[storyId()].title} · Cinematic Play` : 'Cinematic Play';
+  scheduleAutoPlay();
+}
+function scheduleAutoPlay() {
+  clearTimeout(autoTimer);
+  if (!autoPlay || uiHidden || busy || storageProblem || DIALOG.open || document.hidden || !route().startsWith('player/') || reviewBeatIndex !== null) return;
+  const story = record.save.stories[storyId()];
+  if (!story || story.deleted || storyId() !== ACTIVE_EPISODE) return;
+  const index = story.beatIndex ?? 0, beats = story.scene.beats;
+  if (!beats || index >= beats.length - 1) return; // Wait for the reader to choose; never select a response automatically.
+  const delay = Math.min(9000, Math.max(2700, (beats[index].text?.length || 0) * 45));
+  autoTimer = setTimeout(() => { void action('next-beat').catch(error => notify(error.message)); }, delay);
 }
 function notify(text) { message = text; render(); }
 function paintStatus() { document.querySelectorAll('[data-save-status]').forEach(el => { el.textContent = cloud; }); }
 function go(next) {
   if (busy) busy.controller.abort();
+  reviewBeatIndex = null; uiHidden = false; autoPlay = false; clearTimeout(autoTimer);
   void flushDraft().catch(() => {}); closeDialog();
   if (location.hash === `#${next}`) { render(); return; }
   location.hash = next;
 }
 window.addEventListener('hashchange', () => {
   if (busy) busy.controller.abort();
+  reviewBeatIndex = null; uiHidden = false; autoPlay = false; clearTimeout(autoTimer);
   closeDialog(); render(); window.scrollTo({ top: 0 });
   document.getElementById('main')?.focus({ preventScroll: true });
 });
@@ -119,7 +134,7 @@ function setupSync() {
       paintStatus();
       if (status === 'synced') retryDelay = 3000;
       if (['pending', 'error'].includes(status)) { scheduleSync(retryDelay); retryDelay = Math.min(60000, retryDelay * 2); }
-      if (route().startsWith('player/') && renderedStoryRevision !== record.save.stories[storyId()]?.revision && !busy) render();
+      if (route().startsWith('player/') && renderedStoryRevision !== record.save.stories[storyId()]?.revision && !busy) { reviewBeatIndex = null; render(); }
     },
   });
   scheduleSync(200);
@@ -175,6 +190,7 @@ async function advance(input) {
       r.save.stories[id] = { ...original, scene, beatIndex: 0, status: original.status, memory, revision: newId(), updatedAt: now, history: [...original.history, { id: newId(), player: input, scene, source, createdAt: now }] };
       r.drafts[id] = '';
     });
+    reviewBeatIndex = null;
     draftCache[id] = '';
   } catch (error) { if (!controller.signal.aborted) message = error.message; }
   finally {
@@ -185,7 +201,10 @@ async function advance(input) {
 }
 
 function openDialog(title, content) {
+  clearTimeout(autoTimer);
   dialogReturnFocus = document.activeElement;
+  DIALOG.classList.toggle('journal-sheet', title === 'บทสนทนาที่อ่านแล้ว');
+  DIALOG.classList.toggle('status-sheet', title === 'สถานะเรื่อง' || title === 'สถานที่ในเรื่อง');
   DIALOG.innerHTML = sheet(title, content);
   if (!DIALOG.open) DIALOG.showModal();
   DIALOG.querySelector('button')?.focus();
@@ -197,6 +216,7 @@ function closeDialog() {
   }
   if (DIALOG.open) DIALOG.close();
   if (dialogReturnFocus?.isConnected) dialogReturnFocus.focus({ preventScroll: true });
+  scheduleAutoPlay();
 }
 DIALOG.addEventListener('cancel', event => { event.preventDefault(); closeDialog(); });
 DIALOG.addEventListener('click', event => { if (event.target === DIALOG) closeDialog(); });
@@ -304,8 +324,24 @@ function showConflicts() {
 async function action(name) {
   const id = storyId(), story = record.save.stories[id];
   if (name === 'start') return start();
+  if (name === 'hide-ui') { uiHidden = true; render(); document.querySelector('[data-action="show-ui"]')?.focus({ preventScroll: true }); return; }
+  if (name === 'show-ui') { uiHidden = false; render(); document.querySelector('[data-action="hide-ui"]')?.focus({ preventScroll: true }); return; }
+  if (name === 'auto-play') { autoPlay = !autoPlay; render(); return; }
+  if (name === 'previous-beat') {
+    if (busy || id !== ACTIVE_EPISODE || !story || story.deleted) return;
+    const visible = reviewBeatIndex ?? story.beatIndex ?? 0;
+    if (visible > 0) { autoPlay = false; reviewBeatIndex = visible - 1; render(); document.querySelector('[data-action="next-beat"]')?.focus({ preventScroll: true }); }
+    return;
+  }
   if (name === 'next-beat') {
-    if (busy || storageProblem || id !== ACTIVE_EPISODE || !story || story.deleted || (story.beatIndex ?? 0) >= (story.scene.beats?.length || 1) - 1) return;
+    if (busy || storageProblem || id !== ACTIVE_EPISODE || !story || story.deleted) return;
+    if (reviewBeatIndex !== null && reviewBeatIndex < story.beatIndex) {
+      reviewBeatIndex++;
+      if (reviewBeatIndex === story.beatIndex) reviewBeatIndex = null;
+      render(); document.querySelector('[data-action="next-beat"], .visual-dialogue')?.focus({ preventScroll: true });
+      return;
+    }
+    if ((story.beatIndex ?? 0) >= (story.scene.beats?.length || 1) - 1) return;
     const revision = story.revision;
     await change(r => {
       const item = r.save.stories[id];
@@ -315,7 +351,7 @@ async function action(name) {
       item.revision = newId(); item.updatedAt = Date.now();
     });
     render(); scheduleSync(); window.scrollTo({ top: 0, behavior: 'instant' });
-    document.querySelector('[data-action="next-beat"]')?.focus({ preventScroll: true });
+    document.querySelector('[data-action="next-beat"], .visual-dialogue')?.focus({ preventScroll: true });
     return;
   }
   if (name === 'send') return advance(document.getElementById('freeText')?.value);
@@ -347,15 +383,23 @@ async function action(name) {
   }
   if (name === 'update') { await flushDraft(); await mutationQueue; if (!busy && !storageProblem) registration?.waiting?.postMessage({ type: 'SKIP_WAITING' }); return; }
   if (!story || story.deleted) return;
-  if (name === 'journal') return openDialog('บันทึกเรื่องราว', story.history.map((entry, i) => {
-    const visible = i === story.history.length - 1 && entry.scene.beats ? entry.scene.beats.slice(0, (story.beatIndex ?? 0) + 1).map(beat => beat.text).join('\n\n') : entry.scene.body;
-    return `<article class="journal-entry"><h3>ช่วงที่ ${i + 1} · ${esc(entry.scene.chapter)}</h3>${entry.player ? `<p class="player-action">คุณ: ${esc(entry.player)}</p>` : ''}<p class="narrative">${esc(visible)}</p></article>`;
+  if (name === 'journal') return openDialog('บทสนทนาที่อ่านแล้ว', story.history.map((entry, i) => {
+    const visible = i === story.history.length - 1 && entry.scene.beats ? entry.scene.beats.slice(0, (story.beatIndex ?? 0) + 1) : entry.scene.beats;
+    return `<article class="journal-entry"><div class="journal-heading"><span>ช่วงที่ ${i + 1} · ${esc(entry.scene.chapter)}</span><small>${esc(dateText(entry.createdAt))}</small></div>${entry.player ? `<p class="player-action"><strong>คุณเลือก</strong> ${esc(entry.player)}</p>` : ''}${visible ? visible.map((beat, index) => `<div class="journal-beat"><span class="journal-index">${String(index + 1).padStart(2, '0')}</span><div><div class="journal-speaker">${esc(beat.actor ? CAST[beat.actor].name : 'เรื่องราว')}<small>${esc(PLACE_NAMES[beat.background])}</small></div><p>${esc(beat.text)}</p></div></div>`).join('') : `<p class="narrative">${esc(entry.scene.body)}</p>`}</article>`;
   }).join(''));
-  if (name === 'locations') return openDialog('สถานที่ในเรื่อง', [...new Set(story.history.flatMap((entry, i) => (i === story.history.length - 1 ? entry.scene.beats?.slice(0, (story.beatIndex ?? 0) + 1) : entry.scene.beats)?.map(beat => PLACE_NAMES[beat.background]) || [entry.scene.location]).filter(Boolean))].map(location => `<div class="row"><span>${esc(location)}</span>${location === (PLACE_NAMES[story.scene.beats?.[story.beatIndex]?.background] || story.scene.location) ? '<span class="badge">ปัจจุบัน</span>' : ''}</div>`).join(''));
+  if (name === 'locations') {
+    const visited = [...new Set(story.history.flatMap((entry, i) => (i === story.history.length - 1 ? entry.scene.beats?.slice(0, (story.beatIndex ?? 0) + 1) : entry.scene.beats)?.map(beat => PLACE_NAMES[beat.background]) || [entry.scene.location]).filter(Boolean))];
+    const current = PLACE_NAMES[story.scene.beats?.[story.beatIndex]?.background] || story.scene.location;
+    return openDialog('สถานที่ในเรื่อง', `<p class="sub">สถานที่ที่คุณพบแล้วในเรื่อง · ${visited.length} แห่ง</p><div class="visited-places">${visited.map(location => {
+      const image = Object.entries(PLACE_NAMES).find(([, label]) => label === location)?.[0];
+      return `<div class="visited-place">${image ? `<img src="./assets/midnight/${image}.webp" alt="" loading="lazy">` : '<span class="place-placeholder" aria-hidden="true">◇</span>'}<span class="grow">${esc(location)}</span>${location === current ? '<span class="current-place">อยู่ที่นี่</span>' : ''}</div>`;
+    }).join('')}</div>`);
+  }
   if (name === 'story-status') {
     const state = story.status;
     const reading = (story.beatIndex ?? 0) < (story.scene.beats?.length || 1) - 1;
-    return openDialog('สถานะเรื่อง', `<p class="sub">${esc(EPISODES[id].title)} · ${story.history.length} ช่วง<br>ล่าสุด ${esc(dateText(story.updatedAt))}<br>${esc(cloud)}</p>${id === ACTIVE_EPISODE ? `<h3>เวลาและเบาะแส</h3><p class="sub">◷ ${String(Math.floor(state.minute / 60)).padStart(2, '0')}:${String(state.minute % 60).padStart(2, '0')} น. · ${state.clues.length} เบาะแส</p>${state.clues.length ? state.clues.map(clue => `<div class="row">◇ ${esc(CLUE_NAMES[clue])}</div>`).join('') : '<p class="hint">ยังไม่มีเบาะแสที่บันทึกไว้</p>'}<h3>ความสัมพันธ์</h3>${Object.entries(CAST).map(([actor, person]) => `<div class="row"><span class="grow">${esc(person.name)}<span class="rowsub">${esc(person.role)}</span></span><strong>${state.relationships[actor] > 0 ? '+' : ''}${state.relationships[actor]}</strong></div>`).join('')}` : ''}<h3>ความทรงจำของเรื่อง</h3><p class="narrative">${esc(reading ? 'อ่านช่วงนี้ให้จบก่อนดูความทรงจำล่าสุด' : story.memory || 'ยังไม่มีสรุปจาก AI ประวัติฉากทั้งหมดเก็บอยู่ในบันทึก')}</p>`);
+    const clock = `${String(Math.floor(state.minute / 60)).padStart(2, '0')}:${String(state.minute % 60).padStart(2, '0')}`;
+    return openDialog('สถานะเรื่อง', `<p class="sub">${esc(EPISODES[id].title)} · ช่วงที่ ${story.history.length} · บันทึกล่าสุด ${esc(dateText(story.updatedAt))}</p>${id === ACTIVE_EPISODE ? `<div class="status-overview"><div><small>เวลาในเรื่อง</small><strong>◷ ${clock}</strong></div><div><small>เบาะแสที่พบ</small><strong>◇ ${state.clues.length}</strong></div></div><h3 class="status-heading">เบาะแส</h3>${state.clues.length ? `<div class="clue-list">${state.clues.map(clue => `<span>◇ ${esc(CLUE_NAMES[clue])}</span>`).join('')}</div>` : '<p class="hint">ยังไม่มีเบาะแสที่บันทึกไว้</p>'}<h3 class="status-heading">ตัวละครและความสัมพันธ์</h3><div class="status-cast-list">${Object.entries(CAST).map(([actor, person]) => `<div class="status-cast"><img src="./assets/midnight/${actor}-neutral.webp" alt="" loading="lazy"><div class="grow"><strong>${esc(person.name)}</strong><small>${esc(person.role)}</small></div><span class="relation-score ${state.relationships[actor] < 0 ? 'negative' : ''}">♡ ${state.relationships[actor] > 0 ? '+' : ''}${state.relationships[actor]}</span></div>`).join('')}</div>` : ''}<h3 class="status-heading">ความทรงจำของเรื่อง</h3><p class="status-memory">${esc(reading ? 'อ่านช่วงนี้ให้จบก่อนดูความทรงจำล่าสุด' : story.memory || 'ยังไม่มีสรุปจาก AI ประวัติฉากทั้งหมดเก็บอยู่ในบทสนทนา')}</p><p class="status-save" data-save-status role="status">${esc(cloud)}</p>`);
   }
   if (name === 'story-menu') return openDialog(EPISODES[id].title, `<div class="btnrow"><button class="btn" data-nav="settings">ตั้งค่า AI</button><button class="btn" data-action="export">สำรองเซฟ</button></div><div class="btnrow"><button class="btn danger" data-action="reset-story" ${busy ? 'disabled' : ''}>เริ่มเรื่องนี้ใหม่</button></div>`);
 }
@@ -389,6 +433,7 @@ document.addEventListener('input', event => {
   draftCache[storyId()] = event.target.value; draftDirty = true; clearTimeout(draftTimer); draftTimer = setTimeout(() => void flushDraft().catch(() => {}), 300);
 });
 document.addEventListener('keydown', event => {
+  if (uiHidden && event.key === 'Escape') { event.preventDefault(); uiHidden = false; render(); document.querySelector('[data-action="hide-ui"]')?.focus({ preventScroll: true }); return; }
   if (event.target.id === 'freeText' && event.key === 'Enter' && (event.ctrlKey || event.metaKey) && !event.isComposing) { event.preventDefault(); void advance(event.target.value).catch(error => notify(error.message)); }
 });
 document.addEventListener('change', event => {
@@ -406,7 +451,7 @@ channel?.addEventListener('message', event => { if (event.data.writeId !== recor
 window.addEventListener('storage', event => { if (event.key === 'cinematic-play-v6' && storage.kind === 'localStorage') handleStorageError(new StorageConflict()); });
 window.addEventListener('online', () => { render(); scheduleSync(0); });
 window.addEventListener('offline', () => { cloud = 'บันทึกในเครื่องแล้ว · ออฟไลน์'; render(); });
-document.addEventListener('visibilitychange', () => { if (document.hidden) void flushDraft().catch(() => {}); else scheduleSync(0); });
+document.addEventListener('visibilitychange', () => { if (document.hidden) { clearTimeout(autoTimer); void flushDraft().catch(() => {}); } else { scheduleSync(0); scheduleAutoPlay(); } });
 window.addEventListener('beforeunload', event => { if (busy || writes || draftDirty || pendingRecord) { event.preventDefault(); event.returnValue = ''; } });
 window.addEventListener('beforeinstallprompt', event => { event.preventDefault(); installPrompt = event; });
 
