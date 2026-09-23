@@ -1,4 +1,13 @@
-import { clone, newId } from './shared.mjs';
+import { clone, initialStatus, newId, validateScene } from './shared.mjs';
+
+export const CAST = {
+  mina: { name: 'มีนา', role: 'นักบันทึกเสียง', description: 'ช่างสังเกต กล้าถามในสิ่งที่คนอื่นเลี่ยง แต่ไม่ไว้ใจคำอธิบายง่าย ๆ' },
+  tara: { name: 'ธารา', role: 'เจ้าหน้าที่สัญญาณ', description: 'สุขุม ยึดกฎความปลอดภัย และเก็บบันทึกที่ไม่มีใครควรได้อ่าน' },
+  arun: { name: 'อรุณ', role: 'อดีตนายสถานี', description: 'รู้จักขบวนที่ไม่มีอยู่ในตาราง พูดน้อยและปกป้องลูกน้องเก่า' },
+};
+export const PLACE_NAMES = { platform: 'ชานชาลาที่ 4', tunnel: 'ปากอุโมงค์', control: 'ห้องควบคุมสัญญาณ' };
+export const CLUE_NAMES = { voice: 'เสียงประกาศเรียกชื่อ', timetable: 'ตารางรถไฟที่ถูกแก้', signal: 'สัญญาณผิดเวลา', ticket: 'ตั๋วเที่ยวที่หายไป', recording: 'เทปบันทึกเสียง' };
+const beat = (text, actor, expression, background, companion = null, companionExpression = 'neutral') => ({ text, actor, expression, background, companion, companionExpression });
 
 export const EPISODES = {
   'ep-midnight': {
@@ -6,15 +15,20 @@ export const EPISODES = {
     description: 'เรื่องลึกลับเชิงภาพยนตร์ที่ทุกบทสนทนาเปลี่ยนว่าใครจะเชื่อใจคุณ คุณจะค้นพบอะไร และตอนจบแบบไหนจะเกิดขึ้นได้',
     tags: ['ลึกลับ', 'ร่วมสมัย', 'เลือกเส้นเรื่อง'], character: 'มีนา', theme: 'midnight',
     opening: {
-      chapter: 'บทที่ 1 · 00:17', location: 'ชานชาลาที่ 4', speaker: 'มีนา',
-      body: 'รถไฟเที่ยวสุดท้ายควรผ่านไปตั้งแต่สิบสองนาทีก่อนแล้ว แต่มีนายังคงจ้องเข้าไปในอุโมงค์มืด แสงจากโทรศัพท์ในมือของเธอสั่นเล็กน้อย ก่อนจะหันมาถามคุณเสียงเบา\n\n“นายก็ได้ยินใช่ไหม? เสียงประกาศเมื่อกี้…มันเรียกชื่อของนาย”',
+      chapter: 'บทที่ 1 · เสียงที่เรียกชื่อ', location: 'ชานชาลาที่ 4', speaker: 'มีนา',
+      beats: [
+        beat('00:17 น. ฝนเคาะหลังคาชานชาลาที่ 4 รถไฟเที่ยวสุดท้ายผ่านไปแล้วสิบสองนาที แต่ไฟปลายอุโมงค์ยังไม่ดับ', null, 'neutral', 'platform'),
+        beat('“อย่าเพิ่งขยับ” มีนายกเครื่องบันทึกเสียงขึ้น เธอเป็นคนตามรอยเสียงประหลาดมาถึงที่นี่ และเทปในมือกำลังหมุนทั้งที่ยังไม่ได้กดอัด', 'mina', 'worried', 'platform'),
+        beat('เสียงประกาศดังจากลำโพงที่ถูกถอดสายไปแล้ว เรียกชื่อของคุณชัดเจน ก่อนลงท้ายด้วยหมายเลขขบวนที่ไม่มีในตาราง', null, 'neutral', 'tunnel'),
+        beat('“คุณก็ได้ยินใช่ไหม?” มีนามองคุณตรง ๆ “ฉันไม่ได้หูฝาดคนเดียวใช่ไหม”', 'mina', 'neutral', 'platform'),
+      ],
       choices: [
-        { id: 'c1', label: 'บอกความจริงกับเธอว่า คุณเคยได้ยินเสียงนี้มาก่อน' },
-        { id: 'c2', label: 'ตั้งใจฟังเสียงประกาศอีกครั้ง' },
-        { id: 'c3', label: 'ถามมีนาว่าทำไมเธอถึงมาที่สถานีดึกขนาดนี้' },
+        { id: 'c1', label: 'บอกมีนาว่าคุณเคยได้ยินเสียงนี้มาก่อน' },
+        { id: 'c2', label: 'ขอฟังเทปของมีนาเพื่อหาต้นเสียง' },
+        { id: 'c3', label: 'ไปถามเจ้าหน้าที่ว่าใครเปิดระบบประกาศ' },
       ],
     },
-    preview: 'ไฟเหนือชานชาลากะพริบสองครั้ง มีนาขยับเข้ามายืนข้างคุณ ก่อนโทรศัพท์ของเธอจะสั่นขึ้น ข้อความบนจอมาจากหมายเลขของคุณ ทั้งที่โทรศัพท์ของคุณยังอยู่ในกระเป๋า\n\n“อย่าขึ้นขบวนถัดไป” เธออ่านออกมาเบา ๆ และในวินาทีนั้น แสงไฟหน้ารถไฟก็ปรากฏในอุโมงค์',
+    preview: 'ธารานำคุณไปยังห้องควบคุม หลังตารางขบวนถูกแก้ไขด้วยลายมือของอดีตนายสถานี',
   },
   'ep-summer': {
     id: 'ep-summer', title: 'ฤดูร้อนครั้งสุดท้าย', subtitle: 'กลับมาเจอกันอีกครั้ง ก่อนทุกคนจะแยกย้าย',
@@ -64,16 +78,41 @@ export const EPISODES = {
 };
 
 export function startStory(id) {
-  const scene = { id: newId(), ...clone(EPISODES[id].opening) };
+  const scene = validateScene({ id: newId(), ...clone(EPISODES[id].opening) });
   const now = Date.now();
-  return { revision: newId(), updatedAt: now, scene, memory: '', history: [{ id: newId(), player: '', scene, createdAt: now, source: 'demo' }] };
+  return { revision: newId(), updatedAt: now, scene, beatIndex: 0, status: initialStatus(), memory: '', history: [{ id: newId(), player: '', scene, createdAt: now, source: 'demo' }] };
 }
 
-export function demoScene(id) {
-  return { id: newId(), ...clone(EPISODES[id].opening), body: EPISODES[id].preview, choices: [] };
+export function demoScene(id, turn = 1, input = '') {
+  if (id !== 'ep-midnight') return validateScene({ id: newId(), ...clone(EPISODES[id].opening), body: EPISODES[id].preview, choices: [] });
+  const confided = /เคย|ก่อน|ความจริง|บอกมีนา/i.test(input);
+  if (turn === 1) return validateScene({
+    id: newId(), chapter: 'บทที่ 1 · เทปที่ไม่มีต้นเสียง', location: 'ห้องควบคุมสัญญาณ', speaker: 'ธารา',
+    beats: [
+      beat(confided ? 'มีนาชะงักเมื่อได้ยินว่าคุณรู้จักเสียงนั้น “แปลว่าคืนนี้ไม่ใช่ครั้งแรก” เธอพูด แล้วขยับมาถือไฟฉายให้คุณ' : 'มีนายื่นหูฟังให้คุณ เสียงในเทปเป็นเสียงเดียวกับลำโพง แต่มีเสียงคลิกเบา ๆ ดังนำหน้าราวกับมาจากสายสัญญาณเก่า', 'mina', confided ? 'worried' : 'neutral', 'platform'),
+      beat('ประตูห้องควบคุมเปิดออก ธาราในเครื่องแบบสถานียืนกอดแฟ้มบันทึก “ระบบประกาศตัดไฟไปตั้งแต่เที่ยงคืน” เธอบอก “คุณสองคนเข้ามาก่อน”', 'tara', 'neutral', 'control', 'mina', 'worried'),
+      beat('บนจอควบคุมมีขบวนหนึ่งกำลังวิ่งเข้าชานชาลา แต่หน้าต่างเวลาเป็น 00:17 ซ้ำทั้งที่เข็มนาฬิกาเดินต่อ', null, 'neutral', 'control'),
+      beat('ธาราซูมภาพตารางเดินรถ มีตัวเลขขบวนถูกเขียนทับด้วยหมึกสีแดง “ฉันไม่ได้แก้” เธอกระซิบ “ลายมือนี้เป็นของอรุณ อดีตนายสถานี”', 'tara', 'worried', 'control', 'mina', 'neutral'),
+      beat('มีนามองคุณผ่านเงาสะท้อนในจอ “ถ้าเขารู้ว่ารถขบวนนี้มาจากไหน เราต้องคุยกับเขาก่อนมันถึง”', 'mina', 'resolved', 'control'),
+    ],
+    effects: { minutes: 3, clue: 'timetable', trust: [{ actor: 'mina', delta: confided ? 2 : 1 }, { actor: 'tara', delta: 1 }] },
+    choices: [{ label: 'ขอดูบันทึกการแก้ตารางจากธารา' }, { label: 'ชวนมีนาไปตามหาอรุณ' }, { label: 'กลับไปเฝ้าปากอุโมงค์ก่อนรถมาถึง' }],
+  });
+  return validateScene({
+    id: newId(), chapter: 'บทที่ 1 · ตั๋วเที่ยวที่ไม่มีในระบบ', location: 'ปากอุโมงค์', speaker: 'อรุณ',
+    beats: [
+      beat('คุณตามรอยตารางไปถึงปลายชานชาลา เสียงเครื่องเจาะตั๋วดังขึ้นจากเงามืด ทั้งที่ไม่มีผู้โดยสารสักคน', null, 'neutral', 'tunnel'),
+      beat('ชายสูงวัยในเครื่องแบบเก่าก้าวออกมา เขาชื่ออรุณและถือคีมเจาะตั๋วอยู่ “ธาราบอกให้มาหรือ” เขาถามโดยไม่มองสมุดในมือคุณ', 'arun', 'neutral', 'tunnel'),
+      beat('มีนากดเล่นเทป เสียงประกาศเรียกชื่อคุณอีกครั้ง คราวนี้เสียงในเทปต่อท้ายด้วยประโยคที่ลำโพงไม่เคยพูด: “ผู้โดยสารหนึ่งคนยังไม่กลับ”', 'mina', 'worried', 'tunnel', 'arun', 'worried'),
+      beat('อรุณพลิกตั๋วเก่าขึ้นรับแสง สีหน้าของเขาเปลี่ยนไป “ฉันปิดเส้นทางนี้เอง” เขาพูด “แต่สัญญาณไม่เคยยอมรับ”', 'arun', 'worried', 'platform', 'mina', 'neutral'),
+      beat('ไฟหน้าขบวนโผล่จากอุโมงค์โดยไม่มีเสียงล้อ อรุณยื่นตั๋วให้คุณ “ถ้าจะขึ้นไป คุณต้องรู้ก่อนว่าคนที่เรียกคุณเป็นใคร”', 'arun', 'resolved', 'tunnel', 'mina', 'resolved'),
+    ],
+    effects: { minutes: 4, clue: 'ticket', trust: [{ actor: 'arun', delta: 1 }] },
+    choices: [{ label: 'ถามอรุณว่าผู้โดยสารที่ไม่กลับคือใคร' }, { label: 'ให้มีนาเปิดเทปฟังตั้งแต่ต้น' }, { label: 'ตรวจตั๋วและเลขขบวนก่อนตัดสินใจ' }],
+  });
 }
 
 export function episodeContext(id) {
   const { opening, preview, ...context } = EPISODES[id];
-  return context;
+  return id === 'ep-midnight' ? { ...context, cast: CAST, places: PLACE_NAMES, clues: CLUE_NAMES } : context;
 }

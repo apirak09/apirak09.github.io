@@ -5,12 +5,12 @@ import { fileURLToPath } from 'node:url';
 import { createHash, timingSafeEqual } from 'node:crypto';
 import { CodexBridge } from './codex-bridge.mjs';
 import { HttpError, SaveStore } from './save-store.mjs';
-import { EPISODE_IDS, MAX_INPUT, MAX_SAVE_BYTES, validateScene } from '../frontia/shared.mjs';
+import { ACTIVE_EPISODE, MAX_INPUT, MAX_SAVE_BYTES, validateScene, validateStatus } from '../frontia/shared.mjs';
 import { episodeContext } from '../frontia/stories.mjs';
 
 const digest = value => createHash('sha256').update(value).digest();
 function roleplayInput(data) {
-  if (!data || typeof data !== 'object' || !EPISODE_IDS.includes(data.episode?.id)) throw new HttpError(400, 'ไม่พบเรื่องที่เลือก');
+  if (!data || typeof data !== 'object' || data.episode?.id !== ACTIVE_EPISODE) throw new HttpError(400, 'ตอนนี้เปิดเล่นเฉพาะสัญญาณเที่ยงคืน');
   if (typeof data.input !== 'string' || !data.input.trim() || data.input.length > MAX_INPUT) throw new HttpError(400, 'ข้อความต้องมีความยาว 1–4,000 ตัวอักษร');
   if (typeof data.model !== 'string' || !data.model || data.model.length > 120) throw new HttpError(400, 'โมเดลไม่ถูกต้อง');
   if (typeof data.requestId !== 'string' || !/^[a-zA-Z0-9-]{16,100}$/.test(data.requestId)) throw new HttpError(400, 'รหัสคำขอไม่ถูกต้อง กรุณาอัปเดตหน้าเว็บ');
@@ -18,7 +18,7 @@ function roleplayInput(data) {
   if (!Array.isArray(data.recent) || data.recent.length > 12) throw new HttpError(400, 'ประวัติคำขอไม่ถูกต้อง');
   try {
     return {
-      model: data.model, episode: episodeContext(data.episode.id), scene: validateScene(data.scene), input: data.input.trim(), memory: data.memory || '',
+      model: data.model, episode: episodeContext(data.episode.id), scene: validateScene(data.scene), status: validateStatus(data.status), input: data.input.trim(), memory: data.memory || '',
       recent: data.recent.map(entry => {
         if (!entry || typeof entry.player !== 'string' || entry.player.length > MAX_INPUT || typeof entry.scene !== 'string' || entry.scene.length > 16000) throw new Error('ประวัติคำขอไม่ถูกต้อง');
         return { player: entry.player, scene: entry.scene };
@@ -74,7 +74,7 @@ export function createApp({ appPassword, allowedOrigins = ['https://apirak09.git
         res.writeHead(204, headers); res.end(); return;
       }
       const url = new URL(req.url, 'http://localhost');
-      if (req.method === 'GET' && url.pathname === '/health') return send(200, { ok: true, protocol: 2, version: '0.6.0' });
+      if (req.method === 'GET' && url.pathname === '/health') return send(200, { ok: true, protocol: 2, features: { storyboard: 1 }, version: '0.7.0' });
       const supplied = req.headers['x-app-password'];
       if (typeof supplied !== 'string' || !timingSafeEqual(passwordHash, digest(supplied))) {
         const ip = req.socket.remoteAddress || 'unknown', now = Date.now();
@@ -97,8 +97,14 @@ export function createApp({ appPassword, allowedOrigins = ['https://apirak09.git
         if (typeof input.loginId !== 'string' || input.loginId.length > 160) throw new HttpError(400, 'รหัสเข้าสู่ระบบไม่ถูกต้อง');
         await codex.cancelLogin(input.loginId); return send(200, { ok: true });
       }
-      if (url.pathname === '/api/save/get') return send(200, await store.read());
-      if (url.pathname === '/api/save/set') return send(200, await store.set(input.save, input.expectedRevision));
+      if (url.pathname === '/api/save/get') return send(200, { ...await store.read(), features: { storyboard: 1 } });
+      if (url.pathname === '/api/save/set') {
+        const current = input.save?.stories?.[ACTIVE_EPISODE];
+        if (current && !current.deleted && (!Number.isInteger(current.beatIndex) || !current.status)) {
+          throw new HttpError(426, 'กรุณาอัปเดตหน้าเว็บก่อนซิงก์ฉากภาพ', 'client_upgrade_required');
+        }
+        return send(200, await store.set(input.save, input.expectedRevision));
+      }
       if (url.pathname === '/api/roleplay') {
         const payload = roleplayInput(input), fingerprint = digest(JSON.stringify(payload)).toString('hex');
         for (const [key, entry] of completed) if (Date.now() - entry.time > 10 * 60000) completed.delete(key);

@@ -27,7 +27,11 @@ createInterface({ input: process.stdin }).on('line', line => {
     if (payload.input === 'timeout') return;
     if (payload.input === 'exit') return process.exit(1);
     const params = { threadId: p.threadId, turnId, itemId: `message-${seq}` };
-    const scene = { chapter: 'ฉากทดสอบ', location: 'สถานี', speaker: 'มีนา', body: 'ฝนตกเบา ๆ\n\n“คุณจะไปด้วยกันไหม?”', choices: [{ id: 'a', label: 'ไปด้วย' }, { id: 'b', label: 'รอก่อน' }], memory: 'พบมีนาที่สถานี' };
+    const texts = ['ฝนตกเบา ๆ', 'มีนาหยิบเทปขึ้นมาฟัง', 'ธาราเปิดประตูห้องควบคุม', '“คุณจะไปด้วยกันไหม?”'];
+    const scene = { chapter: 'ฉากทดสอบ', location: 'สถานี', speaker: 'มีนา',
+      beats: texts.map((text, i) => ({ text, actor: i % 2 ? 'mina' : null, expression: 'neutral', companion: null, companionExpression: 'neutral', background: i < 2 ? 'platform' : 'control' })),
+      effects: { minutes: 2, clue: 'recording', trust: [{ actor: 'mina', delta: 1 }] },
+      choices: [{ id: 'a', label: 'ไปด้วย' }, { id: 'b', label: 'รอก่อน' }], memory: 'พบมีนาที่สถานี' };
     const output = payload.input === 'badjson' ? 'not json' : JSON.stringify(scene);
     send({ method: 'item/agentMessage/delta', params: { ...params, threadId: 'unrelated', delta: 'ignore' } });
     send({ method: 'item/agentMessage/delta', params: { delta: 'unscoped noise' } });

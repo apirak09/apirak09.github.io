@@ -19,7 +19,9 @@ test('Codex streaming produces one JSON response with isolated threads and no le
   const b = await bridge(t);
   for (let i = 0; i < 3; i++) {
     const result = await b.roleplay({ model: 'test-model', input: 'ถามมีนา' });
-    assert.equal(result.scene.body, 'ฝนตกเบา ๆ\n\n“คุณจะไปด้วยกันไหม?”');
+    assert.equal(result.scene.beats.length, 4);
+    assert.match(result.scene.body, /ธาราเปิดประตูห้องควบคุม/);
+    assert.equal(result.scene.effects.clue, 'recording');
     assert.equal(result.memory, 'พบมีนาที่สถานี'); clean(b);
   }
 });

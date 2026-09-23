@@ -6,7 +6,7 @@ import path from 'node:path';
 import { randomUUID } from 'node:crypto';
 import { IDBFactory } from 'fake-indexeddb';
 import { mergeSaves, migrateLegacy, normalizeBackendUrl, revisions, validateSave } from '../../frontia/shared.mjs';
-import { startStory } from '../../frontia/stories.mjs';
+import { demoScene, startStory } from '../../frontia/stories.mjs';
 import { AppStorage, StorageConflict, blankRecord } from '../../frontia/storage.mjs';
 import { SaveSync } from '../../frontia/sync.mjs';
 import { SaveStore } from '../save-store.mjs';
@@ -55,6 +55,18 @@ test('validation rejects malformed saves, strips credentials, and enforces safe 
   for (const url of ['http://example.com', 'javascript:alert(1)', 'https://user:pass@example.com', 'https://example.com/?key=secret']) assert.throws(() => normalizeBackendUrl(url));
   assert.throws(() => normalizeBackendUrl('http://localhost:8000', 'https:'));
   assert.equal(normalizeBackendUrl('http://localhost:8000', 'http:'), 'http://localhost:8000');
+  const invalid = save('ep-midnight'); invalid.stories['ep-midnight'].beatIndex = 500;
+  assert.throws(() => validateSave(invalid), /ตำแหน่งการอ่าน/);
+  invalid.stories['ep-midnight'].beatIndex = 0; invalid.stories['ep-midnight'].scene.beats[0].background = 'https://hostile.example/x';
+  assert.throws(() => validateSave(invalid), /ตัวละครหรือภาพฉาก/);
+});
+test('prototype turn returns several coherent beats with characters and tracked clues', () => {
+  const opening = startStory('ep-midnight');
+  assert.equal(opening.scene.beats.length, 4);
+  const next = demoScene('ep-midnight', 1, 'บอกมีนาว่าเคยได้ยินเสียงนี้มาก่อน');
+  assert.equal(next.beats.length, 5); assert.equal(next.effects.clue, 'timetable');
+  assert.equal(next.beats[1].actor, 'tara'); assert.equal(next.beats[1].companion, 'mina');
+  assert.match(next.body, /ธารา/);
 });
 test('disk saves use CAS and atomic backup, refusing to overwrite corrupt data', async t => {
   const file = path.join(await temp(t), 'save.json'), store = new SaveStore(file), value = save('ep-midnight');
@@ -79,12 +91,12 @@ test('IndexedDB survives reopening, rejects stale tabs, and retains recovery cop
   assert.equal((await first.backups())[0].save.stories['ep-summer'].scene.location, 'บ้านพักริมทะเล'); first.db.close(); second.db.close();
 });
 function syncHarness(initial, remote = null) {
-  let state = copy(initial), cloud = remote ? copy(remote) : { protocol: 2, revision: null, save: null };
+  let state = copy(initial), cloud = remote ? copy(remote) : { protocol: 2, features: { storyboard: 1 }, revision: null, save: null };
   const statuses = [], conflicts = [];
   const h = { state: () => state, cloud: () => cloud, statuses, conflicts, update: fn => { const next = copy(state); if (fn(next) !== false) state = next; }, transport: async (route, data) => {
     if (route.endsWith('/get')) return copy(cloud);
     if (data.expectedRevision !== cloud.revision) throw Object.assign(new Error('conflict'), { status: 409 });
-    cloud = { protocol: 2, revision: `${cloud.revision || 'initial'}-next`, save: copy(data.save) };
+    cloud = { protocol: 2, features: { storyboard: 1 }, revision: `${cloud.revision || 'initial'}-next`, save: copy(data.save) };
     return { ok: true, protocol: 2, revision: cloud.revision };
   } };
   h.engine = new SaveSync({ getState: h.state, updateState: async fn => h.update(fn), request: (...args) => h.transport(...args), onStatus: (...status) => statuses.push(status), onConflict: value => conflicts.push(value) }); return h;
@@ -102,7 +114,7 @@ test('failed uploads and legacy backend never report successful sync', async () 
 });
 test('cloud conflict preserves both versions; backend changes cancel late sync application', async () => {
   const initial = blankRecord(); initial.save = save('ep-midnight'); const remote = edited(initial.save, 'ep-midnight');
-  const h = syncHarness(initial, { protocol: 2, revision: 'remote', save: remote }); await h.engine.run(); assert.equal(h.conflicts.length, 1); assert.deepEqual(h.state().save, initial.save);
+  const h = syncHarness(initial, { protocol: 2, features: { storyboard: 1 }, revision: 'remote', save: remote }); await h.engine.run(); assert.equal(h.conflicts.length, 1); assert.deepEqual(h.state().save, initial.save);
   let release; const pending = new Promise(resolve => { release = resolve; }), stopped = syncHarness(initial); stopped.transport = () => pending;
   const running = stopped.engine.run(); stopped.engine.stop(); release({ protocol: 2, revision: 'x', save: remote }); await running; assert.deepEqual(stopped.state().save, initial.save);
 });
@@ -126,12 +138,15 @@ test('HTTP auth, CORS and JSON checks precede state changes', async t => {
 test('HTTP save rejects stale clients and round-trips Thai scenes', async t => {
   const s = await server(t), data = save('ep-midnight');
   assert.equal((await s.post('/api/save/set', { save: data })).status, 428);
+  const oldClient = copy(data); delete oldClient.stories['ep-midnight'].beatIndex; delete oldClient.stories['ep-midnight'].status;
+  assert.equal((await s.post('/api/save/set', { save: oldClient, expectedRevision: null })).status, 426);
   const written = await (await s.post('/api/save/set', { save: data, expectedRevision: null })).json(); assert.equal(written.ok, true);
   assert.equal((await s.post('/api/save/set', { save: data, expectedRevision: null })).status, 409);
-  const read = await (await s.post('/api/save/get')).json(); assert.deepEqual(read.save, data); assert.equal(read.revision, written.revision);
+  const read = await (await s.post('/api/save/get')).json(); assert.deepEqual(read.save, data); assert.equal(read.revision, written.revision); assert.equal(read.features.storyboard, 1);
 });
 test('HTTP invalid or oversized roleplay input never reaches Codex', async t => {
   const s = await server(t); assert.equal((await s.post('/api/roleplay', {})).status, 400);
+  assert.equal((await s.post('/api/roleplay', { requestId: randomUUID(), model: 'test-model', episode: { id: 'ep-summer' }, scene: startStory('ep-summer').scene, input: 'เริ่ม', recent: [] })).status, 400);
   assert.equal((await s.post('/api/roleplay', { huge: 'x'.repeat(310000) })).status, 413); assert.equal(s.calls(), 0);
 });
 test('completed generation retries are idempotent and cannot change request data', async t => {

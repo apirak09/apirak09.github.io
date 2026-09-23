@@ -21,8 +21,8 @@ export class SaveSync {
         this.again = false;
         const remote = await this.request('/api/save/get', {});
         if (!this.active || this.blocked()) return this.onStatus('pending');
-        if (remote.protocol !== 2 || !Object.hasOwn(remote, 'revision')) {
-          throw new Error('กรุณาอัปเดต Backend ให้รองรับเซฟรุ่นใหม่ก่อนซิงก์');
+        if (remote.protocol !== 2 || remote.features?.storyboard !== 1 || !Object.hasOwn(remote, 'revision')) {
+          throw new Error('กรุณาอัปเดต Backend เป็นรุ่น 0.7 ก่อนซิงก์ฉากภาพ');
         }
         const remoteSave = validateSave(remote.save || { version: 2, stories: {} });
         let conflict;

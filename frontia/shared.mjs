@@ -2,6 +2,11 @@
 export const EPISODE_IDS = ['ep-midnight', 'ep-summer', 'ep-orbit', 'ep-house'];
 export const MAX_SAVE_BYTES = 8 * 1024 * 1024;
 export const MAX_INPUT = 4000;
+export const ACTIVE_EPISODE = 'ep-midnight';
+export const ACTORS = ['mina', 'tara', 'arun'];
+export const EXPRESSIONS = ['neutral', 'warm', 'worried', 'resolved'];
+export const BACKGROUNDS = ['platform', 'tunnel', 'control'];
+export const CLUES = ['voice', 'timetable', 'signal', 'ticket', 'recording'];
 const object = value => value !== null && typeof value === 'object' && !Array.isArray(value);
 const text = (value, max, required = false) => {
   if (typeof value !== 'string' || value.length > max || (required && !value.trim())) {
@@ -20,13 +25,60 @@ export function validateScene(value) {
     if (!object(choice)) throw new Error('รูปแบบตัวเลือกไม่ถูกต้อง');
     return { id: `c${i + 1}`, label: text(choice.label, 500, true) };
   });
+  let beats;
+  if (value.beats !== undefined) {
+    if (!Array.isArray(value.beats) || value.beats.length < 1 || value.beats.length > 8) throw new Error('ลำดับฉากไม่ถูกต้อง');
+    beats = value.beats.map(beat => {
+      if (!object(beat) || !BACKGROUNDS.includes(beat.background) || !ACTORS.includes(beat.actor) && beat.actor !== null ||
+        !EXPRESSIONS.includes(beat.expression) || !ACTORS.includes(beat.companion) && beat.companion !== null ||
+        !EXPRESSIONS.includes(beat.companionExpression) || beat.actor && beat.actor === beat.companion) throw new Error('ตัวละครหรือภาพฉากไม่ถูกต้อง');
+      return { text: text(beat.text, 1800, true), actor: beat.actor, expression: beat.expression,
+        companion: beat.companion, companionExpression: beat.companionExpression, background: beat.background };
+    });
+  }
+  let effects;
+  if (value.effects !== undefined) {
+    if (!object(value.effects) || !Number.isInteger(value.effects.minutes) || value.effects.minutes < 0 || value.effects.minutes > 15 ||
+      value.effects.clue !== null && !CLUES.includes(value.effects.clue) || !Array.isArray(value.effects.trust) || value.effects.trust.length > 3) throw new Error('ผลของฉากไม่ถูกต้อง');
+    effects = { minutes: value.effects.minutes, clue: value.effects.clue, trust: value.effects.trust.map(item => {
+      if (!object(item) || !ACTORS.includes(item.actor) || !Number.isInteger(item.delta) || item.delta < -2 || item.delta > 2) throw new Error('ความสัมพันธ์ไม่ถูกต้อง');
+      return { actor: item.actor, delta: item.delta };
+    }) };
+  }
+  const body = beats ? beats.map(beat => beat.text).join('\n\n') : text(value.body, 16000, true);
+  if (body.length > 16000) throw new Error('ฉากยาวเกินกำหนด');
   return {
     id: text(value.id || 'scene', 160, true),
     chapter: text(value.chapter || 'ฉากถัดไป', 200),
     location: text(value.location || '', 300),
     speaker: value.speaker == null ? null : text(value.speaker, 200),
-    body: text(value.body, 16000, true), choices,
+    body, choices, ...(beats ? { beats } : {}), ...(effects ? { effects } : {}),
   };
+}
+
+export const initialStatus = () => ({ minute: 17, clues: [], relationships: { mina: 0, tara: 0, arun: 0 } });
+export function validateStatus(value) {
+  if (value === undefined) return initialStatus();
+  if (!object(value) || !Number.isInteger(value.minute) || value.minute < 0 || value.minute > 1439 ||
+    !Array.isArray(value.clues) || value.clues.length > CLUES.length || !object(value.relationships)) throw new Error('สถานะเรื่องไม่ถูกต้อง');
+  const clues = value.clues.map(clue => { if (!CLUES.includes(clue)) throw new Error('เบาะแสไม่ถูกต้อง'); return clue; });
+  if (new Set(clues).size !== clues.length) throw new Error('เบาะแสซ้ำกัน');
+  const relationships = {};
+  for (const actor of ACTORS) {
+    const score = value.relationships[actor];
+    if (!Number.isInteger(score) || score < -20 || score > 20) throw new Error('ความสัมพันธ์ไม่ถูกต้อง');
+    relationships[actor] = score;
+  }
+  return { minute: value.minute, clues, relationships };
+}
+
+export function applyEffects(status, effects) {
+  if (!effects) return status;
+  const next = clone(status);
+  next.minute = Math.min(1439, next.minute + effects.minutes);
+  if (effects.clue && !next.clues.includes(effects.clue)) next.clues.push(effects.clue);
+  for (const { actor, delta } of effects.trust) next.relationships[actor] = Math.max(-20, Math.min(20, next.relationships[actor] + delta));
+  return next;
 }
 
 export function validateSave(value) {
@@ -43,8 +95,11 @@ export function validateSave(value) {
       continue;
     }
     if (!Array.isArray(story.history) || story.history.length > 1500) throw new Error('ประวัติเรื่องไม่ถูกต้องหรือเกิน 1,500 ฉาก');
+    const scene = validateScene(story.scene);
+    const beatIndex = story.beatIndex === undefined ? (scene.beats?.length || 1) - 1 : story.beatIndex;
+    if (!Number.isInteger(beatIndex) || beatIndex < 0 || beatIndex >= (scene.beats?.length || 1)) throw new Error('ตำแหน่งการอ่านไม่ถูกต้อง');
     stories[id] = {
-      revision, updatedAt: story.updatedAt, scene: validateScene(story.scene),
+      revision, updatedAt: story.updatedAt, scene, beatIndex, status: validateStatus(story.status),
       memory: text(story.memory || '', 8000),
       history: story.history.map(entry => {
         if (!object(entry)) throw new Error('ประวัติฉากไม่ถูกต้อง');

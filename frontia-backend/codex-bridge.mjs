@@ -11,16 +11,26 @@ export const ROLEPLAY_INSTRUCTIONS = `คุณเป็นผู้เล่า
 ห้ามกำหนดความคิด คำพูด หรือการตัดสินใจของผู้เล่นเอง เคารพสิ่งที่ผู้เล่นเลือก ให้ตัวละครตอบสนองอย่างสมเหตุสมผล
 งานนี้ใช้ข้อความอย่างเดียว ห้ามเรียกเครื่องมือ shell, files, web, MCP หรือสั่งรันโค้ดใด ๆ
 ตอบเฉพาะ JSON ตาม schema ไม่มี markdown หรือข้อความอธิบายระบบ
-body: ฉากต่อเนื่อง 2-5 ย่อหน้า ไม่ทวนฉากเดิม แยกย่อหน้าด้วย newline
+หนึ่งการตอบต้องเล่าต่อเป็น 4-7 จังหวะ (beats) ที่เกิดขึ้นจริงต่อเนื่องกันก่อนคืนการตัดสินใจให้ผู้เล่น ห้ามทำเป็นถาม-ตอบสั้น ๆ หรือจบฉากด้วยคำถามทุกจังหวะ
+แต่ละ beat มี text ภาษาไทย 1-3 ประโยค, actor เป็น mina/tara/arun หรือ null เมื่อเป็นคำบรรยาย, expression เป็น neutral/warm/worried/resolved, companion เป็นตัวละครอีกคนหรือ null, companionExpression, background เป็น platform/tunnel/control เท่านั้น
+เปลี่ยนฉาก สีหน้า ผู้พูด และตัวละครให้ตรงเหตุการณ์ การย้ายฉากต้องมีเหตุผล ห้ามเปลี่ยนสถานที่แบบฉับพลัน ตัวละครต้องมีบทบาทตามประวัติและบุคลิกที่ให้มา
+effects เป็นเวลาที่ผ่านไปจริง 0-15 นาที เบาะแสใหม่ clue เป็น voice/timetable/signal/ticket/recording หรือ null และ trust เป็นการเปลี่ยนความไว้ใจ -2 ถึง 2 ตามพฤติกรรมในฉาก ไม่มอบเบาะแสโดยไม่มีเหตุการณ์รองรับ
 choices: 2-4 ทางเลือกที่แตกต่างกันชัดเจน ผู้เล่นยังพิมพ์การกระทำเองได้
 memory: สรุปความทรงจำสะสมไม่เกิน 4,000 ตัวอักษร เก็บชื่อ ความสัมพันธ์ ข้อเท็จจริงสำคัญ การตัดสินใจ และปมที่ยังไม่คลี่คลายจากทั้งความทรงจำเดิมและฉากใหม่ ไม่แต่งข้อเท็จจริงเพิ่ม`;
 
 export const SCENE_SCHEMA = {
   type: 'object', additionalProperties: false,
   properties: {
-    chapter: { type: 'string' }, location: { type: 'string' }, speaker: { type: ['string', 'null'] }, body: { type: 'string' }, memory: { type: 'string' },
+    chapter: { type: 'string' }, location: { type: 'string' }, speaker: { type: ['string', 'null'] }, memory: { type: 'string' },
+    beats: { type: 'array', minItems: 4, maxItems: 7, items: { type: 'object', additionalProperties: false,
+      properties: { text: { type: 'string' }, actor: { type: ['string', 'null'], enum: ['mina', 'tara', 'arun', null] }, expression: { type: 'string', enum: ['neutral', 'warm', 'worried', 'resolved'] },
+        companion: { type: ['string', 'null'], enum: ['mina', 'tara', 'arun', null] }, companionExpression: { type: 'string', enum: ['neutral', 'warm', 'worried', 'resolved'] }, background: { type: 'string', enum: ['platform', 'tunnel', 'control'] } },
+      required: ['text', 'actor', 'expression', 'companion', 'companionExpression', 'background'] } },
+    effects: { type: 'object', additionalProperties: false, properties: { minutes: { type: 'integer' }, clue: { type: ['string', 'null'], enum: ['voice', 'timetable', 'signal', 'ticket', 'recording', null] },
+      trust: { type: 'array', maxItems: 3, items: { type: 'object', additionalProperties: false, properties: { actor: { type: 'string', enum: ['mina', 'tara', 'arun'] }, delta: { type: 'integer' } }, required: ['actor', 'delta'] } } },
+      required: ['minutes', 'clue', 'trust'] },
     choices: { type: 'array', minItems: 2, maxItems: 4, items: { type: 'object', additionalProperties: false, properties: { id: { type: 'string' }, label: { type: 'string' } }, required: ['id', 'label'] } },
-  }, required: ['chapter', 'location', 'speaker', 'body', 'choices', 'memory'],
+  }, required: ['chapter', 'location', 'speaker', 'beats', 'effects', 'choices', 'memory'],
 };
 
 export class CodexBridge {
@@ -69,7 +79,7 @@ export class CodexBridge {
       } else if (message.method) this.events.emit(message.method, message.params || {});
     });
     try {
-      await this.rpc('initialize', { clientInfo: { name: 'cinematic_play_private', title: 'Cinematic Play', version: '0.6.0' } });
+      await this.rpc('initialize', { clientInfo: { name: 'cinematic_play_private', title: 'Cinematic Play', version: '0.7.0' } });
       this.write({ method: 'initialized', params: {} }); this.initialized = true;
     } catch (error) { proc.kill(); stopped(); throw error; }
   }
@@ -179,7 +189,7 @@ export class CodexBridge {
       let scene;
       try {
         scene = validateScene({ ...parsed, id: randomUUID() });
-        if (scene.choices.length < 2 || typeof parsed.memory !== 'string' || parsed.memory.length > 8000) throw new Error();
+        if (!scene.beats || scene.beats.length < 4 || scene.choices.length < 2 || typeof parsed.memory !== 'string' || parsed.memory.length > 8000) throw new Error();
       } catch { throw new HttpError(502, 'ฉากที่โมเดลส่งมาไม่ครบหรือยาวเกินกำหนด', 'invalid_output'); }
       return { scene, memory: parsed.memory };
     } catch (error) {

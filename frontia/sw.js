@@ -1,5 +1,6 @@
-const CACHE = 'cinematic-play-shell-v6.0.0';
-const CORE = ['./index.html', './styles.css', './app.js', './shared.mjs', './stories.mjs', './storage.mjs', './sync.mjs', './ui.mjs', './manifest.webmanifest', './icons/icon.svg', './icons/icon-192.png', './icons/icon-512.png', './icons/maskable-512.png'];
+const CACHE = 'cinematic-play-shell-v7.0.0';
+const ART = ['./platform.webp', './tunnel.webp', './control.webp', ...['mina', 'tara', 'arun'].flatMap(actor => ['neutral', 'warm', 'worried', 'resolved'].map(expression => `./${actor}-${expression}.webp`))].map(name => `./assets/midnight/${name.slice(2)}`);
+const CORE = ['./index.html', './styles.css', './reader.css', './app.js', './shared.mjs', './stories.mjs', './storage.mjs', './sync.mjs', './ui.mjs', './manifest.webmanifest', './icons/icon.svg', './icons/icon-192.png', './icons/icon-512.png', './icons/maskable-512.png', ...ART];
 const urls = new Set(CORE.map(file => new URL(file, self.registration.scope).href));
 self.addEventListener('install', event => {
   event.waitUntil(caches.open(CACHE).then(cache => cache.addAll(CORE.map(file => new Request(new URL(file, self.registration.scope), { cache: 'reload' })))));

@@ -1,5 +1,5 @@
-import { clone, EPISODE_IDS, MAX_INPUT, MAX_SAVE_BYTES, mergeSaves, migrateLegacy, newId, normalizeBackendUrl, revisions, sameSave, validateSave, validateScene } from './shared.mjs';
-import { demoScene, EPISODES, episodeContext, startStory } from './stories.mjs';
+import { ACTIVE_EPISODE, applyEffects, clone, EPISODE_IDS, MAX_INPUT, MAX_SAVE_BYTES, mergeSaves, migrateLegacy, newId, normalizeBackendUrl, revisions, sameSave, validateSave, validateScene } from './shared.mjs';
+import { CAST, CLUE_NAMES, demoScene, EPISODES, episodeContext, PLACE_NAMES, startStory } from './stories.mjs';
 import { AppStorage, StorageConflict } from './storage.mjs';
 import { SaveSync } from './sync.mjs';
 import { dateText, esc, renderView, sheet } from './ui.mjs';
@@ -131,7 +131,7 @@ function scheduleSync(delay = 700) {
 }
 
 async function start(id = storyId(), talk = false) {
-  if (!EPISODE_IDS.includes(id)) return;
+  if (!EPISODE_IDS.includes(id) || id !== ACTIVE_EPISODE && (!record.save.stories[id] || record.save.stories[id].deleted)) return;
   await change(r => { if (!r.save.stories[id] || r.save.stories[id].deleted) r.save.stories[id] = startStory(id); r.currentEpisodeId = id; });
   go(`player/${id}`); scheduleSync();
   if (talk) requestAnimationFrame(() => document.getElementById('freeText')?.focus());
@@ -139,35 +139,40 @@ async function start(id = storyId(), talk = false) {
 async function advance(input) {
   if (busy || storageProblem) return;
   const id = storyId();
-  if (!EPISODE_IDS.includes(id) || !input?.trim()) return;
+  if (id !== ACTIVE_EPISODE || !input?.trim()) return;
   input = input.trim();
   if (input.length > MAX_INPUT) throw new Error('ข้อความยาวเกิน 4,000 ตัวอักษร');
   await flushDraft();
   if (busy) return;
   const original = clone(record.save.stories[id]);
   if (!original || original.deleted) return;
+  if ((original.beatIndex ?? 0) < (original.scene.beats?.length || 1) - 1) throw new Error('อ่านช่วงนี้ให้จบก่อนเลือกการกระทำ');
   if (original.history.length >= 1500) throw new Error('เรื่องนี้ครบขีดจำกัด 1,500 ฉากแล้ว กรุณาสำรองเซฟก่อนเริ่มเรื่องใหม่');
   const controller = new AbortController(), job = { controller, id };
   busy = job; message = ''; render();
   try {
     let scene, memory = original.memory, source = 'demo';
     if (record.settings.backendUrl) {
+      const compatibility = await request('/api/save/get', {}, { signal: controller.signal });
+      if (compatibility.features?.storyboard !== 1) throw new Error('กรุณาอัปเดต Backend เป็นรุ่น 0.7 ก่อนสร้างฉากภาพ');
       const status = await request('/api/auth/status', {}, { signal: controller.signal }); auth = status;
       if (!status.connected) throw new Error('ยังไม่ได้เชื่อม ChatGPT หรือการเชื่อมต่อหมดอายุ กรุณาเชื่อมใหม่ในตั้งค่า');
       const result = await request('/api/roleplay', {
         requestId: newId(), model: record.settings.model, episode: episodeContext(id), scene: original.scene,
-        input, memory: original.memory, recent: original.history.slice(-12).map(entry => ({ player: entry.player, scene: entry.scene.body })),
+        input, status: original.status, memory: original.memory, recent: original.history.slice(-12).map(entry => ({ player: entry.player, scene: entry.scene.body })),
       }, { signal: controller.signal, timeout: 150000 });
-      scene = validateScene(result.scene); memory = typeof result.memory === 'string' ? result.memory.slice(0, 8000) : memory; source = 'ai';
+      scene = validateScene(result.scene);
+      if (!scene.beats || scene.beats.length < 4 || !scene.effects) throw new Error('Backend ไม่ได้ส่งเรื่องแบบหลายช็อต กรุณาตรวจเวอร์ชัน Backend');
+      memory = typeof result.memory === 'string' ? result.memory.slice(0, 8000) : memory; source = 'ai';
     } else {
-      if (original.history.length >= 2) throw new Error('จบฉากตัวอย่างแล้ว กรุณาตั้งค่า Backend เพื่อเล่นต่อกับ AI');
-      scene = demoScene(id);
+      if (original.history.length >= 3) throw new Error('จบบทตัวอย่างแล้ว กรุณาตั้งค่า Backend เพื่อเล่นต่อกับ AI');
+      scene = demoScene(id, original.history.length, input);
     }
     if (controller.signal.aborted) return;
     const now = Date.now();
     await change(r => {
       if (r.save.stories[id]?.revision !== original.revision) throw new Error('ฉากถูกเปลี่ยนระหว่างสร้างคำตอบ กรุณาลองใหม่');
-      r.save.stories[id] = { ...original, scene, memory, revision: newId(), updatedAt: now, history: [...original.history, { id: newId(), player: input, scene, source, createdAt: now }] };
+      r.save.stories[id] = { ...original, scene, beatIndex: 0, status: original.status, memory, revision: newId(), updatedAt: now, history: [...original.history, { id: newId(), player: input, scene, source, createdAt: now }] };
       r.drafts[id] = '';
     });
     draftCache[id] = '';
@@ -175,7 +180,7 @@ async function advance(input) {
   finally {
     if (busy === job) busy = null;
     render(); scheduleSync();
-    if (route() === `player/${id}`) document.querySelector('.storybody')?.scrollIntoView({ behavior: 'auto', block: 'start' });
+    if (route() === `player/${id}`) window.scrollTo({ top: 0, behavior: 'instant' });
   }
 }
 
@@ -220,7 +225,10 @@ async function updateModels(catalog) {
   }
 }
 async function testBackend() {
-  await saveSettings(); auth = await request('/api/auth/status');
+  await saveSettings();
+  const compatibility = await request('/api/save/get');
+  if (compatibility.features?.storyboard !== 1) throw new Error('Backend ต้องเป็นรุ่น 0.7 เพื่อเก็บฉากภาพและสถานะ');
+  auth = await request('/api/auth/status');
   const catalog = await request('/api/models');
   await updateModels(catalog);
   message = auth.connected ? 'Backend และ ChatGPT พร้อมใช้งาน' : 'Backend พร้อมแล้ว กดเชื่อม ChatGPT เพื่อเริ่มเล่นกับ AI';
@@ -296,6 +304,20 @@ function showConflicts() {
 async function action(name) {
   const id = storyId(), story = record.save.stories[id];
   if (name === 'start') return start();
+  if (name === 'next-beat') {
+    if (busy || storageProblem || id !== ACTIVE_EPISODE || !story || story.deleted || (story.beatIndex ?? 0) >= (story.scene.beats?.length || 1) - 1) return;
+    const revision = story.revision;
+    await change(r => {
+      const item = r.save.stories[id];
+      if (item.revision !== revision) return false;
+      item.beatIndex = (item.beatIndex ?? 0) + 1;
+      if (item.beatIndex === item.scene.beats.length - 1) item.status = applyEffects(item.status, item.scene.effects);
+      item.revision = newId(); item.updatedAt = Date.now();
+    });
+    render(); scheduleSync();
+    document.querySelector('[data-action="next-beat"]')?.focus({ preventScroll: true });
+    return;
+  }
   if (name === 'send') return advance(document.getElementById('freeText')?.value);
   if (name === 'cancel') { busy?.controller.abort(); return; }
   if (name === 'close-dialog') return closeDialog();
@@ -326,8 +348,11 @@ async function action(name) {
   if (name === 'update') { await flushDraft(); await mutationQueue; if (!busy && !storageProblem) registration?.waiting?.postMessage({ type: 'SKIP_WAITING' }); return; }
   if (!story || story.deleted) return;
   if (name === 'journal') return openDialog('บันทึกเรื่องราว', story.history.map((entry, i) => `<article class="journal-entry"><h3>ฉาก ${i + 1} · ${esc(entry.scene.chapter)}</h3>${entry.player ? `<p class="player-action">คุณ: ${esc(entry.player)}</p>` : ''}<p class="narrative">${esc(entry.scene.body)}</p></article>`).join(''));
-  if (name === 'locations') return openDialog('สถานที่ในเรื่อง', [...new Set(story.history.map(entry => entry.scene.location).filter(Boolean))].map(location => `<div class="row"><span>${esc(location)}</span>${location === story.scene.location ? '<span class="badge">ปัจจุบัน</span>' : ''}</div>`).join(''));
-  if (name === 'story-status') return openDialog('สถานะเรื่อง', `<p class="sub">${esc(EPISODES[id].title)}<br>บันทึก ${story.history.length} ฉาก<br>ล่าสุด ${esc(dateText(story.updatedAt))}<br>${esc(cloud)}</p><h3>ความทรงจำของเรื่อง</h3><p class="narrative">${esc(story.memory || 'ยังไม่มีสรุปจาก AI ประวัติฉากทั้งหมดเก็บอยู่ในบันทึก')}</p>`);
+  if (name === 'locations') return openDialog('สถานที่ในเรื่อง', [...new Set(story.history.flatMap(entry => entry.scene.beats?.map(beat => PLACE_NAMES[beat.background]) || [entry.scene.location]).filter(Boolean))].map(location => `<div class="row"><span>${esc(location)}</span>${location === (PLACE_NAMES[story.scene.beats?.[story.beatIndex]?.background] || story.scene.location) ? '<span class="badge">ปัจจุบัน</span>' : ''}</div>`).join(''));
+  if (name === 'story-status') {
+    const state = story.status;
+    return openDialog('สถานะเรื่อง', `<p class="sub">${esc(EPISODES[id].title)} · ${story.history.length} ช่วง<br>ล่าสุด ${esc(dateText(story.updatedAt))}<br>${esc(cloud)}</p>${id === ACTIVE_EPISODE ? `<h3>เวลาและเบาะแส</h3><p class="sub">◷ ${String(Math.floor(state.minute / 60)).padStart(2, '0')}:${String(state.minute % 60).padStart(2, '0')} น. · ${state.clues.length} เบาะแส</p>${state.clues.length ? state.clues.map(clue => `<div class="row">◇ ${esc(CLUE_NAMES[clue])}</div>`).join('') : '<p class="hint">ยังไม่มีเบาะแสที่บันทึกไว้</p>'}<h3>ความสัมพันธ์</h3>${Object.entries(CAST).map(([actor, person]) => `<div class="row"><span class="grow">${esc(person.name)}<span class="rowsub">${esc(person.role)}</span></span><strong>${state.relationships[actor] > 0 ? '+' : ''}${state.relationships[actor]}</strong></div>`).join('')}` : ''}<h3>ความทรงจำของเรื่อง</h3><p class="narrative">${esc(story.memory || 'ยังไม่มีสรุปจาก AI ประวัติฉากทั้งหมดเก็บอยู่ในบันทึก')}</p>`);
+  }
   if (name === 'story-menu') return openDialog(EPISODES[id].title, `<div class="btnrow"><button class="btn" data-nav="settings">ตั้งค่า AI</button><button class="btn" data-action="export">สำรองเซฟ</button></div><div class="btnrow"><button class="btn danger" data-action="reset-story" ${busy ? 'disabled' : ''}>เริ่มเรื่องนี้ใหม่</button></div>`);
 }
 

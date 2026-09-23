@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="description" content="นิยาย AI ภาษาไทย เลือกเส้นเรื่องของคุณ พร้อมบันทึกอัตโนมัติ">
+<meta name="description" content="นิยายภาพ AI ภาษาไทย อ่านต่อทีละช็อต เปลี่ยนฉากและตัวละครตามเรื่อง พร้อมบันทึกอัตโนมัติ">
 <meta name="referrer" content="no-referrer">
 <link rel="icon" href="./icons/icon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="./icons/icon-192.png">
@@ -13,6 +13,7 @@
 <title>Cinematic Play</title>
 <link rel="manifest" href="./manifest.webmanifest">
 <link rel="stylesheet" href="./styles.css">
+<link rel="stylesheet" href="./reader.css">
 </head>
 <body>
 <div id="app" class="shell">
@@ -22,17 +23,11 @@
       <div class="spacer"></div>
       <button class="iconbtn" type="button" data-nav="settings" aria-label="ตั้งค่า">⚙</button>
     </div>
-    <div class="hero">
-      <span class="badge">เรื่องแนะนำ</span>
+    <div class="hero midnight-hero">
+      <span class="badge">เรื่องต้นแบบ · เล่นได้แล้ว</span>
       <h1>สัญญาณเที่ยงคืน</h1>
-      <div class="sub">เมืองที่จดจำทุกการตัดสินใจของคุณ</div>
+      <div class="sub">เสียงประกาศเรียกชื่อคุณ จากชานชาลาที่ปิดไปแล้ว</div>
       <button class="cta" type="button" data-talk="ep-midnight">ดูเรื่องนี้</button>
-    </div>
-    <h2>แนะนำสำหรับคุณ</h2>
-    <div class="cards">
-      <button class="card" type="button" data-talk="ep-summer"><span class="art summer"></span><span class="cardtitle">ฤดูร้อนครั้งสุดท้าย</span><span class="cardmeta">กลับมาเจอกันอีกครั้ง ก่อนทุกคนจะแยกย้าย</span></button>
-      <button class="card" type="button" data-talk="ep-orbit"><span class="art orbit"></span><span class="cardtitle">วงโคจร 17</span><span class="cardmeta">สถานีบอกว่าคุณเดินทางมาถึงเพียงลำพัง</span></button>
-      <button class="card" type="button" data-talk="ep-house"><span class="art house"></span><span class="cardtitle">บ้านข้าง ๆ</span><span class="cardmeta">มีใครบางคนรอคุณอยู่ที่นั่น</span></button>
     </div>
   </main>
   <nav class="tabs">
