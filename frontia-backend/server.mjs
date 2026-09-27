@@ -141,10 +141,12 @@ if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.me
   const codexDir = path.resolve(process.env.CODEX_HOME || path.join(root, 'data', 'codex'));
   const saveFile = process.env.FRONTIA_SAVE_FILE || path.join(workspace, 'cinematic-save.json');
   fs.mkdirSync(workspace, { recursive: true, mode: 0o700 }); fs.mkdirSync(codexDir, { recursive: true, mode: 0o700 });
-  const codex = new CodexBridge({ workspace, codexDir, command: process.env.CODEX_BIN || 'codex' });
+  // On Windows npm exposes a .cmd shim, which spawn() cannot run safely without a shell.
+  // Launch the CLI's JavaScript entry through Node when CODEX_ENTRY is provided.
+  const codex = new CodexBridge({ workspace, codexDir, command: process.env.CODEX_ENTRY ? process.execPath : (process.env.CODEX_BIN || 'codex'), prefixArgs: process.env.CODEX_ENTRY ? [process.env.CODEX_ENTRY] : [] });
   const server = createApp({ appPassword: process.env.APP_PASSWORD, allowedOrigins: (process.env.ALLOWED_ORIGIN || 'https://apirak09.github.io').split(',').map(s => s.trim()), allowLocalOrigin: process.env.ALLOW_LOCAL_ORIGIN === 'true', store: new SaveStore(saveFile), codex });
   const port = Number(process.env.PORT || 8000);
-  server.listen(port, process.env.HOST || '0.0.0.0', () => console.log(`Cinematic Play backend listening on :${port}`));
+  server.listen(port, process.env.HOST || '127.0.0.1', () => console.log(`Cinematic Play backend listening on :${port}`));
   const stop = () => {
     codex.close(); server.close(() => process.exit(0)); server.closeIdleConnections();
     setTimeout(() => process.exit(0), 5000).unref();

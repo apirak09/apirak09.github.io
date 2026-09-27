@@ -49,7 +49,7 @@ export class CodexBridge {
   async start() {
     // Only pass the environment Codex needs. Never expose APP_PASSWORD to tools.
     const env = { PATH: process.env.PATH, HOME: process.env.HOME, CODEX_HOME: this.codexDir, LANG: 'C.UTF-8' };
-    for (const key of ['HTTPS_PROXY', 'HTTP_PROXY', 'NO_PROXY', 'SSL_CERT_FILE', 'NODE_EXTRA_CA_CERTS', 'SystemRoot']) if (process.env[key]) env[key] = process.env[key];
+    for (const key of ['HTTPS_PROXY', 'HTTP_PROXY', 'NO_PROXY', 'SSL_CERT_FILE', 'NODE_EXTRA_CA_CERTS', 'SystemRoot', 'USERPROFILE', 'APPDATA', 'LOCALAPPDATA', 'TEMP', 'TMP', 'HOMEDRIVE', 'HOMEPATH']) if (process.env[key]) env[key] = process.env[key];
     const proc = spawn(this.command, [...this.prefixArgs, 'app-server', '-c', 'features.shell_tool=false', '-c', 'features.unified_exec=false', '-c', 'features.multi_agent=false', '-c', 'web_search="disabled"'], { stdio: ['pipe', 'pipe', 'pipe'], env, cwd: this.workspace });
     this.proc = proc;
     const stopped = () => {

@@ -459,6 +459,20 @@ async function boot() {
   record = await storage.open();
   password = sessionStorage.getItem(PASSWORD_KEY) || localStorage.getItem(PASSWORD_KEY) || ''; remember = !!localStorage.getItem(PASSWORD_KEY);
   render(); setupSync();
+  // This file contains only a public endpoint. Credentials never belong in the repository.
+  const configController = new AbortController();
+  const configTimer = setTimeout(() => configController.abort(), 2500);
+  try {
+    const config = await fetch('./backend-config.json', { cache: 'no-store', credentials: 'omit', signal: configController.signal });
+    if (config.ok) {
+      const value = await config.json();
+      if (typeof value.backendUrl === 'string' && value.backendUrl.trim()) {
+        const configuredUrl = normalizeBackendUrl(value.backendUrl, location.protocol);
+        if (!record.settings.backendUrl) { await change(r => { r.settings.backendUrl = configuredUrl; }); render(); setupSync(); }
+      }
+    }
+  } catch { /* Offline or not configured: keep the device's existing connection. */ }
+  finally { clearTimeout(configTimer); }
   if ('serviceWorker' in navigator) {
     registration = await navigator.serviceWorker.register('./sw.js', { updateViaCache: 'none' });
     const watch = () => { if (registration.waiting) { updateReady = true; render(); } };

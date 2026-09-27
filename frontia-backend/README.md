@@ -4,6 +4,27 @@ Backend ส่วนตัวสำหรับ [Cinematic Play](https://apirak0
 
 GitHub Pages รัน Backend ไม่ได้ ต้องมีเครื่องที่รัน process ต่อเนื่อง มี persistent disk และ HTTPS การใช้ AI ขึ้นกับสิทธิ์บัญชี โมเดล และโควตา Codex ไม่ได้หมายความว่าใช้งานได้ฟรีหรือไม่จำกัด
 
+## ใช้คอม Windows ที่บ้าน + Tailscale Funnel
+
+วิธีนี้ใช้เว็บเดิมบน GitHub Pages และให้คอมรัน Backend เฉพาะเมื่อเปิดเครื่อง ไม่ต้องติดตั้งอะไรบน iPad หรือโทรศัพท์ Tailscale Funnel เปิด HTTPS สาธารณะให้ backend ที่ฟังบน `127.0.0.1:8000`; อย่าส่งรหัสผ่าน Backend ให้ผู้อื่น URL สาธารณะเพียงอย่างเดียวไม่เปิดให้เรียก private API
+
+1. บน **คอม Windows** ติดตั้ง [Node.js 22 ขึ้นไป](https://nodejs.org/en/download) และ [Tailscale](https://tailscale.com/download/windows) แล้วลงชื่อเข้า Tailscale (แผน Personal สำหรับใช้งานส่วนตัว) หากเพิ่งติดตั้ง Node ให้เปิด PowerShell หน้าต่างใหม่
+2. ต้องมี checkout repository ที่มีทั้ง `frontia/` และ `frontia-backend/` อยู่บนคอม จาก root repository เปิด PowerShell แล้วรัน:
+
+```powershell
+powershell -NoProfile -ExecutionPolicy Bypass -File .\frontia-backend\windows\setup.ps1
+```
+
+สคริปต์ตรวจ Node/Tailscale ติดตั้ง Codex CLI รุ่นที่ Backend ใช้ถ้ายังไม่มี ถามรหัส Backend **ครั้งแรก** (ขั้นต่ำ 16 ตัว) เก็บไว้ในบัญชี Windows ด้วย DPAPI เปิด Backend, ตั้ง Funnel แบบ `--bg` แล้วแสดง URL `https://<ชื่อเครื่อง>.<ชื่อเครือข่าย>.ts.net` อนุมัติ Funnel ในเบราว์เซอร์หาก Tailscale ขอ สคริปต์จะใส่ URL ที่พบใน `frontia/backend-config.json` ของ checkout บนคอม (ไม่มีรหัสผ่าน) ต้องเผยแพร่ไฟล์นี้ขึ้น GitHub Pages อีกครั้งก่อนเว็บบนอุปกรณ์ใหม่จะกรอก URL เอง หากไม่ได้ตั้ง Git push บนคอม สามารถส่ง **เฉพาะ URL** มาเพื่อให้ช่วยเผยแพร่ได้
+
+3. บนโทรศัพท์/iPad เปิด [Cinematic Play](https://apirak09.github.io/frontia/) ในเบราว์เซอร์ → ตั้งค่า → ใส่รหัส Backend ที่ตั้งบนคอม → เลือก **จำรหัสผ่านในอุปกรณ์นี้** → ทดสอบ Backend → เชื่อม ChatGPT ตามหน้าจอครั้งแรก การเปิดครั้งต่อไปจะซิงก์โดยอัตโนมัติขณะคอมและอินเทอร์เน็ตพร้อม บัญชี Codex ยังต้องมีสิทธิ์ใช้งานและโควตา
+
+สคริปต์สร้างทางลัดใน Startup ของ **บัญชี Windows ปัจจุบัน** Backend จะเริ่มหลังล็อกอินเข้า Windows ส่วน Funnel แบบ `--bg` จะกลับมาหลังรีสตาร์ต Tailscale โดยไม่ต้องตั้งค่าซ้ำ หากคอมหลับหรือปิด AI/ซิงก์จะหยุด เปิดไฟล์ `frontia-backend/windows/run.ps1` จาก PowerShell หากต้องการอ่านข้อผิดพลาดของ backend บนเครื่อง ไม่ต้องเปิดพอร์ตเราเตอร์ ไฟล์เซฟและข้อมูล Codex อยู่ที่ `frontia-backend/data/` ควรสำรองโฟลเดอร์นี้เป็นประจำ
+
+`frontia/backend-config.json` **อนุญาตให้ใส่เฉพาะ URL HTTPS สาธารณะ** ห้ามใส่รหัส Backend, OpenAI token หรือข้อมูลบัญชี เว็บจะใช้ URL ในไฟล์นี้เฉพาะอุปกรณ์ที่ยังไม่มี URL ที่บันทึกไว้ หากต้องการเปลี่ยน URL บนอุปกรณ์เดิม ให้แก้ในตั้งค่าเอง รหัสผ่านที่จำในเบราว์เซอร์อ่านได้โดย JavaScript บน origin ของ GitHub Pages เดียวกัน จึงใช้บนอุปกรณ์ส่วนตัวเท่านั้น
+
+Backend ตอนนี้ยังมี **เซฟร่วมกันชุดเดียว** และรหัสผ่านเดียว เหมาะกับเจ้าของเล่นหลายอุปกรณ์ หากเปิดให้คนอื่นเข้าเล่น AI ต้องทำบัญชี เซฟแยก และจำกัดสิทธิ์/การใช้งานก่อน ไม่ควรแจก backend password ให้คนที่เข้าลิงก์เว็บ
+
 ## ติดตั้งด้วย Docker Compose
 
 ใช้ clone ที่มีทั้ง `frontia/` และ `frontia-backend/` เพราะใช้สัญญาข้อมูลร่วมกัน:

@@ -12,7 +12,7 @@ const html = await fs.readFile(new URL('../../frontia/index.html', import.meta.u
 const bundled = (await build({ entryPoints: [fileURLToPath(new URL('../../frontia/app.js', import.meta.url))], bundle: true, format: 'iife', write: false })).outputFiles[0].text;
 async function until(condition, label = 'UI update') {
   const deadline = Date.now() + 1500;
-  while (!condition()) { if (Date.now() > deadline) throw new Error(`Timed out: ${label}`); await new Promise(resolve => setTimeout(resolve, 5)); }
+  while (!(await condition())) { if (Date.now() > deadline) throw new Error(`Timed out: ${label}`); await new Promise(resolve => setTimeout(resolve, 5)); }
 }
 async function app(t, { factory = new IDBFactory(), hash = '', fetch } = {}) {
   const dom = new JSDOM(html, { url: `https://apirak09.github.io/frontia/${hash}`, runScripts: 'outside-only', pretendToBeVisual: true });
@@ -44,6 +44,20 @@ async function saved(factory) {
   const value = await new Promise(resolve => { const r = db.transaction('app').objectStore('app').get('state'); r.onsuccess = () => resolve(r.result); });
   db.close(); return value;
 }
+test('public backend configuration fills a new device but preserves an existing endpoint', async t => {
+  const configFetch = async () => ({ ok: true, json: async () => ({ backendUrl: 'https://desktop.example.ts.net' }) });
+  const a = await app(t, { fetch: configFetch });
+  await until(async () => (await saved(a.factory)).settings.backendUrl === 'https://desktop.example.ts.net', 'published backend URL');
+  assert.equal(a.doc.querySelector('#backendUrl'), null);
+  await navigate(a, 'settings', '#backendUrl');
+  assert.equal(a.doc.querySelector('#backendUrl').value, 'https://desktop.example.ts.net');
+  a.doc.querySelector('#backendUrl').value = 'https://personal.example.ts.net';
+  a.doc.querySelector('#settingsForm').dispatchEvent(new a.w.Event('submit', { bubbles: true, cancelable: true }));
+  await until(async () => (await saved(a.factory)).settings.backendUrl === 'https://personal.example.ts.net', 'manual URL');
+  const b = await app(t, { factory: a.factory, fetch: configFetch, hash: '#settings' });
+  await until(() => b.doc.querySelector('#backendUrl'));
+  assert.equal(b.doc.querySelector('#backendUrl').value, 'https://personal.example.ts.net');
+});
 test('home onboarding presents the single prototype clearly and starts it in one tap', async t => {
   const a = await app(t);
   assert.ok(a.doc.querySelector('.home-portal'));
