@@ -39,4 +39,28 @@ await click('save');await click('read');
 assert(JSON.parse(memory.get('re-archive:saved')).includes('raccoon-survivors'));
 assert(JSON.parse(memory.get('re-archive:read')).includes('raccoon-survivors'));
 await click('language');assert.equal(doc.documentElement.lang,'th');
-console.log('PASS: 114 bilingual record renders, deep links, search, trails, empty states, metadata/biology spoiler isolation, storage and language switch. Uses DOM test doubles; browser visual QA is documented separately.');
+// A fresh mobile reader must arrive at the shared record after consenting,
+// but choosing an earlier boundary must never reveal that destination.
+for(const cap of [10,1]) {
+ const freshMemory=new Map(),dialogs=[];
+ const freshApp={innerHTML:''};
+ const freshDoc={...doc,querySelector:q=>q==='#app'?freshApp:null,createElement:()=>{
+  const callbacks={};
+  const dialog={innerHTML:'',returnValue:'',setAttribute(){},addEventListener:(name,fn)=>callbacks[name]=fn,showModal(){},remove(){},querySelector:q=>q==='#cap-select'?{value:String(cap)}:null,callbacks};
+  dialogs.push(dialog);return dialog;
+ }};
+ const freshStorage={getItem:k=>freshMemory.get(k)??null,setItem:(k,v)=>freshMemory.set(k,v)};
+ const sharedLocation={...loc,hash:'#event=village&lang=en'};
+ const fresh=await factory(freshDoc,freshStorage,sharedLocation,history,win,fetch,()=>({matches:true}),URLSearchParams,{}, {error:e=>{throw e;}});
+ assert.equal(dialogs.length,1,'First reader sees the spoiler gate');
+ dialogs[0].returnValue='apply';dialogs[0].callbacks.close();
+ assert.equal(fresh.state.consented,true);
+ if(cap===10) {
+  assert.equal(fresh.state.selected,'village','Shared destination survives first consent');
+  assert.equal(fresh.state.detailOpen,true,'Mobile shared record opens after first consent');
+ } else {
+  assert.notEqual(fresh.state.selected,'village','Earlier boundary blocks the shared destination');
+  assert(!freshDoc.title.includes(data.events.find(e=>e.id==='village').title.en));
+ }
+}
+console.log('PASS: 114 bilingual record renders, first-reader deep links and spoiler boundaries, search, trails, empty states, metadata/biology spoiler isolation, storage and language switch. Uses DOM test doubles; browser visual QA is documented separately.');

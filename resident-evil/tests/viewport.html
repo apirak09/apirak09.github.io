@@ -1,1 +1,27 @@
-<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Archive responsive QA harness</title><style>body{margin:0;background:#65736a;font:14px system-ui;color:white}header{padding:8px 16px;height:48px;display:flex;gap:20px;align-items:center}a{color:white}iframe{display:block;border:0;background:#172323;margin:0 auto;max-width:100vw;height:calc(100vh - 48px)}span{margin-left:auto}</style><header><a href="?w=375">375</a><a href="?w=390">390</a><a href="?w=768">768</a><a href="?w=1024">1024</a><a href="?w=1440">1440</a><span id="label"></span></header><iframe title="Responsive archive preview" id="preview"></iframe><script>const p=new URLSearchParams(location.search),w=Math.min(1920,Math.max(320,Number(p.get('w'))||390));document.getElementById('preview').style.width=w+'px';document.getElementById('preview').src='../index.html#event=mansion&lang='+ (p.get('lang')==='en'?'en':'th');document.getElementById('label').textContent=w+' CSS px / QA only';</script></html>
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Archive responsive QA harness</title>
+<style>
+body{margin:0;background:#65736a;font:14px system-ui;color:white}
+header{box-sizing:border-box;padding:8px 16px;min-height:56px;width:100vw;display:flex;gap:20px;flex-wrap:wrap;align-items:center}
+a{color:white}
+iframe{display:block;border:0;background:#172323;margin:0 auto;height:calc(100vh - 56px)}
+span{margin-left:auto}
+</style>
+<header>
+<a href="?w=320">320</a><a href="?w=375">375</a><a href="?w=390">390</a>
+<a href="?w=768">768</a><a href="?w=820">820</a><a href="?w=1024">1024</a>
+<a href="?w=1440">1440</a><a href="?w=1920">1920</a><span id="label"></span>
+</header>
+<iframe title="Responsive archive preview" id="preview"></iframe>
+<script>
+const p=new URLSearchParams(location.search),w=Math.min(1920,Math.max(320,Number(p.get('w'))||390));
+const frame=document.getElementById('preview');
+// Deliberately allow outer-page scrolling so large test frames are not clamped.
+frame.style.width=w+'px';
+frame.src='../index.html#event=mansion&lang='+(p.get('lang')==='en'?'en':'th');
+document.getElementById('label').textContent=w+' CSS px / QA only';
+</script>
+</html>

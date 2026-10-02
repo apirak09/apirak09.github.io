@@ -462,7 +462,11 @@ try {
   byWork=Object.fromEntries(data.works.map(x=>[x.id,x]));
   const requested=byEvent[state.selected];
   render();
-  if(!state.consented)showSpoilers(true);
+  if(!state.consented) {
+    // Keep the shared destination while the first reader chooses a boundary.
+    if(requested&&hash.get('event'))pendingEvent=requested.id;
+    showSpoilers(true);
+  }
   else if(requested&&!allowed(requested)) {
     pendingEvent=requested.id;
     showSpoilers(false,t('noVisible'));
