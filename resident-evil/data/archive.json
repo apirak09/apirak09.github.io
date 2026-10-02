@@ -1,0 +1,5876 @@
+{
+  "schemaVersion": 1,
+  "updated": "2026-10-02",
+  "title": "BIOHAZARD / CANON ARCHIVE",
+  "eras": [
+    {
+      "id": "origins",
+      "name": {
+        "en": "01 / Foundations",
+        "th": "01 / รากฐาน"
+      },
+      "range": {
+        "en": "c. 1919–1997",
+        "th": "ราว 1919–1997"
+      },
+      "headline": {
+        "en": "Before the first outbreak",
+        "th": "ก่อนการระบาดครั้งแรก"
+      },
+      "summary": {
+        "en": "Personal ambition becomes a corporate weapons system.",
+        "th": "ความทะเยอทะยานส่วนตัวเติบโตเป็นระบบอาวุธของบริษัท"
+      }
+    },
+    {
+      "id": "raccoon",
+      "name": {
+        "en": "02 / Raccoon City",
+        "th": "02 / Raccoon City"
+      },
+      "range": {
+        "en": "1998",
+        "th": "1998"
+      },
+      "headline": {
+        "en": "One disaster, many survivors",
+        "th": "หายนะเดียว ผู้รอดชีวิตหลายเส้นทาง"
+      },
+      "summary": {
+        "en": "Laboratory failures overwhelm a city; survivors carry its history forward.",
+        "th": "ความล้มเหลวในแล็บกลืนทั้งเมือง ผู้รอดชีวิตนำประวัติศาสตร์นี้ติดตัวไป"
+      }
+    },
+    {
+      "id": "aftermath",
+      "name": {
+        "en": "03 / Beyond Umbrella",
+        "th": "03 / หลังยุค Umbrella"
+      },
+      "range": {
+        "en": "Late 1998–2005",
+        "th": "ปลาย 1998–2005"
+      },
+      "headline": {
+        "en": "The company falls. The weapons travel.",
+        "th": "บริษัทล่ม แต่อาวุธเดินทางต่อ"
+      },
+      "summary": {
+        "en": "Stolen samples, rival laboratories and new response organizations reshape the threat.",
+        "th": "ตัวอย่างที่ถูกขโมย แล็บคู่แข่ง และองค์กรตอบโต้ใหม่เปลี่ยนรูปแบบภัย"
+      }
+    },
+    {
+      "id": "global",
+      "name": {
+        "en": "04 / The bioterror age",
+        "th": "04 / ยุคก่อการร้ายชีวภาพ"
+      },
+      "range": {
+        "en": "2006–2013",
+        "th": "2006–2013"
+      },
+      "headline": {
+        "en": "A global economy of infection",
+        "th": "เศรษฐกิจการติดเชื้อระดับโลก"
+      },
+      "summary": {
+        "en": "Corporations, states and private actors weaponize the research Umbrella left behind.",
+        "th": "บริษัท รัฐ และกลุ่มส่วนตัวเปลี่ยนงานที่เหลือจาก Umbrella ให้เป็นอาวุธ"
+      }
+    },
+    {
+      "id": "mold-era",
+      "name": {
+        "en": "05 / New hosts, old ghosts",
+        "th": "05 / ร่างใหม่ บาดแผลเก่า"
+      },
+      "range": {
+        "en": "2014–2021",
+        "th": "2014–2021"
+      },
+      "headline": {
+        "en": "The threat comes home",
+        "th": "ภัยที่เข้ามาถึงบ้าน"
+      },
+      "summary": {
+        "en": "Old weapons evolve while another biological lineage threatens a family.",
+        "th": "อาวุธเดิมพัฒนาต่อ ขณะที่ชีวภาพอีกสายเข้าคุกคามครอบครัวหนึ่ง"
+      }
+    },
+    {
+      "id": "legacy",
+      "name": {
+        "en": "06 / What survives",
+        "th": "06 / สิ่งที่ยังคงอยู่"
+      },
+      "range": {
+        "en": "2026–c. 2037",
+        "th": "2026–ราว 2037"
+      },
+      "headline": {
+        "en": "The past is still alive",
+        "th": "อดีตยังไม่ตาย"
+      },
+      "summary": {
+        "en": "Long-delayed consequences meet the next generation.",
+        "th": "ผลที่ตามมาหลังหลายสิบปีเผชิญหน้ากับคนรุ่นใหม่"
+      }
+    }
+  ],
+  "works": [
+    {
+      "id": "zero",
+      "name": "Resident Evil 0",
+      "source": "work-zero"
+    },
+    {
+      "id": "re1",
+      "name": "Resident Evil / remake",
+      "source": "work-re1"
+    },
+    {
+      "id": "re2",
+      "name": "Resident Evil 2 / remake",
+      "source": "work-re2"
+    },
+    {
+      "id": "re3",
+      "name": "Resident Evil 3 / remake",
+      "source": "work-re3"
+    },
+    {
+      "id": "outbreak",
+      "name": "Resident Evil Outbreak / File #2",
+      "source": "work-outbreak"
+    },
+    {
+      "id": "survivor",
+      "name": "Resident Evil Survivor",
+      "source": "work-survivor"
+    },
+    {
+      "id": "cv",
+      "name": "CODE: Veronica",
+      "source": "work-cv"
+    },
+    {
+      "id": "darkside",
+      "name": "The Darkside Chronicles",
+      "source": "work-darkside"
+    },
+    {
+      "id": "dead",
+      "name": "Dead Aim",
+      "source": "work-dead"
+    },
+    {
+      "id": "umbrella",
+      "name": "The Umbrella Chronicles",
+      "source": "work-umbrella"
+    },
+    {
+      "id": "re4",
+      "name": "Resident Evil 4 / remake + Separate Ways",
+      "source": "work-re4"
+    },
+    {
+      "id": "rev",
+      "name": "Revelations",
+      "source": "work-rev"
+    },
+    {
+      "id": "degeneration",
+      "name": "Degeneration",
+      "source": "work-degeneration"
+    },
+    {
+      "id": "infinite",
+      "name": "Infinite Darkness",
+      "source": "work-infinite"
+    },
+    {
+      "id": "re5",
+      "name": "Resident Evil 5 + Lost in Nightmares / Desperate Escape",
+      "source": "work-re5"
+    },
+    {
+      "id": "damnation",
+      "name": "Damnation",
+      "source": "work-damnation"
+    },
+    {
+      "id": "rev2",
+      "name": "Revelations 2 + The Struggle / Little Miss",
+      "source": "work-rev2"
+    },
+    {
+      "id": "marhawa",
+      "name": "The Marhawa Desire",
+      "source": "work-marhawa"
+    },
+    {
+      "id": "re6",
+      "name": "Resident Evil 6",
+      "source": "work-re6"
+    },
+    {
+      "id": "heavenly",
+      "name": "Heavenly Island",
+      "source": "work-heavenly"
+    },
+    {
+      "id": "vendetta",
+      "name": "Vendetta",
+      "source": "work-vendetta"
+    },
+    {
+      "id": "death",
+      "name": "Death Island",
+      "source": "work-death"
+    },
+    {
+      "id": "re7",
+      "name": "Resident Evil 7 + Daughters",
+      "source": "work-re7"
+    },
+    {
+      "id": "hero",
+      "name": "Not a Hero",
+      "source": "work-hero"
+    },
+    {
+      "id": "zoe",
+      "name": "End of Zoe",
+      "source": "work-zoe"
+    },
+    {
+      "id": "village",
+      "name": "Village",
+      "source": "work-village"
+    },
+    {
+      "id": "requiem",
+      "name": "Requiem",
+      "source": "work-requiem"
+    },
+    {
+      "id": "rose",
+      "name": "Shadows of Rose",
+      "source": "work-rose"
+    }
+  ],
+  "sources": [
+    {
+      "id": "history",
+      "title": "Capcom: Resident Evil history",
+      "url": "https://game.capcom.com/residentevil/en/re-history.html",
+      "kind": "official",
+      "locator": "",
+      "checked": "2026-10-02"
+    },
+    {
+      "id": "requiem-official",
+      "title": "Capcom: Resident Evil Requiem",
+      "url": "https://www.residentevil.com/requiem/en-asia/",
+      "kind": "official",
+      "locator": "",
+      "checked": "2026-10-02"
+    },
+    {
+      "id": "rose-official",
+      "title": "Capcom: Shadows of Rose — sixteen years later",
+      "url": "https://www.residentevil.com/village/ge/en-asia/",
+      "kind": "official",
+      "locator": "",
+      "checked": "2026-10-02"
+    },
+    {
+      "id": "infinite-official",
+      "title": "Capcom: Infinite Darkness production and continuity",
+      "url": "https://game.capcom.com/residentevil/en/news-1292.html",
+      "kind": "official",
+      "locator": "",
+      "checked": "2026-10-02"
+    },
+    {
+      "id": "death-official",
+      "title": "Sony Pictures: Death Island",
+      "url": "https://www.sonypictures.com/movies/residentevildeathisland",
+      "kind": "official",
+      "locator": "",
+      "checked": "2026-10-02"
+    },
+    {
+      "id": "miranda",
+      "title": "Miranda’s diary",
+      "url": "https://www.evilresource.com/resident-evil-village/files/mirandas-diary",
+      "kind": "game-file",
+      "locator": "resident-evil-village / Miranda’s diary",
+      "checked": "2026-10-02"
+    },
+    {
+      "id": "spencer-letter",
+      "title": "Spencer’s letter",
+      "url": "https://www.evilresource.com/resident-evil-village/files/spencers-letter",
+      "kind": "game-file",
+      "locator": "resident-evil-village / Spencer’s letter",
+      "checked": "2026-10-02"
+    },
+    {
+      "id": "history5",
+      "title": "History of Resident Evil",
+      "url": "https://www.evilresource.com/resident-evil-5/files/history-of-resident-evil-file",
+      "kind": "game-file",
+      "locator": "resident-evil-5 / History of Resident Evil",
+      "checked": "2026-10-02"
+    },
+    {
+      "id": "brandon",
+      "title": "Brandon’s journal No. 1",
+      "url": "https://www.evilresource.com/resident-evil-5/files/from-chief-researcher-brandons-journal-no-1",
+      "kind": "game-file",
+      "locator": "resident-evil-5 / Brandon’s journal No. 1",
+      "checked": "2026-10-02"
+    },
+    {
+      "id": "projectw",
+      "title": "Report on Project W",
+      "url": "https://www.evilresource.com/resident-evil-5/files/report-on-project-w-august-28-1998",
+      "kind": "game-file",
+      "locator": "resident-evil-5 / Report on Project W",
+      "checked": "2026-10-02"
+    },
+    {
+      "id": "bsaa",
+      "title": "BSAA file",
+      "url": "https://www.evilresource.com/resident-evil-5/files/bsaa-file",
+      "kind": "game-file",
+      "locator": "resident-evil-5 / BSAA file",
+      "checked": "2026-10-02"
+    },
+    {
+      "id": "jill",
+      "title": "Jill Valentine file",
+      "url": "https://www.evilresource.com/resident-evil-5/files/jill-valentine-file",
+      "kind": "game-file",
+      "locator": "resident-evil-5 / Jill Valentine file",
+      "checked": "2026-10-02"
+    },
+    {
+      "id": "marcus",
+      "title": "Marcus’s diary 1",
+      "url": "https://www.evilresource.com/resident-evil-zero/files/marcus-diary-1",
+      "kind": "game-file",
+      "locator": "resident-evil-zero / Marcus’s diary 1",
+      "checked": "2026-10-02"
+    },
+    {
+      "id": "keeper",
+      "title": "Keeper’s diary",
+      "url": "https://www.evilresource.com/resident-evil-remake/files/keepers-diary",
+      "kind": "game-file",
+      "locator": "resident-evil-remake / Keeper’s diary",
+      "checked": "2026-10-02"
+    },
+    {
+      "id": "queen",
+      "title": "Queen Ant report",
+      "url": "https://www.evilresource.com/resident-evil-code-veronica/files/queen-ant-report",
+      "kind": "game-file",
+      "locator": "resident-evil-code-veronica / Queen Ant report",
+      "checked": "2026-10-02"
+    },
+    {
+      "id": "javier-file",
+      "title": "Redacted case file",
+      "url": "https://www.evilresource.com/resident-evil-4-remake/files/redacted-case-file",
+      "kind": "game-file",
+      "locator": "resident-evil-4-remake / Redacted case file",
+      "checked": "2026-10-02"
+    },
+    {
+      "id": "cvirus",
+      "title": "The C-virus",
+      "url": "https://www.evilresource.com/resident-evil-6/files/the-c-virus-file",
+      "kind": "game-file",
+      "locator": "resident-evil-6 / The C-virus",
+      "checked": "2026-10-02"
+    },
+    {
+      "id": "sheena-file",
+      "title": "How to extract the material",
+      "url": "https://www.evilresource.com/resident-evil-survivor/files/how-to-extract-the-material",
+      "kind": "game-file",
+      "locator": "resident-evil-survivor / How to extract the material",
+      "checked": "2026-10-02"
+    },
+    {
+      "id": "alyssa",
+      "title": "Alyssa’s journal",
+      "url": "https://www.evilresource.com/resident-evil-requiem/files/alyssas-journal",
+      "kind": "game-file",
+      "locator": "resident-evil-requiem / Alyssa’s journal",
+      "checked": "2026-10-02"
+    },
+    {
+      "id": "patrick",
+      "title": "Letter from Patrick",
+      "url": "https://www.evilresource.com/resident-evil-requiem/files/letter-from-patrick",
+      "kind": "game-file",
+      "locator": "resident-evil-requiem / Letter from Patrick",
+      "checked": "2026-10-02"
+    },
+    {
+      "id": "rcs",
+      "title": "Report on Raccoon City Syndrome",
+      "url": "https://www.evilresource.com/resident-evil-requiem/files/report-on-raccoon-city-syndrome",
+      "kind": "game-file",
+      "locator": "resident-evil-requiem / Report on Raccoon City Syndrome",
+      "checked": "2026-10-02"
+    },
+    {
+      "id": "rc-report",
+      "title": "Report on the Raccoon City Incident",
+      "url": "https://www.evilresource.com/resident-evil-requiem/files/report-on-the-raccoon-city-incident",
+      "kind": "game-file",
+      "locator": "resident-evil-requiem / Report on the Raccoon City Incident",
+      "checked": "2026-10-02"
+    },
+    {
+      "id": "assembly",
+      "title": "Access log: first assembly minutes",
+      "url": "https://www.evilresource.com/resident-evil-requiem/files/access-log-first-assembly-minutes",
+      "kind": "game-file",
+      "locator": "resident-evil-requiem / Access log: first assembly minutes",
+      "checked": "2026-10-02"
+    },
+    {
+      "id": "interview",
+      "title": "Alyssa’s interview notes",
+      "url": "https://www.evilresource.com/resident-evil-requiem/files/alyssas-interview-notes",
+      "kind": "game-file",
+      "locator": "resident-evil-requiem / Alyssa’s interview notes",
+      "checked": "2026-10-02"
+    },
+    {
+      "id": "blood",
+      "title": "Grace Ashcroft blood analysis report",
+      "url": "https://www.evilresource.com/resident-evil-requiem/files/grace-ashcroft-blood-analysis-report",
+      "kind": "game-file",
+      "locator": "resident-evil-requiem / Grace Ashcroft blood analysis report",
+      "checked": "2026-10-02"
+    },
+    {
+      "id": "spencer-research",
+      "title": "Spencer’s research I",
+      "url": "https://www.evilresource.com/resident-evil-requiem/files/spencers-research-i",
+      "kind": "game-file",
+      "locator": "resident-evil-requiem / Spencer’s research I",
+      "checked": "2026-10-02"
+    },
+    {
+      "id": "work-zero",
+      "title": "Resident Evil 0 — incident / primary work locator",
+      "url": "https://residentevil.fandom.com/wiki/Resident_Evil_0",
+      "kind": "reference",
+      "locator": "Resident Evil 0 (playable story / film; file citations listed separately)",
+      "checked": "2026-10-02"
+    },
+    {
+      "id": "work-re1",
+      "title": "Resident Evil / remake — incident / primary work locator",
+      "url": "https://residentevil.fandom.com/wiki/Resident_Evil_(2002_game)",
+      "kind": "reference",
+      "locator": "Resident Evil / remake (playable story / film; file citations listed separately)",
+      "checked": "2026-10-02"
+    },
+    {
+      "id": "work-re2",
+      "title": "Resident Evil 2 / remake — incident / primary work locator",
+      "url": "https://residentevil.fandom.com/wiki/Resident_Evil_2_(2019_game)",
+      "kind": "reference",
+      "locator": "Resident Evil 2 / remake (playable story / film; file citations listed separately)",
+      "checked": "2026-10-02"
+    },
+    {
+      "id": "work-re3",
+      "title": "Resident Evil 3 / remake — incident / primary work locator",
+      "url": "https://residentevil.fandom.com/wiki/Resident_Evil_3_(2020_game)",
+      "kind": "reference",
+      "locator": "Resident Evil 3 / remake (playable story / film; file citations listed separately)",
+      "checked": "2026-10-02"
+    },
+    {
+      "id": "work-outbreak",
+      "title": "Resident Evil Outbreak / File #2 — incident / primary work locator",
+      "url": "https://residentevil.fandom.com/wiki/Resident_Evil_Outbreak",
+      "kind": "reference",
+      "locator": "Resident Evil Outbreak / File #2 (playable story / film; file citations listed separately)",
+      "checked": "2026-10-02"
+    },
+    {
+      "id": "work-survivor",
+      "title": "Resident Evil Survivor — incident / primary work locator",
+      "url": "https://residentevil.fandom.com/wiki/Resident_Evil_Survivor",
+      "kind": "reference",
+      "locator": "Resident Evil Survivor (playable story / film; file citations listed separately)",
+      "checked": "2026-10-02"
+    },
+    {
+      "id": "work-cv",
+      "title": "CODE: Veronica — incident / primary work locator",
+      "url": "https://residentevil.fandom.com/wiki/Resident_Evil_CODE:Veronica",
+      "kind": "reference",
+      "locator": "CODE: Veronica (playable story / film; file citations listed separately)",
+      "checked": "2026-10-02"
+    },
+    {
+      "id": "work-darkside",
+      "title": "The Darkside Chronicles — incident / primary work locator",
+      "url": "https://residentevil.fandom.com/wiki/Resident_Evil:_The_Darkside_Chronicles",
+      "kind": "reference",
+      "locator": "The Darkside Chronicles (playable story / film; file citations listed separately)",
+      "checked": "2026-10-02"
+    },
+    {
+      "id": "work-dead",
+      "title": "Dead Aim — incident / primary work locator",
+      "url": "https://residentevil.fandom.com/wiki/Resident_Evil:_Dead_Aim",
+      "kind": "reference",
+      "locator": "Dead Aim (playable story / film; file citations listed separately)",
+      "checked": "2026-10-02"
+    },
+    {
+      "id": "work-umbrella",
+      "title": "The Umbrella Chronicles — incident / primary work locator",
+      "url": "https://residentevil.fandom.com/wiki/Resident_Evil:_The_Umbrella_Chronicles",
+      "kind": "reference",
+      "locator": "The Umbrella Chronicles (playable story / film; file citations listed separately)",
+      "checked": "2026-10-02"
+    },
+    {
+      "id": "work-re4",
+      "title": "Resident Evil 4 / remake + Separate Ways — incident / primary work locator",
+      "url": "https://residentevil.fandom.com/wiki/Resident_Evil_4_(2023_game)",
+      "kind": "reference",
+      "locator": "Resident Evil 4 / remake + Separate Ways (playable story / film; file citations listed separately)",
+      "checked": "2026-10-02"
+    },
+    {
+      "id": "work-rev",
+      "title": "Revelations — incident / primary work locator",
+      "url": "https://residentevil.fandom.com/wiki/Resident_Evil:_Revelations",
+      "kind": "reference",
+      "locator": "Revelations (playable story / film; file citations listed separately)",
+      "checked": "2026-10-02"
+    },
+    {
+      "id": "work-degeneration",
+      "title": "Degeneration — incident / primary work locator",
+      "url": "https://residentevil.fandom.com/wiki/Resident_Evil:_Degeneration",
+      "kind": "reference",
+      "locator": "Degeneration (playable story / film; file citations listed separately)",
+      "checked": "2026-10-02"
+    },
+    {
+      "id": "work-infinite",
+      "title": "Infinite Darkness — incident / primary work locator",
+      "url": "https://residentevil.fandom.com/wiki/Resident_Evil:_Infinite_Darkness",
+      "kind": "reference",
+      "locator": "Infinite Darkness (playable story / film; file citations listed separately)",
+      "checked": "2026-10-02"
+    },
+    {
+      "id": "work-re5",
+      "title": "Resident Evil 5 + Lost in Nightmares / Desperate Escape — incident / primary work locator",
+      "url": "https://residentevil.fandom.com/wiki/Resident_Evil_5",
+      "kind": "reference",
+      "locator": "Resident Evil 5 + Lost in Nightmares / Desperate Escape (playable story / film; file citations listed separately)",
+      "checked": "2026-10-02"
+    },
+    {
+      "id": "work-damnation",
+      "title": "Damnation — incident / primary work locator",
+      "url": "https://residentevil.fandom.com/wiki/Resident_Evil:_Damnation",
+      "kind": "reference",
+      "locator": "Damnation (playable story / film; file citations listed separately)",
+      "checked": "2026-10-02"
+    },
+    {
+      "id": "work-rev2",
+      "title": "Revelations 2 + The Struggle / Little Miss — incident / primary work locator",
+      "url": "https://residentevil.fandom.com/wiki/Resident_Evil:_Revelations_2",
+      "kind": "reference",
+      "locator": "Revelations 2 + The Struggle / Little Miss (playable story / film; file citations listed separately)",
+      "checked": "2026-10-02"
+    },
+    {
+      "id": "work-marhawa",
+      "title": "The Marhawa Desire — incident / primary work locator",
+      "url": "https://residentevil.fandom.com/wiki/Resident_Evil:_The_Marhawa_Desire",
+      "kind": "reference",
+      "locator": "The Marhawa Desire (playable story / film; file citations listed separately)",
+      "checked": "2026-10-02"
+    },
+    {
+      "id": "work-re6",
+      "title": "Resident Evil 6 — incident / primary work locator",
+      "url": "https://residentevil.fandom.com/wiki/Resident_Evil_6",
+      "kind": "reference",
+      "locator": "Resident Evil 6 (playable story / film; file citations listed separately)",
+      "checked": "2026-10-02"
+    },
+    {
+      "id": "work-heavenly",
+      "title": "Heavenly Island — incident / primary work locator",
+      "url": "https://residentevil.fandom.com/wiki/Resident_Evil:_Heavenly_Island",
+      "kind": "reference",
+      "locator": "Heavenly Island (playable story / film; file citations listed separately)",
+      "checked": "2026-10-02"
+    },
+    {
+      "id": "work-vendetta",
+      "title": "Vendetta — incident / primary work locator",
+      "url": "https://residentevil.fandom.com/wiki/Resident_Evil:_Vendetta",
+      "kind": "reference",
+      "locator": "Vendetta (playable story / film; file citations listed separately)",
+      "checked": "2026-10-02"
+    },
+    {
+      "id": "work-death",
+      "title": "Death Island — incident / primary work locator",
+      "url": "https://residentevil.fandom.com/wiki/Resident_Evil:_Death_Island",
+      "kind": "reference",
+      "locator": "Death Island (playable story / film; file citations listed separately)",
+      "checked": "2026-10-02"
+    },
+    {
+      "id": "work-re7",
+      "title": "Resident Evil 7 + Daughters — incident / primary work locator",
+      "url": "https://residentevil.fandom.com/wiki/Resident_Evil_7:_Biohazard",
+      "kind": "reference",
+      "locator": "Resident Evil 7 + Daughters (playable story / film; file citations listed separately)",
+      "checked": "2026-10-02"
+    },
+    {
+      "id": "work-hero",
+      "title": "Not a Hero — incident / primary work locator",
+      "url": "https://residentevil.fandom.com/wiki/Not_a_Hero",
+      "kind": "reference",
+      "locator": "Not a Hero (playable story / film; file citations listed separately)",
+      "checked": "2026-10-02"
+    },
+    {
+      "id": "work-zoe",
+      "title": "End of Zoe — incident / primary work locator",
+      "url": "https://residentevil.fandom.com/wiki/End_of_Zoe",
+      "kind": "reference",
+      "locator": "End of Zoe (playable story / film; file citations listed separately)",
+      "checked": "2026-10-02"
+    },
+    {
+      "id": "work-village",
+      "title": "Village — incident / primary work locator",
+      "url": "https://residentevil.fandom.com/wiki/Resident_Evil_Village",
+      "kind": "reference",
+      "locator": "Village (playable story / film; file citations listed separately)",
+      "checked": "2026-10-02"
+    },
+    {
+      "id": "work-requiem",
+      "title": "Requiem — incident / primary work locator",
+      "url": "https://residentevil.fandom.com/wiki/Resident_Evil_Requiem",
+      "kind": "reference",
+      "locator": "Requiem (playable story / film; file citations listed separately)",
+      "checked": "2026-10-02"
+    },
+    {
+      "id": "work-rose",
+      "title": "Shadows of Rose — incident / primary work locator",
+      "url": "https://residentevil.fandom.com/wiki/Shadows_of_Rose",
+      "kind": "reference",
+      "locator": "Shadows of Rose (playable story / film; file citations listed separately)",
+      "checked": "2026-10-02"
+    },
+    {
+      "id": "carla",
+      "title": "Carla Radames — RE.NET extended file transcript",
+      "url": "https://residentevil.fandom.com/wiki/Carla_Radames_(file)",
+      "kind": "game-file",
+      "locator": "Resident Evil 6 / RE.NET extended files",
+      "checked": "2026-10-02"
+    },
+    {
+      "id": "grace-report",
+      "title": "Grace’s Report — completion bonus file transcript",
+      "url": "https://residentevil.fandom.com/wiki/Grace%27s_Report",
+      "kind": "game-file",
+      "locator": "Requiem / completion bonus / release ending",
+      "checked": "2026-10-02"
+    },
+    {
+      "id": "blue-letter",
+      "title": "Letter from the Umbrella Corporation",
+      "url": "https://residentevil.fandom.com/wiki/Letter_from_the_Umbrella_Corporation",
+      "kind": "game-file",
+      "locator": "Resident Evil 7 / Not a Hero",
+      "checked": "2026-10-02"
+    }
+  ],
+  "entities": [
+    {
+      "id": "ada",
+      "category": "character",
+      "name": {
+        "en": "Ada Wong",
+        "th": "Ada Wong"
+      },
+      "description": {
+        "en": "An operative whose objectives intersect with Leon’s, while her employers and loyalties stay guarded.",
+        "th": "สายลับที่เป้าหมายตัดกับ Leon แต่นายจ้างและความภักดียังคงเป็นเรื่องที่เธอปิดบัง"
+      },
+      "spoiler": 2
+    },
+    {
+      "id": "alex",
+      "category": "character",
+      "name": {
+        "en": "Alex Wesker",
+        "th": "Alex Wesker"
+      },
+      "description": {
+        "en": "Follow the incidents connected to this record.",
+        "th": "ติดตามเหตุการณ์ที่เกี่ยวข้องกับแฟ้มนี้"
+      },
+      "spoiler": 5
+    },
+    {
+      "id": "alexia",
+      "category": "character",
+      "name": {
+        "en": "Alexia Ashford",
+        "th": "Alexia Ashford"
+      },
+      "description": {
+        "en": "Follow the incidents connected to this record.",
+        "th": "ติดตามเหตุการณ์ที่เกี่ยวข้องกับแฟ้มนี้"
+      },
+      "spoiler": 3
+    },
+    {
+      "id": "alfred",
+      "category": "character",
+      "name": {
+        "en": "Alfred Ashford",
+        "th": "Alfred Ashford"
+      },
+      "description": {
+        "en": "Follow the incidents connected to this record.",
+        "th": "ติดตามเหตุการณ์ที่เกี่ยวข้องกับแฟ้มนี้"
+      },
+      "spoiler": 3
+    },
+    {
+      "id": "alyssa",
+      "category": "character",
+      "name": {
+        "en": "Alyssa Ashcroft",
+        "th": "Alyssa Ashcroft"
+      },
+      "description": {
+        "en": "Follow the incidents connected to this record.",
+        "th": "ติดตามเหตุการณ์ที่เกี่ยวข้องกับแฟ้มนี้"
+      },
+      "spoiler": 2
+    },
+    {
+      "id": "arias",
+      "category": "character",
+      "name": {
+        "en": "Glenn Arias",
+        "th": "Glenn Arias"
+      },
+      "description": {
+        "en": "Follow the incidents connected to this record.",
+        "th": "ติดตามเหตุการณ์ที่เกี่ยวข้องกับแฟ้มนี้"
+      },
+      "spoiler": 7
+    },
+    {
+      "id": "ark",
+      "category": "character",
+      "name": {
+        "en": "Ark Thompson",
+        "th": "Ark Thompson"
+      },
+      "description": {
+        "en": "Follow the incidents connected to this record.",
+        "th": "ติดตามเหตุการณ์ที่เกี่ยวข้องกับแฟ้มนี้"
+      },
+      "spoiler": 3
+    },
+    {
+      "id": "ashley",
+      "category": "character",
+      "name": {
+        "en": "Ashley Graham",
+        "th": "Ashley Graham"
+      },
+      "description": {
+        "en": "Follow the incidents connected to this record.",
+        "th": "ติดตามเหตุการณ์ที่เกี่ยวข้องกับแฟ้มนี้"
+      },
+      "spoiler": 4
+    },
+    {
+      "id": "barry",
+      "category": "character",
+      "name": {
+        "en": "Barry Burton",
+        "th": "Barry Burton"
+      },
+      "description": {
+        "en": "Follow the incidents connected to this record.",
+        "th": "ติดตามเหตุการณ์ที่เกี่ยวข้องกับแฟ้มนี้"
+      },
+      "spoiler": 1
+    },
+    {
+      "id": "billy",
+      "category": "character",
+      "name": {
+        "en": "Billy Coen",
+        "th": "Billy Coen"
+      },
+      "description": {
+        "en": "Follow the incidents connected to this record.",
+        "th": "ติดตามเหตุการณ์ที่เกี่ยวข้องกับแฟ้มนี้"
+      },
+      "spoiler": 1
+    },
+    {
+      "id": "birkin",
+      "category": "character",
+      "name": {
+        "en": "William Birkin",
+        "th": "William Birkin"
+      },
+      "description": {
+        "en": "Follow the incidents connected to this record.",
+        "th": "ติดตามเหตุการณ์ที่เกี่ยวข้องกับแฟ้มนี้"
+      },
+      "spoiler": 1
+    },
+    {
+      "id": "bruce",
+      "category": "character",
+      "name": {
+        "en": "Bruce McGivern",
+        "th": "Bruce McGivern"
+      },
+      "description": {
+        "en": "Follow the incidents connected to this record.",
+        "th": "ติดตามเหตุการณ์ที่เกี่ยวข้องกับแฟ้มนี้"
+      },
+      "spoiler": 4
+    },
+    {
+      "id": "buddy",
+      "category": "character",
+      "name": {
+        "en": "Alexander “Buddy” Kozachenko",
+        "th": "Alexander “Buddy” Kozachenko"
+      },
+      "description": {
+        "en": "Follow the incidents connected to this record.",
+        "th": "ติดตามเหตุการณ์ที่เกี่ยวข้องกับแฟ้มนี้"
+      },
+      "spoiler": 6
+    },
+    {
+      "id": "carla",
+      "category": "character",
+      "name": {
+        "en": "Carla Radames",
+        "th": "Carla Radames"
+      },
+      "description": {
+        "en": "Follow the incidents connected to this record.",
+        "th": "ติดตามเหตุการณ์ที่เกี่ยวข้องกับแฟ้มนี้"
+      },
+      "spoiler": 6
+    },
+    {
+      "id": "carlos",
+      "category": "character",
+      "name": {
+        "en": "Carlos Oliveira",
+        "th": "Carlos Oliveira"
+      },
+      "description": {
+        "en": "Follow the incidents connected to this record.",
+        "th": "ติดตามเหตุการณ์ที่เกี่ยวข้องกับแฟ้มนี้"
+      },
+      "spoiler": 2
+    },
+    {
+      "id": "chris",
+      "category": "character",
+      "name": {
+        "en": "Chris Redfield",
+        "th": "Chris Redfield"
+      },
+      "description": {
+        "en": "A S.T.A.R.S. survivor. Claire’s older brother; Jill’s longtime partner.",
+        "th": "ผู้รอดชีวิต S.T.A.R.S. พี่ชายของ Claire และคู่หูที่ร่วมงานกับ Jill มานาน"
+      },
+      "spoiler": 1
+    },
+    {
+      "id": "claire",
+      "category": "character",
+      "name": {
+        "en": "Claire Redfield",
+        "th": "Claire Redfield"
+      },
+      "description": {
+        "en": "Chris’s younger sister. Her search for him becomes a commitment to protecting survivors.",
+        "th": "น้องสาว Chris ที่เริ่มจากตามหาพี่ ก่อนมุ่งปกป้องผู้รอดชีวิต"
+      },
+      "spoiler": 2
+    },
+    {
+      "id": "curtis",
+      "category": "character",
+      "name": {
+        "en": "Curtis Miller",
+        "th": "Curtis Miller"
+      },
+      "description": {
+        "en": "Follow the incidents connected to this record.",
+        "th": "ติดตามเหตุการณ์ที่เกี่ยวข้องกับแฟ้มนี้"
+      },
+      "spoiler": 5
+    },
+    {
+      "id": "dylan",
+      "category": "character",
+      "name": {
+        "en": "Dylan Blake",
+        "th": "Dylan Blake"
+      },
+      "description": {
+        "en": "Follow the incidents connected to this record.",
+        "th": "ติดตามเหตุการณ์ที่เกี่ยวข้องกับแฟ้มนี้"
+      },
+      "spoiler": 7
+    },
+    {
+      "id": "edward",
+      "category": "character",
+      "name": {
+        "en": "Edward Ashford",
+        "th": "Edward Ashford"
+      },
+      "description": {
+        "en": "Follow the incidents connected to this record.",
+        "th": "ติดตามเหตุการณ์ที่เกี่ยวข้องกับแฟ้มนี้"
+      },
+      "spoiler": 1
+    },
+    {
+      "id": "emily",
+      "category": "character",
+      "name": {
+        "en": "Emily",
+        "th": "Emily"
+      },
+      "description": {
+        "en": "Follow the incidents connected to this record.",
+        "th": "ติดตามเหตุการณ์ที่เกี่ยวข้องกับแฟ้มนี้"
+      },
+      "spoiler": 9
+    },
+    {
+      "id": "ethan",
+      "category": "character",
+      "name": {
+        "en": "Ethan Winters",
+        "th": "Ethan Winters"
+      },
+      "description": {
+        "en": "A civilian looking for his missing wife, Mia.",
+        "th": "พลเรือนที่ออกตามหา Mia ภรรยาที่หายตัวไป"
+      },
+      "spoiler": 7
+    },
+    {
+      "id": "eveline",
+      "category": "character",
+      "name": {
+        "en": "Eveline",
+        "th": "Eveline"
+      },
+      "description": {
+        "en": "Follow the incidents connected to this record.",
+        "th": "ติดตามเหตุการณ์ที่เกี่ยวข้องกับแฟ้มนี้"
+      },
+      "spoiler": 7
+    },
+    {
+      "id": "excella",
+      "category": "character",
+      "name": {
+        "en": "Excella Gionne",
+        "th": "Excella Gionne"
+      },
+      "description": {
+        "en": "Follow the incidents connected to this record.",
+        "th": "ติดตามเหตุการณ์ที่เกี่ยวข้องกับแฟ้มนี้"
+      },
+      "spoiler": 5
+    },
+    {
+      "id": "fong",
+      "category": "character",
+      "name": {
+        "en": "Fong Ling",
+        "th": "Fong Ling"
+      },
+      "description": {
+        "en": "Follow the incidents connected to this record.",
+        "th": "ติดตามเหตุการณ์ที่เกี่ยวข้องกับแฟ้มนี้"
+      },
+      "spoiler": 4
+    },
+    {
+      "id": "gideon",
+      "category": "character",
+      "name": {
+        "en": "Victor Gideon",
+        "th": "Victor Gideon"
+      },
+      "description": {
+        "en": "Follow the incidents connected to this record.",
+        "th": "ติดตามเหตุการณ์ที่เกี่ยวข้องกับแฟ้มนี้"
+      },
+      "spoiler": 9
+    },
+    {
+      "id": "grace",
+      "category": "character",
+      "name": {
+        "en": "Grace Ashcroft",
+        "th": "Grace Ashcroft"
+      },
+      "description": {
+        "en": "Alyssa’s adopted daughter and an FBI analyst confronting her family’s past.",
+        "th": "ลูกบุญธรรม Alyssa และนักวิเคราะห์ FBI ที่ต้องเผชิญอดีตครอบครัว"
+      },
+      "spoiler": 9
+    },
+    {
+      "id": "helena",
+      "category": "character",
+      "name": {
+        "en": "Helena Harper",
+        "th": "Helena Harper"
+      },
+      "description": {
+        "en": "Follow the incidents connected to this record.",
+        "th": "ติดตามเหตุการณ์ที่เกี่ยวข้องกับแฟ้มนี้"
+      },
+      "spoiler": 6
+    },
+    {
+      "id": "hunk",
+      "category": "character",
+      "name": {
+        "en": "HUNK",
+        "th": "HUNK"
+      },
+      "description": {
+        "en": "Follow the incidents connected to this record.",
+        "th": "ติดตามเหตุการณ์ที่เกี่ยวข้องกับแฟ้มนี้"
+      },
+      "spoiler": 2
+    },
+    {
+      "id": "jack",
+      "category": "character",
+      "name": {
+        "en": "Jack Baker",
+        "th": "Jack Baker"
+      },
+      "description": {
+        "en": "Follow the incidents connected to this record.",
+        "th": "ติดตามเหตุการณ์ที่เกี่ยวข้องกับแฟ้มนี้"
+      },
+      "spoiler": 7
+    },
+    {
+      "id": "jake",
+      "category": "character",
+      "name": {
+        "en": "Jake Muller",
+        "th": "Jake Muller"
+      },
+      "description": {
+        "en": "Follow the incidents connected to this record.",
+        "th": "ติดตามเหตุการณ์ที่เกี่ยวข้องกับแฟ้มนี้"
+      },
+      "spoiler": 6
+    },
+    {
+      "id": "jason",
+      "category": "character",
+      "name": {
+        "en": "Jason",
+        "th": "Jason"
+      },
+      "description": {
+        "en": "Follow the incidents connected to this record.",
+        "th": "ติดตามเหตุการณ์ที่เกี่ยวข้องกับแฟ้มนี้"
+      },
+      "spoiler": 5
+    },
+    {
+      "id": "jessica",
+      "category": "character",
+      "name": {
+        "en": "Jessica Sherawat",
+        "th": "Jessica Sherawat"
+      },
+      "description": {
+        "en": "Follow the incidents connected to this record.",
+        "th": "ติดตามเหตุการณ์ที่เกี่ยวข้องกับแฟ้มนี้"
+      },
+      "spoiler": 4
+    },
+    {
+      "id": "jill",
+      "category": "character",
+      "name": {
+        "en": "Jill Valentine",
+        "th": "Jill Valentine"
+      },
+      "description": {
+        "en": "A S.T.A.R.S. survivor whose history connects Arklay and Raccoon City.",
+        "th": "ผู้รอดชีวิต S.T.A.R.S. ที่เชื่อมเหตุ Arklay กับ Raccoon City"
+      },
+      "spoiler": 1
+    },
+    {
+      "id": "joe",
+      "category": "character",
+      "name": {
+        "en": "Joe Baker",
+        "th": "Joe Baker"
+      },
+      "description": {
+        "en": "Follow the incidents connected to this record.",
+        "th": "ติดตามเหตุการณ์ที่เกี่ยวข้องกับแฟ้มนี้"
+      },
+      "spoiler": 7
+    },
+    {
+      "id": "josh",
+      "category": "character",
+      "name": {
+        "en": "Josh Stone",
+        "th": "Josh Stone"
+      },
+      "description": {
+        "en": "Follow the incidents connected to this record.",
+        "th": "ติดตามเหตุการณ์ที่เกี่ยวข้องกับแฟ้มนี้"
+      },
+      "spoiler": 5
+    },
+    {
+      "id": "krauser",
+      "category": "character",
+      "name": {
+        "en": "Jack Krauser",
+        "th": "Jack Krauser"
+      },
+      "description": {
+        "en": "Follow the incidents connected to this record.",
+        "th": "ติดตามเหตุการณ์ที่เกี่ยวข้องกับแฟ้มนี้"
+      },
+      "spoiler": 4
+    },
+    {
+      "id": "leon",
+      "category": "character",
+      "name": {
+        "en": "Leon S. Kennedy",
+        "th": "Leon S. Kennedy"
+      },
+      "description": {
+        "en": "A rookie caught in Raccoon City on his first day. His path intersects repeatedly with Claire and Ada.",
+        "th": "ตำรวจใหม่ที่ติดใน Raccoon City วันเริ่มงาน เส้นทางเขาเชื่อม Claire และ Ada หลายครั้ง"
+      },
+      "spoiler": 2
+    },
+    {
+      "id": "lisa",
+      "category": "character",
+      "name": {
+        "en": "Lisa Trevor",
+        "th": "Lisa Trevor"
+      },
+      "description": {
+        "en": "Follow the incidents connected to this record.",
+        "th": "ติดตามเหตุการณ์ที่เกี่ยวข้องกับแฟ้มนี้"
+      },
+      "spoiler": 1
+    },
+    {
+      "id": "lucas",
+      "category": "character",
+      "name": {
+        "en": "Lucas Baker",
+        "th": "Lucas Baker"
+      },
+      "description": {
+        "en": "Follow the incidents connected to this record.",
+        "th": "ติดตามเหตุการณ์ที่เกี่ยวข้องกับแฟ้มนี้"
+      },
+      "spoiler": 7
+    },
+    {
+      "id": "luis",
+      "category": "character",
+      "name": {
+        "en": "Luis Serra",
+        "th": "Luis Serra"
+      },
+      "description": {
+        "en": "Follow the incidents connected to this record.",
+        "th": "ติดตามเหตุการณ์ที่เกี่ยวข้องกับแฟ้มนี้"
+      },
+      "spoiler": 4
+    },
+    {
+      "id": "manuela",
+      "category": "character",
+      "name": {
+        "en": "Manuela Hidalgo",
+        "th": "Manuela Hidalgo"
+      },
+      "description": {
+        "en": "Follow the incidents connected to this record.",
+        "th": "ติดตามเหตุการณ์ที่เกี่ยวข้องกับแฟ้มนี้"
+      },
+      "spoiler": 4
+    },
+    {
+      "id": "marcus",
+      "category": "character",
+      "name": {
+        "en": "James Marcus",
+        "th": "James Marcus"
+      },
+      "description": {
+        "en": "Follow the incidents connected to this record.",
+        "th": "ติดตามเหตุการณ์ที่เกี่ยวข้องกับแฟ้มนี้"
+      },
+      "spoiler": 1
+    },
+    {
+      "id": "maria",
+      "category": "character",
+      "name": {
+        "en": "Maria Gomez",
+        "th": "Maria Gomez"
+      },
+      "description": {
+        "en": "Follow the incidents connected to this record.",
+        "th": "ติดตามเหตุการณ์ที่เกี่ยวข้องกับแฟ้มนี้"
+      },
+      "spoiler": 7
+    },
+    {
+      "id": "mia",
+      "category": "character",
+      "name": {
+        "en": "Mia Winters",
+        "th": "Mia Winters"
+      },
+      "description": {
+        "en": "Follow the incidents connected to this record.",
+        "th": "ติดตามเหตุการณ์ที่เกี่ยวข้องกับแฟ้มนี้"
+      },
+      "spoiler": 7
+    },
+    {
+      "id": "miranda",
+      "category": "character",
+      "name": {
+        "en": "Miranda",
+        "th": "Miranda"
+      },
+      "description": {
+        "en": "Follow the incidents connected to this record.",
+        "th": "ติดตามเหตุการณ์ที่เกี่ยวข้องกับแฟ้มนี้"
+      },
+      "spoiler": 8
+    },
+    {
+      "id": "moira",
+      "category": "character",
+      "name": {
+        "en": "Moira Burton",
+        "th": "Moira Burton"
+      },
+      "description": {
+        "en": "Follow the incidents connected to this record.",
+        "th": "ติดตามเหตุการณ์ที่เกี่ยวข้องกับแฟ้มนี้"
+      },
+      "spoiler": 6
+    },
+    {
+      "id": "natalia",
+      "category": "character",
+      "name": {
+        "en": "Natalia Korda",
+        "th": "Natalia Korda"
+      },
+      "description": {
+        "en": "Follow the incidents connected to this record.",
+        "th": "ติดตามเหตุการณ์ที่เกี่ยวข้องกับแฟ้มนี้"
+      },
+      "spoiler": 6
+    },
+    {
+      "id": "parker",
+      "category": "character",
+      "name": {
+        "en": "Parker Luciani",
+        "th": "Parker Luciani"
+      },
+      "description": {
+        "en": "Follow the incidents connected to this record.",
+        "th": "ติดตามเหตุการณ์ที่เกี่ยวข้องกับแฟ้มนี้"
+      },
+      "spoiler": 4
+    },
+    {
+      "id": "piers",
+      "category": "character",
+      "name": {
+        "en": "Piers Nivans",
+        "th": "Piers Nivans"
+      },
+      "description": {
+        "en": "Follow the incidents connected to this record.",
+        "th": "ติดตามเหตุการณ์ที่เกี่ยวข้องกับแฟ้มนี้"
+      },
+      "spoiler": 6
+    },
+    {
+      "id": "raymond",
+      "category": "character",
+      "name": {
+        "en": "Raymond Vester",
+        "th": "Raymond Vester"
+      },
+      "description": {
+        "en": "Follow the incidents connected to this record.",
+        "th": "ติดตามเหตุการณ์ที่เกี่ยวข้องกับแฟ้มนี้"
+      },
+      "spoiler": 4
+    },
+    {
+      "id": "rebecca",
+      "category": "character",
+      "name": {
+        "en": "Rebecca Chambers",
+        "th": "Rebecca Chambers"
+      },
+      "description": {
+        "en": "Bravo Team’s young medic and a survivor of the 1998 Arklay incidents.",
+        "th": "แพทย์สนามรุ่นเยาว์ของทีม Bravo และผู้รอดชีวิตจาก Arklay ปี 1998"
+      },
+      "spoiler": 1
+    },
+    {
+      "id": "rose",
+      "category": "character",
+      "name": {
+        "en": "Rose Winters",
+        "th": "Rose Winters"
+      },
+      "description": {
+        "en": "Ethan and Mia’s daughter, drawn into a conflict over inherited mold biology.",
+        "th": "ลูกสาว Ethan กับ Mia ที่ถูกดึงเข้าความขัดแย้งจากชีววิทยาเชื้อราที่ได้รับมา"
+      },
+      "spoiler": 8
+    },
+    {
+      "id": "sherry",
+      "category": "character",
+      "name": {
+        "en": "Sherry Birkin",
+        "th": "Sherry Birkin"
+      },
+      "description": {
+        "en": "William and Annette Birkin’s daughter, protected by Claire during the city outbreak.",
+        "th": "ลูกสาว William กับ Annette Birkin ที่ Claire ปกป้องระหว่างการระบาดในเมือง"
+      },
+      "spoiler": 2
+    },
+    {
+      "id": "sheva",
+      "category": "character",
+      "name": {
+        "en": "Sheva Alomar",
+        "th": "Sheva Alomar"
+      },
+      "description": {
+        "en": "Follow the incidents connected to this record.",
+        "th": "ติดตามเหตุการณ์ที่เกี่ยวข้องกับแฟ้มนี้"
+      },
+      "spoiler": 5
+    },
+    {
+      "id": "simmons",
+      "category": "character",
+      "name": {
+        "en": "Derek C. Simmons",
+        "th": "Derek C. Simmons"
+      },
+      "description": {
+        "en": "Follow the incidents connected to this record.",
+        "th": "ติดตามเหตุการณ์ที่เกี่ยวข้องกับแฟ้มนี้"
+      },
+      "spoiler": 6
+    },
+    {
+      "id": "spencer",
+      "category": "character",
+      "name": {
+        "en": "Oswell E. Spencer",
+        "th": "Oswell E. Spencer"
+      },
+      "description": {
+        "en": "Follow the incidents connected to this record.",
+        "th": "ติดตามเหตุการณ์ที่เกี่ยวข้องกับแฟ้มนี้"
+      },
+      "spoiler": 1
+    },
+    {
+      "id": "steve",
+      "category": "character",
+      "name": {
+        "en": "Steve Burnside",
+        "th": "Steve Burnside"
+      },
+      "description": {
+        "en": "Follow the incidents connected to this record.",
+        "th": "ติดตามเหตุการณ์ที่เกี่ยวข้องกับแฟ้มนี้"
+      },
+      "spoiler": 3
+    },
+    {
+      "id": "wesker",
+      "category": "character",
+      "name": {
+        "en": "Albert Wesker",
+        "th": "Albert Wesker"
+      },
+      "description": {
+        "en": "Researcher and S.T.A.R.S. captain, hiding his involvement with Umbrella.",
+        "th": "นักวิจัยและหัวหน้า S.T.A.R.S. ที่ซ่อนความเกี่ยวข้องกับ Umbrella"
+      },
+      "spoiler": 1
+    },
+    {
+      "id": "zeno",
+      "category": "character",
+      "name": {
+        "en": "Zeno",
+        "th": "Zeno"
+      },
+      "description": {
+        "en": "Follow the incidents connected to this record.",
+        "th": "ติดตามเหตุการณ์ที่เกี่ยวข้องกับแฟ้มนี้"
+      },
+      "spoiler": 9
+    },
+    {
+      "id": "zoe",
+      "category": "character",
+      "name": {
+        "en": "Zoe Baker",
+        "th": "Zoe Baker"
+      },
+      "description": {
+        "en": "Follow the incidents connected to this record.",
+        "th": "ติดตามเหตุการณ์ที่เกี่ยวข้องกับแฟ้มนี้"
+      },
+      "spoiler": 7
+    },
+    {
+      "id": "blue-umbrella",
+      "category": "organization",
+      "name": {
+        "en": "Blue Umbrella",
+        "th": "Blue Umbrella"
+      },
+      "description": {
+        "en": "The reformed organization using Umbrella’s name; distinct from Neo-Umbrella.",
+        "th": "องค์กรที่ปรับรูปแบบและใช้ชื่อ Umbrella แยกจาก Neo-Umbrella"
+      },
+      "spoiler": 7
+    },
+    {
+      "id": "bsaa",
+      "category": "organization",
+      "name": {
+        "en": "BSAA",
+        "th": "BSAA"
+      },
+      "description": {
+        "en": "Bioterrorism Security Assessment Alliance: an international response organization.",
+        "th": "Bioterrorism Security Assessment Alliance องค์กรตอบโต้ก่อการร้ายชีวภาพระดับนานาชาติ"
+      },
+      "spoiler": 4
+    },
+    {
+      "id": "connections",
+      "category": "organization",
+      "name": {
+        "en": "The Connections",
+        "th": "The Connections"
+      },
+      "description": {
+        "en": "A covert biological weapons network central to the mold program.",
+        "th": "เครือข่ายอาวุธชีวภาพลับที่มีบทบาทสำคัญกับโครงการเชื้อรา"
+      },
+      "spoiler": 7
+    },
+    {
+      "id": "dso",
+      "category": "organization",
+      "name": {
+        "en": "DSO",
+        "th": "DSO"
+      },
+      "description": {
+        "en": "Follow the incidents connected to this record.",
+        "th": "ติดตามเหตุการณ์ที่เกี่ยวข้องกับแฟ้มนี้"
+      },
+      "spoiler": 9
+    },
+    {
+      "id": "family",
+      "category": "organization",
+      "name": {
+        "en": "The Family",
+        "th": "The Family"
+      },
+      "description": {
+        "en": "Follow the incidents connected to this record.",
+        "th": "ติดตามเหตุการณ์ที่เกี่ยวข้องกับแฟ้มนี้"
+      },
+      "spoiler": 6
+    },
+    {
+      "id": "fbc",
+      "category": "organization",
+      "name": {
+        "en": "FBC",
+        "th": "FBC"
+      },
+      "description": {
+        "en": "Follow the incidents connected to this record.",
+        "th": "ติดตามเหตุการณ์ที่เกี่ยวข้องกับแฟ้มนี้"
+      },
+      "spoiler": 4
+    },
+    {
+      "id": "fbi",
+      "category": "organization",
+      "name": {
+        "en": "FBI",
+        "th": "FBI"
+      },
+      "description": {
+        "en": "Follow the incidents connected to this record.",
+        "th": "ติดตามเหตุการณ์ที่เกี่ยวข้องกับแฟ้มนี้"
+      },
+      "spoiler": 9
+    },
+    {
+      "id": "hcf",
+      "category": "organization",
+      "name": {
+        "en": "H.C.F.",
+        "th": "H.C.F."
+      },
+      "description": {
+        "en": "Follow the incidents connected to this record.",
+        "th": "ติดตามเหตุการณ์ที่เกี่ยวข้องกับแฟ้มนี้"
+      },
+      "spoiler": 7
+    },
+    {
+      "id": "iluminados",
+      "category": "organization",
+      "name": {
+        "en": "Los Iluminados",
+        "th": "Los Iluminados"
+      },
+      "description": {
+        "en": "Follow the incidents connected to this record.",
+        "th": "ติดตามเหตุการณ์ที่เกี่ยวข้องกับแฟ้มนี้"
+      },
+      "spoiler": 4
+    },
+    {
+      "id": "neo-umbrella",
+      "category": "organization",
+      "name": {
+        "en": "Neo-Umbrella",
+        "th": "Neo-Umbrella"
+      },
+      "description": {
+        "en": "Carla’s organization; not the original Umbrella Corporation revived.",
+        "th": "องค์กรของ Carla ไม่ใช่บริษัท Umbrella เดิมกลับมาเปิดอีกครั้ง"
+      },
+      "spoiler": 6
+    },
+    {
+      "id": "stars",
+      "category": "organization",
+      "name": {
+        "en": "S.T.A.R.S.",
+        "th": "S.T.A.R.S."
+      },
+      "description": {
+        "en": "Follow the incidents connected to this record.",
+        "th": "ติดตามเหตุการณ์ที่เกี่ยวข้องกับแฟ้มนี้"
+      },
+      "spoiler": 1
+    },
+    {
+      "id": "terrasave",
+      "category": "organization",
+      "name": {
+        "en": "TerraSave",
+        "th": "TerraSave"
+      },
+      "description": {
+        "en": "Follow the incidents connected to this record.",
+        "th": "ติดตามเหตุการณ์ที่เกี่ยวข้องกับแฟ้มนี้"
+      },
+      "spoiler": 4
+    },
+    {
+      "id": "tricell",
+      "category": "organization",
+      "name": {
+        "en": "Tricell",
+        "th": "Tricell"
+      },
+      "description": {
+        "en": "Follow the incidents connected to this record.",
+        "th": "ติดตามเหตุการณ์ที่เกี่ยวข้องกับแฟ้มนี้"
+      },
+      "spoiler": 4
+    },
+    {
+      "id": "ubcs",
+      "category": "organization",
+      "name": {
+        "en": "U.B.C.S.",
+        "th": "U.B.C.S."
+      },
+      "description": {
+        "en": "Follow the incidents connected to this record.",
+        "th": "ติดตามเหตุการณ์ที่เกี่ยวข้องกับแฟ้มนี้"
+      },
+      "spoiler": 2
+    },
+    {
+      "id": "umbrella",
+      "category": "organization",
+      "name": {
+        "en": "Umbrella",
+        "th": "Umbrella"
+      },
+      "description": {
+        "en": "A pharmaceutical front for biological weapons. Its laboratories connect most early outbreaks.",
+        "th": "บริษัทเวชภัณฑ์ที่บังหน้าการพัฒนาอาวุธชีวภาพ แล็บของบริษัทเชื่อมการระบาดยุคแรกส่วนใหญ่"
+      },
+      "spoiler": 1
+    },
+    {
+      "id": "usgov",
+      "category": "organization",
+      "name": {
+        "en": "U.S. government",
+        "th": "U.S. government"
+      },
+      "description": {
+        "en": "Follow the incidents connected to this record.",
+        "th": "ติดตามเหตุการณ์ที่เกี่ยวข้องกับแฟ้มนี้"
+      },
+      "spoiler": 2
+    },
+    {
+      "id": "veltro",
+      "category": "organization",
+      "name": {
+        "en": "Veltro",
+        "th": "Veltro"
+      },
+      "description": {
+        "en": "Follow the incidents connected to this record.",
+        "th": "ติดตามเหตุการณ์ที่เกี่ยวข้องกับแฟ้มนี้"
+      },
+      "spoiler": 4
+    },
+    {
+      "id": "wilpharma",
+      "category": "organization",
+      "name": {
+        "en": "WilPharma",
+        "th": "WilPharma"
+      },
+      "description": {
+        "en": "Follow the incidents connected to this record.",
+        "th": "ติดตามเหตุการณ์ที่เกี่ยวข้องกับแฟ้มนี้"
+      },
+      "spoiler": 5
+    },
+    {
+      "id": "a-virus",
+      "category": "agent",
+      "name": {
+        "en": "A-virus",
+        "th": "A-virus"
+      },
+      "description": {
+        "en": "Follow the incidents connected to this record.",
+        "th": "ติดตามเหตุการณ์ที่เกี่ยวข้องกับแฟ้มนี้"
+      },
+      "spoiler": 7
+    },
+    {
+      "id": "c-virus",
+      "category": "agent",
+      "name": {
+        "en": "C-virus",
+        "th": "C-virus"
+      },
+      "description": {
+        "en": "Follow the incidents connected to this record.",
+        "th": "ติดตามเหตุการณ์ที่เกี่ยวข้องกับแฟ้มนี้"
+      },
+      "spoiler": 6
+    },
+    {
+      "id": "cadou",
+      "category": "agent",
+      "name": {
+        "en": "Cadou",
+        "th": "Cadou"
+      },
+      "description": {
+        "en": "Follow the incidents connected to this record.",
+        "th": "ติดตามเหตุการณ์ที่เกี่ยวข้องกับแฟ้มนี้"
+      },
+      "spoiler": 8
+    },
+    {
+      "id": "elpis",
+      "category": "agent",
+      "name": {
+        "en": "Elpis (countermeasure)",
+        "th": "Elpis (countermeasure)"
+      },
+      "description": {
+        "en": "An antiviral countermeasure, not a new biological weapon.",
+        "th": "สารรับมือไวรัส ไม่ใช่อาวุธชีวภาพชนิดใหม่"
+      },
+      "spoiler": 9
+    },
+    {
+      "id": "g-virus",
+      "category": "agent",
+      "name": {
+        "en": "G-virus",
+        "th": "G-virus"
+      },
+      "description": {
+        "en": "Follow the incidents connected to this record.",
+        "th": "ติดตามเหตุการณ์ที่เกี่ยวข้องกับแฟ้มนี้"
+      },
+      "spoiler": 2
+    },
+    {
+      "id": "megamycete",
+      "category": "agent",
+      "name": {
+        "en": "Megamycete",
+        "th": "Megamycete"
+      },
+      "description": {
+        "en": "Follow the incidents connected to this record.",
+        "th": "ติดตามเหตุการณ์ที่เกี่ยวข้องกับแฟ้มนี้"
+      },
+      "spoiler": 8
+    },
+    {
+      "id": "mold",
+      "category": "agent",
+      "name": {
+        "en": "Mold / Mutamycete",
+        "th": "Mold / Mutamycete"
+      },
+      "description": {
+        "en": "A fungal biological system; separate from the Progenitor virus family.",
+        "th": "ระบบชีวภาพของเชื้อรา แยกจากตระกูลไวรัส Progenitor"
+      },
+      "spoiler": 7
+    },
+    {
+      "id": "ne-alpha",
+      "category": "agent",
+      "name": {
+        "en": "NE-α parasite",
+        "th": "NE-α parasite"
+      },
+      "description": {
+        "en": "Follow the incidents connected to this record.",
+        "th": "ติดตามเหตุการณ์ที่เกี่ยวข้องกับแฟ้มนี้"
+      },
+      "spoiler": 2
+    },
+    {
+      "id": "p30",
+      "category": "agent",
+      "name": {
+        "en": "P30 (control drug)",
+        "th": "P30 (control drug)"
+      },
+      "description": {
+        "en": "A behavior-control drug, not a pathogen.",
+        "th": "ยาควบคุมพฤติกรรม ไม่ใช่เชื้อโรค"
+      },
+      "spoiler": 5
+    },
+    {
+      "id": "penamstan-agent",
+      "category": "agent",
+      "name": {
+        "en": "Penamstan agent (unnamed)",
+        "th": "Penamstan agent (unnamed)"
+      },
+      "description": {
+        "en": "Follow the incidents connected to this record.",
+        "th": "ติดตามเหตุการณ์ที่เกี่ยวข้องกับแฟ้มนี้"
+      },
+      "spoiler": 5
+    },
+    {
+      "id": "plaga",
+      "category": "agent",
+      "name": {
+        "en": "Las Plagas",
+        "th": "Las Plagas"
+      },
+      "description": {
+        "en": "Parasites that can control hosts. They are not viruses.",
+        "th": "ปรสิตที่ควบคุมผู้เป็นร่างอาศัยได้ ไม่ใช่ไวรัส"
+      },
+      "spoiler": 4
+    },
+    {
+      "id": "progenitor",
+      "category": "agent",
+      "name": {
+        "en": "Progenitor",
+        "th": "Progenitor"
+      },
+      "description": {
+        "en": "The foundational viral discovery behind Umbrella’s principal research lines.",
+        "th": "ไวรัสต้นทางของสายวิจัยหลักของ Umbrella"
+      },
+      "spoiler": 1
+    },
+    {
+      "id": "prototype",
+      "category": "agent",
+      "name": {
+        "en": "Wesker’s prototype virus",
+        "th": "Wesker’s prototype virus"
+      },
+      "description": {
+        "en": "Follow the incidents connected to this record.",
+        "th": "ติดตามเหตุการณ์ที่เกี่ยวข้องกับแฟ้มนี้"
+      },
+      "spoiler": 3
+    },
+    {
+      "id": "rcs",
+      "category": "agent",
+      "name": {
+        "en": "Raccoon City Syndrome",
+        "th": "Raccoon City Syndrome"
+      },
+      "description": {
+        "en": "A later syndrome of residual t-virus infection in some Raccoon survivors.",
+        "th": "กลุ่มอาการจาก t-virus ที่หลงเหลือในผู้รอดชีวิต Raccoon บางคน"
+      },
+      "spoiler": 9
+    },
+    {
+      "id": "sonido-agent",
+      "category": "agent",
+      "name": {
+        "en": "Sonido agent (unclassified)",
+        "th": "Sonido agent (unclassified)"
+      },
+      "description": {
+        "en": "Follow the incidents connected to this record.",
+        "th": "ติดตามเหตุการณ์ที่เกี่ยวข้องกับแฟ้มนี้"
+      },
+      "spoiler": 7
+    },
+    {
+      "id": "t-abyss",
+      "category": "agent",
+      "name": {
+        "en": "t-Abyss",
+        "th": "t-Abyss"
+      },
+      "description": {
+        "en": "Follow the incidents connected to this record.",
+        "th": "ติดตามเหตุการณ์ที่เกี่ยวข้องกับแฟ้มนี้"
+      },
+      "spoiler": 4
+    },
+    {
+      "id": "t-g",
+      "category": "agent",
+      "name": {
+        "en": "t+G",
+        "th": "t+G"
+      },
+      "description": {
+        "en": "Follow the incidents connected to this record.",
+        "th": "ติดตามเหตุการณ์ที่เกี่ยวข้องกับแฟ้มนี้"
+      },
+      "spoiler": 4
+    },
+    {
+      "id": "t-phobos",
+      "category": "agent",
+      "name": {
+        "en": "t-Phobos",
+        "th": "t-Phobos"
+      },
+      "description": {
+        "en": "Follow the incidents connected to this record.",
+        "th": "ติดตามเหตุการณ์ที่เกี่ยวข้องกับแฟ้มนี้"
+      },
+      "spoiler": 6
+    },
+    {
+      "id": "t-veronica",
+      "category": "agent",
+      "name": {
+        "en": "t-Veronica",
+        "th": "t-Veronica"
+      },
+      "description": {
+        "en": "Follow the incidents connected to this record.",
+        "th": "ติดตามเหตุการณ์ที่เกี่ยวข้องกับแฟ้มนี้"
+      },
+      "spoiler": 3
+    },
+    {
+      "id": "t-virus",
+      "category": "agent",
+      "name": {
+        "en": "t-virus family",
+        "th": "t-virus family"
+      },
+      "description": {
+        "en": "Follow the incidents connected to this record.",
+        "th": "ติดตามเหตุการณ์ที่เกี่ยวข้องกับแฟ้มนี้"
+      },
+      "spoiler": 1
+    },
+    {
+      "id": "uroboros",
+      "category": "agent",
+      "name": {
+        "en": "Uroboros",
+        "th": "Uroboros"
+      },
+      "description": {
+        "en": "Follow the incidents connected to this record.",
+        "th": "ติดตามเหตุการณ์ที่เกี่ยวข้องกับแฟ้มนี้"
+      },
+      "spoiler": 5
+    }
+  ],
+  "biology": [
+    {
+      "id": "progenitor",
+      "title": "Progenitor",
+      "description": {
+        "en": "Viral foundation found in the Stairway of the Sun flower.",
+        "th": "รากฐานไวรัสที่พบในดอก Stairway of the Sun"
+      },
+      "parents": [],
+      "sources": [
+        "brandon"
+      ],
+      "spoiler": 1
+    },
+    {
+      "id": "t-virus",
+      "title": "t-virus family",
+      "description": {
+        "en": "Multiple weapon strains; zombies and many early B.O.W.s.",
+        "th": "หลายสายพันธุ์สำหรับอาวุธ ต้นเหตุซอมบี้และ B.O.W. ยุคแรกจำนวนมาก"
+      },
+      "parents": [
+        {
+          "id": "progenitor",
+          "type": "derived"
+        }
+      ],
+      "sources": [
+        "marcus"
+      ],
+      "spoiler": 1
+    },
+    {
+      "id": "g-virus",
+      "title": "G-virus",
+      "description": {
+        "en": "A separate research branch isolated through Lisa’s long-running experiments.",
+        "th": "สายวิจัยแยกที่ค้นพบผ่านการทดลองระยะยาวกับ Lisa"
+      },
+      "parents": [
+        {
+          "id": "progenitor",
+          "type": "research-line"
+        }
+      ],
+      "sources": [
+        "history5"
+      ],
+      "spoiler": 2
+    },
+    {
+      "id": "t-veronica",
+      "title": "t-Veronica",
+      "description": {
+        "en": "Alexia’s Progenitor-based work uses queen-ant and plant material.",
+        "th": "งานจาก Progenitor ของ Alexia ใช้สารจากมดราชินีและพืช"
+      },
+      "parents": [
+        {
+          "id": "progenitor",
+          "type": "derived"
+        }
+      ],
+      "sources": [
+        "queen"
+      ],
+      "spoiler": 3
+    },
+    {
+      "id": "t-abyss",
+      "title": "t-Abyss",
+      "description": {
+        "en": "A marine virus combined with t-virus research.",
+        "th": "ไวรัสทะเลที่ผสานกับงาน t-virus"
+      },
+      "parents": [
+        {
+          "id": "t-virus",
+          "type": "combined"
+        }
+      ],
+      "sources": [
+        "work-rev"
+      ],
+      "spoiler": 4
+    },
+    {
+      "id": "t-g",
+      "title": "t+G",
+      "description": {
+        "en": "The experimental combination involved in Dead Aim.",
+        "th": "สารทดลองผสมที่ใช้ใน Dead Aim"
+      },
+      "parents": [
+        {
+          "id": "t-virus",
+          "type": "combined"
+        },
+        {
+          "id": "g-virus",
+          "type": "combined"
+        }
+      ],
+      "sources": [
+        "work-dead"
+      ],
+      "spoiler": 4
+    },
+    {
+      "id": "uroboros",
+      "title": "Uroboros",
+      "description": {
+        "en": "Progenitor-derived selection weapon; Jill’s antibodies help refinement.",
+        "th": "อาวุธคัดเลือกจาก Progenitor ที่ใช้แอนติบอดี Jill ช่วยปรับสูตร"
+      },
+      "parents": [
+        {
+          "id": "progenitor",
+          "type": "derived"
+        }
+      ],
+      "sources": [
+        "jill",
+        "work-re5"
+      ],
+      "spoiler": 5
+    },
+    {
+      "id": "c-virus",
+      "title": "C-virus",
+      "description": {
+        "en": "G-related material plus a modified t-Veronica component (t-02).",
+        "th": "สารเกี่ยวกับ G ผสานส่วน t-Veronica ที่ดัดแปลง (t-02)"
+      },
+      "parents": [
+        {
+          "id": "g-virus",
+          "type": "combined"
+        },
+        {
+          "id": "t-veronica",
+          "type": "combined"
+        }
+      ],
+      "sources": [
+        "carla",
+        "cvirus"
+      ],
+      "spoiler": 6
+    },
+    {
+      "id": "t-phobos",
+      "title": "t-Phobos",
+      "description": {
+        "en": "Fear-sensitive weapon used in Alex’s island trials.",
+        "th": "อาวุธที่ตอบสนองความกลัวในงานทดลองบนเกาะของ Alex"
+      },
+      "parents": [
+        {
+          "id": "t-virus",
+          "type": "research-line"
+        }
+      ],
+      "sources": [
+        "work-rev2"
+      ],
+      "spoiler": 6
+    },
+    {
+      "id": "plaga",
+      "title": "Las Plagas",
+      "description": {
+        "en": "Independent parasites. Dominant forms can direct subordinate hosts. Later weaponized variants appear abroad.",
+        "th": "ปรสิตที่มีต้นกำเนิดแยก รูปแบบควบคุมสั่งร่างอาศัยรองได้ และถูกดัดแปลงเป็นอาวุธในต่างประเทศ"
+      },
+      "parents": [],
+      "sources": [
+        "work-re4",
+        "work-damnation",
+        "work-re5"
+      ],
+      "spoiler": 4
+    },
+    {
+      "id": "megamycete",
+      "title": "Megamycete",
+      "description": {
+        "en": "A vast fungus that preserves absorbed consciousness.",
+        "th": "เชื้อราขนาดมหึมาที่เก็บจิตสำนึกที่ดูดซึม"
+      },
+      "parents": [],
+      "sources": [
+        "miranda"
+      ],
+      "spoiler": 8
+    },
+    {
+      "id": "mold",
+      "title": "Mold / Mutamycete",
+      "description": {
+        "en": "The fungal research line weaponized by the Connections; Eveline influences infected hosts.",
+        "th": "สายเชื้อราที่ The Connections พัฒนาเป็นอาวุธ Eveline ชักจูงผู้ติดเชื้อได้"
+      },
+      "parents": [
+        {
+          "id": "megamycete",
+          "type": "research-line"
+        }
+      ],
+      "sources": [
+        "miranda",
+        "work-re7"
+      ],
+      "spoiler": 7
+    },
+    {
+      "id": "cadou",
+      "title": "Cadou",
+      "description": {
+        "en": "Miranda’s mold-infected parasites; results depend on the host.",
+        "th": "ปรสิตติดเชื้อราของ Miranda ผลขึ้นอยู่กับร่างอาศัย"
+      },
+      "parents": [
+        {
+          "id": "mold",
+          "type": "combined"
+        }
+      ],
+      "sources": [
+        "miranda",
+        "work-village"
+      ],
+      "spoiler": 8
+    },
+    {
+      "id": "rcs",
+      "title": "Raccoon City Syndrome",
+      "description": {
+        "en": "A long-term condition from residual t-virus; not a separate foundational agent.",
+        "th": "ภาวะระยะยาวจาก t-virus ที่หลงเหลือ ไม่ใช่เชื้อต้นกำเนิดสายใหม่"
+      },
+      "parents": [
+        {
+          "id": "t-virus",
+          "type": "condition"
+        }
+      ],
+      "sources": [
+        "rcs"
+      ],
+      "spoiler": 9
+    },
+    {
+      "id": "elpis",
+      "title": "Elpis",
+      "description": {
+        "en": "Countermeasure to viral effects. No claim of universal action against mold or parasites.",
+        "th": "สารรับมือผลของไวรัส ไม่ถือว่ารับมือเชื้อราหรือปรสิตทุกชนิดได้"
+      },
+      "parents": [],
+      "sources": [
+        "grace-report",
+        "spencer-research"
+      ],
+      "spoiler": 9
+    }
+  ],
+  "events": [
+    {
+      "id": "miranda-origin",
+      "sortDate": "1919-01-01",
+      "date": {
+        "en": "c. 1919–1920",
+        "th": "ราว ค.ศ. 1919–1920"
+      },
+      "precision": "approximate",
+      "era": "origins",
+      "spoiler": 8,
+      "importance": "core",
+      "title": {
+        "en": "A mother finds a living archive",
+        "th": "แม่ผู้สูญเสีย กับคลังความทรงจำที่มีชีวิต"
+      },
+      "summary": {
+        "en": "Miranda loses Eva and discovers the Megamycete. Grief becomes a century-long experiment.",
+        "th": "Miranda สูญเสีย Eva และพบ Megamycete ความโศกเศร้ากลายเป็นการทดลองที่กินเวลาราวหนึ่งศตวรรษ"
+      },
+      "story": [
+        {
+          "en": "The fungal colony preserves the consciousness of people it absorbs. Miranda believes it can return her daughter. She experiments on villagers with mold and Cadou parasites, searching for a suitable vessel. This is a separate biological history from Umbrella’s viruses.",
+          "th": "เชื้อราขนาดมหึมานี้เก็บจิตสำนึกของคนที่มันดูดซึม Miranda จึงเชื่อว่าจะนำลูกสาวกลับมาได้ เธอทดลองเชื้อราและปรสิต Cadou กับชาวบ้านเพื่อหาร่างที่เหมาะสม สายการวิจัยนี้มีต้นกำเนิดแยกจากไวรัสของ Umbrella"
+        }
+      ],
+      "cause": {
+        "en": "Eva dies during the influenza pandemic.",
+        "th": "Eva เสียชีวิตในช่วงการระบาดของไข้หวัดใหญ่"
+      },
+      "consequence": {
+        "en": "The village becomes Miranda’s experimental population.",
+        "th": "หมู่บ้านกลายเป็นแหล่งทดลองของ Miranda"
+      },
+      "location": {
+        "en": "Eastern European village",
+        "th": "หมู่บ้านในยุโรปตะวันออก"
+      },
+      "characters": [
+        "miranda",
+        "rose"
+      ],
+      "organizations": [],
+      "agents": [
+        "megamycete",
+        "mold",
+        "cadou"
+      ],
+      "works": [
+        "village"
+      ],
+      "sources": [
+        "miranda"
+      ],
+      "uncertainty": {
+        "en": "The diary places Eva’s death about a century before 2021; it does not establish a precise day.",
+        "th": "บันทึกระบุว่า Eva เสียชีวิตประมาณหนึ่งร้อยปีก่อนปี 2021 ไม่ได้ให้วันแน่นอน"
+      },
+      "connections": [
+        "spencer-miranda",
+        "village",
+        "rose"
+      ]
+    },
+    {
+      "id": "spencer-miranda",
+      "sortDate": "1955-01-01",
+      "date": {
+        "en": "c. 1950s",
+        "th": "ราวทศวรรษ 1950"
+      },
+      "precision": "approximate",
+      "era": "origins",
+      "spoiler": 8,
+      "importance": "core",
+      "title": {
+        "en": "Spencer learns from Miranda",
+        "th": "Spencer เรียนรู้จาก Miranda"
+      },
+      "summary": {
+        "en": "A young scientist takes inspiration from the village, but chooses a different ambition.",
+        "th": "นักวิทยาศาสตร์หนุ่มได้แรงบันดาลใจจากหมู่บ้าน แต่เลือกเป้าหมายที่ต่างออกไป"
+      },
+      "story": [
+        {
+          "en": "Miranda shelters Oswell E. Spencer during his travels. Her research convinces him that biology can transform humanity. He later prefers a virus that can spread widely, rather than Miranda’s search for a single vessel. A cave symbol inspires Umbrella’s emblem.",
+          "th": "Miranda ช่วย Oswell E. Spencer ระหว่างการเดินทาง งานของเธอทำให้เขาเชื่อว่าชีววิทยาจะเปลี่ยนมนุษยชาติได้ ต่อมาเขาเลือกไวรัสที่แพร่กระจายได้กว้าง แทนการหาร่างเพียงหนึ่งเดียวอย่าง Miranda และนำสัญลักษณ์ในถ้ำมาเป็นแรงบันดาลใจให้ตรา Umbrella"
+        }
+      ],
+      "cause": {
+        "en": "Miranda’s experiments reveal the possibility of biological transformation.",
+        "th": "การทดลองของ Miranda แสดงให้เห็นว่าชีววิทยาเปลี่ยนมนุษย์ได้"
+      },
+      "consequence": {
+        "en": "Spencer pursues his own program of forced human evolution.",
+        "th": "Spencer เริ่มเส้นทางวิวัฒนาการมนุษย์ที่เขาจะเป็นผู้กำหนด"
+      },
+      "location": {
+        "en": "",
+        "th": ""
+      },
+      "characters": [
+        "spencer",
+        "miranda"
+      ],
+      "organizations": [],
+      "agents": [],
+      "works": [
+        "village"
+      ],
+      "sources": [
+        "spencer-letter"
+      ],
+      "uncertainty": {
+        "en": "The letter is undated. Its intervals support an approximate placement, not an exact meeting year.",
+        "th": "จดหมายไม่มีวันที่ ระยะเวลาที่กล่าวถึงใช้วางได้เพียงช่วงโดยประมาณ"
+      },
+      "connections": [
+        "progenitor",
+        "umbrella-founded"
+      ]
+    },
+    {
+      "id": "progenitor",
+      "sortDate": "1966-12-01",
+      "date": {
+        "en": "December 1966",
+        "th": "ธันวาคม 1966"
+      },
+      "precision": "month",
+      "era": "origins",
+      "spoiler": 1,
+      "importance": "core",
+      "title": {
+        "en": "The flower at the beginning",
+        "th": "ดอกไม้ที่จุดชนวนทุกอย่าง"
+      },
+      "summary": {
+        "en": "Spencer, Marcus and Edward Ashford identify Progenitor in West Africa.",
+        "th": "Spencer, Marcus และ Edward Ashford พบ Progenitor ในแอฟริกาตะวันตก"
+      },
+      "story": [
+        {
+          "en": "The Stairway of the Sun flower carries a virus with extraordinary effects on living organisms. Progenitor becomes the foundation of Umbrella’s viral research. Spencer sees a route to selective human evolution; his colleagues develop the research that makes it commercially and militarily usable.",
+          "th": "ดอก Stairway of the Sun มีไวรัสที่ส่งผลรุนแรงต่อสิ่งมีชีวิต Progenitor กลายเป็นรากฐานงานไวรัสของ Umbrella สำหรับ Spencer มันคือหนทางคัดเลือกและเปลี่ยนมนุษย์ ส่วนทีมวิจัยพัฒนาให้ใช้ได้จริงทั้งในธุรกิจและการทหาร"
+        }
+      ],
+      "cause": {
+        "en": "Spencer’s ambition demands a transformative biological agent.",
+        "th": "Spencer ต้องการสารชีวภาพที่เปลี่ยนมนุษย์ได้"
+      },
+      "consequence": {
+        "en": "A pharmaceutical company will conceal a biological weapons program.",
+        "th": "บริษัทเวชภัณฑ์กำลังจะกลายเป็นฉากบังหน้าของโครงการอาวุธชีวภาพ"
+      },
+      "location": {
+        "en": "West Africa",
+        "th": "แอฟริกาตะวันตก"
+      },
+      "characters": [
+        "spencer",
+        "marcus",
+        "edward"
+      ],
+      "organizations": [
+        "umbrella"
+      ],
+      "agents": [
+        "progenitor"
+      ],
+      "works": [
+        "re5"
+      ],
+      "sources": [
+        "brandon",
+        "history5"
+      ],
+      "uncertainty": null,
+      "connections": [
+        "t-virus",
+        "g-research",
+        "kijuju"
+      ]
+    },
+    {
+      "id": "trevor-family",
+      "sortDate": "1967-11-01",
+      "date": {
+        "en": "November 1967",
+        "th": "พฤศจิกายน 1967"
+      },
+      "precision": "month",
+      "era": "origins",
+      "spoiler": 1,
+      "importance": "core",
+      "title": {
+        "en": "A mansion built to keep secrets",
+        "th": "คฤหาสน์ที่สร้างมาเพื่อเก็บความลับ"
+      },
+      "summary": {
+        "en": "The Trevor family becomes part of the Arklay laboratory’s hidden experiments.",
+        "th": "ครอบครัว Trevor ถูกดึงเข้าสู่การทดลองลับของห้องแล็บ Arklay"
+      },
+      "story": [
+        {
+          "en": "Architect George Trevor builds Spencer’s mansion. Jessica and Lisa Trevor are used as human test subjects, while George is trapped and eliminated. Lisa survives repeated experiments for decades. The elegant mansion hides a research facility built on exploitation.",
+          "th": "George Trevor ออกแบบคฤหาสน์ให้ Spencer แต่ Jessica และ Lisa ถูกใช้เป็นมนุษย์ทดลอง ส่วน George ถูกขังและกำจัด Lisa รอดจากการทดลองซ้ำแล้วซ้ำเล่าเป็นเวลาหลายสิบปี ใต้ความหรูหราของคฤหาสน์จึงเป็นสถานที่วิจัยที่แลกมาด้วยชีวิตคน"
+        }
+      ],
+      "cause": {
+        "en": "Spencer needs a secluded facility and human subjects.",
+        "th": "Spencer ต้องการสถานที่ปิดและมนุษย์ทดลอง"
+      },
+      "consequence": {
+        "en": "Arklay becomes a central research site; Lisa remains there.",
+        "th": "Arklay กลายเป็นศูนย์วิจัยสำคัญ และ Lisa ยังติดอยู่ที่นั่น"
+      },
+      "location": {
+        "en": "Arklay Mountains",
+        "th": "เทือกเขา Arklay"
+      },
+      "characters": [
+        "spencer",
+        "lisa"
+      ],
+      "organizations": [
+        "umbrella"
+      ],
+      "agents": [
+        "progenitor"
+      ],
+      "works": [
+        "re1"
+      ],
+      "sources": [
+        "work-re1",
+        "history5"
+      ],
+      "uncertainty": null,
+      "connections": [
+        "g-research",
+        "mansion"
+      ]
+    },
+    {
+      "id": "umbrella-founded",
+      "sortDate": "1968-01-01",
+      "date": {
+        "en": "1968",
+        "th": "1968"
+      },
+      "precision": "year",
+      "era": "origins",
+      "spoiler": 1,
+      "importance": "core",
+      "title": {
+        "en": "Umbrella opens for business",
+        "th": "Umbrella เปิดฉากธุรกิจ"
+      },
+      "summary": {
+        "en": "A legitimate pharmaceutical enterprise finances a secret weapons program.",
+        "th": "ธุรกิจเวชภัณฑ์ที่ถูกกฎหมายหาเงินเลี้ยงโครงการอาวุธลับ"
+      },
+      "story": [
+        {
+          "en": "Spencer, James Marcus and Edward Ashford establish Umbrella. Medicines and consumer products provide money, laboratories and respectability. Behind that public identity, the founders pursue biological weapons and Spencer’s personal vision for humanity.",
+          "th": "Spencer, James Marcus และ Edward Ashford ร่วมก่อตั้ง Umbrella ยาและสินค้าสำหรับผู้บริโภคสร้างรายได้ ห้องทดลอง และความน่าเชื่อถือ ขณะที่เบื้องหลังบริษัทคือการพัฒนาอาวุธชีวภาพและความฝันส่วนตัวของ Spencer"
+        }
+      ],
+      "cause": {
+        "en": "Progenitor research needs funding and a public cover.",
+        "th": "งาน Progenitor ต้องการเงินทุนและฉากหน้าที่น่าเชื่อถือ"
+      },
+      "consequence": {
+        "en": "Umbrella’s laboratories spread across continents.",
+        "th": "ห้องทดลองของ Umbrella ขยายไปหลายทวีป"
+      },
+      "location": {
+        "en": "",
+        "th": ""
+      },
+      "characters": [
+        "spencer",
+        "marcus",
+        "edward"
+      ],
+      "organizations": [
+        "umbrella"
+      ],
+      "agents": [
+        "progenitor"
+      ],
+      "works": [
+        "re5",
+        "requiem"
+      ],
+      "sources": [
+        "history5",
+        "rc-report"
+      ],
+      "uncertainty": null,
+      "connections": [
+        "arklay-leak",
+        "umbrella-end"
+      ]
+    },
+    {
+      "id": "ashford-twins",
+      "sortDate": "1971-01-01",
+      "date": {
+        "en": "1971",
+        "th": "1971"
+      },
+      "precision": "year",
+      "era": "origins",
+      "spoiler": 3,
+      "importance": "support",
+      "title": {
+        "en": "The Ashford legacy is engineered",
+        "th": "ทายาท Ashford จากห้องทดลอง"
+      },
+      "summary": {
+        "en": "Alexander creates Alfred and Alexia through Project CODE: Veronica.",
+        "th": "Alexander สร้าง Alfred และ Alexia ผ่านโครงการ CODE: Veronica"
+      },
+      "story": [
+        {
+          "en": "Alexander Ashford tries to restore the family’s scientific standing by using genetic material associated with his ancestor Veronica. The resulting twins are not equal in scientific talent: Alexia becomes the prodigy whose experiments will later destroy the family.",
+          "th": "Alexander Ashford พยายามกู้ชื่อเสียงทางวิทยาศาสตร์ของตระกูล ด้วยพันธุกรรมที่เชื่อมโยงกับบรรพบุรุษ Veronica ฝาแฝดที่เกิดขึ้นมีพรสวรรค์ต่างกัน Alexia กลายเป็นอัจฉริยะผู้ทำการทดลองที่จะย้อนทำลายครอบครัว"
+        }
+      ],
+      "cause": {
+        "en": "The Ashford line loses influence within Umbrella.",
+        "th": "ตระกูล Ashford สูญเสียอิทธิพลใน Umbrella"
+      },
+      "consequence": {
+        "en": "Alexia will develop the t-Veronica virus.",
+        "th": "Alexia จะพัฒนาไวรัส t-Veronica"
+      },
+      "location": {
+        "en": "",
+        "th": ""
+      },
+      "characters": [
+        "alexia",
+        "alfred"
+      ],
+      "organizations": [
+        "umbrella"
+      ],
+      "agents": [],
+      "works": [
+        "cv"
+      ],
+      "sources": [
+        "work-cv",
+        "history5"
+      ],
+      "uncertainty": null,
+      "connections": [
+        "veronica-sleep"
+      ]
+    },
+    {
+      "id": "young-researchers",
+      "sortDate": "1977-01-01",
+      "date": {
+        "en": "1977",
+        "th": "1977"
+      },
+      "precision": "year",
+      "era": "origins",
+      "spoiler": 1,
+      "importance": "support",
+      "title": {
+        "en": "Wesker and Birkin enter the laboratory",
+        "th": "Wesker และ Birkin เข้าสู่ห้องทดลอง"
+      },
+      "summary": {
+        "en": "Two young researchers become central to Umbrella’s future.",
+        "th": "นักวิจัยหนุ่มสองคนเริ่มมีบทบาทต่ออนาคตของ Umbrella"
+      },
+      "story": [
+        {
+          "en": "Albert Wesker and William Birkin enter Umbrella’s training and research system. They work under Marcus and later at Arklay. Birkin’s pursuit of scientific recognition and Wesker’s pursuit of power eventually pull them away from loyalty to the company.",
+          "th": "Albert Wesker และ William Birkin เข้าสู่ระบบฝึกอบรมและวิจัยของ Umbrella เรียนรู้งานจาก Marcus แล้วไปทำงานที่ Arklay ความทะเยอทะยานด้านวิทยาศาสตร์ของ Birkin และความต้องการอำนาจของ Wesker จะพาทั้งคู่ห่างจากความภักดีต่อบริษัท"
+        }
+      ],
+      "cause": {
+        "en": "Umbrella recruits gifted young researchers.",
+        "th": "Umbrella รับนักวิจัยรุ่นใหม่ที่มีความสามารถ"
+      },
+      "consequence": {
+        "en": "Their rivalry and collaboration shape the company’s weapons.",
+        "th": "ทั้งความร่วมมือและการแข่งขันของคู่นี้กำหนดทิศทางอาวุธของบริษัท"
+      },
+      "location": {
+        "en": "",
+        "th": ""
+      },
+      "characters": [
+        "wesker",
+        "birkin",
+        "marcus"
+      ],
+      "organizations": [
+        "umbrella"
+      ],
+      "agents": [],
+      "works": [
+        "re5",
+        "zero"
+      ],
+      "sources": [
+        "history5",
+        "projectw"
+      ],
+      "uncertainty": null,
+      "connections": [
+        "marcus-murder",
+        "g-research"
+      ]
+    },
+    {
+      "id": "t-virus",
+      "sortDate": "1978-01-13",
+      "date": {
+        "en": "January 1978",
+        "th": "มกราคม 1978"
+      },
+      "precision": "month",
+      "era": "origins",
+      "spoiler": 1,
+      "importance": "core",
+      "title": {
+        "en": "Progenitor becomes a weapon",
+        "th": "Progenitor กลายเป็นอาวุธ"
+      },
+      "summary": {
+        "en": "Marcus’s leech research produces a crucial t-virus breakthrough.",
+        "th": "งานวิจัยปลิงของ Marcus นำไปสู่ความก้าวหน้าสำคัญของ t-virus"
+      },
+      "story": [
+        {
+          "en": "Marcus combines Progenitor research with leech biology. The t-virus is a family of evolving weapon strains, not one unchanging substance. Later laboratories develop infected animals, Hunters and Tyrants; ordinary infections can produce the zombies that define the early outbreaks.",
+          "th": "Marcus ผสานงาน Progenitor กับชีววิทยาของปลิง t-virus เป็นตระกูลสายพันธุ์ที่พัฒนาต่อเนื่อง ไม่ใช่สารสูตรเดียวตลอดประวัติศาสตร์ ห้องแล็บรุ่นหลังสร้างสัตว์ติดเชื้อ Hunter และ Tyrant ส่วนการติดเชื้อทั่วไปทำให้เกิดซอมบี้ในเหตุการณ์ยุคแรก"
+        }
+      ],
+      "cause": {
+        "en": "Progenitor is difficult to turn into a reliable weapon.",
+        "th": "Progenitor ยังใช้เป็นอาวุธที่ควบคุมได้ยาก"
+      },
+      "consequence": {
+        "en": "Umbrella builds an international market for B.O.W.s.",
+        "th": "Umbrella สร้างตลาดอาวุธชีวภาพ B.O.W. ระดับนานาชาติ"
+      },
+      "location": {
+        "en": "",
+        "th": ""
+      },
+      "characters": [
+        "marcus",
+        "birkin",
+        "wesker"
+      ],
+      "organizations": [
+        "umbrella"
+      ],
+      "agents": [
+        "progenitor",
+        "t-virus"
+      ],
+      "works": [
+        "zero",
+        "re5"
+      ],
+      "sources": [
+        "marcus",
+        "history5"
+      ],
+      "uncertainty": null,
+      "connections": [
+        "arklay-leak",
+        "raccoon-destroyed"
+      ]
+    },
+    {
+      "id": "veronica-sleep",
+      "sortDate": "1983-12-01",
+      "date": {
+        "en": "December 1983",
+        "th": "ธันวาคม 1983"
+      },
+      "precision": "month",
+      "era": "origins",
+      "spoiler": 3,
+      "importance": "core",
+      "title": {
+        "en": "Alexia chooses fifteen years of sleep",
+        "th": "Alexia เลือกหลับยาวสิบห้าปี"
+      },
+      "summary": {
+        "en": "Alexia uses cryogenic sleep to adapt to t-Veronica.",
+        "th": "Alexia ใช้การจำศีลเย็นเพื่อปรับตัวเข้ากับ t-Veronica"
+      },
+      "story": [
+        {
+          "en": "Her research combines Progenitor-derived virology with queen-ant and plant material. Earlier tests, including her father Alexander, fail catastrophically. Alexia infects herself and enters prolonged cryogenic sleep to retain intelligence while her body adapts.",
+          "th": "งานของเธอผสานไวรัสที่สืบจาก Progenitor กับสารพันธุกรรมของมดราชินีและพืช การทดลองก่อนหน้านั้น รวมถึงกับ Alexander ผู้เป็นพ่อ ล้มเหลวอย่างรุนแรง Alexia จึงติดเชื้อเองแล้วเข้าสู่การจำศีลเย็นยาวนาน เพื่อรักษาสติปัญญาขณะร่างกายปรับตัว"
+        }
+      ],
+      "cause": {
+        "en": "Immediate mutation destroys higher brain functions.",
+        "th": "การกลายพันธุ์ทันทีทำลายการทำงานของสมองระดับสูง"
+      },
+      "consequence": {
+        "en": "Her absence leaves Alfred guarding the family’s secrets.",
+        "th": "Alfred เฝ้าความลับของครอบครัวตลอดช่วงที่เธอหลับ"
+      },
+      "location": {
+        "en": "Antarctic facility",
+        "th": "ศูนย์วิจัยแอนตาร์กติกา"
+      },
+      "characters": [
+        "alexia",
+        "alfred"
+      ],
+      "organizations": [
+        "umbrella"
+      ],
+      "agents": [
+        "progenitor",
+        "t-veronica"
+      ],
+      "works": [
+        "cv"
+      ],
+      "sources": [
+        "queen",
+        "history5"
+      ],
+      "uncertainty": null,
+      "connections": [
+        "code-veronica",
+        "c-program"
+      ]
+    },
+    {
+      "id": "marcus-murder",
+      "sortDate": "1988-01-01",
+      "date": {
+        "en": "1988",
+        "th": "1988"
+      },
+      "precision": "year",
+      "era": "origins",
+      "spoiler": 1,
+      "importance": "core",
+      "title": {
+        "en": "Umbrella kills its own founder",
+        "th": "Umbrella สังหารผู้ก่อตั้ง"
+      },
+      "summary": {
+        "en": "Spencer has Marcus eliminated; a queen leech later takes on Marcus’s identity.",
+        "th": "Spencer สั่งกำจัด Marcus ต่อมาปลิงราชินีรับเอาตัวตนของเขาไป"
+      },
+      "story": [
+        {
+          "en": "Wesker and Birkin participate in the assassination of Marcus. The queen leech in his research survives and eventually assimilates his memories and appearance. Its revenge helps trigger the 1998 disasters around Arklay. The returning “Marcus” is the organism, rather than the original man simply revived.",
+          "th": "Wesker และ Birkin มีส่วนในการลอบสังหาร Marcus ปลิงราชินีจากงานของเขารอดและค่อย ๆ รับความทรงจำกับรูปลักษณ์ของเขา การแก้แค้นของมันมีส่วนจุดชนวนภัยพิบัติรอบ Arklay ในปี 1998 “Marcus” ที่กลับมาจึงเป็นสิ่งมีชีวิตนี้ ไม่ใช่มนุษย์คนเดิมที่ฟื้นขึ้นเฉย ๆ"
+        }
+      ],
+      "cause": {
+        "en": "Spencer removes a rival and takes control of the research.",
+        "th": "Spencer กำจัดคู่แข่งและยึดการวิจัย"
+      },
+      "consequence": {
+        "en": "A concealed murder returns as an outbreak ten years later.",
+        "th": "การฆาตกรรมที่ถูกปิดบังย้อนกลับมาเป็นการระบาดในอีกสิบปี"
+      },
+      "location": {
+        "en": "",
+        "th": ""
+      },
+      "characters": [
+        "spencer",
+        "marcus",
+        "wesker",
+        "birkin"
+      ],
+      "organizations": [
+        "umbrella"
+      ],
+      "agents": [
+        "t-virus"
+      ],
+      "works": [
+        "zero"
+      ],
+      "sources": [
+        "work-zero",
+        "history5"
+      ],
+      "uncertainty": null,
+      "connections": [
+        "arklay-leak",
+        "ecliptic"
+      ]
+    },
+    {
+      "id": "g-research",
+      "sortDate": "1991-01-01",
+      "date": {
+        "en": "1988–1991",
+        "th": "1988–1991"
+      },
+      "precision": "range",
+      "era": "origins",
+      "spoiler": 2,
+      "importance": "core",
+      "title": {
+        "en": "Birkin opens the G project",
+        "th": "Birkin เริ่มโครงการ G"
+      },
+      "summary": {
+        "en": "Experiments on Lisa Trevor lead to a new research branch.",
+        "th": "การทดลองกับ Lisa Trevor นำไปสู่สายการวิจัยใหม่"
+      },
+      "story": [
+        {
+          "en": "Lisa’s unusual response to years of infection and an implanted NE-α parasite reveals the basis of Birkin’s G research. Umbrella approves the project in 1991. G causes radical regeneration and reproductive mutations; it is not simply the t-virus with a higher power level.",
+          "th": "การตอบสนองผิดปกติของ Lisa ต่อการติดเชื้อหลายปีและปรสิต NE-α ที่ฝังในร่าง เปิดทางให้งาน G ของ Birkin Umbrella อนุมัติโครงการในปี 1991 G ทำให้เกิดการฟื้นฟูและการกลายพันธุ์เพื่อสืบพันธุ์อย่างรุนแรง จึงไม่ใช่แค่ t-virus ที่แรงขึ้น"
+        }
+      ],
+      "cause": {
+        "en": "Lisa survives experiments that should have killed her.",
+        "th": "Lisa รอดจากการทดลองที่ควรคร่าชีวิตเธอ"
+      },
+      "consequence": {
+        "en": "Birkin becomes protective of a discovery Umbrella wants to own.",
+        "th": "Birkin หวงผลงานที่ Umbrella ต้องการถือครอง"
+      },
+      "location": {
+        "en": "",
+        "th": ""
+      },
+      "characters": [
+        "lisa",
+        "birkin"
+      ],
+      "organizations": [
+        "umbrella"
+      ],
+      "agents": [
+        "g-virus",
+        "progenitor",
+        "ne-alpha"
+      ],
+      "works": [
+        "re2",
+        "re5"
+      ],
+      "sources": [
+        "history5",
+        "work-re2"
+      ],
+      "uncertainty": null,
+      "connections": [
+        "birkin-raid",
+        "raccoon-survivors"
+      ]
+    },
+    {
+      "id": "stars",
+      "sortDate": "1996-01-01",
+      "date": {
+        "en": "1996",
+        "th": "1996"
+      },
+      "precision": "year",
+      "era": "origins",
+      "spoiler": 1,
+      "importance": "support",
+      "title": {
+        "en": "Raccoon City forms S.T.A.R.S.",
+        "th": "Raccoon City ตั้งหน่วย S.T.A.R.S."
+      },
+      "summary": {
+        "en": "A specialist police unit places future survivors under Wesker’s command.",
+        "th": "หน่วยตำรวจเฉพาะกิจรวมผู้รอดชีวิตในอนาคตไว้ใต้คำสั่งของ Wesker"
+      },
+      "story": [
+        {
+          "en": "S.T.A.R.S. is attached to the Raccoon Police Department. Chris Redfield, Jill Valentine, Barry Burton, Rebecca Chambers and others form its two teams. Captain Wesker’s hidden connection to Umbrella makes their later investigation dangerously compromised.",
+          "th": "S.T.A.R.S. สังกัดตำรวจ Raccoon City สมาชิกสองทีมรวม Chris Redfield, Jill Valentine, Barry Burton และ Rebecca Chambers แต่ความสัมพันธ์ลับระหว่างหัวหน้า Wesker กับ Umbrella ทำให้การสืบสวนในอนาคตถูกแทรกแซงตั้งแต่ต้น"
+        }
+      ],
+      "cause": {
+        "en": "The city creates a specialist response capability.",
+        "th": "เมืองต้องการหน่วยตอบสนองเหตุร้ายเฉพาะทาง"
+      },
+      "consequence": {
+        "en": "The unit will investigate the killings around Arklay.",
+        "th": "หน่วยนี้จะถูกส่งไปสืบคดีฆาตกรรมรอบ Arklay"
+      },
+      "location": {
+        "en": "Raccoon City",
+        "th": "Raccoon City"
+      },
+      "characters": [
+        "chris",
+        "jill",
+        "barry",
+        "rebecca",
+        "wesker"
+      ],
+      "organizations": [
+        "stars",
+        "umbrella"
+      ],
+      "agents": [],
+      "works": [
+        "re1"
+      ],
+      "sources": [
+        "work-re1",
+        "history5"
+      ],
+      "uncertainty": null,
+      "connections": [
+        "mansion"
+      ]
+    },
+    {
+      "id": "arklay-leak",
+      "sortDate": "1998-05-01",
+      "date": {
+        "en": "May–July 1998",
+        "th": "พฤษภาคม–กรกฎาคม 1998"
+      },
+      "precision": "range",
+      "era": "raccoon",
+      "spoiler": 1,
+      "importance": "core",
+      "title": {
+        "en": "The laboratory spills into the forest",
+        "th": "การทดลองหลุดออกสู่ป่า"
+      },
+      "summary": {
+        "en": "Arklay’s containment fails and nearby killings draw police attention.",
+        "th": "การควบคุมเชื้อที่ Arklay ล้มเหลว คดีฆาตกรรมรอบพื้นที่ดึงตำรวจเข้ามา"
+      },
+      "story": [
+        {
+          "en": "The queen leech attacks Umbrella facilities. In the mansion, the keeper’s diary records infection spreading among staff in May. Infected animals and people turn the surrounding mountains into a danger zone. Umbrella’s secrets are no longer contained within its laboratories.",
+          "th": "ปลิงราชินีโจมตีสถานที่ของ Umbrella บันทึกคนดูแลสัตว์ในคฤหาสน์แสดงการติดเชื้อในหมู่พนักงานตั้งแต่เดือนพฤษภาคม คนและสัตว์ที่ติดเชื้อทำให้ภูเขารอบเมืองเป็นพื้นที่อันตราย ความลับของบริษัทหลุดพ้นกำแพงห้องทดลองแล้ว"
+        }
+      ],
+      "cause": {
+        "en": "Revenge and failed containment undermine Arklay.",
+        "th": "การแก้แค้นและระบบควบคุมที่ล้มเหลวทำลาย Arklay"
+      },
+      "consequence": {
+        "en": "S.T.A.R.S. sends Bravo Team into the mountains.",
+        "th": "S.T.A.R.S. ส่งทีม Bravo ไปที่ภูเขา"
+      },
+      "location": {
+        "en": "Arklay Mountains",
+        "th": "เทือกเขา Arklay"
+      },
+      "characters": [],
+      "organizations": [
+        "umbrella",
+        "stars"
+      ],
+      "agents": [
+        "t-virus"
+      ],
+      "works": [
+        "zero",
+        "re1"
+      ],
+      "sources": [
+        "keeper",
+        "work-zero"
+      ],
+      "uncertainty": null,
+      "connections": [
+        "ecliptic",
+        "mansion"
+      ]
+    },
+    {
+      "id": "ecliptic",
+      "sortDate": "1998-07-23",
+      "date": {
+        "en": "23 July 1998",
+        "th": "23 กรกฎาคม 1998"
+      },
+      "precision": "day",
+      "era": "raccoon",
+      "spoiler": 1,
+      "importance": "core",
+      "title": {
+        "en": "Rebecca and Billy on the Ecliptic Express",
+        "th": "Rebecca และ Billy บน Ecliptic Express"
+      },
+      "summary": {
+        "en": "Bravo Team’s Rebecca meets fugitive Billy Coen during a leech-driven outbreak.",
+        "th": "Rebecca จากทีม Bravo พบ Billy Coen ผู้หลบหนีคดี ท่ามกลางการระบาดจากปลิง"
+      },
+      "story": [
+        {
+          "en": "Rebecca and Billy survive the train and abandoned training facility. They uncover Marcus’s fate and destroy the queen leech. Rebecca lets Billy escape after learning that the murder accusation against him conceals a different story. She continues toward the mansion.",
+          "th": "Rebecca กับ Billy รอดจากรถไฟและศูนย์ฝึกที่ถูกทิ้ง ทั้งคู่รู้ชะตากรรมของ Marcus และกำจัดปลิงราชินี เมื่อรู้ว่าคดีฆาตกรรมของ Billy มีความจริงอีกด้าน Rebecca จึงปล่อยเขาหนี และเดินทางต่อไปยังคฤหาสน์"
+        }
+      ],
+      "cause": {
+        "en": "Bravo Team investigates unexplained murders.",
+        "th": "ทีม Bravo สืบคดีฆาตกรรมที่อธิบายไม่ได้"
+      },
+      "consequence": {
+        "en": "Rebecca survives to help the next group of S.T.A.R.S. members.",
+        "th": "Rebecca รอดไปช่วยสมาชิก S.T.A.R.S. กลุ่มถัดไป"
+      },
+      "location": {
+        "en": "Ecliptic Express / training facility",
+        "th": "Ecliptic Express / ศูนย์ฝึก Umbrella"
+      },
+      "characters": [
+        "rebecca",
+        "billy",
+        "marcus"
+      ],
+      "organizations": [
+        "stars",
+        "umbrella"
+      ],
+      "agents": [
+        "t-virus"
+      ],
+      "works": [
+        "zero"
+      ],
+      "sources": [
+        "history",
+        "work-zero"
+      ],
+      "uncertainty": null,
+      "connections": [
+        "mansion"
+      ]
+    },
+    {
+      "id": "mansion",
+      "sortDate": "1998-07-24",
+      "date": {
+        "en": "24 July 1998",
+        "th": "24 กรกฎาคม 1998"
+      },
+      "precision": "day",
+      "era": "raccoon",
+      "spoiler": 1,
+      "importance": "core",
+      "title": {
+        "en": "The mansion incident",
+        "th": "เหตุการณ์คฤหาสน์"
+      },
+      "summary": {
+        "en": "Chris and Jill uncover Umbrella’s weapons behind the Arklay murders.",
+        "th": "Chris และ Jill พบว่าอาวุธของ Umbrella อยู่เบื้องหลังคดี Arklay"
+      },
+      "story": [
+        {
+          "en": "Alpha Team searches for Bravo Team and takes refuge in Spencer’s mansion. Wesker betrays the unit while collecting combat data on B.O.W.s. Chris, Jill, Barry and Rebecca escape with pilot Brad Vickers as the facility is destroyed. No single playable route shows every established survivor together.",
+          "th": "ทีม Alpha ออกตามหา Bravo แล้วหลบเข้าไปในคฤหาสน์ของ Spencer Wesker หักหลังทีมและเก็บข้อมูลการต่อสู้ของ B.O.W. Chris, Jill, Barry และ Rebecca หนีออกมากับนักบิน Brad Vickers ก่อนสถานที่ถูกทำลาย ไม่มีเส้นทางเล่นใดเส้นทางหนึ่งแสดงผู้รอดชีวิตที่ยืนยันทั้งหมดพร้อมกัน"
+        }
+      ],
+      "cause": {
+        "en": "The Arklay outbreak draws both S.T.A.R.S. teams into a trap.",
+        "th": "การระบาดที่ Arklay ดึงสองทีม S.T.A.R.S. เข้าไปในกับดัก"
+      },
+      "consequence": {
+        "en": "The survivors try to expose Umbrella, but their warning fails to protect the city.",
+        "th": "ผู้รอดชีวิตพยายามเปิดโปง Umbrella แต่คำเตือนช่วยเมืองไว้ไม่ได้"
+      },
+      "location": {
+        "en": "Spencer mansion",
+        "th": "คฤหาสน์ Spencer"
+      },
+      "characters": [
+        "chris",
+        "jill",
+        "barry",
+        "rebecca",
+        "wesker"
+      ],
+      "organizations": [
+        "stars",
+        "umbrella"
+      ],
+      "agents": [
+        "t-virus"
+      ],
+      "works": [
+        "re1"
+      ],
+      "sources": [
+        "history",
+        "work-re1"
+      ],
+      "uncertainty": {
+        "en": "Original and remake depict one incident. Shared outcomes are retained without selecting one literal gameplay route.",
+        "th": "ต้นฉบับและรีเมกเล่าเหตุการณ์เดียวกัน ใช้ผลลัพธ์ที่ยืนยันร่วมกัน โดยไม่ยึดเส้นทางเล่นหนึ่งเป็นลำดับจริงทั้งหมด"
+      },
+      "connections": [
+        "raccoon-hunt",
+        "code-veronica"
+      ]
+    },
+    {
+      "id": "birkin-raid",
+      "sortDate": "1998-09-20",
+      "date": {
+        "en": "Late September 1998",
+        "th": "ปลายกันยายน 1998"
+      },
+      "precision": "approximate",
+      "era": "raccoon",
+      "spoiler": 2,
+      "importance": "core",
+      "title": {
+        "en": "Umbrella comes for Birkin’s research",
+        "th": "Umbrella เข้ามายึดงานของ Birkin"
+      },
+      "summary": {
+        "en": "A raid on the G laboratory becomes another breach in a city already in danger.",
+        "th": "การบุกห้องแล็บ G กลายเป็นการรั่วไหลอีกครั้งในเมืองที่เริ่มตกอยู่ในอันตราย"
+      },
+      "story": [
+        {
+          "en": "Umbrella’s retrieval team shoots Birkin while seizing samples. He injects himself with G and attacks them. Damaged t-virus samples and infected rats contribute to contamination through the sewer system. G transforms Birkin; the city’s mass zombie outbreak is principally t-virus infection. HUNK escapes with a G sample.",
+          "th": "ทีมเก็บตัวอย่างของ Umbrella ยิง Birkin ระหว่างเข้ายึดงาน เขาฉีด G ให้ตัวเองแล้วโจมตีกลับ ตัวอย่าง t-virus ที่เสียหายและหนูติดเชื้อช่วยแพร่เชื้อผ่านท่อระบายน้ำ G เปลี่ยน Birkin ส่วนซอมบี้จำนวนมหาศาลในเมืองเกิดจาก t-virus เป็นหลัก HUNK หนีออกไปพร้อมตัวอย่าง G"
+        }
+      ],
+      "cause": {
+        "en": "Birkin tries to keep control of G outside Umbrella.",
+        "th": "Birkin พยายามรักษาการควบคุม G โดยไม่ขึ้นกับ Umbrella"
+      },
+      "consequence": {
+        "en": "An expanding urban outbreak overwhelms the police and hospitals.",
+        "th": "การระบาดในเมืองขยายจนตำรวจและโรงพยาบาลรับไม่ไหว"
+      },
+      "location": {
+        "en": "NEST / Raccoon sewers",
+        "th": "NEST / ท่อระบายน้ำ Raccoon City"
+      },
+      "characters": [
+        "birkin",
+        "hunk"
+      ],
+      "organizations": [
+        "umbrella"
+      ],
+      "agents": [
+        "g-virus",
+        "t-virus"
+      ],
+      "works": [
+        "re2"
+      ],
+      "sources": [
+        "work-re2"
+      ],
+      "uncertainty": {
+        "en": "Contamination develops through multiple failures; the raid is not treated as the only cause of every infection.",
+        "th": "การปนเปื้อนเกิดจากหลายความล้มเหลว จึงไม่ถือว่าการบุกครั้งนี้เป็นต้นเหตุเดียวของผู้ติดเชื้อทุกคน"
+      },
+      "connections": [
+        "raccoon-survivors",
+        "raccoon-destroyed"
+      ]
+    },
+    {
+      "id": "civilian-outbreak",
+      "sortDate": "1998-09-24",
+      "date": {
+        "en": "September 1998",
+        "th": "กันยายน 1998"
+      },
+      "precision": "month",
+      "era": "raccoon",
+      "spoiler": 2,
+      "importance": "support",
+      "title": {
+        "en": "A city of ordinary survivors",
+        "th": "เมืองของผู้รอดชีวิตธรรมดา"
+      },
+      "summary": {
+        "en": "Outbreak follows civilians struggling through Raccoon City’s collapse.",
+        "th": "Outbreak ติดตามพลเรือนที่ดิ้นรนเอาตัวรอดจากการล่มสลายของ Raccoon City"
+      },
+      "story": [
+        {
+          "en": "Hospital staff, police and other residents confront the same disaster from outside the main heroes’ journeys. Journalist Alyssa Ashcroft is among the survivors. These stories establish a citywide humanitarian catastrophe, rather than just a battle in a laboratory or police station.",
+          "th": "เจ้าหน้าที่โรงพยาบาล ตำรวจ และชาวเมืองเผชิญภัยเดียวกันจากมุมที่ไม่ได้เดินตามตัวเอกหลัก Alyssa Ashcroft นักข่าวเป็นหนึ่งในผู้รอดชีวิต เรื่องเหล่านี้ทำให้เห็นว่าเป็นหายนะของคนทั้งเมือง ไม่ใช่แค่การต่อสู้ในแล็บหรือสถานีตำรวจ"
+        }
+      ],
+      "cause": {
+        "en": "t-virus spreads across civilian infrastructure.",
+        "th": "t-virus แพร่ไปทั่วโครงสร้างพื้นฐานของเมือง"
+      },
+      "consequence": {
+        "en": "Survivors carry testimony and long-term consequences beyond Raccoon City.",
+        "th": "ผู้รอดชีวิตนำทั้งคำให้การและผลกระทบระยะยาวติดตัวออกไป"
+      },
+      "location": {
+        "en": "Raccoon City",
+        "th": "Raccoon City"
+      },
+      "characters": [
+        "alyssa"
+      ],
+      "organizations": [
+        "umbrella"
+      ],
+      "agents": [
+        "t-virus"
+      ],
+      "works": [
+        "outbreak",
+        "requiem"
+      ],
+      "sources": [
+        "work-outbreak",
+        "rc-report"
+      ],
+      "uncertainty": {
+        "en": "Individual scenarios and branching endings are not combined into one fully literal itinerary.",
+        "th": "ไม่รวมทุกฉากและฉากจบที่แตกแขนงให้เป็นการเดินทางจริงเพียงเส้นเดียว"
+      },
+      "connections": [
+        "wrenwood",
+        "requiem"
+      ]
+    },
+    {
+      "id": "raccoon-hunt",
+      "sortDate": "1998-09-28",
+      "date": {
+        "en": "28 September–1 October 1998",
+        "th": "28 กันยายน–1 ตุลาคม 1998"
+      },
+      "precision": "range",
+      "era": "raccoon",
+      "spoiler": 2,
+      "importance": "core",
+      "title": {
+        "en": "Jill is hunted by Nemesis",
+        "th": "Jill ถูก Nemesis ตามล่า"
+      },
+      "summary": {
+        "en": "Umbrella sends a weapon after the surviving S.T.A.R.S. members.",
+        "th": "Umbrella ส่งอาวุธตามล่าสมาชิก S.T.A.R.S. ที่รอดชีวิต"
+      },
+      "story": [
+        {
+          "en": "Jill tries to escape a collapsing city while Nemesis pursues her. Carlos Oliveira of the U.B.C.S. helps her and obtains treatment after she becomes infected. Jill and Carlos escape before the city is destroyed. The U.B.C.S. rescue mission also serves Umbrella’s interests in combat data and concealment.",
+          "th": "Jill พยายามหนีจากเมืองที่พังทลาย ขณะ Nemesis ตามล่า Carlos Oliveira จาก U.B.C.S. ช่วยเธอและหาวิธีรักษาหลังเธอติดเชื้อ ทั้งคู่หนีออกมาก่อนเมืองถูกทำลาย ภารกิจกู้ภัยของ U.B.C.S. ยังแฝงประโยชน์ด้านข้อมูลการต่อสู้และการปิดบังของ Umbrella"
+        }
+      ],
+      "cause": {
+        "en": "S.T.A.R.S. survivors know too much about Umbrella.",
+        "th": "ผู้รอดชีวิต S.T.A.R.S. รู้ความลับของ Umbrella มากเกินไป"
+      },
+      "consequence": {
+        "en": "Jill survives, but the city cannot be saved.",
+        "th": "Jill รอดชีวิต แต่เมืองไม่อาจรอดได้"
+      },
+      "location": {
+        "en": "Raccoon City",
+        "th": "Raccoon City"
+      },
+      "characters": [
+        "jill",
+        "carlos"
+      ],
+      "organizations": [
+        "stars",
+        "umbrella",
+        "ubcs"
+      ],
+      "agents": [
+        "t-virus",
+        "ne-alpha"
+      ],
+      "works": [
+        "re3"
+      ],
+      "sources": [
+        "history",
+        "work-re3",
+        "jill"
+      ],
+      "uncertainty": null,
+      "connections": [
+        "raccoon-destroyed",
+        "jill-captive"
+      ]
+    },
+    {
+      "id": "raccoon-survivors",
+      "sortDate": "1998-09-29",
+      "date": {
+        "en": "29–30 September 1998",
+        "th": "29–30 กันยายน 1998"
+      },
+      "precision": "range",
+      "era": "raccoon",
+      "spoiler": 2,
+      "importance": "core",
+      "title": {
+        "en": "Leon, Claire and Sherry escape",
+        "th": "Leon, Claire และ Sherry หนีออกจากเมือง"
+      },
+      "summary": {
+        "en": "A rookie officer and a sister searching for Chris uncover Birkin’s disaster.",
+        "th": "ตำรวจใหม่และน้องสาวที่มาตามหา Chris พบหายนะจากงานของ Birkin"
+      },
+      "story": [
+        {
+          "en": "Leon Kennedy arrives for his first day as a police officer. Claire Redfield searches for her brother and protects Birkin’s daughter Sherry. Ada Wong works to obtain G while concealing her loyalties. Sherry’s G infection is treated, and Leon, Claire and Sherry escape the laboratory. Ada also survives.",
+          "th": "Leon Kennedy มาถึงเพื่อเริ่มงานตำรวจวันแรก Claire Redfield มาตามหาพี่ชายและปกป้อง Sherry ลูกสาวของ Birkin ขณะที่ Ada Wong พยายามเอา G โดยปิดบังฝ่ายที่ตนทำงานให้ Sherry ได้รับการรักษา G และหนีออกจากแล็บพร้อม Leon กับ Claire ส่วน Ada ก็รอดชีวิตเช่นกัน"
+        }
+      ],
+      "cause": {
+        "en": "The city’s outbreak converges on Birkin’s underground research.",
+        "th": "การระบาดในเมืองโยงกลับสู่งานวิจัยใต้ดินของ Birkin"
+      },
+      "consequence": {
+        "en": "The three survivors become central to later anti-bioterrorism efforts.",
+        "th": "ผู้รอดชีวิตสามคนมีบทบาทสำคัญต่อการต่อต้านก่อการร้ายชีวภาพในอนาคต"
+      },
+      "location": {
+        "en": "RPD / NEST",
+        "th": "สถานีตำรวจ RPD / NEST"
+      },
+      "characters": [
+        "leon",
+        "claire",
+        "sherry",
+        "ada",
+        "birkin"
+      ],
+      "organizations": [
+        "umbrella"
+      ],
+      "agents": [
+        "t-virus",
+        "g-virus"
+      ],
+      "works": [
+        "re2"
+      ],
+      "sources": [
+        "history",
+        "work-re2"
+      ],
+      "uncertainty": {
+        "en": "Leon and Claire’s routes overlap. Their shared outcomes are canon; incompatible route details are left unresolved.",
+        "th": "เส้นทาง Leon และ Claire ทับซ้อนกัน ใช้ผลลัพธ์ร่วมที่ยืนยันได้ และไม่ฝืนรวมรายละเอียดเส้นทางที่ขัดกัน"
+      },
+      "connections": [
+        "code-veronica",
+        "ashley-rescue",
+        "edonia"
+      ]
+    },
+    {
+      "id": "raccoon-destroyed",
+      "sortDate": "1998-10-01",
+      "date": {
+        "en": "1 October 1998",
+        "th": "1 ตุลาคม 1998"
+      },
+      "precision": "day",
+      "era": "raccoon",
+      "spoiler": 2,
+      "importance": "core",
+      "title": {
+        "en": "Raccoon City is erased",
+        "th": "Raccoon City ถูกลบออกจากแผนที่"
+      },
+      "summary": {
+        "en": "A government strike destroys the city to contain the outbreak.",
+        "th": "รัฐบาลทำลายเมืองเพื่อควบคุมการระบาด"
+      },
+      "story": [
+        {
+          "en": "The strike kills the people still trapped inside and destroys much of the physical evidence. The public disaster turns Umbrella into a liability, but biological weapons, samples and surviving research spread beyond the corporation. Raccoon City becomes the defining trauma for a generation of survivors.",
+          "th": "การโจมตีคร่าชีวิตคนที่ยังติดอยู่และทำลายหลักฐานจำนวนมาก หายนะที่ปิดบังไม่ได้ทำให้ Umbrella กลายเป็นภาระ แต่ตัวอย่างเชื้อ อาวุธ และงานวิจัยที่รอดยังแพร่ออกไปนอกบริษัท Raccoon City จึงเป็นบาดแผลร่วมของผู้รอดชีวิตทั้งรุ่น"
+        }
+      ],
+      "cause": {
+        "en": "The outbreak outgrows every attempted local response.",
+        "th": "การระบาดเกินขีดความสามารถของทุกมาตรการในพื้นที่"
+      },
+      "consequence": {
+        "en": "Corporate containment gives way to global bioterrorism.",
+        "th": "การควบคุมในบริษัทเปลี่ยนเป็นปัญหาก่อการร้ายชีวภาพทั่วโลก"
+      },
+      "location": {
+        "en": "Raccoon City",
+        "th": "Raccoon City"
+      },
+      "characters": [
+        "leon",
+        "claire",
+        "jill",
+        "sherry",
+        "alyssa"
+      ],
+      "organizations": [
+        "umbrella",
+        "usgov"
+      ],
+      "agents": [
+        "t-virus"
+      ],
+      "works": [
+        "re3",
+        "requiem"
+      ],
+      "sources": [
+        "history",
+        "rc-report"
+      ],
+      "uncertainty": null,
+      "connections": [
+        "umbrella-end",
+        "tall-oaks",
+        "requiem"
+      ]
+    },
+    {
+      "id": "sheena",
+      "sortDate": "1998-11-01",
+      "date": {
+        "en": "November 1998",
+        "th": "พฤศจิกายน 1998"
+      },
+      "precision": "month",
+      "era": "aftermath",
+      "spoiler": 3,
+      "importance": "support",
+      "title": {
+        "en": "The Tyrant factory on Sheena Island",
+        "th": "โรงงาน Tyrant บนเกาะ Sheena"
+      },
+      "summary": {
+        "en": "Ark Thompson uncovers an island built around the mass production of Tyrants.",
+        "th": "Ark Thompson พบเกาะที่ใช้ผลิต Tyrant เป็นจำนวนมาก"
+      },
+      "story": [
+        {
+          "en": "Investigating for Leon, Ark survives a t-virus outbreak and exposes the exploitation of kidnapped children to obtain material for Tyrant production. He escapes with Lott and Lily Klein. Umbrella’s weapons program extends well beyond Raccoon City.",
+          "th": "Ark สืบสวนตามคำขอของ Leon และรอดจากการระบาด t-virus เขาพบว่ามีการลักพาตัวเด็กเพื่อสกัดสารสำหรับผลิต Tyrant ก่อนหนีไปกับ Lott และ Lily Klein โครงการอาวุธของ Umbrella ไม่ได้จำกัดอยู่แค่ Raccoon City"
+        }
+      ],
+      "cause": {
+        "en": "Umbrella pursues scalable Tyrant manufacturing.",
+        "th": "Umbrella ต้องการผลิต Tyrant ได้ในปริมาณมาก"
+      },
+      "consequence": {
+        "en": "Another production facility is lost; its victims reveal the human cost.",
+        "th": "โรงงานอีกแห่งถูกทำลาย พร้อมเปิดเผยชีวิตที่ต้องสูญเสียในการผลิต"
+      },
+      "location": {
+        "en": "Sheena Island",
+        "th": "เกาะ Sheena"
+      },
+      "characters": [
+        "ark",
+        "leon"
+      ],
+      "organizations": [
+        "umbrella"
+      ],
+      "agents": [
+        "t-virus"
+      ],
+      "works": [
+        "survivor"
+      ],
+      "sources": [
+        "sheena-file",
+        "work-survivor"
+      ],
+      "uncertainty": null,
+      "connections": [
+        "umbrella-end"
+      ]
+    },
+    {
+      "id": "code-veronica",
+      "sortDate": "1998-12-01",
+      "date": {
+        "en": "December 1998",
+        "th": "ธันวาคม 1998"
+      },
+      "precision": "month",
+      "era": "aftermath",
+      "spoiler": 3,
+      "importance": "core",
+      "title": {
+        "en": "Claire’s search reaches the Ashfords",
+        "th": "การตามหา Chris พา Claire ไปถึงตระกูล Ashford"
+      },
+      "summary": {
+        "en": "Claire and Chris reunite amid the collapse of Rockfort and the Antarctic base.",
+        "th": "Claire และ Chris พบกันอีกครั้งท่ามกลางหายนะที่ Rockfort และฐานแอนตาร์กติกา"
+      },
+      "story": [
+        {
+          "en": "Captured while investigating Umbrella, Claire survives Rockfort with Steve Burnside. Alexia wakes after fifteen years; Steve is infected and dies. Chris rescues Claire and defeats Alexia. Wesker, alive through a prototype virus, has become a rival operator and obtains Steve’s infected body for its t-Veronica material.",
+          "th": "Claire ถูกจับระหว่างสืบ Umbrella และเอาตัวรอดจาก Rockfort กับ Steve Burnside Alexia ตื่นหลังหลับสิบห้าปี ส่วน Steve ติดเชื้อและเสียชีวิต Chris ช่วย Claire และกำจัด Alexia ขณะที่ Wesker ซึ่งรอดด้วยไวรัสต้นแบบ เปลี่ยนเป็นผู้เล่นฝ่ายคู่แข่งและนำศพ Steve ไปเพื่องาน t-Veronica"
+        }
+      ],
+      "cause": {
+        "en": "Umbrella’s secrets draw Claire into captivity while rivals attack its facilities.",
+        "th": "การสืบความลับทำให้ Claire ถูกขัง ส่วนคู่แข่งโจมตีสถานที่ของบริษัท"
+      },
+      "consequence": {
+        "en": "The Redfields reunite; Wesker’s independent biological arsenal grows.",
+        "th": "พี่น้อง Redfield ได้พบกัน และคลังชีวภาพของ Wesker ขยายขึ้น"
+      },
+      "location": {
+        "en": "Rockfort / Antarctica",
+        "th": "Rockfort / แอนตาร์กติกา"
+      },
+      "characters": [
+        "claire",
+        "chris",
+        "steve",
+        "alexia",
+        "alfred",
+        "wesker"
+      ],
+      "organizations": [
+        "umbrella"
+      ],
+      "agents": [
+        "t-virus",
+        "t-veronica",
+        "prototype"
+      ],
+      "works": [
+        "cv"
+      ],
+      "sources": [
+        "history",
+        "work-cv",
+        "queen"
+      ],
+      "uncertainty": null,
+      "connections": [
+        "umbrella-end",
+        "spencer-raid"
+      ]
+    },
+    {
+      "id": "mold-program",
+      "sortDate": "2000-01-01",
+      "date": {
+        "en": "By 2000",
+        "th": "ภายในปี 2000"
+      },
+      "precision": "year",
+      "era": "aftermath",
+      "spoiler": 7,
+      "importance": "support",
+      "title": {
+        "en": "The Connections develops living infiltration",
+        "th": "The Connections สร้างอาวุธแทรกซึมที่มีชีวิต"
+      },
+      "summary": {
+        "en": "A separate weapons program uses mold to control people through apparent family bonds.",
+        "th": "โครงการอาวุธอีกสายใช้เชื้อราควบคุมคนผ่านความผูกพันแบบครอบครัว"
+      },
+      "story": [
+        {
+          "en": "The Connections begins a mold-based weapon program with assistance from H.C.F. Its later E-series can infiltrate a population through a human-looking carrier and influence infected hosts. This research does not descend from the t-virus. Eveline is eventually produced by the program.",
+          "th": "The Connections เริ่มโครงการอาวุธจากเชื้อราโดยได้รับความช่วยเหลือจาก H.C.F. อาวุธ E-series รุ่นหลังใช้พาหะที่ดูเหมือนมนุษย์เข้าไปในชุมชนและชักจูงผู้ติดเชื้อ งานนี้ไม่ได้สืบจาก t-virus และนำไปสู่การสร้าง Eveline"
+        }
+      ],
+      "cause": {
+        "en": "A discreet, controllable weapon offers a different market from obvious monsters.",
+        "th": "อาวุธที่แทรกซึมและควบคุมคนได้มีตลาดต่างจากสัตว์ประหลาดที่เห็นชัด"
+      },
+      "consequence": {
+        "en": "A transported E-series weapon will reach the Baker family in 2014.",
+        "th": "อาวุธ E-series ที่กำลังขนส่งจะไปถึงครอบครัว Baker ในปี 2014"
+      },
+      "location": {
+        "en": "",
+        "th": ""
+      },
+      "characters": [
+        "eveline"
+      ],
+      "organizations": [
+        "connections",
+        "hcf"
+      ],
+      "agents": [
+        "mold"
+      ],
+      "works": [
+        "re7"
+      ],
+      "sources": [
+        "work-re7"
+      ],
+      "uncertainty": {
+        "en": "The program’s start is documented; the exact timing of every transfer and collaboration is not.",
+        "th": "มีบันทึกจุดเริ่มโครงการ แต่ลำดับการส่งมอบและความร่วมมือทุกขั้นไม่ได้ระบุแน่นอน"
+      },
+      "connections": [
+        "baker-infection",
+        "village"
+      ]
+    },
+    {
+      "id": "penamstan",
+      "sortDate": "2000-10-01",
+      "date": {
+        "en": "October 2000",
+        "th": "ตุลาคม 2000"
+      },
+      "precision": "month",
+      "era": "aftermath",
+      "spoiler": 5,
+      "importance": "support",
+      "title": {
+        "en": "Penamstan becomes a hidden experiment",
+        "th": "Penamstan กลายเป็นการทดลองที่ถูกปิดบัง"
+      },
+      "summary": {
+        "en": "American soldiers encounter an outbreak whose cover-up reaches Washington.",
+        "th": "ทหารอเมริกันเผชิญการระบาดที่การปิดบังจะย้อนมาถึงวอชิงตัน"
+      },
+      "story": [
+        {
+          "en": "A mission in Penamstan exposes soldiers to a biological agent. Survivors including Jason depend on suppressants. Defense official Wilson exploits their condition and conceals the operation. The consequences surface in Infinite Darkness six years later.",
+          "th": "ภารกิจใน Penamstan ทำให้ทหารสัมผัสเชื้อ ผู้รอดชีวิตรวม Jason ต้องพึ่งยากดอาการ Wilson เจ้าหน้าที่กลาโหมใช้สภาพนี้ควบคุมพวกเขาและปิดบังปฏิบัติการ ผลของมันจะปรากฏใน Infinite Darkness อีกหกปีต่อมา"
+        }
+      ],
+      "cause": {
+        "en": "Military operations provide cover for weapons testing.",
+        "th": "ปฏิบัติการทหารเป็นฉากหน้าสำหรับทดสอบอาวุธ"
+      },
+      "consequence": {
+        "en": "Surviving soldiers become both witnesses and tools of the cover-up.",
+        "th": "ทหารที่รอดกลายเป็นทั้งพยานและเครื่องมือปกปิด"
+      },
+      "location": {
+        "en": "Penamstan",
+        "th": "Penamstan"
+      },
+      "characters": [
+        "jason"
+      ],
+      "organizations": [
+        "usgov"
+      ],
+      "agents": [
+        "penamstan-agent"
+      ],
+      "works": [
+        "infinite"
+      ],
+      "sources": [
+        "infinite-official",
+        "work-infinite"
+      ],
+      "uncertainty": null,
+      "connections": [
+        "infinite-darkness"
+      ]
+    },
+    {
+      "id": "c-program",
+      "sortDate": "2001-01-01",
+      "date": {
+        "en": "From 2001",
+        "th": "ตั้งแต่ปี 2001"
+      },
+      "precision": "year",
+      "era": "aftermath",
+      "spoiler": 6,
+      "importance": "support",
+      "title": {
+        "en": "A new virus built from old research",
+        "th": "ไวรัสใหม่จากงานวิจัยเก่า"
+      },
+      "summary": {
+        "en": "Carla Radames develops C-virus for Derek Simmons.",
+        "th": "Carla Radames พัฒนา C-virus ให้ Derek Simmons"
+      },
+      "story": [
+        {
+          "en": "C research combines G-related material obtained through Sherry with a modified t-Veronica component, described as t-02. Simmons later forces Carla’s transformation into Ada’s likeness. Her retaliation creates Neo-Umbrella, a new organization rather than the old company restored.",
+          "th": "งาน C ผสานสารที่เกี่ยวข้องกับ G จาก Sherry กับส่วนประกอบ t-Veronica ที่ดัดแปลง เรียกว่า t-02 ต่อมา Simmons บังคับเปลี่ยน Carla ให้มีรูปลักษณ์เหมือน Ada การแก้แค้นของเธอนำไปสู่ Neo-Umbrella ซึ่งเป็นองค์กรใหม่ ไม่ใช่บริษัทเดิมฟื้นคืน"
+        }
+      ],
+      "cause": {
+        "en": "Simmons controls research and subjects through political power.",
+        "th": "Simmons ใช้อำนาจทางการเมืองควบคุมงานวิจัยและผู้ถูกทดลอง"
+      },
+      "consequence": {
+        "en": "A private obsession produces the weapon behind the 2012–2013 crises.",
+        "th": "ความหมกมุ่นส่วนตัวสร้างอาวุธเบื้องหลังวิกฤตปี 2012–2013"
+      },
+      "location": {
+        "en": "",
+        "th": ""
+      },
+      "characters": [
+        "carla",
+        "simmons",
+        "sherry",
+        "ada"
+      ],
+      "organizations": [
+        "family",
+        "neo-umbrella"
+      ],
+      "agents": [
+        "c-virus",
+        "g-virus",
+        "t-veronica"
+      ],
+      "works": [
+        "re6"
+      ],
+      "sources": [
+        "cvirus",
+        "carla"
+      ],
+      "uncertainty": null,
+      "connections": [
+        "marhawa",
+        "tall-oaks"
+      ]
+    },
+    {
+      "id": "javier",
+      "sortDate": "2002-01-01",
+      "date": {
+        "en": "2002",
+        "th": "2002"
+      },
+      "precision": "year",
+      "era": "aftermath",
+      "spoiler": 4,
+      "importance": "core",
+      "title": {
+        "en": "Operation Javier",
+        "th": "ปฏิบัติการ Javier"
+      },
+      "summary": {
+        "en": "South American bioweapons operations connect Leon and Krauser to the coming Spanish mission.",
+        "th": "ปฏิบัติการอาวุธชีวภาพในอเมริกาใต้เชื่อม Leon กับ Krauser ไปสู่ภารกิจสเปน"
+      },
+      "story": [
+        {
+          "en": "The Darkside Chronicles depicts Leon and Jack Krauser confronting Javier Hidalgo’s t- and t-Veronica-related experiments, with Manuela central to the crisis. The Resident Evil 4 remake refers to Javier as a disastrous operation involving Krauser’s lost unit and denied extraction. These accounts cannot be merged into one fully certain tactical sequence.",
+          "th": "The Darkside Chronicles เล่า Leon และ Jack Krauser เผชิญการทดลอง t-virus และ t-Veronica ของ Javier Hidalgo โดย Manuela เป็นหัวใจของเหตุการณ์ ส่วน RE4 รีเมกกล่าวถึงปฏิบัติการที่หน่วยของ Krauser สูญเสียและไม่ได้รับการอพยพ รายละเอียดทั้งสองชุดไม่อาจรวมเป็นลำดับยุทธวิธีเดียวที่แน่นอนได้"
+        }
+      ],
+      "cause": {
+        "en": "Bioweapons reach criminal and military networks outside Umbrella.",
+        "th": "อาวุธชีวภาพไหลเข้าสู่เครือข่ายอาชญากรรมและทหารนอก Umbrella"
+      },
+      "consequence": {
+        "en": "Krauser’s disillusionment and pursuit of power shape his later role.",
+        "th": "ความผิดหวังและความต้องการอำนาจกำหนดบทบาทต่อมาของ Krauser"
+      },
+      "location": {
+        "en": "South America",
+        "th": "อเมริกาใต้"
+      },
+      "characters": [
+        "leon",
+        "krauser",
+        "manuela"
+      ],
+      "organizations": [],
+      "agents": [
+        "t-virus",
+        "t-veronica"
+      ],
+      "works": [
+        "darkside",
+        "re4"
+      ],
+      "sources": [
+        "work-darkside",
+        "javier-file"
+      ],
+      "uncertainty": {
+        "en": "The operation is established, but the relationship between the two accounts remains uncertain.",
+        "th": "ปฏิบัติการเกิดขึ้นจริง แต่ความสัมพันธ์ระหว่างรายละเอียดสองเวอร์ชันยังไม่ชัด"
+      },
+      "connections": [
+        "ashley-rescue"
+      ]
+    },
+    {
+      "id": "dead-aim",
+      "sortDate": "2002-09-01",
+      "date": {
+        "en": "September 2002",
+        "th": "กันยายน 2002"
+      },
+      "precision": "month",
+      "era": "aftermath",
+      "spoiler": 4,
+      "importance": "support",
+      "title": {
+        "en": "Bioterrorism aboard the Spencer Rain",
+        "th": "ก่อการร้ายชีวภาพบน Spencer Rain"
+      },
+      "summary": {
+        "en": "Morpheus Duvall turns a stolen weapons shipment into an international threat.",
+        "th": "Morpheus Duvall เปลี่ยนอาวุธที่ขโมยมาเป็นภัยคุกคามระหว่างประเทศ"
+      },
+      "story": [
+        {
+          "en": "Agents Bruce McGivern and Fong Ling stop Morpheus after he hijacks the cruise ship Spencer Rain. A t+G experimental agent gives him a radically altered body. This incident shows how Umbrella technology can be stolen and used for personal coercion.",
+          "th": "Bruce McGivern กับ Fong Ling หยุด Morpheus หลังเขายึดเรือ Spencer Rain สารทดลอง t+G เปลี่ยนร่างเขาอย่างรุนแรง เหตุการณ์นี้แสดงว่าเทคโนโลยี Umbrella ถูกขโมยไปใช้บีบบังคับตามเป้าหมายส่วนตัวได้"
+        }
+      ],
+      "cause": {
+        "en": "A former Umbrella employee steals biological weapons.",
+        "th": "อดีตพนักงาน Umbrella ขโมยอาวุธชีวภาพ"
+      },
+      "consequence": {
+        "en": "Governments confront threats independent of Umbrella’s command.",
+        "th": "รัฐบาลเผชิญภัยที่ไม่ได้อยู่ใต้คำสั่ง Umbrella"
+      },
+      "location": {
+        "en": "Spencer Rain / Atlantic facility",
+        "th": "Spencer Rain / ฐานในมหาสมุทรแอตแลนติก"
+      },
+      "characters": [
+        "bruce",
+        "fong"
+      ],
+      "organizations": [
+        "umbrella",
+        "usgov"
+      ],
+      "agents": [
+        "t-virus",
+        "t-g"
+      ],
+      "works": [
+        "dead"
+      ],
+      "sources": [
+        "work-dead"
+      ],
+      "uncertainty": null,
+      "connections": [
+        "bsaa-founded"
+      ]
+    },
+    {
+      "id": "umbrella-end",
+      "sortDate": "2003-02-01",
+      "date": {
+        "en": "2003–2004",
+        "th": "2003–2004"
+      },
+      "precision": "range",
+      "era": "aftermath",
+      "spoiler": 4,
+      "importance": "core",
+      "title": {
+        "en": "Umbrella falls; its research survives",
+        "th": "Umbrella ล่มสลาย แต่งานวิจัยยังอยู่"
+      },
+      "summary": {
+        "en": "A Russian operation and legal defeats end the company’s old form.",
+        "th": "ปฏิบัติการในรัสเซียและความพ่ายแพ้ทางกฎหมายปิดฉากบริษัทเดิม"
+      },
+      "story": [
+        {
+          "en": "Chris and Jill attack the Caucasus facility in February 2003 and defeat T-A.L.O.S. Wesker separately defeats Sergei and steals Umbrella’s archives. Court proceedings establish Umbrella’s responsibility for Raccoon City; subsequent records describe cessation of operations in 2004. Its scientists, samples and data remain marketable.",
+          "th": "Chris กับ Jill บุกฐานคอเคซัสในกุมภาพันธ์ 2003 และกำจัด T-A.L.O.S. อีกด้าน Wesker เอาชนะ Sergei และยึดคลังข้อมูล ศาลยืนยันความรับผิดของ Umbrella ต่อ Raccoon City ส่วนบันทึกรุ่นหลังระบุการยุติดำเนินงานในปี 2004 นักวิจัย ตัวอย่างเชื้อ และข้อมูลยังขายต่อได้"
+        }
+      ],
+      "cause": {
+        "en": "Survivors gather evidence while Umbrella loses legal and financial protection.",
+        "th": "ผู้รอดชีวิตรวบรวมหลักฐาน ขณะที่บริษัทสูญเสียการคุ้มครองทางกฎหมายและการเงิน"
+      },
+      "consequence": {
+        "en": "The enemy becomes a dispersed bioweapons economy.",
+        "th": "ศัตรูเปลี่ยนจากบริษัทเดียวเป็นเศรษฐกิจอาวุธชีวภาพที่กระจายตัว"
+      },
+      "location": {
+        "en": "Caucasus / international courts",
+        "th": "คอเคซัส / กระบวนการศาลระหว่างประเทศ"
+      },
+      "characters": [
+        "chris",
+        "jill",
+        "wesker"
+      ],
+      "organizations": [
+        "umbrella"
+      ],
+      "agents": [
+        "t-virus"
+      ],
+      "works": [
+        "umbrella",
+        "requiem"
+      ],
+      "sources": [
+        "history",
+        "work-umbrella",
+        "rc-report"
+      ],
+      "uncertainty": {
+        "en": "“Fall of Umbrella” covers legal defeat and later cessation; it is not one interchangeable date.",
+        "th": "“การล่มสลายของ Umbrella” รวมทั้งความพ่ายแพ้ในศาลและการยุติธุรกิจภายหลัง ไม่ใช่วันที่เดียวกันทุกความหมาย"
+      },
+      "connections": [
+        "bsaa-founded",
+        "blue-umbrella"
+      ]
+    },
+    {
+      "id": "bsaa-founded",
+      "sortDate": "2003-03-01",
+      "date": {
+        "en": "2003; expanded after 2005",
+        "th": "2003; ขยายบทบาทหลัง 2005"
+      },
+      "precision": "range",
+      "era": "aftermath",
+      "spoiler": 4,
+      "importance": "core",
+      "title": {
+        "en": "An international response takes shape",
+        "th": "การตอบโต้ระดับนานาชาติเริ่มเป็นรูปเป็นร่าง"
+      },
+      "summary": {
+        "en": "Chris and Jill help establish the BSAA; TerraSave focuses on civilian harm.",
+        "th": "Chris และ Jill ร่วมสร้าง BSAA ส่วน TerraSave ดูแลผลกระทบต่อพลเรือน"
+      },
+      "story": [
+        {
+          "en": "The pharmaceutical consortium backs the BSAA as bioweapons proliferate. Chris and Jill belong to its original eleven members. It later gains expanded authority under the United Nations. TerraSave, active by 2005 and associated with Claire, provides advocacy and relief rather than a parallel military force.",
+          "th": "สมาคมบริษัทเวชภัณฑ์สนับสนุน BSAA เมื่ออาวุธชีวภาพแพร่กระจาย Chris และ Jill อยู่ในสมาชิกดั้งเดิมสิบเอ็ดคน ต่อมาองค์กรได้อำนาจมากขึ้นภายใต้สหประชาชาติ ส่วน TerraSave ที่ดำเนินงานแล้วภายในปี 2005 และมี Claire ร่วมงาน เน้นช่วยเหลือและเรียกร้องสิทธิให้พลเรือน"
+        }
+      ],
+      "cause": {
+        "en": "Umbrella’s collapse does not end outbreaks.",
+        "th": "การล่มของ Umbrella ไม่ได้ยุติการระบาด"
+      },
+      "consequence": {
+        "en": "Military response and humanitarian work become ongoing institutions.",
+        "th": "การตอบโต้ทางทหารและการช่วยเหลือมนุษย์กลายเป็นงานต่อเนื่อง"
+      },
+      "location": {
+        "en": "",
+        "th": ""
+      },
+      "characters": [
+        "chris",
+        "jill",
+        "claire"
+      ],
+      "organizations": [
+        "bsaa",
+        "terrasave"
+      ],
+      "agents": [],
+      "works": [
+        "re5",
+        "rev",
+        "degeneration"
+      ],
+      "sources": [
+        "bsaa",
+        "work-degeneration"
+      ],
+      "uncertainty": {
+        "en": "The exact founding date of TerraSave is not asserted here.",
+        "th": "ไม่กำหนดวันก่อตั้ง TerraSave ที่หลักฐานไม่ได้ยืนยัน"
+      },
+      "connections": [
+        "zenobia",
+        "kijuju",
+        "bsaa-weapons"
+      ]
+    },
+    {
+      "id": "terragrigia",
+      "sortDate": "2004-01-01",
+      "date": {
+        "en": "2004",
+        "th": "2004"
+      },
+      "precision": "year",
+      "era": "aftermath",
+      "spoiler": 4,
+      "importance": "core",
+      "title": {
+        "en": "Terragrigia burns",
+        "th": "Terragrigia ถูกเผาทำลาย"
+      },
+      "summary": {
+        "en": "Veltro attacks a floating city; the FBC’s response conceals its chief’s involvement.",
+        "th": "Veltro โจมตีเมืองลอยน้ำ ขณะที่การตอบโต้ของ FBC ปกปิดส่วนร่วมของผู้บัญชาการ"
+      },
+      "story": [
+        {
+          "en": "FBC chief Morgan Lansdale supplies biological weapons to Veltro to manufacture a crisis. Hunters overwhelm Terragrigia, and its solar-energy system is used to destroy the city. Parker Luciani and Jessica Sherawat survive the operation. The cover-up drives the following year’s investigation.",
+          "th": "Morgan Lansdale หัวหน้า FBC ส่งอาวุธให้ Veltro เพื่อสร้างวิกฤต Hunter บุก Terragrigia ก่อนระบบพลังงานแสงอาทิตย์ถูกใช้ทำลายเมือง Parker Luciani กับ Jessica Sherawat รอดจากปฏิบัติการ การปิดบังครั้งนี้นำไปสู่การสืบสวนปีถัดมา"
+        }
+      ],
+      "cause": {
+        "en": "Lansdale wants greater power for his agency.",
+        "th": "Lansdale ต้องการขยายอำนาจหน่วยงาน"
+      },
+      "consequence": {
+        "en": "Evidence of the engineered disaster remains on the Queen Dido.",
+        "th": "หลักฐานหายนะที่จัดฉากยังอยู่บน Queen Dido"
+      },
+      "location": {
+        "en": "Terragrigia",
+        "th": "Terragrigia"
+      },
+      "characters": [
+        "parker",
+        "jessica"
+      ],
+      "organizations": [
+        "fbc",
+        "veltro"
+      ],
+      "agents": [
+        "t-virus",
+        "t-abyss"
+      ],
+      "works": [
+        "rev"
+      ],
+      "sources": [
+        "work-rev"
+      ],
+      "uncertainty": null,
+      "connections": [
+        "zenobia"
+      ]
+    },
+    {
+      "id": "ashley-rescue",
+      "sortDate": "2004-10-01",
+      "date": {
+        "en": "Autumn 2004",
+        "th": "ฤดูใบไม้ร่วง 2004"
+      },
+      "precision": "approximate",
+      "era": "aftermath",
+      "spoiler": 4,
+      "importance": "core",
+      "title": {
+        "en": "Leon enters a different kind of outbreak",
+        "th": "Leon พบการระบาดอีกชนิด"
+      },
+      "summary": {
+        "en": "Los Iluminados uses Las Plagas to control hosts and target the U.S. presidency.",
+        "th": "Los Iluminados ใช้ Las Plagas ควบคุมคนและเล็งเป้าไปถึงผู้นำสหรัฐฯ"
+      },
+      "story": [
+        {
+          "en": "Leon rescues Ashley Graham in rural Spain, helped by Luis Serra and Ada. Saddler’s cult uses parasites rather than a new t-virus strain. Leon and Ashley remove their parasites and escape. Krauser dies; Ada’s sample mission intersects with Wesker’s plans, without reducing her role to simple loyalty to him.",
+          "th": "Leon ช่วย Ashley Graham ในชนบทสเปนโดยมี Luis Serra และ Ada ช่วย ลัทธิของ Saddler ใช้ปรสิต ไม่ใช่ t-virus รุ่นใหม่ Leon กับ Ashley เอาปรสิตออกแล้วหนีได้ Krauser เสียชีวิต ส่วนภารกิจเก็บตัวอย่างของ Ada เชื่อมกับแผน Wesker แต่เธอไม่ได้ภักดีต่อเขาอย่างตรงไปตรงมา"
+        }
+      ],
+      "cause": {
+        "en": "The cult plans to exploit Ashley’s access to political power.",
+        "th": "ลัทธิต้องการใช้ Ashley เข้าถึงอำนาจการเมือง"
+      },
+      "consequence": {
+        "en": "Plaga samples enter the international weapons market.",
+        "th": "ตัวอย่าง Plaga เข้าสู่ตลาดอาวุธนานาชาติ"
+      },
+      "location": {
+        "en": "Rural Spain",
+        "th": "ชนบทสเปน"
+      },
+      "characters": [
+        "leon",
+        "ashley",
+        "ada",
+        "luis",
+        "krauser",
+        "wesker"
+      ],
+      "organizations": [
+        "usgov",
+        "iluminados"
+      ],
+      "agents": [
+        "plaga"
+      ],
+      "works": [
+        "re4"
+      ],
+      "sources": [
+        "history",
+        "work-re4"
+      ],
+      "uncertainty": {
+        "en": "Original, remake and Separate Ways are treated as portrayals of one rescue. Exact sample transactions vary by portrayal.",
+        "th": "ต้นฉบับ รีเมก และ Separate Ways คือภารกิจช่วยเหลือเดียวกัน รายละเอียดการส่งมอบตัวอย่างต่างกันระหว่างการเล่า"
+      },
+      "connections": [
+        "kijuju",
+        "damnation"
+      ]
+    },
+    {
+      "id": "zenobia",
+      "sortDate": "2005-01-01",
+      "date": {
+        "en": "2005",
+        "th": "2005"
+      },
+      "precision": "year",
+      "era": "aftermath",
+      "spoiler": 4,
+      "importance": "core",
+      "title": {
+        "en": "The ships that expose the FBC",
+        "th": "เรือที่เปิดโปง FBC"
+      },
+      "summary": {
+        "en": "Jill and Chris investigate t-Abyss and the manufactured Terragrigia crisis.",
+        "th": "Jill และ Chris สืบ t-Abyss กับวิกฤต Terragrigia ที่ถูกจัดฉาก"
+      },
+      "story": [
+        {
+          "en": "The Queen Zenobia investigation leads to Norman and evidence on the Queen Dido. t-Abyss combines a marine virus with t-virus research, creating an ocean-contamination threat. Lansdale is arrested; the FBC is dissolved and the BSAA’s authority grows. Jessica and Raymond’s hidden sample dealings point toward Tricell.",
+          "th": "การสืบ Queen Zenobia นำไปสู่ Norman และหลักฐานบน Queen Dido t-Abyss ผสานไวรัสทะเลกับงาน t-virus จนคุกคามการปนเปื้อนในมหาสมุทร Lansdale ถูกจับ FBC ถูกยุบ และ BSAA ได้อำนาจมากขึ้น การส่งตัวอย่างลับของ Jessica กับ Raymond ชี้ต่อไปถึง Tricell"
+        }
+      ],
+      "cause": {
+        "en": "Terragrigia’s cover-up and missing agents trigger a staged investigation.",
+        "th": "การปิดบัง Terragrigia และเจ้าหน้าที่ที่หายไปนำไปสู่การสืบที่ถูกจัดฉาก"
+      },
+      "consequence": {
+        "en": "A flawed response agency is replaced by stronger international oversight.",
+        "th": "หน่วยงานที่ใช้วิกฤตหาประโยชน์ถูกแทนที่ด้วยการกำกับระดับนานาชาติ"
+      },
+      "location": {
+        "en": "Mediterranean",
+        "th": "ทะเลเมดิเตอร์เรเนียน"
+      },
+      "characters": [
+        "jill",
+        "chris",
+        "parker",
+        "jessica",
+        "raymond"
+      ],
+      "organizations": [
+        "bsaa",
+        "fbc",
+        "tricell"
+      ],
+      "agents": [
+        "t-abyss",
+        "t-virus"
+      ],
+      "works": [
+        "rev"
+      ],
+      "sources": [
+        "work-rev",
+        "bsaa"
+      ],
+      "uncertainty": null,
+      "connections": [
+        "kijuju"
+      ]
+    },
+    {
+      "id": "degeneration",
+      "sortDate": "2005-11-01",
+      "date": {
+        "en": "2005",
+        "th": "2005"
+      },
+      "precision": "year",
+      "era": "aftermath",
+      "spoiler": 5,
+      "importance": "support",
+      "title": {
+        "en": "Raccoon City’s grievances reach an airport",
+        "th": "บาดแผลจาก Raccoon City มาถึงสนามบิน"
+      },
+      "summary": {
+        "en": "Leon and Claire reunite during the Harvardville outbreak.",
+        "th": "Leon และ Claire พบกันอีกครั้งในการระบาด Harvardville"
+      },
+      "story": [
+        {
+          "en": "Curtis Miller, traumatized by Raccoon City, becomes a G-infected attacker. Leon and Claire confront the outbreak and a conspiracy around WilPharma researcher Frederic Downing. Tricell acquires WilPharma’s assets afterward, showing how research survives a company’s disgrace.",
+          "th": "Curtis Miller ซึ่งสูญเสียจาก Raccoon City กลายเป็นผู้โจมตีที่ติดเชื้อ G Leon กับ Claire รับมือการระบาดและแผนของ Frederic Downing นักวิจัย WilPharma หลังเหตุการณ์ Tricell ซื้อทรัพย์สินของ WilPharma งานวิจัยจึงอยู่ต่อแม้เจ้าของเดิมพังลง"
+        }
+      ],
+      "cause": {
+        "en": "Loss, manipulation and illegal sample sales converge.",
+        "th": "ความสูญเสีย การชักใย และการขายตัวอย่างผิดกฎหมายมาบรรจบกัน"
+      },
+      "consequence": {
+        "en": "Tricell gains another route into the bioweapons business.",
+        "th": "Tricell ได้ช่องทางสู่งานอาวุธชีวภาพเพิ่ม"
+      },
+      "location": {
+        "en": "Harvardville",
+        "th": "Harvardville"
+      },
+      "characters": [
+        "leon",
+        "claire",
+        "curtis"
+      ],
+      "organizations": [
+        "terrasave",
+        "tricell",
+        "wilpharma"
+      ],
+      "agents": [
+        "t-virus",
+        "g-virus"
+      ],
+      "works": [
+        "degeneration"
+      ],
+      "sources": [
+        "history",
+        "work-degeneration"
+      ],
+      "uncertainty": null,
+      "connections": [
+        "kijuju"
+      ]
+    },
+    {
+      "id": "infinite-darkness",
+      "sortDate": "2006-01-01",
+      "date": {
+        "en": "2006",
+        "th": "2006"
+      },
+      "precision": "year",
+      "era": "global",
+      "spoiler": 5,
+      "importance": "support",
+      "title": {
+        "en": "Penamstan’s secrets reach the White House",
+        "th": "ความลับ Penamstan มาถึงทำเนียบขาว"
+      },
+      "summary": {
+        "en": "Leon and Claire uncover different sides of Wilson’s conspiracy.",
+        "th": "Leon และ Claire พบคนละด้านของแผน Wilson"
+      },
+      "story": [
+        {
+          "en": "A White House outbreak and a threatened diplomatic crisis expose the use of infected soldiers. Jason seeks to reveal the truth through terror; Leon stops him. Claire wants the evidence made public, but Leon withholds it. Their disagreement shows the tension between official security and survivor-led accountability.",
+          "th": "การระบาดในทำเนียบขาวและวิกฤตทางการทูตเปิดโปงการใช้ทหารติดเชื้อ Jason ต้องการเปิดความจริงด้วยความหวาดกลัว แต่ Leon หยุดเขา Claire ต้องการเผยหลักฐาน ส่วน Leon เก็บไว้ ความขัดแย้งนี้สะท้อนช่องว่างระหว่างความมั่นคงรัฐกับการเรียกร้องความรับผิดของผู้รอดชีวิต"
+        }
+      ],
+      "cause": {
+        "en": "Wilson’s control of infected soldiers begins to unravel.",
+        "th": "การควบคุมทหารติดเชื้อของ Wilson เริ่มแตก"
+      },
+      "consequence": {
+        "en": "The Penamstan conspiracy is disrupted, without full public transparency.",
+        "th": "แผน Penamstan ถูกหยุด แต่ความจริงไม่ได้เปิดต่อสาธารณะทั้งหมด"
+      },
+      "location": {
+        "en": "Washington, D.C.",
+        "th": "วอชิงตัน ดี.ซี."
+      },
+      "characters": [
+        "leon",
+        "claire",
+        "jason"
+      ],
+      "organizations": [
+        "usgov",
+        "terrasave"
+      ],
+      "agents": [
+        "penamstan-agent"
+      ],
+      "works": [
+        "infinite"
+      ],
+      "sources": [
+        "infinite-official",
+        "work-infinite"
+      ],
+      "uncertainty": null,
+      "connections": [
+        "tall-oaks"
+      ]
+    },
+    {
+      "id": "spencer-raid",
+      "sortDate": "2006-08-01",
+      "date": {
+        "en": "August 2006",
+        "th": "สิงหาคม 2006"
+      },
+      "precision": "month",
+      "era": "global",
+      "spoiler": 5,
+      "importance": "core",
+      "title": {
+        "en": "The founder dies; Jill disappears",
+        "th": "ผู้ก่อตั้งตาย และ Jill หายไป"
+      },
+      "summary": {
+        "en": "Chris and Jill find Wesker at Spencer’s estate.",
+        "th": "Chris และ Jill พบ Wesker ที่คฤหาสน์ Spencer"
+      },
+      "story": [
+        {
+          "en": "Spencer reveals Project W: selected children, including Albert and Alex Wesker, were shaped for his vision of a superior humanity. Albert kills him. Jill tackles Wesker through a window to save Chris and is presumed dead. Wesker survives and secretly keeps her captive.",
+          "th": "Spencer เปิดเผย Project W ซึ่งคัดเลือกเด็ก รวม Albert และ Alex Wesker เพื่อสร้างมนุษยชาติตามอุดมการณ์ของเขา Albert ฆ่า Spencer ส่วน Jill พุ่งใส่ Wesker หลุดหน้าต่างเพื่อช่วย Chris และถูกเชื่อว่าเสียชีวิต แต่ Wesker รอดและขังเธอไว้ลับ ๆ"
+        }
+      ],
+      "cause": {
+        "en": "Chris and Jill follow evidence to Umbrella’s founder.",
+        "th": "Chris และ Jill ตามหลักฐานไปถึงผู้ก่อตั้ง Umbrella"
+      },
+      "consequence": {
+        "en": "Wesker inherits research while Chris searches for answers about Jill.",
+        "th": "Wesker ได้งานวิจัยต่อ ส่วน Chris ตามหาคำตอบเรื่อง Jill"
+      },
+      "location": {
+        "en": "Spencer estate",
+        "th": "คฤหาสน์ Spencer"
+      },
+      "characters": [
+        "spencer",
+        "wesker",
+        "alex",
+        "chris",
+        "jill"
+      ],
+      "organizations": [
+        "bsaa",
+        "umbrella"
+      ],
+      "agents": [
+        "prototype"
+      ],
+      "works": [
+        "re5"
+      ],
+      "sources": [
+        "projectw",
+        "jill",
+        "work-re5"
+      ],
+      "uncertainty": null,
+      "connections": [
+        "jill-captive",
+        "grace-guardian",
+        "sein-island"
+      ]
+    },
+    {
+      "id": "grace-guardian",
+      "sortDate": "2006-12-01",
+      "date": {
+        "en": "After Spencer’s death",
+        "th": "หลัง Spencer เสียชีวิต"
+      },
+      "precision": "uncertain",
+      "era": "global",
+      "spoiler": 9,
+      "importance": "support",
+      "title": {
+        "en": "A child placed in Alyssa’s care",
+        "th": "เด็กที่อยู่ในความดูแลของ Alyssa"
+      },
+      "summary": {
+        "en": "Patrick’s letter connects Spencer’s wishes to Grace Ashcroft’s adoption.",
+        "th": "จดหมาย Patrick เชื่อมความประสงค์ของ Spencer กับการรับเลี้ยง Grace Ashcroft"
+      },
+      "story": [
+        {
+          "en": "After Spencer’s death, his servant Patrick asks Alyssa to care for a child in accordance with his wishes. Later evidence distinguishes the ordinary adopted Grace from the exceptional child Victor Gideon expects. This is not proof that Grace herself is an engineered superhuman.",
+          "th": "หลัง Spencer ตาย Patrick ผู้รับใช้ขอให้ Alyssa ดูแลเด็กตามความประสงค์ของ Spencer หลักฐานภายหลังแยก Grace ที่เป็นเด็กบุญธรรมธรรมดาออกจากเด็กพิเศษที่ Victor Gideon คาดหวัง จึงไม่ใช่หลักฐานว่า Grace ถูกสร้างให้เป็นยอดมนุษย์"
+        }
+      ],
+      "cause": {
+        "en": "Spencer’s late wishes outlive his death.",
+        "th": "ความประสงค์ช่วงท้ายของ Spencer ยังมีผลหลังเขาตาย"
+      },
+      "consequence": {
+        "en": "Alyssa’s family becomes entangled in the later ARK investigation.",
+        "th": "ครอบครัว Alyssa ถูกโยงเข้าสู่การสืบ ARK ในอนาคต"
+      },
+      "location": {
+        "en": "",
+        "th": ""
+      },
+      "characters": [
+        "grace",
+        "alyssa",
+        "spencer"
+      ],
+      "organizations": [],
+      "agents": [],
+      "works": [
+        "requiem"
+      ],
+      "sources": [
+        "patrick",
+        "blood",
+        "grace-report"
+      ],
+      "uncertainty": {
+        "en": "The letter is undated. Its position here is an editorial anchor after 2006, not a confirmed December date.",
+        "th": "จดหมายไม่มีวันที่ ตำแหน่งหลังปี 2006 ใช้จัดลำดับ ไม่ได้ยืนยันว่าเกิดในเดือนธันวาคม"
+      },
+      "connections": [
+        "wrenwood",
+        "elpis-revealed"
+      ]
+    },
+    {
+      "id": "blue-umbrella",
+      "sortDate": "2007-01-01",
+      "date": {
+        "en": "From 2007",
+        "th": "ตั้งแต่ปี 2007"
+      },
+      "precision": "year",
+      "era": "global",
+      "spoiler": 7,
+      "importance": "support",
+      "title": {
+        "en": "The Umbrella name returns in blue",
+        "th": "ชื่อ Umbrella กลับมาในสีน้ำเงิน"
+      },
+      "summary": {
+        "en": "A reorganized Umbrella offers anti-bioweapon support, under continued suspicion.",
+        "th": "Umbrella ที่จัดตั้งใหม่สนับสนุนงานต่อต้านอาวุธชีวภาพ ท่ามกลางความระแวง"
+      },
+      "story": [
+        {
+          "en": "Blue Umbrella describes itself as a reformed private military organization correcting its predecessor’s damage. It supplies equipment and personnel during the Baker cleanup. Chris cooperates as a BSAA operative; cooperation is not evidence that he has joined Umbrella or that every institutional claim should be trusted.",
+          "th": "Blue Umbrella อธิบายตนเองว่าเป็นองค์กรทหารเอกชนที่ปรับตัวเพื่อแก้ความเสียหายของบริษัทเดิม และส่งคนกับอุปกรณ์เก็บกวาดเหตุ Baker Chris ร่วมงานในฐานะเจ้าหน้าที่ BSAA ไม่ได้แปลว่าเขาเข้าร่วม Umbrella หรือว่าคำกล่าวขององค์กรเชื่อได้ทั้งหมด"
+        }
+      ],
+      "cause": {
+        "en": "The old company’s legacy creates both expertise and a credibility problem.",
+        "th": "มรดกบริษัทเดิมให้ทั้งความเชี่ยวชาญและปัญหาความน่าเชื่อถือ"
+      },
+      "consequence": {
+        "en": "Its support becomes visible in the 2017 operations.",
+        "th": "บทบาทสนับสนุนปรากฏชัดในปฏิบัติการปี 2017"
+      },
+      "location": {
+        "en": "",
+        "th": ""
+      },
+      "characters": [
+        "chris"
+      ],
+      "organizations": [
+        "blue-umbrella",
+        "bsaa"
+      ],
+      "agents": [],
+      "works": [
+        "hero",
+        "re7"
+      ],
+      "sources": [
+        "blue-letter"
+      ],
+      "uncertainty": null,
+      "connections": [
+        "baker-house",
+        "baker-cleanup"
+      ]
+    },
+    {
+      "id": "jill-captive",
+      "sortDate": "2008-01-01",
+      "date": {
+        "en": "2006–2009",
+        "th": "2006–2009"
+      },
+      "precision": "range",
+      "era": "global",
+      "spoiler": 5,
+      "importance": "support",
+      "title": {
+        "en": "Jill becomes Wesker’s unwilling asset",
+        "th": "Jill ถูกใช้เป็นเครื่องมือของ Wesker"
+      },
+      "summary": {
+        "en": "Her earlier infection contributes to Uroboros research while P30 controls her behavior.",
+        "th": "การติดเชื้อในอดีตของเธอช่วยงาน Uroboros ขณะที่ P30 ควบคุมพฤติกรรมเธอ"
+      },
+      "story": [
+        {
+          "en": "Wesker studies antibodies associated with Jill’s earlier t-virus infection to refine Uroboros, derived from Progenitor research. He uses the P30 drug to force her into obedience. P30 control is distinct from Uroboros infection; Jill is a captive, not a willing convert.",
+          "th": "Wesker ศึกษาแอนติบอดีที่เกี่ยวข้องกับการติด t-virus ในอดีตของ Jill เพื่อปรับ Uroboros ซึ่งสืบจากงาน Progenitor เขาใช้ยา P30 บังคับให้เธอทำตาม การควบคุมด้วย P30 ไม่ใช่การติด Uroboros และ Jill ไม่ได้สมัครใจเปลี่ยนฝ่าย"
+        }
+      ],
+      "cause": {
+        "en": "Jill survives her apparent death and falls into Wesker’s custody.",
+        "th": "Jill รอดจากเหตุที่เหมือนเสียชีวิต แต่ตกอยู่ในมือ Wesker"
+      },
+      "consequence": {
+        "en": "Chris will have to rescue her during the Kijuju operation.",
+        "th": "Chris ต้องช่วยเธอในปฏิบัติการ Kijuju"
+      },
+      "location": {
+        "en": "",
+        "th": ""
+      },
+      "characters": [
+        "jill",
+        "wesker",
+        "chris"
+      ],
+      "organizations": [
+        "tricell"
+      ],
+      "agents": [
+        "uroboros",
+        "progenitor",
+        "p30"
+      ],
+      "works": [
+        "re5"
+      ],
+      "sources": [
+        "jill",
+        "work-re5"
+      ],
+      "uncertainty": null,
+      "connections": [
+        "kijuju",
+        "death-island"
+      ]
+    },
+    {
+      "id": "kijuju",
+      "sortDate": "2009-03-01",
+      "date": {
+        "en": "March 2009",
+        "th": "มีนาคม 2009"
+      },
+      "precision": "month",
+      "era": "global",
+      "spoiler": 5,
+      "importance": "core",
+      "title": {
+        "en": "Wesker’s global selection fails",
+        "th": "การคัดเลือกมนุษย์ของ Wesker ล้มเหลว"
+      },
+      "summary": {
+        "en": "Chris and Sheva stop the Tricell-backed Uroboros plan.",
+        "th": "Chris กับ Sheva หยุดแผน Uroboros ที่ Tricell สนับสนุน"
+      },
+      "story": [
+        {
+          "en": "In Kijuju, engineered Plaga variants control the Majini. Tricell’s Excella Gionne supports Wesker’s plan to spread Uroboros worldwide, killing those it rejects. Chris and Sheva free Jill, stop deployment and kill Wesker. Jill and Josh’s parallel escape helps the final extraction.",
+          "th": "Plaga ที่ดัดแปลงควบคุม Majini ใน Kijuju Excella Gionne จาก Tricell สนับสนุนแผน Wesker แพร่ Uroboros ทั่วโลกและฆ่าผู้ที่เชื้อไม่ยอมรับ Chris กับ Sheva ช่วย Jill หยุดการปล่อยเชื้อและฆ่า Wesker ส่วนการหนีของ Jill กับ Josh ช่วยให้ทุกคนอพยพออกมาได้"
+        }
+      ],
+      "cause": {
+        "en": "Wesker turns Spencer’s selective evolution into a global extermination plan.",
+        "th": "Wesker เปลี่ยนแนวคิดวิวัฒนาการคัดเลือกของ Spencer เป็นแผนสังหารทั่วโลก"
+      },
+      "consequence": {
+        "en": "Albert Wesker is dead, but his research and family legacy persist.",
+        "th": "Albert Wesker ตาย แต่งานวิจัยและมรดกครอบครัวยังส่งผลต่อไป"
+      },
+      "location": {
+        "en": "Kijuju, West Africa",
+        "th": "Kijuju แอฟริกาตะวันตก"
+      },
+      "characters": [
+        "chris",
+        "sheva",
+        "jill",
+        "wesker",
+        "josh",
+        "excella"
+      ],
+      "organizations": [
+        "bsaa",
+        "tricell"
+      ],
+      "agents": [
+        "plaga",
+        "uroboros"
+      ],
+      "works": [
+        "re5"
+      ],
+      "sources": [
+        "history",
+        "work-re5"
+      ],
+      "uncertainty": null,
+      "connections": [
+        "edonia",
+        "sein-island"
+      ]
+    },
+    {
+      "id": "damnation",
+      "sortDate": "2011-01-01",
+      "date": {
+        "en": "2011",
+        "th": "2011"
+      },
+      "precision": "year",
+      "era": "global",
+      "spoiler": 6,
+      "importance": "support",
+      "title": {
+        "en": "Parasites enter a civil war",
+        "th": "ปรสิตเข้าสู่สงครามกลางเมือง"
+      },
+      "summary": {
+        "en": "Leon encounters Plaga-controlled Lickers in the Eastern Slav Republic.",
+        "th": "Leon พบ Licker ที่ถูกควบคุมด้วย Plaga ใน Eastern Slav Republic"
+      },
+      "story": [
+        {
+          "en": "Rebels use dominant parasites to direct Lickers, while government forces deploy Tyrants. Ada pursues samples under a false BSAA identity. Leon prevents Buddy’s parasite from overtaking him by damaging its connection through the spine, leaving him alive but unable to walk.",
+          "th": "ฝ่ายกบฏใช้ปรสิตระดับควบคุมสั่ง Licker ขณะที่รัฐบาลใช้ Tyrant Ada หาตัวอย่างโดยอ้างตัวเป็น BSAA Leon หยุดปรสิตของ Buddy ด้วยการทำลายการเชื่อมต่อผ่านกระดูกสันหลัง ทำให้เขารอดแต่เดินไม่ได้"
+        }
+      ],
+      "cause": {
+        "en": "Both sides of a civil war seek biological force multipliers.",
+        "th": "ทั้งสองฝ่ายต้องการอาวุธชีวภาพเพิ่มอำนาจรบ"
+      },
+      "consequence": {
+        "en": "Plaga-based control spreads beyond the Spanish cult.",
+        "th": "การควบคุมด้วย Plaga แพร่ออกไปไกลจากลัทธิในสเปน"
+      },
+      "location": {
+        "en": "Eastern Slav Republic",
+        "th": "Eastern Slav Republic"
+      },
+      "characters": [
+        "leon",
+        "ada",
+        "buddy"
+      ],
+      "organizations": [
+        "usgov"
+      ],
+      "agents": [
+        "plaga",
+        "t-virus"
+      ],
+      "works": [
+        "damnation"
+      ],
+      "sources": [
+        "history",
+        "work-damnation"
+      ],
+      "uncertainty": null,
+      "connections": [
+        "lanshiang"
+      ]
+    },
+    {
+      "id": "sein-island",
+      "sortDate": "2011-06-01",
+      "date": {
+        "en": "2011; over six months",
+        "th": "2011; กินเวลาราวหกเดือน"
+      },
+      "precision": "year",
+      "era": "global",
+      "spoiler": 6,
+      "importance": "core",
+      "title": {
+        "en": "Alex Wesker’s inheritance experiment",
+        "th": "การทดลองสืบทอดตัวตนของ Alex Wesker"
+      },
+      "summary": {
+        "en": "Claire, Moira, Barry and Natalia confront fear-based infection and identity transfer.",
+        "th": "Claire, Moira, Barry และ Natalia เผชิญเชื้อที่ตอบสนองต่อความกลัวและการถ่ายโอนตัวตน"
+      },
+      "story": [
+        {
+          "en": "Alex kidnaps TerraSave members to test t-Phobos, which responds to fear. Claire and Moira escape the initial captivity; Barry reaches the island six months later and protects Natalia. Alex attempts to move her consciousness into Natalia and later mutates with Uroboros. Moira survives and helps stop her. The later epilogue hints that Alex’s identity remains within Natalia.",
+          "th": "Alex ลักพาตัวสมาชิก TerraSave เพื่อทดสอบ t-Phobos ที่ตอบสนองต่อความกลัว Claire กับ Moira หนีจากการขังช่วงแรก ส่วน Barry มาถึงอีกหกเดือนต่อมาและปกป้อง Natalia Alex พยายามย้ายจิตสำนึกเข้า Natalia ก่อนกลายพันธุ์ด้วย Uroboros ในภายหลัง Moira รอดและช่วยหยุดเธอ ฉากท้ายเรื่องบ่งชี้ว่าตัวตน Alex ยังอยู่ใน Natalia"
+        }
+      ],
+      "cause": {
+        "en": "Alex seeks survival beyond her failing body.",
+        "th": "Alex ต้องการอยู่ต่อแม้ร่างกายเสื่อมลง"
+      },
+      "consequence": {
+        "en": "The Burton family shelters Natalia; the identity-transfer consequence remains unsettling.",
+        "th": "ครอบครัว Burton รับดูแล Natalia แต่ผลของการถ่ายโอนตัวตนยังน่ากังวล"
+      },
+      "location": {
+        "en": "Sein Island",
+        "th": "เกาะ Sein"
+      },
+      "characters": [
+        "alex",
+        "claire",
+        "moira",
+        "barry",
+        "natalia"
+      ],
+      "organizations": [
+        "terrasave"
+      ],
+      "agents": [
+        "t-phobos",
+        "uroboros"
+      ],
+      "works": [
+        "rev2"
+      ],
+      "sources": [
+        "history",
+        "work-rev2"
+      ],
+      "uncertainty": {
+        "en": "The main incident is officially placed in 2011. Its six-month jump is preserved without inventing exact calendar days.",
+        "th": "เหตุการณ์หลักถูกวางไว้ในปี 2011 คงช่วงกระโดดหกเดือนโดยไม่แต่งวันปฏิทินที่ไม่มีการยืนยัน"
+      },
+      "connections": [
+        "heavenly-island"
+      ]
+    },
+    {
+      "id": "marhawa",
+      "sortDate": "2012-01-01",
+      "date": {
+        "en": "2012, before Edonia",
+        "th": "2012 ก่อนเหตุ Edonia"
+      },
+      "precision": "year",
+      "era": "global",
+      "spoiler": 6,
+      "importance": "support",
+      "title": {
+        "en": "C-virus reaches Marhawa School",
+        "th": "C-virus มาถึงโรงเรียน Marhawa"
+      },
+      "summary": {
+        "en": "A school outbreak foreshadows the global C-virus crisis.",
+        "th": "การระบาดในโรงเรียนเป็นสัญญาณก่อนวิกฤต C-virus ระดับโลก"
+      },
+      "story": [
+        {
+          "en": "Chris, Piers and the BSAA respond to an outbreak at Marhawa School. Carla’s covert involvement links the disaster to the developing C-virus campaign. The manga’s main narrative contributes to the game continuity; its importance here is this bridge into Resident Evil 6.",
+          "th": "Chris, Piers และ BSAA รับมือการระบาดที่โรงเรียน Marhawa การเกี่ยวข้องลับ ๆ ของ Carla เชื่อมเหตุนี้กับแผน C-virus ที่กำลังเกิดขึ้น เนื้อเรื่องหลักของมังงะมีบทบาทในความต่อเนื่องของเกม และทำหน้าที่เชื่อมเข้าสู่ RE6"
+        }
+      ],
+      "cause": {
+        "en": "C-virus research moves into real-world testing and manipulation.",
+        "th": "งาน C-virus ขยับสู่การทดสอบและชักใยสถานการณ์จริง"
+      },
+      "consequence": {
+        "en": "Chris and Piers face another outbreak before their Edonia deployment.",
+        "th": "Chris กับ Piers เผชิญภัยอีกครั้งก่อนภารกิจ Edonia"
+      },
+      "location": {
+        "en": "Marhawa School, Asia",
+        "th": "โรงเรียน Marhawa ในเอเชีย"
+      },
+      "characters": [
+        "chris",
+        "piers",
+        "carla"
+      ],
+      "organizations": [
+        "bsaa",
+        "neo-umbrella"
+      ],
+      "agents": [
+        "c-virus"
+      ],
+      "works": [
+        "marhawa"
+      ],
+      "sources": [
+        "work-marhawa"
+      ],
+      "uncertainty": null,
+      "connections": [
+        "edonia"
+      ]
+    },
+    {
+      "id": "edonia",
+      "sortDate": "2012-12-24",
+      "date": {
+        "en": "24 December 2012",
+        "th": "24 ธันวาคม 2012"
+      },
+      "precision": "day",
+      "era": "global",
+      "spoiler": 6,
+      "importance": "core",
+      "title": {
+        "en": "Edonia: the next generation of targets",
+        "th": "Edonia: เป้าหมายรุ่นใหม่"
+      },
+      "summary": {
+        "en": "Sherry protects Jake Muller while Chris’s unit is devastated.",
+        "th": "Sherry ปกป้อง Jake Muller ขณะที่หน่วย Chris สูญเสียหนัก"
+      },
+      "story": [
+        {
+          "en": "Jake, Albert Wesker’s son, carries a valuable immunity to C-virus. Sherry, now a U.S. agent, tries to secure him for treatment research. Neo-Umbrella’s Ustanak pursues them. Carla, posing as Ada, destroys much of Chris’s unit; Piers survives, and Chris’s trauma disrupts his memory.",
+          "th": "Jake ลูกชาย Albert Wesker มีภูมิคุ้มกัน C-virus ที่มีค่า Sherry ซึ่งเป็นเจ้าหน้าที่สหรัฐฯ พยายามนำตัวเขาไปเพื่องานรักษา Ustanak ของ Neo-Umbrella ไล่ล่าทั้งคู่ Carla ที่ปลอมเป็น Ada ทำลายหน่วย Chris ส่วนใหญ่ Piers รอด แต่บาดแผลทำให้ความทรงจำ Chris ผิดปกติ"
+        }
+      ],
+      "cause": {
+        "en": "C-virus is used in a war zone while Jake’s biology becomes a prize.",
+        "th": "C-virus ถูกใช้ในเขตสงคราม และชีววิทยาของ Jake กลายเป็นสิ่งที่ทุกฝ่ายต้องการ"
+      },
+      "consequence": {
+        "en": "The survivors’ paths converge in China six months later.",
+        "th": "เส้นทางผู้รอดชีวิตจะมาบรรจบในจีนอีกหกเดือนต่อมา"
+      },
+      "location": {
+        "en": "Edonia",
+        "th": "Edonia"
+      },
+      "characters": [
+        "sherry",
+        "jake",
+        "chris",
+        "piers",
+        "carla"
+      ],
+      "organizations": [
+        "bsaa",
+        "usgov",
+        "neo-umbrella"
+      ],
+      "agents": [
+        "c-virus"
+      ],
+      "works": [
+        "re6"
+      ],
+      "sources": [
+        "work-re6"
+      ],
+      "uncertainty": null,
+      "connections": [
+        "lanshiang"
+      ]
+    },
+    {
+      "id": "tall-oaks",
+      "sortDate": "2013-06-29",
+      "date": {
+        "en": "29 June 2013",
+        "th": "29 มิถุนายน 2013"
+      },
+      "precision": "day",
+      "era": "global",
+      "spoiler": 6,
+      "importance": "core",
+      "title": {
+        "en": "A president is silenced in Tall Oaks",
+        "th": "ประธานาธิบดีถูกปิดปากที่ Tall Oaks"
+      },
+      "summary": {
+        "en": "Leon and Helena uncover an attack designed to suppress the truth about Raccoon City.",
+        "th": "Leon กับ Helena พบการโจมตีที่ตั้งใจปิดความจริงเรื่อง Raccoon City"
+      },
+      "story": [
+        {
+          "en": "President Adam Benford intends to reveal the government’s role in Raccoon City. Simmons engineers a C-virus attack, coercing Helena through her sister Deborah. Leon is forced to kill the infected president. Aerosolized C-virus produces the zombie outbreak, unlike the injected forms commonly associated with J’avo.",
+          "th": "ประธานาธิบดี Adam Benford ตั้งใจเปิดเผยบทบาทรัฐบาลใน Raccoon City Simmons จัดการโจมตีด้วย C-virus และบีบ Helena ผ่าน Deborah น้องสาวของเธอ Leon จำต้องฆ่าประธานาธิบดีที่ติดเชื้อ C-virus แบบแพร่ทางอากาศทำให้เกิดซอมบี้ ต่างจากแบบฉีดที่มักเกี่ยวข้องกับ J’avo"
+        }
+      ],
+      "cause": {
+        "en": "Simmons protects the political order and its concealed history.",
+        "th": "Simmons ปกป้องโครงสร้างอำนาจและประวัติศาสตร์ที่ถูกซ่อน"
+      },
+      "consequence": {
+        "en": "Leon and Helena pursue Simmons to Lanshiang.",
+        "th": "Leon กับ Helena ตาม Simmons ไป Lanshiang"
+      },
+      "location": {
+        "en": "Tall Oaks",
+        "th": "Tall Oaks"
+      },
+      "characters": [
+        "leon",
+        "helena",
+        "simmons"
+      ],
+      "organizations": [
+        "usgov",
+        "family"
+      ],
+      "agents": [
+        "c-virus"
+      ],
+      "works": [
+        "re6"
+      ],
+      "sources": [
+        "work-re6",
+        "cvirus"
+      ],
+      "uncertainty": null,
+      "connections": [
+        "lanshiang"
+      ]
+    },
+    {
+      "id": "lanshiang",
+      "sortDate": "2013-06-30",
+      "date": {
+        "en": "Late June–July 2013",
+        "th": "ปลายมิถุนายน–กรกฎาคม 2013"
+      },
+      "precision": "range",
+      "era": "global",
+      "spoiler": 6,
+      "importance": "core",
+      "title": {
+        "en": "The C-virus campaigns converge",
+        "th": "วิกฤต C-virus มาบรรจบกัน"
+      },
+      "summary": {
+        "en": "Four intersecting journeys stop Simmons, Carla and the HAOS deployment.",
+        "th": "เส้นทางสี่สายหยุด Simmons, Carla และการปล่อย HAOS"
+      },
+      "story": [
+        {
+          "en": "Leon, Helena, Chris, Piers, Jake, Sherry and the real Ada confront linked but competing conspiracies. Carla and Simmons die. Piers infects himself to save Chris and sacrifices himself against HAOS. Jake and Sherry escape Ustanak; Jake’s blood helps treatment development. The crisis ends without undoing its immense civilian losses.",
+          "th": "Leon, Helena, Chris, Piers, Jake, Sherry และ Ada ตัวจริงเผชิญแผนที่เชื่อมกันแต่แข่งขันกัน Carla กับ Simmons ตาย Piers ยอมติดเชื้อเพื่อช่วย Chris และเสียสละหยุด HAOS ส่วน Jake กับ Sherry หนี Ustanak ได้ เลือด Jake ช่วยงานรักษา วิกฤตจบลงแต่ไม่อาจคืนชีวิตพลเรือนที่สูญเสีย"
+        }
+      ],
+      "cause": {
+        "en": "Carla’s revenge and Simmons’s control collide on an international scale.",
+        "th": "การแก้แค้น Carla และการรักษาอำนาจ Simmons ปะทะกันระดับนานาชาติ"
+      },
+      "consequence": {
+        "en": "Chris recommits to his work; bioterrorism remains a permanent global threat.",
+        "th": "Chris กลับมายึดมั่นในงาน และภัยก่อการร้ายชีวภาพยังไม่หายไป"
+      },
+      "location": {
+        "en": "Lanshiang / offshore facility",
+        "th": "Lanshiang / ฐานนอกชายฝั่ง"
+      },
+      "characters": [
+        "leon",
+        "helena",
+        "chris",
+        "piers",
+        "jake",
+        "sherry",
+        "ada",
+        "carla",
+        "simmons"
+      ],
+      "organizations": [
+        "bsaa",
+        "usgov",
+        "neo-umbrella",
+        "family"
+      ],
+      "agents": [
+        "c-virus"
+      ],
+      "works": [
+        "re6"
+      ],
+      "sources": [
+        "history",
+        "work-re6"
+      ],
+      "uncertainty": null,
+      "connections": [
+        "vendetta"
+      ]
+    },
+    {
+      "id": "heavenly-island",
+      "sortDate": "2014-01-01",
+      "date": {
+        "en": "2014",
+        "th": "2014"
+      },
+      "precision": "year",
+      "era": "mold-era",
+      "spoiler": 7,
+      "importance": "support",
+      "title": {
+        "en": "Alex’s research outlives her",
+        "th": "งานของ Alex อยู่ต่อหลังเธอ"
+      },
+      "summary": {
+        "en": "Claire and TerraSave encounter another island outbreak tied to abandoned research.",
+        "th": "Claire กับ TerraSave พบการระบาดบนเกาะอีกแห่งที่โยงงานวิจัยถูกทิ้ง"
+      },
+      "story": [
+        {
+          "en": "A television production on Sonido de Tortuga becomes an outbreak site. Claire’s investigation connects it to facilities associated with Alex Wesker’s research legacy. The agent is not assigned a speculative place in the established virus genealogy.",
+          "th": "กองถ่ายรายการบน Sonido de Tortuga กลายเป็นพื้นที่ระบาด การสืบของ Claire เชื่อมถึงสถานที่ที่เกี่ยวข้องกับมรดกการวิจัย Alex Wesker โดยไม่ฝืนจัดเชื้อในเรื่องเข้าสายวิวัฒนาการไวรัสที่หลักฐานยังไม่ยืนยัน"
+        }
+      ],
+      "cause": {
+        "en": "Unsecured research survives the loss of its original operator.",
+        "th": "งานวิจัยที่ไม่ถูกควบคุมยังอยู่แม้ผู้ดูแลเดิมหมดบทบาท"
+      },
+      "consequence": {
+        "en": "TerraSave continues to confront the civilian aftermath of weapons research.",
+        "th": "TerraSave ยังต้องรับมือผลที่ตกกับพลเรือน"
+      },
+      "location": {
+        "en": "Sonido de Tortuga",
+        "th": "Sonido de Tortuga"
+      },
+      "characters": [
+        "claire"
+      ],
+      "organizations": [
+        "terrasave"
+      ],
+      "agents": [
+        "sonido-agent"
+      ],
+      "works": [
+        "heavenly"
+      ],
+      "sources": [
+        "work-heavenly"
+      ],
+      "uncertainty": {
+        "en": "Placement within 2014 is not precise enough to establish its order against every other event that year.",
+        "th": "ไม่มีข้อมูลละเอียดพอจัดลำดับกับทุกเหตุการณ์อื่นในปี 2014"
+      },
+      "connections": [
+        "death-island"
+      ]
+    },
+    {
+      "id": "vendetta",
+      "sortDate": "2014-06-01",
+      "date": {
+        "en": "2014",
+        "th": "2014"
+      },
+      "precision": "year",
+      "era": "mold-era",
+      "spoiler": 7,
+      "importance": "core",
+      "title": {
+        "en": "An outbreak designed to choose its victims",
+        "th": "การระบาดที่เลือกเหยื่อได้"
+      },
+      "summary": {
+        "en": "Chris, Leon and Rebecca stop Glenn Arias’s attack on New York.",
+        "th": "Chris, Leon และ Rebecca หยุดการโจมตีนิวยอร์กของ Glenn Arias"
+      },
+      "story": [
+        {
+          "en": "Arias weaponizes the A-virus through latent infection and an activation mechanism, with recognition that can distinguish allies from targets. Rebecca develops a countermeasure. The team defeats Arias and disperses treatment, reversing infection in affected civilians. This is an engineered program, not a new explanation for every earlier zombie outbreak.",
+          "th": "Arias ใช้ A-virus ผ่านการติดเชื้อแฝงและกลไกกระตุ้น พร้อมการแยกฝ่ายเพื่อเลือกเป้าหมาย Rebecca พัฒนาวิธีรับมือ ทีมกำจัด Arias และกระจายสารรักษาเพื่อคืนสภาพพลเรือนที่ติดเชื้อ นี่คือโครงการดัดแปลงเฉพาะ ไม่ใช่คำอธิบายใหม่ของซอมบี้ทุกครั้งที่ผ่านมา"
+        }
+      ],
+      "cause": {
+        "en": "Arias combines weapons dealing with revenge.",
+        "th": "Arias ผสานธุรกิจอาวุธกับการแก้แค้น"
+      },
+      "consequence": {
+        "en": "The survivors prevent a citywide weaponized infection.",
+        "th": "ผู้รอดชีวิตหยุดการใช้คนทั้งเมืองเป็นอาวุธ"
+      },
+      "location": {
+        "en": "New York",
+        "th": "นิวยอร์ก"
+      },
+      "characters": [
+        "chris",
+        "leon",
+        "rebecca",
+        "arias",
+        "maria"
+      ],
+      "organizations": [
+        "bsaa",
+        "usgov"
+      ],
+      "agents": [
+        "a-virus"
+      ],
+      "works": [
+        "vendetta"
+      ],
+      "sources": [
+        "work-vendetta"
+      ],
+      "uncertainty": {
+        "en": "The story is set in 2014; an exact position relative to the other 2014 incidents is not asserted.",
+        "th": "เรื่องเกิดในปี 2014 แต่ไม่กำหนดลำดับแน่นอนเทียบเหตุอื่นในปีเดียวกัน"
+      },
+      "connections": [
+        "death-island"
+      ]
+    },
+    {
+      "id": "baker-infection",
+      "sortDate": "2014-10-01",
+      "date": {
+        "en": "October 2014",
+        "th": "ตุลาคม 2014"
+      },
+      "precision": "month",
+      "era": "mold-era",
+      "spoiler": 7,
+      "importance": "core",
+      "title": {
+        "en": "The Bakers welcome the wrong survivor",
+        "th": "ครอบครัว Baker ช่วยผู้รอดชีวิตผิดคน"
+      },
+      "summary": {
+        "en": "A transport disaster brings Eveline and Mia to a Louisiana family.",
+        "th": "อุบัติเหตุระหว่างขนส่งพา Eveline และ Mia มาถึงครอบครัวใน Louisiana"
+      },
+      "story": [
+        {
+          "en": "Mia Winters is an operative involved in transporting Eveline. After the ship disaster, Jack Baker offers help. Eveline infects the family with mold and imposes her desire for a family through coercion and hallucinations. The Bakers’ violence is a consequence of infection, not simply who they were before.",
+          "th": "Mia Winters ทำงานเกี่ยวกับการขนส่ง Eveline หลังเรือประสบเหตุ Jack Baker เข้าไปช่วย Eveline ทำให้ครอบครัวติดเชื้อราและบังคับให้เป็นครอบครัวของเธอผ่านการชักจูงกับภาพหลอน ความรุนแรงของบ้าน Baker จึงเป็นผลของเชื้อ ไม่ใช่นิสัยดั้งเดิมของพวกเขา"
+        }
+      ],
+      "cause": {
+        "en": "An E-series weapon escapes transport containment.",
+        "th": "อาวุธ E-series หลุดจากการควบคุมระหว่างขนส่ง"
+      },
+      "consequence": {
+        "en": "Mia’s disappearance draws Ethan to the house three years later.",
+        "th": "Mia หายตัวไป และดึง Ethan มาที่บ้านอีกสามปีต่อมา"
+      },
+      "location": {
+        "en": "Dulvey, Louisiana",
+        "th": "Dulvey รัฐ Louisiana"
+      },
+      "characters": [
+        "mia",
+        "eveline",
+        "jack",
+        "zoe",
+        "ethan"
+      ],
+      "organizations": [
+        "connections"
+      ],
+      "agents": [
+        "mold"
+      ],
+      "works": [
+        "re7"
+      ],
+      "sources": [
+        "work-re7"
+      ],
+      "uncertainty": null,
+      "connections": [
+        "baker-house"
+      ]
+    },
+    {
+      "id": "death-island",
+      "sortDate": "2015-01-01",
+      "date": {
+        "en": "2015",
+        "th": "2015"
+      },
+      "precision": "year",
+      "era": "mold-era",
+      "spoiler": 7,
+      "importance": "core",
+      "title": {
+        "en": "Five survivors meet on Alcatraz",
+        "th": "ผู้รอดชีวิตห้าคนพบกันบน Alcatraz"
+      },
+      "summary": {
+        "en": "Jill, Chris, Leon, Claire and Rebecca stop targeted infections in San Francisco.",
+        "th": "Jill, Chris, Leon, Claire และ Rebecca หยุดการติดเชื้อเจาะจงเป้าหมายใน San Francisco"
+      },
+      "story": [
+        {
+          "en": "Former U.B.C.S. member Dylan Blake weaponizes resentment from Raccoon City. A modified t-virus is delivered through mosquito-like drones, and Maria seeks revenge for Arias. Rebecca’s countermeasure saves the infected team members. Jill’s recovery from captivity remains part of her emotional story.",
+          "th": "Dylan Blake อดีต U.B.C.S. ใช้ความคับแค้นจาก Raccoon City สร้างอาวุธ t-virus ดัดแปลงถูกส่งด้วยโดรนคล้ายยุง ขณะที่ Maria แก้แค้นให้ Arias สารรับมือของ Rebecca ช่วยสมาชิกทีมที่ติดเชื้อ และบาดแผลจากการถูกขังยังเป็นส่วนหนึ่งของเรื่อง Jill"
+        }
+      ],
+      "cause": {
+        "en": "Past survivors turn trauma into opposing responses.",
+        "th": "ผู้รอดชีวิตในอดีตเลือกตอบสนองต่อบาดแผลคนละทาง"
+      },
+      "consequence": {
+        "en": "The team stops the operation while reconnecting across their shared history.",
+        "th": "ทีมยุติปฏิบัติการและเชื่อมกันผ่านประวัติศาสตร์ที่มีร่วมกัน"
+      },
+      "location": {
+        "en": "San Francisco / Alcatraz",
+        "th": "San Francisco / Alcatraz"
+      },
+      "characters": [
+        "jill",
+        "chris",
+        "leon",
+        "claire",
+        "rebecca",
+        "dylan",
+        "maria"
+      ],
+      "organizations": [
+        "bsaa",
+        "terrasave",
+        "usgov"
+      ],
+      "agents": [
+        "t-virus"
+      ],
+      "works": [
+        "death"
+      ],
+      "sources": [
+        "death-official",
+        "work-death"
+      ],
+      "uncertainty": null,
+      "connections": [
+        "requiem"
+      ]
+    },
+    {
+      "id": "baker-house",
+      "sortDate": "2017-07-01",
+      "date": {
+        "en": "July 2017",
+        "th": "กรกฎาคม 2017"
+      },
+      "precision": "month",
+      "era": "mold-era",
+      "spoiler": 7,
+      "importance": "core",
+      "title": {
+        "en": "Ethan searches for Mia",
+        "th": "Ethan ออกตามหา Mia"
+      },
+      "summary": {
+        "en": "A personal rescue becomes a confrontation with a living biological weapon.",
+        "th": "การช่วยคนรักกลายเป็นการเผชิญอาวุธชีวภาพที่มีชีวิต"
+      },
+      "story": [
+        {
+          "en": "Ethan follows a message from Mia to the Baker estate. Zoe helps him understand the mold infection and obtain serum. He defeats Eveline with anti-bioweapon assistance and leaves with Mia. The later continuity establishes Mia’s survival; the mutually exclusive player choice is not treated as two parallel histories.",
+          "th": "Ethan ตามข้อความของ Mia ไปบ้าน Baker Zoe ช่วยอธิบายการติดเชื้อราและหาซีรัม เขากำจัด Eveline ด้วยความช่วยเหลือด้านอาวุธแล้วออกไปพร้อม Mia เรื่องภายหลังยืนยันว่า Mia รอด จึงไม่ถือทางเลือกที่ขัดกันในเกมเป็นสองประวัติศาสตร์คู่ขนาน"
+        }
+      ],
+      "cause": {
+        "en": "Eveline keeps Mia and the Bakers trapped in her imposed family.",
+        "th": "Eveline กัก Mia กับครอบครัว Baker ไว้ในครอบครัวที่เธอบังคับสร้าง"
+      },
+      "consequence": {
+        "en": "The estate is contained, but the Connections’ research needs further cleanup.",
+        "th": "พื้นที่ถูกควบคุม แต่ยังต้องจัดการงานวิจัยของ The Connections"
+      },
+      "location": {
+        "en": "Baker estate",
+        "th": "บ้าน Baker"
+      },
+      "characters": [
+        "ethan",
+        "mia",
+        "zoe",
+        "eveline",
+        "chris"
+      ],
+      "organizations": [
+        "connections",
+        "bsaa",
+        "blue-umbrella"
+      ],
+      "agents": [
+        "mold"
+      ],
+      "works": [
+        "re7"
+      ],
+      "sources": [
+        "history",
+        "work-re7"
+      ],
+      "uncertainty": null,
+      "connections": [
+        "baker-cleanup",
+        "village"
+      ]
+    },
+    {
+      "id": "baker-cleanup",
+      "sortDate": "2017-07-02",
+      "date": {
+        "en": "After the July 2017 incident",
+        "th": "หลังเหตุเดือนกรกฎาคม 2017"
+      },
+      "precision": "range",
+      "era": "mold-era",
+      "spoiler": 7,
+      "importance": "support",
+      "title": {
+        "en": "Lucas is stopped; Zoe is saved",
+        "th": "Lucas ถูกหยุด และ Zoe ได้รับการช่วยเหลือ"
+      },
+      "summary": {
+        "en": "Chris confronts Lucas, while Joe Baker rescues Zoe from the remaining mold threat.",
+        "th": "Chris เผชิญ Lucas ขณะที่ Joe Baker ช่วย Zoe จากเชื้อราที่ยังหลงเหลือ"
+      },
+      "story": [
+        {
+          "en": "In Not a Hero, Chris works with Blue Umbrella support to stop Lucas Baker’s independent research and eliminate him. In End of Zoe, Joe confronts the surviving, heavily mutated Jack and obtains treatment for Zoe. The cleanup connects tactical containment with the recovery of a person left behind.",
+          "th": "ใน Not a Hero Chris ใช้การสนับสนุน Blue Umbrella หยุดงานวิจัยอิสระของ Lucas Baker และกำจัดเขา ส่วน End of Zoe เล่า Joe ต่อสู้กับ Jack ที่รอดและกลายพันธุ์หนัก ก่อนหาการรักษาให้ Zoe การเก็บกวาดจึงมีทั้งการควบคุมพื้นที่และช่วยคนที่ตกค้าง"
+        }
+      ],
+      "cause": {
+        "en": "The initial escape leaves both research and infected survivors behind.",
+        "th": "การหนีครั้งแรกทิ้งทั้งงานวิจัยและผู้ติดเชื้อไว้"
+      },
+      "consequence": {
+        "en": "Zoe survives; Lucas can no longer export his findings.",
+        "th": "Zoe รอด และ Lucas ไม่อาจส่งผลงานวิจัยต่อ"
+      },
+      "location": {
+        "en": "Dulvey",
+        "th": "Dulvey"
+      },
+      "characters": [
+        "chris",
+        "lucas",
+        "joe",
+        "zoe",
+        "jack"
+      ],
+      "organizations": [
+        "blue-umbrella",
+        "bsaa",
+        "connections"
+      ],
+      "agents": [
+        "mold"
+      ],
+      "works": [
+        "hero",
+        "zoe"
+      ],
+      "sources": [
+        "work-hero",
+        "work-zoe",
+        "blue-letter"
+      ],
+      "uncertainty": null,
+      "connections": [
+        "village"
+      ]
+    },
+    {
+      "id": "wrenwood",
+      "sortDate": "2018-10-01",
+      "date": {
+        "en": "October 2018",
+        "th": "ตุลาคม 2018"
+      },
+      "precision": "month",
+      "era": "mold-era",
+      "spoiler": 9,
+      "importance": "support",
+      "title": {
+        "en": "Alyssa’s investigation ends at Wrenwood",
+        "th": "การสืบของ Alyssa จบที่ Wrenwood"
+      },
+      "summary": {
+        "en": "Grace witnesses her mother’s murder while Umbrella’s buried legacy resurfaces.",
+        "th": "Grace เห็นแม่ถูกฆ่า ขณะมรดกที่ถูกฝังของ Umbrella กลับมา"
+      },
+      "story": [
+        {
+          "en": "Alyssa researches connections around Spencer, children and the ARK project. At the Wrenwood Hotel she is killed in front of Grace. Eight years later, a new series of deaths draws FBI analyst Grace back to the place of that trauma.",
+          "th": "Alyssa สืบเรื่องที่โยง Spencer เด็ก และโครงการ ARK เธอถูกฆ่าที่โรงแรม Wrenwood ต่อหน้า Grace แปดปีให้หลัง การตายชุดใหม่ดึง Grace ซึ่งเป็นนักวิเคราะห์ FBI กลับไปยังสถานที่แห่งบาดแผล"
+        }
+      ],
+      "cause": {
+        "en": "Alyssa follows evidence that dangerous interests want hidden.",
+        "th": "Alyssa ตามหลักฐานที่กลุ่มอันตรายต้องการปิดบัง"
+      },
+      "consequence": {
+        "en": "Grace’s personal history becomes part of the 2026 investigation.",
+        "th": "อดีตส่วนตัวของ Grace กลายเป็นส่วนหนึ่งของการสืบปี 2026"
+      },
+      "location": {
+        "en": "Wrenwood Hotel",
+        "th": "โรงแรม Wrenwood"
+      },
+      "characters": [
+        "alyssa",
+        "grace"
+      ],
+      "organizations": [
+        "connections"
+      ],
+      "agents": [],
+      "works": [
+        "requiem"
+      ],
+      "sources": [
+        "alyssa",
+        "interview",
+        "work-requiem"
+      ],
+      "uncertainty": null,
+      "connections": [
+        "requiem"
+      ]
+    },
+    {
+      "id": "village",
+      "sortDate": "2021-02-01",
+      "date": {
+        "en": "February 2021",
+        "th": "กุมภาพันธ์ 2021"
+      },
+      "precision": "month",
+      "era": "mold-era",
+      "spoiler": 8,
+      "importance": "core",
+      "title": {
+        "en": "A father enters Miranda’s village",
+        "th": "ผู้เป็นพ่อเข้าสู่หมู่บ้าน Miranda"
+      },
+      "summary": {
+        "en": "Ethan follows the abducted Rose into a century-old experiment.",
+        "th": "Ethan ตาม Rose ที่ถูกลักพาตัวเข้าไปในงานทดลองอายุหนึ่งศตวรรษ"
+      },
+      "story": [
+        {
+          "en": "Miranda impersonates Mia; Chris’s intervention is misunderstood by Ethan. Miranda and her four lords use mold and Cadou, with Rose intended as Eva’s vessel. Ethan discovers that Jack killed him in 2017 and mold sustained his reconstructed body. He defeats Miranda, rescues Rose and sacrifices himself to destroy the Megamycete.",
+          "th": "Miranda ปลอมเป็น Mia ทำให้ Ethan เข้าใจการเข้าช่วยของ Chris ผิด Miranda กับสี่ขุนนางใช้เชื้อราและ Cadou โดยต้องการ Rose เป็นร่างของ Eva Ethan รู้ว่า Jack ฆ่าเขาตั้งแต่ปี 2017 และเชื้อราค้ำจุนร่างที่สร้างขึ้นใหม่ เขากำจัด Miranda ช่วย Rose และเสียสละทำลาย Megamycete"
+        }
+      ],
+      "cause": {
+        "en": "Miranda recognizes Rose as a potential vessel after the E-series failure.",
+        "th": "Miranda เห็น Rose เป็นร่างที่อาจใช้ได้หลัง E-series ล้มเหลว"
+      },
+      "consequence": {
+        "en": "Rose and Mia escape; Ethan’s memories persist within the mold’s archive.",
+        "th": "Rose กับ Mia รอด ส่วนความทรงจำ Ethan ยังคงอยู่ในคลังของเชื้อรา"
+      },
+      "location": {
+        "en": "Eastern European village",
+        "th": "หมู่บ้านในยุโรปตะวันออก"
+      },
+      "characters": [
+        "ethan",
+        "mia",
+        "rose",
+        "chris",
+        "miranda"
+      ],
+      "organizations": [
+        "bsaa",
+        "connections"
+      ],
+      "agents": [
+        "mold",
+        "megamycete",
+        "cadou"
+      ],
+      "works": [
+        "village"
+      ],
+      "sources": [
+        "miranda",
+        "spencer-letter",
+        "work-village"
+      ],
+      "uncertainty": null,
+      "connections": [
+        "bsaa-weapons",
+        "rose"
+      ]
+    },
+    {
+      "id": "bsaa-weapons",
+      "sortDate": "2021-02-02",
+      "date": {
+        "en": "During the 2021 village operation",
+        "th": "ระหว่างปฏิบัติการหมู่บ้านปี 2021"
+      },
+      "precision": "month",
+      "era": "mold-era",
+      "spoiler": 8,
+      "importance": "support",
+      "title": {
+        "en": "The BSAA deploys biological soldiers",
+        "th": "BSAA ส่งทหารชีวภาพ"
+      },
+      "summary": {
+        "en": "Chris discovers that the organization fighting B.O.W.s is fielding them.",
+        "th": "Chris พบว่าองค์กรต่อต้าน B.O.W. กำลังใช้งานพวกมันเอง"
+      },
+      "story": [
+        {
+          "en": "A recovered BSAA soldier is a biological weapon. Chris orders a move toward the organization’s European headquarters. The revelation challenges the institution’s purpose. Later BSAA appearances do not by themselves explain who authorized this deployment or resolve the underlying corruption.",
+          "th": "ทหาร BSAA ที่เก็บกลับมาเป็นอาวุธชีวภาพ Chris สั่งมุ่งไปสำนักงานใหญ่ยุโรป การค้นพบนี้ท้าทายเป้าหมายขององค์กร การปรากฏของ BSAA ในเรื่องภายหลังไม่ได้อธิบายเองว่าใครอนุมัติหรือแก้ความผิดปกตินี้แล้ว"
+        }
+      ],
+      "cause": {
+        "en": "The village operation exposes an unexplained change in BSAA practice.",
+        "th": "ปฏิบัติการหมู่บ้านเผยการเปลี่ยนแนวทาง BSAA ที่ยังอธิบายไม่ได้"
+      },
+      "consequence": {
+        "en": "Chris’s conflict with his own institution remains an open thread.",
+        "th": "ความขัดแย้ง Chris กับองค์กรของตนยังเป็นปมเปิด"
+      },
+      "location": {
+        "en": "",
+        "th": ""
+      },
+      "characters": [
+        "chris"
+      ],
+      "organizations": [
+        "bsaa"
+      ],
+      "agents": [],
+      "works": [
+        "village"
+      ],
+      "sources": [
+        "work-village"
+      ],
+      "uncertainty": {
+        "en": "The soldiers’ exact agent and the full chain of authorization are not established.",
+        "th": "ยังไม่ยืนยันเชื้อที่ใช้กับทหารและสายการอนุมัติทั้งหมด"
+      },
+      "connections": [
+        "elpis-revealed"
+      ]
+    },
+    {
+      "id": "requiem",
+      "sortDate": "2026-10-08",
+      "date": {
+        "en": "October 2026",
+        "th": "ตุลาคม 2026"
+      },
+      "precision": "month",
+      "era": "legacy",
+      "spoiler": 9,
+      "importance": "core",
+      "title": {
+        "en": "The ruins call the survivors back",
+        "th": "ซากเมืองเรียกผู้รอดชีวิตกลับมา"
+      },
+      "summary": {
+        "en": "Grace and Leon investigate deaths tied to Raccoon City’s long-term infection.",
+        "th": "Grace กับ Leon สืบการตายที่เกี่ยวข้องกับการติดเชื้อระยะยาวจาก Raccoon City"
+      },
+      "story": [
+        {
+          "en": "Grace’s FBI investigation intersects with Leon and Sherry’s DSO work. Residual t-virus in some Raccoon survivors develops into Raccoon City Syndrome. Victor Gideon’s experiments lead through Rhodes Hill to the ruined city and the ARK facility. Grace’s apparent special status is a deliberate deception, not a confirmed genetic destiny.",
+          "th": "งานสืบ FBI ของ Grace ตัดกับภารกิจ DSO ของ Leon และ Sherry t-virus ที่หลงเหลือในผู้รอดชีวิตบางคนพัฒนาเป็น Raccoon City Syndrome การทดลองของ Victor Gideon พาเรื่องจาก Rhodes Hill ไปซากเมืองและฐาน ARK ส่วนความพิเศษที่กล่าวอ้างของ Grace เป็นการหลอก ไม่ใช่ชะตากรรมทางพันธุกรรมที่ยืนยันจริง"
+        }
+      ],
+      "cause": {
+        "en": "Latent infection and concealed Umbrella research resurface decades later.",
+        "th": "เชื้อแฝงกับงานลับ Umbrella กลับมาหลังผ่านไปหลายสิบปี"
+      },
+      "consequence": {
+        "en": "The search for Elpis becomes a choice between destruction and release.",
+        "th": "การตามหา Elpis นำไปสู่ทางเลือกระหว่างทำลายกับปลดปล่อย"
+      },
+      "location": {
+        "en": "Rhodes Hill / Raccoon City / ARK",
+        "th": "Rhodes Hill / Raccoon City / ARK"
+      },
+      "characters": [
+        "grace",
+        "leon",
+        "sherry",
+        "gideon",
+        "emily"
+      ],
+      "organizations": [
+        "fbi",
+        "dso",
+        "connections",
+        "umbrella"
+      ],
+      "agents": [
+        "t-virus",
+        "rcs"
+      ],
+      "works": [
+        "requiem"
+      ],
+      "sources": [
+        "requiem-official",
+        "rcs",
+        "blood",
+        "work-requiem"
+      ],
+      "uncertainty": null,
+      "connections": [
+        "elpis-revealed"
+      ]
+    },
+    {
+      "id": "elpis-revealed",
+      "sortDate": "2026-10-09",
+      "date": {
+        "en": "At the end of the 2026 incident",
+        "th": "ช่วงจบเหตุการณ์ปี 2026"
+      },
+      "precision": "month",
+      "era": "legacy",
+      "spoiler": 9,
+      "importance": "core",
+      "title": {
+        "en": "Elpis is a countermeasure, not the expected weapon",
+        "th": "Elpis คือวิธีรับมือ ไม่ใช่อาวุธที่คาดไว้"
+      },
+      "summary": {
+        "en": "The release outcome reveals Spencer’s late research and new evidence about Raccoon City.",
+        "th": "ผลลัพธ์การปลดปล่อยเผยงานช่วงท้ายของ Spencer และหลักฐานใหม่เรื่อง Raccoon City"
+      },
+      "story": [
+        {
+          "en": "Elpis neutralizes virus-based enhancements rather than granting the power Zeno expects. Gideon is defeated; Leon, Sherry and Emily benefit from treatment, and Grace adopts Emily. ARK records implicate The Connections in the destruction of Raccoon City and show that the strike lacked presidential authorization. A later attack involving unidentified forces leaves a new open thread.",
+          "th": "Elpis ลบผลเสริมจากไวรัสแทนการให้อำนาจอย่างที่ Zeno คาด Gideon ถูกกำจัด Leon, Sherry และ Emily ได้ประโยชน์จากการรักษา และ Grace รับ Emily เป็นลูก บันทึก ARK เชื่อม The Connections กับการทำลาย Raccoon City และระบุว่าการโจมตีไม่ได้รับอนุมัติจากประธานาธิบดี การโจมตีภายหลังโดยฝ่ายที่ยังไม่ระบุทิ้งปมใหม่ไว้"
+        }
+      ],
+      "cause": {
+        "en": "A misunderstood project is pursued as a route to power.",
+        "th": "หลายฝ่ายไล่ล่าโครงการที่เข้าใจผิดว่าเป็นทางสู่อำนาจ"
+      },
+      "consequence": {
+        "en": "A viral countermeasure saves survivors; the political history remains larger than one laboratory.",
+        "th": "วิธีรับมือไวรัสช่วยผู้รอดชีวิต แต่ประวัติศาสตร์การเมืองยังใหญ่กว่าแล็บเดียว"
+      },
+      "location": {
+        "en": "",
+        "th": ""
+      },
+      "characters": [
+        "grace",
+        "leon",
+        "sherry",
+        "emily",
+        "gideon",
+        "zeno",
+        "spencer"
+      ],
+      "organizations": [
+        "connections",
+        "bsaa"
+      ],
+      "agents": [
+        "elpis",
+        "rcs"
+      ],
+      "works": [
+        "requiem"
+      ],
+      "sources": [
+        "grace-report",
+        "assembly",
+        "spencer-research"
+      ],
+      "uncertainty": {
+        "en": "The release branch is supported by the completion report and is used here. The destruction branch is not a second historical event. Elpis is not assumed to cure unrelated parasites or mold.",
+        "th": "ใช้ผลลัพธ์ปลดปล่อยที่มีรายงานหลังจบรองรับ ไม่สร้างทางเลือกทำลายเป็นอีกเหตุการณ์หนึ่ง และไม่สรุปว่า Elpis รักษาปรสิตหรือเชื้อราที่ไม่เกี่ยวข้องได้"
+      },
+      "connections": [
+        "rose"
+      ]
+    },
+    {
+      "id": "rose",
+      "sortDate": "2037-01-01",
+      "date": {
+        "en": "c. 2037 — sixteen years later",
+        "th": "ราว 2037 — สิบหกปีต่อมา"
+      },
+      "precision": "approximate",
+      "era": "legacy",
+      "spoiler": 10,
+      "importance": "core",
+      "title": {
+        "en": "Rose enters the archive within herself",
+        "th": "Rose เข้าสู่คลังที่อยู่ในตัวเธอ"
+      },
+      "summary": {
+        "en": "Rose confronts inherited mold abilities and the memories of her father.",
+        "th": "Rose เผชิญพลังเชื้อราที่ได้รับมาและความทรงจำของพ่อ"
+      },
+      "story": [
+        {
+          "en": "Sixteen-year-old Rose enters the consciousness realm within a surviving Megamycete sample, hoping to remove her powers. A remnant of Miranda manipulates that wish. “Michael,” who guides her, is Ethan’s preserved consciousness. Rose defeats Miranda’s remnant and accepts her identity. This is not Ethan’s physical resurrection.",
+          "th": "Rose วัยสิบหกเข้าสู่โลกจิตสำนึกในตัวอย่าง Megamycete ที่เหลืออยู่ เพื่อหวังเอาพลังออก เศษจิตสำนึก Miranda ใช้ความหวังนี้หลอกเธอ ส่วน “Michael” ที่ช่วยนำทางคือจิตสำนึก Ethan ที่ถูกเก็บไว้ Rose กำจัด Miranda ที่หลงเหลือและยอมรับตัวเอง ไม่ใช่การคืนชีพทางกายภาพของ Ethan"
+        }
+      ],
+      "cause": {
+        "en": "Rose struggles with being treated as different because of her biology.",
+        "th": "Rose เจ็บปวดจากการถูกมองว่าต่างเพราะชีววิทยาของเธอ"
+      },
+      "consequence": {
+        "en": "The furthest established point in the chronology centers on acceptance, memory and Ethan’s legacy.",
+        "th": "จุดไกลที่สุดของลำดับเวลาที่มีเรื่องเล่าแล้วอยู่ที่การยอมรับ ความทรงจำ และมรดก Ethan"
+      },
+      "location": {
+        "en": "Megamycete consciousness realm",
+        "th": "โลกจิตสำนึกของ Megamycete"
+      },
+      "characters": [
+        "rose",
+        "ethan",
+        "miranda"
+      ],
+      "organizations": [],
+      "agents": [
+        "mold",
+        "megamycete"
+      ],
+      "works": [
+        "rose"
+      ],
+      "sources": [
+        "rose-official",
+        "work-rose"
+      ],
+      "uncertainty": {
+        "en": "2037 is inferred from the official sixteen-year interval after Village, not an exact dated calendar entry. Requiem is the newer release but occurs earlier.",
+        "th": "ปี 2037 คำนวณจากระยะสิบหกปีหลัง Village ตามข้อมูลทางการ ไม่ใช่วันที่ปฏิทินระบุในเรื่อง Requiem ออกใหม่กว่าแต่เกิดก่อน"
+      },
+      "connections": []
+    }
+  ]
+}

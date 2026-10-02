@@ -1,0 +1,13 @@
+{
+  "name": "biohazard-canon-archive",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "A buildless bilingual Resident Evil canonical story archive",
+  "scripts": {
+    "dev": "python3 -m http.server 4173 --bind 0.0.0.0",
+    "validate": "node scripts/validate.mjs",
+    "build": "node scripts/build.mjs"
+  },
+  "engines": { "node": ">=20" }
+}

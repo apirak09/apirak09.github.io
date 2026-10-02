@@ -1,0 +1,36 @@
+# OPTIONAL: for a NEW, dedicated repository only.
+# This site's live deployment shares apirak09.github.io and uses its existing
+# Pages branch publishing. Do not replace that deployment with this workflow.
+# In a dedicated repository, put project files at its root and copy this file
+# to .github/workflows/pages.yml. Set Settings > Pages > Source to GitHub Actions.
+name: Deploy canonical archive
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+concurrency:
+  group: pages
+  cancel-in-progress: false
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: npm run build
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+      - name: Publish
+        id: deployment
+        uses: actions/deploy-pages@v4
