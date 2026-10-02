@@ -7,7 +7,10 @@
   "scripts": {
     "dev": "python3 -m http.server 4173 --bind 0.0.0.0",
     "validate": "node scripts/validate.mjs",
-    "build": "node scripts/build.mjs"
+    "build": "node scripts/build.mjs",
+    "test": "node scripts/validate.mjs && node tests/integration.mjs"
   },
-  "engines": { "node": ">=20" }
+  "engines": {
+    "node": ">=20"
+  }
 }

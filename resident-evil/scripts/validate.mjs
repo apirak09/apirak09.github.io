@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 const root=new URL('../',import.meta.url);
 const d=JSON.parse(await readFile(new URL('data/archive.json',root),'utf8'));
 const refs={};
-for(const key of ['events','eras','entities','works','sources','biology']){refs[key]=new Map(d[key].map(x=>[x.id,x]));assert.equal(refs[key].size,d[key].length,`Duplicate ID in ${key}`);}
+for(const key of ['events','eras','entities','works','sources','biology']){for(const x of d[key])assert(/^[a-z0-9-]+$/.test(x.id),key+' unsafe ID: '+x.id);refs[key]=new Map(d[key].map(x=>[x.id,x]));assert.equal(refs[key].size,d[key].length,`Duplicate ID in ${key}`);}
 const bilingual=(x,label)=>{assert.equal(typeof x.en,'string',label+' English');assert.equal(typeof x.th,'string',label+' Thai');assert(x.en.trim()&&x.th.trim(),label+' empty translation');};
 let previous='';
 for(const e of d.events){

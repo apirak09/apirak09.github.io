@@ -17,6 +17,7 @@ Open http://localhost:4173. Use an HTTP server rather than opening `index.html` 
 
 ```sh
 npm run validate
+npm test
 npm run build
 ```
 
@@ -37,6 +38,7 @@ resident-evil/
   scripts/validate.mjs        Structural and chronological invariants
   scripts/build.mjs           Optional static packaging
   deployment/github-pages.yml Optional dedicated-repository workflow
+  tests/integration.mjs      Regression checks with lightweight DOM doubles
   tests/viewport.html         Responsive QA frame harness
 ```
 

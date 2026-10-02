@@ -2326,8 +2326,7 @@
         "th": "หมู่บ้านในยุโรปตะวันออก"
       },
       "characters": [
-        "miranda",
-        "rose"
+        "miranda"
       ],
       "organizations": [],
       "agents": [
@@ -4481,6 +4480,72 @@
       ]
     },
     {
+      "id": "jill-captive",
+      "sortDate": "2006-08-02",
+      "date": {
+        "en": "2006–2009",
+        "th": "2006–2009"
+      },
+      "precision": "range",
+      "era": "global",
+      "spoiler": 5,
+      "importance": "support",
+      "title": {
+        "en": "Jill becomes Wesker’s unwilling asset",
+        "th": "Jill ถูกใช้เป็นเครื่องมือของ Wesker"
+      },
+      "summary": {
+        "en": "Her earlier infection contributes to Uroboros research while P30 controls her behavior.",
+        "th": "การติดเชื้อในอดีตของเธอช่วยงาน Uroboros ขณะที่ P30 ควบคุมพฤติกรรมเธอ"
+      },
+      "story": [
+        {
+          "en": "Wesker studies antibodies associated with Jill’s earlier t-virus infection to refine Uroboros, derived from Progenitor research. He uses the P30 drug to force her into obedience. P30 control is distinct from Uroboros infection; Jill is a captive, not a willing convert.",
+          "th": "Wesker ศึกษาแอนติบอดีที่เกี่ยวข้องกับการติด t-virus ในอดีตของ Jill เพื่อปรับ Uroboros ซึ่งสืบจากงาน Progenitor เขาใช้ยา P30 บังคับให้เธอทำตาม การควบคุมด้วย P30 ไม่ใช่การติด Uroboros และ Jill ไม่ได้สมัครใจเปลี่ยนฝ่าย"
+        }
+      ],
+      "cause": {
+        "en": "Jill survives her apparent death and falls into Wesker’s custody.",
+        "th": "Jill รอดจากเหตุที่เหมือนเสียชีวิต แต่ตกอยู่ในมือ Wesker"
+      },
+      "consequence": {
+        "en": "Chris will have to rescue her during the Kijuju operation.",
+        "th": "Chris ต้องช่วยเธอในปฏิบัติการ Kijuju"
+      },
+      "location": {
+        "en": "",
+        "th": ""
+      },
+      "characters": [
+        "jill",
+        "wesker",
+        "chris"
+      ],
+      "organizations": [
+        "tricell"
+      ],
+      "agents": [
+        "uroboros",
+        "progenitor",
+        "p30"
+      ],
+      "works": [
+        "re5"
+      ],
+      "sources": [
+        "jill",
+        "work-re5"
+      ],
+      "uncertainty": {
+        "en": "These experiments belong to Jill’s 2006–2009 captivity. Their exact internal sequence is not fully dated.",
+        "th": "การทดลองเหล่านี้อยู่ในช่วงที่ Jill ถูกขังระหว่าง 2006–2009 แต่ลำดับภายในแต่ละขั้นไม่ได้ระบุวันที่ครบ"
+      },
+      "connections": [
+        "kijuju",
+        "death-island"
+      ]
+    },
+    {
       "id": "grace-guardian",
       "sortDate": "2006-12-01",
       "date": {
@@ -4597,69 +4662,6 @@
       "connections": [
         "baker-house",
         "baker-cleanup"
-      ]
-    },
-    {
-      "id": "jill-captive",
-      "sortDate": "2008-01-01",
-      "date": {
-        "en": "2006–2009",
-        "th": "2006–2009"
-      },
-      "precision": "range",
-      "era": "global",
-      "spoiler": 5,
-      "importance": "support",
-      "title": {
-        "en": "Jill becomes Wesker’s unwilling asset",
-        "th": "Jill ถูกใช้เป็นเครื่องมือของ Wesker"
-      },
-      "summary": {
-        "en": "Her earlier infection contributes to Uroboros research while P30 controls her behavior.",
-        "th": "การติดเชื้อในอดีตของเธอช่วยงาน Uroboros ขณะที่ P30 ควบคุมพฤติกรรมเธอ"
-      },
-      "story": [
-        {
-          "en": "Wesker studies antibodies associated with Jill’s earlier t-virus infection to refine Uroboros, derived from Progenitor research. He uses the P30 drug to force her into obedience. P30 control is distinct from Uroboros infection; Jill is a captive, not a willing convert.",
-          "th": "Wesker ศึกษาแอนติบอดีที่เกี่ยวข้องกับการติด t-virus ในอดีตของ Jill เพื่อปรับ Uroboros ซึ่งสืบจากงาน Progenitor เขาใช้ยา P30 บังคับให้เธอทำตาม การควบคุมด้วย P30 ไม่ใช่การติด Uroboros และ Jill ไม่ได้สมัครใจเปลี่ยนฝ่าย"
-        }
-      ],
-      "cause": {
-        "en": "Jill survives her apparent death and falls into Wesker’s custody.",
-        "th": "Jill รอดจากเหตุที่เหมือนเสียชีวิต แต่ตกอยู่ในมือ Wesker"
-      },
-      "consequence": {
-        "en": "Chris will have to rescue her during the Kijuju operation.",
-        "th": "Chris ต้องช่วยเธอในปฏิบัติการ Kijuju"
-      },
-      "location": {
-        "en": "",
-        "th": ""
-      },
-      "characters": [
-        "jill",
-        "wesker",
-        "chris"
-      ],
-      "organizations": [
-        "tricell"
-      ],
-      "agents": [
-        "uroboros",
-        "progenitor",
-        "p30"
-      ],
-      "works": [
-        "re5"
-      ],
-      "sources": [
-        "jill",
-        "work-re5"
-      ],
-      "uncertainty": null,
-      "connections": [
-        "kijuju",
-        "death-island"
       ]
     },
     {
