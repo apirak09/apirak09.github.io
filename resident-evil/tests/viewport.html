@@ -21,7 +21,9 @@ const p=new URLSearchParams(location.search),w=Math.min(1920,Math.max(320,Number
 const frame=document.getElementById('preview');
 // Deliberately allow outer-page scrolling so large test frames are not clamped.
 frame.style.width=w+'px';
-frame.src='../index.html#event=mansion&lang='+(p.get('lang')==='en'?'en':'th');
+const event=/^[a-z0-9-]+$/.test(p.get('event')||'')?p.get('event'):'';
+const era=/^[a-z0-9-]+$/.test(p.get('era')||'')?p.get('era'):'origins';
+frame.src='../index.html#'+(event?'event='+event:'era='+era)+'&lang='+(p.get('lang')==='en'?'en':'th');
 document.getElementById('label').textContent=w+' CSS px / QA only';
 </script>
 </html>

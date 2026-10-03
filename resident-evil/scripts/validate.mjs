@@ -24,6 +24,7 @@ function ancestors(id,trail=[]){assert(!trail.includes(id),'Biology cycle: '+[..
 assert(!refs.biology.get('plaga').parents.length,'Plaga must remain independent');assert(!refs.biology.get('megamycete').parents.length,'Megamycete must remain independent');
 assert(d.events.find(x=>x.id==='rose').sortDate>d.events.find(x=>x.id==='requiem').sortDate,'Rose must follow Requiem in-world');
 for(const file of ['index.html','app.js','styles.css','assets/favicon.svg','assets/noto-thai-400.woff','assets/noto-thai-600.woff','assets/FONT-LICENSE.txt','docs/LORE-SOURCES.md'])assert((await stat(new URL(file,root))).size>0,file+' missing');
+for(const era of d.eras)for(const suffix of ['', '-thumb'])assert((await stat(new URL(`assets/eras/${era.id}${suffix}.webp`,root))).size>0,era.id+' illustration missing');
 const js=await readFile(new URL('app.js',root),'utf8');assert(!/https?:\/\/[^'"\s]+\.js/.test(js),'No third-party JS');
 const css=await readFile(new URL('styles.css',root),'utf8');assert(css.includes('prefers-reduced-motion'));assert(css.includes('max-width:480px'));assert(css.includes('focus-visible'));
 console.log(`PASS: ${d.events.length} bilingual events; ${d.entities.length} trails; ${d.biology.length} biology records; ${d.sources.length} references. Chronology, relationships, language fields, spoiler levels and deployment assets valid.`);

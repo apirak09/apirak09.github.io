@@ -1,6 +1,6 @@
 # BIOHAZARD — Canon Archive
 
-A responsive Thai / English archive for retelling the primary Resident Evil game continuity. Chronological incidents, causal connections, character and organization trails, biological research, optional source references, spoiler boundaries and device-local reading marks.
+A responsive Thai / English visual guide to the primary Resident Evil game continuity. Choose one of six illustrated eras on a horizontal timeline, then read its numbered event branches. Short summaries and consequences are visible immediately; a single click expands the full story in place. Supporting incidents, search, character trails, sources and spoiler settings are available when wanted.
 
 Live: https://apirak09.github.io/resident-evil/
 
@@ -29,12 +29,14 @@ No `npm install` is required. `npm run build` validates the archive and copies d
 resident-evil/
   index.html                 Semantic shell, metadata and no-script fallback
   app.js                     Buildless ES module, hash routes and interaction
-  styles.css                 Responsive archive / document design
+  styles.css                 Visual era rail, responsive branches and inline stories
   data/archive.json          Bilingual incidents, entities, sources and biology
-  assets/                    Original SVG icon and self-hosted licensed fonts
+  assets/                    Original era illustrations, SVG icon and licensed fonts
   docs/LORE-SOURCES.md        Canon decisions, evidence hierarchy and source index
   docs/CONTENT-SCHEMA.md      Data contract and adding new incidents
-  docs/QA.md                 Checks, findings and practical limits
+  docs/QA.md                 Historical QA record
+  docs/QA-2026-10-03.md       Visual redesign QA
+  docs/ART-DIRECTION.md       Image provenance, prompts and display policy
   scripts/validate.mjs        Structural and chronological invariants
   scripts/build.mjs           Optional static packaging
   deployment/github-pages.yml Optional dedicated-repository workflow
@@ -50,6 +52,8 @@ All asset paths are relative, and selected events use URL fragments, for example
 
 `https://apirak09.github.io/resident-evil/#event=mansion&lang=en`
 
+An era is also shareable: `#era=raccoon&lang=th`. Existing event IDs and device-local reading/bookmark data remain compatible.
+
 Refreshing a direct event link requests the real `index.html`; it needs no server rewrite or SPA fallback. A reader's saved spoiler boundary takes precedence over a shared link.
 
 For a **new dedicated repository**, place these files at its root. Either enable Pages from `main` / root, or copy `deployment/github-pages.yml` into `.github/workflows/pages.yml` and enable GitHub Actions as the Pages source. The optional workflow is for the dedicated repository, not a replacement for the current multi-project homepage deployment.
@@ -62,10 +66,10 @@ Thai is authored alongside English rather than generated at runtime. Both langua
 
 ## Technical choices
 
-No framework or build-time dependency is necessary for this interaction model. One ES module loads a local JSON document; CSS handles the desktop split view and the mobile list/detail transition. There are no trackers, remote fonts, required APIs, accounts, backend services or exposed secrets.
+No framework or build-time dependency is necessary for this interaction model. One ES module loads a local JSON document; CSS handles the horizontal era rail, desktop event branches and mobile vertical story cards. Details expand inside the current card rather than replacing the timeline. A first-reader spoiler notice is inline and nonblocking; an explicitly shared event outside a saved boundary still asks before revealing it. There are no trackers, remote fonts, required APIs, accounts, backend services or exposed secrets.
 
 Reading progress, saved incidents, language and spoiler consent use `localStorage`. If storage is unavailable, the session remains usable. External references open separately and may reveal later spoilers. The site is designed for modern evergreen browsers with native `<dialog>` support.
 
 ## Rights
 
-Independent fan project. Resident Evil / Biohazard and the associated characters, works and names belong to Capcom. Lore is paraphrased; the repository does not redistribute game artwork or full game-file text. Original interface code and graphics are provided under the MIT license. Noto Sans Thai is distributed under the SIL Open Font License in `assets/FONT-LICENSE.txt`. No endorsement is implied.
+Independent fan project. Resident Evil / Biohazard and the associated characters, works and names belong to Capcom. Lore is paraphrased; the repository does not redistribute game artwork or full game-file text. Original interface code and graphics are provided under the MIT license. The environmental illustrations are AI-assisted mood cues, not game screenshots or proof of scene geography; see [art direction](docs/ART-DIRECTION.md). Small WebP thumbnails are separate from era banners so the first view does not download every full-sized image. Noto Sans Thai is distributed under the SIL Open Font License in `assets/FONT-LICENSE.txt`. No endorsement is implied.
