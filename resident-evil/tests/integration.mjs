@@ -69,5 +69,7 @@ const directFresh=await boot({hash:'#event=village&lang=th',consented:false});as
 const returnTrip=await boot();returnTrip.api.selectEra('raccoon');returnTrip.api.state.q='Leon';returnTrip.api.render();await returnTrip.click({action:'clear'});assert.equal(returnTrip.api.state.era,'raccoon','Clearing a search returns to the era being read');
 const escape=await boot({hash:'#event=mansion&lang=en'});escape.listeners.keydown({key:'Escape',target:{closest:()=>null}});assert.equal(escape.api.state.detailOpen,false,'Escape closes inline detail on desktop and mobile');
 const lower=await boot({hash:'#event=rose&lang=en',cap:1});assert(!lower.app.innerHTML.includes('Rose enters the archive within herself'));
+const nativeKeys=await boot({hash:'#era=raccoon&lang=en'});
+for(const keyEvent of [{key:'Home',ctrlKey:true},{key:'ArrowLeft',altKey:true}]){let prevented=false;nativeKeys.listeners.keydown({...keyEvent,target:{closest:()=>({dataset:{era:'raccoon'}})},preventDefault(){prevented=true;}});assert.equal(prevented,false,'Browser keyboard shortcuts remain native');assert.equal(nativeKeys.api.state.era,'raccoon');}
 for(const path of renderedImages){assert(path.startsWith('./assets/'),'Images stay local');assert((await stat(new URL(path,root))).size>0,'Rendered image missing: '+path);}
 console.log('PASS: 114 bilingual inline stories; first-reader overview without a modal; era selection; one-click open/close; legacy and supporting deep links; spoiler isolation; search, trails, storage, Escape and language. DOM doubles do not claim visual browser coverage.');

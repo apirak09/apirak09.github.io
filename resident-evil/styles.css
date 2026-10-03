@@ -48,3 +48,7 @@ button,input,select{font:inherit}button,a,input,select,summary{-webkit-tap-highl
  .spoiler-notice button{font-size:10px;padding:5px 7px}
 }
 @media(max-width:360px){.node-copy>strong,.expanded .node-copy>strong{font-size:19px}.node-copy,.expanded .node-copy{padding:18px 16px 15px}.node-peek{padding:13px 16px}.node-date{font-size:10px}}
+
+body{padding-left:env(safe-area-inset-left,0px);padding-right:env(safe-area-inset-right,0px)}
+.topbar{padding-top:calc(14px + env(safe-area-inset-top,0px))}
+.site-footer{padding-bottom:calc(32px + env(safe-area-inset-bottom,0px))}

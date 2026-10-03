@@ -73,3 +73,7 @@ Reading progress, saved incidents, language and spoiler consent use `localStorag
 ## Rights
 
 Independent fan project. Resident Evil / Biohazard and the associated characters, works and names belong to Capcom. Lore is paraphrased; the repository does not redistribute game artwork or full game-file text. Original interface code and graphics are provided under the MIT license. The environmental illustrations are AI-assisted mood cues, not game screenshots or proof of scene geography; see [art direction](docs/ART-DIRECTION.md). Small WebP thumbnails are separate from era banners so the first view does not download every full-sized image. Noto Sans Thai is distributed under the SIL Open Font License in `assets/FONT-LICENSE.txt`. No endorsement is implied.
+
+## Maintaining the visual interface
+
+New incidents use the era illustration by default. Optional incident environment overrides live in `sceneByEvent` in `app.js`; their original assets and prompts are documented in `docs/ART-DIRECTION.md`. Use illustrative images as mood cues, never as proof of an uncertain canon detail. When changing `app.js` or `styles.css` in the directly served source folder, refresh their content-version query in `index.html` so returning browsers load the matching interface files.

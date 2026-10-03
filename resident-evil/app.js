@@ -356,7 +356,7 @@ document.addEventListener('change',event=>{
 document.addEventListener('keydown',event=>{
  if(event.key==='Escape'&&state.detailOpen&&!document.querySelector('dialog[open]')){state.detailOpen=false;render();focusNode(state.selected);return;}
  const button=event.target.closest?.('.era-stop');
- if(button&&['ArrowLeft','ArrowRight','Home','End'].includes(event.key)){
+ if(button&&!event.ctrlKey&&!event.metaKey&&!event.altKey&&['ArrowLeft','ArrowRight','Home','End'].includes(event.key)){
   event.preventDefault();const eras=data.eras.filter(e=>eraAvailable(e.id));let ix=eras.findIndex(e=>e.id===button.dataset.era);
   ix=event.key==='Home'?0:event.key==='End'?eras.length-1:Math.max(0,Math.min(eras.length-1,ix+(event.key==='ArrowRight'?1:-1)));
   selectEra(eras[ix].id,{focus:false,scroll:false});$(`.era-stop[data-era="${eras[ix].id}"]`)?.focus({preventScroll:true});

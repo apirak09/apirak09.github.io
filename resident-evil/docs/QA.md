@@ -51,3 +51,8 @@ External references can restrict automated access and may contain later spoilers
 The first-reader fix was deployed in commit `1659c9195d32e1e55d6cedc0f5fb161c28f7fa16`. GitHub Pages run `37026994269` completed successfully. The actual published Thai archive was reloaded, rendered the shared mansion record, and produced no application-origin warnings or errors in the observed console.
 
 A screenshot of the published Thai desktop archive accompanies the delivery.
+
+
+## Visual interface redesign
+
+The current era/branch interface replaces the list-and-document layout described above. See [3 October 2026 redesign QA](QA-2026-10-03.md) for the current interaction checks and limitations.
