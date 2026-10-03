@@ -23,7 +23,7 @@ const frame=document.getElementById('preview');
 frame.style.width=w+'px';
 const event=/^[a-z0-9-]+$/.test(p.get('event')||'')?p.get('event'):'';
 const era=/^[a-z0-9-]+$/.test(p.get('era')||'')?p.get('era'):'origins';
-frame.src='../index.html#'+(event?'event='+event:'era='+era)+'&lang='+(p.get('lang')==='en'?'en':'th');
+frame.src='../index.html?v=visual-final-20261003#'+(event?'event='+event:'era='+era)+'&lang='+(p.get('lang')==='en'?'en':'th');
 document.getElementById('label').textContent=w+' CSS px / QA only';
 </script>
 </html>

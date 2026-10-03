@@ -1,8 +1,9 @@
-import {readFile} from 'node:fs/promises';
+import {readFile,stat} from 'node:fs/promises';
 import assert from 'node:assert/strict';
 const root=new URL('../',import.meta.url);
 const js=await readFile(new URL('app.js',root),'utf8');
 const data=JSON.parse(await readFile(new URL('data/archive.json',root),'utf8'));
+const renderedImages=new Set();
 const factory=new Function('document','localStorage','location','history','window','fetch','matchMedia','URLSearchParams','navigator','console','return (async()=>{'+js+'\nreturn {state,filtered,detail,render,selectEvent,selectEra,url};})()');
 async function boot({hash='#lang=en',cap=10,consented=true}={}){
  const app={innerHTML:''},listeners={},dialogs=[],memory=new Map();
@@ -41,6 +42,7 @@ for(const lang of ['en','th']){
   assert(app.innerHTML.includes(event.title[lang]),event.id+' translated story');
   assert(app.innerHTML.includes('id="story-'+event.id+'" role="region"'),event.id+' inline detail');
   assert(app.innerHTML.includes('class="evidence"'),event.id+' sources retained');
+  for(const match of app.innerHTML.matchAll(/<img[^>]+src="([^"]+)"/g))renderedImages.add(match[1]);
  }
 }
 api.state.lang='en';api.state.cap=1;api.state.selected='village';api.state.era='origins';api.render();
@@ -64,6 +66,8 @@ for(const appliedCap of [1,10]){
  else{assert.notEqual(blocked.api.state.selected,'village');assert(!blocked.doc.title.includes(data.events.find(e=>e.id==='village').title.en));}
 }
 const directFresh=await boot({hash:'#event=village&lang=th',consented:false});assert.equal(directFresh.dialogs.length,0);assert.equal(directFresh.api.state.detailOpen,true,'Allowed first-reader links open directly');
+const returnTrip=await boot();returnTrip.api.selectEra('raccoon');returnTrip.api.state.q='Leon';returnTrip.api.render();await returnTrip.click({action:'clear'});assert.equal(returnTrip.api.state.era,'raccoon','Clearing a search returns to the era being read');
 const escape=await boot({hash:'#event=mansion&lang=en'});escape.listeners.keydown({key:'Escape',target:{closest:()=>null}});assert.equal(escape.api.state.detailOpen,false,'Escape closes inline detail on desktop and mobile');
 const lower=await boot({hash:'#event=rose&lang=en',cap:1});assert(!lower.app.innerHTML.includes('Rose enters the archive within herself'));
+for(const path of renderedImages){assert(path.startsWith('./assets/'),'Images stay local');assert((await stat(new URL(path,root))).size>0,'Rendered image missing: '+path);}
 console.log('PASS: 114 bilingual inline stories; first-reader overview without a modal; era selection; one-click open/close; legacy and supporting deep links; spoiler isolation; search, trails, storage, Escape and language. DOM doubles do not claim visual browser coverage.');

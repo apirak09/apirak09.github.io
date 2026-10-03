@@ -109,6 +109,7 @@ const state = {
   core:false,
   savedOnly:false,
   selected:hash.get('event')||'',
+  browseEra:hash.get('era')||'origins',
   toolsOpen:false,
   supportingOpen:false,
   detailOpen:false,
@@ -179,7 +180,7 @@ Object.assign(ui,{
  illustration:['Original atmospheric illustration','ภาพประกอบบรรยากาศ'],
  synopsis:['This era in one sentence','ยุคนี้ในประโยคเดียว'],
  locked:['Beyond your spoiler boundary','เกินขอบเขตสปอยล์'],
- inlineSpoiler:['Major story spoilers are visible. Set a boundary if you want to stop at a game you have played.','หน้านี้เปิดเผยเนื้อเรื่องสำคัญ หากยังเล่นไม่ครบ สามารถเลือกขอบเขตสปอยล์ได้'],
+ inlineSpoiler:['Major story spoilers are visible.','มีสปอยล์เนื้อเรื่องทั้งชุด'],
  acknowledge:['Understood','รับทราบ'],
  results:['Search results','ผลการค้นหา'],
  eraBefore:['Previous era','ยุคก่อนหน้า'],
@@ -208,6 +209,19 @@ const eraTitles={
 };
 const artPath=(id,small=false)=>`./assets/eras/${id}${small?'-thumb':''}.webp`;
 const eraAvailable=id=>data.events.some(e=>e.era===id&&allowed(e));
+const sceneByEvent={
+ 'miranda-origin':'village','spencer-miranda':'village',
+ 'trevor-family':'mansion','umbrella-founded':'laboratory','ashford-twins':'laboratory','young-researchers':'laboratory',
+ 't-virus':'laboratory','veronica-sleep':'laboratory','marcus-murder':'laboratory','g-research':'laboratory',
+ 'arklay-leak':'mansion','ecliptic':'train','mansion':'mansion','birkin-raid':'laboratory',
+ 'mold-program':'laboratory','c-program':'laboratory','javier':'laboratory','umbrella-end':'laboratory',
+ 'ashley-rescue':'spanish-village','spencer-raid':'mansion','jill-captive':'laboratory','kijuju':'kijuju',
+ 'baker-infection':'baker-house','baker-house':'baker-house','baker-cleanup':'baker-house','village':'village',
+ 'bsaa-weapons':'village','elpis-revealed':'laboratory'
+};
+const scenePath=e=>sceneByEvent[e.id]?`./assets/scenes/${sceneByEvent[e.id]}.webp`:artPath(e.era,true);
+const browseEra=()=>eraAvailable(state.browseEra)?state.browseEra:data.events.find(allowed)?.era||data.eras[0].id;
+
 const eraLabel=id=>l(eraTitles[id]);
 const chevron=()=>'<svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="m9 5 7 7-7 7"/></svg>';
 function header(){
@@ -229,7 +243,7 @@ function detail(e,list){
 function eventNode(e,i,list){
  const open=state.detailOpen&&state.selected===e.id;
  const era=data.eras.find(x=>x.id===e.era);
- return `<li class="story-node ${open?'expanded':''} ${e.importance}" id="node-${e.id}"><span class="branch-number" aria-hidden="true">${i+1}</span><article class="node-card"><button class="node-toggle" data-event="${e.id}" aria-expanded="${open}" aria-controls="story-${e.id}" aria-labelledby="event-${e.id}-title"><span class="node-image"><img src="${artPath(e.era,true)}" alt="" width="600" height="400" loading="lazy" decoding="async"><span>${esc(e.works.slice(0,2).map(id=>byWork[id].name.replace(/^Resident Evil\s*/i,'RE ')).join(' / '))}</span></span><span class="node-copy"><span class="node-date">${esc(l(e.date))}<span class="precision ${e.precision}">${precision(e)}</span></span><strong id="event-${e.id}-title">${esc(l(e.title))}</strong><span class="node-summary">${esc(l(e.summary))}</span><span class="node-location">${esc(l(e.location))}${state.read.has(e.id)?` · ${t('unread')}`:''}</span><span class="node-open">${open?t('collapse'):t('readMore')}<b aria-hidden="true">${open?'−':'+'}</b></span></span></button>${open?detail(e,list):`<div class="node-peek"><span><b>${t('changes')}</b>${esc(l(e.consequence))}</span></div><div id="story-${e.id}" hidden></div>`}</article></li>`;
+ return `<li class="story-node ${open?'expanded':''} ${e.importance}" id="node-${e.id}"><span class="branch-number" aria-hidden="true">${i+1}</span><article class="node-card"><button class="node-toggle" data-event="${e.id}" aria-expanded="${open}" aria-controls="story-${e.id}" aria-labelledby="event-${e.id}-title" aria-describedby="event-${e.id}-summary"><span class="node-image"><i class="scene-label">${t('illustration')}</i><img src="${scenePath(e)}" alt="" width="600" height="400" loading="lazy" decoding="async"><span>${esc(e.works.slice(0,2).map(id=>byWork[id].name.replace(/^Resident Evil\s*/i,'RE ')).join(' / '))}</span></span><span class="node-copy"><span class="node-date">${esc(l(e.date))}<span class="precision ${e.precision}">${precision(e)}</span></span><strong id="event-${e.id}-title">${esc(l(e.title))}</strong><span class="node-summary" id="event-${e.id}-summary">${esc(l(e.summary))}</span><span class="node-location">${esc(l(e.location))}${state.read.has(e.id)?` · ${t('unread')}`:''}</span><span class="node-open">${open?t('collapse'):t('readMore')}<b aria-hidden="true">${open?'−':'+'}</b></span></span></button>${open?detail(e,list):`<div class="node-peek"><span><b>${t('changes')}</b>${esc(l(e.consequence))}</span></div><div id="story-${e.id}" hidden></div>`}</article></li>`;
 }
 function eraStage(era){
  const visible=data.events.filter(e=>e.era===era.id&&allowed(e));
@@ -243,7 +257,7 @@ function eraStage(era){
 function timeline(){
  const searching=!!(state.q||state.entity||state.savedOnly||state.core);
  if(searching)state.era='all';
- if(!searching&&!data.eras.some(x=>x.id===state.era&&eraAvailable(x.id)))state.era=data.events.find(allowed)?.era||data.eras[0].id;
+ if(!searching&&!data.eras.some(x=>x.id===state.era&&eraAvailable(x.id)))state.era=browseEra();
  if(state.selected&&(!byEvent[state.selected]||!allowed(byEvent[state.selected]))){state.selected='';state.detailOpen=false;}
  const era=data.eras.find(x=>x.id===state.era);
  const list=filtered();
@@ -273,7 +287,7 @@ function selectEvent(id,{toggle=true,scroll=true}={}){
  const close=toggle&&state.detailOpen&&state.selected===id;
  const searching=!!(state.q||state.entity||state.savedOnly||state.core);
  if(!searching||!filtered().some(x=>x.id===id)){
-  state.era=e.era;state.entity='';state.q='';state.savedOnly=false;state.core=false;
+  state.era=e.era;state.browseEra=e.era;state.entity='';state.q='';state.savedOnly=false;state.core=false;
  }
  state.view='timeline';state.selected=id;state.detailOpen=!close;
  if(e.importance==='support')state.supportingOpen=true;
@@ -281,7 +295,7 @@ function selectEvent(id,{toggle=true,scroll=true}={}){
 }
 function selectEra(id,{focus=true,scroll=true}={}){
  if(!data.eras.some(x=>x.id===id)||!eraAvailable(id))return;
- state.era=id;state.view='timeline';state.detailOpen=false;state.selected='';state.q='';state.entity='';state.savedOnly=false;state.core=false;state.supportingOpen=false;
+ state.era=id;state.browseEra=id;state.view='timeline';state.detailOpen=false;state.selected='';state.q='';state.entity='';state.savedOnly=false;state.core=false;state.supportingOpen=false;
  render();
  const rail=$('.era-rail'),stop=$(`.era-stop[data-era="${id}"]`);
  if(rail&&stop)rail.scrollTo({left:stop.offsetLeft-rail.offsetLeft-(rail.clientWidth-stop.clientWidth)/2,behavior:motion()});
@@ -297,7 +311,7 @@ function showSpoilers(first=false,message=''){
    state.cap=Number($('#cap-select',d).value);state.consented=true;storage.set('cap',state.cap);storage.set('consented',true);
    if(state.entity&&byEntity[state.entity]&&!allowed(byEntity[state.entity]))state.entity='';
    if(pendingEvent&&allowed(byEvent[pendingEvent])){
-    const e=byEvent[pendingEvent];state.selected=e.id;state.era=e.era;state.detailOpen=true;state.entity='';state.q='';state.savedOnly=false;state.core=false;state.supportingOpen=e.importance==='support';pendingEvent='';
+    const e=byEvent[pendingEvent];state.selected=e.id;state.era=e.era;state.browseEra=e.era;state.detailOpen=true;state.entity='';state.q='';state.savedOnly=false;state.core=false;state.supportingOpen=e.importance==='support';pendingEvent='';
    }
    render();
   }
@@ -323,8 +337,8 @@ document.addEventListener('click',async event=>{
  if(action==='back'){state.detailOpen=false;render();focusNode(state.selected,true);return;}
  if(action==='home'){selectEra(data.events.find(allowed).era,{focus:false,scroll:false});window.scrollTo({top:0,behavior:'instant'});return;}
  if(action==='essentials'){state.era='all';state.view='timeline';state.entity='';state.q='';state.core=true;state.savedOnly=false;state.detailOpen=false;render();return;}
- if(action==='clear'){state.entity='';state.q='';state.core=false;state.savedOnly=false;state.detailOpen=false;state.era=data.events.find(allowed).era;render();$('#search')?.focus({preventScroll:true});return;}
- if(action==='savedOnly'){state.savedOnly=!state.savedOnly;state.detailOpen=false;state.toolsOpen=true;if(!state.savedOnly)state.era=data.events.find(allowed).era;render();return;}
+ if(action==='clear'){state.entity='';state.q='';state.core=false;state.savedOnly=false;state.detailOpen=false;state.era=browseEra();render();$('#search')?.focus({preventScroll:true});return;}
+ if(action==='savedOnly'){state.savedOnly=!state.savedOnly;state.detailOpen=false;state.toolsOpen=true;if(!state.savedOnly)state.era=browseEra();render();return;}
  if(action==='read'||action==='save'){const set=action==='read'?state.read:state.saved;set.has(state.selected)?set.delete(state.selected):set.add(state.selected);persist();render();$(`[data-action="${action}"]`)?.focus({preventScroll:true});return;}
  if(action==='reset'){state.read.clear();persist();render();return;}
  if(action==='share'){
@@ -334,10 +348,10 @@ document.addEventListener('click',async event=>{
  }
 });
 document.addEventListener('input',event=>{
- if(event.target.id==='search'){state.q=event.target.value;state.era=state.q||state.entity||state.savedOnly?'all':data.events.find(allowed).era;state.detailOpen=false;state.toolsOpen=true;render('search');}
+ if(event.target.id==='search'){state.q=event.target.value;state.era=state.q||state.entity||state.savedOnly?'all':browseEra();state.detailOpen=false;state.toolsOpen=true;render('search');}
 });
 document.addEventListener('change',event=>{
- if(event.target.id==='trace'){state.entity=event.target.value;state.era=state.entity||state.q||state.savedOnly?'all':data.events.find(allowed).era;state.detailOpen=false;state.toolsOpen=true;render('trace');}
+ if(event.target.id==='trace'){state.entity=event.target.value;state.era=state.entity||state.q||state.savedOnly?'all':browseEra();state.detailOpen=false;state.toolsOpen=true;render('trace');}
 });
 document.addEventListener('keydown',event=>{
  if(event.key==='Escape'&&state.detailOpen&&!document.querySelector('dialog[open]')){state.detailOpen=false;render();focusNode(state.selected);return;}
@@ -357,7 +371,7 @@ try{
  const response=await fetch('./data/archive.json');if(!response.ok)throw new Error('Archive HTTP '+response.status);data=await response.json();
  byEvent=Object.fromEntries(data.events.map(x=>[x.id,x]));byEntity=Object.fromEntries(data.entities.map(x=>[x.id,x]));bySource=Object.fromEntries(data.sources.map(x=>[x.id,x]));byWork=Object.fromEntries(data.works.map(x=>[x.id,x]));
  const requested=byEvent[hash.get('event')];
- if(requested&&allowed(requested)){state.selected=requested.id;state.era=requested.era;state.detailOpen=true;state.supportingOpen=requested.importance==='support';}
+ if(requested&&allowed(requested)){state.selected=requested.id;state.era=requested.era;state.browseEra=requested.era;state.detailOpen=true;state.supportingOpen=requested.importance==='support';}
  render();
  if(requested&&!allowed(requested)){pendingEvent=requested.id;showSpoilers(false,t('noVisible'));}
  if(requested&&allowed(requested))focusNode(requested.id,true);
