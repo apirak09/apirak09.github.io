@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#263637">
+  <meta name="description" content="อินทาเนีย เกมผจญภัย 3D โลกเปิดในธีมวิศวะจุฬาฯ สำรวจ 5 ภูมิประเทศ สลับทีม ต่อสู้ และอัญเชิญตัวละครฟรี">
+  <title>INTHANIA — วิศวะผจญภัย</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23263637'/%3E%3Ctext x='32' y='46' font-size='44' text-anchor='middle' fill='%23e8bbc8'%3E⚙%3C/text%3E%3C/svg%3E">
+  <link rel="stylesheet" href="./style.css">
+  <script type="importmap">{"imports":{"three":"./assets/vendor/three.module.js"}}</script>
+</head>
+<body>
+  <main id="game" aria-label="อินทาเนีย เกมผจญภัย 3D">
+    <canvas id="view" aria-label="โลก 3D ลากเพื่อหมุนกล้อง" tabindex="0"></canvas>
+    <div id="vignette"></div>
+    <div id="start" class="start-screen">
+      <div class="start-brand"><span class="brand-mark">⚙</span> CHULA ENGINEERING <span class="edition">EXPEDITION / 01</span></div>
+      <section class="start-copy">
+        <div class="eyebrow">การเดินทางของเหล่าวิศวกร</div>
+        <h1>INTHANIA<span>อินทาเนีย</span></h1>
+        <p>เมื่อโครงข่ายกลจักรหยุดทำงาน<br>พลังจากต่างภาควิชาจะพาคุณออกไปค้นหาคำตอบ</p>
+        <button id="start-button" class="primary start-button" disabled>กำลังเตรียมโลก…</button>
+        <div class="loading"><span id="load-label">กำลังโหลดโมเดล 3D</span><div class="load-track"><i id="load-bar"></i></div></div>
+        <div id="load-error" hidden></div>
+        <div class="start-note">5 ภูมิประเทศ · ทีม 4 คน · อัญเชิญฟรี</div>
+      </section>
+      <div class="start-bottom"><span>เกมแฟนเมดในโลกสมมติ · ไม่ใช่ผังมหาวิทยาลัยจริง</span><button id="start-info" class="text-button" disabled>วิธีเล่นและที่มา</button><span>v1.0</span></div>
+    </div>
+    <div id="hud" hidden>
+      <div class="top-left">
+        <button id="minimap-button" aria-label="เปิดแผนที่ M" class="minimap-frame"><canvas id="minimap" width="180" height="180"></canvas><span class="north">N</span><span class="map-key">M · แผนที่</span></button>
+        <div class="location"><span class="eyebrow">EXPEDITION 01</span><strong id="region-name">ลานเกียร์</strong><span id="region-sub">ศูนย์กลางอินทาเนีย</span></div>
+        <button id="quest-tracker" class="quest-tracker"><span class="quest-dot">◇</span><span><small>ภารกิจหลัก</small><strong id="quest-title">เริ่มต้นที่ลานเกียร์</strong><span id="quest-detail">คุยกับพี่พิม</span></span></button>
+      </div>
+      <nav class="top-right" aria-label="เมนูเกม">
+        <span class="currency">✧ <b id="crystal-count">1600</b></span>
+        <button data-menu="wish" title="อัญเชิญ G" aria-label="อัญเชิญฟรี G"><span>✧</span><small>อัญเชิญ</small></button>
+        <button data-menu="team" title="ทีม T" aria-label="จัดทีม T"><span>♙</span><small>ทีม</small></button>
+        <button data-menu="settings" title="ตั้งค่า Esc" aria-label="ตั้งค่าและพักเกม"><span>☷</span><small>เมนู</small></button>
+      </nav>
+      <div id="boss-hud" class="boss-hud" hidden><span>ผู้พิทักษ์โครงข่าย</span><strong>ATLAS · แกนกลจักร</strong><div class="boss-track"><i id="boss-fill"></i></div><small id="boss-phase">ระยะที่ 1</small></div>
+      <div id="party" class="party"></div>
+      <div id="region-banner" class="region-banner" hidden><span>พื้นที่ใหม่</span><strong></strong><small></small></div>
+      <div id="damage-numbers" aria-hidden="true"></div>
+      <div id="interaction" class="interaction" hidden><button id="interact-button"><kbd>F</kbd> <span id="interact-label">คุย</span></button></div>
+      <div id="hero-status" class="hero-status"><div class="hero-line"><span id="hero-symbol">Δ</span><strong id="hero-name">อิน</strong><small id="hero-level">Lv. 1</small><span id="hero-mode"></span></div><div class="hp-track"><i id="hp-fill"></i><span id="hp-text">210 / 210</span></div><div class="stamina-track"><i id="stamina-fill"></i></div></div>
+      <div class="skills"><button id="dodge-button" aria-label="หลบ X"><span>↝</span><small>X · หลบ</small></button><button id="jump-button" aria-label="กระโดดและร่อน Space"><span>⌁</span><small>Space</small></button><button id="attack-button" aria-label="โจมตี J"><span>⚔</span><small>J · โจมตี</small></button><button id="skill-button" aria-label="ใช้สกิล E"><span id="skill-icon">Δ</span><small id="skill-cd">E · สกิล</small></button><button id="burst-button" aria-label="อัลติเมต Q"><span>✺</span><small id="burst-energy">Q · 35/60</small></button></div>
+      <div class="desktop-hint">W A S D เดิน <span>·</span> Shift วิ่ง <span>·</span> ลากกล้อง <span>·</span> 1–4 สลับทีม <span>·</span> H วิธีเล่น</div>
+      <div id="touch-controls"><div id="joystick" aria-label="จอยเดิน"><i id="joystick-knob"></i></div><button id="sprint-button" aria-label="วิ่ง กดค้าง">วิ่ง</button><button id="climb-button" aria-label="ปีน กดค้าง">ปีน</button></div>
+      <div id="save-status" class="save-status">✓ บันทึกแล้ว</div>
+    </div>
+    <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
+    <div id="portrait-tip" hidden>เล่นได้ทั้งสองแนว · หมุนเครื่องเพื่อเห็นโลกกว้างขึ้น</div>
+    <dialog id="panel" aria-label="เมนูอินทาเนีย"><div class="panel-header"><span class="panel-brand">⚙ INTHANIA</span><nav id="panel-tabs" aria-label="หมวดเมนู"></nav><button id="close-panel" class="close-button" aria-label="ปิดเมนู">×</button></div><div id="panel-content"></div></dialog>
+  </main>
+  <script type="module">
+    import('./game.js').then(m=>m.boot()).catch(e=>{
+      console.error(e);document.querySelector('#load-label').textContent='เปิดเกมไม่สำเร็จ';
+      const box=document.querySelector('#load-error');box.hidden=false;box.textContent='ไม่สามารถโหลดเกม 3D ได้ ลองใช้ Chrome / Safari รุ่นปัจจุบันและตรวจการเชื่อมต่อ';
+      const b=document.querySelector('#start-button');b.disabled=false;b.textContent='ลองอีกครั้ง';b.onclick=()=>location.reload();
+    });
+  </script>
+</body>
+</html>

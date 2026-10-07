@@ -1,0 +1,167 @@
+{
+  "date": "2026-10-07T09:58:51.449Z",
+  "engine": "Chromium 131, Playwright, SwiftShader WebGL 2",
+  "checks": [
+    {
+      "name": "Boot loads all 18 GLB models and Thai webfont",
+      "status": "pass"
+    },
+    {
+      "name": "Real characters have a skinned mesh and authored gameplay clips",
+      "status": "pass"
+    },
+    {
+      "name": "Animated patrol and boss models keep their intended visible height",
+      "status": "pass"
+    },
+    {
+      "name": "Keyboard movement, sprint drain, and input clearing",
+      "status": "pass"
+    },
+    {
+      "name": "Buildings stop the character and world bounds hold",
+      "status": "pass"
+    },
+    {
+      "name": "Jump, glide, and landing execute with stamina",
+      "status": "pass"
+    },
+    {
+      "name": "Wetland swimming drains stamina; the walkway stays dry",
+      "status": "pass"
+    },
+    {
+      "name": "Steep terrain requires climbing and consumes stamina",
+      "status": "pass"
+    },
+    {
+      "name": "Chest rewards can only be claimed once",
+      "status": "pass"
+    },
+    {
+      "name": "NPC starts the main quest through the visible dialogue",
+      "status": "pass"
+    },
+    {
+      "name": "Normal attack projectile hits, and cross-discipline skills react",
+      "status": "pass"
+    },
+    {
+      "name": "Opening a menu freezes gameplay and clears held movement",
+      "status": "pass"
+    },
+    {
+      "name": "Escape opens and closes the pause menu once",
+      "status": "pass"
+    },
+    {
+      "name": "Gacha uses displayed resources, gives ten results, and writes the save",
+      "status": "pass"
+    },
+    {
+      "name": "Party controls switch heroes and leveling deducts the right cost",
+      "status": "pass"
+    },
+    {
+      "name": "Station forest puzzle, wrong answer recovery, and one-time activation",
+      "status": "pass"
+    },
+    {
+      "name": "Station wetland puzzle, wrong answer recovery, and one-time activation",
+      "status": "pass"
+    },
+    {
+      "name": "Station wind puzzle, wrong answer recovery, and one-time activation",
+      "status": "pass"
+    },
+    {
+      "name": "Three stations unlock the boss and map teleport only permits open stations",
+      "status": "pass"
+    },
+    {
+      "name": "Geo shield absorbs damage and nuclear ultimate restores party HP",
+      "status": "pass"
+    },
+    {
+      "name": "Boss telegraph, second phase, victory, and story rewards are reachable",
+      "status": "pass"
+    },
+    {
+      "name": "The final NPC dialogue finishes the campaign and cannot double-claim",
+      "status": "pass"
+    },
+    {
+      "name": "Save export and rejected invalid imports preserve progress",
+      "status": "pass"
+    },
+    {
+      "name": "Reload restores characters, summons, stations, chests, and completed story",
+      "status": "pass"
+    },
+    {
+      "name": "Repeat boss challenge reopens the encounter after completion",
+      "status": "pass"
+    },
+    {
+      "name": "Responsive HUD and scrollable menus: desktop",
+      "status": "pass"
+    },
+    {
+      "name": "Responsive HUD and scrollable menus: tablet",
+      "status": "pass"
+    },
+    {
+      "name": "Responsive HUD and scrollable menus: mobile-landscape",
+      "status": "pass"
+    },
+    {
+      "name": "Responsive HUD and scrollable menus: mobile-portrait",
+      "status": "pass"
+    },
+    {
+      "name": "Touch joystick and held sprint drive actual movement",
+      "status": "pass"
+    },
+    {
+      "name": "Graphics settings apply the low mode and recover high mode",
+      "status": "pass"
+    },
+    {
+      "name": "No JavaScript errors or missing requests across the journey",
+      "status": "pass"
+    }
+  ],
+  "errors": [],
+  "viewports": [
+    {
+      "name": "desktop",
+      "width": 1440,
+      "height": 900,
+      "touch": false
+    },
+    {
+      "name": "tablet",
+      "width": 1024,
+      "height": 768,
+      "touch": true
+    },
+    {
+      "name": "mobile-landscape",
+      "width": 844,
+      "height": 390,
+      "touch": true
+    },
+    {
+      "name": "mobile-portrait",
+      "width": 390,
+      "height": 844,
+      "touch": true
+    }
+  ],
+  "render": {
+    "drawCalls": 111,
+    "triangles": 121786,
+    "geometries": 273,
+    "textures": 85
+  }
+}

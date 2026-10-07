@@ -1,0 +1,140 @@
+{
+  "source_date": "2026-10-07",
+  "assets": [
+    {
+      "path": "assets/fonts/NotoSansThai.ttf",
+      "bytes": 218652,
+      "sha256": "5a1c559bb539583c8a1fd99d1c5b9491e5e14478c9cd2bd0970d5c3096cc9ef8"
+    },
+    {
+      "path": "assets/fonts/OFL.txt",
+      "bytes": 4380,
+      "sha256": "2e98fd23a52d253db8612cd5942c8f2ff4111b21d2367050fdca91d8ccc374a0"
+    },
+    {
+      "path": "assets/models/KAYKIT-LICENSE.txt",
+      "bytes": 891,
+      "sha256": "ae322141814056dda0deea7540d74c41d87aee1da319977cd1bd84ee5a923629"
+    },
+    {
+      "path": "assets/models/KENNEY-LICENSE.txt",
+      "bytes": 611,
+      "sha256": "cb96b75e3560ac78d7a53ce6f083f4cdb5c53faea6141b62d63458dcfe1e4b9d"
+    },
+    {
+      "path": "assets/models/barbarian.glb",
+      "bytes": 994668,
+      "sha256": "12b89d1a773e499514550c4a5d859b9618d9f328743771a6cf46e2cfb70f4c4c"
+    },
+    {
+      "path": "assets/models/bridge_wood.glb",
+      "bytes": 15692,
+      "sha256": "3da4c208b0f72b7f2ba42db521b62ec4b0278050c75256a6982c40d21aab5701"
+    },
+    {
+      "path": "assets/models/campfire_stones.glb",
+      "bytes": 17344,
+      "sha256": "54869db23243a3f4905bc00bd4cd93b1037b28556ab3ef93e7a893a093791e35"
+    },
+    {
+      "path": "assets/models/canoe.glb",
+      "bytes": 15780,
+      "sha256": "ad9c7a315f55accbce8d1ee3dc853f919f01f97ab4e3096bb235d1815aed6941"
+    },
+    {
+      "path": "assets/models/flower_purpleC.glb",
+      "bytes": 7600,
+      "sha256": "beb85b66766c9943a89a5ee27114d3befe22569db9a6f0b5f8366b687f9c1e42"
+    },
+    {
+      "path": "assets/models/knight.glb",
+      "bytes": 1040600,
+      "sha256": "568ed7919a4742e108cb1a78ae2c90640b92fd8291863a9e41dbac8a8fcb4f77"
+    },
+    {
+      "path": "assets/models/lily_large.glb",
+      "bytes": 8044,
+      "sha256": "c8f7080df0ae3166e9d33f523b66360c2ac7556dff36cc9c8ee78b6a676c7db2"
+    },
+    {
+      "path": "assets/models/mage.glb",
+      "bytes": 971056,
+      "sha256": "fbacd4ba22e4d487e8445630019da370f783273773b29ab71c05c5a755b6ef13"
+    },
+    {
+      "path": "assets/models/plant_bush.glb",
+      "bytes": 4396,
+      "sha256": "ae7b1beb39e242b13f5f29e3ec23ef21034b814f82297b8aa00a9bf4e1b09590"
+    },
+    {
+      "path": "assets/models/robot.glb",
+      "bytes": 463988,
+      "sha256": "047f5e5fb3bb6d378bd1df16ca6137f2a596c99b3a1b5690b4020c05aaf6f319"
+    },
+    {
+      "path": "assets/models/rock_largeA.glb",
+      "bytes": 7552,
+      "sha256": "6dd15390fd96501dcd1454765a17ba61dbbd8d47705dfe5149c8dd92b353ce25"
+    },
+    {
+      "path": "assets/models/rock_tallA.glb",
+      "bytes": 12072,
+      "sha256": "88250f236a3b75f8b55c1d8afb6af020f8a91b1e81f9fb51f7ef513420d45a2d"
+    },
+    {
+      "path": "assets/models/rogue.glb",
+      "bytes": 997656,
+      "sha256": "dfd63c8c4404be2b1607400304f4b56f9562aff5a5cc0345f3cf0a45213fb3a3"
+    },
+    {
+      "path": "assets/models/stone_largeA.glb",
+      "bytes": 7124,
+      "sha256": "fe486a13775e833b1aca99413a89e013f300841de80f42ecd44ceaf43720f17b"
+    },
+    {
+      "path": "assets/models/tent_detailedOpen.glb",
+      "bytes": 15324,
+      "sha256": "d54d9665d07e0ff9680e56731c9f5338fc25d93788504d63b8375f54e6444193"
+    },
+    {
+      "path": "assets/models/tree_oak.glb",
+      "bytes": 14644,
+      "sha256": "d7fd8773674928c50c11b66d12c636d49bdcc15a8b1c7fbb98e6f63a3439a3f3"
+    },
+    {
+      "path": "assets/models/tree_palmDetailedTall.glb",
+      "bytes": 28204,
+      "sha256": "2cbea0f9621cde884c63a7b4ad787bda1d051fa27ef3c66b9f2b65328dc53683"
+    },
+    {
+      "path": "assets/models/tree_pineRoundA.glb",
+      "bytes": 14488,
+      "sha256": "7dc9711f31585eafdcb965d0649c30af5e19f2def1955f7a915081d30759ef8e"
+    },
+    {
+      "path": "assets/vendor/BufferGeometryUtils.js",
+      "bytes": 31768,
+      "sha256": "c25b7930e570e9ec56173cd3b866ec8d2e10016630db3937efb439daf1cedbf6"
+    },
+    {
+      "path": "assets/vendor/GLTFLoader.js",
+      "bytes": 110266,
+      "sha256": "8a7db5a19d1018d79fb9a7a8b8372f317682027321a67d86023002e264ea479d"
+    },
+    {
+      "path": "assets/vendor/SkeletonUtils.js",
+      "bytes": 8802,
+      "sha256": "ee412be1aa05f3051c2bda8ea89612c1ba70c5c87de62b56040282120d5eb991"
+    },
+    {
+      "path": "assets/vendor/THREE-LICENSE.txt",
+      "bytes": 1081,
+      "sha256": "4c40a1ef62450b857c3b2aaf294936304cd552d965fbcd9d32d4c5bcf4ba4454"
+    },
+    {
+      "path": "assets/vendor/three.module.js",
+      "bytes": 691648,
+      "sha256": "08fd7545d13d2c7fb65ab691530a802dafefd638596501854f267d0fb13c39e7"
+    }
+  ]
+}
