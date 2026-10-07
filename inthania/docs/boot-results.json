@@ -1,0 +1,13 @@
+{
+  "date": "2026-10-07T10:12:13.093Z",
+  "checks": [
+    {
+      "name": "Disabled WebGL gives an accessible explanation and disables ineffective retry",
+      "status": "pass"
+    },
+    {
+      "name": "Failed module download gives a working retry control",
+      "status": "pass"
+    }
+  ]
+}

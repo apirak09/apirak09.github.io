@@ -1,0 +1,144 @@
+{
+  "date": "2026-10-07T10:12:14.192268+00:00",
+  "url": "https://apirak09.github.io/inthania/",
+  "assetChecks": [
+    {
+      "path": "assets/fonts/NotoSansThai.ttf",
+      "bytes": 218652,
+      "match": true
+    },
+    {
+      "path": "assets/fonts/OFL.txt",
+      "bytes": 4380,
+      "match": true
+    },
+    {
+      "path": "assets/models/KAYKIT-LICENSE.txt",
+      "bytes": 891,
+      "match": true
+    },
+    {
+      "path": "assets/models/KENNEY-LICENSE.txt",
+      "bytes": 611,
+      "match": true
+    },
+    {
+      "path": "assets/models/barbarian.glb",
+      "bytes": 994668,
+      "match": true
+    },
+    {
+      "path": "assets/models/bridge_wood.glb",
+      "bytes": 15692,
+      "match": true
+    },
+    {
+      "path": "assets/models/campfire_stones.glb",
+      "bytes": 17344,
+      "match": true
+    },
+    {
+      "path": "assets/models/canoe.glb",
+      "bytes": 15780,
+      "match": true
+    },
+    {
+      "path": "assets/models/flower_purpleC.glb",
+      "bytes": 7600,
+      "match": true
+    },
+    {
+      "path": "assets/models/knight.glb",
+      "bytes": 1040600,
+      "match": true
+    },
+    {
+      "path": "assets/models/lily_large.glb",
+      "bytes": 8044,
+      "match": true
+    },
+    {
+      "path": "assets/models/mage.glb",
+      "bytes": 971056,
+      "match": true
+    },
+    {
+      "path": "assets/models/plant_bush.glb",
+      "bytes": 4396,
+      "match": true
+    },
+    {
+      "path": "assets/models/robot.glb",
+      "bytes": 463988,
+      "match": true
+    },
+    {
+      "path": "assets/models/rock_largeA.glb",
+      "bytes": 7552,
+      "match": true
+    },
+    {
+      "path": "assets/models/rock_tallA.glb",
+      "bytes": 12072,
+      "match": true
+    },
+    {
+      "path": "assets/models/rogue.glb",
+      "bytes": 997656,
+      "match": true
+    },
+    {
+      "path": "assets/models/stone_largeA.glb",
+      "bytes": 7124,
+      "match": true
+    },
+    {
+      "path": "assets/models/tent_detailedOpen.glb",
+      "bytes": 15324,
+      "match": true
+    },
+    {
+      "path": "assets/models/tree_oak.glb",
+      "bytes": 14644,
+      "match": true
+    },
+    {
+      "path": "assets/models/tree_palmDetailedTall.glb",
+      "bytes": 28204,
+      "match": true
+    },
+    {
+      "path": "assets/models/tree_pineRoundA.glb",
+      "bytes": 14488,
+      "match": true
+    },
+    {
+      "path": "assets/vendor/BufferGeometryUtils.js",
+      "bytes": 31768,
+      "match": true
+    },
+    {
+      "path": "assets/vendor/GLTFLoader.js",
+      "bytes": 110266,
+      "match": true
+    },
+    {
+      "path": "assets/vendor/SkeletonUtils.js",
+      "bytes": 8802,
+      "match": true
+    },
+    {
+      "path": "assets/vendor/THREE-LICENSE.txt",
+      "bytes": 1081,
+      "match": true
+    },
+    {
+      "path": "assets/vendor/three.module.js",
+      "bytes": 691648,
+      "match": true
+    }
+  ],
+  "allAssetsMatch": true,
+  "successfulDeploymentCommit": "dafd7458ed662b6bf67cc35b72d66ebfe439705a",
+  "liveRendering": "Cloud browser has WebGL disabled; Chromium test runtime cannot validate the managed proxy certificate. Full campaign was verified over local HTTP with the same asset bytes."
+}

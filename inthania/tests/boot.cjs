@@ -1,0 +1,20 @@
+const {chromium}=require('playwright');
+const {spawn}=require('node:child_process');
+const path=require('node:path');
+const fs=require('node:fs');
+const assert=require('node:assert/strict');
+const server=spawn('python',['-u','-m','http.server','8897','--bind','127.0.0.1'],{cwd:path.resolve(__dirname,'../..')});
+const report={date:new Date().toISOString(),checks:[]};let browser;
+(async()=>{
+  await new Promise((resolve,reject)=>{server.stdout.once('data',resolve);server.on('error',reject)});
+  browser=await chromium.launch({headless:true,executablePath:process.env.INTHANIA_CHROME_PATH,args:['--no-sandbox','--disable-webgl']});
+  const page=await browser.newPage();
+  await page.goto('http://127.0.0.1:8897/inthania/');await page.locator('#load-error').waitFor({state:'visible'});
+  assert.match(await page.locator('#load-label').innerText(),/WebGL 2/);assert.match(await page.locator('#load-error').innerText(),/WebGL 2/);assert.equal(await page.locator('#load-error').getAttribute('role'),'alert');assert.equal(await page.locator('#start-button').isEnabled(),false);
+  report.checks.push({name:'Disabled WebGL gives an accessible explanation and disables ineffective retry',status:'pass'});
+  await page.route('**/game.js',route=>route.abort());await page.reload();await page.locator('#load-error').waitFor({state:'visible'});
+  assert.match(await page.locator('#load-error').innerText(),/การเชื่อมต่อ/);assert.equal(await page.locator('#start-button').isEnabled(),true);
+  const reloaded=page.waitForEvent('load');await page.click('#start-button');await reloaded;await page.locator('#load-error').waitFor({state:'visible'});assert.equal(await page.locator('#start-button').isEnabled(),true);
+  report.checks.push({name:'Failed module download gives a working retry control',status:'pass'});
+  console.log(JSON.stringify(report));
+})().catch(e=>{report.checks.push({name:'Boot checks',status:'fail',error:e.stack});console.error(e);process.exitCode=1;}).finally(async()=>{fs.writeFileSync(path.resolve(__dirname,'../docs/boot-results.json'),JSON.stringify(report,null,2)+'\n');if(browser)await browser.close();server.kill();});

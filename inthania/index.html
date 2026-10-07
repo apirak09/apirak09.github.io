@@ -56,9 +56,9 @@
   </main>
   <script type="module">
     import('./game.js').then(m=>m.boot()).catch(e=>{
-      console.error(e);document.querySelector('#load-label').textContent='เปิดเกมไม่สำเร็จ';
-      const box=document.querySelector('#load-error');box.hidden=false;box.textContent='ไม่สามารถโหลดเกม 3D ได้ ลองใช้ Chrome / Safari รุ่นปัจจุบันและตรวจการเชื่อมต่อ';
-      const b=document.querySelector('#start-button');b.disabled=false;b.textContent='ลองอีกครั้ง';b.onclick=()=>location.reload();
+      console.error(e);const webgl=/WebGL/i.test(e.message||'');document.querySelector('#load-label').textContent=webgl?'ไม่พบ WebGL 2':'เปิดเกมไม่สำเร็จ';
+      const box=document.querySelector('#load-error');box.hidden=false;box.setAttribute('role','alert');box.textContent=webgl?'เบราว์เซอร์นี้ปิดการแสดงผล 3D หรือไม่รองรับ WebGL 2 กรุณาเปิดด้วยเบราว์เซอร์ที่รองรับกราฟิก 3D':'โหลดไฟล์เกมไม่สำเร็จ กรุณาตรวจการเชื่อมต่อแล้วลองอีกครั้ง';
+      const b=document.querySelector('#start-button');b.disabled=webgl;b.textContent=webgl?'ต้องใช้ WebGL 2':'ลองอีกครั้ง';if(!webgl)b.onclick=()=>location.reload();
     });
   </script>
 </body>
