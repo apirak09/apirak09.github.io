@@ -810,6 +810,7 @@ window.addEventListener('keydown',e=>{
   if(e.ctrlKey||e.metaKey||e.altKey)return;
   const gameKeys=['Space','ArrowUp','ArrowDown','ArrowLeft','ArrowRight','KeyW','KeyA','KeyS','KeyD','KeyJ','KeyK','KeyE','KeyI','KeyM','Escape','Digit1','Digit2','Digit3','Digit4','Digit5','Digit6'];
   if(!gameKeys.includes(e.code))return;
+  if(e.code==='Space'&&menu&&document.activeElement?.tagName==='BUTTON')return;
   if(e.code==='Escape'){e.preventDefault();if(menu)closePanel();else if(mode==='play')openPanel('pause');return;}
   if(mode==='title'){if(e.code==='Space'&&!menu){e.preventDefault();startGame(!!saved);}return;}
   e.preventDefault();
@@ -850,8 +851,13 @@ document.addEventListener('visibilitychange',()=>{if(document.hidden){clearInput
 window.addEventListener('pagehide',saveGame);window.addEventListener('resize',resize);
 window.addEventListener('error',e=>{if(!e.filename?.includes('game.js'))return;$('fatal-error').classList.remove('hidden');$('error-detail').textContent=e.message;mode='error';});
 function frame(now) {
-  const dt=Math.min((now-last)/1000||0,.035);last=now;
-  if(mode==='play')update(dt);
+  const dt=clamp((now-last)/1000||0,0,.15);last=now;
+  if(mode==='play') {
+    // Keep life and movement at real speed on slower phones; small physics steps
+    // retain reliable collision and boss/projectile behaviour at low frame rates.
+    let remaining=dt;
+    while(remaining>0&&mode==='play'){const step=Math.min(remaining,1/60);update(step);remaining-=step;}
+  }
   else if(mode==='title'&&!menu){time+=dt;updateEffects(dt);}
   render();requestAnimationFrame(frame);
 }
