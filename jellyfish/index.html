@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#061c2b">
+  <meta name="description" content="Jelly: Reborn — เกม RPG ผจญภัยใต้ทะเล เติบโต ปรับแต่งร่างกาย สำรวจ และท้าทายผู้เฝ้าร่องลึก">
+  <title>Jelly: Reborn · ชีวิตใต้กระแสน้ำ</title>
+  <link rel="icon" type="image/svg+xml" href="icon.svg">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main id="app">
+    <header class="topbar">
+      <a class="brand" href="./" aria-label="Jelly Reborn"><span class="brand-mark" aria-hidden="true">◈</span><span>JELLY<span class="brand-light">: REBORN</span><small>ชีวิตใต้กระแสน้ำ</small></span></a>
+      <div class="top-actions">
+        <span id="save-state" class="save-state" aria-live="polite">บันทึกในเครื่องนี้</span>
+        <button id="sound-btn" class="icon-btn" aria-label="เปิดเสียง" title="เปิดหรือปิดเสียง">♪</button>
+        <button id="fullscreen-btn" class="icon-btn" aria-label="เต็มหน้าจอ" title="เต็มหน้าจอ">⛶</button>
+        <button id="help-btn" class="icon-btn" aria-label="วิธีเล่น" title="วิธีเล่น">?</button>
+        <button id="pause-btn" class="icon-btn" aria-label="พักเกม" title="พักเกม (Esc)">Ⅱ</button>
+      </div>
+    </header>
+    <section id="sea" class="sea" aria-label="สนามผจญภัยใต้น้ำ">
+      <canvas id="game" tabindex="0" aria-label="เกมแมงกะพรุน ใช้ WASD ว่ายน้ำ คลิกหรือ J โจมตี Space พุ่ง E สำรวจ M แผนที่ I ร่างกาย"></canvas>
+      <div id="hud" class="hud hidden">
+        <div class="vitals">
+          <div class="vital health"><span>♥</span><div class="meter"><i id="health-fill"></i></div><b id="health-text">100 / 100</b></div>
+          <div class="vital energy"><span>ϟ</span><div class="meter"><i id="energy-fill"></i></div><b id="energy-text">100</b></div>
+          <div class="vital food"><span>◌</span><div class="meter"><i id="food-fill"></i></div><b id="food-text">อิ่ม 100%</b></div>
+        </div>
+        <div class="location"><span id="biome-tag">01 / CORAL GARDEN</span><strong id="biome-name">สวนปะการัง</strong><small id="depth-text">ความลึก 24 m</small></div>
+        <button id="mini-map-btn" class="mini-map-btn" aria-label="เปิดแผนที่"><canvas id="minimap" width="180" height="76"></canvas><span>แผนที่ <kbd>M</kbd></span></button>
+      </div>
+      <div id="quest" class="quest hidden"><span class="quest-dot"></span><div><small>การเดินทางของคุณ</small><strong id="quest-title">ตามหาอวัยวะแรก</strong><span id="quest-detail">สำรวจแสงสีทองทางขวา แล้วกด E</span></div></div>
+      <div id="boss-hud" class="boss-hud hidden"><div><span>ผู้เฝ้าร่องลึก</span><b id="boss-phase">LEVIATHAN · I</b></div><div class="boss-track"><i id="boss-fill"></i></div></div>
+      <div id="life-hud" class="life-hud hidden"><div><span id="stage-icon">◌</span><strong id="stage-name">ตัวอ่อน</strong><small id="cycle-text">ชีวิตที่ 1</small><b id="stage-time">00:35</b></div><div class="life-track"><i id="life-fill"></i></div><div class="life-stages"><span>ตัวอ่อน</span><span>โพลิป</span><span>เอไฟรา</span><span>โตเต็มวัย</span><span>ชรา</span></div></div>
+      <div id="hotbar" class="hotbar hidden" aria-label="เลือกอวัยวะอาวุธ"></div>
+      <div id="interact-prompt" class="interact-prompt hidden"></div>
+      <div id="toast" class="toast hidden" role="status" aria-live="polite"></div>
+      <div id="area-banner" class="area-banner hidden"><small id="area-kicker"></small><strong id="area-title"></strong></div>
+      <div id="touch-controls" class="touch-controls hidden">
+        <div id="joystick" class="joystick" aria-label="จอยว่ายน้ำ"><div id="joy-knob" class="joy-knob"></div><span aria-hidden="true">✥</span></div>
+        <div class="touch-actions"><button id="touch-interact" aria-label="สำรวจหรือเก็บของ">สำรวจ</button><button id="touch-dash" aria-label="พุ่งหลบ">พุ่ง</button><button id="touch-attack" class="attack-btn" aria-label="โจมตี กดค้างได้">โจมตี</button></div>
+      </div>
+      <div id="start-screen" class="overlay start-screen">
+        <div class="start-content">
+          <div class="edition"><span></span> A TINY OCEAN ADVENTURE</div>
+          <h1>JELLY<span>REBORN<span class="title-dot">.</span></span></h1>
+          <p class="start-desc">จากตัวอ่อนตัวเล็ก สู่ผู้ท้าทายร่องลึก<br>สำรวจ เปลี่ยนร่าง แล้วเริ่มชีวิตใหม่อีกครั้ง</p>
+          <div class="start-buttons"><button id="continue-btn" class="primary-btn hidden">กลับสู่ทะเล <span>เล่นต่อ</span></button><button id="start-btn" class="primary-btn">เริ่มชีวิตใหม่ <span>PLAY</span></button></div>
+          <div class="start-meta"><span>4 เขตทะเล</span><i></i><span>6 อวัยวะ</span><i></i><span>1 ผู้เฝ้าร่องลึก</span></div>
+          <p class="start-controls">WASD ว่าย · J โจมตี · SPACE พุ่ง<br><span>มือถือใช้จอยและปุ่มบนหน้าจอ</span></p>
+        </div>
+        <div class="ocean-label"><span>SPECIMEN 001</span><strong>Turritopsis / fantasy variant</strong><small>การเดินทางไม่จบที่ชีวิตเดียว</small></div>
+        <div class="start-footer"><span>BY APIRAK09</span><button id="start-help">วิธีเล่นและวงจรชีวิต</button><span>PROTOTYPE 01</span></div>
+      </div>
+      <div id="panel-overlay" class="overlay panel-overlay hidden">
+        <section id="panel" class="panel" role="dialog" aria-modal="true" aria-labelledby="panel-title">
+          <header class="panel-head"><div><small id="panel-kicker">PAUSED</small><h2 id="panel-title">พักใต้กระแสน้ำ</h2></div><button id="panel-close" class="icon-btn" aria-label="ปิดหน้าต่าง">×</button></header>
+          <div id="panel-content"></div>
+        </section>
+      </div>
+      <div id="fatal-error" class="overlay hidden"><div class="panel"><h2>เกมโหลดไม่สำเร็จ</h2><p>ลองรีเฟรชหน้าอีกครั้ง ความคืบหน้าที่บันทึกไว้ยังอยู่ในเครื่องนี้</p><button class="primary-btn" onclick="location.reload()">โหลดใหม่</button><p id="error-detail"></p></div></div>
+    </section>
+    <footer class="bottom-bar"><span id="footer-status"><span class="tiny-diamond">◇</span> สำรวจใต้กระแสน้ำ</span><div id="game-menu" class="hidden"><button id="body-btn">ร่างกาย <kbd>I</kbd></button><button id="map-btn">แผนที่ <kbd>M</kbd></button></div><span class="desktop-hint">WASD ว่าย · J โจมตี · SPACE พุ่ง · E สำรวจ</span></footer>
+  </main>
+  <noscript>เกมนี้ต้องเปิด JavaScript เพื่อเล่น</noscript>
+  <script type="module" src="game.js"></script>
+</body>
+</html>
