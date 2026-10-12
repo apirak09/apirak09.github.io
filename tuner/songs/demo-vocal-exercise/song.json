@@ -1,0 +1,36 @@
+{
+  "schemaVersion": 1,
+  "id": "demo-vocal-exercise",
+  "title": "Find Your Note",
+  "artist": "Original vocal exercise",
+  "accent": "mint",
+  "difficulty": "Beginner",
+  "range": { "low": 60, "high": 69 },
+  "audioMode": "repository",
+  "audioSrc": "demo/vocal-exercise.wav",
+  "melodyStatus": "original",
+  "lyricsStatus": "original",
+  "referencePitch": 440,
+  "sections": [
+    { "name": "Step up", "start": 0.5, "end": 4 },
+    { "name": "Reach and return", "start": 4.75, "end": 10.5 },
+    { "name": "Hold steady", "start": 10.75, "end": 13.25 }
+  ],
+  "lyrics": [
+    { "start": 0.5, "end": 4, "text": "Hum · step up · find your note" },
+    { "start": 4.75, "end": 10.5, "text": "Reach · return · rise · settle" },
+    { "start": 10.75, "end": 13.25, "text": "Hold one steady hum" }
+  ],
+  "notes": [
+    { "start": 0.5, "end": 1.5, "midi": 60, "note": "C4" },
+    { "start": 1.75, "end": 2.75, "midi": 62, "note": "D4" },
+    { "start": 3, "end": 4, "midi": 64, "note": "E4" },
+    { "start": 4, "end": 4.75, "midi": null },
+    { "start": 4.75, "end": 6.25, "midi": 67, "note": "G4" },
+    { "start": 6.5, "end": 7.5, "midi": 64, "note": "E4" },
+    { "start": 7.75, "end": 9.25, "midi": 69, "note": "A4" },
+    { "start": 9.5, "end": 10.5, "midi": 67, "note": "G4" },
+    { "start": 10.75, "end": 13.25, "midi": 60, "note": "C4" },
+    { "start": 13.25, "end": 14, "midi": null }
+  ]
+}

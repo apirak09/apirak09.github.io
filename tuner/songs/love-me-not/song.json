@@ -1,0 +1,16 @@
+{
+  "schemaVersion": 1,
+  "id": "love-me-not",
+  "title": "Love Me Not",
+  "artist": "Ravyn Lenae",
+  "accent": "violet",
+  "difficulty": null,
+  "range": null,
+  "audioMode": "local-file",
+  "melodyStatus": "pending-transcription",
+  "lyricsStatus": "not-included-copyright",
+  "referencePitch": 440,
+  "sections": [],
+  "lyrics": [],
+  "notes": []
+}

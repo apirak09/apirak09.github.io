@@ -1,0 +1,16 @@
+{
+  "schemaVersion": 1,
+  "id": "let-her-go",
+  "title": "Let Her Go",
+  "artist": "Passenger",
+  "accent": "amber",
+  "difficulty": null,
+  "range": null,
+  "audioMode": "local-file",
+  "melodyStatus": "pending-transcription",
+  "lyricsStatus": "not-included-copyright",
+  "referencePitch": 440,
+  "sections": [],
+  "lyrics": [],
+  "notes": []
+}

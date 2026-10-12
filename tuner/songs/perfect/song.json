@@ -1,0 +1,16 @@
+{
+  "schemaVersion": 1,
+  "id": "perfect",
+  "title": "Perfect",
+  "artist": "Ed Sheeran",
+  "accent": "rose",
+  "difficulty": null,
+  "range": null,
+  "audioMode": "local-file",
+  "melodyStatus": "pending-transcription",
+  "lyricsStatus": "not-included-copyright",
+  "referencePitch": 440,
+  "sections": [],
+  "lyrics": [],
+  "notes": []
+}
