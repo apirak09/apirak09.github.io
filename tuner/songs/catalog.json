@@ -1,0 +1,26 @@
+[
+  {
+    "id": "let-her-go",
+    "title": "Let Her Go",
+    "artist": "Passenger",
+    "accent": "amber"
+  },
+  {
+    "id": "perfect",
+    "title": "Perfect",
+    "artist": "Ed Sheeran",
+    "accent": "rose"
+  },
+  {
+    "id": "love-me-not",
+    "title": "Love Me Not",
+    "artist": "Ravyn Lenae",
+    "accent": "violet"
+  },
+  {
+    "id": "demo-vocal-exercise",
+    "title": "Find Your Note",
+    "artist": "Original vocal exercise",
+    "accent": "mint"
+  }
+]

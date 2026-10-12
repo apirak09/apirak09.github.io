@@ -1,0 +1,272 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="theme-color" content="#282528" />
+    <meta
+      name="description"
+      content="Create a local, timestamped target melody map for Vocal Studio."
+    />
+    <title>Melody Map Editor — Vocal Studio</title>
+    <link rel="stylesheet" href="../../css/main.css" />
+    <link rel="icon" href="../../favicon.svg" type="image/svg+xml" />
+  </head>
+  <body>
+    <a class="skip-link" href="#editor">Skip to map editor</a>
+    <div id="header"></div>
+    <main class="shell editor" id="editor">
+      <div class="stack">
+        <h1>Map a melody.</h1>
+        <p class="muted">
+          Listen, mark an interval, and add its pitch. Work with audio you can
+          legally use. Every file stays on this device.
+        </p>
+        <p class="notice" id="status" role="status" aria-live="polite">
+          Start a new map, load a song package, or import your saved JSON.
+        </p>
+      </div>
+      <section class="panel stack" aria-labelledby="package-heading">
+        <h2 id="package-heading">Song package</h2>
+        <div class="editor-grid">
+          <label class="field"
+            >Start from a song<select id="song-picker">
+              <option value="">New song</option>
+            </select></label
+          >
+          <label class="field"
+            >Import song JSON<input
+              id="json-file"
+              type="file"
+              accept="application/json,.json"
+          /></label>
+          <div class="field">
+            <span>Start fresh</span
+            ><button id="new-map" class="quiet" type="button">New map</button>
+          </div>
+          <label class="field"
+            >Song ID<input
+              id="song-id"
+              value="new-song"
+              maxlength="80"
+              pattern="[a-z0-9]+(-[a-z0-9]+)*"
+              required
+          /></label>
+          <label class="field"
+            >Song title<input
+              id="song-title"
+              value="Untitled song"
+              maxlength="160"
+              required
+          /></label>
+          <label class="field"
+            >Artist / creator<input id="song-artist" maxlength="160"
+          /></label>
+          <label class="field"
+            >Reference A4 (Hz)<input
+              id="reference-pitch"
+              type="number"
+              min="400"
+              max="480"
+              step="0.1"
+              value="440"
+          /></label>
+        </div>
+        <p class="small muted">
+          Times refer to the exact audio version you map. An album track, radio
+          edit, instrumental, and live recording may need different maps.
+        </p>
+      </section>
+      <section class="panel stack" aria-labelledby="listen-heading">
+        <h2 id="listen-heading">Listen and mark</h2>
+        <div class="row">
+          <label class="field"
+            >Choose local audio<input
+              id="audio-file"
+              type="file"
+              accept="audio/*"
+          /></label>
+          <label class="field"
+            >Playback speed<select id="speed">
+              <option value="1">1.0×</option>
+              <option value="0.75">0.75×</option>
+              <option value="0.5">0.5×</option>
+            </select></label
+          >
+        </div>
+        <audio id="audio" controls preload="metadata"></audio>
+        <p class="small muted">
+          Use the player's seek bar to inspect a phrase. Mark start and end from
+          the current position, then type the exact times if needed. Headphones
+          help you compare your voice with the guide.
+        </p>
+        <form id="interval-form" class="stack">
+          <div class="editor-grid">
+            <label class="field"
+              >Interval type<select id="interval-type">
+                <option value="notes">Target note</option>
+                <option value="lyrics">Lyric cue</option>
+              </select></label
+            >
+            <label class="field"
+              >Start (seconds)<input
+                id="start"
+                type="number"
+                min="0"
+                max="86400"
+                step="0.001"
+                value="0"
+                required
+            /></label>
+            <label class="field"
+              >End (seconds)<input
+                id="end"
+                type="number"
+                min="0"
+                max="86400"
+                step="0.001"
+                value="1"
+                required
+            /></label>
+          </div>
+          <div class="row">
+            <button id="mark-start" type="button">Mark start</button
+            ><button id="mark-end" type="button">Mark end</button
+            ><button id="seek-start" type="button" class="quiet">
+              Seek to start
+            </button>
+          </div>
+          <div id="note-fields" class="stack">
+            <div class="row">
+              <label class="field"
+                >Target MIDI pitch<input
+                  id="midi"
+                  type="number"
+                  min="0"
+                  max="127"
+                  step="1"
+                  value="60"
+                  required
+              /></label>
+              <strong class="mono" id="note-label">C4</strong>
+              <label class="row small"
+                ><input id="rest" type="checkbox" /> Rest / unvoiced
+                interval</label
+              >
+              <button id="hear-note" class="quiet" type="button">
+                Hear target
+              </button>
+            </div>
+            <p class="small muted">
+              MIDI 60 = C4, 69 = A4. Choose the sung melody's pitch. A rest is
+              never scored. Gaps between notes also remain unscored.
+            </p>
+          </div>
+          <label id="lyric-fields" class="field" hidden
+            >Lyric / practice cue<textarea
+              id="lyric-text"
+              maxlength="500"
+              rows="2"
+              placeholder="Add your own text or a practice cue"
+            ></textarea>
+          </label>
+          <div class="row">
+            <button class="primary" id="save-interval" type="submit">
+              Add interval</button
+            ><button id="cancel-edit" class="quiet" type="button" hidden>
+              Cancel edit
+            </button>
+          </div>
+        </form>
+      </section>
+      <section class="panel stack" aria-labelledby="notes-heading">
+        <div class="section-heading">
+          <h2 id="notes-heading">Target notes</h2>
+          <span id="note-count" class="muted small">0 intervals</span>
+        </div>
+        <div class="table-scroll">
+          <table>
+            <caption class="sr-only">
+              Target note timings and pitches
+            </caption>
+            <thead>
+              <tr>
+                <th scope="col">Start</th>
+                <th scope="col">End</th>
+                <th scope="col">Pitch</th>
+                <th scope="col">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="note-rows"></tbody>
+          </table>
+        </div>
+        <p id="notes-empty" class="muted small">
+          Add the first note above. Listen closely to its onset and the point
+          where it changes or ends.
+        </p>
+      </section>
+      <section class="panel stack" aria-labelledby="lyrics-heading">
+        <div class="section-heading">
+          <h2 id="lyrics-heading">Lyric cues</h2>
+          <span id="lyric-count" class="muted small">0 lines</span>
+        </div>
+        <div class="table-scroll">
+          <table>
+            <caption class="sr-only">
+              Lyric cue timings and text
+            </caption>
+            <thead>
+              <tr>
+                <th scope="col">Start</th>
+                <th scope="col">End</th>
+                <th scope="col">Text</th>
+                <th scope="col">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="lyric-rows"></tbody>
+          </table>
+        </div>
+        <p id="lyrics-empty" class="muted small">
+          Lyrics are optional. Choose “Lyric cue” above to add legally usable
+          text or original exercise instructions.
+        </p>
+      </section>
+      <section class="panel stack" aria-labelledby="export-heading">
+        <h2 id="export-heading">Review and export</h2>
+        <label class="row"
+          ><input id="verified" type="checkbox" /><span
+            >I checked every note and rest against this exact audio version,
+            including timing and pitch.</span
+          ></label
+        >
+        <p class="small muted">
+          Leave this unchecked while transcribing. Draft maps remain in Free
+          Pitch mode. Checking it labels your map “verified” and enables scoring
+          when you import it into a trainer; it does not independently verify
+          your work.
+        </p>
+        <div class="row">
+          <button id="export" class="primary" type="button">
+            Export song JSON</button
+          ><a
+            class="button quiet"
+            href="../../README.md#how-to-create-a-target-melody-map"
+            >Mapping guide ↗</a
+          >
+        </div>
+        <p class="small muted">
+          Export often. This editor keeps your work in this tab only. Export
+          includes song metadata, notes, lyrics, and any existing sections.
+          Local audio is never included.
+        </p>
+      </section>
+      <div id="footer"></div>
+    </main>
+    <noscript
+      ><p class="shell notice">
+        Enable JavaScript to use the melody map editor.
+      </p></noscript
+    >
+    <script type="module" src="./editor.js"></script>
+  </body>
+</html>
