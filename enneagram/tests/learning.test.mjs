@@ -38,7 +38,7 @@ test('Shuffling preserves each correct answer and source-linked explanation',()=
  assert.notDeepEqual(makeQuestions('all',()=>.01).map(q=>q.id),makeQuestions('all',()=>.99).map(q=>q.id));
 });
 test('Corrupted local data cannot inject routes or unbounded notes',()=>{
- assert.deepEqual(cleanSaved(null),{type:1,done:[],notes:{}});
+ assert.deepEqual(cleanSaved(null),{type:1,lang:'th',done:[],notes:{}});
  const data=cleanSaved({type:99,done:['core','core','arbitrary'],notes:{'core-1':'x'.repeat(10000),'core-10':'bad','arbitrary':'bad'}});
  assert.equal(data.type,1);assert.deepEqual(data.done,['core']);assert.equal(data.notes['core-1'].length,6000);assert.equal(Object.keys(data.notes).length,1);
  assert.deepEqual(parseRoute('#arrows/9/stress'),{page:'arrows',type:9,detail:'stress'});

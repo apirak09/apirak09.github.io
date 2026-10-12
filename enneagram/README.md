@@ -1,57 +1,45 @@
-# Ennea — Interactive Enneagram Learning
+# Ennea — Bilingual Enneagram Field Guide
 
-A responsive, source-linked learning app covering the five requested layers of the Enneagram. Published in the `enneagram/` folder of `apirak09/apirak09.github.io`.
+Dependency-free learning app at https://apirak09.github.io/enneagram/.
 
-## Learn
+## Release 02 · 12 October 2026
 
-- **Core types:** all nine types; motivations, fears, strengths, difficulties, illustrative situations, and private reflection prompts.
-- **Instincts and subtypes:** SP, SO, SX; all 27 Chestnut–Paes subtype descriptions; the nine countertypes; six instinct-stack orders; clear terminology differences between schools.
-- **Wings:** all 18 combinations, interactive neighbouring points, and illustrative comparisons that retain the core type.
-- **Arrows:** all nine traditional Riso–Hudson growth and stress mappings, correct directional diagrams, and a separately labelled Chestnut–Paes view of constructive possibilities at both connections.
-- **Triads:** centers, Hornevian stances, harmonic groups, and object relations. Each framework has interactive memberships and an explanatory question.
-- **Practice:** 20 original knowledge questions, 4 per lesson, shuffled questions and answer positions, answer explanations with citations, lesson filters, and a missed-question review round.
-- **Progress:** manually completed lessons and optional reflection notes are saved only in this browser on this device. Quiz scores are session-only. No account or remote database is used.
+- ENG / ไทย button on every page. Thai is editorially written for understanding rather than generated at runtime. The same model data and answer order support both languages.
+- Five lessons: nine core types, 27 Chestnut–Paes subtypes, all 18 wing combinations, traditional versus both-connection arrows, and four triad frameworks.
+- **Common confusions** is a separate, linkable view at `#compare/1/8`. Any two of the nine types can be compared using their core descriptions; 18 selected pairs also include an original scenario, underlying difference, reflection question and pair-specific Institute reading. Generic pairs are explicitly distinguished from detailed articles.
+- Eight expandable misconceptions cover leadership, creativity, quietness, kindness, fear, anger, wings, arrows, instincts and overconfidence in typing.
+- Existing `ennea-learning-v1` notes and completed lessons are retained. The preferred language is saved with them; `?lang=en` or `?lang=th` can select the language for a shared URL.
+- Read/unread toggle, keyboard tabs, visible focus, source dialog with focus trapping, accessible diagrams and reduced-motion support.
+- Twenty original knowledge questions, lesson filters, shuffled questions/options, explanations and missed-question rounds. A round is stored in `sessionStorage` for reload within the same browser tab; language switching does not restart or reshuffle it. No personality score is produced.
+- No account, analytics, remote database, external fonts or automatic translation service. Reflections use `localStorage` in this browser only. Failed storage is handled gracefully.
 
-## Source and evidence policy
+## Sources and evidence
 
-Reviewed 10 September 2026. The app distinguishes accurate presentation of a school’s teaching from empirical validation. This is an educational reflection framework, not a diagnostic tool or an automated personality assessment.
+Base curriculum reviewed 10 September 2026; new pair discussions reviewed 12 October 2026. The site separates a school's teaching from independent scientific validation.
 
-The course uses original summaries. Wing blends, scenarios, and reflection prompts are explicitly illustrative. Every lesson has source links, and the Sources & evidence view includes the reference directory. Subtype labels and countertypes consistently follow Chestnut–Paes rather than mixing naming systems.
-
-| Material | Source |
+| Material | Teaching / research source |
 | --- | --- |
-| Core types, conventional wings, traditional arrows | [The Enneagram Institute](https://www.enneagraminstitute.com/how-the-enneagram-system-works/) and its nine individual type pages |
-| 27 subtypes and countertypes | [Chestnut–Paes Enneagram Academy](https://cpenneagram.com/subtypes) and its nine individual type guides |
-| Alternative instinct terminology | [The Narrative Enneagram](https://www.narrativeenneagram.org/instinctual-subtypes/) |
-| Hornevian, harmonic, object relations | [Enneagrammer: Triads](https://www.enneagrammer.com/triads) |
-| Empirical limits | [Hook et al., 2021, Journal of Clinical Psychology](https://onlinelibrary.wiley.com/doi/abs/10.1002/jclp.23097) |
+| Core types, conventional wings, traditional arrows | [Enneagram Institute](https://www.enneagraminstitute.com/how-the-enneagram-system-works/) |
+| Selected pair distinctions | [Institute misidentification discussions](https://www.enneagraminstitute.com/36-type-misidentifications/) |
+| Subtypes, countertypes, both-connection perspective | [Chestnut–Paes](https://cpenneagram.com/subtypes) |
+| Alternative instinct terms | [Narrative Enneagram](https://www.narrativeenneagram.org/instinctual-subtypes/) |
+| Hornevian, harmonic, object relations | [Enneagrammer](https://www.enneagrammer.com/triads) |
+| Empirical limits | [Hook et al., 2021](https://doi.org/10.1002/jclp.23097) |
 
-The review assessed 104 independent samples and reported mixed reliability and validity evidence, including little research support for secondary aspects such as wings and intertype movement. Its abstract was consulted; this app does not claim a new systematic review or continuous source monitoring.
+Summaries, Thai equivalents, wing blends, scenarios and reflection questions are original teaching material. Examples do not establish a person's type. The research review's abstract was consulted; the full article was not reviewed. Its mixed reliability/validity findings and limited secondary-model support are stated in Sources & evidence.
 
-## Run and maintain
+## Run and check
 
-This is a dependency-free static app. Serve the directory containing `index.html` with any HTTP server. ES modules require HTTP(S), so do not rely on opening the file directly with a `file:` URL.
-
-In the GitHub repository:
+ES modules require HTTP(S). In a local development environment:
 
 ```sh
 python -m http.server 8000
-# Then visit http://localhost:8000/enneagram/
-node --test enneagram/tests/learning.test.mjs
+# http://localhost:8000/enneagram/
+node --test enneagram/tests/*.test.mjs
 ```
 
-In the Sites checkout, the authored public files are under `dist/`:
+All public asset paths are relative and work under GitHub Pages' subdirectory. No build step or dependency installation is needed. Entry assets use release query strings to refresh cached clients.
 
-```sh
-node --test dist/tests/learning.test.mjs
-```
+Tests cover curriculum structure, wings/arrows/triads, countertypes, source references, Thai completeness, bilingual answer alignment, migration, safe quiz restoration, comparison orientation, escaped notes and app runtime rendering in both languages. The runtime test uses a minimal DOM surface and is not browser/layout testing. See AUDIT.md for verification scope.
 
-All asset paths are relative, so the same app works at the site root or under the GitHub Pages subdirectory. Hash routes retain lesson, selected type, and relevant view. The existing repository's games are preserved.
-
-## Accessibility and implementation
-
-Native buttons, keyboard-operable tabs, visible focus, meaningful diagram button labels, skip link, reduced-motion support, responsive layouts, a focus-trapped source dialog, and text equivalents for connections and groupings. No remote fonts, images, or scripts are required. Source links open separately.
-
-Optional WebMCP registers `navigate_enneagram_lesson` when `document.modelContext` is available. It uses the same navigation action as the UI, validates the lesson and type, and neither answers questions nor marks lessons complete. Validation in a supported browser WebMCP context was unavailable in this environment; the feature is optional and feature-detected.
-
-Automated checks cover the curriculum, all arrow endpoints, countertype assignments, triad partitions, wing wraparound, quiz answer preservation under shuffling, source reference integrity, and malformed stored state. Browser visual/end-to-end QA was not performed.
+`navigate_enneagram_lesson` is optionally registered with WebMCP when available, using the same navigation as the visible app. Its experimental integration remains feature-detected; no unsupported API can block learning.
