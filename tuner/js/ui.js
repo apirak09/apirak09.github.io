@@ -9,10 +9,10 @@ export const esc = (value) =>
   );
 export const url = (path) => new URL(path, BASE_URL).href;
 export function header(active = "") {
-  return `<header class="shell"><div class="topbar"><a href="${url("")}" class="brand" aria-label="Vocal Studio home"><span class="brand-mark" aria-hidden="true">${[10, 20, 30, 16, 24].map((h) => `<i style="--h:${h}px"></i>`).join("")}</span>Vocal Studio</a><nav aria-label="Main navigation"><a href="${url("")}" ${active === "songs" ? 'aria-current="page"' : ""}>Songs</a><a href="${url("generic/")}" ${active === "generic" ? 'aria-current="page"' : ""}>Free tuner</a><a href="${url("tools/song-editor/")}">Map editor</a></nav><span class="local-badge"><i class="dot"></i>Private by design</span></div></header>`;
+  return `<header class="shell"><div class="topbar"><a href="${url("")}" class="brand" aria-label="Vocal Studio home"><span class="brand-mark" aria-hidden="true">${[10, 20, 30, 16, 24].map((h) => `<i style="--h:${h}px"></i>`).join("")}</span>Vocal Studio</a><nav aria-label="Main navigation"><a href="${url("")}" ${active === "songs" ? 'aria-current="page"' : ""}>Songs</a><a href="${url("generic/")}" ${active === "generic" ? 'aria-current="page"' : ""}>Free tuner</a><a href="${url("tools/song-editor/")}">Map editor</a></nav><span class="local-badge"><i class="dot"></i>Recordings stay local</span></div></header>`;
 }
 export function footer() {
-  return `<footer class="footer"><span>Your audio. Your voice. All on this device.</span><a href="${url("README.md")}">Guide &amp; song data status ↗</a></footer>`;
+  return `<footer class="footer"><span>Your voice recordings stay on this device.</span><a href="${url("README.md")}">Guide &amp; song data status ↗</a></footer>`;
 }
 export function dateLabel(value) {
   const d = new Date(value);

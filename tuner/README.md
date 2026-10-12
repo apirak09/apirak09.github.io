@@ -1,23 +1,29 @@
 # Vocal Studio
 
-A static, private vocal practice app for [apirak09.github.io/tuner/](https://apirak09.github.io/tuner/).
-One training engine powers every song page: local audio playback, live pitch,
+A static vocal practice app for [apirak09.github.io/tuner/](https://apirak09.github.io/tuner/).
+One training engine powers every song page: official YouTube video or local
+audio playback, live pitch,
 timestamped melody targets, synchronized lyric cues, microphone recording,
 section loops, and local practice history. No account or backend is required.
 
 ## Song data status
 
-| Song                               | Audio                                     | Melody / range / difficulty                                    | Lyrics                            | Available now                                            |
-| ---------------------------------- | ----------------------------------------- | -------------------------------------------------------------- | --------------------------------- | -------------------------------------------------------- |
-| Let Her Go — Passenger             | Choose your own local file                | Pending transcription; range and difficulty unknown            | Not included because of copyright | Player, Free Pitch tuner, recorder, loops, local history |
-| Perfect — Ed Sheeran               | Choose your own local file                | Pending transcription; range and difficulty unknown            | Not included because of copyright | Player, Free Pitch tuner, recorder, loops, local history |
-| Love Me Not — Ravyn Lenae          | Choose your own local file                | Pending transcription; range and difficulty unknown            | Not included because of copyright | Player, Free Pitch tuner, recorder, loops, local history |
-| Find Your Note — original exercise | Included original 14-second generated WAV | Complete original C4–A4 map, eight pitched intervals and rests | Original practice cues            | Full target practice and scoring                         |
+| Song                               | Audio                                       | Melody / range / difficulty                                    | Lyrics                            | Available now                                            |
+| ---------------------------------- | ------------------------------------------- | -------------------------------------------------------------- | --------------------------------- | -------------------------------------------------------- |
+| Let Her Go — Passenger             | Official YouTube video; optional local file | Pending transcription; range and difficulty unknown            | Not included because of copyright | Player, Free Pitch tuner, recorder, loops, local history |
+| Perfect — Ed Sheeran               | Official YouTube video; optional local file | Pending transcription; range and difficulty unknown            | Not included because of copyright | Player, Free Pitch tuner, recorder, loops, local history |
+| Love Me Not — Ravyn Lenae          | Official YouTube video; optional local file | Pending transcription; range and difficulty unknown            | Not included because of copyright | Player, Free Pitch tuner, recorder, loops, local history |
+| Find Your Note — original exercise | Included original 14-second generated WAV   | Complete original C4–A4 map, eight pitched intervals and rests | Original practice cues            | Full target practice and scoring                         |
 
 The three commercial configurations deliberately contain empty notes, lyrics,
 and sections. They do not report invented scores, sections, or vocal ranges.
 Only `original` or `verified` maps with voiced notes enable scoring. A file
 labeled `verified` is a declaration by its creator, not automated verification.
+
+The three videos use the artists' official uploads, played in YouTube's visible
+embedded player. No commercial audio file is copied into this repository and
+no download or audio extraction is performed. The original demo continues to
+use its included WAV. Local files remain optional on every commercial song.
 
 Do not commit commercial studio audio, instrumental tracks, or full lyrics
 without explicit permission and usable rights. Selecting a file does not grant
@@ -27,11 +33,32 @@ audio and lyrics that you want published must be legally usable for publication.
 ## Use the app
 
 1. Open a song at `/tuner/let-her-go/`, `/tuner/perfect/`, or `/tuner/love-me-not/`.
-2. Choose **Select audio file**. Its name and duration confirm that it loaded.
+2. Choose **Load official video**, then **Play**. No audio file is required.
+   Alternatively, choose **Local audio (optional)** to use a track on your device.
 3. Use headphones. Enable the microphone and allow the browser's permission prompt.
-4. Play, seek, set speed to 0.5× / 0.75× / 1.0×, or mark A and B for a loop.
-5. Choose **Record take**. Finish the take to review your pitch trace and recording.
-6. Replay your voice, backing track, or both; download your voice or delete the take.
+4. Play, seek, choose an available speed, or mark A and B for a loop. Video
+   playback uses YouTube's available rates and seeking precision.
+5. Once the song itself is playing, choose **Record take**. Finish the take to
+   review your pitch trace and recording. With YouTube, recording stays disabled
+   while an ad is playing or content has not started.
+6. Replay your voice or backing track; download your voice or delete the take.
+   **Play both** is available with local or repository audio. It is disabled
+   while a YouTube source is selected, because YouTube's developer policies
+   prohibit playing alternate audio tracks over YouTube video content.
+
+The video shares the trainer's playback timeline, pitch trace, and A–B loop
+controls. YouTube seeking and loops can be less precise than local playback.
+The embedded player retains its native controls, branding, and any ads; its
+viewport is at least 200 × 200 pixels. Recordings capture your microphone only,
+so headphones help keep the backing track out of the microphone.
+
+YouTube availability depends on the uploader, region, connection, and browser.
+The trainer's song clock waits for content playback; YouTube's ad controls stay
+visible. Finish an ad or use its standard Skip Ad control when available before
+recording. Autoplay restrictions may require clicking the video's Play control.
+If embedding is blocked or playback fails, use **Open on
+YouTube** or select a local track. Selecting a local file removes the embedded
+player and switches the shared timeline back to the local track.
 
 The same local audio stays selected while this page is open. Reloading or
 opening another song requires choosing the file again; browsers cannot silently
@@ -56,6 +83,7 @@ tuner/
   css/main.css, trainer.css          Shared responsive design
   js/app.js                         Catalog screen
   js/trainer.js                     Shared trainer orchestration
+  js/track-player.js                Shared sources and visible YouTube IFrame adapter
   js/audio-player.js                Local / repository audio and A–B loops
   js/pitch-detector.js               YIN detector and microphone lifecycle
   js/pitch-utils.js                  Frequency / MIDI / note / time helpers
@@ -81,6 +109,12 @@ Every route shell identifies the song using `body[data-song]` and imports the
 same `trainer.js`. `BASE_URL` comes from `import.meta.url`, so configuration,
 audio, imports, and navigation resolve under `/tuner/` instead of the domain
 root. Adding a song does not require editing the tuner, player, or scorer.
+
+`TrackPlayer` delegates local and repository sources to the existing native
+audio player and optional `youtubeVideoId` sources to the YouTube IFrame
+adapter. Trainer controls consume the same clock and playback events, so a
+future song's video source is configured entirely in data. YouTube embedding
+requires no API key, account, backend, media proxy, or extraction service.
 
 `loadSong(id)` loads a configuration; `validateSong(input)` is the shared
 validation boundary for bundled packages and imports. `loadCatalog()` returns
@@ -108,20 +142,21 @@ version 1 deliberately implements JSON import only.
 }
 ```
 
-| Field                         | Meaning                                                                                    |
-| ----------------------------- | ------------------------------------------------------------------------------------------ |
-| `schemaVersion`               | Version 1; other versions are rejected                                                     |
-| `id`                          | Lowercase slug such as `my-song`; must match the package's route                           |
-| `title`, `artist`             | Display text; never HTML                                                                   |
-| `difficulty`                  | Optional descriptive text; `null` when unverified                                          |
-| `range`                       | `null`, or `{ "low": 60, "high": 69 }` with integer MIDI bounds                            |
-| `audioMode`                   | `local-file`, or `repository` for legally usable committed audio                           |
-| `audioSrc`                    | Required with `repository`; path relative to `/tuner/`, e.g. `demo/vocal-exercise.wav`     |
-| `melodyStatus`                | `pending-transcription`, `draft`, `user-supplied`, `verified`, `original`, or `free-pitch` |
-| `lyricsStatus`                | `not-included-copyright`, `none`, `user-supplied`, `verified`, or `original`               |
-| `referencePitch`              | A4 frequency, from 400 to 480 Hz                                                           |
-| `accent`                      | Optional shared card color: `amber`, `rose`, `violet`, or `mint`                           |
-| `notes`, `lyrics`, `sections` | Time-ordered arrays of non-overlapping intervals within each array                         |
+| Field                         | Meaning                                                                                                            |
+| ----------------------------- | ------------------------------------------------------------------------------------------------------------------ |
+| `schemaVersion`               | Version 1; other versions are rejected                                                                             |
+| `id`                          | Lowercase slug such as `my-song`; must match the package's route                                                   |
+| `title`, `artist`             | Display text; never HTML                                                                                           |
+| `difficulty`                  | Optional descriptive text; `null` when unverified                                                                  |
+| `range`                       | `null`, or `{ "low": 60, "high": 69 }` with integer MIDI bounds                                                    |
+| `audioMode`                   | `local-file`, or `repository` for legally usable committed audio                                                   |
+| `audioSrc`                    | Required with `repository`; path relative to `/tuner/`, e.g. `demo/vocal-exercise.wav`                             |
+| `youtubeVideoId`              | Optional official video ID: exactly 11 characters from `A–Z`, `a–z`, `0–9`, `_`, or `-`; a URL or HTML is rejected |
+| `melodyStatus`                | `pending-transcription`, `draft`, `user-supplied`, `verified`, `original`, or `free-pitch`                         |
+| `lyricsStatus`                | `not-included-copyright`, `none`, `user-supplied`, `verified`, or `original`                                       |
+| `referencePitch`              | A4 frequency, from 400 to 480 Hz                                                                                   |
+| `accent`                      | Optional shared card color: `amber`, `rose`, `violet`, or `mint`                                                   |
+| `notes`, `lyrics`, `sections` | Time-ordered arrays of non-overlapping intervals within each array                                                 |
 
 Note examples use seconds in the exact backing-track timeline:
 
@@ -158,6 +193,13 @@ line is edited. Lyric text is rendered as plain text. No embedded markup runs.
 Each event array is capped at 20,000 entries. Repository package loading and
 editor import are limited to 4 MB; trainer map import is limited to 2 MB.
 
+`youtubeVideoId` is an optional playback alternative, rather than a new
+`audioMode`. Existing `local-file` and `repository` configurations retain
+their behavior. For example, add `"youtubeVideoId": "RBumgq5yVrA"` to offer
+Passenger's official **Let Her Go** video. Importing a melody map preserves
+the current page's song identity and configured audio/video source; imported
+JSON cannot replace the page's official video ID.
+
 ## HOW TO ADD A NEW SONG
 
 1. Choose a lowercase, URL-safe slug, such as `my-original-song`.
@@ -179,7 +221,9 @@ editor import are limited to 4 MB; trainer map import is limited to 2 MB.
    existing alias route. This route needs `../../css/` and `../../js/` paths.
 6. Leave pending data empty and unknown metadata `null`. If including audio,
    confirm your publication rights, set `audioMode` to `repository`, and add
-   `audioSrc` relative to `tuner/`. Otherwise use `local-file`.
+   `audioSrc` relative to `tuner/`. Otherwise use `local-file`. To offer an
+   official embedded video, add its verified 11-character `youtubeVideoId`;
+   keep either existing `audioMode` for local/repository playback.
 7. Validate, open the direct route, and test with the precise audio version.
 
 For example, a public route's essentials are:
@@ -269,9 +313,12 @@ or localhost. The app releases the microphone when disabled or leaving the page.
 `MediaRecorder` selects a supported WebM / Opus, MP4 / AAC, or Ogg / Opus format.
 If voice recording is unavailable, pitch practice and saved pitch history still
 work. Recorded microphone audio remains separate from the backing track; the
-backing track is never copied into the saved voice file. **Play both** aligns
+backing track is never copied into the saved voice file. With local or repository
+audio, **Play both** aligns
 the voice with its recorded playback segments, including speed, pauses, and
 loops, using the currently loaded backing track. It needs the same track version.
+Combined voice-and-backing replay is disabled while a YouTube source is
+selected; voice-only review and microphone downloads remain available.
 
 IndexedDB database `vocal-trainer-v1`, store `takes`, holds each take's song ID,
 date, duration, metric object, detected samples, reference pitch, target map,
@@ -284,9 +331,21 @@ eviction, or moving to another browser/device may remove history.
 
 Audio selection uses `URL.createObjectURL()`; replaced and discarded object
 URLs are revoked. No selected file, microphone stream, recording, or map is
-uploaded. Network requests load the static app, catalog, bundled song JSON, and
-the original demo asset only. There are no analytics, account services, remote
-font dependencies, or browser-to-server recording endpoints.
+uploaded by Vocal Studio. Before **Load official video** is clicked, network
+requests load the static app, catalog, bundled song JSON, and original demo
+asset only. Local/repository practice never requires YouTube. Loading an
+official video explicitly loads YouTube's IFrame API and a privacy-enhanced
+`youtube-nocookie.com` embed, which contact Google and YouTube. That mode does
+not make the player contact-free; YouTube's own terms and privacy practices
+apply. Files, recordings, and imported maps remain local to this browser.
+
+The app adds no analytics, remote fonts, account services, or recording-upload
+endpoint. See YouTube's [embedding and privacy-enhanced mode guidance](https://support.google.com/youtube/answer/171780),
+[IFrame Player API](https://developers.google.com/youtube/iframe_api_reference),
+and [developer policies](https://developers.google.com/youtube/terms/developer-policies)
+(including III.I.7 on alternate audio tracks). The embedded service is subject
+to the [YouTube Terms of Service](https://www.youtube.com/t/terms) and
+[Google Privacy Policy](https://policies.google.com/privacy).
 
 ## Scores and performance review
 
@@ -333,7 +392,11 @@ preservation where supported, but quality varies. Some recorded blobs do not
 expose an immediate native duration. **Play both** can drift slightly because
 the voice and backing track are separate HTML media elements; it corrects
 position as playback proceeds. A–B looping is close to the selected boundaries,
-rather than sample-accurate seamless audio editing.
+rather than sample-accurate seamless audio editing. YouTube rates depend on the
+specific video, and its seeks can land near a requested position rather than
+on an exact sample. Ads, embedding restrictions, region restrictions, removed
+videos, blocked third-party requests, and playback errors can interrupt video
+practice. Choose a local file when precise control or offline practice is needed.
 
 There is no automatic transcription, MIDI / MusicXML importer, latency
 calibration, offline service worker, cross-device synchronization, or guaranteed
@@ -369,15 +432,17 @@ node --test tuner/tests/*.test.mjs
 
 The tests exercise pitch and silence filtering, score honesty, target map
 validation, media / loop / recorder lifecycle, and local storage fallbacks.
-Optional reproducible browser checks live in `tuner/tests/browser-check.mjs`
-and `tuner/tests/editor-browser-check.mjs`. With Node/npm available, install
+Optional reproducible browser checks live in `tuner/tests/browser-check.mjs`,
+`tuner/tests/editor-browser-check.mjs`, and `tuner/tests/stream-browser-check.mjs`.
+With Node/npm available, install
 the test-only dependencies in `tuner/tests` (`npm install`) and install the
 Playwright Chromium test browser (`npx playwright install chromium`). Serve
-the repository root on port 4173, then run both scripts from `tuner/tests`:
+the repository root on port 4173, then run the scripts from `tuner/tests`:
 
 ```sh
 node browser-check.mjs
 node editor-browser-check.mjs
+node stream-browser-check.mjs
 ```
 
 Use `VOCAL_BASE_URL` for a different preview URL (include `/tuner/` and a
