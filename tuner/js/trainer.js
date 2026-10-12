@@ -1,5 +1,5 @@
 import { loadSong, validateSong, BASE_URL } from "./song-loader.js";
-import { AudioPlayer } from "./audio-player.js";
+import { TrackPlayer } from "./track-player.js";
 import { PitchDetector } from "./pitch-detector.js";
 import {
   midiToNote,
@@ -52,6 +52,9 @@ let takeStart = 0,
   reviewMode = "voice",
   frame = 0,
   lastSample = 0;
+let videoPending = false,
+  playRequested = false,
+  takeSource = null;
 let transportLocked = false,
   reviewStarting = false,
   reviewGeneration = 0,
@@ -122,9 +125,79 @@ function updateNote() {
     `${Math.round(cents)} cents ${target ? "from target" : "from nearest note"}`,
   );
 }
+function officialSourceUI() {
+  if (!song.youtubeVideoId) return '<div id="youtube-mount" hidden></div>';
+  const watch = `https://www.youtube.com/watch?v=${song.youtubeVideoId}`;
+  return `<section class="youtube-option" aria-label="Official song playback"><div class="youtube-header"><div><h2>Play the official video</h2><p>No audio file needed. Stream from ${esc(song.artist)}’s official YouTube channel.</p></div><button id="load-youtube" class="primary">Load official video</button></div><div id="youtube-mount" class="youtube-frame" hidden></div><p class="youtube-help" id="youtube-help">Loading connects to YouTube. Its ads, availability, <a href="https://www.youtube.com/t/terms" target="_blank" rel="noopener noreferrer">terms</a>, and <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer">privacy policy</a> apply. Your microphone recordings stay on this device.</p><a class="youtube-link" href="${watch}" target="_blank" rel="noopener noreferrer">Open official video on YouTube ↗</a></section>`;
+}
+function updateSourceControls() {
+  const streaming = player.sourceType === "youtube";
+  const rates = player.availableSpeeds;
+  for (const option of $("speed").options)
+    option.disabled = !rates.includes(Number(option.value));
+  const rate = player.audio.playbackRate;
+  if ([...$("speed").options].some((option) => Number(option.value) === rate))
+    $("speed").value = String(rate);
+  if (selectedTake) {
+    const compatible = selectedTake.source
+      ? (selectedTake.source.type === player.sourceType &&
+          selectedTake.source.id === player.sourceId) ||
+        (selectedTake.source.type === "youtube" && !streaming)
+      : !streaming;
+    $("play-backing").disabled = !player.ready || !compatible;
+    $("play-both").disabled =
+      !voiceURL ||
+      !player.ready ||
+      !selectedTake.segments?.length ||
+      streaming ||
+      !compatible;
+  }
+  $("review-stream-note").hidden = !streaming;
+  $("record-help").textContent = streaming
+    ? "Use headphones. Let the song start in the visible YouTube player, then record your voice. Voice and video can be reviewed separately."
+    : "Record a take, then listen to your voice on its own or alongside the backing track.";
+}
+async function loadOfficialVideo() {
+  if (recording || recordPending || finishing || !song.youtubeVideoId) return;
+  const generation = ++fileGeneration;
+  a = b = null;
+  loopOn = false;
+  stopReview();
+  videoPending = true;
+  $("youtube-mount").hidden = false;
+  $("load-youtube").textContent = "Connecting…";
+  message("Connecting to the official YouTube player…");
+  syncButtons();
+  try {
+    await player.loadYouTube(song.youtubeVideoId);
+    if (generation !== fileGeneration) return;
+    $("audio-name").textContent = `${song.title} · official YouTube video`;
+    $("audio-info").textContent =
+      "Streaming from YouTube · local audio is optional";
+    a = b = null;
+    loopOn = false;
+    samples = [];
+    pass++;
+    updateLoop();
+    timeline.setSamples(samples);
+    updateSourceControls();
+    message(
+      "Official player loaded. Press Play, finish or use the video’s own Skip control for ads, then record when the song starts.",
+    );
+  } catch (error) {
+    if (generation === fileGeneration && error.name !== "AbortError")
+      message(error.message, true);
+  } finally {
+    if (generation === fileGeneration) {
+      videoPending = false;
+      $("load-youtube").textContent = "Reload official video";
+      syncButtons();
+    }
+  }
+}
 function render() {
   app.setAttribute("aria-busy", "false");
-  app.innerHTML = `${header(generic() ? "generic" : "songs")}<main id="main" class="shell trainer ${generic() ? "generic" : ""}"><div class="trainer-head"><div><a class="breadcrumb" href="${url("")}">← Your practice room</a><h1>${esc(song.title)}</h1><p>${esc(song.artist || "Find your pitch. Take your time.")}</p></div><div class="row"><span class="badge" id="analysis-mode">${scorable() ? "Target melody" : "Free Pitch"}</span><button id="mic-toggle">Enable microphone</button><span class="status-tag" id="mic-state" role="status">Microphone off</span></div></div><div id="message" class="notice" role="status" aria-live="polite">${generic() ? "Sing a single note to see your pitch. Use headphones if other audio is playing." : "Choose your audio file to begin. Use headphones so the microphone hears your voice."}</div><div class="workspace"><section class="panel tuner-panel" aria-label="Live pitch tuner"><div class="panel-label"><span>Your voice</span><span id="confidence">Waiting</span></div><div><div class="pitch-note mono" id="detected-note">—</div><div class="pitch-details mono" id="pitch-details">Microphone is off</div><div class="pitch-state" id="pitch-state">Enable your microphone to begin</div></div><div class="tuner-right"><div class="meter"><div class="meter-track" id="meter-track" role="meter" aria-label="Pitch deviation in cents" aria-valuemin="-50" aria-valuemax="50" aria-valuenow="0"><span class="meter-marker" id="meter-marker" hidden></span></div><div class="meter-labels"><span>−50 · LOW</span><span>0</span><span>HIGH · +50</span></div></div><div class="target-row"><span id="target-label">${scorable() ? "Target note" : "Analysis mode"}</span><strong id="target-note">Free pitch</strong></div></div><label class="reference-row">Reference A4 <input id="reference" type="number" min="400" max="480" step="1" value="${song.referencePitch}" aria-label="Reference A4 frequency"> Hz</label></section><div class="analysis"><section class="panel graph-panel" aria-labelledby="graph-heading"><div class="graph-title"><h2 id="graph-heading">Pitch timeline</h2><div class="legend"><span><i class="target"></i>Target</span><span><i class="voice"></i>Your voice</span></div></div><canvas id="timeline" class="timeline" role="img" aria-label="Pitch over time; target notes are bars and your voice is a line"></canvas><p class="graph-caption" id="graph-caption">${scorable() ? "Follow the notes. Gaps are rests; the vertical line is now." : "Your recent pitch trace. Add a verified melody map to compare with target notes."}</p></section><section class="panel lyrics-panel" aria-label="Synchronized lyrics"><div id="lyrics"></div></section></div></div><section class="panel transport" aria-label="Backing track player" ${generic() ? "hidden" : ""}><div class="audio-setup"><div><h2 id="audio-name">Choose your audio file to begin</h2><p id="audio-info">Files stay in your browser. Nothing is uploaded.</p></div><label class="button file-button">Select audio file<input id="audio-file" type="file" accept="audio/*" aria-label="Select local song audio"></label></div><audio id="backing" preload="metadata"></audio><div class="seek-row"><span id="current-time" class="mono">0:00</span><input id="seek" type="range" min="0" max="1" step="0.01" value="0" aria-label="Seek backing track" disabled><span id="duration" class="mono">0:00</span></div><div class="transport-controls"><div class="play-group"><button id="back" aria-label="Back 5 seconds" disabled>−5s</button><button id="play" class="primary play" disabled>Play</button><button id="forward" aria-label="Forward 5 seconds" disabled>+5s</button></div><div class="player-options"><label class="compact-field">Speed<select id="speed" aria-label="Playback speed"><option value="0.5">0.5×</option><option value="0.75">0.75×</option><option value="1" selected>1.0×</option></select></label><label class="compact-field">Volume<input id="volume" type="range" min="0" max="1" step="0.01" value="0.7" aria-label="Backing track volume"></label></div></div><div class="loop-controls"><div class="row"><button id="set-a" disabled>Set A</button><button id="set-b" disabled>Set B</button><button id="loop-toggle" aria-pressed="false" disabled>Loop off</button><button id="clear-loop" disabled>Clear</button></div><span id="loop-points" class="loop-points mono">A — : — · B — : —</span></div><div id="segments" class="segments" hidden></div><p class="keyboard-help"><kbd>Space</kbd> play / pause · <kbd>←</kbd> <kbd>→</kbd> seek 5 seconds · shortcuts work outside form controls.</p><p class="error-inline" id="player-error" role="alert"></p></section><div class="session-area"><section class="panel record-panel" aria-labelledby="record-heading"><h2 id="record-heading">Hear your progress</h2><p>Record a take, then listen to your voice on its own or alongside the backing track.</p><div class="row"><button id="record" class="primary">Record take</button><button id="finish" disabled>Finish take</button></div><div class="record-indicator" id="record-indicator"><i class="dot"></i><span id="record-status">Ready when you are</span></div><p id="record-error" class="error-inline" role="alert"></p></section><section class="panel map-panel" ${generic() ? "hidden" : ""}><h2>${scorable() ? "Melody map loaded" : "Make the song yours"}</h2><p id="map-status">${scorable() ? "Target notes and timed lyrics are ready for this exercise." : "This song’s melody map is pending. Use Free Pitch now, or import a verified note map to unlock scoring."}</p><label class="button quiet file-button">Import melody JSON<input id="map-file" type="file" accept="application/json,.json" aria-label="Import target melody map"></label> <a class="button quiet" style="margin-top:16px;font-size:.85rem" href="${url("tools/song-editor/")}">Open map editor ↗</a><p id="map-error" class="error-inline" role="alert"></p></section></div><section class="review" id="review" hidden aria-labelledby="review-heading"><div class="review-top"><div><h2 id="review-heading">Your take</h2><p id="review-date" class="small muted"></p></div><button id="another" class="quiet">Start another take</button></div><p id="review-reason" class="notice"></p><div class="metric-grid" id="metrics"></div><audio id="voice-playback" controls preload="metadata" aria-label="Recorded voice playback"></audio><div class="review-controls"><button id="play-voice">Play my voice</button><button id="play-backing" ${generic() ? "hidden" : ""}>Play backing track</button><button id="play-both" ${generic() ? "hidden" : ""}>Play both</button><button id="stop-review">Stop playback</button><a id="download" class="button quiet" download="vocal-take.webm">Download voice</a><button id="delete-take" class="quiet danger">Delete take</button></div><p id="review-error" class="error-inline" role="alert"></p><canvas id="review-timeline" class="timeline" role="img" aria-label="Recorded take pitch timeline"></canvas><label class="field">Explore take timeline<input id="review-seek" type="range" min="0" max="1" step="0.05" value="0" aria-label="Explore recorded pitch timeline"></label><p id="review-position" class="small muted"></p><ul id="hotspots" class="hotspots"></ul><p class="privacy-note">Scores describe pitch practice. They don’t measure expression, tone, or the quality of your voice.</p></section><section class="review-history" aria-labelledby="history-heading"><div class="section-heading"><h2 id="history-heading">Your takes</h2><span class="small muted" id="take-count"></span></div><ul id="take-history" class="take-list"></ul><p class="history-note" id="storage-status"></p></section>${footer()}</main>`;
+  app.innerHTML = `${header(generic() ? "generic" : "songs")}<main id="main" class="shell trainer ${generic() ? "generic" : ""}"><div class="trainer-head"><div><a class="breadcrumb" href="${url("")}">← Your practice room</a><h1>${esc(song.title)}</h1><p>${esc(song.artist || "Find your pitch. Take your time.")}</p></div><div class="row"><span class="badge" id="analysis-mode">${scorable() ? "Target melody" : "Free Pitch"}</span><button id="mic-toggle">Enable microphone</button><span class="status-tag" id="mic-state" role="status">Microphone off</span></div></div><div id="message" class="notice" role="status" aria-live="polite">${generic() ? "Sing a single note to see your pitch. Use headphones if other audio is playing." : song.youtubeVideoId ? "Play the official video without choosing a file. Use headphones for clear microphone pitch detection." : "Choose your audio file to begin. Use headphones so the microphone hears your voice."}</div><div class="workspace"><section class="panel tuner-panel" aria-label="Live pitch tuner"><div class="panel-label"><span>Your voice</span><span id="confidence">Waiting</span></div><div><div class="pitch-note mono" id="detected-note">—</div><div class="pitch-details mono" id="pitch-details">Microphone is off</div><div class="pitch-state" id="pitch-state">Enable your microphone to begin</div></div><div class="tuner-right"><div class="meter"><div class="meter-track" id="meter-track" role="meter" aria-label="Pitch deviation in cents" aria-valuemin="-50" aria-valuemax="50" aria-valuenow="0"><span class="meter-marker" id="meter-marker" hidden></span></div><div class="meter-labels"><span>−50 · LOW</span><span>0</span><span>HIGH · +50</span></div></div><div class="target-row"><span id="target-label">${scorable() ? "Target note" : "Analysis mode"}</span><strong id="target-note">Free pitch</strong></div></div><label class="reference-row">Reference A4 <input id="reference" type="number" min="400" max="480" step="1" value="${song.referencePitch}" aria-label="Reference A4 frequency"> Hz</label></section><div class="analysis"><section class="panel graph-panel" aria-labelledby="graph-heading"><div class="graph-title"><h2 id="graph-heading">Pitch timeline</h2><div class="legend"><span><i class="target"></i>Target</span><span><i class="voice"></i>Your voice</span></div></div><canvas id="timeline" class="timeline" role="img" aria-label="Pitch over time; target notes are bars and your voice is a line"></canvas><p class="graph-caption" id="graph-caption">${scorable() ? "Follow the notes. Gaps are rests; the vertical line is now." : "Your recent pitch trace. Add a verified melody map to compare with target notes."}</p></section><section class="panel lyrics-panel" aria-label="Synchronized lyrics"><div id="lyrics"></div></section></div></div><section class="panel transport" aria-label="Backing track player" ${generic() ? "hidden" : ""}>${officialSourceUI()}<div class="audio-setup"><div><h2 id="audio-name">${song.youtubeVideoId ? "Official video available above" : "Choose your audio file to begin"}</h2><p id="audio-info">${song.youtubeVideoId ? "Or choose a local track for combined voice/backing replay." : "Files stay in your browser. Nothing is uploaded."}</p></div><label class="button file-button">${song.youtubeVideoId ? "Local audio (optional)" : "Select audio file"}<input id="audio-file" type="file" accept="audio/*" aria-label="Select local song audio"></label></div><audio id="backing" preload="metadata"></audio><div class="seek-row"><span id="current-time" class="mono">0:00</span><input id="seek" type="range" min="0" max="1" step="0.01" value="0" aria-label="Seek backing track" disabled><span id="duration" class="mono">0:00</span></div><div class="transport-controls"><div class="play-group"><button id="back" aria-label="Back 5 seconds" disabled>−5s</button><button id="play" class="primary play" disabled>Play</button><button id="forward" aria-label="Forward 5 seconds" disabled>+5s</button></div><div class="player-options"><label class="compact-field">Speed<select id="speed" aria-label="Playback speed"><option value="0.5">0.5×</option><option value="0.75">0.75×</option><option value="1" selected>1.0×</option></select></label><label class="compact-field">Volume<input id="volume" type="range" min="0" max="1" step="0.01" value="0.7" aria-label="Backing track volume"></label></div></div><div class="loop-controls"><div class="row"><button id="set-a" disabled>Set A</button><button id="set-b" disabled>Set B</button><button id="loop-toggle" aria-pressed="false" disabled>Loop off</button><button id="clear-loop" disabled>Clear</button></div><span id="loop-points" class="loop-points mono">A — : — · B — : —</span></div><div id="segments" class="segments" hidden></div><p class="keyboard-help"><kbd>Space</kbd> play / pause · <kbd>←</kbd> <kbd>→</kbd> seek 5 seconds · shortcuts work outside form controls.</p><p class="error-inline" id="player-error" role="alert"></p></section><div class="session-area"><section class="panel record-panel" aria-labelledby="record-heading"><h2 id="record-heading">Hear your progress</h2><p id="record-help">Record a take, then listen to your voice on its own or alongside the backing track.</p><div class="row"><button id="record" class="primary">Record take</button><button id="finish" disabled>Finish take</button></div><div class="record-indicator" id="record-indicator"><i class="dot"></i><span id="record-status">Ready when you are</span></div><p id="record-error" class="error-inline" role="alert"></p></section><section class="panel map-panel" ${generic() ? "hidden" : ""}><h2>${scorable() ? "Melody map loaded" : "Make the song yours"}</h2><p id="map-status">${scorable() ? "Target notes and timed lyrics are ready for this exercise." : "This song’s melody map is pending. Use Free Pitch now, or import a verified note map to unlock scoring."}</p><label class="button quiet file-button">Import melody JSON<input id="map-file" type="file" accept="application/json,.json" aria-label="Import target melody map"></label> <a class="button quiet" style="margin-top:16px;font-size:.85rem" href="${url("tools/song-editor/")}">Open map editor ↗</a><p id="map-error" class="error-inline" role="alert"></p></section></div><section class="review" id="review" hidden aria-labelledby="review-heading"><div class="review-top"><div><h2 id="review-heading">Your take</h2><p id="review-date" class="small muted"></p></div><button id="another" class="quiet">Start another take</button></div><p id="review-reason" class="notice"></p><div class="metric-grid" id="metrics"></div><audio id="voice-playback" controls preload="metadata" aria-label="Recorded voice playback"></audio><div class="review-controls"><button id="play-voice">Play my voice</button><button id="play-backing" ${generic() ? "hidden" : ""}>Play backing track</button><button id="play-both" ${generic() ? "hidden" : ""}>Play both</button><button id="stop-review">Stop playback</button><a id="download" class="button quiet" download="vocal-take.webm">Download voice</a><button id="delete-take" class="quiet danger">Delete take</button></div><p id="review-error" class="error-inline" role="alert"></p><p id="review-stream-note" class="privacy-note" hidden>With YouTube selected, replay your voice or the official video separately. Load the same local track to use combined voice/backing replay.</p><canvas id="review-timeline" class="timeline" role="img" aria-label="Recorded take pitch timeline"></canvas><label class="field">Explore take timeline<input id="review-seek" type="range" min="0" max="1" step="0.05" value="0" aria-label="Explore recorded pitch timeline"></label><p id="review-position" class="small muted"></p><ul id="hotspots" class="hotspots"></ul><p class="privacy-note">Scores describe pitch practice. They don’t measure expression, tone, or the quality of your voice.</p></section><section class="review-history" aria-labelledby="history-heading"><div class="section-heading"><h2 id="history-heading">Your takes</h2><span class="small muted" id="take-count"></span></div><ul id="take-history" class="take-list"></ul><p class="history-note" id="storage-status"></p></section>${footer()}</main>`;
 }
 async function enableMic() {
   if (micOn && detector.context?.state === "running") return true;
@@ -176,34 +249,56 @@ function markSegment() {
     recordEnd: elapsed,
     songStart: now(),
     speed: player.audio.playbackRate,
-    playing: generic() ? false : !player.paused,
+    playing: generic() ? false : !player.paused && !player.seeking,
     pass,
   };
   segments.push(segment);
 }
 function syncButtons() {
   const ready = player.ready;
+  const canSeek =
+    ready &&
+    player.duration > 0 &&
+    (player.sourceType !== "youtube" || player.contentStarted);
+  const streaming = player.sourceType === "youtube";
   ["play", "back", "forward", "seek", "set-a", "set-b", "clear-loop"].forEach(
     (id) => {
-      $(id).disabled = !ready || transportLocked;
+      $(id).disabled = !(id === "play" ? ready : canSeek) || transportLocked;
     },
   );
   $("loop-toggle").disabled =
-    !ready || !(a !== null && b !== null && b > a) || transportLocked;
-  $("play").textContent = player.paused ? "Play" : "Pause";
+    !canSeek || !(a !== null && b !== null && b > a) || transportLocked;
+  for (const button of $("segments").querySelectorAll("button"))
+    button.disabled = !canSeek || transportLocked;
+  $("play").textContent = !player.paused || playRequested ? "Pause" : "Play";
   $("record").disabled =
-    recording || recordPending || finishing || (!generic() && !ready);
+    recording ||
+    recordPending ||
+    finishing ||
+    (!generic() && !ready) ||
+    (streaming && player.paused);
   $("finish").disabled = !recording || finishing;
   $("audio-file").disabled = recording || recordPending || finishing;
   $("map-file").disabled = recording || recordPending || finishing;
   $("reference").disabled = recording || recordPending || finishing;
-  $("speed").disabled = transportLocked;
+  $("speed").disabled =
+    transportLocked || (streaming && (!ready || !player.contentStarted));
+  if ($("load-youtube"))
+    $("load-youtube").disabled =
+      recording || recordPending || finishing || videoPending;
   $("mic-toggle").disabled =
     recording || micPending || recordPending || finishing;
   $("review").inert = recording || recordPending || finishing;
 }
 function updateLoop() {
-  if (a !== null && b !== null && b > a) player.setLoop(a, b, loopOn);
+  if (
+    a !== null &&
+    b !== null &&
+    b > a &&
+    player.ready &&
+    (player.sourceType !== "youtube" || player.contentStarted)
+  )
+    player.setLoop(a, b, loopOn);
   else player.clearLoop();
   $("loop-toggle").textContent = loopOn ? "Loop on" : "Loop off";
   $("loop-toggle").setAttribute("aria-pressed", String(loopOn));
@@ -213,21 +308,34 @@ function updateLoop() {
 }
 async function startTake() {
   if (recording || recordPending || finishing) return;
+  if (player.sourceType === "youtube" && player.paused) {
+    message(
+      "Start the song in the YouTube player first. Recording becomes available after ads finish.",
+    );
+    return;
+  }
   recordPending = true;
-  stopReview();
+  stopReview({ keepBacking: player.sourceType === "youtube" });
   syncButtons();
   try {
     if (!(await enableMic())) return;
+    if (player.sourceType === "youtube" && (player.paused || document.hidden)) {
+      message(
+        "Start or resume the song, then press Record take again. Your microphone is ready.",
+      );
+      return;
+    }
     recordSamples = [];
     segments = [];
     pass++;
+    takeSource = { type: player.sourceType, id: player.sourceId };
     takeSongStart = now();
     takeSpeed = player.audio.playbackRate;
     if (recorder.supported) recorder.start(detector.stream);
     takeStart = performance.now();
     recording = true;
     markSegment();
-    if (!generic()) await player.play();
+    if (!generic() && player.sourceType !== "youtube") await player.play();
     $("record-error").textContent = "";
     $("record-indicator").classList.add("active");
     message("Take in progress. Finish when you’re ready to listen back.");
@@ -266,6 +374,7 @@ async function finishTake() {
     });
     const take = {
       songId: song.id,
+      source: takeSource,
       date: new Date().toISOString(),
       duration,
       metrics,
@@ -309,16 +418,23 @@ async function refreshHistory() {
     : '<li class="empty-history">Your recordings and practice results will appear here after a take.</li>';
   $("storage-status").textContent = storageDescription(getStorageStatus());
 }
-function stopReview() {
+function stopReview({ keepBacking = false } = {}) {
   reviewGeneration++;
   reviewStarting = false;
+  playRequested = false;
   const voice = $("voice-playback");
   if (voice) voice.pause();
   reviewMode = "voice";
   transportLocked = false;
-  if (player) {
+  if (player && !keepBacking) {
     player.pause();
-    player.setSpeed(Number($("speed").value));
+    if (player.sourceType !== "youtube" || player.ready) {
+      try {
+        player.setSpeed(Number($("speed").value));
+      } catch {
+        /* A newly selected stream may support fewer rates. */
+      }
+    }
     updateLoop();
   }
 }
@@ -368,6 +484,7 @@ async function showReview(take) {
   $("review-error").textContent = voiceURL
     ? ""
     : "This take has pitch history only. Voice recording was unavailable.";
+  updateSourceControls();
   reviewTimeline?.destroy();
   reviewTimeline = new Timeline($("review-timeline"));
   reviewTimeline.setNotes(take.notes || []);
@@ -422,11 +539,24 @@ function syncReviewBacking() {
 async function playback(mode) {
   stopReview();
   const generation = reviewGeneration;
+  if (mode === "both" && player.sourceType === "youtube") {
+    $("review-error").textContent =
+      "Use local audio for combined replay. YouTube video and voice replay are separate.";
+    return;
+  }
   $("review-error").textContent = "";
   const voice = $("voice-playback");
   try {
     if (mode === "backing") {
       player.clearLoop();
+      if (player.sourceType === "youtube" && !player.contentStarted) {
+        $("youtube-mount").scrollIntoView({
+          block: "center",
+          behavior: "smooth",
+        });
+        await player.play();
+        if (generation !== reviewGeneration) return;
+      }
       player.seek(selectedTake.startTime || 0);
       player.setSpeed(selectedTake.speed || 1);
       await player.play();
@@ -472,9 +602,10 @@ function refreshSections() {
         `<button data-section="${i}">${esc(section.name || section.title)}</button>`,
     )
     .join("");
+  syncButtons();
 }
 function bind() {
-  player = new AudioPlayer($("backing"));
+  player = new TrackPlayer($("backing"), $("youtube-mount"));
   player.setVolume(0.7);
   recorder = new Recorder();
   detector = new PitchDetector({
@@ -517,12 +648,19 @@ function bind() {
     const file = e.target.files[0];
     if (!file) return;
     const generation = ++fileGeneration;
+    a = b = null;
+    loopOn = false;
+    videoPending = false;
+    if ($("load-youtube"))
+      $("load-youtube").textContent = "Load official video";
     stopReview();
     player.pause();
+    $("youtube-mount").hidden = true;
     message("Loading your local audio…");
     try {
       await player.loadFile(file);
       if (generation !== fileGeneration) return;
+      updateSourceControls();
       $("audio-name").textContent = file.name;
       $("audio-info").textContent =
         "Local file · available while this page stays open";
@@ -536,14 +674,35 @@ function bind() {
         "Audio ready. Enable your microphone to practice, or record a take.",
       );
     } catch (error) {
-      message(error.message, true);
+      if (generation === fileGeneration && error.name !== "AbortError")
+        message(error.message, true);
     } finally {
       syncButtons();
     }
   });
+  $("load-youtube")?.addEventListener("click", loadOfficialVideo);
   $("play").addEventListener("click", () => {
-    if (!player.paused) player.pause();
-    else player.play().catch((e) => message(e.message, true));
+    if (!player.paused || playRequested) {
+      playRequested = false;
+      player.pause();
+      syncButtons();
+    } else {
+      playRequested = true;
+      syncButtons();
+      if (player.sourceType === "youtube")
+        message(
+          "Waiting for the song. YouTube may show ads; its native controls remain available.",
+        );
+      player
+        .play()
+        .catch((error) => {
+          if (error.name !== "AbortError") message(error.message, true);
+        })
+        .finally(() => {
+          playRequested = false;
+          syncButtons();
+        });
+    }
   });
   $("back").addEventListener("click", () => player.skip(-5));
   $("forward").addEventListener("click", () => player.skip(5));
@@ -552,7 +711,12 @@ function bind() {
   );
   $("speed").addEventListener("change", () => {
     markSegment();
-    player.setSpeed(Number($("speed").value));
+    try {
+      player.setSpeed(Number($("speed").value));
+    } catch (error) {
+      message(error.message, true);
+      $("speed").value = String(player.audio.playbackRate);
+    }
     markSegment();
   });
   $("volume").addEventListener("input", () =>
@@ -593,6 +757,10 @@ function bind() {
     pass++;
     markSegment();
   });
+  player.addEventListener("seeked", () => {
+    pass++;
+    markSegment();
+  });
   player.addEventListener("loop", () => {
     pass++;
     markSegment();
@@ -605,21 +773,36 @@ function bind() {
     "durationchange",
   ])
     player.audio.addEventListener(event, () => {
+      if (event === "play" || event === "pause") pass++;
+      if (event === "play" && player.sourceType === "youtube")
+        $("voice-playback").pause();
+      if (event === "play" && player.sourceType === "youtube" && !recording)
+        message(
+          "The song is playing. Use headphones, then Record take when you’re ready.",
+        );
       markSegment();
+      updateSourceControls();
       syncButtons();
       if (event === "ended" && recording && !loopOn) finishTake();
     });
-  player.audio.addEventListener("error", () => {
+  player.audio.addEventListener("error", (event) => {
     $("player-error").textContent =
+      event.detail?.error?.message ||
       "This audio cannot be decoded. Try an MP3, WAV, or AAC file supported by your browser.";
     syncButtons();
+    if (recording) finishTake();
+  });
+  player.audio.addEventListener("ratechange", () => {
+    updateSourceControls();
+    markSegment();
   });
   player.addEventListener("loaded", () => {
     $("player-error").textContent = "";
+    updateSourceControls();
     syncButtons();
     if (selectedTake) {
       $("play-backing").disabled = false;
-      $("play-both").disabled = !voiceURL || !selectedTake.segments?.length;
+      updateSourceControls();
     }
   });
   $("record").addEventListener("click", startTake);
@@ -655,6 +838,7 @@ function bind() {
         artist: song.artist,
         audioMode: song.audioMode,
         audioSrc: song.audioSrc,
+        youtubeVideoId: song.youtubeVideoId,
         melodyStatus: imported.melodyStatus || "draft",
       });
       timeline.setNotes(song.notes);
@@ -730,7 +914,10 @@ function bind() {
   $("voice-playback").addEventListener("pause", () => {
     if (reviewMode === "both") player.pause();
   });
-  $("voice-playback").addEventListener("play", syncReviewBacking);
+  $("voice-playback").addEventListener("play", () => {
+    if (player.sourceType === "youtube") player.pause();
+    syncReviewBacking();
+  });
   $("voice-playback").addEventListener("ended", stopReview);
   $("review-seek").addEventListener("input", drawReview);
   $("delete-take").addEventListener("click", async () => {
@@ -817,7 +1004,7 @@ function tick(ts) {
   if (ts - lastSample >= 50) {
     lastSample = ts;
     const time = now();
-    if (micOn && (generic() || !player.paused)) {
+    if (micOn && (generic() || (!player.paused && !player.seeking))) {
       const sample = {
         time,
         midi: latest?.midi ?? null,
@@ -830,7 +1017,7 @@ function tick(ts) {
       timeline.push(sample);
       if (recording)
         recordSamples.push({ ...sample, recordTime: (ts - takeStart) / 1000 });
-    } else if (recording) {
+    } else if (recording && !player.paused && !player.seeking) {
       recordSamples.push({
         time,
         midi: null,

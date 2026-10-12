@@ -2,6 +2,7 @@
 export const BASE_URL = new URL("../", import.meta.url);
 
 const SLUG = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
+const YOUTUBE_VIDEO_ID = /^[A-Za-z0-9_-]{11}$/;
 const MELODY_STATUSES = new Set([
   "pending-transcription",
   "original",
@@ -207,6 +208,18 @@ export function validateSong(input) {
     notes,
   };
   if (audioMode === "repository") result.audioSrc = localAsset(value.audioSrc);
+  if (value.youtubeVideoId !== undefined) {
+    if (
+      typeof value.youtubeVideoId !== "string" ||
+      value.youtubeVideoId.length !== 11 ||
+      !YOUTUBE_VIDEO_ID.test(value.youtubeVideoId)
+    ) {
+      throw new Error(
+        "youtubeVideoId must be an 11-character YouTube video ID using only letters, numbers, underscores, or hyphens.",
+      );
+    }
+    result.youtubeVideoId = value.youtubeVideoId;
+  }
   if (value.accent !== undefined) {
     if (!ACCENTS.has(value.accent))
       throw new Error("accent must be amber, rose, violet, or mint.");

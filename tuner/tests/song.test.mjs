@@ -42,6 +42,11 @@ test("explicit rest and unvoiced types never become pitched targets", () => {
 });
 
 test("commercial packages expose truthful empty data and no embedded audio", async () => {
+  const officialVideos = {
+    "let-her-go": "RBumgq5yVrA",
+    perfect: "2Vv-BfVoq4g",
+    "love-me-not": "cswfR85D7jM",
+  };
   for (const id of ["let-her-go", "perfect", "love-me-not"]) {
     const song = validateSong(await readPackage(id));
     assert.equal(song.id, id);
@@ -54,6 +59,66 @@ test("commercial packages expose truthful empty data and no embedded audio", asy
     assert.deepEqual(song.lyrics, []);
     assert.deepEqual(song.sections, []);
     assert.equal(song.audioSrc, undefined);
+    assert.equal(song.youtubeVideoId, officialVideos[id]);
+  }
+});
+
+test("optional YouTube sources accept only video IDs without changing local audio modes", () => {
+  assert.equal(validateSong(base).youtubeVideoId, undefined);
+  for (const youtubeVideoId of [
+    "RBumgq5yVrA",
+    "2Vv-BfVoq4g",
+    "cswfR85D7jM",
+    "aB0_-CdE9fG",
+  ]) {
+    const song = validateSong({ ...base, youtubeVideoId });
+    assert.equal(song.youtubeVideoId, youtubeVideoId);
+    assert.equal(song.audioMode, "local-file");
+  }
+  const repositorySong = validateSong({
+    ...base,
+    audioMode: "repository",
+    audioSrc: "demo/own-track.wav",
+    youtubeVideoId: "RBumgq5yVrA",
+  });
+  assert.equal(repositorySong.audioMode, "repository");
+  assert.equal(repositorySong.audioSrc, "demo/own-track.wav");
+  assert.equal(repositorySong.youtubeVideoId, "RBumgq5yVrA");
+  assert.throws(
+    () =>
+      validateSong({
+        ...base,
+        audioMode: "youtube",
+        youtubeVideoId: "RBumgq5yVrA",
+      }),
+    /audioMode/,
+  );
+});
+
+test("YouTube video IDs reject URLs, markup, malformed lengths, and nontext values", () => {
+  for (const youtubeVideoId of [
+    "",
+    "RBumgq5yVr",
+    "RBumgq5yVrAx",
+    " RBumgq5yVrA",
+    "RBumgq5yVrA ",
+    "RBumgq5yVrA\n",
+    "https://www.youtube.com/watch?v=RBumgq5yVrA",
+    "https://youtu.be/RBumgq5yVrA",
+    "javascript:alert(1)",
+    '<iframe src="https://www.youtube.com/embed/RBumgq5yVrA">',
+    '" onload=x ',
+    "../escape12",
+    "RBumgq5yVr%",
+    null,
+    12345678901,
+    [],
+    {},
+  ]) {
+    assert.throws(
+      () => validateSong({ ...base, youtubeVideoId }),
+      /youtubeVideoId/,
+    );
   }
 });
 
