@@ -26,4 +26,7 @@ The pre-existing base curriculum and source policy are retained. Thai preserves 
 - JavaScript syntax checks pass; `git diff --check` passes.
 - The original production page was opened and inspected in the cloud browser.
 - Local browser preview is unavailable under the managed environment's supported preview workflow. Automated render tests use a minimal DOM; they do not establish layout, actual mobile rendering, screen-reader experience or experimental WebMCP behaviour.
-- Production browser/deployment verification is recorded after publication below.
+- GitHub Pages workflow `38263742016` completed successfully for release commit `ea8bfb772c4bfffdc6c4635daa443c1b88138de9`.
+- Production browser checks: all five lessons, comparisons, practice and sources open; Thai/English swap preserves the 1/8 comparison; native selectors open the 3/4 comparison; a correctly answered practice question retains its explanation and score through language swap and reload.
+- At the observed 1363 px desktop viewport, the document has no horizontal overflow or duplicate element IDs. Browser logs show extension metadata errors, with no observed errors from the Ennea application.
+- Actual mobile device/emulated viewport and screen-reader QA remain unperformed. This is an explicit verification limit, not a claim of completed device testing.
