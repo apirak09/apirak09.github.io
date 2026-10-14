@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en" data-mode="moon" data-screen="menu">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#070e15">
+  <meta name="description" content="Small wings. Strange worlds. Fly across the Moon, survive the Nightmare, or face seven unpredictable sins in Hell. A full-screen arcade game by Apirak.">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <title>Flappy 2 — Small wings. Strange worlds.</title>
+  <link rel="icon" href="assets/icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="assets/icon-192.png">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="preload" href="assets/fonts/chakra-petch-bold.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="assets/fonts/manrope.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <svg class="symbols" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><defs>
+    <symbol id="i-bird" viewBox="0 0 24 24"><path d="M18 7c-2-4-8-4-10 0L3 5l2 5c-2 6 1 10 7 10 5 0 8-3 8-7l3-2-4-2Z"/><path d="M6 14c4-5 8-4 8-2s-3 5-7 4M16 7h.01"/></symbol>
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M4 12h15m-6-6 6 6-6 6"/></symbol>
+    <symbol id="i-moon" viewBox="0 0 24 24"><path d="M20 15A9 9 0 0 1 9 4a9 9 0 1 0 11 11Z"/><path d="M16 3v4m-2-2h4"/></symbol>
+    <symbol id="i-bat" viewBox="0 0 24 24"><path d="m12 8-3-4-1 5L2 5l1 11 5-1 4 6 4-6 5 1 1-11-6 4-1-5-3 4Z"/><path d="M9 12h.01M15 12h.01"/></symbol>
+    <symbol id="i-fire" viewBox="0 0 24 24"><path d="M13 2c1 7-6 7-4 12 2-1 3-3 3-5 6 4 8 7 5 11-3 3-10 2-12-2C1 12 8 9 8 5c2 2 3 2 3 4 2-2 2-4 2-7Z"/></symbol>
+    <symbol id="i-pause" viewBox="0 0 24 24"><path d="M8 5v14M16 5v14"/></symbol>
+    <symbol id="i-play" viewBox="0 0 24 24"><path d="m8 4 12 8-12 8V4Z"/></symbol>
+    <symbol id="i-sound" viewBox="0 0 24 24"><path d="m11 4-5 4H3v8h3l5 4V4Zm4 4a6 6 0 0 1 0 8m3-11a10 10 0 0 1 0 14"/></symbol>
+    <symbol id="i-muted" viewBox="0 0 24 24"><path d="m11 4-5 4H3v8h3l5 4V4Zm5 5 5 6m0-6-5 6"/></symbol>
+    <symbol id="i-full" viewBox="0 0 24 24"><path d="M8 3H3v5m13-5h5v5M3 16v5h5m13-5v5h-5"/></symbol>
+    <symbol id="i-settings" viewBox="0 0 24 24"><path d="M4 7h16M4 17h16"/><circle cx="9" cy="7" r="3"/><circle cx="15" cy="17" r="3"/></symbol>
+    <symbol id="i-close" viewBox="0 0 24 24"><path d="m6 6 12 12M6 18 18 6"/></symbol>
+    <symbol id="i-retry" viewBox="0 0 24 24"><path d="M4 10a8 8 0 1 1 1 7M4 4v6h6"/></symbol>
+    <symbol id="i-crown" viewBox="0 0 24 24"><path d="m3 6 5 5 4-8 4 8 5-5-2 13H5L3 6Zm2 10h14"/></symbol>
+    <symbol id="i-coin" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 6v12m4-9c-6-4-10 3-4 3s2 7-4 3"/></symbol>
+    <symbol id="i-echo" viewBox="0 0 24 24"><path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/></symbol>
+    <symbol id="i-bolt" viewBox="0 0 24 24"><path d="m14 2-9 12h7l-2 8 9-12h-7l2-8Z"/></symbol>
+    <symbol id="i-heart" viewBox="0 0 24 24"><path d="M12 20 4 12C-3 5 6-2 12 6c6-8 15-1 8 6l-8 8Z"/></symbol>
+    <symbol id="i-jaw" viewBox="0 0 24 24"><path d="M3 4h18v16H3V4Zm0 6h18M6 4l2 5 2-5m4 0 2 5 2-5M6 20l2-5 2 5m4 0 2-5 2 5"/></symbol>
+    <symbol id="i-time" viewBox="0 0 24 24"><path d="M5 3h14M5 21h14M7 3v4l5 5-5 5v4m10-18v4l-5 5 5 5v4"/></symbol>
+    <symbol id="i-help" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9 9a3 3 0 1 1 5 2c-2 1-2 2-2 3m0 3h.01"/></symbol>
+  </defs></svg>
+  <main id="app" aria-label="Flappy 2 game">
+    <canvas id="world" tabindex="0" aria-label="Flappy 2 playfield. Space or Up Arrow to flap. P to pause." aria-describedby="controlHelp">Your browser needs Canvas to play. Try a current Safari, Chrome, Firefox, or Edge.</canvas>
+    <div class="menu-shade" aria-hidden="true"></div>
+    <header id="topbar" class="topbar">
+      <button id="home" class="wordmark" aria-label="Flappy 2 world selection"><svg><use href="#i-bird"/></svg><span>FLAPPY <b>2</b></span></button>
+      <div class="top-actions">
+        <button id="help" class="icon-button" title="How to play" aria-label="How to play"><svg><use href="#i-help"/></svg></button>
+        <button id="sound" class="icon-button" title="Sound (M)" aria-label="Mute sound" aria-pressed="true"><svg><use id="soundIcon" href="#i-sound"/></svg></button>
+        <button id="settings" class="icon-button" title="Settings" aria-label="Settings"><svg><use href="#i-settings"/></svg></button>
+        <button id="fullscreen" class="icon-button" title="Fullscreen (F)" aria-label="Enter fullscreen"><svg><use href="#i-full"/></svg></button>
+        <button id="pause" class="icon-button pause-button" title="Pause (P)" aria-label="Pause flight" hidden><svg><use href="#i-pause"/></svg></button>
+      </div>
+    </header>
+    <section id="menu" class="menu" aria-labelledby="title">
+      <div class="menu-intro"><h1 id="title">FLAPPY<sup>2</sup></h1><p class="tagline">Small wings.<br>Strange worlds.</p><p class="intro-copy">One tap is all you have.<br>Choose where it takes you.</p></div>
+      <div class="menu-controls">
+        <div class="worlds" role="radiogroup" aria-label="Choose your world">
+          <button class="world-choice" data-choice="moon" role="radio" aria-checked="true" tabindex="0"><svg class="world-symbol"><use href="#i-moon"/></svg><span class="choice-copy"><strong>Moon</strong><span>Low gravity. Wide open wonder.</span></span><span class="choice-best" aria-label="Moon best score"><span>BEST</span><b id="best-moon">0</b></span><span class="radio-dot" aria-hidden="true"></span></button>
+          <button class="world-choice" data-choice="nightmare" role="radio" aria-checked="false" tabindex="-1"><svg class="world-symbol"><use href="#i-bat"/></svg><span class="choice-copy"><strong>Nightmare</strong><span>Blood gates. Bats. No mercy.</span></span><span class="choice-best" aria-label="Nightmare best score"><span>BEST</span><b id="best-nightmare">0</b></span><span class="radio-dot" aria-hidden="true"></span></button>
+          <button class="world-choice" data-choice="hell" role="radio" aria-checked="false" tabindex="-1"><svg class="world-symbol"><use href="#i-fire"/></svg><span class="choice-copy"><strong>Hell</strong><span>Seven sins. Unpredictable survival.</span></span><span class="choice-best" aria-label="Hell best score"><span>BEST</span><b id="best-hell">0</b></span><span class="radio-dot" aria-hidden="true"></span></button>
+        </div>
+        <button id="launch" class="primary launch"><span id="launchText">Launch on the Moon</span><svg><use href="#i-arrow"/></svg></button>
+        <p class="control-hint" id="controlHelp"><span class="touch-hint">Tap the sky to flap</span><span class="keyboard-hint"><kbd>SPACE</kbd> or <kbd>↑</kbd> to flap</span><span class="hint-divider">/</span><button id="guideLink" class="inline-button">Flight guide</button></p>
+      </div>
+      <aside class="world-note" aria-live="polite"><div class="world-note-heading"><span id="worldFact">0.16 G</span><span class="world-note-line"></span></div><p id="worldNote">A softer fall.<br>A longer flight.</p><span id="worldDetail">Drift over lunar ridges beneath an Earth-lit sky.</span></aside>
+    </section>
+    <div id="hud" class="hud" hidden aria-label="Flight information">
+      <div class="flight-info"><strong id="modeLabel">MOON</strong><span id="phaseLabel">LOW GRAVITY</span><span id="pressureLabel">1.0× FLIGHT SPEED</span></div>
+      <div class="score-wrap"><strong id="score">0</strong><span id="scoreAdd" aria-hidden="true"></span></div>
+      <div class="flight-bottom"><span id="runTime">00:00</span><span id="flightBest">BEST 0</span><span class="flight-shortcuts">Tap / Space to flap <span>·</span> P to pause</span></div>
+      <div id="danger" class="danger" hidden><strong id="dangerName"></strong><span id="dangerHint"></span></div>
+    </div>
+    <div id="ready" class="ready-cue" hidden><svg><use href="#i-bird"/></svg><h2>Ready for another world?</h2><p>Tap the sky or press <kbd>SPACE</kbd></p><span id="readyTip">Low gravity carries every flap farther. Leave room above.</span></div>
+    <div id="countdown" class="countdown" hidden aria-live="assertive">3</div>
+    <section id="pausePanel" class="state-overlay" hidden role="dialog" aria-modal="true" aria-labelledby="pauseTitle"><div class="state-panel"><h2 id="pauseTitle">Take a breath.</h2><p id="pauseReason">Your flight is right where you left it.</p><button id="resume" class="primary"><span>Resume flight</span><svg><use href="#i-play"/></svg></button><button id="pauseMenu" class="secondary">Choose another world</button></div></section>
+    <section id="results" class="state-overlay" hidden role="dialog" aria-modal="true" aria-labelledby="resultTitle"><div class="state-panel result-panel"><h2 id="resultTitle">Back to moon dust.</h2><p id="recordMessage" class="record-message">There is always another flight.</p><div class="result-score"><strong id="finalScore">0</strong><span>POINTS</span></div><dl class="run-stats"><div><dt>Best</dt><dd id="finalBest">0</dd></div><div><dt>Survived</dt><dd id="finalTime">00:00</dd></div><div><dt id="thirdStatName">Flights</dt><dd id="thirdStat">1</dd></div></dl><p id="crashTip" class="crash-tip"></p><button id="retry" class="primary"><span>Fly again</span><svg><use href="#i-retry"/></svg></button><button id="resultMenu" class="secondary">Choose another world</button></div></section>
+    <footer id="menuFooter" class="menu-footer"><span>APIRAK <span class="footer-slash">/</span> FLAPPY 2</span><span id="saveNotice">Records saved on this device</span></footer>
+    <div id="toast" class="toast" role="status" hidden></div>
+    <div id="announcer" class="sr-only" role="status" aria-live="polite" aria-atomic="true"></div>
+    <div id="fatal" class="fatal" hidden role="alert"><h1>Flight could not start.</h1><p id="fatalMessage">Please reload this page in a current browser.</p><button class="primary" id="reload">Reload game</button></div>
+  </main>
+  <dialog id="settingsDialog" aria-labelledby="settingsTitle"><div class="dialog-top"><h2 id="settingsTitle">Make it your flight.</h2><button class="icon-button" data-close aria-label="Close settings"><svg><use href="#i-close"/></svg></button></div>
+    <label class="setting-row"><span><strong>Sound</strong><small>Flaps, scores, and warning cues</small></span><input id="soundSetting" type="checkbox" role="switch" checked></label>
+    <label class="setting-row"><span><strong>Music</strong><small>An original ambient score for each world</small></span><input id="musicSetting" type="checkbox" role="switch"></label>
+    <div class="volume-row"><label for="volume">Volume</label><output id="volumeOutput" for="volume">45%</output><input id="volume" type="range" min="0" max="100" value="45"></div>
+    <label class="setting-row"><span><strong>Reduce motion</strong><small>Less decorative movement, no flashes or shake</small></span><input id="motionSetting" type="checkbox" role="switch"></label>
+    <label class="setting-row"><span><strong>Graphics</strong><small>Lower detail saves battery; gameplay stays the same</small></span><select id="quality"><option value="auto">Auto</option><option value="high">High</option><option value="low">Low</option></select></label>
+    <p class="dialog-note" id="storageNote">Your records and preferences stay on this device.</p><button class="secondary" data-close>Done</button>
+  </dialog>
+  <dialog id="helpDialog" class="help-dialog" aria-labelledby="helpTitle"><div class="dialog-top"><h2 id="helpTitle">A little flight school.</h2><button class="icon-button" data-close aria-label="Close flight guide"><svg><use href="#i-close"/></svg></button></div>
+    <p>Tap or click the sky, press <kbd>SPACE</kbd>, or press <kbd>↑</kbd> for one flap. Release and press again to flap again. Keep clear of the ground, ceiling, and hazards.</p>
+    <div class="guide-world"><svg><use href="#i-moon"/></svg><div><h3>Moon</h3><p>One-sixth of Nightmare’s gravity. Flaps are gentler, but you float for longer. Pass lunar gates for points; some openings drift slowly.</p></div></div>
+    <div class="guide-world"><svg><use href="#i-bat"/></svg><div><h3>Nightmare</h3><p>Six blood gates, then a demon-bat swarm. Leave a dashed laser sightline before it becomes solid. For projectile volleys, follow the marked open corridor. Each cleared gate or wave earns a point. More points mean faster flight, tighter gates, and more bats.</p></div></div>
+    <div class="guide-world"><svg><use href="#i-fire"/></svg><div><h3>Hell</h3><p>Seven sins arrive in a random order, with no fixed cycle. Time increases speed and pressure. After 45 seconds, compatible sins can overlap. Survive an encounter for a point; a guarded gold coin is worth two extra points.</p></div></div>
+    <div class="sin-guide">
+      <div><svg><use href="#i-crown"/></svg><p><strong>Pride</strong>Moving crown gates. Follow the opening.</p></div>
+      <div><svg><use href="#i-coin"/></svg><p><strong>Greed</strong>Orbiting blades guard optional gold. Fly around the whole trap to play it safe.</p></div>
+      <div><svg><use href="#i-echo"/></svg><p><strong>Envy</strong>A shadow copies your recent path, then locks its height before crossing.</p></div>
+      <div><svg><use href="#i-bolt"/></svg><p><strong>Wrath</strong>Lightning locks onto a dashed line. Move away before it fires.</p></div>
+      <div><svg><use href="#i-heart"/></svg><p><strong>Lust</strong>A lethal rose bends gravity toward its center. Keep your distance.</p></div>
+      <div><svg><use href="#i-jaw"/></svg><p><strong>Gluttony</strong>Living jaws open and close. Leave space for the next bite.</p></div>
+      <div><svg><use href="#i-time"/></svg><p><strong>Sloth</strong>Amber fog increases gravity and weakens each flap. Tap more often.</p></div>
+    </div>
+    <p class="help-footer"><kbd>P</kbd> / <kbd>ESC</kbd> pause · <kbd>R</kbd> retry after a crash · <kbd>M</kbd> sound · <kbd>F</kbd> fullscreen</p><p class="dialog-note">Either orientation works. Wide screens show more of the world. Browser fullscreen support varies; adding the game to your Home Screen is another way to play edge to edge. Records are personal, not a global leaderboard.</p><button class="primary" data-close>Got it. Let’s fly.</button>
+  </dialog>
+  <noscript><div class="fatal"><h1>JavaScript is needed to fly.</h1><p>Enable JavaScript and reload this page.</p></div></noscript>
+  <script type="module" src="app.mjs"></script>
+</body>
+</html>
