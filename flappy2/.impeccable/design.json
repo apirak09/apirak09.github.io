@@ -678,7 +678,7 @@
   ],
   "narrative": {
     "northStar": "Small wings, immense worlds",
-    "overview": "A small, determined bird sits against immense procedural landscapes. Lunar silver and acid ivory establish the quiet baseline; blood rose and lava amber shift the same controls into Nightmare and Hell. Fine contours, soft atmospheric gradients, and tangible buttons keep the scenes illustrated while controls stay precise.\n\nThe playfield fills the viewport. The menu gives way to edge information during flight, and a compact centered panel handles pause and results. The interface uses original Canvas creatures and inline SVG contours rather than an image-heavy component shell.",
+    "overview": "A small, determined bird sits against immense procedural landscapes. Lunar silver and acid ivory establish the quiet baseline; blood rose and lava amber shift the same controls into Nightmare and Hell. Fine contours, soft atmospheric gradients, and tangible buttons keep the scenes illustrated while controls stay precise.\n\nThe playfield fills the viewport. The menu gives way to edge information during flight, and a compact centered panel handles pause and results. The interface uses original Canvas creatures and inline SVG contours rather than an image-heavy component shell.\n\nDeath counts sit alongside personal records: the menu footer shows selected-world deaths and the all-world total, the bottom flight HUD shows DEATHS, and results use four stat columns including Deaths. Each actual crash increments its world count once; pausing, leaving a run, and preparing a retry do not.",
     "keyCharacteristics": [
       "Three mode-bound palettes on one shared control system.",
       "Full-viewport scenery with compact edge information.",

@@ -164,3 +164,15 @@ test('Nightmare’s opening round is survivable with sampled input on phone, tab
     assert.ok(clears >= 5, `Nightmare ${width} wide, ${fps}fps: ${clears}/8`);
   }
 });
+
+test('death-count migration keeps existing scores and never guesses deaths from attempts', () => {
+  const legacy = validateSave({ mode: 'nightmare', records: { moon: { best: 11, time: 25.5, runs: 22 }, nightmare: { best: 7, runs: 9 } } });
+  assert.equal(legacy.records.moon.deaths, 0); assert.equal(legacy.records.moon.runs, 22); assert.equal(legacy.records.moon.best, 11); assert.equal(legacy.records.nightmare.deaths, 0);
+  const current = validateSave({ records: { moon: { deaths: 3 }, nightmare: { deaths: 7.9 }, hell: { deaths: -2 } } });
+  assert.equal(current.records.moon.deaths, 3); assert.equal(current.records.nightmare.deaths, 7); assert.equal(current.records.hell.deaths, 0);
+  for (const value of [NaN, Infinity, '4', null]) assert.equal(validateSave({records:{moon:{deaths:value}}}).records.moon.deaths, 0);
+});
+test('multiple collisions in a physics slice emit exactly one death signal', () => {
+  const f = start(); f.drainEvents(); f.crash('ground'); f.crash('wrath'); f.crash('envy');
+  assert.equal(f.drainEvents().filter(e => e.type === 'crash').length, 1); assert.equal(f.reason, 'ground');
+});

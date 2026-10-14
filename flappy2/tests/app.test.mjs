@@ -30,8 +30,8 @@ class Element {
   get offsetWidth() { return 100; }
 }
 let view, now, nextFrame, saved, globalListeners;
-function setup(blocked = false) {
-  view = { w: 1440, h: 900 }; now = 0; nextFrame = null; saved = new Map(); globalListeners = {};
+function setup(blocked = false, initial = null) {
+  view = { w: 1440, h: 900 }; now = 0; nextFrame = null; saved = new Map(initial ? [['apirak-flappy2-v1', initial]] : []); globalListeners = {};
   const body = new Element('document'), stack = [body];
   const html = fs.readFileSync(new URL('../index.html', import.meta.url), 'utf8');
   for (const match of html.matchAll(/<\/?[a-z][^>]*>/gi)) {
@@ -66,6 +66,7 @@ test('production app: world selection, touch flight, pause/countdown cancellatio
   $('launch').emit('click'); assert.equal(document.documentElement.dataset.screen, 'ready');
   $('world').emit('pointerdown', { pointerType: 'touch', button: 0 }); assert.equal(document.documentElement.dataset.screen, 'playing'); advance(.18);
   key('KeyP', $('world')); assert.equal(document.documentElement.dataset.screen, 'paused'); assert.equal($('topbar').inert, true);
+  assert.equal(JSON.parse(saved.get('apirak-flappy2-v1')).records.moon.deaths, 0, 'pause is not a death');
   const time = $('runTime').textContent; advance(.2); assert.equal($('runTime').textContent, time);
   $('resume').emit('click'); assert.equal($('countdown').hidden, false); key('KeyP', $('world')); assert.equal($('countdown').hidden, true); assert.equal($('pausePanel').hidden, false, 'cancelled countdown restores pause controls');
   $('resume').emit('click'); advance(1.0); assert.equal(document.documentElement.dataset.screen, 'playing');
@@ -73,11 +74,23 @@ test('production app: world selection, touch flight, pause/countdown cancellatio
   view = { w: 844, h: 390 }; dispatch('resize'); assert.equal($('world').width, 844); assert.equal($('world').height, 390);
   $('resume').emit('click'); advance(.9); advance(5); assert.equal(document.documentElement.dataset.screen, 'dead'); assert.equal($('retry').disabled, false);
   assert.equal($('topbar').inert, true); $('resultMenu').focus(); const tab = key('Tab', $('resultMenu')); assert.equal(tab.prevented, true); assert.equal(document.activeElement, $('retry'));
-  const record = JSON.parse(saved.get('apirak-flappy2-v1')); assert.equal(record.records.moon.runs, 1); assert.ok(record.records.moon.time > 0); assert.equal(record.records.hell.runs, 0);
+  const record = JSON.parse(saved.get('apirak-flappy2-v1')); assert.equal(record.records.moon.runs, 1); assert.ok(record.records.moon.time > 0); assert.equal(record.records.hell.runs, 0); assert.equal(record.records.moon.deaths, 1); assert.equal(Number($('finalDeaths').textContent), 1);
+  advance(1); assert.equal(JSON.parse(saved.get('apirak-flappy2-v1')).records.moon.deaths, 1, 'one death is counted only once');
   key('KeyR', $('retry')); assert.equal(document.documentElement.dataset.screen, 'ready'); assert.equal($('score').textContent, 0);
   $('home').emit('click'); assert.equal(document.documentElement.dataset.screen, 'menu'); assert.equal($('topbar').inert, false);
+  assert.equal(Number($('menuDeaths').textContent), 1); assert.equal(Number($('totalDeaths').textContent), 1);
+  $('launch').emit('click'); $('home').emit('click');
+  $('launch').emit('click'); $('world').emit('pointerdown', { pointerType: 'touch' }); advance(.1); $('home').emit('click');
+  assert.equal(JSON.parse(saved.get('apirak-flappy2-v1')).records.moon.deaths, 1, 'leaving ready or active flight is not a death');
+  choices[2].emit('click'); assert.equal(Number($('menuDeaths').textContent), 0); assert.equal(Number($('totalDeaths').textContent), 1);
+  $('launch').emit('click'); $('world').emit('pointerdown', { pointerType: 'touch' }); advance(4);
+  assert.equal(document.documentElement.dataset.screen, 'dead'); assert.equal(Number($('finalDeaths').textContent), 1);
+  $('resultMenu').emit('click'); assert.equal(Number($('menuDeaths').textContent), 1); assert.equal(Number($('totalDeaths').textContent), 2);
+  const persisted = saved.get('apirak-flappy2-v1'), afterReload = setup(false, persisted);
+  await import(`../app.mjs?reload=${Date.now()}`);
+  assert.equal(document.documentElement.dataset.mode, 'hell'); assert.equal(Number(afterReload('menuDeaths').textContent), 1); assert.equal(Number(afterReload('totalDeaths').textContent), 2);
 });
 test('blocked storage and unavailable audio cannot prevent game startup or flight', async () => {
-  const $ = setup(true); await import(`../app.mjs?blocked=${Date.now()}`); assert.equal($('fatal').hidden, true); assert.equal($('saveNotice').textContent, 'Records kept for this visit');
-  $('sound').emit('click'); $('launch').emit('click'); $('world').emit('pointerdown', { pointerType: 'touch' }); advance(.2); assert.equal(document.documentElement.dataset.screen, 'playing');
+  const $ = setup(true); await import(`../app.mjs?blocked=${Date.now()}`); assert.equal($('fatal').hidden, true); assert.equal($('saveNotice').textContent, 'This visit only');
+  $('sound').emit('click'); $('launch').emit('click'); $('world').emit('pointerdown', { pointerType: 'touch' }); advance(.2); assert.equal(document.documentElement.dataset.screen, 'playing'); advance(4); assert.equal(Number($('finalDeaths').textContent),1); $('resultMenu').emit('click'); assert.equal(Number($('totalDeaths').textContent),1);
 });

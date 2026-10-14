@@ -11,6 +11,7 @@ Static GitHub Pages, no server, keyboard/mouse/touch, either orientation, viewpo
 ## Capabilities and Constraints
 Exactly three modes: Moon, Nightmare, Hell. Moon has lunar scenery and low gravity. Nightmare preserves the original six-gate / demon-bat attack loop with improvements. Hell has seven mechanically distinct sins, randomized without a fixed rotation and increasing difficulty with survival time. User selected increasing overlap: readable individual encounters initially, up to two compatible sins later.
 Existing repository uses buildless HTML, CSS, JavaScript and Canvas. Ship only a new /flappy2/ directory. Preserve original saves; use separate storage and a service worker scoped to /flappy2/.
+Saved death counts are per mode plus a combined total. Only actual crashes increment them; pausing, leaving a flight, and preparing another flight do not. Show counts in the menu, flight HUD, and results.
 ## Brand Commitments
 User requests Impeccable guidance, full-screen layouts without a forced portrait arena, lunar / blood moon / seven sins worlds. No Easy, Normal or Hard choices.
 ## Evidence on Hand

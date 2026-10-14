@@ -13,7 +13,7 @@
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="preload" href="assets/fonts/chakra-petch-bold.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="assets/fonts/manrope.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="styles.css?v=2">
 </head>
 <body>
   <svg class="symbols" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><defs>
@@ -68,14 +68,14 @@
     <div id="hud" class="hud" hidden aria-label="Flight information">
       <div class="flight-info"><strong id="modeLabel">MOON</strong><span id="phaseLabel">LOW GRAVITY</span><span id="pressureLabel">1.0× FLIGHT SPEED</span></div>
       <div class="score-wrap"><strong id="score">0</strong><span id="scoreAdd" aria-hidden="true"></span></div>
-      <div class="flight-bottom"><span id="runTime">00:00</span><span id="flightBest">BEST 0</span><span class="flight-shortcuts">Tap / Space to flap <span>·</span> P to pause</span></div>
+      <div class="flight-bottom"><span id="runTime">00:00</span><span id="flightBest">BEST 0</span><span id="flightDeaths">DEATHS 0</span><span class="flight-shortcuts">Tap / Space to flap <span>·</span> P to pause</span></div>
       <div id="danger" class="danger" hidden><strong id="dangerName"></strong><span id="dangerHint"></span></div>
     </div>
     <div id="ready" class="ready-cue" hidden><svg><use href="#i-bird"/></svg><h2>Ready for another world?</h2><p>Tap the sky or press <kbd>SPACE</kbd></p><span id="readyTip">Low gravity carries every flap farther. Leave room above.</span></div>
     <div id="countdown" class="countdown" hidden aria-live="assertive">3</div>
     <section id="pausePanel" class="state-overlay" hidden role="dialog" aria-modal="true" aria-labelledby="pauseTitle"><div class="state-panel"><h2 id="pauseTitle">Take a breath.</h2><p id="pauseReason">Your flight is right where you left it.</p><button id="resume" class="primary"><span>Resume flight</span><svg><use href="#i-play"/></svg></button><button id="pauseMenu" class="secondary">Choose another world</button></div></section>
-    <section id="results" class="state-overlay" hidden role="dialog" aria-modal="true" aria-labelledby="resultTitle"><div class="state-panel result-panel"><h2 id="resultTitle">Back to moon dust.</h2><p id="recordMessage" class="record-message">There is always another flight.</p><div class="result-score"><strong id="finalScore">0</strong><span>POINTS</span></div><dl class="run-stats"><div><dt>Best</dt><dd id="finalBest">0</dd></div><div><dt>Survived</dt><dd id="finalTime">00:00</dd></div><div><dt id="thirdStatName">Flights</dt><dd id="thirdStat">1</dd></div></dl><p id="crashTip" class="crash-tip"></p><button id="retry" class="primary"><span>Fly again</span><svg><use href="#i-retry"/></svg></button><button id="resultMenu" class="secondary">Choose another world</button></div></section>
-    <footer id="menuFooter" class="menu-footer"><span>APIRAK <span class="footer-slash">/</span> FLAPPY 2</span><span id="saveNotice">Records saved on this device</span></footer>
+    <section id="results" class="state-overlay" hidden role="dialog" aria-modal="true" aria-labelledby="resultTitle"><div class="state-panel result-panel"><h2 id="resultTitle">Back to moon dust.</h2><p id="recordMessage" class="record-message">There is always another flight.</p><div class="result-score"><strong id="finalScore">0</strong><span>POINTS</span></div><dl class="run-stats"><div><dt>Best</dt><dd id="finalBest">0</dd></div><div><dt>Survived</dt><dd id="finalTime">00:00</dd></div><div><dt>Deaths</dt><dd id="finalDeaths">0</dd></div><div><dt id="thirdStatName">Flights</dt><dd id="thirdStat">1</dd></div></dl><p id="crashTip" class="crash-tip"></p><button id="retry" class="primary"><span>Fly again</span><svg><use href="#i-retry"/></svg></button><button id="resultMenu" class="secondary">Choose another world</button></div></section>
+    <footer id="menuFooter" class="menu-footer"><span class="death-summary"><span id="menuDeathLabel">Moon deaths</span>: <b id="menuDeaths">0</b><span class="footer-slash">/</span>Total: <b id="totalDeaths">0</b></span><span id="saveNotice">Saved on this device</span></footer>
     <div id="toast" class="toast" role="status" hidden></div>
     <div id="announcer" class="sr-only" role="status" aria-live="polite" aria-atomic="true"></div>
     <div id="fatal" class="fatal" hidden role="alert"><h1>Flight could not start.</h1><p id="fatalMessage">Please reload this page in a current browser.</p><button class="primary" id="reload">Reload game</button></div>
@@ -102,9 +102,9 @@
       <div><svg><use href="#i-jaw"/></svg><p><strong>Gluttony</strong>Living jaws open and close. Leave space for the next bite.</p></div>
       <div><svg><use href="#i-time"/></svg><p><strong>Sloth</strong>Amber fog increases gravity and weakens each flap. Tap more often.</p></div>
     </div>
-    <p class="help-footer"><kbd>P</kbd> / <kbd>ESC</kbd> pause · <kbd>R</kbd> retry after a crash · <kbd>M</kbd> sound · <kbd>F</kbd> fullscreen</p><p class="dialog-note">Either orientation works. Wide screens show more of the world. Browser fullscreen support varies; adding the game to your Home Screen is another way to play edge to edge. Records are personal, not a global leaderboard.</p><button class="primary" data-close>Got it. Let’s fly.</button>
+    <p class="help-footer"><kbd>P</kbd> / <kbd>ESC</kbd> pause · <kbd>R</kbd> retry after a crash · <kbd>M</kbd> sound · <kbd>F</kbd> fullscreen</p><p class="dialog-note">Either orientation works. Wide screens show more of the world. Browser fullscreen support varies; adding the game to your Home Screen is another way to play edge to edge. Deaths are saved separately for each world and summed in the menu. Only crashes count; pausing, retry preparation, and leaving a run do not. Records are personal, not a global leaderboard.</p><button class="primary" data-close>Got it. Let’s fly.</button>
   </dialog>
   <noscript><div class="fatal"><h1>JavaScript is needed to fly.</h1><p>Enable JavaScript and reload this page.</p></div></noscript>
-  <script type="module" src="app.mjs"></script>
+  <script type="module" src="app.mjs?v=2"></script>
 </body>
 </html>

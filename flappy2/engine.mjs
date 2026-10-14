@@ -54,7 +54,7 @@ export function validateSave(raw, motion = false) {
   const finite = (n, max = 1e9) => Number.isFinite(n) && n >= 0 ? Math.min(max, n) : 0;
   const out = { version: 1, mode: own(MODES, source.mode) ? source.mode : 'moon', records: {}, settings: { sound: true, music: false, volume: .45, motion, quality: 'auto' } };
   for (const key of Object.keys(MODES)) {
-    const r = source.records?.[key]; out.records[key] = { best: Math.floor(finite(r?.best)), time: finite(r?.time), runs: Math.floor(finite(r?.runs)) };
+    const r = source.records?.[key]; out.records[key] = { best: Math.floor(finite(r?.best)), time: finite(r?.time), runs: Math.floor(finite(r?.runs)), deaths: Math.floor(finite(r?.deaths)) };
   }
   for (const key of ['sound', 'music', 'motion']) if (typeof source.settings?.[key] === 'boolean') out.settings[key] = source.settings[key];
   if (Number.isFinite(source.settings?.volume)) out.settings.volume = clamp(source.settings.volume, 0, 1);

@@ -138,6 +138,8 @@ A small, determined bird sits against immense procedural landscapes. Lunar silve
 
 The playfield fills the viewport. The menu gives way to edge information during flight, and a compact centered panel handles pause and results. The interface uses original Canvas creatures and inline SVG contours rather than an image-heavy component shell.
 
+Death counts sit alongside personal records: the menu footer shows selected-world deaths and the all-world total, the bottom flight HUD shows DEATHS, and results use four stat columns including Deaths. Each actual crash increments its world count once; pausing, leaving a run, and preparing a retry do not.
+
 **Key Characteristics:**
 
 - Three mode-bound palettes on one shared control system.
@@ -213,8 +215,8 @@ Controls have gently squared corners; panels and dialogs have a softer, larger r
 - **Primary action:** active-world fill and contrasting dark text; full-width launch/retry/resume variants. Default minimum height (54px), reducing to (48px) on short portrait screens. Hover uses shared ink and the raised shadow; disabled controls use opacity (.55).
 - **Secondary action:** transparent fill, thin world divider, minimum height (48px), and a subtle light hover wash. Used for returning to world selection and closing settings.
 - **World selector:** a vertical radiogroup of three flat rows, default minimum height (77px). The checked row has a faint fill, accent symbol/name, and filled radio dot. Arrow keys, Home, and End move the roving selection; each row carries its own best score.
-- **Edge controls and HUD:** circular SVG buttons, normally (44px) square; pointer input belongs to the controls rather than the HUD wrapper. A centered score, left-side phase, bottom elapsed time, and temporary centered danger instruction leave the action open.
-- **Panels and dialogs:** pause/results use a compact bordered surface over a dark full-screen scrim. Settings and help use native dialogs with scrollable content. Pause/results trap keyboard focus and make background controls inert; native dialogs restore the previous focus on close.
+- **Edge controls and HUD:** circular SVG buttons, normally (44px) square; pointer input belongs to the controls rather than the HUD wrapper. A centered score, left-side phase, bottom elapsed time, best score and death count, and temporary centered danger instruction leave the action open.
+- **Panels and dialogs:** pause/results use a compact bordered surface over a dark full-screen scrim. Results retain a four-column stat row including Deaths. Settings and help use native dialogs with scrollable content. Pause/results trap keyboard focus and make background controls inert; native dialogs restore the previous focus on close.
 - **Settings:** native switches, range, and select, tinted with the active accent. The select is capped at (110px) width; switches use (40px × 28px) after the legibility override.
 - **Hazard cues:** Nightmare sightlines and marked safe corridors precede attacks. Hell uses distinct sin geometry, a temporary named instruction, and matching color; Wrath's offscreen emitter remains clamped into view while its warning/beam spans the viewport.
 

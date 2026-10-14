@@ -1,4 +1,4 @@
-import { H, FLOOR, R, SINS, seeded, clamp } from './engine.mjs';
+import { H, FLOOR, R, SINS, seeded, clamp } from './engine.mjs?v=2';
 const TAU = Math.PI * 2;
 function ellipse(c, x, y, rx, ry, fill, rotate = 0) { c.beginPath(); c.ellipse(x, y, Math.max(.1, rx), Math.max(.1, ry), rotate, 0, TAU); if (fill) { c.fillStyle = fill; c.fill(); } }
 function path(c, points, fill, stroke) { c.beginPath(); points.forEach((p, i) => i ? c.lineTo(...p) : c.moveTo(...p)); c.closePath(); if (fill) { c.fillStyle = fill; c.fill(); } if (stroke) { c.strokeStyle = stroke; c.stroke(); } }

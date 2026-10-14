@@ -1,12 +1,12 @@
-import { Flight, MODES, SINS, H, validateSave, clamp } from './engine.mjs';
-import { Renderer } from './renderer.mjs';
-import { FlightAudio } from './audio.mjs';
+import { Flight, MODES, SINS, H, validateSave, clamp } from './engine.mjs?v=2';
+import { Renderer } from './renderer.mjs?v=2';
+import { FlightAudio } from './audio.mjs?v=2';
 const $ = id => document.getElementById(id), root = document.documentElement;
 const SAVE_KEY = 'apirak-flappy2-v1';
 let save, persistent = true;
 try { save = validateSave(localStorage.getItem(SAVE_KEY), matchMedia('(prefers-reduced-motion: reduce)').matches); }
 catch { save = validateSave(null, matchMedia('(prefers-reduced-motion: reduce)').matches); persistent = false; }
-let screen = 'menu', renderer, flight, lastFrame = 0, hudAt = 0, countdown = 0, countMark = 0, deathAt = 0, counted = false, initialBest = 0, cueUntil = 0, toastUntil = 0, lastFocus = null;
+let screen = 'menu', renderer, flight, lastFrame = 0, hudAt = 0, countdown = 0, countMark = 0, deathAt = 0, counted = false, deathCounted = false, initialBest = 0, cueUntil = 0, toastUntil = 0, lastFocus = null;
 const audio = new FlightAudio();
 const facts = {
   moon: { fact: '0.16 G', title: 'A softer fall.<br>A longer flight.', description: 'Drift over lunar ridges beneath an Earth-lit sky.', action: 'Launch on the Moon', tip: 'Low gravity carries every flap farther. Leave room above.' },
@@ -19,7 +19,7 @@ function persist() {
   catch { persistent = false; storageStatus(); }
 }
 function storageStatus() {
-  $('saveNotice').textContent = persistent ? 'Records saved on this device' : 'Records kept for this visit';
+  $('saveNotice').textContent = persistent ? 'Saved on this device' : 'This visit only';
   $('storageNote').textContent = persistent ? 'Your records and preferences stay on this device.' : 'Browser storage is unavailable. Your records and preferences last for this visit.';
 }
 function announce(message) { $('announcer').textContent = message; }
@@ -35,7 +35,12 @@ function setScreen(value) {
   $('menu').inert = value !== 'menu';
   $('topbar').inert = ['dead', 'paused'].includes(value);
 }
-function updateBests() { for (const mode of Object.keys(MODES)) $(`best-${mode}`).textContent = save.records[mode].best; }
+function updateBests() {
+  for (const mode of Object.keys(MODES)) $(`best-${mode}`).textContent = save.records[mode].best;
+  $('menuDeathLabel').textContent = `${MODES[save.mode].name} deaths`;
+  $('menuDeaths').textContent = save.records[save.mode].deaths;
+  $('totalDeaths').textContent = Object.values(save.records).reduce((total, record) => total + record.deaths, 0);
+}
 function selectMode(mode, focus = false) {
   if (!(mode in MODES)) return;
   save.mode = mode; root.dataset.mode = mode; audio.mode = mode;
@@ -62,7 +67,7 @@ function updateRecord() {
 function prepare() {
   updateRecord();
   countdown = 0; $('countdown').hidden = true; cueUntil = 0; $('danger').hidden = true;
-  initialBest = save.records[save.mode].best; counted = false;
+  initialBest = save.records[save.mode].best; counted = false; deathCounted = false;
   flight = new Flight(save.mode, renderer.width); renderer.particles = []; renderer.flash = 0; renderer.shake = 0;
   setScreen('ready'); updateHUD(); $('world').focus({ preventScroll: true }); audio.unlock(); announce(`${MODES[save.mode].name}. Tap or press Space to begin.`);
 }
@@ -91,20 +96,24 @@ const crashMessages = {
   laser: 'The dashed sightline was a warning. Move clear before it turns solid.', bolt: 'Follow the marked open corridor through the volley.'
 };
 function finishRun() {
+  if (deathCounted || !counted) return;
+  deathCounted = true; save.records[flight.mode].deaths++;
   deathAt = performance.now(); updateRecord(); updateBests(); setScreen('dead'); $('danger').hidden = true;
   const r = save.records[flight.mode], record = flight.score > initialBest;
   $('resultTitle').textContent = flight.mode === 'moon' ? 'Back to moon dust.' : flight.mode === 'nightmare' ? 'The dark caught up.' : 'Hell wants a rematch.';
   $('recordMessage').textContent = record ? 'A NEW PERSONAL BEST.' : 'There is always another flight.'; $('recordMessage').classList.toggle('new', record);
   $('finalScore').textContent = flight.score; $('finalBest').textContent = r.best; $('finalTime').textContent = formatTime(flight.elapsed);
+  $('finalDeaths').textContent = r.deaths;
   $('thirdStatName').textContent = flight.mode === 'hell' ? 'Gold' : 'Flights'; $('thirdStat').textContent = flight.mode === 'hell' ? flight.coins : r.runs;
   $('crashTip').textContent = SINS[flight.reason]?.hint || crashMessages[flight.reason] || facts[flight.mode].tip;
   $('retry').disabled = true; $('resultMenu').focus({ preventScroll: true });
-  announce(`${MODES[flight.mode].name} flight ended. ${flight.score} points. ${record ? 'New personal best.' : `Best ${r.best}.`}`);
+  announce(`${MODES[flight.mode].name} flight ended. ${flight.score} points. ${r.deaths} deaths in this world. ${record ? 'New personal best.' : `Best ${r.best}.`}`);
 }
 function formatTime(seconds) { const whole = Math.floor(seconds); return `${String(Math.floor(whole / 60)).padStart(2, '0')}:${String(whole % 60).padStart(2, '0')}`; }
 function updateHUD() {
   $('score').textContent = flight.score; $('modeLabel').textContent = MODES[flight.mode].name.toUpperCase();
   $('runTime').textContent = formatTime(flight.elapsed); $('flightBest').textContent = `BEST ${Math.max(save.records[flight.mode].best, flight.score)}`;
+  $('flightDeaths').textContent = `DEATHS ${save.records[flight.mode].deaths}`;
   const ratio = flight.speed / MODES[flight.mode].speed;
   if (flight.mode === 'moon') { $('phaseLabel').textContent = 'LOW GRAVITY'; $('pressureLabel').textContent = `${ratio.toFixed(1)}× FLIGHT SPEED`; }
   else if (flight.mode === 'nightmare') {

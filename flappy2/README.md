@@ -41,9 +41,9 @@ UI uses locally bundled **Chakra Petch** and **Manrope**, under their included S
 
 ## Saves and offline behavior
 
-Storage is isolated under `apirak-flappy2-v1`; no old Flappy key is read or changed. Saves validate input, keep separate best score/best survival/run count, and degrade to memory when browser storage is blocked. This is a personal device record, not a global leaderboard.
+Storage is isolated under `apirak-flappy2-v1`; no old Flappy key is read or changed. Saves validate input, keep separate best score/best survival/run count/death count, and degrade to memory when browser storage is blocked. Deaths increment exactly once per actual crash. Pausing, leaving a run, and preparing a retry do not count. The menu shows deaths for the selected world and a combined total; the flight HUD and result panel show the current world’s count. Old saves preserve their scores and attempts and begin death tracking at zero because earlier deaths were not logged. This is a personal device record, not a global leaderboard.
 
-The service worker is scoped to `/flappy2/`. After a successful first online load and cache installation, this game can reopen offline. Updates wait for existing game windows to close, avoiding replacement during a flight. Version changes must update `CACHE` in `sw.js`. Cache cleanup only touches `apirak-flappy2-*` names. The manifest allows either orientation and asks for fullscreen/standalone display.
+The service worker is scoped to `/flappy2/`. After a successful first online load and cache installation, this game can reopen offline. Updates wait for existing game windows to close, avoiding replacement during a flight. Version changes must update `CACHE` in `sw.js` and keep runtime query versions in the HTML, module imports, and precache list aligned. Precache requests bypass the HTTP cache so a new release cannot install stale scripts. Cache cleanup only touches `apirak-flappy2-*` names. The manifest allows either orientation and asks for fullscreen/standalone display.
 
 ## Verification
 
@@ -53,7 +53,7 @@ Run from the repository root:
 node --test flappy2/tests/*.test.mjs
 ```
 
-The Node tests cover physics across 30/60/120 FPS; collision sweeps; separate sin behaviors; truthful laser/volley warnings; pause, resize and retry cleanup; time scaling and randomness; saves; bounded actor counts in 180-second diagnostic Hell runs; sampled-input opening simulations at phone/tablet/desktop widths; and production-app interaction through a DOM adapter. Diagnostic invulnerability in the long-run director test is explicitly marked.
+The Node tests cover physics across 30/60/120 FPS; collision sweeps; separate sin behaviors; truthful laser/volley warnings; pause, resize and retry cleanup; time scaling and randomness; saves; bounded actor counts in 180-second diagnostic Hell runs; sampled-input opening simulations at phone/tablet/desktop widths; death-count migration and persistence, and production-app interaction through a DOM adapter. Diagnostic invulnerability in the long-run director test is explicitly marked.
 
 The DOM adapter exercises actual app code and renderer calls but does **not** verify browser layout or native browser APIs. Actual production Canvas frames were separately rendered and visually inspected at desktop, portrait phone, and landscape phone dimensions. Live browser/device QA was unavailable in the authoring environment; Safari/Chrome layout, native fullscreen, audio hardware, installation and offline reopening still need real-device verification. No claim of universal device compatibility is made.
 
