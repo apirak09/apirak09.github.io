@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="256" height="256" viewBox="-3 -3 139 139"><title>Black Panther</title><defs>
+  <linearGradient id="coat" x1=".2" y1="0" x2=".8" y2="1" gradientUnits="objectBoundingBox"><stop stop-color="#665f83"/><stop offset=".48" stop-color="#26253c"/><stop offset="1" stop-color="#101827"/></linearGradient>
+  <linearGradient id="belly" x2=".2" y2="1"><stop stop-color="#303044"/><stop offset="1" stop-color="#26253c"/></linearGradient>
+  <linearGradient id="gold" x2=".3" y2="1"><stop stop-color="#fff2ad"/><stop offset=".4" stop-color="#eac26b"/><stop offset="1" stop-color="#ab753b"/></linearGradient>
+  <linearGradient id="silver" x2=".7" y2="1"><stop stop-color="#f3faff"/><stop offset=".38" stop-color="#b3c9dc"/><stop offset=".65" stop-color="#6f87a3"/><stop offset="1" stop-color="#d8e6ed"/></linearGradient>
+  <linearGradient id="metal" x2=".45" y2="1"><stop stop-color="#f37c60"/><stop offset=".42" stop-color="#ba3542"/><stop offset="1" stop-color="#6d2136"/></linearGradient>
+  <linearGradient id="rainbow" x2=".6" y2="1"><stop stop-color="#ff969e"/><stop offset=".2" stop-color="#ffdf7d"/><stop offset=".4" stop-color="#9bf2c0"/><stop offset=".6" stop-color="#6cd9ee"/><stop offset=".8" stop-color="#a7a5ff"/><stop offset="1" stop-color="#f08ddc"/></linearGradient>
+  <filter id="glow" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation=".85"/><feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+  <clipPath id="body-clip"><path d="M36 44C45 30 63 26 80 29c21 2 34 18 36 38 3 25-16 47-42 51-24 4-49-7-55-29-5-17 1-32 17-45Z"/></clipPath></defs>
+  <g stroke-linejoin="round" stroke-linecap="round">
+  <path d="M22 76Q7 64 4 75l14 11C2 79 1 91 12 96l15-3" fill="#101827" stroke="#101f3b" stroke-width="3.2"/>
+  <path d="M59 35Q47 19 52 15q12-2 22 12Q59 7 66 7q15 0 24 24" fill="#665f83" stroke="#101f3b" stroke-width="3.2"/>
+  <path d="M36 44C45 30 63 26 80 29c21 2 34 18 36 38 3 25-16 47-42 51-24 4-49-7-55-29-5-17 1-32 17-45Z" fill="url(#coat)" stroke="#101f3b" stroke-width="3.3"/>
+  <path d="M29 91q29 15 56-4 11-8 21-3-7 23-32 29-30 6-45-13Z" fill="url(#belly)"/>
+  <path d="M38 46q13-12 31-12M25 63l4-6" fill="none" stroke="#665f83" stroke-width="3.2" opacity=".8"/>
+  <path d="M39 80q30 19 58-1l4 14q-27 21-62 1Z" fill="#171e31" stroke="#7d7098" stroke-width="1.4"/><path d="m44 87 4 13 5-11 5 14 5-11 6 13 5-13 7 9 2-14 8 6 2-12" fill="#b5b4cb" stroke="#eee4fa" stroke-width=".7"/><path d="m37 101 14 6 7 12m39-23-11 11-7 10m-16-14 4 10m-22-55-7 10" fill="none" stroke="#a46ae8" stroke-width="1.7"/><path d="m50 109 8-1m23 0 8-4" stroke="#d59bff" stroke-width="1.1"/><path d="m63 43 2-25 15 13 17-1 12-12 1 30Z" fill="#29283f" stroke="#111d30" stroke-width="2.5"/><path d="m68 27 1 11 8-4m27-8-2 10-5-2" fill="none" stroke="#b7add6" stroke-width="1.4"/><path d="m67 38 17-6 22 8 8 21-9 18-14 9-23-17-7-21Z" fill="#24263a" stroke="#111b2f" stroke-width="2.8"/><path d="m85 35 3 16-8 14 9 15m14-39-9 13 9 14-9 14M66 46l9 7-7 10m40-13-8 3 10 10" fill="none" stroke="#aaa6ba" stroke-width="1.35"/><path d="m89 39 2 9m-18 23 9 5m22-7-6 6" stroke="#bf7aff" stroke-width="1.5"/>
+  <path d="m78 53 11 3-3 6-9-3m16-3 13-5-3 8-9 3Z" fill="#dce6ff" stroke="#6d5c8c" stroke-width="1"/>
+  <path d="M109 72q14-7 20 2 1 5-12 10l11 3q1 7-13 9l-11-9 1-9Z" fill="#9c95c7" stroke="#101f3b" stroke-width="2.8"/><path d="m107 83 18-6-9 9 11 2-13 3" fill="#bd592e" opacity=".8"/><path d="m111 75 10-1" fill="none" stroke="#fff0b0" stroke-width="2"/>
+  <path d="M25 70q19-12 34 2l2 14-16 9-16-5-9-10Z" fill="#303045" stroke="#111a2d" stroke-width="2.4"/><path d="m29 75 12-4 11 5-10 12-13-7m13-10 1 13" fill="none" stroke="#9671b4" stroke-width="1.3"/><path d="m45 89 6 8m-14-7 6 10m-13-12 4 10" stroke="#d5d7e1" stroke-width="2.1"/>
+  </g></svg>

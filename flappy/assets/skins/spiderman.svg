@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="256" height="256" viewBox="-3 -3 139 139"><title>Spider-Man</title><defs>
+  <linearGradient id="coat" x1=".2" y1="0" x2=".8" y2="1" gradientUnits="objectBoundingBox"><stop stop-color="#ff8b79"/><stop offset=".48" stop-color="#e4424e"/><stop offset="1" stop-color="#9e1f3e"/></linearGradient>
+  <linearGradient id="belly" x2=".2" y2="1"><stop stop-color="#1d67b0"/><stop offset="1" stop-color="#e4424e"/></linearGradient>
+  <linearGradient id="gold" x2=".3" y2="1"><stop stop-color="#fff2ad"/><stop offset=".4" stop-color="#eac26b"/><stop offset="1" stop-color="#ab753b"/></linearGradient>
+  <linearGradient id="silver" x2=".7" y2="1"><stop stop-color="#f3faff"/><stop offset=".38" stop-color="#b3c9dc"/><stop offset=".65" stop-color="#6f87a3"/><stop offset="1" stop-color="#d8e6ed"/></linearGradient>
+  <linearGradient id="metal" x2=".45" y2="1"><stop stop-color="#f37c60"/><stop offset=".42" stop-color="#ba3542"/><stop offset="1" stop-color="#6d2136"/></linearGradient>
+  <linearGradient id="rainbow" x2=".6" y2="1"><stop stop-color="#ff969e"/><stop offset=".2" stop-color="#ffdf7d"/><stop offset=".4" stop-color="#9bf2c0"/><stop offset=".6" stop-color="#6cd9ee"/><stop offset=".8" stop-color="#a7a5ff"/><stop offset="1" stop-color="#f08ddc"/></linearGradient>
+  <filter id="glow" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation=".85"/><feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+  <clipPath id="body-clip"><path d="M36 44C45 30 63 26 80 29c21 2 34 18 36 38 3 25-16 47-42 51-24 4-49-7-55-29-5-17 1-32 17-45Z"/></clipPath></defs>
+  <g stroke-linejoin="round" stroke-linecap="round">
+  <path d="M22 76Q7 64 4 75l14 11C2 79 1 91 12 96l15-3" fill="#9e1f3e" stroke="#101f3b" stroke-width="3.2"/>
+  <path d="M59 35Q47 19 52 15q12-2 22 12Q59 7 66 7q15 0 24 24" fill="#ff8b79" stroke="#101f3b" stroke-width="3.2"/>
+  <path d="M36 44C45 30 63 26 80 29c21 2 34 18 36 38 3 25-16 47-42 51-24 4-49-7-55-29-5-17 1-32 17-45Z" fill="url(#coat)" stroke="#101f3b" stroke-width="3.3"/>
+  <path d="M29 91q29 15 56-4 11-8 21-3-7 23-32 29-30 6-45-13Z" fill="url(#belly)"/>
+  <path d="M38 46q13-12 31-12M25 63l4-6" fill="none" stroke="#ff8b79" stroke-width="3.2" opacity=".8"/>
+  <path d="M28 80q21 8 47-1l30 12-15 23-46 3-17-18Z" fill="#2264ad" stroke="#101f3b" stroke-width="2"/><path d="M32 103q18 1 35-4l18-12 13 5-7 17-24 9-29-5Z" fill="#e54150"/><path d="M62 40q19-18 40-1l13 26-15 18-34-10Z" fill="#e94a51" stroke="#101f3b" stroke-width="2"/><g fill="none" stroke="#801f3c" stroke-width="1.3"><path d="m85 39 1 40m-24-24 46 9M70 39l31 34m-5-39L73 75M65 48q24 4 38-7M64 61q24 2 47-10m-40 19q20 1 40-7M77 37q-5 23 8 40m8-43q-4 20 11 36"/></g>
+  <path d="m77 48 27-5q6 18-12 27-15-1-15-22Z" fill="#f0fbff" stroke="#122842" stroke-width="3"/><path d="m83 51 14-4" stroke="#c4e2f7" stroke-width="2"/>
+  <path d="M109 72q14-7 20 2 1 5-12 10l11 3q1 7-13 9l-11-9 1-9Z" fill="#f1bc60" stroke="#101f3b" stroke-width="2.8"/><path d="m107 83 18-6-9 9 11 2-13 3" fill="#bd592e" opacity=".8"/><path d="m111 75 10-1" fill="none" stroke="#fff0b0" stroke-width="2"/>
+  <path d="M29 69q22-12 35 2l-8 22-23-2-11-10Z" fill="#e94752" stroke="#101f3b" stroke-width="2.5"/><path d="m29 69 27 24m-34-12 40-7m-26-9 3 27m13-26-7 26m-16-18q13 7 28-2m-26 12q14 7 29-1" fill="none" stroke="#801e3d" stroke-width="1.1"/>
+  <path d="M75 91v17m-7-13 7 4 7-4m-14 7 7-2 8 3m-15-9 1-4 6 7 6-7 2 4m-14 10-2 6m15-6 2 5" fill="none" stroke="#111e39" stroke-width="1.8"/><ellipse cx="75" cy="100" rx="3" ry="5" fill="#111e39"/></g></svg>

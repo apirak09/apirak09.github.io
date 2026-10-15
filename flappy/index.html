@@ -4,12 +4,13 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#102c3d">
+  <meta name="game-version" content="3.0.0">
   <meta name="description" content="Play Flappy Bird with four difficulties. Nightmare accelerates every point: tighter gates, swarms of demon bats, and the Blood Moon. Touch or keyboard controls.">
   <title>Flappy Bird — Sky Club</title>
   <link rel="icon" href="assets/bird.png" type="image/png">
   <link rel="apple-touch-icon" href="assets/bird.png">
-  <link rel="manifest" href="manifest.webmanifest?v=nightmare-2">
-  <link rel="stylesheet" href="styles.css?v=nightmare-2">
+  <link rel="manifest" href="manifest.webmanifest?v=club-3.0.0">
+  <link rel="stylesheet" href="styles.css?v=club-3.0.0">
 </head>
 <body>
   <svg class="icon-library" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><defs>
@@ -23,11 +24,16 @@
     <symbol id="i-retry" viewBox="0 0 24 24"><path d="M4 10a8 8 0 1 1 1 7M4 4v6h6"/></symbol>
     <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M4 12h16m-6-6 6 6-6 6"/></symbol>
     <symbol id="i-close" viewBox="0 0 24 24"><path d="m6 6 12 12M6 18 18 6"/></symbol>
+    <symbol id="i-coin" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="6"/><path d="m12 8 2 4-2 4-2-4 2-4Z"/></symbol>
+    <symbol id="i-bag" viewBox="0 0 24 24"><path d="M5 7h14l1 14H4L5 7Zm3 0V5a4 4 0 0 1 8 0v2"/></symbol>
+    <symbol id="i-skull" viewBox="0 0 24 24"><path d="M5 15a9 9 0 1 1 14 0v4h-3v2H8v-2H5v-4Z"/><circle cx="8.5" cy="10.5" r="1.5"/><circle cx="15.5" cy="10.5" r="1.5"/><path d="m11 15 1-2 1 2m-3 4v2m4-2v2"/></symbol>
+    <symbol id="i-update" viewBox="0 0 24 24"><path d="M20 8a8 8 0 0 0-14-2L3 9m0-5v5h5m-4 7a8 8 0 0 0 14 2l3-3m0 5v-5h-5"/></symbol>
   </defs></svg>
   <main id="app" class="app">
     <header class="topbar">
       <a class="brand" href="./" aria-label="Flappy Bird home"><img src="assets/bird.png" width="48" height="48" alt=""><span>flappy bird<span class="brand-edition">SKY CLUB</span></span></a>
       <div class="header-actions">
+        <button id="shopButton" class="wallet-button" type="button" title="Bird shop"><svg class="icon"><use href="#i-coin"/></svg><strong id="walletCoins">0</strong><span class="wallet-label">Shop</span></button>
         <button id="helpButton" class="text-button" type="button" aria-label="How to play"><span class="help-label">How to play</span><span class="help-mark" aria-hidden="true">?</span></button>
         <span class="header-divider"></span>
         <button id="soundButton" class="icon-button" type="button" aria-label="Mute sound" aria-pressed="false" title="Mute sound (M)"><svg><use href="#i-sound"/></svg></button>
@@ -90,6 +96,7 @@
           <span id="resultKicker" class="eyebrow">EVERY FLIGHT COUNTS</span><h2 id="resultTitle">One more try?</h2>
           <div class="result-numbers"><div><span>SCORE</span><strong id="resultScore">0</strong></div><div><span>BEST</span><strong id="resultBest">0</strong></div></div>
           <div id="resultMedal" class="result-medal"><svg class="icon"><use href="#i-trophy"/></svg><span>5 pipes to your first medal</span></div>
+          <div class="flight-receipt"><div><span>FLIGHT EARNINGS</span><strong id="resultCoins">+0 coins</strong></div><div><span>TOTAL DEATHS</span><strong id="resultDeaths">0</strong></div><button id="resultShopButton" class="receipt-shop" type="button" aria-label="Open bird shop"><svg class="icon"><use href="#i-bag"/></svg></button></div>
           <p id="resultTip" class="result-tip">Short, steady taps are the secret.</p>
           <button id="retryButton" class="primary-button" type="button"><svg class="icon"><use href="#i-retry"/></svg>Fly again<kbd>R</kbd></button>
           <button id="resultMenuButton" class="secondary-button" type="button">Change difficulty</button>
@@ -98,7 +105,8 @@
       <div class="ground-edge" aria-hidden="true"></div>
     </section>
 
-    <footer class="footer"><span class="footer-mode"><span class="mode-dot"></span><b id="footerDifficulty">Normal</b><span class="footer-separator">/</span><span>Endless flight</span></span><p id="controlsText"><kbd>SPACE</kbd><span>or</span><kbd>↑</kbd><span>to flap</span><span class="footer-separator">·</span><kbd>P</kbd><span>to pause</span></p><span class="mobile-controls">Tap anywhere to flap</span><span class="save-note" id="saveNote">Best scores saved on this device</span></footer>
+    <footer class="footer"><span class="footer-mode"><span class="mode-dot"></span><b id="footerDifficulty">Normal</b><span class="footer-separator">/</span><span>Endless flight</span></span><p id="controlsText"><kbd>SPACE</kbd><span>or</span><kbd>↑</kbd><span>to flap</span><span class="footer-separator">·</span><kbd>P</kbd><span>to pause</span></p><span class="mobile-controls">Tap anywhere to flap</span><span class="death-counter" title="Total deaths across all difficulties"><svg class="icon"><use href="#i-skull"/></svg><b id="totalDeaths">0</b><span>deaths</span></span><span class="save-note" id="saveNote">Best scores saved on this device</span></footer>
+    <aside id="updateBanner" class="update-banner" aria-label="Game update available" hidden><svg class="icon"><use href="#i-update"/></svg><div><b>A fresh flight is ready.</b><span>Your coins, skins, and records stay with you.</span></div><button id="applyUpdateButton" type="button">Update now</button><button id="laterUpdateButton" class="icon-button" type="button" aria-label="Remind me later"><svg><use href="#i-close"/></svg></button></aside>
     <div id="announcer" class="sr-only" role="status" aria-live="polite" aria-atomic="true"></div>
     <div id="notice" class="notice" role="status" hidden></div>
   </main>
@@ -110,7 +118,18 @@
     <label class="setting-row"><span><b>Background music</b><small>A light arcade soundtrack</small></span><input id="musicSetting" type="checkbox" role="switch"></label>
     <label class="volume-setting" for="volumeSetting"><span>Volume</span><output id="volumeValue">60%</output></label><input id="volumeSetting" type="range" min="0" max="100" value="60" aria-label="Audio volume">
     <label class="setting-row"><span><b>Reduce motion</b><small>Less shake, trails, and animation</small></span><input id="motionSetting" type="checkbox" role="switch"></label>
-    <p class="dialog-note">Settings and best scores stay on this device.</p>
+    <section class="game-update" aria-labelledby="updateTitle"><span class="eyebrow" id="updateTitle">GAME UPDATES</span><p id="versionLabel">Version 3.0.0</p><button id="updateButton" class="secondary-button" type="button"><svg class="icon"><use href="#i-update"/></svg><span id="updateButtonLabel">Check for updates</span></button><p id="updateStatus" role="status">Checks online for the newest game. Your saves stay on this device.</p></section>
+    <p class="dialog-note">Settings, records, coins, and skins stay on this device.</p>
+  </dialog>
+  <dialog id="shopDialog" class="dialog shop-dialog" aria-labelledby="shopTitle">
+    <header class="shop-top"><div><span class="eyebrow">THE SKY CLUB WARDROBE</span><h2 id="shopTitle">Small wings. Big personality.</h2></div><button class="icon-button close-dialog" type="button" aria-label="Close bird shop"><svg><use href="#i-close"/></svg></button></header>
+    <div class="shop-summary"><span class="shop-wallet"><svg class="icon"><use href="#i-coin"/></svg><strong id="shopCoins">0</strong><span>coins</span></span><span><b id="ownedSkins">1 / 15</b> collected</span><span id="shopDeaths">0 total deaths</span></div>
+    <p class="shop-note">Every point earns 1 coin when your flight ends. Every skin has the same hitbox.</p>
+    <div class="shop-body">
+      <section class="shop-feature" aria-label="Selected skin"><div id="skinStage" class="skin-stage"><span class="skin-stage-ring" aria-hidden="true"></span><img id="skinPreview" src="assets/bird.png" width="180" height="180" alt="Sky Club Original preview"></div><div class="skin-copy"><span id="skinTier" class="eyebrow">THE ORIGINAL</span><h3 id="skinName">Sky Club Original</h3><p id="skinDescription">The little yellow bird that started it all. Always yours.</p><p id="skinPrice" class="skin-price">Included</p><button id="skinAction" class="primary-button" type="button" disabled>Equipped</button><p id="skinStatus" class="skin-status" role="status">Your current look.</p></div></section>
+      <div class="shop-collection"><div class="skin-filters" role="group" aria-label="Filter skins"><button type="button" data-filter="all" aria-pressed="true">All</button><button type="button" data-filter="colors" aria-pressed="false">Colors</button><button type="button" data-filter="glow" aria-pressed="false">Glow</button><button type="button" data-filter="heroes" aria-pressed="false">Heroes</button><button type="button" data-filter="owned" aria-pressed="false">Owned</button></div><div id="skinGrid" class="skin-grid" aria-label="Bird skin collection"></div></div>
+    </div>
+    <p class="shop-bottom">Only a new look. The same little bird. <span id="shopSaveNote">Saved on this device.</span></p>
   </dialog>
   <dialog id="helpDialog" class="dialog" aria-labelledby="helpTitle">
     <div class="dialog-top"><span class="eyebrow">FLIGHT SCHOOL</span><button class="icon-button close-dialog" type="button" aria-label="Close help"><svg><use href="#i-close"/></svg></button></div>
@@ -121,6 +140,6 @@
     <button class="primary-button close-dialog" type="button">Got it. Let's fly.</button>
   </dialog>
   <noscript><div class="noscript">Please enable JavaScript to play Flappy Bird.</div></noscript>
-  <script src="core.js?v=nightmare-2"></script><script src="audio.js?v=nightmare-2"></script><script src="game.js?v=nightmare-2"></script>
+  <script src="core.js?v=club-3.0.0"></script><script src="audio.js?v=club-3.0.0"></script><script src="club.js?v=club-3.0.0"></script><script src="updates.js?v=club-3.0.0"></script><script src="game.js?v=club-3.0.0"></script>
 </body>
 </html>

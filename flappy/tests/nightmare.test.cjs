@@ -236,10 +236,13 @@ test('old saves keep all classic records and add an independent Nightmare record
 
 test('HTML and offline worker use the same complete versioned code set', () => {
   const root = path.resolve(__dirname, '..'), html = fs.readFileSync(path.join(root, 'index.html'), 'utf8'), sw = fs.readFileSync(path.join(root, 'sw.js'), 'utf8');
-  for (const file of ['core.js', 'audio.js', 'game.js', 'styles.css']) {
-    assert.ok(html.includes(`${file}?v=nightmare-2`)); assert.ok(sw.includes(`./${file}?v=nightmare-2`));
+  const version = JSON.parse(fs.readFileSync(path.join(root, 'version.json'), 'utf8')).version;
+  assert.equal(require('../updates.js').VERSION, version);
+  assert.ok(html.includes(`name="game-version" content="${version}"`));
+  for (const file of ['core.js', 'audio.js', 'club.js', 'updates.js', 'game.js', 'styles.css']) {
+    assert.ok(html.includes(`${file}?v=club-${version}`)); assert.ok(sw.includes(`./${file}?v=club-${version}`));
   }
   for (const file of ['assets/blood-moon.webp', 'assets/bat.png']) assert.ok(sw.includes(file));
-  assert.ok(sw.includes("const CACHE = 'flappy-sky-club-nightmare-2'"));
+  assert.ok(sw.includes(`const CACHE = 'flappy-sky-club-club-${version}'`));
   assert.ok(!sw.includes("const CACHE = 'flappy-sky-club-v1'"));
 });

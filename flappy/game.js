@@ -5,10 +5,15 @@
   const canvas = $('game'), ctx = canvas.getContext('2d', { alpha: true });
   if (!ctx) { $('menuTitle').textContent = 'Canvas unavailable'; $('playButton').disabled = true; return; }
   const SAVE_KEY = 'flappy-bird-sky-club-v1';
-  let canSave = true, rawSave = null;
-  try { rawSave = localStorage.getItem(SAVE_KEY); } catch (_) { canSave = false; }
+  let canSave = true, rawSave = null, saveStorage = null;
+  try { saveStorage = window.localStorage; rawSave = saveStorage.getItem(SAVE_KEY); } catch (_) { canSave = false; }
   const reducedQuery = window.matchMedia?.('(prefers-reduced-motion: reduce)');
   const settings = safeSave(rawSave, !!reducedQuery?.matches);
+  const { SKINS, SKIN_BY_ID, ProfileStore } = window.FlappyClub;
+  const club = new ProfileStore({ storage: saveStorage, locks: navigator.locks, legacyRuns: settings.runs });
+  let profile = club.read(), selectedSkin = profile.equipped, skinFilter = 'all', shopBusy = false;
+  let runId = '', runEarnings = 0, rewardPending = false, updates = null, dismissedUpdate = false;
+  const skinImage = new Image(); let renderedSkin = '';
   const audio = new window.FlightAudio(settings), flight = new Flight(settings.difficulty);
   const birdImage = new Image(); birdImage.src = 'assets/bird.png';
   const batImage = new Image(); batImage.src = 'assets/bat.png';
@@ -19,8 +24,8 @@
   let pixelRatio = 1;
 
   function persist() {
-    try { localStorage.setItem(SAVE_KEY, JSON.stringify(settings)); canSave = true; } catch (_) { canSave = false; }
-    $('saveNote').textContent = canSave ? 'Best scores saved on this device' : 'Scores saved for this session only';
+    try { saveStorage.setItem(SAVE_KEY, JSON.stringify(settings)); canSave = true; } catch (_) { canSave = false; }
+    $('saveNote').textContent = canSave && club.canSave ? 'Records, coins & skins saved on this device' : 'Saves available for this session only';
   }
   function announce(message) { $('announcer').textContent = message; }
   function notice(message) {
@@ -67,9 +72,12 @@
     $('nightmareHud').hidden = !flight.nightmare || ['menu', 'result', 'dying'].includes(next);
     canvas.tabIndex = next === 'playing' ? 0 : -1;
     audio.setActive(next === 'playing');
+    syncUpdateUI();
   }
   function startRun() {
-    if (openDialog) return;
+    if (openDialog || rewardPending || updates?.applying) return;
+    runId = window.crypto?.randomUUID?.() || `${Date.now()}-${Math.random().toString(36).slice(2)}`;
+    runEarnings = 0;
     audio.unlock().then(() => { if (screen === 'playing') audio.effect('start'); }); clearTimeout(milestoneTimer); $('milestone').hidden = true;
     flight.reset(settings.difficulty); recordBeforeRun = settings.best[settings.difficulty]; newRecord = false;
     particles = []; trail = []; shake = 0; flash = 0; wing = 1; deadTime = 0;
@@ -104,6 +112,15 @@
   function finishRun() {
     if (screen !== 'playing') return;
     settings.runs[settings.difficulty]++;
+    rewardPending = true;
+    club.complete({ id: runId, mode: settings.difficulty, score: flight.score }).then(result => {
+      runEarnings = result.earned; rewardPending = false; syncClub();
+      $('resultCoins').textContent = `+${runEarnings.toLocaleString()} coin${runEarnings === 1 ? '' : 's'}`;
+      $('retryButton').disabled = false; syncUpdateUI();
+    }).catch(() => {
+      rewardPending = false; $('retryButton').disabled = false;
+      notice('Earnings could not be saved. Keep this tab open and try again.'); syncUpdateUI();
+    });
     newRecord = flight.score > recordBeforeRun;
     settings.best[settings.difficulty] = Math.max(settings.best[settings.difficulty], flight.score);
     persist(); $('sideBest').textContent = settings.best[settings.difficulty];
@@ -114,6 +131,8 @@
   }
   function showResults() {
     $('resultScore').textContent = flight.score; $('resultBest').textContent = settings.best[settings.difficulty];
+    $('resultCoins').textContent = rewardPending ? 'Saving earnings…' : `+${runEarnings.toLocaleString()} coin${runEarnings === 1 ? '' : 's'}`;
+    $('retryButton').disabled = rewardPending;
     $('resultKicker').textContent = newRecord ? 'A NEW PERSONAL BEST!' : 'EVERY FLIGHT COUNTS';
     $('resultTitle').textContent = newRecord ? 'Look at you fly.' : 'One more try?';
     const earned = [...MEDALS].reverse().find(medal => flight.score >= medal.score);
@@ -130,7 +149,7 @@
     }
     showScreen('result'); $('retryButton').focus({ preventScroll: true });
     if (newRecord && flight.score >= 5) audio.effect('medal');
-    announce(`Flight over. Score ${flight.score}. ${newRecord ? 'New personal best!' : `Best ${settings.best[settings.difficulty]}.`} Press R to fly again.`);
+    announce(`Flight over. Score ${flight.score}. ${flight.score} coins earned. ${$('totalDeaths').textContent} total deaths. ${newRecord ? 'New personal best!' : `Best ${settings.best[settings.difficulty]}.`} Press R to fly again.`);
   }
   function handleEvents() {
     for (const event of flight.drainEvents()) {
@@ -289,7 +308,8 @@
   function drawBird(y, angle, time) {
     ctx.save(); ctx.translate(BIRD_X, y); ctx.rotate(angle);
     const s = 1 + wing * .035; ctx.scale(s, 1 / s);
-    if (birdImage.complete && birdImage.naturalWidth) ctx.drawImage(birdImage, -28, -28, 56, 56);
+    const artwork = profile.equipped !== 'classic' && skinImage.complete && skinImage.naturalWidth ? skinImage : birdImage;
+    if (artwork.complete && artwork.naturalWidth) ctx.drawImage(artwork, -28, -28, 56, 56);
     else { ctx.font = '46px system-ui'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle'; ctx.fillText('🐤', 0, 0); }
     ctx.restore();
   }
@@ -363,12 +383,14 @@
     if (typeof dialog.showModal === 'function') dialog.showModal();
     else { dialog.setAttribute('open', ''); dialog.setAttribute('role', 'dialog'); dialog.setAttribute('aria-modal', 'true'); dialog.classList.add('dialog-fallback'); }
     $('app').inert = true; dialog.querySelector('button').focus();
+    syncUpdateUI();
   }
   function closeDialog() {
     if (!openDialog) return;
     const dialog = openDialog; openDialog = null;
     if (typeof dialog.close === 'function') dialog.close(); else dialog.removeAttribute('open');
     $('app').inert = false; dialogOpener?.focus({ preventScroll: true });
+    syncUpdateUI();
   }
   async function fullscreen() {
     try {
@@ -378,14 +400,87 @@
     } catch (_) { notice('Fullscreen is unavailable in this browser. You can keep playing here.'); }
   }
 
+  function syncClub() {
+    profile = club.read();
+    const total = Object.values(profile.deaths).reduce((sum, value) => sum + value, 0);
+    $('walletCoins').textContent = profile.coins < 10000 ? profile.coins.toLocaleString() : new Intl.NumberFormat('en', { notation: 'compact', maximumFractionDigits: 1 }).format(profile.coins);
+    $('shopButton').setAttribute('aria-label', `Bird shop. ${profile.coins.toLocaleString()} coins available`);
+    $('totalDeaths').textContent = total.toLocaleString(); $('resultDeaths').textContent = total.toLocaleString();
+    $('totalDeaths').parentElement.title = `Total deaths · ${Object.keys(DIFFICULTIES).map(mode => `${DIFFICULTIES[mode].name}: ${profile.deaths[mode]}`).join(' · ')}`;
+    if (renderedSkin !== profile.equipped) {
+      renderedSkin = profile.equipped;
+      if (renderedSkin !== 'classic') skinImage.src = SKIN_BY_ID[renderedSkin].src;
+      const preview = document.querySelector('.menu-bird'); preview.src = SKIN_BY_ID[renderedSkin].src; preview.alt = `${SKIN_BY_ID[renderedSkin].name}, ready to fly`;
+    }
+    $('shopCoins').textContent = profile.coins.toLocaleString();
+    $('ownedSkins').textContent = `${profile.owned.length} / ${SKINS.length}`;
+    $('shopDeaths').textContent = `${total.toLocaleString()} total deaths`;
+    $('shopSaveNote').textContent = club.canSave ? 'Saved on this device.' : 'Session only: browser storage is unavailable.';
+    $('saveNote').textContent = canSave && club.canSave ? 'Records, coins & skins saved on this device' : 'Saves available for this session only';
+    syncShop();
+  }
+  function buildShop() {
+    $('skinGrid').innerHTML = SKINS.map(skin => `<button class="skin-card" type="button" data-skin="${skin.id}" data-category="${skin.category}" aria-pressed="false" style="--skin-color:${skin.color}"><span class="skin-card-art"><img src="${skin.src}" width="96" height="96" alt="" loading="lazy" decoding="async"></span><span class="skin-card-name">${skin.name}</span><span class="skin-card-price"></span></button>`).join('');
+    $('skinGrid').querySelectorAll('[data-skin]').forEach(button => button.addEventListener('click', () => { selectedSkin = button.dataset.skin; syncShop(); }));
+  }
+  function syncShop() {
+    const skin = SKIN_BY_ID[selectedSkin], owned = profile.owned.includes(skin.id), equipped = profile.equipped === skin.id;
+    $('skinPreview').src = skin.src; $('skinPreview').alt = `${skin.name} preview`;
+    $('skinStage').style.setProperty('--skin-color', skin.color);
+    $('skinTier').textContent = skin.label; $('skinName').textContent = skin.name; $('skinDescription').textContent = skin.description;
+    $('skinPrice').textContent = owned ? (skin.id === 'classic' ? 'Always included' : 'In your collection') : `${skin.price.toLocaleString()} coins`;
+    $('skinAction').disabled = shopBusy || equipped || (!owned && profile.coins < skin.price);
+    $('skinAction').textContent = shopBusy ? 'Saving…' : equipped ? 'Equipped' : owned ? 'Equip skin' : `Buy & equip · ${skin.price.toLocaleString()}`;
+    $('skinStatus').textContent = equipped ? 'Your current look.' : owned ? 'Yours to wear, whenever you like.' : profile.coins < skin.price ? `${(skin.price - profile.coins).toLocaleString()} more coins to unlock.` : 'One purchase. Yours to keep.';
+    $('skinGrid').querySelectorAll('[data-skin]').forEach(button => {
+      const item = SKIN_BY_ID[button.dataset.skin], isOwned = profile.owned.includes(item.id);
+      button.hidden = !(skinFilter === 'all' || (skinFilter === 'owned' ? isOwned : item.category === skinFilter));
+      button.setAttribute('aria-pressed', String(item.id === selectedSkin));
+      button.setAttribute('aria-label', `${item.name}, ${profile.equipped === item.id ? 'equipped' : isOwned ? 'owned' : `${item.price} coins`}. Preview skin`);
+      button.dataset.owned = String(isOwned);
+      button.querySelector('.skin-card-price').textContent = profile.equipped === item.id ? '✓ Equipped' : isOwned ? 'Owned' : `${item.price.toLocaleString()} coins`;
+    });
+    document.querySelectorAll('[data-filter]').forEach(button => button.setAttribute('aria-pressed', String(button.dataset.filter === skinFilter)));
+  }
+  function openShop(opener) { selectedSkin = profile.equipped; syncClub(); showDialog($('shopDialog'), opener); }
+  async function buyOrEquip() {
+    if (shopBusy) return;
+    shopBusy = true; const id = selectedSkin; syncShop();
+    try {
+      const wasOwned = profile.owned.includes(id);
+      const result = wasOwned ? await club.equip(id) : await club.buy(id);
+      if (!result.ok) { notice('Not enough coins yet. Every point brings you closer.'); }
+      else { audio.unlock().then(() => audio.effect('select')); announce(`${SKIN_BY_ID[id].name} ${wasOwned ? 'equipped' : 'purchased and equipped'}.`); }
+    } catch (_) { notice('The shop could not save this change. Please try again.'); }
+    finally { shopBusy = false; syncClub(); syncUpdateUI(); }
+  }
+  function syncUpdateUI() {
+    if (!updates) return;
+    const safe = ['menu', 'result'].includes(screen) && !rewardPending && !shopBusy;
+    $('versionLabel').textContent = `Version ${window.FlappyUpdates.VERSION}${updates.available && updates.latest !== window.FlappyUpdates.VERSION ? ` → ${updates.latest}` : ''}`;
+    $('updateButton').disabled = updates.busy || updates.applying || (updates.available && !safe);
+    $('updateButtonLabel').textContent = updates.applying ? 'Updating…' : updates.busy ? 'Checking…' : updates.available ? 'Update now' : 'Check for updates';
+    $('updateStatus').textContent = updates.error || (updates.available ? safe ? 'Update ready. Your records, coins, and skins will be kept.' : 'Update ready. Finish this flight first.' : updates.message || 'Checks online for the newest game. Your saves stay on this device.');
+    if (!canSave || !club.canSave) $('updateStatus').textContent += ' Browser storage is blocked; session progress resets when this page reloads.';
+    $('updateBanner').hidden = !updates.available || !safe || dismissedUpdate || !!openDialog;
+    $('applyUpdateButton').disabled = updates.applying; $('applyUpdateButton').textContent = updates.applying ? 'Updating…' : 'Update now';
+  }
+
   $('playButton').addEventListener('click', startRun); $('retryButton').addEventListener('click', startRun);
   $('resumeButton').addEventListener('click', resume); $('pauseButton').addEventListener('click', pause);
   $('pauseMenuButton').addEventListener('click', toMenu); $('resultMenuButton').addEventListener('click', toMenu);
   $('soundButton').addEventListener('click', toggleSound); $('fullscreenButton').addEventListener('click', fullscreen);
   $('settingsButton').addEventListener('click', () => showDialog($('settingsDialog'), $('settingsButton')));
   $('helpButton').addEventListener('click', () => showDialog($('helpDialog'), $('helpButton')));
+  $('shopButton').addEventListener('click', () => openShop($('shopButton')));
+  $('resultShopButton').addEventListener('click', () => openShop($('resultShopButton')));
+  $('skinAction').addEventListener('click', buyOrEquip);
+  document.querySelectorAll('[data-filter]').forEach(button => button.addEventListener('click', () => { skinFilter = button.dataset.filter; syncShop(); }));
+  $('updateButton').addEventListener('click', () => { if (updates.available) updates.apply(); else { dismissedUpdate = false; updates.check(true); } });
+  $('applyUpdateButton').addEventListener('click', () => updates.apply());
+  $('laterUpdateButton').addEventListener('click', () => { dismissedUpdate = true; syncUpdateUI(); });
   document.querySelectorAll('.close-dialog').forEach(button => button.addEventListener('click', closeDialog));
-  for (const id of ['settingsDialog', 'helpDialog']) {
+  for (const id of ['settingsDialog', 'helpDialog', 'shopDialog']) {
     $(id).addEventListener('cancel', event => { event.preventDefault(); closeDialog(); });
     $(id).addEventListener('click', event => { if (event.target === $(id)) { const r = $(id).getBoundingClientRect(); if (event.clientX < r.left || event.clientX > r.right || event.clientY < r.top || event.clientY > r.bottom) closeDialog(); } });
   }
@@ -432,7 +527,10 @@
   });
   document.addEventListener('visibilitychange', () => {
     if (document.hidden) { pause(); audio.suspend(); persist(); } lastTime = null;
+    if (!document.hidden) updates?.check();
   });
+  window.addEventListener('online', () => updates?.check(true));
+  window.addEventListener('storage', event => { if (event.key === window.FlappyClub.SAVE_KEY || event.key === null) syncClub(); });
   window.addEventListener('blur', () => { pause(); audio.setActive(false); });
   window.addEventListener('pagehide', () => { pause(); audio.suspend(); persist(); });
   window.addEventListener('resize', () => { fitCanvas(); });
@@ -442,7 +540,14 @@
   document.addEventListener('fullscreenchange', () => {
     $('fullscreenButton').setAttribute('aria-label', document.fullscreenElement ? 'Exit fullscreen' : 'Enter fullscreen'); fitCanvas();
   });
+  buildShop(); syncClub();
+  updates = new window.FlappyUpdates.GameUpdates({
+    serviceWorker: location.protocol === 'https:' ? navigator.serviceWorker : null,
+    fetcher: (...args) => fetch(...args), baseURL: new URL('./', location.href).href,
+    canReload: () => ['menu', 'result'].includes(screen) && !rewardPending && !shopBusy,
+    beforeReload: async () => { await club.queue; persist(); }, reload: url => location.replace(url),
+    onChange: syncUpdateUI
+  });
   syncSettings(); syncDifficulty(); showScreen('menu'); fitCanvas(); persist(); requestAnimationFrame(frame);
-  // Scope offline caching to this game, leaving other games on the domain alone.
-  if ('serviceWorker' in navigator && location.protocol === 'https:') navigator.serviceWorker.register('./sw.js', { scope: './' }).catch(() => {});
+  updates.start(); updates.check();
 })();

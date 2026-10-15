@@ -53,7 +53,32 @@ Each gate or attack survived awards one point. Nightmare has its own record and 
 
 The engine tests include 48 simulations (16 seeds at 30/60/120 FPS) using visible cues, decisions at 50 ms intervals, and at least 140 ms between flaps. They check that the harder opening remains playable; they do not promise survival in later rounds. Separate tests cover continuous escalation, independent bat targeting/firing, truthful warnings, corridor clearance, fixed room targets, high-speed collisions, pause/resume, retry cleanup, and old-save migration. All 25 tests pass with `node --test flappy/tests/*.test.cjs`.
 
-The HTML references versioned code/styles and the offline cache has its own update version, avoiding mixed old/new game scripts. The direct update link is https://apirak09.github.io/flappy/?v=nightmare-2.
+The HTML references versioned code/styles and the offline cache has its own update version, avoiding mixed old/new game scripts. The current entry link is https://apirak09.github.io/flappy/?v=3.0.0.
+
+## The Wardrobe update — 3.0.0
+
+The original physics engine, difficulty settings, hit circle, audio, backgrounds, and free yellow bird are unchanged. The additions are:
+
+- **Deaths:** a total in the footer and results, with per-mode counts in the footer tooltip. Existing completed-run counts migrate into deaths; earlier sessions that were never saved cannot be reconstructed. Pausing and returning to the menu do not count as a death.
+- **Coins:** each point pays one coin when the bird crashes, including Nightmare gate and attack points. A zero-point crash still counts as a death. The complete run is settled once before the results can be retried or updated. Old high scores do not generate retrospective coins; abandoning an unfinished flight does not pay coins.
+- **Bird shop:** open the gold wallet button in the header or the bag in results. Previewing is free; **Buy & equip** spends coins once. Owned looks can be equipped for free. Opening the shop during a flight pauses it, using the existing resume countdown afterward.
+- **14 costumes:** Mint Breeze, Rose Finch, and Bluebird (100); Rainbow Prism, Aurora, and Neon Pulse (250); Batman and Spider-Man (500); Superman and Captain America (750); Iron Man, Thor, Black Panther, and Doctor Strange (1,000). Hero details include masks, capes, suit emblems, armor plates, shields, and spell rings. Each local SVG is drawn into the same 56 × 56 render box, independent of the unchanged 14-unit hit circle.
+- **Updates:** Settings → **Check for updates** checks an uncached `version.json`. A banner offers **Update now** when a release is ready. Updates wait for a finished flight and settled wallet transactions; there is no automatic mid-flight reload. The waiting offline worker activates only after the explicit button, then navigates once with a fresh URL. A worker activated by another tab never reloads the current tab. When service workers are unavailable, fresh matching-version HTML must be reachable before the update navigation.
+
+Coins, inventory, equipped skin, paid-run IDs, and deaths use the separate `flappy-bird-sky-club-profile-v1` localStorage key. The existing `flappy-bird-sky-club-v1` scores/settings key is preserved. Web Locks serialize wallet changes between tabs where supported; a local queue handles repeated taps. Storage failures use consistent session memory and show a session-only save note. All costumes are included in the offline cache after installation. Update checks themselves require a connection. Clearing browser data or changing browsers/devices does not preserve local progress.
+
+### Publishing later updates
+
+After a source change, prepare a newer release with:
+
+```sh
+node flappy/tools/release.cjs 3.1.0
+node --test flappy/tests/*.test.cjs
+```
+
+The helper updates the online version marker, HTML metadata, script/style URLs, and worker cache together. Commit and publish those files together. Do not reuse a release number for changed code. If adding a costume, also add its path to the worker's `FILES` list; the offline tests check every costume. Rebuild the committed costume SVGs with `node flappy/tools/build-skins.cjs` after editing their vector source. The release-consistency test catches mismatched page, script, and cache versions.
+
+Tests cover the original 25 engine scenarios, wallet/migration/duplicate-purchase behavior, real UI handlers using a minimal Node DOM fixture, update timing, and offline-worker events. The Node fixture does not verify browser layout, real service-worker installation, or platform-specific rendering.
 
 ## Compatibility and saves
 
@@ -67,7 +92,10 @@ Best scores and settings use the isolated `flappy-bird-sky-club-v1` localStorage
 - `core.js`: DOM-independent physics, obstacle generation, collisions, and save validation.
 - `audio.js`: original synthesized effects and optional original pentatonic loop.
 - `game.js`: rendering, state transitions, controls, and persistence.
+- `club.js`: validated inventory, coin settlement, death migration, and queued wallet transactions.
+- `updates.js`, `version.json`: online release checks and explicit safe update activation.
 - `sw.js`, `manifest.webmanifest`: offline caching and install metadata.
 - `assets/`: original generated bird and landscape, plus icon derivatives.
+- `assets/skins/`, `tools/build-skins.cjs`: local vector bird costumes and their source generator.
 
 Run the deterministic engine/compatibility tests with `node --test flappy/tests/*.test.cjs` from the repository root. No package installation is needed.
