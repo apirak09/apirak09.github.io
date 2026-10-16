@@ -3,208 +3,45 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <meta name="theme-color" content="#f5f1e8" />
-  <meta name="color-scheme" content="light" />
+  <meta name="theme-color" content="#fbfdff" />
   <meta name="description" content="งานหนังสือ 24 Oct 2026 10:00 @ MRT เพชรบุรี" />
   <title>งานหนังสือ — Countdown</title>
   <style>
-    :root {
-      --paper: #f5f1e8;
-      --paper-2: #ece5d8;
-      --ink: #171717;
-      --muted: #6d695f;
-      --line: rgba(23, 23, 23, 0.11);
-      --card: rgba(255, 255, 255, 0.54);
-      --accent: #c04a32;
-      --shadow: 0 22px 60px rgba(40, 33, 25, 0.09);
-    }
-
-    * { box-sizing: border-box; }
-
-    html, body { min-height: 100%; }
-
-    body {
-      margin: 0;
-      min-height: 100svh;
-      display: grid;
-      place-items: center;
-      overflow-x: hidden;
-      background:
-        radial-gradient(circle at 12% 14%, rgba(192, 74, 50, 0.08), transparent 30%),
-        radial-gradient(circle at 88% 82%, rgba(80, 74, 63, 0.07), transparent 34%),
-        var(--paper);
-      color: var(--ink);
-      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans Thai", sans-serif;
-      -webkit-font-smoothing: antialiased;
-      text-rendering: optimizeLegibility;
-    }
-
-    main {
-      width: min(960px, calc(100% - 32px));
-      padding: max(28px, env(safe-area-inset-top)) 0 max(28px, env(safe-area-inset-bottom));
-    }
-
-    .shell {
-      position: relative;
-      overflow: hidden;
-      border: 1px solid var(--line);
-      border-radius: 30px;
-      background: var(--card);
-      box-shadow: var(--shadow);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      padding: clamp(28px, 6vw, 68px);
-    }
-
-    .shell::before {
-      content: "";
-      position: absolute;
-      inset: 0 auto 0 0;
-      width: 5px;
-      background: var(--accent);
-    }
-
-    .eyebrow {
-      margin: 0 0 14px;
-      color: var(--accent);
-      font-size: 0.78rem;
-      font-weight: 750;
-      letter-spacing: 0.16em;
-      text-transform: uppercase;
-    }
-
-    h1 {
-      margin: 0;
-      max-width: 12ch;
-      font-size: clamp(2.6rem, 8vw, 6rem);
-      line-height: 0.96;
-      letter-spacing: -0.055em;
-      font-weight: 780;
-    }
-
-    .meta {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 9px 16px;
-      margin-top: 22px;
-      color: var(--muted);
-      font-size: clamp(0.98rem, 2.4vw, 1.08rem);
-      line-height: 1.5;
-    }
-
-    .meta span {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .meta span + span::before {
-      content: "·";
-      color: rgba(23, 23, 23, 0.35);
-      margin-right: 8px;
-    }
-
-    .countdown {
-      display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 12px;
-      margin-top: clamp(34px, 7vw, 72px);
-    }
-
-    .unit {
-      min-width: 0;
-      border-top: 1px solid var(--line);
-      padding-top: 18px;
-    }
-
-    .value {
-      display: block;
-      font-variant-numeric: tabular-nums;
-      font-feature-settings: "tnum" 1;
-      font-size: clamp(2.5rem, 8vw, 5.8rem);
-      font-weight: 700;
-      line-height: 0.95;
-      letter-spacing: -0.06em;
-      white-space: nowrap;
-    }
-
-    .label {
-      display: block;
-      margin-top: 10px;
-      color: var(--muted);
-      font-size: 0.78rem;
-      font-weight: 650;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-    }
-
-    .done {
-      display: none;
-      margin-top: clamp(34px, 7vw, 72px);
-      border-top: 1px solid var(--line);
-      padding-top: 22px;
-      font-size: clamp(1.5rem, 5vw, 3rem);
-      font-weight: 700;
-      letter-spacing: -0.035em;
-    }
-
-    body.finished .countdown { display: none; }
-    body.finished .done { display: block; }
-
-    @media (max-width: 620px) {
-      main { width: min(100% - 22px, 960px); }
-      .shell { border-radius: 24px; padding: 28px 24px 30px; }
-      .countdown { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px 18px; }
-      .meta { display: grid; gap: 4px; }
-      .meta span + span::before { display: none; }
-    }
-
-    @media (prefers-reduced-motion: no-preference) {
-      .shell { animation: arrive 620ms cubic-bezier(.2,.7,.2,1) both; }
-      .value { transition: opacity 160ms ease; }
-      @keyframes arrive {
-        from { opacity: 0; transform: translateY(10px) scale(.995); }
-        to { opacity: 1; transform: translateY(0) scale(1); }
-      }
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      *, *::before, *::after {
-        animation-duration: 0.01ms !important;
-        animation-iteration-count: 1 !important;
-        transition-duration: 0.01ms !important;
-      }
-    }
+    :root{--ink:#233044;--muted:#7a8796;--line:#e8edf2;--blue:#b9d9f5;--blue2:#e8f4fd;--green:#cfe8c2;--green2:#ecf6e8;--paper:#fff;--shadow:0 24px 70px rgba(79,105,132,.12)}
+    *{box-sizing:border-box}html,body{min-height:100%}body{margin:0;background:linear-gradient(180deg,#fff 0%,#fbfdff 56%,#f4f8fb 100%);color:var(--ink);font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI","Noto Sans Thai",sans-serif;-webkit-font-smoothing:antialiased}
+    main{min-height:100svh;display:grid;place-items:center;padding:18px}.card{width:min(920px,100%);position:relative;overflow:hidden;background:rgba(255,255,255,.94);border:1px solid var(--line);border-radius:32px;box-shadow:var(--shadow);padding:clamp(26px,5vw,52px)}
+    .scene{position:relative;height:180px;margin:-12px 0 20px;overflow:hidden}.sun{position:absolute;right:13%;top:12px;width:54px;height:54px;border-radius:50%;background:#fff4c9}.cloud{position:absolute;left:10%;top:28px;width:74px;height:22px;border-radius:999px;background:#f1f6fa}.cloud:before,.cloud:after{content:"";position:absolute;border-radius:50%;background:#f1f6fa}.cloud:before{width:32px;height:32px;left:12px;top:-13px}.cloud:after{width:39px;height:39px;right:8px;top:-18px}
+    .mountain{position:absolute;bottom:32px;border-radius:52% 48% 0 0/72% 72% 0 0}.m1{left:1%;width:44%;height:105px;background:var(--blue2)}.m2{left:28%;width:48%;height:128px;background:var(--blue)}.m3{right:0;width:40%;height:96px;background:var(--green2)}.hill{position:absolute;left:8%;right:8%;bottom:8px;height:64px;border-radius:50% 50% 20% 20%/80% 80% 20% 20%;background:var(--green)}
+    .book{position:absolute;left:50%;bottom:24px;transform:translateX(-50%) rotate(-2deg);width:112px;height:58px;z-index:2}.book:before,.book:after{content:"";position:absolute;top:0;width:56px;height:58px;background:#fff;border:1px solid #dfe7ee;box-shadow:0 8px 18px rgba(72,94,119,.08)}.book:before{left:0;border-radius:10px 2px 8px 12px;transform:skewY(5deg)}.book:after{right:0;border-radius:2px 10px 12px 8px;transform:skewY(-5deg)}.spine{position:absolute;left:55px;top:4px;width:2px;height:48px;background:#dfe7ee;z-index:3}
+    .head{display:flex;align-items:flex-end;justify-content:space-between;gap:20px}.title-wrap{min-width:0}.kicker{margin:0 0 8px;color:#8ca0b3;font-size:.78rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase}.title{margin:0;font-size:clamp(2.5rem,7vw,5.2rem);line-height:.98;letter-spacing:-.055em;font-weight:760}.place{margin:14px 0 0;color:var(--muted);font-size:clamp(1rem,2vw,1.12rem)}
+    .countdown{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-top:clamp(34px,6vw,62px)}.unit{padding:20px 12px 17px;text-align:center;background:#fff;border:1px solid var(--line);border-radius:22px}.value{display:block;font-size:clamp(2.4rem,7vw,5rem);font-weight:700;line-height:.95;letter-spacing:-.06em;font-variant-numeric:tabular-nums}.label{display:block;margin-top:10px;color:#96a2ae;font-size:.74rem;font-weight:650;letter-spacing:.08em;text-transform:uppercase}.done{display:none;margin-top:42px;padding-top:22px;border-top:1px solid var(--line);font-size:clamp(1.4rem,4vw,2.5rem);font-weight:700}body.finished .countdown{display:none}body.finished .done{display:block}
+    @media(max-width:620px){main{padding:8px}.card{border-radius:24px;padding:22px 18px 24px}.scene{height:145px;margin:-8px 0 18px}.countdown{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.unit{border-radius:18px;padding:18px 10px 15px}.head{display:block}.place{margin-top:10px}}
+    @media(prefers-reduced-motion:no-preference){.card{animation:in .55s ease both}@keyframes in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}}
+    @media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;transition:none!important}}
   </style>
 </head>
 <body>
   <main>
-    <section class="shell" aria-labelledby="event-title">
-      <p class="eyebrow">24 OCT 2026 · 10:00</p>
-      <h1 id="event-title">งานหนังสือ</h1>
-
-      <div class="meta" aria-label="รายละเอียดนัดหมาย">
-        <span>24 Oct 2026 · 10:00</span>
-        <span>@ MRT เพชรบุรี</span>
+    <section class="card" aria-labelledby="event-title">
+      <div class="scene" aria-hidden="true">
+        <div class="sun"></div><div class="cloud"></div>
+        <div class="mountain m1"></div><div class="mountain m2"></div><div class="mountain m3"></div><div class="hill"></div>
+        <div class="book"><div class="spine"></div></div>
       </div>
 
-      <div class="countdown" role="timer" aria-live="off" aria-label="เวลาที่เหลือถึงงานหนังสือ">
-        <div class="unit">
-          <span class="value" id="days">00</span>
-          <span class="label">วัน</span>
+      <div class="head">
+        <div class="title-wrap">
+          <p class="kicker">24 OCT 2026 · 10:00</p>
+          <h1 class="title" id="event-title">งานหนังสือ</h1>
+          <p class="place">@ MRT เพชรบุรี</p>
         </div>
-        <div class="unit">
-          <span class="value" id="hours">00</span>
-          <span class="label">ชั่วโมง</span>
-        </div>
-        <div class="unit">
-          <span class="value" id="minutes">00</span>
-          <span class="label">นาที</span>
-        </div>
-        <div class="unit">
-          <span class="value" id="seconds">00</span>
-          <span class="label">วินาที</span>
-        </div>
+      </div>
+
+      <div class="countdown" role="timer" aria-label="เวลาที่เหลือ">
+        <div class="unit"><span class="value" id="days">00</span><span class="label">วัน</span></div>
+        <div class="unit"><span class="value" id="hours">00</span><span class="label">ชั่วโมง</span></div>
+        <div class="unit"><span class="value" id="minutes">00</span><span class="label">นาที</span></div>
+        <div class="unit"><span class="value" id="seconds">00</span><span class="label">วินาที</span></div>
       </div>
 
       <div class="done" role="status">ถึงเวลาแล้ว</div>
@@ -212,39 +49,20 @@
   </main>
 
   <script>
-    (() => {
-      const target = new Date('2026-10-24T10:00:00+07:00').getTime();
-      const els = {
-        days: document.getElementById('days'),
-        hours: document.getElementById('hours'),
-        minutes: document.getElementById('minutes'),
-        seconds: document.getElementById('seconds')
-      };
-
-      const pad = (value) => String(value).padStart(2, '0');
-
-      function updateCountdown() {
-        const remaining = target - Date.now();
-
-        if (remaining <= 0) {
-          document.body.classList.add('finished');
-          return;
-        }
-
-        const totalSeconds = Math.floor(remaining / 1000);
-        const days = Math.floor(totalSeconds / 86400);
-        const hours = Math.floor((totalSeconds % 86400) / 3600);
-        const minutes = Math.floor((totalSeconds % 3600) / 60);
-        const seconds = totalSeconds % 60;
-
-        els.days.textContent = pad(days);
-        els.hours.textContent = pad(hours);
-        els.minutes.textContent = pad(minutes);
-        els.seconds.textContent = pad(seconds);
+    (()=>{
+      const target=new Date('2026-10-24T10:00:00+07:00').getTime();
+      const e={d:document.getElementById('days'),h:document.getElementById('hours'),m:document.getElementById('minutes'),s:document.getElementById('seconds')};
+      const pad=n=>String(n).padStart(2,'0');
+      function tick(){
+        const r=target-Date.now();
+        if(r<=0){document.body.classList.add('finished');return}
+        const t=Math.floor(r/1000);
+        e.d.textContent=pad(Math.floor(t/86400));
+        e.h.textContent=pad(Math.floor(t%86400/3600));
+        e.m.textContent=pad(Math.floor(t%3600/60));
+        e.s.textContent=pad(t%60);
       }
-
-      updateCountdown();
-      setInterval(updateCountdown, 1000);
+      tick();setInterval(tick,1000);
     })();
   </script>
 </body>
