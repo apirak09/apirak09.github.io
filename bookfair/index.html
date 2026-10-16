@@ -3,30 +3,201 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <meta name="theme-color" content="#fbfdff" />
+  <meta name="theme-color" content="#f8fbff" />
   <meta name="description" content="งานหนังสือ 24 Oct 2026 10:00 @ MRT เพชรบุรี" />
   <title>งานหนังสือ — Countdown</title>
   <style>
-    :root{--ink:#233044;--muted:#7a8796;--line:#e8edf2;--blue:#b9d9f5;--blue2:#e8f4fd;--green:#cfe8c2;--green2:#ecf6e8;--paper:#fff;--shadow:0 24px 70px rgba(79,105,132,.12)}
-    *{box-sizing:border-box}html,body{min-height:100%}body{margin:0;background:linear-gradient(180deg,#fff 0%,#fbfdff 56%,#f4f8fb 100%);color:var(--ink);font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI","Noto Sans Thai",sans-serif;-webkit-font-smoothing:antialiased}
-    main{min-height:100svh;display:grid;place-items:center;padding:18px}.card{width:min(920px,100%);position:relative;overflow:hidden;background:rgba(255,255,255,.94);border:1px solid var(--line);border-radius:32px;box-shadow:var(--shadow);padding:clamp(26px,5vw,52px)}
-    .scene{position:relative;height:180px;margin:-12px 0 20px;overflow:hidden}.sun{position:absolute;right:13%;top:12px;width:54px;height:54px;border-radius:50%;background:#fff4c9}.cloud{position:absolute;left:10%;top:28px;width:74px;height:22px;border-radius:999px;background:#f1f6fa}.cloud:before,.cloud:after{content:"";position:absolute;border-radius:50%;background:#f1f6fa}.cloud:before{width:32px;height:32px;left:12px;top:-13px}.cloud:after{width:39px;height:39px;right:8px;top:-18px}
-    .mountain{position:absolute;bottom:32px;border-radius:52% 48% 0 0/72% 72% 0 0}.m1{left:1%;width:44%;height:105px;background:var(--blue2)}.m2{left:28%;width:48%;height:128px;background:var(--blue)}.m3{right:0;width:40%;height:96px;background:var(--green2)}.hill{position:absolute;left:8%;right:8%;bottom:8px;height:64px;border-radius:50% 50% 20% 20%/80% 80% 20% 20%;background:var(--green)}
-    .book{position:absolute;left:50%;bottom:24px;transform:translateX(-50%) rotate(-2deg);width:112px;height:58px;z-index:2}.book:before,.book:after{content:"";position:absolute;top:0;width:56px;height:58px;background:#fff;border:1px solid #dfe7ee;box-shadow:0 8px 18px rgba(72,94,119,.08)}.book:before{left:0;border-radius:10px 2px 8px 12px;transform:skewY(5deg)}.book:after{right:0;border-radius:2px 10px 12px 8px;transform:skewY(-5deg)}.spine{position:absolute;left:55px;top:4px;width:2px;height:48px;background:#dfe7ee;z-index:3}
-    .head{display:flex;align-items:flex-end;justify-content:space-between;gap:20px}.title-wrap{min-width:0}.kicker{margin:0 0 8px;color:#8ca0b3;font-size:.78rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase}.title{margin:0;font-size:clamp(2.5rem,7vw,5.2rem);line-height:.98;letter-spacing:-.055em;font-weight:760}.place{margin:14px 0 0;color:var(--muted);font-size:clamp(1rem,2vw,1.12rem)}
-    .countdown{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-top:clamp(34px,6vw,62px)}.unit{padding:20px 12px 17px;text-align:center;background:#fff;border:1px solid var(--line);border-radius:22px}.value{display:block;font-size:clamp(2.4rem,7vw,5rem);font-weight:700;line-height:.95;letter-spacing:-.06em;font-variant-numeric:tabular-nums}.label{display:block;margin-top:10px;color:#96a2ae;font-size:.74rem;font-weight:650;letter-spacing:.08em;text-transform:uppercase}.done{display:none;margin-top:42px;padding-top:22px;border-top:1px solid var(--line);font-size:clamp(1.4rem,4vw,2.5rem);font-weight:700}body.finished .countdown{display:none}body.finished .done{display:block}
-    @media(max-width:620px){main{padding:8px}.card{border-radius:24px;padding:22px 18px 24px}.scene{height:145px;margin:-8px 0 18px}.countdown{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.unit{border-radius:18px;padding:18px 10px 15px}.head{display:block}.place{margin-top:10px}}
-    @media(prefers-reduced-motion:no-preference){.card{animation:in .55s ease both}@keyframes in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}}
+    :root{
+      --ink:#223149;
+      --muted:#7a899b;
+      --line:#e8eef4;
+      --sky:#dff1ff;
+      --sky2:#a8d4f7;
+      --green:#bfe6a8;
+      --green2:#e8f6df;
+      --blue:#67aef0;
+      --yellow:#ffe36b;
+      --pink:#ffb4c7;
+      --orange:#ffb06d;
+      --paper:#fff;
+      --shadow:0 28px 70px rgba(91,119,148,.13);
+    }
+
+    *{box-sizing:border-box}
+    html,body{min-height:100%}
+    body{
+      margin:0;
+      color:var(--ink);
+      font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI","Noto Sans Thai",sans-serif;
+      -webkit-font-smoothing:antialiased;
+      background:
+        radial-gradient(circle at 16% 12%,rgba(159,211,255,.22),transparent 26%),
+        radial-gradient(circle at 86% 16%,rgba(191,230,168,.22),transparent 22%),
+        linear-gradient(180deg,#fff 0%,#fbfdff 58%,#f4f8fb 100%);
+    }
+
+    main{min-height:100svh;display:grid;place-items:center;padding:18px}
+
+    .card{
+      width:min(960px,100%);
+      position:relative;
+      overflow:hidden;
+      background:rgba(255,255,255,.94);
+      border:1px solid var(--line);
+      border-radius:32px;
+      box-shadow:var(--shadow);
+      padding:clamp(24px,4.5vw,48px);
+    }
+
+    .art{
+      position:relative;
+      height:230px;
+      margin:-8px -6px 26px;
+      overflow:hidden;
+    }
+
+    .sun{
+      position:absolute;
+      top:12px;
+      right:11%;
+      width:62px;
+      height:62px;
+      border-radius:50%;
+      background:#fff2a9;
+      box-shadow:0 0 0 10px rgba(255,227,107,.10);
+    }
+
+    .cloud,.cloud:before,.cloud:after{
+      position:absolute;
+      content:"";
+      background:#f2f7fb;
+      border-radius:999px;
+    }
+    .cloud{left:9%;top:32px;width:88px;height:24px}
+    .cloud:before{width:36px;height:36px;left:14px;top:-14px}
+    .cloud:after{width:44px;height:44px;right:9px;top:-20px}
+    .cloud.c2{left:auto;right:24%;top:58px;transform:scale(.66);opacity:.9}
+
+    .mountain{position:absolute;bottom:54px;border-radius:52% 48% 0 0/72% 72% 0 0}
+    .m1{left:-1%;width:40%;height:112px;background:#edf7ff}
+    .m2{left:24%;width:47%;height:154px;background:var(--sky2)}
+    .m3{right:-1%;width:42%;height:118px;background:var(--green2)}
+
+    .island{
+      position:absolute;
+      left:13%;right:13%;bottom:10px;
+      height:88px;
+      border-radius:50% 50% 38% 38%/76% 76% 32% 32%;
+      background:linear-gradient(180deg,#ccecb8 0 55%,#9fd17f 55% 100%);
+      box-shadow:inset 0 -9px 0 rgba(97,141,73,.10);
+    }
+
+    .water{
+      position:absolute;
+      left:4%;right:4%;bottom:0;height:52px;
+      border-radius:999px 999px 24px 24px;
+      background:linear-gradient(180deg,#eff9ff,#dff1ff);
+      z-index:0;
+    }
+    .water:before,.water:after{
+      content:"";
+      position:absolute;
+      left:9%;right:9%;
+      height:12px;
+      border-top:2px solid rgba(103,174,240,.22);
+      border-radius:50%;
+    }
+    .water:before{top:15px}
+    .water:after{top:31px;left:22%;right:20%}
+
+    .tree{position:absolute;right:24%;bottom:57px;width:16px;height:82px;background:#ec9b58;border-radius:999px;z-index:3}
+    .leaf,.leaf:before,.leaf:after{position:absolute;content:"";background:#65bf79;border-radius:58% 42% 60% 40%/58% 50% 50% 42%}
+    .leaf{width:82px;height:47px;left:-32px;top:-19px;transform:rotate(-5deg)}
+    .leaf:before{width:58px;height:40px;left:-29px;top:2px;transform:rotate(-20deg)}
+    .leaf:after{width:58px;height:40px;right:-25px;top:4px;transform:rotate(20deg)}
+
+    .books{position:absolute;right:14%;bottom:42px;width:78px;height:70px;z-index:5}
+    .books span{position:absolute;height:17px;border-radius:7px;box-shadow:0 6px 12px rgba(68,95,122,.10)}
+    .books span:nth-child(1){left:0;right:4px;bottom:0;background:#76a9ef}
+    .books span:nth-child(2){left:8px;right:-3px;bottom:17px;background:var(--yellow)}
+    .books span:nth-child(3){left:-7px;right:10px;bottom:34px;background:var(--pink)}
+
+    .open-book{position:absolute;left:46%;bottom:48px;transform:translateX(-50%) rotate(-3deg);width:116px;height:62px;z-index:4}
+    .open-book:before,.open-book:after{content:"";position:absolute;top:0;width:58px;height:62px;background:#fff;border:1px solid #e0e8ef;box-shadow:0 7px 16px rgba(72,94,119,.08)}
+    .open-book:before{left:0;border-radius:11px 2px 9px 13px;transform:skewY(5deg)}
+    .open-book:after{right:0;border-radius:2px 11px 13px 9px;transform:skewY(-5deg)}
+    .open-book i{position:absolute;left:57px;top:5px;width:2px;height:51px;background:#e1e7ed;z-index:2}
+
+    .message{
+      position:absolute;
+      left:10%;
+      bottom:72px;
+      z-index:6;
+      padding:11px 14px 10px;
+      border-radius:16px 16px 16px 5px;
+      background:#fff;
+      border:1px solid #e7eef4;
+      box-shadow:0 12px 28px rgba(78,106,135,.10);
+      font-size:.82rem;
+      color:#688099;
+      line-height:1.25;
+    }
+    .message strong{display:block;color:#3e84ce;font-size:.88rem;margin-bottom:2px}
+    .dot{position:absolute;top:8px;right:9px;width:7px;height:7px;border-radius:50%;background:#ff6b76;box-shadow:0 0 0 3px rgba(255,107,118,.11)}
+
+    .head{display:flex;align-items:flex-end;justify-content:space-between;gap:20px}
+    .title-wrap{min-width:0}
+    .kicker{margin:0 0 8px;color:#7ca1c5;font-size:.78rem;font-weight:750;letter-spacing:.16em;text-transform:uppercase}
+    .title{margin:0;font-size:clamp(2.6rem,7vw,5.25rem);line-height:.98;letter-spacing:-.055em;font-weight:770}
+    .place{margin:14px 0 0;color:var(--muted);font-size:clamp(1rem,2vw,1.12rem)}
+
+    .countdown{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-top:clamp(34px,6vw,60px)}
+    .unit{padding:20px 12px 17px;text-align:center;background:#fff;border:1px solid var(--line);border-radius:22px}
+    .value{display:block;font-size:clamp(2.4rem,7vw,5rem);font-weight:700;line-height:.95;letter-spacing:-.06em;font-variant-numeric:tabular-nums}
+    .label{display:block;margin-top:10px;color:#96a2ae;font-size:.74rem;font-weight:650;letter-spacing:.08em;text-transform:uppercase}
+
+    .done{display:none;margin-top:42px;padding-top:22px;border-top:1px solid var(--line);font-size:clamp(1.4rem,4vw,2.5rem);font-weight:700}
+    body.finished .countdown{display:none}
+    body.finished .done{display:block}
+
+    @media(max-width:620px){
+      main{padding:8px}
+      .card{border-radius:24px;padding:20px 16px 24px}
+      .art{height:188px;margin:-5px -2px 22px}
+      .mountain{bottom:44px}.m1{height:87px}.m2{height:118px}.m3{height:90px}
+      .island{left:7%;right:7%;height:73px}
+      .tree{right:22%;bottom:48px;height:67px}
+      .leaf{transform:scale(.82) rotate(-5deg);transform-origin:center}
+      .books{right:8%;bottom:37px;transform:scale(.84)}
+      .open-book{left:48%;bottom:40px;transform:translateX(-50%) rotate(-3deg) scale(.86)}
+      .message{left:5%;bottom:59px;padding:9px 11px;font-size:.73rem}
+      .message strong{font-size:.78rem}
+      .countdown{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+      .unit{border-radius:18px;padding:18px 10px 15px}
+    }
+
+    @media(prefers-reduced-motion:no-preference){
+      .card{animation:arrive .55s ease both}
+      .message{animation:float 5.5s ease-in-out infinite}
+      @keyframes arrive{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+      @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}
+    }
+
     @media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;transition:none!important}}
   </style>
 </head>
 <body>
   <main>
     <section class="card" aria-labelledby="event-title">
-      <div class="scene" aria-hidden="true">
-        <div class="sun"></div><div class="cloud"></div>
-        <div class="mountain m1"></div><div class="mountain m2"></div><div class="mountain m3"></div><div class="hill"></div>
-        <div class="book"><div class="spine"></div></div>
+      <div class="art" aria-hidden="true">
+        <div class="sun"></div>
+        <div class="cloud"></div><div class="cloud c2"></div>
+        <div class="mountain m1"></div><div class="mountain m2"></div><div class="mountain m3"></div>
+        <div class="water"></div><div class="island"></div>
+        <div class="message"><span class="dot"></span><strong>Unread Messages</strong>คุณได้รับข้อความใหม่</div>
+        <div class="tree"><div class="leaf"></div></div>
+        <div class="open-book"><i></i></div>
+        <div class="books"><span></span><span></span><span></span></div>
       </div>
 
       <div class="head">
