@@ -1,25 +1,33 @@
-# ChemSafe
+# ChemSafe 2.0
 
-Thai chemical-safety exam practice at https://apirak09.github.io/chemsafe/ . Static HTML/CSS/ES modules; no build or account required.
+Thai chemical-safety practice: https://apirak09.github.io/chemsafe/ . Static HTML/CSS/ES modules; no build or account required.
 
-Source exam: user-provided 51-page PDF. 206 complete question occurrences; 165 records after conservative duplicate consolidation. One partial question at page47/top-right/bottom has missing options, is documented, and is not fabricated. Variants with changed text/choices remain separate. Original option order is retained in sourceLocations.
+## Question bank
 
-117 records have a single supported answer and count toward scores. 48 ambiguous, conditional, or source-limited records remain available in practice with explicit explanations; they are excluded from scoring/exam mode. This is independently checked study material, not an official answer key. Do not infer that an answer omitted from scoring is necessarily medically/chemically unknowable; some require additional SDS or policy details beyond the specified references.
+142 live questions, each with exactly one best answer. Version1 had165 records;23 further duplicates were consolidated, including shuffled options, transcription differences and equivalent phrasings. All206 complete source occurrences remain traceable through sourceLocations; the cropped fragment at source page47 remains documented, with no fabricated missing choices.
 
-References:
+36 retained questions have limited wording/context revisions to make one answer defensible. These show a visible "ปรับถ้อยคำสำหรับฝึก" label, a revision explanation after answering, and original text/choices in questions.json. The remaining questions preserve the source wording. Some questions therefore differ from the original exam; this is an independently checked practice bank, not an official key.
+
+Primary references:
 - https://www.shecu.chula.ac.th/data/boards/617/chemical-safety-manual-students-research.pdf
 - https://www.shecu.chula.ac.th/data/boards/1018/2025-chemsafe-document.pdf
 
-All page citations are 1-based PDF pages, not printed page numbers. questions.json is the production bank. source-audit.json retains all complete occurrences and provenance. No selected radio button or handwritten tick was treated as authoritative.
+Supplemental primary sources from CDC/ATSDR, NHS and Berkeley Lab EHS cover specific gaps such as HF, thermal burns and cryogenic vessels. Question explanations link them explicitly. All PDF page citations are1-based PDF pages, not printed page numbers.
 
-Adaptive practice drains a shuffled coverage queue and reserves every third draw for eligible weak questions. Recently seen questions are avoided when alternatives exist. Thus all questions receive exposure even if answers remain wrong. Exams prioritize never-seen scored questions, contain no duplicates, and reveal explanations only after submission. Configurable time/length are practice settings, not official exam requirements.
+questions.json is the production bank. revision-audit.json records consolidation decisions and old IDs. source-audit.json is the historical transcription/audit from version1, not the live answer key.
 
-Progress and active sessions use localStorage. No cross-device sync. Export/import on the overview supports transfer. Refreshing or updating does not erase progress. There is no service worker or offline cache which could trap old versions. Bump both asset query versions and meta.version when publishing code/data updates.
+## Practice and persistence
+
+Adaptive practice drains a shuffled coverage queue and reserves every third draw for weak questions. Exams use all live questions and do not repeat a canonical item within one set. The loader rejects zero/multiple-answer items and duplicate semantic keys.
+
+Old visited counts, bookmarks, queues and selected options migrate through canonical aliases and option-order maps. Revised questions keep visit counts and bookmarks but require a fresh answer. Old active exams containing revised wording are cleared rather than silently grading answers against changed text. Completed history remains stored. Migration runs once per bank version.
+
+Progress uses localStorage; no automatic cross-device sync. Export/import supports transfer. There is no service worker. Asset query versions and meta.version are2.0.0/v2 so the update button loads the revised code and bank without clearing progress.
 
 Validation:
 ```
-node --test core.test.mjs
+node --test core.test.mjs migration.test.mjs
 node app.test.mjs
 node validate.mjs
 ```
-The app test is an isolated DOM-stub interaction test, not a visual browser test. Browser QA was unavailable in the execution environment. No existing repository files outside /chemsafe were changed.
+The app test uses a DOM stub, not a visual browser. It renders and answers every production question and checks exactly one highlighted answer. Browser QA was unavailable in this environment. Changes are confined to /chemsafe.
