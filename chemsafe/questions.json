@@ -1,6 +1,6 @@
 {
   "meta": {
-    "version": "2.0.0",
+    "version": "3.0.0",
     "reviewed": "21 ตุลาคม 2569",
     "pages": 51,
     "occurrences": 206,
@@ -1277,7 +1277,8 @@
         "title": "Berkeley Lab EHS — Dewar Flasks",
         "url": "https://ehs.lbl.gov/service/cryogenic-liquid-safety/dewar-flasks/"
       }
-    ]
+    ],
+    "practicePolicy": "one-pass-until-complete"
   },
   "questions": [
     {

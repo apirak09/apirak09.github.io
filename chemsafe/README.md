@@ -1,4 +1,4 @@
-# ChemSafe 2.0
+# ChemSafe 3.0
 
 Thai chemical-safety practice: https://apirak09.github.io/chemsafe/ . Static HTML/CSS/ES modules; no build or account required.
 
@@ -18,16 +18,18 @@ questions.json is the production bank. revision-audit.json records consolidation
 
 ## Practice and persistence
 
-Adaptive practice drains a shuffled coverage queue and reserves every third draw for weak questions. Exams use all live questions and do not repeat a canonical item within one set. The loader rejects zero/multiple-answer items and duplicate semantic keys.
+Practice uses finite rounds. Each question is shown once until every item has been answered, regardless of correctness; the round then stops on a completion screen. A new round starts only after an explicit click. Wrong-answer and bookmark reviews are finite snapshots too. Opening one question from the bank returns to the bank after answering. Exams use all live questions and do not repeat a canonical item within one set. The loader rejects zero/multiple-answer items, duplicate semantic keys and identical question/option content even if choices are shuffled.
 
-Old visited counts, bookmarks, queues and selected options migrate through canonical aliases and option-order maps. Revised questions keep visit counts and bookmarks but require a fresh answer. Old active exams containing revised wording are cleared rather than silently grading answers against changed text. Completed history remains stored. Migration runs once per bank version.
+On upgrading from v2, the first coverage round is seeded from existing answered-question history, so users resume only questions they have not answered. Round order, completed IDs and review snapshots persist across refresh, reopening and export/import. A wrong answer is counted as completed in the current round. Original v1 visited counts, bookmarks, queues and selected options migrate through canonical aliases and option-order maps. Revised questions keep visit counts and bookmarks but require a fresh answer. Old active exams containing revised wording are cleared rather than silently grading answers against changed text. Completed history remains stored. The v1 answer-key migration runs only for v1 data; upgrading v2 to v3 does not reset mastered/revised question statistics.
 
-Progress uses localStorage; no automatic cross-device sync. Export/import supports transfer. There is no service worker. Asset query versions and meta.version are2.0.0/v2 so the update button loads the revised code and bank without clearing progress.
+Progress uses localStorage; no automatic cross-device sync. Export/import supports transfer. There is no service worker. Asset query versions and meta.version are3.0.0/v3 so the update button loads the revised code and bank without clearing progress.
 
 Validation:
 ```
 node --test core.test.mjs migration.test.mjs
 node app.test.mjs
+node round-ui.test.mjs
+LEGACY=1 node round-ui.test.mjs
 node validate.mjs
 ```
-The app test uses a DOM stub, not a visual browser. It renders and answers every production question and checks exactly one highlighted answer. Browser QA was unavailable in this environment. Changes are confined to /chemsafe.
+The app test uses a DOM stub, not a visual browser. It renders and answers every production question and checks exactly one highlighted answer. Round UI regressions cover an entirely wrong full pass, a v2 user with seven questions remaining, explicit restart, and finite wrong-only review. Browser QA was unavailable in this environment. Changes are confined to /chemsafe.
