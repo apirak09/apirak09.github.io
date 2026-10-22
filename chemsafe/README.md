@@ -1,4 +1,4 @@
-# ChemSafe 3.0
+# ChemSafe 3.1
 
 Thai chemical-safety practice: https://apirak09.github.io/chemsafe/ . Static HTML/CSS/ES modules; no build or account required.
 
@@ -22,14 +22,22 @@ Practice uses finite rounds. Each question is shown once until every item has be
 
 On upgrading from v2, the first coverage round is seeded from existing answered-question history, so users resume only questions they have not answered. Round order, completed IDs and review snapshots persist across refresh, reopening and export/import. A wrong answer is counted as completed in the current round. Original v1 visited counts, bookmarks, queues and selected options migrate through canonical aliases and option-order maps. Revised questions keep visit counts and bookmarks but require a fresh answer. Old active exams containing revised wording are cleared rather than silently grading answers against changed text. Completed history remains stored. The v1 answer-key migration runs only for v1 data; upgrading v2 to v3 does not reset mastered/revised question statistics.
 
-Progress uses localStorage; no automatic cross-device sync. Export/import supports transfer. There is no service worker. Asset query versions and meta.version are3.0.0/v3 so the update button loads the revised code and bank without clearing progress.
+Progress uses localStorage; no automatic cross-device sync. Export/import supports transfer. There is no service worker. Asset query versions and meta.version are 3.1.0/v3.1 so the update button loads the revised code and bank without clearing progress. The v3→v3.1 upgrade preserves scores, coverage, bookmarks, history and the current unanswered practice question.
+
+## Quick review
+
+The “ทบทวนเร็ว” navigation item and `https://apirak09.github.io/chemsafe/?v=3.1#study` open a read-only review of all142 questions without pagination. Every card shows its single best answer, explanation, reference links and any wording-revision notice. All choices are available per question or via an “แสดงทุกช้อยส์” checkbox. The answer is always visible for rapid review.
+
+Keyword search defaults to question stems and question IDs; an optional scope searches choices too. Multiple space-separated keywords use AND matching. Matching normalizes Unicode, whitespace, zero-width characters and Latin case; displayed literal matches are highlighted safely. Category, last-wrong, bookmark, unseen and revised filters can be combined. Search updates only results so typing/caret/IME input is not disrupted. Opening or searching review never records an answer, changes a score, consumes a coverage question or replaces active practice/exams. Only explicitly clicking a bookmark changes bookmarks.
 
 Validation:
 ```
 node --test core.test.mjs migration.test.mjs
+node --test study.test.mjs
 node app.test.mjs
+node study-ui.test.mjs
 node round-ui.test.mjs
 LEGACY=1 node round-ui.test.mjs
 node validate.mjs
 ```
-The app test uses a DOM stub, not a visual browser. It renders and answers every production question and checks exactly one highlighted answer. Round UI regressions cover an entirely wrong full pass, a v2 user with seven questions remaining, explicit restart, and finite wrong-only review. Browser QA was unavailable in this environment. Changes are confined to /chemsafe.
+The automated app tests use a DOM stub. They render and answer every production question and check exactly one highlighted answer. Round UI regressions cover an entirely wrong full pass, a v2 user with seven questions remaining, explicit restart, and finite wrong-only review. Quick-review tests cover search scope, Unicode and regex safety, combined filters, IME, all142 answer panels, direct links, bookmarks, and preservation of active practice/exams and progress. Desktop browser QA for v3.1 verified layout, keyword search, displayed choices, bookmarking and bookmarked filtering using the supervised preview; no application console errors were observed. Mobile breakpoint styles are included but mobile visual QA was not performed. Changes are confined to /chemsafe.

@@ -1,6 +1,6 @@
 export const STORE_KEY='chemsafe-progress-v1';
 export function shuffle(items,random=Math.random){const a=[...items];for(let i=a.length-1;i>0;i--){const j=Math.floor(random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
-export function blankProgress(){return {schema:1,bankVersion:'3.0.0',stats:{},bookmarks:[],history:[],total:0,correct:0,cycle:[],turn:0,recent:[],practice:null,exam:null,coverage:null,review:null}}
+export function blankProgress(){return {schema:1,bankVersion:'3.1.0',stats:{},bookmarks:[],history:[],total:0,correct:0,cycle:[],turn:0,recent:[],practice:null,exam:null,coverage:null,review:null}}
 export function statFor(p,id){return p.stats[id]||{attempts:0,correct:0,streak:0,last:0,lastCorrect:null}}
 export function isScored(q){return q.status==='verified'&&Array.isArray(q.correct)&&q.correct.length===1&&Number.isInteger(q.correct[0])&&q.correct[0]>=0&&q.correct[0]<q.options.length}
 export function record(p,q,choice,now=Date.now()){const s={...statFor(p,q.id)};s.attempts++;s.last=now;s.lastChoice=choice;const scored=isScored(q);s.lastCorrect=scored?q.correct.includes(choice):null;if(scored){p.total++;if(s.lastCorrect){p.correct++;s.correct++;s.streak++}else s.streak=0}p.stats[q.id]=s;if(p.coverage&&!p.coverage.done.includes(q.id))p.coverage.done.push(q.id);if(p.review?.ids.includes(q.id)&&!p.review.done.includes(q.id))p.review.done.push(q.id);return s}
