@@ -1,0 +1,1975 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#125a4c"><meta name="description" content="เรียนและฝึก Time Value of Money จากสไลด์ 9.1–9.2 พร้อมข้อสอบจำลอง 10 ข้อและเฉลยละเอียด"><title>EconPrep — ฝึก Time Value of Money</title>
+<style>@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&display=swap');
+:root{--ink:#172d29;--muted:#667670;--green:#125a4c;--deep:#0c3e36;--light:#edf4ee;--lime:#d8f591;--line:#dce4de;--red:#a64136;--paper:#fff;--bg:#f7f8f3;--amber:#795b21;--shadow:0 18px 45px rgba(26,56,42,.055)}*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--ink);font-family:'IBM Plex Sans Thai',system-ui,sans-serif;font-size:16px;line-height:1.7}button,input,select{font:inherit}button,a,input,select{touch-action:manipulation}button{cursor:pointer;border:0}a{color:var(--green)}button:disabled{cursor:default;opacity:.48}button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,summary:focus-visible{outline:3px solid #83a833;outline-offset:3px}.header{max-width:1400px;margin:auto;padding:20px 40px;display:flex;align-items:center;justify-content:space-between;gap:20px;border-bottom:1px solid var(--line)}.brand{text-decoration:none;display:flex;align-items:center;gap:12px;color:var(--ink);font:800 22px Manrope,system-ui,sans-serif;letter-spacing:-.7px;white-space:nowrap}.brand small{display:block;font-size:9px;letter-spacing:1.5px;color:var(--muted);margin-top:5px}.brand-icon{display:grid;place-items:center;background:var(--green);color:#d8f591;width:43px;height:43px;border-radius:13px;font:700 28px Georgia,serif}.header nav{display:flex;gap:3px}.nav{color:var(--muted);background:transparent;border-radius:9px;padding:9px 12px;white-space:nowrap}.nav.active{color:var(--green);background:var(--light);font-weight:600}.icon-btn{background:transparent;color:var(--muted);padding:8px;font-size:18px;white-space:nowrap}.icon-btn span{font-size:12px}main{max-width:1248px;margin:auto;padding:46px 32px 70px;min-height:calc(100vh - 190px)}h1,h2,h3,p{margin-top:0}h1{font-size:clamp(32px,4vw,49px);line-height:1.3;letter-spacing:-1.2px;font-weight:600;margin-bottom:18px}h2{font-size:23px;font-weight:600;line-height:1.5}h3{font-size:18px;line-height:1.5;font-weight:600}p{color:var(--muted)}.eyebrow{font:700 11px Manrope,system-ui,sans-serif;letter-spacing:1.7px;color:var(--green);margin-bottom:18px;text-transform:uppercase}.hero{display:grid;grid-template-columns:1.12fr 1fr;gap:50px;align-items:center;margin-bottom:32px}.hero p{max-width:570px;margin-bottom:24px}.hero-visual{min-height:277px;border-radius:23px;background:#e6eee1;position:relative;overflow:hidden;display:grid;place-items:center;padding:28px}.hero-visual svg{width:100%;height:auto;max-height:240px}.hero-visual .mini-label{position:absolute;left:23px;top:18px;font:700 10px Manrope,sans-serif;letter-spacing:1.3px;color:var(--green)}.hero-visual .bottom-label{position:absolute;bottom:16px;left:23px;right:23px;display:flex;justify-content:space-between;color:var(--green);font-size:11px}.primary,.secondary,.danger{display:inline-flex;align-items:center;justify-content:center;gap:9px;border-radius:10px;padding:11px 19px;font-weight:600;text-decoration:none;min-height:44px}.primary{background:var(--green);color:white}.primary:hover{background:var(--deep)}.secondary{background:white;color:var(--green);border:1px solid var(--line)}.secondary:hover{background:#f5f8f2}.danger{background:#f9e9e5;color:var(--red)}.actions{display:flex;gap:10px;align-items:center;flex-wrap:wrap}.micro{font-size:12px;color:var(--muted)}.stats{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--line);background:white;border-radius:16px;margin:0 0 32px;overflow:hidden}.stat{padding:20px 22px;border-right:1px solid var(--line)}.stat:last-child{border:0}.stat strong{display:block;font:700 28px Manrope,system-ui,sans-serif;letter-spacing:-1px;margin:8px 0 4px}.stat span{font-size:13px;color:var(--muted)}.stat i{font-style:normal;font-size:12px;color:var(--green)}.section-title{display:flex;justify-content:space-between;gap:20px;align-items:baseline;margin:28px 0 16px}.section-title h2{margin:0}.modes{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}.mode{background:white;border:1px solid var(--line);border-radius:17px;padding:24px;display:flex;flex-direction:column;align-items:flex-start;position:relative}.mode.featured{background:#f0f5e8;border-color:#bfd3ab}.mode .mode-number{font:600 11px Manrope,sans-serif;color:var(--muted);margin-bottom:24px;letter-spacing:1px}.mode h3{margin:0 0 8px}.mode p{font-size:14px;flex:1}.mode button{margin-top:4px}.tag{display:inline-flex;align-items:center;padding:4px 9px;border-radius:7px;font-size:11px;background:var(--light);color:var(--green);font-weight:600}.tag.warn{background:#fff0cc;color:var(--amber)}.coverage{margin-top:28px;background:white;border:1px solid var(--line);padding:24px;border-radius:17px}.coverage-top{display:flex;align-items:center;justify-content:space-between;gap:20px}.coverage-top h3{margin-bottom:4px}.bar{height:7px;background:#e9eee7;border-radius:10px;overflow:hidden}.bar span{height:100%;display:block;background:var(--green);border-radius:10px}.coverage .bar{margin:18px 0 10px}.dot-grid{display:flex;flex-wrap:wrap;gap:5px;margin-top:15px}.dot{height:10px;width:10px;border-radius:3px;background:#e4e9e2}.dot.seen{background:#9cbea4}.dot.mastered{background:var(--green)}.dot.wrong{background:#db9a87}.legend{display:flex;gap:16px;flex-wrap:wrap;font-size:11px;color:var(--muted);margin-top:12px}.legend span{display:flex;align-items:center;gap:5px}.page-head{margin-bottom:28px}.page-head h1{font-size:34px;margin-bottom:8px}.page-head p{max-width:760px;margin-bottom:0}.flex-between{display:flex;align-items:center;justify-content:space-between;gap:14px}.practice-layout{display:grid;grid-template-columns:minmax(0,1fr) 250px;gap:24px;align-items:start}.question-card,.side-card,.source-card{background:white;border:1px solid var(--line);border-radius:17px;padding:28px}.question-card{box-shadow:var(--shadow)}.side-card{padding:20px;margin-bottom:16px}.side-card h3{font-size:15px}.side-row{display:flex;justify-content:space-between;gap:10px;margin:11px 0;font-size:13px}.side-row b{font-family:Manrope,sans-serif}.question-meta{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:24px;flex-wrap:wrap}.question-title{font-size:21px;line-height:1.8;font-weight:500;margin-bottom:23px;white-space:pre-line;overflow-wrap:anywhere}.choices{display:grid;gap:10px}.choice{display:flex;align-items:flex-start;gap:14px;width:100%;text-align:left;border:1px solid var(--line);border-radius:12px;padding:13px 15px;background:white;color:var(--ink);line-height:1.65}.choice .letter{flex-shrink:0;width:29px;height:29px;border-radius:8px;background:#f1f4ee;display:grid;place-items:center;font:600 12px Manrope,sans-serif}.choice:hover:not(:disabled){border-color:var(--green);background:#f5f8f1}.choice.selected{border-color:var(--green);box-shadow:0 0 0 1px var(--green);background:#f1f7ec}.choice.correct{border-color:#5a9672;background:#eff8ef}.choice.incorrect{border-color:#ce9388;background:#fff2ed}.choice:disabled{opacity:1;color:var(--ink)}.choice.correct .letter{background:#d3ead1;color:#1f5834}.choice.incorrect .letter{background:#f0d3ca;color:var(--red)}.answer-panel{border-radius:12px;padding:22px;margin-top:22px;background:#edf6ed;border:1px solid #cce0c9}.answer-panel.wrong{background:#fff3ee;border-color:#f0d0c3}.answer-panel h3{margin-bottom:9px}.answer-panel p,.answer-panel li{font-size:14px;color:var(--ink);white-space:pre-line}.answer-panel ol{padding-left:23px}.answer-panel li{padding:3px 0}.answer-panel .source-line{font-size:12px;color:var(--muted);border-top:1px solid #cfdfce;padding-top:12px;margin:14px 0 0}.question-bottom{display:flex;justify-content:space-between;align-items:center;gap:16px;margin-top:25px;padding-top:20px;border-top:1px solid var(--line)}.bookmark{background:transparent;color:var(--muted);font-size:13px;padding:8px}.bookmark.on{color:var(--green);font-weight:600}.exam-actions{display:flex;justify-content:space-between;gap:10px;margin-top:25px}.exam-nav{display:flex;flex-wrap:wrap;gap:6px;margin-top:16px}.qnum{width:34px;height:34px;border-radius:7px;border:1px solid var(--line);background:white;font:600 11px Manrope,sans-serif;color:var(--muted)}.qnum.answered{background:var(--light);border-color:#bed0ba;color:var(--green)}.qnum.current{background:var(--green);color:white}.timer{font:700 25px Manrope,sans-serif;letter-spacing:1px;margin-bottom:10px}.notice,.tip,.warning{font-size:13px;line-height:1.8;border-left:3px solid #abc68e;padding:13px 16px;background:#f0f4e9;color:#526658;margin:20px 0;border-radius:0 8px 8px 0}.warning{background:#fff6df;border-color:#dbbd6c;color:#6c551f}.setup{display:flex;gap:18px;flex-wrap:wrap;margin:20px 0}.setup label{display:flex;flex-direction:column;gap:7px;font-size:13px;min-width:190px}input,select{background:white;border:1px solid var(--line);padding:10px 13px;border-radius:9px;color:var(--ink)}.score{font:800 70px Manrope,sans-serif;letter-spacing:-4px;color:var(--green);line-height:1.2}.score small{font-size:24px;color:var(--muted);letter-spacing:-1px}.result-hero{text-align:center;padding:24px 20px 32px}.result-hero .actions{justify-content:center;margin-top:22px}.review-item,.bank-row{background:white;border:1px solid var(--line);border-radius:12px;padding:18px 20px;margin:10px 0}.review-item h3,.bank-row h3{font-size:16px;line-height:1.7;margin:7px 0;font-weight:500}.review-item .answer-panel{margin-top:15px}.bank-row summary{cursor:pointer;color:var(--green);font-size:13px}.bank-row details{margin-top:12px}.filters{display:flex;flex-wrap:wrap;gap:10px;margin:22px 0}.filters input{flex:1;min-width:190px}.empty{padding:30px;text-align:center;color:var(--muted)}.lesson-layout{display:grid;grid-template-columns:250px minmax(0,1fr);gap:24px;align-items:start}.lesson-menu{position:sticky;top:16px;background:white;border:1px solid var(--line);border-radius:15px;padding:14px;max-height:82vh;overflow:auto}.lesson-menu-title{padding:8px 10px;font-size:11px;color:var(--muted);letter-spacing:1px;font-weight:700}.lesson-item{display:flex;width:100%;text-align:left;align-items:flex-start;gap:8px;background:transparent;border-radius:9px;padding:9px 10px;color:var(--muted);font-size:13px;line-height:1.5}.lesson-item.active{background:var(--light);color:var(--green);font-weight:600}.lesson-item span{min-width:24px;color:#8a9a90;font:600 11px Manrope;margin-top:4px}.lesson-article{background:white;border:1px solid var(--line);border-radius:17px;padding:32px 36px;min-width:0;box-shadow:var(--shadow)}.lesson-article h1{font-size:30px;margin:10px 0}.lesson-article h3{font-size:18px;margin-top:28px;margin-bottom:8px}.lesson-article p,.lesson-article li{color:#40514a}.lesson-article p{margin-bottom:16px}.lesson-article li{padding:4px 0}.lesson-article ol{padding-left:22px}.formula{font-size:15px;line-height:2;overflow-wrap:anywhere;background:#eef5ea;color:#21483d;border:1px solid #d4e4d0;border-radius:11px;padding:16px 18px;margin:18px 0;font-family:'IBM Plex Sans Thai',system-ui,sans-serif}.table-wrap{overflow-x:auto}.lesson-article table{width:100%;border-collapse:collapse;font-size:13px;margin:14px 0}.lesson-article th,.lesson-article td{text-align:left;border-bottom:1px solid var(--line);padding:10px;vertical-align:top}.lesson-article th{color:var(--green);font-weight:600}.lesson-bottom{border-top:1px solid var(--line);margin-top:30px;padding-top:22px;display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px}.text-link{background:none;padding:4px 0;color:var(--green);text-decoration:underline;font-size:13px}.source-links{display:flex;flex-wrap:wrap;gap:12px}.source-links a{font-size:12px}.loading{padding:80px;text-align:center;color:var(--muted)}footer{max-width:1240px;margin:auto;border-top:1px solid var(--line);padding:24px 24px 30px;display:flex;justify-content:space-between;gap:20px;font-size:11px;color:var(--muted)}#toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:var(--ink);color:white;padding:11px 20px;border-radius:10px;font-size:13px;z-index:5;max-width:90vw;display:none}.skip{position:absolute;top:-100px}.skip:focus{top:10px;left:10px;background:white;padding:10px;z-index:10}.mobile-lesson{display:none}.progress-label{font-size:12px;color:var(--muted)}.bank-count{font-size:13px;color:var(--muted)}.review-choice{font-size:13px;color:#40514a;margin:7px 0}.result-question{margin-bottom:8px}.source-card h2{margin-bottom:6px}.source-card p{font-size:14px}.kbd{font-family:Manrope,system-ui;font-size:11px;color:var(--muted);margin-top:15px}.exam-warning{margin:18px 0}.btn-sm{min-height:38px;padding:7px 13px;font-size:13px}
+@media(max-width:1000px){.header{padding:18px 24px;gap:10px}.nav{padding:8px 8px;font-size:13px}.hero{gap:24px}.practice-layout{grid-template-columns:minmax(0,1fr) 220px;gap:16px}.question-card{padding:24px}.modes{gap:12px}.mode{padding:20px}.stat{padding:17px}.lesson-layout{grid-template-columns:210px minmax(0,1fr);gap:16px}}
+@media(max-width:700px){.header{padding:15px 17px;flex-wrap:wrap}.brand{font-size:20px}.brand-icon{width:38px;height:38px;font-size:25px}.header nav{order:3;width:100%;display:flex;border-top:1px solid var(--line);padding-top:10px;margin-top:2px;overflow-x:auto;scrollbar-width:none}.header nav::-webkit-scrollbar{display:none}.nav{flex:1;font-size:12px;padding:8px 10px}.icon-btn{margin-left:auto}main{padding:30px 17px 45px}.hero{grid-template-columns:1fr;gap:22px;margin-bottom:25px}.hero-visual{min-height:180px;order:2}.hero-visual svg{max-height:155px}.hero h1{font-size:34px}.hero p{font-size:14px}.stats{grid-template-columns:repeat(2,1fr);margin-bottom:27px}.stat{padding:15px;border-bottom:1px solid var(--line)}.stat:nth-child(2){border-right:0}.stat:nth-child(n+3){border-bottom:0}.stat strong{font-size:25px}.modes{grid-template-columns:1fr}.mode .mode-number{margin-bottom:14px}.practice-layout{grid-template-columns:1fr}.practice-layout aside{display:grid;grid-template-columns:1fr;gap:0}.question-card,.source-card{padding:20px}.question-title{font-size:19px}.question-bottom{align-items:stretch}.question-bottom .primary{margin-left:auto}.page-head h1{font-size:29px}.lesson-layout{display:block}.lesson-menu{display:none}.mobile-lesson{display:block;width:100%;margin-bottom:15px}.lesson-article{padding:22px 20px}.lesson-article h1{font-size:26px}.lesson-bottom .actions{width:100%}.lesson-bottom .actions button{flex:1}.flex-between{align-items:flex-start}.filters input,.filters select{width:100%;min-width:0}.score{font-size:60px}footer{flex-direction:column;gap:5px;padding:22px 18px}}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">ข้ามไปเนื้อหา</a>
+<header class="header"><a class="brand" href="./" data-view="home" aria-label="EconPrep หน้าหลัก"><span class="brand-icon">∑</span><span>EconPrep<small>TIME VALUE OF MONEY</small></span></a><nav aria-label="เมนูหลัก"><button class="nav active" data-view="home">ภาพรวม</button><button class="nav" data-view="learn">บทเรียน</button><button class="nav" data-view="practiceStart">ฝึกทีละข้อ</button><button class="nav" data-view="examSetup">จำลองสอบ</button><button class="nav" data-view="bank">คลังข้อสอบ</button></nav><button id="update" class="icon-btn" aria-label="โหลดเว็บเวอร์ชันล่าสุด">↻ <span>อัปเดต</span></button></header>
+<main id="main" tabindex="-1"><div class="loading">กำลังเตรียมบทเรียนและคลังข้อสอบ…</div></main>
+<footer><span>EconPrep · เข้าใจเหตุผลก่อนจำสูตร</span><span>สื่อฝึกอิสระจากสไลด์และข้อสอบที่ให้มา · ไม่ใช่ระบบสอบทางการ</span></footer><div id="toast" role="status" aria-live="polite"></div>
+<script>const QUESTIONS = [
+  {
+    "id": "Q001",
+    "chapter": "9.1",
+    "topic": "มูลค่าเงินตามเวลา",
+    "question": "ถ้าอัตราดอกเบี้ยเป็นบวก และความเสี่ยงเท่ากัน ทำไมเงิน 1,000 บาทวันนี้จึงมีมูลค่าทางเศรษฐกิจมากกว่าเงิน 1,000 บาทในอีกหนึ่งปี?",
+    "options": [
+      "เงินวันนี้นำไปลงทุนและรับผลตอบแทนระหว่างรอได้",
+      "ตัวเลข 1,000 ในอนาคตต้องเปลี่ยนเป็น 0 เสมอ",
+      "เงินในอนาคตใช้ซื้อสินค้าไม่ได้",
+      "จำนวนเงินในอนาคตมากกว่าวันนี้เสมอ"
+    ],
+    "correct": 0,
+    "why": "หลัก time value of money เปรียบเทียบเงิน ณ เวลาเดียวกัน โดยคิดโอกาสรับผลตอบแทน",
+    "steps": [
+      "หากนำ 1,000 ไปลงทุน 10% ต่อปี จะมี 1,100 บาทในหนึ่งปี",
+      "ดังนั้น 1,000 วันนี้เทียบได้กับ 1,100 ปีหน้า ไม่ใช่ 1,000 ปีหน้า"
+    ],
+    "ref": "9.1 · หน้า 5–7",
+    "origin": "สร้างเพิ่มจากสไลด์"
+  },
+  {
+    "id": "Q002",
+    "chapter": "9.1",
+    "topic": "มูลค่าเงินตามเวลา",
+    "question": "ที่อัตรา 10% ต่อปี จำนวนใดเทียบเท่า 100 บาทวันนี้เมื่อครบหนึ่งปี?",
+    "options": [
+      "110 บาท",
+      "100 บาท",
+      "90 บาท",
+      "120 บาท"
+    ],
+    "correct": 0,
+    "why": "ใช้ F/P เพราะย้ายเงินก้อนเดียวจากเวลาปัจจุบันไปอนาคต",
+    "steps": [
+      "F = P(1+i)ⁿ",
+      "F = 100(1.10)¹ = 110 บาท; equivalence ขึ้นกับอัตราและเวลา"
+    ],
+    "ref": "9.1 · หน้า 30–31",
+    "origin": "สร้างเพิ่มจากสไลด์"
+  },
+  {
+    "id": "Q003",
+    "chapter": "9.1",
+    "topic": "มูลค่าเงินตามเวลา",
+    "question": "อัตราผลตอบแทน 7% ต่อปี ถ้ารับ 930 บาทวันนี้แล้วลงทุนหนึ่งปี จะมีเงินเท่าใดเมื่อสิ้นปี?",
+    "options": [
+      "995.10 บาท",
+      "930.00 บาท",
+      "1,000.00 บาท",
+      "1,581.00 บาท"
+    ],
+    "correct": 0,
+    "why": "รับเงินวันนี้แล้วทบหนึ่งปี: ใช้ F = P(1+i)ⁿ",
+    "steps": [
+      "P = 930, i = 0.07 ต่อปี, n = 1 ปี",
+      "F = 930(1.07) = 995.10 บาท; ถ้าอีกทางเลือกให้ 1,000 สิ้นปี ทางเลือกนั้นมากกว่า ณ ปีที่ 1"
+    ],
+    "ref": "9.1 · หน้า 5",
+    "origin": "สร้างเพิ่มจากสไลด์"
+  },
+  {
+    "id": "Q004",
+    "chapter": "9.1",
+    "topic": "มูลค่าเงินตามเวลา",
+    "question": "ต้องเปรียบเทียบรับ 1,420 บาทวันนี้กับ 1,500 บาทสิ้นปีที่ 1 หาก i = 7% ต่อปี ควรเลือกข้อใด?",
+    "options": [
+      "รับ 1,420 บาทวันนี้",
+      "รับ 1,500 บาทสิ้นปีที่ 1",
+      "เท่ากันพอดี",
+      "ตอบไม่ได้แม้รู้ i และเวลา"
+    ],
+    "correct": 0,
+    "why": "ย้ายทั้งสองทางเลือกไปเวลาเดียวกันก่อนเปรียบเทียบ",
+    "steps": [
+      "นำ 1,420 วันนี้ไปสิ้นปี: 1,420(1.07) = 1,519.40 บาท",
+      "1,519.40 มากกว่า 1,500 จึงเลือกรับวันนี้ หากความเสี่ยงและเงื่อนไขอื่นเท่ากัน"
+    ],
+    "ref": "9.1 · หน้า 5",
+    "origin": "สร้างเพิ่มจากสไลด์"
+  },
+  {
+    "id": "Q005",
+    "chapter": "9.1",
+    "topic": "ดอกเบี้ยอย่างง่ายและทบต้น",
+    "question": "ฝาก 10,000 บาทที่ดอกเบี้ยอย่างง่าย 8% ต่อปี เป็นเวลา 3 ปี เงินรวมเป็นเท่าใด?",
+    "options": [
+      "12,400.00 บาท",
+      "12,597.12 บาท",
+      "10,800.00 บาท",
+      "1,240.00 บาท"
+    ],
+    "correct": 0,
+    "why": "โจทย์ระบุ simple interest จึงคิดดอกเบี้ยบนเงินต้นเดิม ไม่ทบผลตอบแทน",
+    "steps": [
+      "I = Pin = 10,000(0.08)(3) = 2,400 บาท",
+      "F = P + I = 10,000 + 2,400 = 12,400 บาท"
+    ],
+    "ref": "9.1 · หน้า 8–10",
+    "origin": "สร้างเพิ่มจากสไลด์"
+  },
+  {
+    "id": "Q006",
+    "chapter": "9.1",
+    "topic": "ดอกเบี้ยอย่างง่ายและทบต้น",
+    "question": "ฝาก 10,000 บาทที่ 8% ต่อปี ทบต้นรายปี 3 ปี มูลค่าเมื่อสิ้นปีที่ 3 เท่าใด?",
+    "options": [
+      "12,597.12 บาท",
+      "12,400.00 บาท",
+      "10,800.00 บาท",
+      "13,000.00 บาท"
+    ],
+    "correct": 0,
+    "why": "ผลตอบแทนแต่ละปีถูกนำมาทบเป็นฐานของปีถัดไป จึงใช้ F/P",
+    "steps": [
+      "F = P(1+i)ⁿ = 10,000(1.08)³",
+      "F = 12,597.12 บาท; มากกว่า 12,400 แบบ simple interest เพราะมีดอกเบี้ยบนดอกเบี้ย"
+    ],
+    "ref": "9.1 · หน้า 11–12",
+    "origin": "สร้างเพิ่มจากสไลด์"
+  },
+  {
+    "id": "Q007",
+    "chapter": "9.1",
+    "topic": "ดอกเบี้ยอย่างง่ายและทบต้น",
+    "question": "ข้อใดอธิบายความต่างของ simple interest กับ compound interest ได้ถูกต้อง?",
+    "options": [
+      "Simple คิดจากเงินต้นเดิม ส่วน compound คิดจากยอดสะสมที่รวมดอกเบี้ยแล้ว",
+      "Simple ต้องมีอัตราสูงกว่า compound เสมอ",
+      "Compound คิดปีละครั้งเท่านั้น",
+      "Simple ทำให้ดอกเบี้ยปีต่อ ๆ ไปเพิ่มเพราะทบต้น"
+    ],
+    "correct": 0,
+    "why": "แยกจากฐานที่นำไปคิดดอกเบี้ย ไม่ใช่ดูว่าอัตราที่ระบุสูงหรือต่ำ",
+    "steps": [
+      "Simple: I ปีละ P × i เท่าเดิม",
+      "Compound: เงินสะสมงวดก่อนกลายเป็นฐานงวดต่อไป"
+    ],
+    "ref": "9.1 · หน้า 9–12",
+    "origin": "สร้างเพิ่มจากสไลด์"
+  },
+  {
+    "id": "Q008",
+    "chapter": "9.1",
+    "topic": "เงินก้อนเดียว P–F",
+    "question": "ต้องการ 5,000 ดอลลาร์เมื่อครบ 10 ปี ที่ 8% ทบต้นรายปี ต้องลงทุนวันนี้เท่าใด?",
+    "options": [
+      "2,315.97 ดอลลาร์",
+      "2,777.78 ดอลลาร์",
+      "4,629.63 ดอลลาร์",
+      "2,500.00 ดอลลาร์"
+    ],
+    "correct": 0,
+    "why": "รู้ F ต้องการ P จึง discount ย้อนกลับ 10 ปีด้วย P/F",
+    "steps": [
+      "P = F/(1+i)ⁿ",
+      "P = 5,000/(1.08)¹⁰ = 2,315.97 ดอลลาร์"
+    ],
+    "ref": "9.1 · หน้า 13",
+    "origin": "สร้างเพิ่มจากสไลด์"
+  },
+  {
+    "id": "Q009",
+    "chapter": "9.1",
+    "topic": "เงินก้อนเดียว P–F",
+    "question": "ต้องการเงิน 100,000 บาทในอีก 5 ปี ดอกเบี้ย 4% ทบต้นรายปีต้องฝากวันนี้ใกล้เคียงเท่าใด?",
+    "options": [
+      "82,192.71 บาท",
+      "90,190.00 บาท",
+      "86,160.00 บาท",
+      "85,160.00 บาท"
+    ],
+    "correct": 0,
+    "why": "โจทย์ให้ F และต้องการ P ของเงินก้อนเดียว จึงใช้ P/F",
+    "steps": [
+      "P = 100,000/(1.04)⁵ = 82,192.71 บาท",
+      "หากช้อยส์สอบปัดเป็นหลักสิบ จะตรงกับประมาณ 82,190 บาท"
+    ],
+    "ref": "9.1 · หน้า 25; ข้อสอบ 2025 · หน้า 5 ข้อ 23",
+    "origin": "ดัดแปลงจากข้อสอบ 2025"
+  },
+  {
+    "id": "Q010",
+    "chapter": "9.1",
+    "topic": "เงินก้อนเดียว P–F",
+    "question": "เมื่อครบ 10 ปีได้รับเงิน 21,500 บาท อัตรา 10% ต่อปีแบบ nominal ทบต้นปีละ 2 ครั้ง เงินต้นเท่าใด?",
+    "options": [
+      "8,103.12 บาท",
+      "8,289.18 บาท",
+      "13,199.13 บาท",
+      "3,195.84 บาท"
+    ],
+    "correct": 0,
+    "why": "ต้องแปลง i และ n ให้เป็นงวดครึ่งปีเดียวกันก่อนใช้ P/F",
+    "steps": [
+      "i ต่องวด = 0.10/2 = 0.05; n = 10 × 2 = 20 งวด",
+      "P = 21,500/(1.05)²⁰ = 8,103.12 บาท หรือประมาณ 8,100 บาท"
+    ],
+    "ref": "ข้อสอบ 2025 · หน้า 3–4 ข้อ 16; 9.1 · หน้า 15–17",
+    "origin": "ดัดแปลงจากข้อสอบ 2025"
+  },
+  {
+    "id": "Q011",
+    "chapter": "9.1",
+    "topic": "เงินก้อนเดียว P–F",
+    "question": "ฝาก 1,000 บาท 3 ปี โดยผลตอบแทนปีที่ 1, 2, 3 เท่ากับ 5%, 8%, 3% ตามลำดับ จะมีเงินเท่าใด?",
+    "options": [
+      "1,168.02 บาท",
+      "1,160.00 บาท",
+      "1,134.00 บาท",
+      "1,259.71 บาท"
+    ],
+    "correct": 0,
+    "why": "อัตราเปลี่ยนรายปี จึงคูณตัวประกอบของแต่ละปี ไม่ใช่ใช้อัตราปีเดียวซ้ำ",
+    "steps": [
+      "F = P(1+i₁)(1+i₂)(1+i₃)",
+      "F = 1,000(1.05)(1.08)(1.03) = 1,168.02 บาท"
+    ],
+    "ref": "9.1 · หน้า 14",
+    "origin": "สร้างเพิ่มจากสไลด์"
+  },
+  {
+    "id": "Q012",
+    "chapter": "9.1",
+    "topic": "เงินก้อนเดียว P–F",
+    "question": "เงิน 10,000 บาทเติบโตเป็น 14,641 บาทใน 4 ปี โดยทบต้นปีละครั้ง อัตราต่อปีเท่าใด?",
+    "options": [
+      "10.00 % ต่อปี",
+      "8.00 % ต่อปี",
+      "12.00 % ต่อปี",
+      "46.41 % ต่อปี"
+    ],
+    "correct": 0,
+    "why": "รู้ P, F, n และต้องการ i จึงย้อนจากสมการทบต้น",
+    "steps": [
+      "F/P = (1+i)⁴ → i = (F/P)^(1/4) − 1",
+      "i = (14,641/10,000)^(1/4) − 1 = 0.10 = 10% ต่อปี"
+    ],
+    "ref": "9.1 · หน้า 11–14",
+    "origin": "สร้างเพิ่มจากสไลด์"
+  },
+  {
+    "id": "Q013",
+    "chapter": "9.1",
+    "topic": "เงินก้อนเดียว P–F",
+    "question": "ลงทุน 10,000 บาทที่ 10% ทบต้นรายปี ต้องใช้เวลากี่ปีจึงเติบโตถึง 13,310 บาท?",
+    "options": [
+      "3.00 ปี",
+      "2.00 ปี",
+      "4.00 ปี",
+      "3.31 ปี"
+    ],
+    "correct": 0,
+    "why": "รู้ P, F, i และต้องหา n; ใช้ลอการิทึมหรือทดลองยกกำลัง",
+    "steps": [
+      "13,310 = 10,000(1.10)ⁿ",
+      "n = ln(13,310/10,000)/ln(1.10) = 3 ปี"
+    ],
+    "ref": "9.1 · หน้า 11–14",
+    "origin": "สร้างเพิ่มจากสไลด์"
+  },
+  {
+    "id": "Q014",
+    "chapter": "9.1",
+    "topic": "Nominal & effective rate",
+    "question": "ดอกเบี้ย nominal 12% ต่อปี ทบต้นรายเดือน มี effective annual rate เท่าใด?",
+    "options": [
+      "12.68 % ต่อปี",
+      "12.00 % ต่อปี",
+      "12.12 % ต่อปี",
+      "11.49 % ต่อปี"
+    ],
+    "correct": 0,
+    "why": "อัตรา 12% เป็น nominal จึงแปลงเป็นอัตราต่อเดือนแล้วทบ 12 งวด",
+    "steps": [
+      "i_month = 0.12/12 = 0.01",
+      "i_eff,year = (1+0.01)¹² − 1 = 0.126825 ≈ 12.68% ต่อปี"
+    ],
+    "ref": "9.1 · หน้า 15–18; ข้อสอบ 2025 · หน้า 6 ข้อ 28",
+    "origin": "ดัดแปลงจากข้อสอบ 2025"
+  },
+  {
+    "id": "Q015",
+    "chapter": "9.1",
+    "topic": "Nominal & effective rate",
+    "question": "Effective annual rate เท่ากับ 12% ถ้าทบต้นรายไตรมาส nominal annual rate เท่าใด?",
+    "options": [
+      "11.49 % ต่อปี",
+      "12.00 % ต่อปี",
+      "10.50 % ต่อปี",
+      "12.76 % ต่อปี"
+    ],
+    "correct": 0,
+    "why": "กลับสมการ effective annual: 1+i_eff = (1+j/m)^m",
+    "steps": [
+      "m = 4; j = 4[(1+0.12)^(1/4)−1]",
+      "j = 0.114947 ≈ 11.49% ต่อปี แบบ nominal"
+    ],
+    "ref": "9.1 · หน้า 26; ข้อสอบ 2025 · หน้า 5 ข้อ 22",
+    "origin": "ดัดแปลงจากข้อสอบ 2025"
+  },
+  {
+    "id": "Q016",
+    "chapter": "9.1",
+    "topic": "Nominal & effective rate",
+    "question": "Effective annual rate 10% โดยทบต้นปีละสองครั้ง เทียบกับ nominal annual rate เท่าใด?",
+    "options": [
+      "9.76 % ต่อปี",
+      "10.00 % ต่อปี",
+      "10.36 % ต่อปี",
+      "9.00 % ต่อปี"
+    ],
+    "correct": 0,
+    "why": "รู้ effective ต่อปีและต้องย้อนเป็น nominal โดยมี 2 งวดต่อปี",
+    "steps": [
+      "j = m[(1+i_eff)^(1/m) − 1]",
+      "j = 2[(1.10)^(1/2)−1] = 0.097618 ≈ 9.76% ต่อปี"
+    ],
+    "ref": "ข้อสอบ 2025 · หน้า 5–6 ข้อ 25; 9.1 · หน้า 17",
+    "origin": "ดัดแปลงจากข้อสอบ 2025"
+  },
+  {
+    "id": "Q017",
+    "chapter": "9.1",
+    "topic": "Nominal & effective rate",
+    "question": "อัตรา nominal 9% ต่อปี ทบต้นรายไตรมาส คิดเป็น effective rate ต่อครึ่งปีเท่าใด?",
+    "options": [
+      "4.55 % ต่อครึ่งปี",
+      "4.50 % ต่อครึ่งปี",
+      "2.25 % ต่อครึ่งปี",
+      "9.31 % ต่อครึ่งปี"
+    ],
+    "correct": 0,
+    "why": "ครึ่งปีมี 2 ไตรมาส จึงทบดอกเบี้ยไตรมาสสองครั้ง",
+    "steps": [
+      "i_quarter = 0.09/4 = 0.0225",
+      "i_6month = (1.0225)² − 1 = 0.04550625 ≈ 4.55% ต่อครึ่งปี"
+    ],
+    "ref": "9.1 · หน้า 19",
+    "origin": "สร้างเพิ่มจากสไลด์"
+  },
+  {
+    "id": "Q018",
+    "chapter": "9.1",
+    "topic": "Nominal & effective rate",
+    "question": "ฝาก 1,000 ดอลลาร์ที่ nominal 10% ต่อปี ทบต้นรายเดือน 10 ปี ยอดปลายงวดเท่าใด?",
+    "options": [
+      "2,707.04 ดอลลาร์",
+      "2,593.74 ดอลลาร์",
+      "2,000.00 ดอลลาร์",
+      "1,086.53 ดอลลาร์"
+    ],
+    "correct": 0,
+    "why": "หน่วยงวดดอกเบี้ยเป็นเดือน จึงใช้ 120 งวดและอัตรา 0.10/12 ต่องวด",
+    "steps": [
+      "F = 1,000(1 + 0.10/12)^(12×10)",
+      "F = 2,707.04 ดอลลาร์"
+    ],
+    "ref": "9.1 · หน้า 18",
+    "origin": "สร้างเพิ่มจากสไลด์"
+  },
+  {
+    "id": "Q019",
+    "chapter": "9.1",
+    "topic": "Nominal & effective rate",
+    "question": "หาก nominal 12% ต่อปี ทบต้นรายเดือน การใช้สูตรเงินกู้รายเดือนควรแทน i และ n อย่างไรสำหรับ 5 ปี?",
+    "options": [
+      "i = 0.12/12 ต่อเดือน และ n = 5×12 = 60 เดือน",
+      "i = 0.12 ต่อเดือน และ n = 5",
+      "i = 0.12 ต่อปี และ n = 60 ปี",
+      "i = 0.12/5 ต่อเดือน และ n = 12"
+    ],
+    "correct": 0,
+    "why": "อัตราต้องตรงกับช่วงเวลาของ n และการจ่าย",
+    "steps": [
+      "รายเดือน 5 ปีมี 60 งวด",
+      "i ต่องวดเดือน = nominal ต่อปี/12 = 1% ต่อเดือน"
+    ],
+    "ref": "9.1 · หน้า 15–18; 9.2 · หน้า 19–21",
+    "origin": "สร้างเพิ่มจากสไลด์"
+  },
+  {
+    "id": "Q020",
+    "chapter": "9.1",
+    "topic": "Nominal & effective rate",
+    "question": "เงินฝากใดมี effective annual rate สูงสุด โดยถือว่าความเสี่ยงเท่ากันและ 1 ปีมี 365 วัน?",
+    "options": [
+      "Nominal 10.5% ต่อปี ทบต้นรายไตรมาส",
+      "Nominal 10.0% ต่อปี ทบต้นรายเดือน",
+      "Nominal 9.5% ต่อปี ทบต้นรายวัน",
+      "ทั้งสามให้ผลเท่ากัน"
+    ],
+    "correct": 0,
+    "why": "เปรียบเทียบด้วย effective annual rate ที่มีหน่วยเดียวกันก่อนเลือก",
+    "steps": [
+      "9.5% รายวัน: (1+0.095/365)^365−1 ≈ 9.965%",
+      "10% รายเดือน ≈ 10.471%; 10.5% รายไตรมาส ≈ 10.921%",
+      "ค่าที่สูงสุดคือ 10.5% รายไตรมาส"
+    ],
+    "ref": "9.1 · หน้า 27",
+    "origin": "สร้างเพิ่มจากสไลด์"
+  },
+  {
+    "id": "Q021",
+    "chapter": "9.1",
+    "topic": "ดอกเบี้ยต่อเนื่อง",
+    "question": "Nominal annual rate 20% ทบต้นอย่างต่อเนื่อง มี effective annual rate ประมาณเท่าใด?",
+    "options": [
+      "22.14 % ต่อปี",
+      "20.00 % ต่อปี",
+      "21.00 % ต่อปี",
+      "24.00 % ต่อปี"
+    ],
+    "correct": 0,
+    "why": "ทบต้นต่อเนื่องใช้ i_eff = eʳ − 1 เมื่อ r เป็น nominal ต่อปี",
+    "steps": [
+      "i_eff = e^0.20 − 1 = 0.221403",
+      "แปลงเป็นร้อยละ: 22.14% ต่อปี"
+    ],
+    "ref": "9.1 · หน้า 20–23",
+    "origin": "สร้างเพิ่มจากสไลด์"
+  },
+  {
+    "id": "Q022",
+    "chapter": "9.1",
+    "topic": "ดอกเบี้ยต่อเนื่อง",
+    "question": "ฝาก 10,000 บาท อัตรา nominal 8% ต่อปี ทบต้นต่อเนื่องเป็นเวลา 3 ปี ยอดปลายงวดเท่าใด?",
+    "options": [
+      "12,712.49 บาท",
+      "12,597.12 บาท",
+      "12,400.00 บาท",
+      "10,832.87 บาท"
+    ],
+    "correct": 0,
+    "why": "ทบต้นต่อเนื่องของเงินก้อนเดียวใช้ F = Pe^(rt)",
+    "steps": [
+      "P = 10,000; r = 0.08 ต่อปี; t = 3 ปี",
+      "F = 10,000e^(0.08×3) = 12,712.49 บาท"
+    ],
+    "ref": "9.1 · หน้า 20–24",
+    "origin": "สร้างเพิ่มจากสไลด์"
+  },
+  {
+    "id": "Q023",
+    "chapter": "9.1",
+    "topic": "ดอกเบี้ยต่อเนื่อง",
+    "question": "ข้อใดถูกเกี่ยวกับอัตรา 8% nominal ต่อปี ทบต้นอย่างต่อเนื่อง?",
+    "options": [
+      "อัตรา effective ต่อปีเท่ากับ e^0.08 − 1",
+      "อัตรา effective ต่อปีเท่ากับ 8% พอดี",
+      "ต้องใช้ e^(8×100)",
+      "อัตรา effective ต่อเดือนเท่ากับ 8%"
+    ],
+    "correct": 0,
+    "why": "การทบต้นต่อเนื่องเป็นลิมิตของการทบถี่ขึ้นเมื่ออัตรา nominal ต่อปียังคงเดิม",
+    "steps": [
+      "i_eff,year = eʳ−1 โดย r = 0.08 ต่อปี",
+      "ประมาณ 8.33% ต่อปี ซึ่งมากกว่า 8% nominal เล็กน้อย"
+    ],
+    "ref": "9.1 · หน้า 20–23",
+    "origin": "สร้างเพิ่มจากสไลด์"
+  },
+  {
+    "id": "Q024",
+    "chapter": "9.1",
+    "topic": "เงินเฟ้อและกำลังซื้อ",
+    "question": "ข้อใดนิยามเงินเฟ้อได้แม่นยำที่สุด?",
+    "options": [
+      "ระดับราคาสินค้าและบริการโดยทั่วไปเพิ่มขึ้นต่อเนื่อง ทำให้กำลังซื้อของเงินลดลง",
+      "ราคาสินค้าหนึ่งชนิดเพิ่มครั้งเดียวหมายถึงเงินเฟ้อเสมอ",
+      "ทุกคนมีรายได้เพิ่มขึ้นพร้อมกัน",
+      "เงินมีค่ามากขึ้นจนซื้อได้มากขึ้นเสมอ"
+    ],
+    "correct": 0,
+    "why": "เงินเฟ้อวัดการเพิ่มของระดับราคาโดยรวม ไม่ได้แปลว่าทุกสินค้าต้องขึ้นพร้อมกัน",
+    "steps": [
+      "เมื่อระดับราคาโดยรวมสูงขึ้น เงินจำนวนเดิมซื้อสินค้าโดยรวมได้น้อยลง",
+      "เงินเฟ้อไม่ใช่เพียงการที่ราคาสินค้าเฉพาะชิ้นหนึ่งเพิ่มขึ้น"
+    ],
+    "ref": "9.1 · หน้า 32–35; ข้อสอบ 2025 · หน้า 4 ข้อ 18–19",
+    "origin": "ดัดแปลงจากข้อสอบ 2025"
+  },
+  {
+    "id": "Q025",
+    "chapter": "9.1",
+    "topic": "เงินเฟ้อและกำลังซื้อ",
+    "question": "ถ้าเงินเฟ้อลดจาก 6% เหลือ 2% ต่อปี ข้อใดถูกต้อง?",
+    "options": [
+      "ระดับราคาทั่วไปยังเพิ่มขึ้น แต่เพิ่มช้าลง",
+      "ระดับราคาทั่วไปลดลง 2% แน่นอน",
+      "กำลังซื้อของเงินเพิ่มขึ้นแน่นอน",
+      "นี่คือเงินฝืด −2% เสมอ"
+    ],
+    "correct": 0,
+    "why": "เงินเฟ้อที่ชะลอลงแต่ยังเป็นบวกต่างจากเงินฝืด",
+    "steps": [
+      "อัตรา 2% เป็นบวก ระดับราคาจึงยังเพิ่มขึ้นเฉลี่ย 2%",
+      "เงินฝืดหมายถึงระดับราคาโดยรวมลดลง หรืออัตราเงินเฟ้อติดลบ"
+    ],
+    "ref": "9.1 · หน้า 34–39",
+    "origin": "สร้างเพิ่มจากสไลด์"
+  },
+  {
+    "id": "Q026",
+    "chapter": "9.1",
+    "topic": "เงินเฟ้อและกำลังซื้อ",
+    "question": "ต้นทุนพลังงานสูงขึ้นจนผู้ผลิตปรับราคาสินค้าหลายประเภทขึ้น สอดคล้องกับภาวะใด?",
+    "options": [
+      "Cost-push inflation",
+      "Demand-pull inflation จากอุปสงค์สูงอย่างเดียว",
+      "Deflation เสมอ",
+      "ดอกเบี้ยอย่างง่าย"
+    ],
+    "correct": 0,
+    "why": "แรงดันมาจากต้นทุนการผลิต ไม่ใช่คำอธิบายหลักจากอุปสงค์ที่เพิ่ม",
+    "steps": [
+      "ต้นทุนพลังงานสูง → ต้นทุนผลิตสูงขึ้น",
+      "เมื่อส่งผ่านเข้าสู่ราคาทั่วไปจึงเป็นตัวอย่าง cost-push inflation"
+    ],
+    "ref": "9.1 · หน้า 35–36",
+    "origin": "สร้างเพิ่มจากสไลด์"
+  },
+  {
+    "id": "Q027",
+    "chapter": "9.1",
+    "topic": "เงินเฟ้อและกำลังซื้อ",
+    "question": "ตามสไลด์ Core CPI ของไทยตัดสินค้าหมวดใดออกจากดัชนีทั่วไป?",
+    "options": [
+      "อาหารสดและพลังงาน",
+      "สินค้าทุกชนิดยกเว้นอาหารสด",
+      "ที่อยู่อาศัยและคมนาคมทั้งหมด",
+      "อาหารและเครื่องดื่มทุกชนิด"
+    ],
+    "correct": 0,
+    "why": "สไลด์นิยาม core CPI โดยตัดหมวดที่ผันผวนสูงบางหมวด",
+    "steps": [
+      "Core CPI ในสไลด์หักอาหารสดและพลังงานออก",
+      "ไม่ได้แปลว่าตัดอาหารทั้งหมดหรือใช้แทนราคาสินค้าเฉพาะทุกประเภท"
+    ],
+    "ref": "9.1 · หน้า 40–41",
+    "origin": "สร้างเพิ่มจากสไลด์"
+  },
+  {
+    "id": "Q028",
+    "chapter": "9.1",
+    "topic": "เงินเฟ้อและกำลังซื้อ",
+    "question": "ถ้าราคาสินค้าคงที่ในรูปอัตรารายปีและเพิ่มเป็นสองเท่าใน 10 ปี อัตราเพิ่มเฉลี่ยทบต้นต่อปีเท่าใด?",
+    "options": [
+      "7.18 % ต่อปี",
+      "10.00 % ต่อปี",
+      "20.00 % ต่อปี",
+      "5.00 % ต่อปี"
+    ],
+    "correct": 0,
+    "why": "ราคาสองเท่าในหลายปีต้องใช้การทบต้น ไม่ใช่นำ 100% หาร 10 ตรง ๆ",
+    "steps": [
+      "2P = P(1+f)¹⁰ → 1+f = 2^(1/10)",
+      "f = 2^(1/10) − 1 ≈ 7.18% ต่อปี"
+    ],
+    "ref": "9.1 · หน้า 32–33",
+    "origin": "สร้างเพิ่มจากสไลด์"
+  },
+  {
+    "id": "Q029",
+    "chapter": "9.1",
+    "topic": "เงินเฟ้อและกำลังซื้อ",
+    "question": "CEPCI เพิ่มจาก 359 ในปี 1993 เป็น 402 ในปี 2003 อัตราเพิ่มเฉลี่ยทบต้นต่อปีประมาณเท่าใด?",
+    "options": [
+      "1.14 % ต่อปี",
+      "2.14 % ต่อปี",
+      "3.14 % ต่อปี",
+      "4.14 % ต่อปี"
+    ],
+    "correct": 0,
+    "why": "ดัชนีใช้สัมพันธ์แบบทบต้นตลอดช่วง 10 ปี",
+    "steps": [
+      "402 = 359(1+f)¹⁰",
+      "f = (402/359)^(1/10) − 1 ≈ 1.14% ต่อปี"
+    ],
+    "ref": "9.1 · หน้า 42–43; ข้อสอบ 2025 · หน้า 7 ข้อ 29",
+    "origin": "ดัดแปลงจากข้อสอบ 2025"
+  },
+  {
+    "id": "Q030",
+    "chapter": "9.1",
+    "topic": "เงินเฟ้อและกำลังซื้อ",
+    "question": "ดัชนีเพิ่มจาก 402 เป็น 600 ใน 8 ปี อัตราเพิ่มเฉลี่ยทบต้นต่อปีเท่าใด?",
+    "options": [
+      "5.13 % ต่อปี",
+      "6.16 % ต่อปี",
+      "4.93 % ต่อปี",
+      "8.00 % ต่อปี"
+    ],
+    "correct": 0,
+    "why": "รู้ดัชนีต้นทาง ปลายทาง และระยะเวลา ใช้ CAGR",
+    "steps": [
+      "f = (Index_final/Index_initial)^(1/n) − 1",
+      "f = (600/402)^(1/8) − 1 ≈ 5.13% ต่อปี"
+    ],
+    "ref": "9.1 · หน้า 44",
+    "origin": "สร้างเพิ่มจากสไลด์"
+  },
+  {
+    "id": "Q031",
+    "chapter": "9.1",
+    "topic": "เงินเฟ้อและกำลังซื้อ",
+    "question": "ค่าใช้จ่ายวันนี้ 10,000 บาท เพิ่มด้วยเงินเฟ้อคงที่ 3% ต่อปีแบบทบรายปีเป็นเวลา 5 ปี ต้องเตรียมเงินปีที่ 5 เท่าใด?",
+    "options": [
+      "11,592.74 บาท",
+      "11,500.00 บาท",
+      "10,300.00 บาท",
+      "8,626.09 บาท"
+    ],
+    "correct": 0,
+    "why": "ย้ายราคาวันนี้ไปปีที่ 5 โดยสมมติอัตราเงินเฟ้อคงที่และทบต้น",
+    "steps": [
+      "Cost₅ = Cost₀(1+f)⁵",
+      "Cost₅ = 10,000(1.03)⁵ = 11,592.74 บาท"
+    ],
+    "ref": "9.1 · หน้า 32–34, 42",
+    "origin": "สร้างเพิ่มจากสไลด์"
+  },
+  {
+    "id": "Q032",
+    "chapter": "9.1",
+    "topic": "เงินเฟ้อและกำลังซื้อ",
+    "question": "เงินในปีที่ 3 เท่ากับ 12,000 บาท หากเงินเฟ้อ 5% ต่อปี กำลังซื้อในหน่วยบาทวันนี้เท่าใด?",
+    "options": [
+      "10,366.05 บาท",
+      "13,891.50 บาท",
+      "10,434.78 บาท",
+      "11,428.57 บาท"
+    ],
+    "correct": 0,
+    "why": "ต้อง deflate มูลค่าอนาคตกลับเป็นกำลังซื้อวันนี้ โดยหารดัชนีราคาสะสม",
+    "steps": [
+      "Real value = F/(1+f)ⁿ",
+      "12,000/(1.05)³ = 10,366.05 บาทในกำลังซื้อวันนี้"
+    ],
+    "ref": "9.1 · หน้า 45",
+    "origin": "สร้างเพิ่มจากสไลด์"
+  },
+  {
+    "id": "Q033",
+    "chapter": "9.1",
+    "topic": "เงินเฟ้อและกำลังซื้อ",
+    "question": "ผลตอบแทน effective 12% ต่อปี และเงินเฟ้อ 6% ต่อปี อัตราผลตอบแทนที่แท้จริงเท่าใด?",
+    "options": [
+      "5.66 % ต่อปี",
+      "6.00 % ต่อปี",
+      "18.00 % ต่อปี",
+      "5.00 % ต่อปี"
+    ],
+    "correct": 0,
+    "why": "ใช้อัตรา effective และเงินเฟ้อที่มีช่วงเวลาตรงกันในสมการ Fisher แบบ exact",
+    "steps": [
+      "i_real = (1+i_eff)/(1+f) − 1",
+      "i_real = 1.12/1.06 − 1 = 0.056604 ≈ 5.66% ต่อปี; 12−6 = 6% เป็นเพียงค่าประมาณ"
+    ],
+    "ref": "9.1 · หน้า 45",
+    "origin": "สร้างเพิ่มจากสไลด์"
+  },
+  {
+    "id": "Q034",
+    "chapter": "9.1",
+    "topic": "เงินเฟ้อและกำลังซื้อ",
+    "question": "ฝากเงิน nominal 12% ต่อปี ทบต้นรายเดือน เงินเฟ้อ 6% ต่อปี ผลตอบแทนจริงต่อปีประมาณเท่าใด?",
+    "options": [
+      "6.30 % ต่อปี",
+      "6.00 % ต่อปี",
+      "6.68 % ต่อปี",
+      "5.66 % ต่อปี"
+    ],
+    "correct": 0,
+    "why": "แปลง nominal เป็น effective annual ก่อน แล้วจึงปรับเงินเฟ้อ 6% ซึ่งเป็นรายปี",
+    "steps": [
+      "i_eff = (1+0.12/12)¹²−1 = 12.6825%",
+      "i_real = (1.126825/1.06)−1 = 6.30% ต่อปี"
+    ],
+    "ref": "9.1 · หน้า 46–47",
+    "origin": "สร้างเพิ่มจากสไลด์"
+  },
+  {
+    "id": "Q035",
+    "chapter": "9.1",
+    "topic": "เงินเฟ้อและกำลังซื้อ",
+    "question": "เมื่อต้องหาอัตรา real return จาก nominal 12% ต่อปีที่ทบรายเดือน และเงินเฟ้อ 6% ต่อปี ขั้นตอนที่เหมาะสมคือ?",
+    "options": [
+      "แปลง 12% nominal เป็น effective ต่อปีก่อน แล้วใช้ (1+i_eff)/(1+f)−1",
+      "นำ 12% ลบ 6% แล้วเป็นคำตอบ exact เสมอ",
+      "ใช้ 1% ต่อเดือนเทียบกับเงินเฟ้อ 6% ต่อปีทันที",
+      "บวก 12% กับ 6%"
+    ],
+    "correct": 0,
+    "why": "อัตราที่นำมาเทียบกันต้องมีหน่วยเวลาเดียวกัน และการลบตรง ๆ เป็นค่าประมาณ",
+    "steps": [
+      "effective ปี = (1+0.12/12)¹²−1 ≈ 12.68%",
+      "real ≈ (1.1268/1.06)−1 ≈ 6.30%"
+    ],
+    "ref": "9.1 · หน้า 45–47",
+    "origin": "สร้างเพิ่มจากสไลด์"
+  },
+  {
+    "id": "Q036",
+    "chapter": "9.1",
+    "topic": "เงินเฟ้อและกำลังซื้อ",
+    "question": "ดัชนี CPI และ CEPCI ใช้ต่างกันอย่างไรในบริบทสไลด์?",
+    "options": [
+      "CPI ติดตามราคาตะกร้าผู้บริโภค ส่วน CEPCI ใช้ติดตามต้นทุนที่เกี่ยวข้องกับโรงงานเคมี",
+      "สองดัชนีต้องมีค่าเท่ากันทุกปี",
+      "CEPCI ใช้วัดกำลังซื้อผู้บริโภคทุกกลุ่มแทน CPI ได้เสมอ",
+      "CPI คือดอกเบี้ยทบต้นรายเดือน"
+    ],
+    "correct": 0,
+    "why": "ดัชนีมีตะกร้ารายการต่างกัน จึงต้องเลือกให้ตรงกับสิ่งที่ต้องการประเมิน",
+    "steps": [
+      "CPI สัมพันธ์กับราคาสินค้าและบริการผู้บริโภค",
+      "CEPCI เหมาะกับต้นทุนการสร้างหรืออุปกรณ์โรงงานเคมีโดยประมาณ"
+    ],
+    "ref": "9.1 · หน้า 40–44",
+    "origin": "สร้างเพิ่มจากสไลด์"
+  },
+  {
+    "id": "Q037",
+    "chapter": "9.2",
+    "topic": "แผนภาพกระแสเงินสด",
+    "question": "สำหรับผู้กู้ที่ได้รับเงินกู้ 20,000 บาท ณ t = 0 และผ่อนคืนปลายเดือน กระแสเงินสดควรมีเครื่องหมายอย่างไร?",
+    "options": [
+      "t = 0 เป็น +20,000 และเงินผ่อนเป็นลบ",
+      "t = 0 เป็น −20,000 และเงินผ่อนเป็นบวก",
+      "ทั้งเงินกู้และเงินผ่อนเป็นบวก",
+      "ทั้งเงินกู้และเงินผ่อนเป็นลบ"
+    ],
+    "correct": 0,
+    "why": "เลือกมุมมองผู้กู้ก่อน: เงินเข้าบวก เงินออกลบ",
+    "steps": [
+      "เงินกู้ที่ได้รับคือเงินเข้า (+) ณ t = 0",
+      "เงินผ่อนเป็นเงินออก (−) แต่ละงวด; หากมองจากฝั่งธนาคาร เครื่องหมายกลับกัน"
+    ],
+    "ref": "9.2 · หน้า 3–5",
+    "origin": "สร้างเพิ่มจากสไลด์"
+  },
+  {
+    "id": "Q038",
+    "chapter": "9.2",
+    "topic": "แผนภาพกระแสเงินสด",
+    "question": "ก่อนกำหนดลูกศรขึ้นหรือลงใน cash flow diagram สิ่งที่ต้องเลือกเป็นอันดับแรกคือ?",
+    "options": [
+      "มุมมองของผู้วิเคราะห์ เช่น ผู้กู้หรือธนาคาร",
+      "ทิศเหนือของกระดาษ",
+      "ระบุอัตราเงินเฟ้อเสมอแม้โจทย์ไม่ต้องใช้",
+      "สมมติเงินทุกจำนวนเป็นรายรับ"
+    ],
+    "correct": 0,
+    "why": "เครื่องหมายขึ้นอยู่กับว่าเงินเข้าหรือออกจากระบบของใคร",
+    "steps": [
+      "เงินกู้ก้อนเดียวกันเป็นเงินเข้าของผู้กู้ แต่เป็นเงินออกของธนาคาร",
+      "กำหนด positive/negative อย่างสม่ำเสมอทั้งโจทย์"
+    ],
+    "ref": "9.2 · หน้า 3–5",
+    "origin": "สร้างเพิ่มจากสไลด์"
+  },
+  {
+    "id": "Q039",
+    "chapter": "9.2",
+    "topic": "แผนภาพกระแสเงินสด",
+    "question": "ในแผนภาพ cash flow ทั่วไป แกนนอนและลูกศรแนวตั้งแสดงอะไร?",
+    "options": [
+      "แกนนอนแสดงเวลา ลูกศรแสดงทิศและขนาดกระแสเงินสด",
+      "แกนนอนคือดอกเบี้ย ลูกศรคืออุณหภูมิ",
+      "แกนนอนคือเงิน ลูกศรคือเวลา",
+      "ทุกลูกศรต้องเป็นรายรับ"
+    ],
+    "correct": 0,
+    "why": "แกนนอนช่วยระบุว่ากระแสเกิดเมื่อใด ส่วนทิศลูกศรบอกเครื่องหมาย",
+    "steps": [
+      "กำหนด t = 0, 1, 2, ... ตามหน่วยเวลา",
+      "ตาม convention ทั่วไป ลูกศรขึ้นแทนเงินเข้า ลงแทนเงินออกจากมุมมองที่เลือก"
+    ],
+    "ref": "9.2 · หน้า 3–4",
+    "origin": "สร้างเพิ่มจากสไลด์"
+  },
+  {
+    "id": "Q040",
+    "chapter": "9.2",
+    "topic": "แผนภาพกระแสเงินสด",
+    "question": "ต้องเปรียบเทียบเงินสดที่เกิดในปี 1 และปี 4 ควรทำอย่างไร?",
+    "options": [
+      "ย้ายมูลค่าทั้งสองไปเวลาอ้างอิงเดียวกันด้วยอัตราที่เหมาะสม",
+      "บวกตัวเลขเดิมโดยไม่สนใจเวลาเสมอ",
+      "ย้ายเงินได้เฉพาะจากอนาคตมาปัจจุบัน",
+      "คูณทุกจำนวนด้วยจำนวนปีโดยไม่คิดอัตราดอกเบี้ย"
+    ],
+    "correct": 0,
+    "why": "เงินต่างเวลาเปรียบเทียบได้ด้วยมูลค่าเทียบเท่า ณ เวลาเดียวกัน",
+    "steps": [
+      "เลือกจุดเปรียบเทียบ เช่น t = 0 หรือ t = 4",
+      "ใช้ P/F หรือ F/P ตามทิศและจำนวนช่วงเวลาจริง"
+    ],
+    "ref": "9.2 · หน้า 6–9",
+    "origin": "สร้างเพิ่มจากสไลด์"
+  },
+  {
+    "id": "Q041",
+    "chapter": "9.2",
+    "topic": "แผนภาพกระแสเงินสด",
+    "question": "กระแสเงินสดแบบ discrete ต่างจาก continuous อย่างไร?",
+    "options": [
+      "Discrete เกิดเป็นงวดหรือจุดเวลา ส่วน continuous ไหลอย่างต่อเนื่องตามเวลา",
+      "Discrete แปลว่าเงินไม่แน่นอน ส่วน continuous แปลว่าเงินไม่เปลี่ยน",
+      "ทั้งสองต้องเป็นเงินก้อนเดียวที่ t = 0",
+      "Continuous หมายถึงทบต้นรายปีเท่านั้น"
+    ],
+    "correct": 0,
+    "why": "แยกความถี่ของการจ่ายออกจากความถี่ของการทบดอกเบี้ย",
+    "steps": [
+      "รายจ่ายสิ้นปีทุกปีคือ discrete cash flow",
+      "เงินลงทุนกระจายสม่ำเสมอตลอดปีแบบจำลองเป็น continuous cash flow"
+    ],
+    "ref": "9.2 · หน้า 4, 27–29",
+    "origin": "สร้างเพิ่มจากสไลด์"
+  },
+  {
+    "id": "Q042",
+    "chapter": "9.2",
+    "topic": "ปัจจัย P/F และ F/P",
+    "question": "สัญลักษณ์ (P/F, i, n) หมายความว่าอย่างไร?",
+    "options": [
+      "ตัวคูณเพื่อหาค่า P เมื่อรู้ F, i และ n",
+      "ตัวคูณเพื่อหาค่า F เมื่อรู้ P",
+      "ตัวคูณเพื่อหา A เมื่อรู้ G",
+      "อัตราดอกเบี้ย nominal รายปี"
+    ],
+    "correct": 0,
+    "why": "ตัวหน้าเครื่องหมาย / คือค่าที่ต้องการ ตัวหลังคือค่าที่รู้",
+    "steps": [
+      "P = F(P/F, i, n)",
+      "P/F = 1/(1+i)ⁿ ใช้ discount เงินก้อนเดียว"
+    ],
+    "ref": "9.2 · หน้า 13–15",
+    "origin": "สร้างเพิ่มจากสไลด์"
+  },
+  {
+    "id": "Q043",
+    "chapter": "9.2",
+    "topic": "ปัจจัย P/F และ F/P",
+    "question": "ข้อใดแสดงความสัมพันธ์ของตัวคูณเงินก้อนเดียวได้ถูกต้อง?",
+    "options": [
+      "(P/F, i, n) = 1/(F/P, i, n)",
+      "(P/F, i, n) = (F/P, i, n) + 1",
+      "(P/F, i, n) = (F/P, i, n) × n",
+      "(P/F, i, n) = i/n เสมอ"
+    ],
+    "correct": 0,
+    "why": "F/P และ P/F ย้ายเงินระหว่างเวลาเดียวกันในทิศตรงข้าม จึงเป็นส่วนกลับ",
+    "steps": [
+      "F/P = (1+i)ⁿ",
+      "P/F = (1+i)⁻ⁿ = 1/(F/P)"
+    ],
+    "ref": "9.2 · หน้า 13–14",
+    "origin": "สร้างเพิ่มจากสไลด์"
+  },
+  {
+    "id": "Q044",
+    "chapter": "9.2",
+    "topic": "ปัจจัย P/F และ F/P",
+    "question": "เงิน 12,000 บาทวันนี้เท่ากับเท่าใด ณ สิ้นปีที่ 4 เมื่อ i = 6% ต่อปี?",
+    "options": [
+      "15,149.72 บาท",
+      "9,505.12 บาท",
+      "12,720.00 บาท",
+      "14,880.00 บาท"
+    ],
+    "correct": 0,
+    "why": "จาก P ไป F ของเงินก้อนเดียว ใช้ F/P",
+    "steps": [
+      "F = P(F/P, i, n) = P(1+i)ⁿ",
+      "F = 12,000(1.06)⁴ = 15,149.72 บาท"
+    ],
+    "ref": "9.2 · หน้า 13–15",
+    "origin": "สร้างเพิ่มจากสไลด์"
+  },
+  {
+    "id": "Q045",
+    "chapter": "9.2",
+    "topic": "ปัจจัย P/F และ F/P",
+    "question": "เงิน 10,000 บาท ณ สิ้นปีที่ 3 มีมูลค่าปัจจุบันเท่าใดที่ 8% ต่อปี?",
+    "options": [
+      "7,938.32 บาท",
+      "12,597.12 บาท",
+      "9,259.26 บาท",
+      "7,600.00 บาท"
+    ],
+    "correct": 0,
+    "why": "เงินก้อนอยู่ในอนาคตและต้องหาเวลา 0 จึงใช้ P/F",
+    "steps": [
+      "P = F(P/F, 8%, 3) = F/(1+i)ⁿ",
+      "P = 10,000/(1.08)³ = 7,938.32 บาท"
+    ],
+    "ref": "9.2 · หน้า 13–15",
+    "origin": "สร้างเพิ่มจากสไลด์"
+  },
+  {
+    "id": "Q046",
+    "chapter": "9.2",
+    "topic": "กระแสเงินสดหลายช่วงเวลา",
+    "question": "ฝาก 5,000 บาทที่ t=0, 1,000 ที่ t=1 และ 2,000 ที่ t=3 ถอน 3,000 ที่ t=4 ถ้า i=8% ต่อปี ยอดสุทธิ ณ t=7 เท่าใด?",
+    "options": [
+      "9,097.84 บาท",
+      "5,000.00 บาท",
+      "8,569.12 บาท",
+      "16,656.11 บาท"
+    ],
+    "correct": 0,
+    "why": "แต่ละรายการเกิดคนละปี ต้องทบไปถึง t=7 โดยใช้จำนวนงวดของตนและรักษาเครื่องหมาย",
+    "steps": [
+      "F₇ = 5,000(1.08)⁷ + 1,000(1.08)⁶ + 2,000(1.08)⁴ − 3,000(1.08)³",
+      "F₇ = 9,097.84 บาท; เงินถอนเป็นลบ"
+    ],
+    "ref": "9.2 · หน้า 17–18",
+    "origin": "ดัดแปลงจากตัวอย่างสไลด์"
+  },
+  {
+    "id": "Q047",
+    "chapter": "9.2",
+    "topic": "กระแสเงินสดหลายช่วงเวลา",
+    "question": "กระแสเงินสด +5,000 ที่ t=0, +1,000 ที่ t=1, +2,000 ที่ t=3, −3,000 ที่ t=4 มีมูลค่ารวมที่ t=0 เท่าใด เมื่อ i=8%?",
+    "options": [
+      "5,308.50 บาท",
+      "9,097.84 บาท",
+      "5,000.00 บาท",
+      "9,718.68 บาท"
+    ],
+    "correct": 0,
+    "why": "คิดมูลค่าที่จุดเวลาเดียวกัน โดยคิดลดทุกรายการกลับเวลา 0",
+    "steps": [
+      "P = 5,000 + 1,000/(1.08) + 2,000/(1.08)³ − 3,000/(1.08)⁴",
+      "หรือ P = F₇/(1.08)⁷ = 5,308.50 บาท"
+    ],
+    "ref": "9.2 · หน้า 17–18",
+    "origin": "ดัดแปลงจากตัวอย่างสไลด์"
+  },
+  {
+    "id": "Q048",
+    "chapter": "9.2",
+    "topic": "กระแสเงินสดหลายช่วงเวลา",
+    "question": "โครงการจ่าย 10,000 บาทวันนี้ แล้วรับ 4,000 บาทสิ้นปี 1 และ 8,000 บาทสิ้นปี 2 ที่ i=10% NPV เท่าใด?",
+    "options": [
+      "247.93 บาท",
+      "2,000.00 บาท",
+      "20,247.93 บาท",
+      "578.51 บาท"
+    ],
+    "correct": 0,
+    "why": "NPV รวมค่าใช้จ่ายเริ่มต้น ณ t=0 กับมูลค่าปัจจุบันของรายรับแต่ละปี",
+    "steps": [
+      "NPV = −10,000 + 4,000/(1.10) + 8,000/(1.10)²",
+      "NPV = 247.93 บาท; ค่าเริ่มต้นไม่ต้อง discount"
+    ],
+    "ref": "9.2 · หน้า 6–9, 40–42",
+    "origin": "สร้างเพิ่มจากสไลด์"
+  },
+  {
+    "id": "Q049",
+    "chapter": "9.2",
+    "topic": "ชุดเงินเท่ากัน A",
+    "question": "ชุดเงินเท่ากันแบบ ordinary annuity ตามสูตรมาตรฐาน (P/A) มีการจ่ายครั้งแรกเมื่อใด?",
+    "options": [
+      "สิ้นงวดที่ 1 หรือ t = 1",
+      "ทันทีที่ t = 0 เสมอ",
+      "เมื่อครบ n+1 งวด",
+      "ต้องจ่ายกลางปีเสมอ"
+    ],
+    "correct": 0,
+    "why": "สูตร P/A มาตรฐานตั้งมูลค่า P หนึ่งงวดก่อนการจ่ายครั้งแรก",
+    "steps": [
+      "ถ้างวดเป็นปี จุด t=1 คือสิ้นปีที่ 1",
+      "หากจ่ายครั้งแรก t=0 ต้องปรับเป็น annuity due; ดู timeline ไม่ยึดคำบรรยายที่กำกวม"
+    ],
+    "ref": "9.2 · หน้า 10–12, 15",
+    "origin": "สร้างเพิ่มจากสไลด์"
+  },
+  {
+    "id": "Q050",
+    "chapter": "9.2",
+    "topic": "ชุดเงินเท่ากัน A",
+    "question": "ถ้าจ่าย A เท่ากันสิ้นปีที่ 1–5 และใช้ (P/A, i, 5) ค่า P ที่ได้อยู่เวลาใด?",
+    "options": [
+      "t = 0 หนึ่งงวดก่อนเงิน A งวดแรก",
+      "t = 1 ตรงกับเงินงวดแรก",
+      "t = 5 ตรงกับเงินงวดสุดท้าย",
+      "t = −1 สองงวดก่อนงวดแรก"
+    ],
+    "correct": 0,
+    "why": "factor P/A ให้ P หนึ่งงวดก่อนจ่ายงวดแรกเสมอ",
+    "steps": [
+      "มี A ที่ t=1,2,3,4,5",
+      "P = A(P/A, i,5) จึงอยู่ t=0"
+    ],
+    "ref": "9.2 · หน้า 10–15, 30",
+    "origin": "สร้างเพิ่มจากสไลด์"
+  },
+  {
+    "id": "Q051",
+    "chapter": "9.2",
+    "topic": "ชุดเงินเท่ากัน A",
+    "question": "เงิน A เท่ากันปลายปีที่ 3, 4 และ 5 ถ้าใช้ P = A(P/A, i, 3) ค่า P ที่ได้อยู่เวลาใดก่อนย้ายกลับ t=0?",
+    "options": [
+      "t = 2",
+      "t = 0",
+      "t = 3",
+      "t = 5"
+    ],
+    "correct": 0,
+    "why": "จุด P ของ ordinary series อยู่หนึ่งงวดก่อน A แรก ไม่ได้อยู่ t=0 โดยอัตโนมัติ",
+    "steps": [
+      "A แรกอยู่ t=3 ดังนั้น P ที่ได้จาก P/A อยู่ t=2",
+      "หากต้องการ t=0 ให้คูณ (P/F, i, 2) อีกครั้ง"
+    ],
+    "ref": "9.2 · หน้า 14–15, 30",
+    "origin": "สร้างเพิ่มจากสไลด์"
+  },
+  {
+    "id": "Q052",
+    "chapter": "9.2",
+    "topic": "ชุดเงินเท่ากัน A",
+    "question": "ถ้ารู้ A เท่ากันทุกสิ้นงวดและต้องการ F ณ เวลาเดียวกับ A งวดสุดท้าย ต้องเลือก factor ใด?",
+    "options": [
+      "(F/A, i, n)",
+      "(P/A, i, n)",
+      "(A/F, i, n)",
+      "(P/F, i, n)"
+    ],
+    "correct": 0,
+    "why": "ตัวหน้า / คือสิ่งที่ต้องการ ส่วนตัวหลังคือข้อมูลที่ให้มา",
+    "steps": [
+      "F = A(F/A, i, n)",
+      "(F/A) = [(1+i)ⁿ−1]/i สำหรับ A สิ้นงวด"
+    ],
+    "ref": "9.2 · หน้า 10–15",
+    "origin": "สร้างเพิ่มจากสไลด์"
+  },
+  {
+    "id": "Q053",
+    "chapter": "9.2",
+    "topic": "ชุดเงินเท่ากัน A",
+    "question": "ถ้ารู้เงินกู้ P และต้องหาค่างวด A เท่า ๆ กันทุกสิ้นเดือน ควรใช้ factor ใด?",
+    "options": [
+      "(A/P, i, n)",
+      "(P/A, i, n)",
+      "(F/A, i, n)",
+      "(P/F, i, n)"
+    ],
+    "correct": 0,
+    "why": "สิ่งที่ต้องการคือ A และข้อมูลที่รู้คือ P",
+    "steps": [
+      "A = P(A/P, i, n)",
+      "i และ n ต้องเป็นหน่วยเดียวกับรอบการชำระ เช่น ต่อเดือนและจำนวนเดือน"
+    ],
+    "ref": "9.2 · หน้า 15, 19–23",
+    "origin": "สร้างเพิ่มจากสไลด์"
+  },
+  {
+    "id": "Q054",
+    "chapter": "9.2",
+    "topic": "ชุดเงินเท่ากัน A",
+    "question": "หากต้องการสะสมเงินก้อน F ในอนาคตด้วยการฝากเท่ากันทุกสิ้นปี ควรใช้ factor ใดหาเงินฝาก A?",
+    "options": [
+      "(A/F, i, n)",
+      "(F/A, i, n)",
+      "(P/F, i, n)",
+      "(F/P, i, n)"
+    ],
+    "correct": 0,
+    "why": "ต้องการ A จาก F จึงใช้ sinking-fund factor A/F",
+    "steps": [
+      "A = F(A/F, i, n)",
+      "A/F = i/[(1+i)ⁿ−1] เป็นส่วนกลับของ F/A"
+    ],
+    "ref": "9.2 · หน้า 13–15",
+    "origin": "สร้างเพิ่มจากสไลด์"
+  },
+  {
+    "id": "Q055",
+    "chapter": "9.2",
+    "topic": "ชุดเงินเท่ากัน A",
+    "question": "ฝาก 3,000 บาททุกสิ้นปีเป็นเวลา 5 ปี ผลตอบแทน 6% ต่อปี ยอดรวม ณ สิ้นปีที่ 5 เท่าใด?",
+    "options": [
+      "16,911.28 บาท",
+      "15,000.00 บาท",
+      "12,637.09 บาท",
+      "17,925.96 บาท"
+    ],
+    "correct": 0,
+    "why": "A จ่ายเท่ากันสิ้นปี 1–5 และต้องการ F ที่ปี 5 จึงใช้ F/A",
+    "steps": [
+      "F = A[(1+i)ⁿ−1]/i",
+      "F = 3,000[(1.06)⁵−1]/0.06 = 16,911.28 บาท"
+    ],
+    "ref": "9.2 · หน้า 10–12; ข้อสอบ 2025 · หน้า 5 ข้อ 24",
+    "origin": "ดัดแปลงจากข้อสอบ 2025"
+  },
+  {
+    "id": "Q056",
+    "chapter": "9.2",
+    "topic": "ชุดเงินเท่ากัน A",
+    "question": "ได้รับ 1,000 บาททุกสิ้นปีเป็นเวลา 5 ปี ที่ i=8% ต่อปี มูลค่าปัจจุบันคือเท่าใด?",
+    "options": [
+      "3,992.71 บาท",
+      "5,000.00 บาท",
+      "5,866.60 บาท",
+      "680.58 บาท"
+    ],
+    "correct": 0,
+    "why": "ได้รับ A เท่ากันตั้งแต่สิ้นปี 1 ถึง 5 และต้องหา P ที่เวลา 0 จึงใช้ P/A",
+    "steps": [
+      "P = A[1−(1+i)⁻ⁿ]/i",
+      "P = 1,000[1−(1.08)⁻⁵]/0.08 = 3,992.71 บาท"
+    ],
+    "ref": "9.2 · หน้า 14–15",
+    "origin": "สร้างเพิ่มจากสไลด์"
+  },
+  {
+    "id": "Q057",
+    "chapter": "9.2",
+    "topic": "ชุดเงินเท่ากัน A",
+    "question": "อยากมีเงิน 20,000 บาทสิ้นปีที่ 4 โดยฝากทุกสิ้นปี ที่ 5% ต่อปี ต้องฝากปีละเท่าใด?",
+    "options": [
+      "4,640.24 บาท",
+      "5,000.00 บาท",
+      "5,640.24 บาท",
+      "86,202.50 บาท"
+    ],
+    "correct": 0,
+    "why": "ต้องการ A จาก F ของเงินฝากปลายงวด จึงใช้ A/F",
+    "steps": [
+      "A = F × i/[(1+i)ⁿ−1]",
+      "A = 20,000(0.05)/[(1.05)⁴−1] = 4,640.24 บาทต่อปี"
+    ],
+    "ref": "9.2 · หน้า 13–15",
+    "origin": "สร้างเพิ่มจากสไลด์"
+  },
+  {
+    "id": "Q058",
+    "chapter": "9.2",
+    "topic": "ชุดเงินเท่ากัน A",
+    "question": "ฝาก 5,000 ดอลลาร์ทุกสิ้นปีเป็นเวลา 40 ปี ผลตอบแทน 8% ต่อปี มูลค่าเมื่อสิ้นปีที่ 40 เท่าใด?",
+    "options": [
+      "1,295,282.59 ดอลลาร์",
+      "200,000.00 ดอลลาร์",
+      "59,623.07 ดอลลาร์",
+      "1,398,905.20 ดอลลาร์"
+    ],
+    "correct": 0,
+    "why": "เงินฝากเท่ากันปลายงวดและต้องการยอดปลายงวดสุดท้าย ใช้ F/A",
+    "steps": [
+      "F = 5,000[(1.08)⁴⁰−1]/0.08",
+      "F ≈ 1,295,282.59 ดอลลาร์; เงินฝากรวม 200,000 ส่วนที่เหลือเป็นผลตอบแทน"
+    ],
+    "ref": "9.2 · หน้า 25–26",
+    "origin": "ดัดแปลงจากตัวอย่างสไลด์"
+  },
+  {
+    "id": "Q059",
+    "chapter": "9.2",
+    "topic": "ชุดเงินเท่ากัน A",
+    "question": "รับเงิน 1,000 บาทสิ้นปี 3, 4 และ 5 เท่านั้น ที่ i=10% ต่อปี มูลค่าที่ t=0 เท่าใด?",
+    "options": [
+      "2,055.25 บาท",
+      "2,486.85 บาท",
+      "1,868.41 บาท",
+      "3,000.00 บาท"
+    ],
+    "correct": 0,
+    "why": "ชุด A เริ่ม t=3 ทำให้ P/A ให้ค่าที่ t=2 ก่อน ต้อง discount ย้อนอีก 2 ปี",
+    "steps": [
+      "P₂ = 1,000(P/A, 10%, 3) = 1,000[1−(1.10)⁻³]/0.10",
+      "P₀ = P₂(P/F, 10%, 2) = 2,055.25 บาท"
+    ],
+    "ref": "9.2 · หน้า 14–15, 30",
+    "origin": "สร้างเพิ่มจากสไลด์"
+  },
+  {
+    "id": "Q060",
+    "chapter": "9.2",
+    "topic": "ชุดเงินเท่ากัน A",
+    "question": "ฝาก 1,000 บาทต้นปีที่ t=0,1,2,3,4 ที่ i=10% ต่อปี ยอดที่ t=5 เท่าใด?",
+    "options": [
+      "6,715.61 บาท",
+      "6,105.10 บาท",
+      "5,000.00 บาท",
+      "3,790.79 บาท"
+    ],
+    "correct": 0,
+    "why": "นี่คือ annuity due: ทุกงวดเกิดก่อน ordinary annuity 1 งวด จึงทบเพิ่มหนึ่งงวด",
+    "steps": [
+      "ordinary ฝากที่ t=1–5 ให้ F₅ = 1,000(F/A,10%,5)",
+      "ฝากที่ t=0–4 จึงได้ F₅ = 1,000(F/A,10%,5)(1.10) = 6,715.61 บาท"
+    ],
+    "ref": "9.2 · หน้า 10–15 (ต่อยอดเรื่อง timing)",
+    "origin": "สร้างเพิ่มจากสไลด์"
+  },
+  {
+    "id": "Q061",
+    "chapter": "9.2",
+    "topic": "ชุดเงินเท่ากัน A",
+    "question": "หากอัตราดอกเบี้ยเป็นศูนย์ ชุดจ่ายเท่ากัน 1,000 บาทสิ้นปี 5 ครั้ง มีมูลค่าปัจจุบันเท่าใด?",
+    "options": [
+      "5,000 บาท",
+      "0 บาท",
+      "1,000 บาท",
+      "6,000 บาท"
+    ],
+    "correct": 0,
+    "why": "เมื่อ i=0 ไม่มีการเพิ่มหรือลดค่าตามเวลา จึงรวมเงินแต่ละงวดได้ตรง ๆ",
+    "steps": [
+      "P = 1,000 + 1,000 + 1,000 + 1,000 + 1,000",
+      "P = 5,000 บาท; สูตรที่หารด้วย i ให้ใช้กรณีลิมิตหรือรวมโดยตรง"
+    ],
+    "ref": "9.2 · หน้า 10–15",
+    "origin": "สร้างเพิ่มจากสไลด์"
+  },
+  {
+    "id": "Q062",
+    "chapter": "9.2",
+    "topic": "เงินกู้และค่างวด",
+    "question": "กู้ 20,000 ดอลลาร์ ผ่อนสิ้นเดือน 60 เดือน อัตรา nominal 8% ต่อปี ทบต้นรายเดือน ค่างวดใกล้เคียงเท่าใด?",
+    "options": [
+      "405.53 ดอลลาร์/เดือน",
+      "333.33 ดอลลาร์/เดือน",
+      "5,009.13 ดอลลาร์/เดือน",
+      "1,615.96 ดอลลาร์/เดือน"
+    ],
+    "correct": 0,
+    "why": "รู้ P ต้องหาเงินผ่อนเท่ากัน A จึงใช้ A/P โดย i และ n เป็นรายเดือน",
+    "steps": [
+      "i_month = 0.08/12; n = 60",
+      "A = 20,000 × i(1+i)⁶⁰/[(1+i)⁶⁰−1] = 405.53 ดอลลาร์ต่อเดือน"
+    ],
+    "ref": "9.2 · หน้า 19–21",
+    "origin": "ดัดแปลงจากตัวอย่างสไลด์"
+  },
+  {
+    "id": "Q063",
+    "chapter": "9.2",
+    "topic": "เงินกู้และค่างวด",
+    "question": "จากเงินกู้ 20,000 ดอลลาร์ ดอกเบี้ย nominal 8% ต่อปี ทบต้นเดือน ผ่อน 60 งวด คิดจากค่างวดไม่ปัดระหว่างทาง ดอกเบี้ยรวมประมาณเท่าใด?",
+    "options": [
+      "4,331.67 ดอลลาร์",
+      "24,331.67 ดอลลาร์",
+      "8,000.00 ดอลลาร์",
+      "0.00 ดอลลาร์"
+    ],
+    "correct": 0,
+    "why": "ดอกเบี้ยรวมแบบ nominal cash paid = ผลรวมเงินผ่อน − เงินต้น โดยไม่คิดมูลค่าเงินตามเวลาอีกครั้ง",
+    "steps": [
+      "A ≈ 405.5279 ดอลลาร์/เดือน จาก A/P",
+      "Interest = 60A − 20,000 = 4,331.67 ดอลลาร์; หากปัดค่างวดทุกเดือนผลอาจต่างเล็กน้อย"
+    ],
+    "ref": "9.2 · หน้า 19–21",
+    "origin": "สร้างเพิ่มจากสไลด์"
+  },
+  {
+    "id": "Q064",
+    "chapter": "9.2",
+    "topic": "เงินกู้และค่างวด",
+    "question": "กู้ซื้อบ้าน 200,000 ดอลลาร์ nominal 6% ต่อปี ทบต้นรายเดือน ผ่อน 15 ปี ค่างวดต่อเดือนเท่าใด?",
+    "options": [
+      "1,687.71 ดอลลาร์/เดือน",
+      "1,199.10 ดอลลาร์/เดือน",
+      "1,111.11 ดอลลาร์/เดือน",
+      "20,592.55 ดอลลาร์/เดือน"
+    ],
+    "correct": 0,
+    "why": "A/P แปลงเงินกู้ปัจจุบันเป็นชุดผ่อนรายเดือน",
+    "steps": [
+      "i = 0.06/12 = 0.005 ต่อเดือน; n = 15×12 = 180",
+      "A = 200,000(A/P,0.5%,180) ≈ 1,687.71 ดอลลาร์ต่อเดือน"
+    ],
+    "ref": "9.2 · หน้า 22–24",
+    "origin": "ดัดแปลงจากตัวอย่างสไลด์"
+  },
+  {
+    "id": "Q065",
+    "chapter": "9.2",
+    "topic": "เงินกู้และค่างวด",
+    "question": "กู้บ้านเท่ากัน ที่ดอกเบี้ยเดียวกัน หากยืดจาก 15 ปีเป็น 30 ปีโดยผ่อนรายเดือน ข้อใดถูก?",
+    "options": [
+      "ค่างวดต่อเดือนลดลง แต่ดอกเบี้ยรวมที่จ่ายมักเพิ่มขึ้น",
+      "ค่างวดและดอกเบี้ยรวมลดลงทั้งคู่เสมอ",
+      "ค่างวดเพิ่มขึ้นเสมอ",
+      "ไม่มีผลต่อดอกเบี้ยรวม"
+    ],
+    "correct": 0,
+    "why": "จำนวนงวดมากขึ้นช่วยกระจายเงินต้น แต่ทำให้มียอดคงค้างนานขึ้น",
+    "steps": [
+      "ตัวอย่าง $200,000 ที่ 6% nominal ทบเดือน: 15 ปีประมาณ $1,687.71/เดือน; 30 ปีประมาณ $1,199.10/เดือน",
+      "ดอกเบี้ยรวมประมาณ $103,788.46 เทียบ $231,676.38"
+    ],
+    "ref": "9.2 · หน้า 22–24",
+    "origin": "สร้างเพิ่มจากสไลด์"
+  },
+  {
+    "id": "Q066",
+    "chapter": "9.2",
+    "topic": "เงินกู้และค่างวด",
+    "question": "เงินกู้ 100,000 บาท nominal 12% ต่อปี ทบต้นรายเดือน จ่ายสิ้นเดือน 12 งวด ค่างวดเท่าใด?",
+    "options": [
+      "8,884.88 บาท/เดือน",
+      "8,333.33 บาท/เดือน",
+      "16,143.68 บาท/เดือน",
+      "112,000.00 บาท/เดือน"
+    ],
+    "correct": 0,
+    "why": "ใช้ A/P เพื่อกระจายเงินก้อนปัจจุบันเป็น 12 งวดปลายเดือน",
+    "steps": [
+      "i = 0.12/12 = 0.01 ต่อเดือน; n = 12",
+      "A = 100,000[0.01(1.01)¹²/((1.01)¹²−1)] = 8,884.88 บาทต่อเดือน"
+    ],
+    "ref": "9.2 · หน้า 19–24",
+    "origin": "สร้างเพิ่มจากสไลด์"
+  },
+  {
+    "id": "Q067",
+    "chapter": "9.2",
+    "topic": "เงินกู้และค่างวด",
+    "question": "เงินกู้ทบต้นรายเดือน แต่จ่ายทุกสิ้นปีเท่ากัน ก่อนใช้ P/A รายปีควรทำอย่างไร?",
+    "options": [
+      "แปลง nominal เป็น effective annual rate แล้วใช้ n เป็นจำนวนปี",
+      "ใช้ nominal ต่อปีโดยตรงเสมอ",
+      "นำอัตราต่อเดือนมาใช้กับ n เป็นปี",
+      "คูณ n ด้วย 12 แต่ใช้จำนวนเงินจ่ายรายปีทุกเดือน"
+    ],
+    "correct": 0,
+    "why": "ช่วงเวลาของ i ต้องตรงกับงวดจ่ายใน factor แบบมาตรฐาน",
+    "steps": [
+      "i_eff,year = (1+j/12)¹²−1",
+      "ใช้ i_eff,year และ n จำนวนปี เมื่อ A เกิดทุกสิ้นปี"
+    ],
+    "ref": "9.1 · หน้า 15–17; 9.2 · หน้า 19–21",
+    "origin": "สร้างเพิ่มจากสไลด์"
+  },
+  {
+    "id": "Q068",
+    "chapter": "9.2",
+    "topic": "Gradient และอนุกรมเพิ่ม",
+    "question": "ชุดค่าใช้จ่ายสิ้นปี 1–5 เท่ากับ 100, 130, 160, 190, 220 บาท ค่า base และ gradient G คือเท่าใด?",
+    "options": [
+      "Base A = 100 บาท และ G = +30 บาทต่อปี",
+      "Base A = 130 และ G = 100",
+      "Base A = 100 และ G = 130",
+      "Base A = 0 และ G = 100"
+    ],
+    "correct": 0,
+    "why": "gradient เลขคณิตคือส่วนเปลี่ยนแปลงคงที่ของเงินในแต่ละงวด",
+    "steps": [
+      "แยกเป็น base 100 ทุกปี บวก gradient 0,30,60,90,120",
+      "ดังนั้น G = +30 บาท/ปี ไม่ใช่จำนวนเงินทั้งหมดของปีที่ 2"
+    ],
+    "ref": "9.2 · หน้า 31–33",
+    "origin": "สร้างเพิ่มจากสไลด์"
+  },
+  {
+    "id": "Q069",
+    "chapter": "9.2",
+    "topic": "Gradient และอนุกรมเพิ่ม",
+    "question": "กระแสเงินสดปี 1 เท่ากับ 80,000 บาท และปี 9 เท่ากับ 200,000 บาท โดยเพิ่มเท่ากันทุกปี ค่า G เท่าใด?",
+    "options": [
+      "15,000.00 บาท/ปี",
+      "13,333.33 บาท/ปี",
+      "120,000.00 บาท/ปี",
+      "10,000.00 บาท/ปี"
+    ],
+    "correct": 0,
+    "why": "G คือการเปลี่ยนแปลงต่อช่วงเวลา ระหว่างปี 1 ถึงปี 9 มี 8 ช่วง",
+    "steps": [
+      "G = (CF₉−CF₁)/(9−1)",
+      "G = (200,000−80,000)/8 = 15,000 บาทต่อปี"
+    ],
+    "ref": "9.2 · หน้า 32",
+    "origin": "สร้างเพิ่มจากสไลด์"
+  },
+  {
+    "id": "Q070",
+    "chapter": "9.2",
+    "topic": "Gradient และอนุกรมเพิ่ม",
+    "question": "อนุกรม gradient มาตรฐาน G เริ่มเป็น 0 ที่ t=1 และมีค่า 3G ที่ t ใด?",
+    "options": [
+      "t = 4",
+      "t = 3",
+      "t = 1",
+      "t = 5"
+    ],
+    "correct": 0,
+    "why": "ส่วน gradient คือ (t−1)G เมื่อ t เริ่มนับที่ 1",
+    "steps": [
+      "ที่ t=1,2,3,4 gradient คือ 0,G,2G,3G",
+      "base A แยกออกจากส่วน gradient"
+    ],
+    "ref": "9.2 · หน้า 31–36",
+    "origin": "สร้างเพิ่มจากสไลด์"
+  },
+  {
+    "id": "Q071",
+    "chapter": "9.2",
+    "topic": "Gradient และอนุกรมเพิ่ม",
+    "question": "ค่าใช้จ่ายสิ้นปีที่ 1 = 500 ดอลลาร์ แล้วเพิ่มปีละ 100 ดอลลาร์ถึงปีที่ 10; i=5% มูลค่าปัจจุบันของขนาดค่าใช้จ่ายเท่าใด?",
+    "options": [
+      "7,026.07 ดอลลาร์",
+      "3,860.87 ดอลลาร์",
+      "4,633.04 ดอลลาร์",
+      "9,500.00 ดอลลาร์"
+    ],
+    "correct": 0,
+    "why": "แยก base 500 ทุกปีและ gradient 0,100,...,900 แล้วใช้ P/A กับ P/G",
+    "steps": [
+      "P = 500(P/A,5%,10) + 100(P/G,5%,10)",
+      "P/A ≈ 7.7217; P/G ≈ 31.6520",
+      "P ≈ 7,026.07 ดอลลาร์ หรือใกล้ 7,026.05 เมื่อปัด factor ตามสไลด์; ถ้าแสดงเป็นเงินออกใช้เครื่องหมายลบ"
+    ],
+    "ref": "9.2 · หน้า 37–39",
+    "origin": "ดัดแปลงจากตัวอย่างสไลด์"
+  },
+  {
+    "id": "Q072",
+    "chapter": "9.2",
+    "topic": "Gradient และอนุกรมเพิ่ม",
+    "question": "จากค่าใช้จ่ายปี 1 = 500 ดอลลาร์ เพิ่มปีละ 100 ถึงปี 10 ที่ i=5% ค่าใช้จ่ายรายปีเทียบเท่า A เท่าใด?",
+    "options": [
+      "909.91 ดอลลาร์/ปี",
+      "950.00 ดอลลาร์/ปี",
+      "500.00 ดอลลาร์/ปี",
+      "1,000.00 ดอลลาร์/ปี"
+    ],
+    "correct": 0,
+    "why": "หา annual equivalent ของ base และ gradient โดย A = base + G(A/G)",
+    "steps": [
+      "A/G = 1/i − n/[(1+i)ⁿ−1]",
+      "A = 500 + 100(A/G,5%,10) = 909.91 ดอลลาร์/ปี; เป็นขนาดค่าใช้จ่าย"
+    ],
+    "ref": "9.2 · หน้า 35–39",
+    "origin": "ดัดแปลงจากตัวอย่างสไลด์"
+  },
+  {
+    "id": "Q073",
+    "chapter": "9.2",
+    "topic": "Gradient และอนุกรมเพิ่ม",
+    "question": "ค่าใช้จ่ายสิ้นปี 1–4 คือ 500, 400, 300, 200 บาท ที่ i=10% ขนาดมูลค่าปัจจุบันเท่าใด?",
+    "options": [
+      "1,147.12 บาท",
+      "2,022.74 บาท",
+      "1,400.00 บาท",
+      "1,584.93 บาท"
+    ],
+    "correct": 0,
+    "why": "ค่าใช้จ่ายลดลงปีละ 100 จึงใช้ G เป็นลบ หรือคิดลดแต่ละปีโดยตรง",
+    "steps": [
+      "P = 500(P/A,10%,4) − 100(P/G,10%,4)",
+      "P = 500/1.1 + 400/1.1² + 300/1.1³ + 200/1.1⁴ = 1,147.12 บาท"
+    ],
+    "ref": "9.2 · หน้า 31–36",
+    "origin": "สร้างเพิ่มจากสไลด์"
+  },
+  {
+    "id": "Q074",
+    "chapter": "9.2",
+    "topic": "Gradient และอนุกรมเพิ่ม",
+    "question": "ค่าใช้จ่าย 500, 600, ..., 1,400 ดอลลาร์สิ้นปี 1–10 ที่ 5% จะตรวจทานคำตอบ P อย่างไร?",
+    "options": [
+      "รวม 500/1.05 + 600/1.05² + … + 1,400/1.05¹⁰ แล้วตรวจหน่วยเงิน",
+      "นำ 500 ถึง 1,400 บวกกันโดยไม่คิดเวลา",
+      "ใช้ 10 × 1,400 โดยไม่คิดดอกเบี้ย",
+      "นำ factor ไปบวกกับ 500 โดยไม่คูณ"
+    ],
+    "correct": 0,
+    "why": "การ discount ทีละงวดเป็นวิธีอิสระเพื่อตรวจสูตร gradient และหน่วย",
+    "steps": [
+      "P ≈ 7,026.07 ดอลลาร์ จากกระแสที่แสดงเป็นดอลลาร์ในกราฟ",
+      "สไลด์หน้า 39 แสดง 7,026,050 ดอลลาร์ แต่ไม่สอดคล้องกับขนาดเงินบนกราฟ; ตรวจสอบหน่วยกับผู้สอน"
+    ],
+    "ref": "9.2 · หน้า 37–39",
+    "origin": "สร้างเพิ่มจากสไลด์"
+  },
+  {
+    "id": "Q075",
+    "chapter": "9.2",
+    "topic": "กระแสเงินต่อเนื่อง",
+    "question": "มีกระแสเงินเข้าอย่างต่อเนื่องคงที่ 1,000 บาท/ปี ตั้งแต่ t=0 ถึง 1 ปี ทบต้นต่อเนื่อง r=10% ต่อปี มูลค่าที่ t=1 เท่าใด?",
+    "options": [
+      "1,051.71 บาท",
+      "1,105.17 บาท",
+      "1,000.00 บาท",
+      "1,100.00 บาท"
+    ],
+    "correct": 0,
+    "why": "การไหลต่อเนื่องต้องรวมเงินแต่ละจุดเวลาที่มีเวลาทบไม่เท่ากัน",
+    "steps": [
+      "F₁ = ∫₀¹ 1,000e^[0.10(1−t)]dt = 1,000(e^0.10−1)/0.10",
+      "F₁ ≈ 1,051.71 บาท; อยู่ระหว่าง 1,000 กับ 1,000e^0.1"
+    ],
+    "ref": "9.2 · หน้า 27–29 (ต่อยอด)",
+    "origin": "สร้างเพิ่มจากสไลด์"
+  },
+  {
+    "id": "Q076",
+    "chapter": "9.2",
+    "topic": "กระแสเงินต่อเนื่อง",
+    "question": "ทบต้นต่อเนื่องกับกระแสเงินสดต่อเนื่อง หมายถึงสิ่งเดียวกันหรือไม่?",
+    "options": [
+      "ไม่เหมือนกัน: อย่างแรกบอกวิธีคิดดอกเบี้ย อย่างหลังบอกช่วงเวลาที่เงินไหล",
+      "เหมือนกันเสมอและต้องใช้ร่วมกัน",
+      "หมายถึงไม่มีดอกเบี้ยทั้งคู่",
+      "ทั้งสองหมายถึงจ่ายเงินตอนสิ้นปีเท่านั้น"
+    ],
+    "correct": 0,
+    "why": "ต้องแยก frequency ของ interest compounding จาก timing ของกระแสเงินสด",
+    "steps": [
+      "ก้อนเงิน ณ t=0 สามารถทบต้นต่อเนื่องได้โดยใช้ Peʳᵗ",
+      "กระแสเงินสดอาจเกิดต่อเนื่องตลอดช่วงเวลาและต้องรวมผลของแต่ละช่วง"
+    ],
+    "ref": "9.1 · หน้า 20–22; 9.2 · หน้า 27–29",
+    "origin": "สร้างเพิ่มจากสไลด์"
+  },
+  {
+    "id": "Q077",
+    "chapter": "9.2",
+    "topic": "กระแสเงินต่อเนื่อง",
+    "question": "อัตราดอกเบี้ยต่อเนื่อง r=12% ต่อปี ลงทุนต่อเนื่อง 3 ล้านดอลลาร์/ปีในช่วง t=−2 ถึง −1 และ 7 ล้าน/ปีในช่วง −1 ถึง 0 มูลค่าที่ t=0 ตามช่วงเวลานี้เท่าใด?",
+    "options": [
+      "11.031 ล้านดอลลาร์",
+      "12.440 ล้านดอลลาร์",
+      "10.000 ล้านดอลลาร์",
+      "11.706 ล้านดอลลาร์"
+    ],
+    "correct": 0,
+    "why": "ต้องทบเงินที่ไหลแต่ละขณะถึง t=0; ช่วง −2 ถึง −1 ทบเพิ่มหลังจบช่วงเพียง 1 ปี",
+    "steps": [
+      "F₁ = 3[(e^0.12−1)/0.12]e^0.12 = 3.5938 ล้าน",
+      "F₂ = 7[(e^0.12−1)/0.12] = 7.4373 ล้าน",
+      "รวม F₀ = 11.0311 ล้านดอลลาร์; สไลด์หน้า 28 ระบุ 12.44 ล้าน แต่ตัวคูณเหมือนเพิ่มเวลาทบอีกหนึ่งปี จึงควรตรวจสอบกับผู้สอน"
+    ],
+    "ref": "9.2 · หน้า 27–28",
+    "origin": "ตรวจทานตัวอย่างสไลด์"
+  },
+  {
+    "id": "Q078",
+    "chapter": "9.2",
+    "topic": "กระแสเงินต่อเนื่อง",
+    "question": "หากมีมูลค่าปัจจุบัน 11.031 ล้านดอลลาร์ ต้องแปลงเป็นกระแสเงินเข้าแบบต่อเนื่องคงที่ตลอด 10 ปี ที่ r=12% ต่อปี จะได้ประมาณเท่าใดต่อปี?",
+    "options": [
+      "1.894 ล้านดอลลาร์/ปี",
+      "1.103 ล้านดอลลาร์/ปี",
+      "1.324 ล้านดอลลาร์/ปี",
+      "3.662 ล้านดอลลาร์/ปี"
+    ],
+    "correct": 0,
+    "why": "ต้องใช้ P/A แบบกระแสต่อเนื่อง: P = ∫₀ᴺ A e^(−rt)dt",
+    "steps": [
+      "P = A(1−e^(−rN))/r จึง A = Pr/(1−e^(−rN))",
+      "A = 11.031(0.12)/(1−e^−1.2) ≈ 1.894 ล้านดอลลาร์/ปี"
+    ],
+    "ref": "9.2 · หน้า 29",
+    "origin": "สร้างเพิ่มจากสไลด์"
+  },
+  {
+    "id": "Q079",
+    "chapter": "9.2",
+    "topic": "Excel สำหรับ TVM",
+    "question": "Excel: B2 เป็นเงินลงทุน ณ วันนี้ (ค่าติดลบ) และ C2:E2 เป็นเงินรับสิ้นปี 1–3 ที่ i=8% สูตร NPV ใดเหมาะสม?",
+    "options": [
+      "=NPV(8%,C2:E2)+B2",
+      "=NPV(8%,B2:E2)",
+      "=NPV(8%,C2:E2)−B2",
+      "=FV(8%,C2:E2)+B2"
+    ],
+    "correct": 0,
+    "why": "NPV ใน Excel คิดว่า argument แรกเป็นเงินปลายงวด 1 ไม่ใช่ t=0",
+    "steps": [
+      "discount เงินใน C2:E2 ด้วย NPV(8%,C2:E2)",
+      "บวก B2 ที่ระบุเครื่องหมายไว้แล้วนอกฟังก์ชัน; เช่น B2 = −10,000"
+    ],
+    "ref": "9.2 · หน้า 40–42",
+    "origin": "สร้างเพิ่มจากสไลด์"
+  },
+  {
+    "id": "Q080",
+    "chapter": "9.2",
+    "topic": "Excel สำหรับ TVM",
+    "question": "Excel: ต้องหาเงินผ่อนรายเดือนจากเงินกู้ 20,000 ดอลลาร์ nominal 8% ต่อปี ทบต้นเดือน 60 เดือน สูตรใดให้จำนวนงวดเป็นบวก?",
+    "options": [
+      "=PMT(8%/12,60,-20000)",
+      "=PMT(8%,60,-20000)",
+      "=PMT(8%/12,5,-20000)",
+      "=PMT(8%/12,60,20000)"
+    ],
+    "correct": 0,
+    "why": "PMT ใช้อัตราและจำนวนงวดรายเดือน; ป้ายเงินต้องตรง convention ของผลลัพธ์ที่ต้องการ",
+    "steps": [
+      "i = 8%/12, n = 60",
+      "ใส่ PV เป็นลบเพื่อให้ PMT ส่งค่าบวก; ถ้า PV เป็นบวก PMT จะเป็นลบ"
+    ],
+    "ref": "9.2 · หน้า 40–42",
+    "origin": "สร้างเพิ่มจากสไลด์"
+  },
+  {
+    "id": "Q081",
+    "chapter": "9.2",
+    "topic": "Excel สำหรับ TVM",
+    "question": "Excel: ต้องแปลง nominal 12% ต่อปี ทบต้นรายเดือนเป็น effective ต่อปี ใช้สูตรใด?",
+    "options": [
+      "=EFFECT(12%,12)",
+      "=EFFECT(12%,1)",
+      "=EFFECT(1%,12)",
+      "=NPV(12%,12)"
+    ],
+    "correct": 0,
+    "why": "EFFECT รับ nominal annual rate และจำนวนรอบทบต่อปี",
+    "steps": [
+      "=EFFECT(12%,12) = (1+12%/12)¹²−1",
+      "ผลลัพธ์ประมาณ 12.68% ต่อปี"
+    ],
+    "ref": "9.2 · หน้า 40–42",
+    "origin": "สร้างเพิ่มจากสไลด์"
+  },
+  {
+    "id": "Q082",
+    "chapter": "9.2",
+    "topic": "Excel สำหรับ TVM",
+    "question": "Excel function ใดใช้หาอัตราดอกเบี้ยต่องวดเมื่อรู้จำนวนงวดและ cash flow ที่สอดคล้องกัน?",
+    "options": [
+      "RATE",
+      "NPER",
+      "PMT",
+      "FV"
+    ],
+    "correct": 0,
+    "why": "RATE ใช้หา i ส่วน NPER หา n, PMT หา A, FV หา F",
+    "steps": [
+      "ตัวอย่างกรณีเงินก้อน: =RATE(4,0,-10000,14641)",
+      "ผลคือ 10% ต่องวด เมื่อป้ายเงินเข้าและออกสอดคล้องกัน"
+    ],
+    "ref": "9.2 · หน้า 40–42",
+    "origin": "สร้างเพิ่มจากสไลด์"
+  },
+  {
+    "id": "Q083",
+    "chapter": "9.2",
+    "topic": "Excel สำหรับ TVM",
+    "question": "Excel function ใดใช้หาจำนวนงวด n จากอัตราดอกเบี้ยและรูปแบบ cash flow?",
+    "options": [
+      "NPER",
+      "NPV",
+      "EFFECT",
+      "RATE"
+    ],
+    "correct": 0,
+    "why": "NPER ใช้หาจำนวน periods ไม่ใช่ present value หรือ rate",
+    "steps": [
+      "เช่น =NPER(10%,0,-10000,13310) ได้ 3 งวด",
+      "กำหนดเครื่องหมายเงินเข้าและออกตรงข้ามกัน"
+    ],
+    "ref": "9.2 · หน้า 40–42",
+    "origin": "สร้างเพิ่มจากสไลด์"
+  },
+  {
+    "id": "Q084",
+    "chapter": "9.2",
+    "topic": "กระแสเงินสดหลายช่วงเวลา",
+    "question": "โครงการลงทุนวันนี้ $70,000 รับสุทธิปลายปี $12,150 นาน 10 ปี อัตรา nominal 23% ต่อ 2 ปี ทบต้นรายไตรมาส NPV เท่าใด?",
+    "options": [
+      "-1,365.28 ดอลลาร์",
+      "-23,838.87 ดอลลาร์",
+      "78.41 ดอลลาร์",
+      "1,365.28 ดอลลาร์"
+    ],
+    "correct": 0,
+    "why": "รายรับเป็นรายปี จึงต้องแปลงอัตราที่ทบรายไตรมาสเป็น effective ต่อปีก่อนใช้ P/A",
+    "steps": [
+      "2 ปีมี 8 ไตรมาส → i_quarter = 0.23/8 = 0.02875",
+      "i_year = (1.02875)⁴−1 = 12.0055%",
+      "NPV = −70,000 + 12,150(P/A, i_year, 10) = -1,365.28 ดอลลาร์; ช้อยส์เดิมใกล้ −1,350 ดอลลาร์"
+    ],
+    "ref": "ข้อสอบ 2025 · หน้า 7 ข้อ 30; 9.1 · หน้า 15–17; 9.2 · หน้า 14–15",
+    "origin": "ดัดแปลงจากข้อสอบ 2025"
+  },
+  {
+    "id": "Q085",
+    "chapter": "9.2",
+    "topic": "กระแสเงินสดหลายช่วงเวลา",
+    "question": "ในการคำนวณ NPV ด้วย i > 0 เงินลงทุนเริ่มต้นที่ t=0 ต้องคิดลดกี่งวด?",
+    "options": [
+      "0 งวด เพราะอยู่ที่เวลาปัจจุบันแล้ว",
+      "1 งวดเสมอ",
+      "เท่าจำนวนปีของโครงการ",
+      "12 งวดเสมอ"
+    ],
+    "correct": 0,
+    "why": "P เป็นค่าที่เวลาอ้างอิง t=0 จึงใช้ตัวประกอบ (1+i)^0 = 1",
+    "steps": [
+      "NPV = CF₀ + CF₁/(1+i) + CF₂/(1+i)² + ...",
+      "ถ้า CF₀ คือเงินลงทุน จะมีเครื่องหมายลบจากมุมมองผู้ลงทุน"
+    ],
+    "ref": "9.2 · หน้า 6–9, 40–42",
+    "origin": "สร้างเพิ่มจากสไลด์"
+  },
+  {
+    "id": "Q086",
+    "chapter": "9.2",
+    "topic": "ปัจจัย P/F และ F/P",
+    "question": "ข้อใดเป็นสมการเชื่อมตัวคูณเพื่อแปลง A ของ ordinary series เป็น P?",
+    "options": [
+      "(P/A) = (F/A)(P/F) เมื่อใช้ i,n เดียวกัน",
+      "(P/A) = (F/A)(F/P)",
+      "(P/A) = (A/F)+(F/P)",
+      "(P/A) = (A/P)(F/P)"
+    ],
+    "correct": 0,
+    "why": "หา F จาก A ก่อน แล้ว discount F กลับ P ในระยะ n เดียวกัน",
+    "steps": [
+      "F = A(F/A)",
+      "P = F(P/F) = A(F/A)(P/F)"
+    ],
+    "ref": "9.2 · หน้า 14",
+    "origin": "สร้างเพิ่มจากสไลด์"
+  },
+  {
+    "id": "Q087",
+    "chapter": "9.2",
+    "topic": "ปัจจัย P/F และ F/P",
+    "question": "เงิน 5,000 บาท ณ t=2 จะเทียบเท่าเท่าใด ณ t=5 ที่ i=10% ต่อปี?",
+    "options": [
+      "6,655.00 บาท",
+      "8,052.55 บาท",
+      "3,756.57 บาท",
+      "5,500.00 บาท"
+    ],
+    "correct": 0,
+    "why": "ช่วงห่างระหว่าง t=2 ถึง t=5 มี 3 งวด ใช้ F/P ทบ 3 งวด",
+    "steps": [
+      "n = 5−2 = 3",
+      "F₅ = 5,000(1.10)³ = 6,655 บาท"
+    ],
+    "ref": "9.2 · หน้า 6–9, 13",
+    "origin": "สร้างเพิ่มจากสไลด์"
+  },
+  {
+    "id": "Q088",
+    "chapter": "9.2",
+    "topic": "ชุดเงินเท่ากัน A",
+    "question": "จ่าย 2,000 บาททุกสิ้นปีเป็นเวลา 3 ปี ที่ 10% ต่อปี ปัจจัย (P/A,10%,3) มีค่าเท่าใด?",
+    "options": [
+      "2.4869 เท่า",
+      "3.3100 เท่า",
+      "0.7513 เท่า",
+      "3.0000 เท่า"
+    ],
+    "correct": 0,
+    "why": "P/A เป็นผลรวมของตัวคูณคิดลดสำหรับเงินปลายงวดทุกปี",
+    "steps": [
+      "P/A = [1−(1+i)⁻ⁿ]/i",
+      "P/A = [1−(1.10)⁻³]/0.10 = 2.4869"
+    ],
+    "ref": "9.2 · หน้า 14–15",
+    "origin": "สร้างเพิ่มจากสไลด์"
+  }
+];</script>
+<script>const LESSONS = [
+{id:'foundations', chapter:'9.1', title:'เริ่มจาก Time Value of Money', topic:'มูลค่าเงินตามเวลา', pages:'9.1 หน้า 5–7, 30–31', read:'6 นาที', html:`
+<p>เงินจำนวนเท่ากันที่ได้รับคนละเวลาไม่ได้มีมูลค่าทางเศรษฐกิจเท่ากันโดยอัตโนมัติ เพราะเงินวันนี้สามารถนำไปลงทุนเพื่อรับผลตอบแทนได้ เวลาจะเทียบทางเลือกต้องย้ายทุกจำนวนไปยังเวลาเดียวกันก่อน</p>
+<div class="formula"><b>สัญลักษณ์ที่ต้องรู้</b><br>P = เงินปัจจุบัน / เงินก้อนต้นทาง<br>F = เงินก้อน ณ เวลาปลายทาง<br>A = เงินจำนวนเท่ากันในแต่ละงวด<br>i = อัตราดอกเบี้ยที่แท้จริงต่องวด<br>n = จำนวนงวด &nbsp; G = จำนวนที่เพิ่มขึ้นเท่า ๆ กันต่องวด</div>
+<h3>ตัวอย่าง: 930 วันนี้ หรือ 1,000 สิ้นปี?</h3><ol><li>กำหนด i = 7% ต่อปี และนำทั้งสองตัวเลือกไปเทียบที่สิ้นปี</li><li>930 วันนี้มีมูลค่าสิ้นปี = 930(1.07) = <b>995.10</b> บาท</li><li>เปรียบเทียบ 995.10 กับ 1,000 บาท จึงเลือกรับ 1,000 สิ้นปี เมื่อความเสี่ยงและเงื่อนไขอื่นเท่ากัน</li></ol>
+<div class="tip"><b>จุดสำคัญ</b> Economic equivalence คือมูลค่าเทียบเท่าที่อัตราและเวลาที่กำหนด ตัวเลขเงินอาจไม่เท่ากัน เช่น 100 วันนี้ เทียบเท่า 110 สิ้นปีที่ 1 เมื่อ i = 10%</div>`},
+{id:'interest', chapter:'9.1', title:'ดอกเบี้ยอย่างง่ายและทบต้น', topic:'ดอกเบี้ยอย่างง่ายและทบต้น', pages:'9.1 หน้า 8–14', read:'8 นาที', html:`
+<p><b>Simple interest</b> คิดดอกเบี้ยจากเงินต้นเริ่มต้นตลอด ส่วน <b>compound interest</b> นำดอกเบี้ยที่เกิดแล้วไปรวมในฐานของงวดถัดไป</p>
+<div class="formula">Simple: I = Pin &nbsp; และ &nbsp; F = P(1 + in)<br>Compound: F = P(1+i)ⁿ &nbsp; และ &nbsp; P = F/(1+i)ⁿ</div>
+<h3>ตัวอย่างเปรียบเทียบ</h3><p>ฝาก 10,000 บาท ดอกเบี้ย 8% ต่อปี 3 ปี</p><ol><li>Simple: F = 10,000[1 + (0.08)(3)] = <b>12,400</b> บาท</li><li>Compound รายปี: F = 10,000(1.08)³ = <b>12,597.12</b> บาท</li><li>ส่วนต่างเกิดจากดอกเบี้ยที่ถูกนำไปทบในงวดต่อไป</li></ol>
+<h3>ย้อนหา P, i หรือ n</h3><p>P = F/(1+i)ⁿ; i = (F/P)^(1/n) − 1; n = ln(F/P)/ln(1+i) โดยต้องใช้ i และ n ในหน่วยเวลาเดียวกัน</p>
+<p>ถ้าอัตราแต่ละปีเปลี่ยน ให้คูณแยก: F = P(1+i₁)(1+i₂)…(1+iₙ) เช่น 5%, 8%, 3% ใช้ 1.05 × 1.08 × 1.03</p>
+<div class="tip">ถ้าโจทย์ไม่ชัดว่าดอกเบี้ยทบต้นหรือไม่ ควรดูเงื่อนไขหรือสมมติฐานที่ผู้สอนกำหนด ไม่ควรใช้ simple แทน compound โดยไม่บอก</div>`},
+{id:'single-sum', chapter:'9.1', title:'ย้ายเงินก้อนระหว่าง P และ F', topic:'เงินก้อนเดียว P–F', pages:'9.1 หน้า 11–14, 25; ข้อสอบ 2025 ข้อ 16, 23', read:'7 นาที', html:`
+<p>เงินก้อนเดียวใช้ F/P เมื่อย้ายไปอนาคต และ P/F เมื่อย้ายกลับอดีต โดย n คือจำนวนงวดระหว่างสองจุดเวลาจริง</p><div class="formula">F = P(F/P,i,n) = P(1+i)ⁿ<br>P = F(P/F,i,n) = F/(1+i)ⁿ</div>
+<h3>ตัวอย่าง 1: ต้องการ 100,000 บาทในอีก 5 ปี</h3><ol><li>รู้ F = 100,000, i = 4% ต่อปี, n = 5; ต้องการ P ที่ t=0</li><li>P = 100,000/(1.04)⁵ = <b>82,192.71 บาท</b> หรือประมาณ 82,190 บาทตามช้อยส์</li></ol>
+<h3>ตัวอย่าง 2: เปลี่ยนหน่วยการทบต้น</h3><p>F = 21,500 หลัง 10 ปี, nominal 10% ต่อปี ทบปีละ 2 ครั้ง: i = 0.10/2 = 5% ต่อครึ่งปี และ n = 10×2 = 20 งวด ดังนั้น P = 21,500/(1.05)²⁰ ≈ <b>8,103.12 บาท</b></p><div class="tip">ตรวจคำตอบ: เมื่อ i เป็นบวกและ F อยู่ในอนาคต ค่า P ต้องน้อยกว่า F</div>`},
+{id:'rates', chapter:'9.1', title:'Nominal, effective และหน่วยเวลา', topic:'Nominal & effective rate', pages:'9.1 หน้า 15–19, 25–27', read:'10 นาที', html:`
+<p>Nominal annual rate (j) เป็นอัตราที่อ้างเป็นรายปี ส่วน effective rate บอกการเติบโตจริงในช่วงที่กำหนดหลังคิดผลของการทบต้น <b>ต้องบอกด้วยว่า effective ต่อเดือน ต่อครึ่งปี หรือต่อปี</b></p>
+<div class="formula">อัตราต่องวด = j/m<br>Effective ต่อปี = (1 + j/m)ᵐ − 1<br>Nominal ต่อปีจาก effective = m[(1+i<sub>eff</sub>)<sup>1/m</sup> − 1]<br>F = P(1+j/m)^(m × จำนวนปี)</div>
+<p>m คือจำนวนงวดทบต้นต่อปี เช่น รายเดือน m=12, รายไตรมาส m=4, ครึ่งปี m=2</p>
+<h3>ตัวอย่าง 12% nominal ทบต้นรายเดือน</h3><ol><li>ต่อเดือน i = 0.12/12 = 0.01 = 1%</li><li>หนึ่งปีมี 12 งวด: i<sub>eff</sub> = (1.01)¹² − 1 = <b>12.6825% ต่อปี</b></li><li>ถ้าจ่ายรายเดือน 5 ปี ให้ใช้ i = 1% ต่อเดือน และ n = 60 เดือนในสูตร annuity</li></ol>
+<h3>โจทย์ย้อนกลับ</h3><p>Effective 12% ต่อปี ทบต้นรายไตรมาส: j = 4[(1.12)^(1/4) − 1] = <b>11.49% nominal ต่อปี</b></p>
+<div class="tip"><b>กับดัก:</b> 9% nominal ต่อปี ทบไตรมาส จะได้ effective ต่อครึ่งปี = (1+0.09/4)²−1 = 4.5506% ไม่ใช่ 9% และไม่ใช่แค่ 9%/2 แบบไม่ทบ</div>`},
+{id:'continuous-interest', chapter:'9.1', title:'ทบต้นต่อเนื่อง', topic:'ดอกเบี้ยต่อเนื่อง', pages:'9.1 หน้า 20–24', read:'5 นาที', html:`
+<p>เมื่อจำนวนครั้งที่ทบต้นในหนึ่งปีเพิ่มมากขึ้นเรื่อย ๆ สูตร discrete จะเข้าใกล้ลิมิตของการทบต้นต่อเนื่อง</p>
+<div class="formula">F = Peʳᵗ<br>Effective ต่อปี = eʳ − 1<br>r = nominal rate ต่อปีแบบทบต้นต่อเนื่อง, t = จำนวนปี</div>
+<h3>ตัวอย่าง</h3><p>ทบต้นต่อเนื่องที่ nominal 20% ต่อปี: effective ต่อปี = e<sup>0.20</sup> − 1 = <b>22.14%</b> การหาเงินก้อนหลัง 3 ปีใช้ e<sup>0.20×3</sup></p>
+<div class="tip">การทบต้นต่อเนื่องเป็นเรื่อง <b>วิธีคิดดอกเบี้ย</b> ส่วนกระแสเงินสดต่อเนื่องเป็นเรื่อง <b>เวลาในการรับหรือจ่ายเงิน</b> ทั้งสองแนวคิดไม่จำเป็นต้องเกิดพร้อมกัน</div>`},
+{id:'inflation', chapter:'9.1', title:'เงินเฟ้อ ดัชนีราคา และกำลังซื้อ', topic:'เงินเฟ้อและกำลังซื้อ', pages:'9.1 หน้า 32–45', read:'9 นาที', html:`
+<p>เงินเฟ้อคือระดับราคาสินค้าและบริการโดยทั่วไปเพิ่มขึ้น ทำให้เงินจำนวนเดิมซื้อของได้โดยเฉลี่ยน้อยลง หากอัตราเงินเฟ้อชะลอจาก 6% เหลือ 2% ระดับราคายังเพิ่ม แต่เพิ่มช้าลง ส่วนเงินฝืดคือระดับราคาโดยทั่วไปลดลง</p>
+<p><b>Demand-pull:</b> อุปสงค์รวมดันราคา; <b>Cost-push:</b> ต้นทุนผลิตสูงขึ้นแล้วส่งผ่านเข้าสู่ราคา</p>
+<div class="formula">ราคาในปี n = ราคาเริ่มต้น × (1+f)ⁿ<br>f เฉลี่ยต่อปี = (ดัชนีปลายงวด/ดัชนีต้นงวด)^(1/n) − 1<br>มูลค่ากำลังซื้อวันนี้ของ F = F/(1+f)ⁿ</div>
+<h3>ตัวอย่าง CEPCI</h3><p>ดัชนีจาก 359 เป็น 402 ใน 10 ปี: f = (402/359)^(1/10)−1 = <b>1.14% ต่อปี</b> โดยเป็นอัตราเฉลี่ยแบบทบต้น</p>
+<p><b>CPI</b> อ้างอิงตะกร้าสินค้าและบริการผู้บริโภค; <b>CEPCI</b> ใช้ติดตามต้นทุนที่เกี่ยวกับโรงงานเคมี จึงเลือกให้ตรงกับปัญหา ตามสไลด์ Core CPI ของไทยหักหมวดอาหารสดและพลังงานออกจาก CPI ทั่วไป</p>
+<div class="tip">ราคาขึ้นสองเท่าใน 10 ปีหมายถึง (1+f)¹⁰=2 จึง f≈7.18% ไม่ใช่ 10% เพราะมีการทบต้น</div>`},
+{id:'real-return', chapter:'9.1', title:'ผลตอบแทนหลังหักเงินเฟ้อ', topic:'เงินเฟ้อและกำลังซื้อ', pages:'9.1 หน้า 45–47', read:'6 นาที', html:`
+<p>อัตราผลตอบแทนที่เห็นเป็นตัวเงินต้องนำมาเปรียบเทียบกับอัตราเงินเฟ้อในช่วงเดียวกัน เพื่อประเมินกำลังซื้อที่เพิ่มขึ้นจริง</p>
+<div class="formula">1 + i<sub>real</sub> = (1 + i<sub>effective</sub>)/(1 + f)<br>i<sub>real</sub> ≈ i<sub>effective</sub> − f เป็นเพียงค่าประมาณ</div>
+<h3>ตัวอย่างจากสไลด์</h3><ol><li>Nominal 12% ต่อปี ทบรายเดือน → i<sub>eff</sub> = (1+0.12/12)¹²−1 = 12.6825% ต่อปี</li><li>เงินเฟ้อ f = 6% ต่อปี</li><li>i<sub>real</sub> = 1.126825/1.06 − 1 = <b>6.30% ต่อปี</b></li></ol>
+<div class="tip">อย่าเทียบ 1% ต่อเดือนกับเงินเฟ้อ 6% ต่อปีโดยตรง และอย่าเรียก 12−6=6% ว่าคำตอบ exact ในกรณีนี้</div>`},
+{id:'diagram', chapter:'9.2', title:'อ่าน Cash Flow Diagram', topic:'แผนภาพกระแสเงินสด', pages:'9.2 หน้า 1–9', read:'7 นาที', html:`
+<p>แกนนอนคือเวลา t=0,1,2,… และลูกศรบอกกระแสเงินสดในแต่ละเวลา เลือกมุมมองก่อนเสมอ: เงินเข้าสู่ระบบที่เลือกเป็นบวก และเงินออกเป็นลบ</p>
+<h3>ตัวอย่างเงินกู้ 20,000</h3><p>มุมมองผู้กู้: ได้เงิน +20,000 ณ t=0 และจ่ายค่างวดเป็นลบ ส่วนมุมมองธนาคารกลับเครื่องหมาย การเปรียบเทียบเงินต่างเวลาต้องนำไปยังจุดเดียวกันก่อน</p>
+<div class="formula">มูลค่าที่เวลา T = Σ CF<sub>t</sub>(1+i)^(T−t)<br>NPV ที่เวลา 0 = CF₀ + CF₁/(1+i) + CF₂/(1+i)² + …</div>
+<p><b>Discrete:</b> จ่ายเป็นจุดเวลา เช่น สิ้นเดือน <b>Continuous:</b> เงินไหลตลอดช่วง โดยการทบต้นและการไหลเป็นคนละเรื่อง</p>
+<div class="tip">ถ้าเป็นเงินวันนี้ CF₀ ไม่ต้อง discount; สำหรับเงินที่อยู่ t=2 แล้วต้องการ t=5 ให้ใช้จำนวนงวด 5−2=3</div>`},
+{id:'factors', chapter:'9.2', title:'เลือก Factor ให้ถูกทิศ', topic:'ปัจจัย P/F และ F/P', pages:'9.2 หน้า 13–16', read:'9 นาที', html:`
+<p>อ่าน (สิ่งที่อยากหา / สิ่งที่รู้, i, n) เช่น (P/F,8%,3) หมายถึงตัวคูณหา P เมื่อรู้ F ที่อัตรา 8% และ 3 งวด</p>
+<div class="table-wrap"><table><thead><tr><th>ต้องการจากสิ่งที่รู้</th><th>สูตร factor</th><th>ความหมาย</th></tr></thead><tbody>
+<tr><td>F จาก P</td><td>F/P = (1+i)ⁿ</td><td>ทบเงินก้อนไปอนาคต</td></tr><tr><td>P จาก F</td><td>P/F = (1+i)⁻ⁿ</td><td>คิดลดเงินก้อนมาปัจจุบัน</td></tr>
+<tr><td>F จาก A</td><td>F/A = [(1+i)ⁿ−1]/i</td><td>รวมชุดเงินเท่ากันปลายงวดไป F</td></tr><tr><td>P จาก A</td><td>P/A = [1−(1+i)⁻ⁿ]/i</td><td>คิดลดชุดเงินเท่ากันไป P</td></tr>
+<tr><td>A จาก P</td><td>A/P = i(1+i)ⁿ/[(1+i)ⁿ−1]</td><td>เงินก้อนเป็นค่างวด</td></tr><tr><td>A จาก F</td><td>A/F = i/[(1+i)ⁿ−1]</td><td>เงินฝากต่อปีเพื่อสะสม F</td></tr></tbody></table></div>
+<p>คู่กลับที่ควรรู้: P/F = 1/(F/P), A/P = 1/(P/A), A/F = 1/(F/A) และ P/A = (F/A)(P/F) เมื่อ i,n ตรงกัน</p><div class="tip">เมื่อ i=0 อย่าหารด้วยศูนย์: ใช้ลิมิตหรือบวกกระแสทีละงวด เช่น P/A = n และ F/A = n</div>`},
+{id:'annuity', chapter:'9.2', title:'Uniform Series และการเลื่อนเวลา', topic:'ชุดเงินเท่ากัน A', pages:'9.2 หน้า 10–15, 30', read:'10 นาที', html:`
+<p>Ordinary annuity คือ A เท่ากันทุกสิ้นงวด โดย A แรกเกิดหนึ่งงวดหลังจุด P ส่วน F จาก F/A จะอยู่เวลาเดียวกับ A งวดสุดท้าย</p>
+<div class="formula">F = A(F/A,i,n) &nbsp;&nbsp; P = A(P/A,i,n)<br>A = P(A/P,i,n) &nbsp;&nbsp; A = F(A/F,i,n)</div>
+<h3>ตัวอย่าง: ฝาก 3,000 สิ้นปี 5 ครั้งที่ 6%</h3><ol><li>เป็นชุด A ปลายงวด ต้องการ F ที่ t=5 จึงใช้ F/A</li><li>F = 3,000[(1.06)⁵−1]/0.06 = <b>16,911.28 บาท</b></li></ol>
+<h3>ชุดเริ่มช้า (deferred annuity)</h3><p>ถ้าได้รับ 1,000 ที่ t=3,4,5: P/A 3 งวดให้มูลค่า ณ t=2 ก่อน จากนั้นคิดลดสองงวด: P₀ = 1,000(P/A,10%,3)(P/F,10%,2) ≈ <b>2,055.25 บาท</b></p>
+<h3>จ่ายต้นงวด</h3><p>หาก A ที่ t=0,1,2,3,4 แทน t=1,2,3,4,5 แล้วต้องการ F₅ ให้คูณ F/A ปกติอีก (1+i) เพราะเงินแต่ละก้อนได้ดอกเบี้ยเพิ่มหนึ่งงวด</p>
+<div class="tip">ภาพในสไลด์แสดง A ที่ t=1,2,… จึงควรยึดตำแหน่งบน timeline เป็นหลัก หากคำบรรยายต้นงวด/ปลายงวดกำกวม</div>`},
+{id:'loans', chapter:'9.2', title:'เงินกู้ ค่างวด และดอกเบี้ยรวม', topic:'เงินกู้และค่างวด', pages:'9.2 หน้า 19–24', read:'8 นาที', html:`
+<p>เงินกู้ P วันนี้เท่ากับมูลค่าปัจจุบันของเงินผ่อน A เท่า ๆ กันทุกสิ้นงวด ดังนั้นเลือก <b>A/P</b> เพื่อหา A</p>
+<div class="formula">A = P × i(1+i)ⁿ / [(1+i)ⁿ−1]<br>ดอกเบี้ยที่จ่ายรวมแบบตัวเงิน = A × n − P</div>
+<h3>ตัวอย่างกู้ 20,000 ดอลลาร์</h3><ol><li>Nominal 8% ต่อปี ทบรายเดือน, ผ่อน 5 ปี → i = 0.08/12 ต่อเดือน, n = 60</li><li>A = 20,000(A/P, 0.08/12, 60) ≈ <b>405.53 ดอลลาร์ต่อเดือน</b></li><li>คิดจากค่างวดก่อนปัด: ดอกเบี้ยรวม = 60A − 20,000 ≈ <b>4,331.67 ดอลลาร์</b> การปัดค่างวดแต่ละเดือนอาจทำให้ต่างเล็กน้อย</li></ol>
+<p>หนี้ก้อนเดียวกันยืดเวลาผ่อนมักทำให้ค่างวดลด แต่จ่ายดอกเบี้ยรวมมากขึ้น เพราะยอดคงค้างอยู่นานขึ้น</p>
+<div class="tip">หากโจทย์จ่ายรายปีแต่ทบรายเดือน ให้แปลงเป็น effective รายปีก่อนใช้ factor แบบรายปี</div>`},
+{id:'mixed', chapter:'9.2', title:'กระแสเงินสดไม่เท่ากันและ NPV', topic:'กระแสเงินสดหลายช่วงเวลา', pages:'9.2 หน้า 6–9, 17–18, 40–42', read:'7 นาที', html:`
+<p>ถ้าจำนวนเงินแต่ละปีไม่เท่ากัน ไม่ควรใช้ P/A ครอบทั้งหมดโดยไม่มีการแยกชุด ให้แปลงรายการทีละก้อนหรือแยกชุดที่เท่ากันก่อนรวม</p>
+<h3>ตัวอย่างจากสไลด์</h3><p>ฝาก 5,000 ที่ t=0; 1,000 ที่ t=1; 2,000 ที่ t=3 และถอน 3,000 ที่ t=4; i = 8% ต้องการเงินที่ t=7</p><div class="formula">F₇ = 5,000(1.08)⁷ + 1,000(1.08)⁶<br>+ 2,000(1.08)⁴ − 3,000(1.08)³<br>= <b>9,097.84</b></div>
+<p>แต่ละเลขชี้กำลังเท่ากับ 7−t ของรายการนั้น หากต้องการค่า ณ t=0 ให้หาร F₇ ด้วย (1.08)⁷ ได้ประมาณ <b>5,308.50</b></p>
+<div class="tip">NPV = CF₀ + Σ CFₜ/(1+i)ᵗ เครื่องหมายต้องตรงมุมมองผู้ลงทุน และเงินเริ่มต้น CF₀ ไม่ต้องคิดลด</div>`},
+{id:'gradient', chapter:'9.2', title:'Arithmetic Gradient: P/G และ A/G', topic:'Gradient และอนุกรมเพิ่ม', pages:'9.2 หน้า 31–39', read:'10 นาที', html:`
+<p>Arithmetic gradient คือ cash flow เพิ่มหรือลดด้วย <b>จำนวนคงที่ G</b> แต่ละงวด ไม่ใช่เพิ่มคงที่เป็นร้อยละ แยกเป็น base A ที่เท่ากันทุกปี และส่วน gradient 0, G, 2G, …</p>
+<div class="formula">P<sub>รวม</sub> = A<sub>base</sub>(P/A,i,n) + G(P/G,i,n)<br>P/G = [(1+i)ⁿ − in − 1] / [i²(1+i)ⁿ]<br>A<sub>รวม</sub> = A<sub>base</sub> + G(A/G,i,n)<br>A/G = 1/i − n/[(1+i)ⁿ−1]</div>
+<h3>ตัวอย่าง</h3><p>ค่าใช้จ่าย 500, 600, …, 1,400 ดอลลาร์ ในปี 1–10, i=5%: base = 500 และ G=100</p><ol><li>P = 500(P/A,5%,10) + 100(P/G,5%,10)</li><li>ใช้ factor ไม่ปัดระหว่างทางได้ขนาดค่าใช้จ่าย <b>7,026.07 ดอลลาร์</b>; ถ้าเงินออกให้ใส่เครื่องหมายลบ</li><li>A = 500 + 100(A/G,5%,10) ≈ <b>909.91 ดอลลาร์/ปี</b></li></ol>
+<div class="warning"><b>ตรวจหน่วยกับสไลด์:</b> หน้า 39 แสดง 7,026,050 และ 909,910 ดอลลาร์ แต่กราฟหน้า 37 ระบุ 500 ถึง 1,400 ดอลลาร์ หากตัวเลขกราฟเป็นหน่วยดอลลาร์ตามที่พิมพ์ คำตอบจะเป็น 7,026.07 และ 909.91 ดอลลาร์/ปี การปัด factor แบบในสไลด์ให้ประมาณ 7,026.05 จึงควรตรวจสอบหน่วยที่ผู้สอนตั้งใจ</div>
+<p>ถ้าค่าใช้จ่าย <b>ลดลง</b> ปีละจำนวนเท่ากัน ให้ใช้ G ติดลบ เช่น 500,400,300,200 → G = −100</p>`},
+{id:'continuous-flow', chapter:'9.2', title:'กระแสเงินสดต่อเนื่อง', topic:'กระแสเงินต่อเนื่อง', pages:'9.2 หน้า 27–29', read:'9 นาที', html:`
+<p>ถ้าเงินไหลเข้าหรือออกสม่ำเสมอเป็นอัตรา C ต่อปีตลอดช่วงเวลา แต่ละส่วนได้รับดอกเบี้ยนานไม่เท่ากัน จึงต้องรวมผลตามเวลาจริง</p>
+<div class="formula">เงินไหล C ระหว่าง t=a ถึง b และคิดที่ T ≥ b:<br>F<sub>T</sub> = C(e<sup>r(T−a)</sup> − e<sup>r(T−b)</sup>)/r<br>เงินไหล A ต่อเนื่อง 0 ถึง n: P = A(1−e⁻ʳⁿ)/r</div>
+<h3>ตรวจตัวอย่างในสไลด์</h3><p>r=12% ต่อปี: ลงทุน 3 ล้านดอลลาร์/ปี ระหว่าง t=−2 ถึง −1 และ 7 ล้าน/ปี ระหว่าง −1 ถึง 0</p><ol><li>ช่วงแรก F₀ = 3(e<sup>0.24</sup>−e<sup>0.12</sup>)/0.12 = <b>3.5938 ล้าน</b></li><li>ช่วงที่สอง F₀ = 7(e<sup>0.12</sup>−1)/0.12 = <b>7.4373 ล้าน</b></li><li>รวมตาม timeline = <b>11.0311 ล้านดอลลาร์</b></li></ol>
+<div class="warning">สไลด์หน้า 28 ระบุ 12.44 ล้าน แต่ตัวคูณในเฉลยดูเหมือนทบเพิ่มอีกหนึ่งปีเทียบกับช่วงที่วาด จึงได้ผลต่างจากการรวมตาม timeline นี้ ควรถามผู้สอนว่าตั้งใจใช้ช่วงเวลาใด</div>`},
+{id:'excel', chapter:'9.2', title:'ใช้ Excel ตรวจคำตอบ', topic:'Excel สำหรับ TVM', pages:'9.2 หน้า 40–42', read:'7 นาที', html:`
+<div class="table-wrap"><table><thead><tr><th>หาอะไร</th><th>ฟังก์ชัน</th><th>ตัวอย่าง</th></tr></thead><tbody><tr><td>มูลค่าปัจจุบัน</td><td>PV</td><td>=PV(8%,5,-1000)</td></tr><tr><td>มูลค่าอนาคต</td><td>FV</td><td>=FV(8%,5,-1000)</td></tr><tr><td>ค่างวด</td><td>PMT</td><td>=PMT(8%/12,60,-20000)</td></tr><tr><td>อัตราต่องวด</td><td>RATE</td><td>=RATE(4,0,-10000,14641)</td></tr><tr><td>จำนวนงวด</td><td>NPER</td><td>=NPER(10%,0,-10000,13310)</td></tr><tr><td>Effective annual rate</td><td>EFFECT</td><td>=EFFECT(12%,12)</td></tr></tbody></table></div>
+<p>Excel ใช้ convention เงินเข้าและเงินออกคนละเครื่องหมาย เช่น ใส่ PV เป็น −20,000 เพื่อให้ PMT ออกมาเป็นบวก ตัวเลือก type ที่ไม่ได้ใส่มักหมายถึงจ่ายสิ้นงวด</p>
+<div class="warning"><b>Excel NPV:</b> =NPV(8%,C2:E2)+B2 เมื่อ C2 ถึง E2 เป็นเงินปลายงวดปี 1–3 และ B2 เป็นเงินวันนี้ที่มีเครื่องหมายอยู่แล้ว อย่าใส่ B2 เป็น argument แรกของ NPV เพราะ Excel จะคิดลดมันหนึ่งงวด</div>`}
+];
+</script>
+<script>'use strict';
+const KEY='econprep_91_92_v1';
+const $=s=>document.querySelector(s), main=$('#main');
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const initial=()=>({stats:{},bookmarks:[],learned:[],practice:null,exam:null,round:0});
+let state;
+try{state={...initial(),...JSON.parse(localStorage.getItem(KEY)||'{}')}}catch{state=initial()}
+if(!state.stats||typeof state.stats!=='object')state.stats={};
+if(!Array.isArray(state.bookmarks))state.bookmarks=[];
+if(!Array.isArray(state.learned))state.learned=[];
+let view='home', lessonId=LESSONS[0].id, reviewFilter='all', timer=null, bankFilter={query:'',chapter:'all',topic:'all'},confirmExamSubmit=false,confirmRestart=false,confirmPracticeReset=false;
+const letters=['A','B','C','D'];
+function save(){try{localStorage.setItem(KEY,JSON.stringify(state))}catch{toast('ไม่สามารถบันทึกในเบราว์เซอร์นี้ได้')}}
+let toastTimer;
+function toast(message){const el=$('#toast');el.textContent=message;el.style.display='block';clearTimeout(toastTimer);toastTimer=setTimeout(()=>el.style.display='none',3000)}
+function shuf(arr){let a=[...arr];for(let i=a.length-1;i>0;i--){let j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+function find(id){return QUESTIONS.find(q=>q.id===id)}
+function stat(id){return state.stats[id]||{attempts:0,correct:0,lastCorrect:null}}
+function record(id,isCorrect){const s=stat(id);state.stats[id]={attempts:s.attempts+1,correct:s.correct+(isCorrect?1:0),lastCorrect:isCorrect};}
+function summary(){const vals=Object.values(state.stats);let attempts=vals.reduce((n,x)=>n+(x.attempts||0),0),right=vals.reduce((n,x)=>n+(x.correct||0),0);return {seen:QUESTIONS.filter(q=>stat(q.id).attempts>0).length,weak:QUESTIONS.filter(q=>stat(q.id).lastCorrect===false).length,attempts,right,accuracy:attempts?Math.round(right/attempts*100):null}}
+function setView(v,{focus=true}={}){clearInterval(timer);view=v;document.querySelectorAll('.nav').forEach(x=>{let nav=x.dataset.view;let active=nav===v||(nav==='learn'&&v==='lesson')||(nav==='practiceStart'&&['practice','practiceDone'].includes(v))||(nav==='examSetup'&&['exam','result'].includes(v));x.classList.toggle('active',active);if(active)x.setAttribute('aria-current','page');else x.removeAttribute('aria-current')});render();if(focus){main.focus({preventScroll:true});window.scrollTo({top:0,behavior:'instant'})}}
+function goTop(){window.scrollTo({top:0,behavior:'instant'});main.focus({preventScroll:true})}
+const topics=()=>[...new Set(QUESTIONS.map(x=>x.topic))];
+const head=(label,title,desc='')=>`<div class="page-head"><div class="eyebrow">${esc(label)}</div><h1>${esc(title)}</h1>${desc?`<p>${esc(desc)}</p>`:''}</div>`;
+function sourceNote(){return `<div class="notice">อ้างอิงสไลด์ Section 3 Chapter 9.1 และ 9.2 และข้อสอบปลายภาค 2025 ที่แจ๊คให้มา · แบบฝึกดัดแปลงและสร้างเพิ่ม พร้อมตรวจคำนวณใหม่ · <a href="https://drive.google.com/drive/folders/1uCYPxCg6GRYN_JaAj4r798SVz02m4vPJ" target="_blank" rel="noopener noreferrer">เปิดโฟลเดอร์ต้นฉบับ ↗</a></div>`}
+function home(){const s=summary(),pr=state.practice, ex=state.exam; const resume=pr&&!pr.finished&&pr.ids?.length>0;const resumeEx=ex&&!ex.finished&&ex.ids?.length>0;
+const svg=`<svg viewBox="0 0 520 230" role="img" aria-label="แผนภาพเงินปัจจุบันเดินทางไปยังมูลค่าในอนาคต"><path d="M35 167H485" fill="none" stroke="#89a793" stroke-width="2"/><path d="M475 161l10 6-10 6" fill="none" stroke="#89a793" stroke-width="2"/><path d="M90 165V100M228 165V124M344 165V95M437 165V56" stroke="#125a4c" stroke-width="3" stroke-linecap="round"/><path d="M84 108l6-9 6 9M222 132l6-9 6 9M338 103l6-9 6 9M431 64l6-9 6 9" fill="none" stroke="#125a4c" stroke-width="3" stroke-linecap="round"/><circle cx="90" cy="167" r="5" fill="#125a4c"/><circle cx="228" cy="167" r="5" fill="#125a4c"/><circle cx="344" cy="167" r="5" fill="#125a4c"/><circle cx="437" cy="167" r="5" fill="#125a4c"/><text x="74" y="194" font-size="14" font-family="sans-serif" fill="#50766a">now</text><text x="215" y="194" font-size="14" font-family="sans-serif" fill="#50766a">t = 1</text><text x="331" y="194" font-size="14" font-family="sans-serif" fill="#50766a">t = 2</text><text x="417" y="194" font-size="14" font-family="sans-serif" fill="#50766a">future</text><text x="74" y="87" font-size="22" font-family="Georgia" fill="#125a4c">P</text><text x="216" y="111" font-size="20" font-family="Georgia" fill="#125a4c">A</text><text x="332" y="82" font-size="20" font-family="Georgia" fill="#125a4c">A</text><text x="425" y="45" font-size="22" font-family="Georgia" fill="#125a4c">F</text><circle cx="422" cy="52" r="29" fill="none" stroke="#c1dca9" stroke-width="13" opacity=".55"/></svg>`;
+main.innerHTML=`<section class="hero"><div><div class="eyebrow">CHAPTER 9.1 + 9.2 / QUIZ PRACTICE</div><h1>เข้าใจมูลค่าเงิน<br>ฝึกให้พร้อมก่อนควิซ</h1><p>เรียนรู้ตั้งแต่ดอกเบี้ยและเงินเฟ้อจนถึง cash flow diagram พร้อมฝึกโจทย์ 4 ตัวเลือกและเฉลยที่บอกทั้งเหตุผล สูตร และวิธีคิด</p><div class="actions"><button class="primary" data-view="examSetup">${resumeEx?'กลับไปทำชุดสอบ':'เริ่มจำลองสอบ 10 ข้อ'} →</button><button class="secondary" data-view="learn">อ่านบทเรียน</button></div><p class="micro" style="margin:14px 0 0">ชุดสอบผสม 9.1 และ 9.2 · เฉลยหลังส่ง · เลือกจับเวลาได้</p></div><div class="hero-visual"><span class="mini-label">THE VALUE OF TIME</span>${svg}<div class="bottom-label"><span>ONE PERIOD AT A TIME</span><span>9.1 — 9.2</span></div></div></section>
+<section class="stats"><div class="stat"><span>บทเรียน</span><strong>${LESSONS.length}<i> หัวข้อ</i></strong><span>ตามสไลด์ 9.1–9.2</span></div><div class="stat"><span>คลังข้อสอบ</span><strong>${QUESTIONS.length}<i> ข้อ</i></strong><span>โจทย์ 4 ตัวเลือก</span></div><div class="stat"><span>เคยฝึกแล้ว</span><strong>${s.seen}<i> / ${QUESTIONS.length}</i></strong><span>นับข้อไม่ซ้ำ</span></div><div class="stat"><span>ควรทบทวน</span><strong>${s.weak}<i> ข้อ</i></strong><span>ตอบล่าสุดยังไม่ถูก</span></div></section>
+<div class="section-title"><h2>เลือกวิธีฝึกของคุณ</h2><span class="micro">อ่านให้เข้าใจ แล้วลองทำ</span></div><section class="modes"><article class="mode featured"><span class="mode-number">01 / 10-QUESTION QUIZ</span><h3>จำลองควิซ</h3><p>สุ่ม 10 ข้อจากหลายหัวข้อ มี 4 ตัวเลือกต่อข้อ ส่งแล้วดูคะแนนและเฉลยทีละขั้น</p><button class="primary" data-view="examSetup">${resumeEx?'ทำชุดเดิมต่อ':'ตั้งค่าจำลองสอบ'} →</button></article><article class="mode"><span class="mode-number">02 / STUDY AT YOUR PACE</span><h3>บทเรียนและสูตร</h3><p>อ่านภาพรวม ตัวอย่างคำนวณ และจุดที่ต้องระวังตามลำดับของสไลด์</p><button class="secondary" data-view="learn">เปิดบทเรียน →</button></article><article class="mode"><span class="mode-number">03 / PRACTICE ALL</span><h3>ฝึกให้ครบทุกข้อ</h3><p>เฉลยทันทีหลังตอบ แต่ละข้อปรากฏครั้งเดียวในรอบ พร้อมทบทวนข้อที่ยังผิด</p><button class="secondary" data-view="practiceStart">${resume?'ทำต่อให้ครบ':'เลือกชุดฝึก'} →</button></article></section>
+<section class="coverage"><div class="coverage-top"><div><h3>ความคืบหน้าของคุณ</h3><span class="micro">บันทึกในเบราว์เซอร์ของอุปกรณ์นี้</span></div><span class="micro">อ่าน ${state.learned.length}/${LESSONS.length} บท · ฝึก ${s.seen}/${QUESTIONS.length} ข้อ</span></div><div class="bar" aria-label="ความคืบหน้าการทำข้อสอบ"><span style="width:${100*s.seen/QUESTIONS.length}%"></span></div><div class="dot-grid" aria-hidden="true">${QUESTIONS.map(q=>{let t=stat(q.id);return `<span class="dot ${!t.attempts?'':t.lastCorrect===false?'wrong':t.correct>=3?'mastered':'seen'}" title="${q.id}"></span>`}).join('')}</div><div class="legend"><span><i class="dot"></i>ยังไม่เคยทำ</span><span><i class="dot seen"></i>ตอบล่าสุดถูก</span><span><i class="dot wrong"></i>ตอบล่าสุดผิด</span><span><i class="dot mastered"></i>ตอบถูกสะสม ≥ 3 ครั้ง</span></div></section>${sourceNote()}`}
+function learn(){const done=state.learned.length;main.innerHTML=head('LEARNING / CHAPTER 9.1–9.2','เรียนทีละเรื่อง','บทเรียนสรุปหลักคิด สูตร วิธีแทนค่า และจุดที่มักพลาด พร้อมโจทย์ฝึกในแต่ละหัวข้อ')+`<section class="source-card"><div class="flex-between"><div><h2>บทเรียนทั้งหมด</h2><p>อ่านแล้ว ${done} จาก ${LESSONS.length} เรื่อง · เลือกเรื่องเพื่อเริ่มเรียน</p></div><span class="tag">${Math.round(done/LESSONS.length*100)}% COMPLETE</span></div><div class="bar"><span style="width:${done/LESSONS.length*100}%"></span></div><div class="modes" style="margin-top:20px">${['9.1','9.2'].map(ch=>`<article class="mode"><span class="mode-number">SECTION ${ch}</span><h3>${ch==='9.1'?'ดอกเบี้ยและเงินเฟ้อ':'Cash flow และปัจจัย'}</h3><p>${ch==='9.1'?'Time value, simple / compound interest, nominal และ effective rate, inflation':'แผนภาพ, factor, annuity, เงินกู้, gradient, continuous flow และ Excel'}</p><button class="secondary" data-action="openLesson" data-id="${LESSONS.find(l=>l.chapter===ch).id}">เริ่ม ${ch} →</button></article>`).join('')}<article class="mode featured"><span class="mode-number">QUICK ACCESS</span><h3>เลือกเรื่องที่อยากอ่าน</h3><p>มีตัวอย่างพร้อมวิธีเลือกสูตรและจุดสังเกตสำคัญ</p><button class="primary" data-action="openLesson" data-id="${esc(lessonId)}">ไปบทเรียน →</button></article></div></section>${sourceNote()}`}
+function lesson(){let item=LESSONS.find(x=>x.id===lessonId)||LESSONS[0];lessonId=item.id;let idx=LESSONS.findIndex(x=>x.id===item.id),done=state.learned.includes(item.id);
+const menu=`<div class="lesson-menu-title">บทเรียน · ${state.learned.length}/${LESSONS.length} เรื่อง</div>${LESSONS.map((l,i)=>`<button class="lesson-item ${l.id===item.id?'active':''}" data-action="openLesson" data-id="${l.id}" ${l.id===item.id?'aria-current="page"':''}><span>${String(i+1).padStart(2,'0')}</span>${esc(l.title)} ${state.learned.includes(l.id)?'✓':''}</button>`).join('')}`;
+main.innerHTML=`<div class="lesson-layout"><aside class="lesson-menu" aria-label="สารบัญบทเรียน">${menu}</aside><div><label class="mobile-lesson"><span class="micro">เลือกบทเรียน</span><select id="lesson-select" aria-label="เลือกบทเรียน" style="width:100%">${LESSONS.map((l,i)=>`<option value="${l.id}" ${l.id===item.id?'selected':''}>${i+1}. ${esc(l.title)} ${state.learned.includes(l.id)?'✓':''}</option>`).join('')}</select></label><article class="lesson-article"><div class="eyebrow">SECTION ${esc(item.chapter)} / ${esc(item.read)}</div><h1>${esc(item.title)}</h1><p class="micro">อ้างอิง ${esc(item.pages)}</p>${item.html}<div class="lesson-bottom"><button class="secondary btn-sm" data-action="markLesson" data-id="${item.id}">${done?'✓ อ่านจบแล้ว':'ทำเครื่องหมายว่าอ่านแล้ว'}</button><div class="actions"><button class="secondary btn-sm" data-action="lessonPractice" data-topic="${esc(item.topic)}">ฝึกหัวข้อนี้ →</button>${idx<LESSONS.length-1?`<button class="primary btn-sm" data-action="openLesson" data-id="${LESSONS[idx+1].id}">บทถัดไป →</button>`:'<button class="primary btn-sm" data-view="examSetup">ลองทำควิซ →</button>'}</div></div></article></div></div>`}
+function questionUI(q,choiceOrder,selected=null,revealed=false,options={}){let {exam=false}=options;return `<div class="question-meta"><span class="tag">${esc(q.chapter)} · ${esc(q.topic)}</span><span class="micro">${esc(q.id)} · ${esc(q.origin)}</span></div><h2 class="question-title">${esc(q.question)}</h2><div class="choices" role="group" aria-label="ตัวเลือกคำตอบ">${choiceOrder.map((original,i)=>`<button class="choice ${original===selected?'selected':''} ${revealed&&original===q.correct?'correct':''} ${revealed&&original===selected&&original!==q.correct?'incorrect':''}" data-choice="${original}" aria-pressed="${original===selected}" ${revealed?'disabled':''}><span class="letter">${letters[i]}</span><span>${esc(q.options[original])}</span></button>`).join('')}</div>${revealed?feedback(q,selected):''}`}
+function feedback(q,selected,reviewOnly=false){let correct=reviewOnly||selected===q.correct, title=reviewOnly?'คำตอบที่ถูกต้อง':selected===null?'ยังไม่ได้ตอบ':correct?'✓ ตอบถูกแล้ว':'ยังไม่ถูก';return `<div class="answer-panel ${correct?'':'wrong'}" role="status"><h3>${title} · เฉลย ${esc(q.options[q.correct])}</h3><p><b>ทำไมจึงใช้วิธีนี้:</b> ${esc(q.why)}</p><ol>${q.steps.map(t=>`<li>${esc(t)}</li>`).join('')}</ol><div class="source-line">${esc(q.origin)} · ${esc(q.ref)} · <a href="https://drive.google.com/drive/folders/1uCYPxCg6GRYN_JaAj4r798SVz02m4vPJ" target="_blank" rel="noopener noreferrer">เอกสารต้นฉบับ ↗</a></div></div>`}
+function practiceStart(){const s=summary(),p=state.practice;main.innerHTML=head('PRACTICE / LEARN BY DOING','ฝึกทีละข้อ','ตอบแล้วดูเฉลยละเอียดทันที แต่ละข้อปรากฏครั้งเดียวภายในชุด')+`<section class="source-card"><h2>เลือกชุดฝึก</h2><div class="setup"><label>บทที่ต้องการ<select id="practice-chapter"><option value="all">ทั้ง 9.1 และ 9.2</option><option value="9.1">เฉพาะ 9.1</option><option value="9.2">เฉพาะ 9.2</option></select></label></div><div class="actions"><button class="primary" data-action="beginPractice" data-mode="all">${p&&!p.finished?'เริ่มชุดฝึกใหม่':'ฝึกให้ครบทุกข้อ'} →</button><button class="secondary" data-action="beginPractice" data-mode="weak">ข้อที่ยังผิด · ${s.weak}</button><button class="secondary" data-action="beginPractice" data-mode="saved">ข้อที่บันทึก · ${state.bookmarks.length}</button></div>${p&&!p.finished?`<div class="notice">มีชุดที่ทำค้างไว้ · อยู่ข้อ ${p.index+1}/${p.ids.length}<br><button class="text-link" data-action="resumePractice">กลับไปทำต่อ</button>${confirmPracticeReset?'<p>เริ่มชุดใหม่จะเขียนทับชุดฝึกเดิม แต่สถิติและข้อที่บันทึกยังอยู่</p><button class="primary btn-sm" data-action="confirmPracticeReset">ยืนยันเริ่มชุดใหม่</button> <button class="secondary btn-sm" data-action="cancelPracticeReset">ยกเลิก</button>':''}</div>`:''}<p class="micro">ผลการทำบันทึกในอุปกรณ์นี้ · ตอบผิดก็ไปข้อต่อไป ไม่แทรกข้อเดิมในชุด</p></section>${sourceNote()}`}
+let pendingPractice=null;
+function startPractice(mode='all',chapter='all',topic='',force=false,singleId=''){
+ if(state.practice&&!state.practice.finished&&!force){pendingPractice={mode,chapter,topic,singleId};confirmPracticeReset=true;setView('practiceStart');return}
+ let pool=QUESTIONS.filter(q=>(chapter==='all'||q.chapter===chapter)&&(!topic||q.topic===topic));
+ if(mode==='weak')pool=pool.filter(q=>stat(q.id).lastCorrect===false);if(mode==='saved')pool=pool.filter(q=>state.bookmarks.includes(q.id));if(mode==='single')pool=pool.filter(q=>q.id===singleId);
+ if(!pool.length){toast(mode==='weak'?'ยังไม่มีข้อที่ตอบผิดในบทที่เลือก':mode==='saved'?'ยังไม่มีข้อที่บันทึกไว้ในบทที่เลือก':'ไม่มีโจทย์ในชุดนี้');return}
+ const ids=shuf(pool.map(q=>q.id)),orders=Object.fromEntries(ids.map(id=>[id,shuf([0,1,2,3])]));
+ state.practice={mode,chapter,topic,ids,orders,index:0,selected:null,revealed:false,finished:false,correct:0,answered:0};state.round++;confirmPracticeReset=false;pendingPractice=null;save();setView('practice');
+}
+function practice(){let p=state.practice;if(!p||p.finished){setView('practiceStart');return}let q=find(p.ids[p.index]);if(!q){state.practice=null;save();setView('practiceStart');return}const remaining=p.ids.length-p.index-(p.revealed?1:0);main.innerHTML=`<div class="page-head flex-between"><div><div class="eyebrow">PRACTICE / ${esc(p.topic || (p.chapter==='all'?'ALL TOPICS':p.chapter))}</div><h1>ฝึกทีละข้อ</h1></div><button class="secondary btn-sm" data-view="home">พักก่อน</button></div><div class="practice-layout"><section class="question-card">${questionUI(q,p.orders[q.id],p.selected,p.revealed)}<div class="question-bottom"><button class="bookmark ${state.bookmarks.includes(q.id)?'on':''}" data-action="bookmark" data-id="${q.id}">${state.bookmarks.includes(q.id)?'★ บันทึกไว้แล้ว':'☆ บันทึกข้อนี้'}</button>${p.revealed?`<button class="primary" data-action="practiceNext">${p.index===p.ids.length-1?'สรุปชุดนี้':'ข้อต่อไป'} →</button>`:`<button class="primary" data-action="practiceCheck" ${p.selected===null?'disabled':''}>ตรวจคำตอบ →</button>`}</div><p class="kbd">เลือกคำตอบ 1–4 · Enter เพื่อตรวจหรือไปข้อต่อไป</p></section><aside><section class="side-card"><h3>ความคืบหน้า</h3><div class="side-row"><span>ข้อปัจจุบัน</span><b>${p.index+1} / ${p.ids.length}</b></div><div class="side-row"><span>ตอบแล้ว</span><b>${p.answered} / ${p.ids.length}</b></div><div class="bar"><span style="width:${100*p.answered/p.ids.length}%"></span></div><div class="side-row"><span>ถูกในชุดนี้</span><b>${p.correct}</b></div><div class="side-row"><span>ยังเหลือ</span><b>${remaining}</b></div><p class="micro">คำตอบและความคืบหน้าบันทึกในเครื่องนี้</p></section><section class="side-card"><h3>ฝึกให้เข้าใจ</h3><p class="micro">เลือกคำตอบแล้วอ่านเหตุผล สูตร และการแทนค่าในเฉลยก่อนทำข้อต่อไป</p><button class="text-link" data-view="learn">กลับไปอ่านบทเรียน</button></section></aside></div>`}
+function practiceDone(){const p=state.practice;main.innerHTML=`<section class="result-hero"><div class="eyebrow">PRACTICE COMPLETE</div><h1>ฝึกครบชุดแล้ว</h1><div class="score">${p.correct}<small> / ${p.ids.length}</small></div><p>ทำครบ ${p.answered} ข้อ และไม่แทรกข้อซ้ำในชุดนี้</p><div class="actions"><button class="primary" data-action="beginPractice" data-mode="weak">ทบทวนข้อที่ยังผิด</button><button class="secondary" data-view="bank">เปิดคลังข้อสอบ</button><button class="text-link" data-view="home">กลับภาพรวม</button></div></section>`}
+function checkPractice(){let p=state.practice;if(!p||p.revealed||p.selected===null)return;const q=find(p.ids[p.index]);let ok=p.selected===q.correct;p.revealed=true;p.answered++;if(ok)p.correct++;record(q.id,ok);save();practice()}
+function nextPractice(){const p=state.practice;if(!p||!p.revealed)return;if(p.index===p.ids.length-1){p.finished=true;save();setView('practiceDone');return}p.index++;p.selected=null;p.revealed=false;save();practice();goTop()}
+function topicSelection(pool,count){let groups={};for(const q of pool)(groups[q.topic]??=[]).push(q);let ids=[],topicOrder=shuf(Object.keys(groups));for(let topic of topicOrder){if(ids.length>=count)break;ids.push(shuf(groups[topic])[0].id)}if(ids.length<count){let rest=shuf(pool.filter(q=>!ids.includes(q.id)).map(q=>q.id));ids.push(...rest.slice(0,count-ids.length))}return ids}
+function examSetup(){const e=state.exam,resume=e&&!e.finished;main.innerHTML=head('EXAM ROOM / 10 QUESTIONS','จำลองควิซ 10 ข้อ','โจทย์ 4 ตัวเลือก ไม่มีข้อซ้ำในชุด และแสดงเฉลยหลังส่งคำตอบ')+`<section class="source-card"><h2>ตั้งค่าชุดสอบ</h2><div class="setup"><label>เนื้อหาที่ออก<select id="exam-chapter"><option value="all">ผสม 9.1 + 9.2 (อย่างละ 5 ข้อ)</option><option value="9.1">เฉพาะ 9.1</option><option value="9.2">เฉพาะ 9.2</option></select></label><label>เวลาฝึก<select id="exam-minutes"><option value="0">ไม่จับเวลา</option><option value="15">15 นาที</option><option value="20">20 นาที</option><option value="30">30 นาที</option></select></label></div><div class="notice">ระบบเลือกหัวข้อให้หลากหลายภายในชุด · เวลาเป็นตัวเลือกสำหรับฝึก ไม่ใช่เวลาสอบจริงที่ยืนยันแล้ว</div>${resume?`<p>มีชุดสอบที่ยังทำไม่เสร็จ (${Object.keys(e.answers).length}/10 ข้อ)${e.deadline?' · เวลายังคงเดินขณะพัก':''}</p><div class="actions"><button class="primary" data-action="resumeExam">ทำชุดเดิมต่อ →</button><button class="secondary" data-action="restartExam">เริ่มชุดใหม่</button></div>${confirmRestart?'<div class="warning">เริ่มชุดใหม่จะเขียนทับชุดสอบที่ยังไม่ส่ง <div class="actions"><button class="primary btn-sm" data-action="confirmRestartExam">ยืนยันเริ่มชุดใหม่</button><button class="secondary btn-sm" data-action="cancelRestart">ยกเลิก</button></div></div>':''}`:'<button class="primary" data-action="beginExam">เริ่มจำลองสอบ →</button>'}</section>${sourceNote()}`}
+function beginExam(){let ch=$('#exam-chapter')?.value||'all',minutes=Number($('#exam-minutes')?.value||0),ids;
+ if(ch==='all'){ids=[...topicSelection(QUESTIONS.filter(q=>q.chapter==='9.1'),5),...topicSelection(QUESTIONS.filter(q=>q.chapter==='9.2'),5)]}else ids=topicSelection(QUESTIONS.filter(q=>q.chapter===ch),10);
+ ids=shuf(ids);state.exam={ids,orders:Object.fromEntries(ids.map(id=>[id,shuf([0,1,2,3])])),answers:{},index:0,chapter:ch,started:Date.now(),deadline:minutes?Date.now()+minutes*60000:null,finished:false};confirmRestart=false;confirmExamSubmit=false;save();setView('exam');}
+function exam(){clearInterval(timer);const e=state.exam;if(!e){setView('examSetup');return}if(e.finished){setView('result');return}if(e.deadline&&Date.now()>=e.deadline){finishExam();return}const q=find(e.ids[e.index]),selected=e.answers[q.id]??null,answered=Object.keys(e.answers).length;
+main.innerHTML=`<div class="page-head flex-between"><div><div class="eyebrow">EXAM ROOM / QUESTION ${e.index+1} OF 10</div><h1>จำลองควิซ</h1></div><button class="secondary btn-sm" data-view="home">พักก่อน</button></div><div class="practice-layout"><section class="question-card">${questionUI(q,e.orders[q.id],selected,false,{exam:true})}<div class="exam-actions"><button class="secondary" data-action="examPrev" ${e.index===0?'disabled':''}>← ก่อนหน้า</button>${e.index<e.ids.length-1?'<button class="primary" data-action="examNext">ข้อถัดไป →</button>':'<button class="primary" data-action="askSubmit">ตรวจและส่งชุด →</button>'}</div>${confirmExamSubmit?`<div class="warning exam-warning">${answered<10?`ยังไม่ได้ตอบ ${10-answered} ข้อ ข้อที่ข้ามจะนับเป็น 0 คะแนน`: 'ตอบครบแล้ว พร้อมส่งคำตอบ'}<div class="actions"><button class="primary btn-sm" data-action="confirmSubmit">ยืนยันส่งคำตอบ</button><button class="secondary btn-sm" data-action="cancelSubmit">กลับไปตรวจ</button></div></div>`:''}</section><aside><section class="side-card">${e.deadline?'<div class="micro">เวลาที่เหลือ</div><div class="timer" id="timer"></div>':'<h3>ไม่จับเวลา</h3>'}<div class="side-row"><span>ตอบแล้ว</span><b>${answered}/10</b></div><div class="bar"><span style="width:${answered*10}%"></span></div><div class="exam-nav" aria-label="ไปยังข้อสอบ">${e.ids.map((id,i)=>`<button class="qnum ${e.answers[id]!==undefined?'answered':''} ${i===e.index?'current':''}" data-action="jumpExam" data-index="${i}" aria-label="ข้อ ${i+1}${e.answers[id]!==undefined?' ตอบแล้ว':''}" ${i===e.index?'aria-current="step"':''}>${i+1}</button>`).join('')}</div><button style="margin-top:22px;width:100%" class="secondary" data-action="askSubmit">ส่งคำตอบ</button><p class="micro">${e.deadline?'เวลายังเดินเมื่อพักหรือปิดหน้าเว็บ':'พักและกลับมาทำต่อได้บนอุปกรณ์นี้'}</p></section></aside></div>`;if(e.deadline){tick();if(!e.finished)timer=setInterval(tick,1000)}}
+function tick(){const e=state.exam;if(!e||e.finished)return;const left=Math.max(0,Math.ceil((e.deadline-Date.now())/1000)), el=$('#timer');if(el)el.textContent=String(Math.floor(left/60)).padStart(2,'0')+':'+String(left%60).padStart(2,'0');if(!left){clearInterval(timer);finishExam()}}
+function finishExam(){const e=state.exam;if(!e||e.finished)return;e.finished=true;e.score=0;for(const id of e.ids){const answer=e.answers[id];if(answer!==undefined){const ok=answer===find(id).correct;record(id,ok);if(ok)e.score++}}save();confirmExamSubmit=false;reviewFilter='all';setView('result')}
+function result(){const e=state.exam;if(!e||!e.finished){setView('examSetup');return}let answered=Object.keys(e.answers).length;let qs=e.ids.map((id,i)=>({q:find(id),n:i+1,ans:e.answers[id]??null}));if(reviewFilter==='wrong')qs=qs.filter(x=>x.ans!==x.q.correct);main.innerHTML=`<section class="result-hero"><div class="eyebrow">QUIZ COMPLETE / REVIEW YOUR REASONING</div><h1>จบชุดจำลองสอบแล้ว</h1><div class="score">${e.score}<small> / 10</small></div><p>ตอบแล้ว ${answered}/10 ข้อ · คำตอบที่ข้ามนับ 0 คะแนน</p><div class="actions"><button class="primary" data-view="examSetup">ทำชุดใหม่ →</button><button class="secondary" data-view="home">กลับภาพรวม</button></div></section><div class="section-title"><h2>ทบทวนเฉลยทุกข้อ</h2><div class="actions"><button class="${reviewFilter==='all'?'primary':'secondary'} btn-sm" data-action="reviewFilter" data-filter="all">ทุกข้อ</button><button class="${reviewFilter==='wrong'?'primary':'secondary'} btn-sm" data-action="reviewFilter" data-filter="wrong">ผิด / ข้าม</button></div></div>${qs.length?qs.map(({q,n,ans})=>`<article class="review-item"><div class="question-meta"><span class="tag">ข้อ ${n} · ${esc(q.topic)}</span><span class="micro">${esc(q.id)} · ${esc(q.origin)}</span></div><h3 class="result-question">${esc(q.question)}</h3><p class="review-choice">คำตอบของคุณ: <b>${ans===null?'ยังไม่ได้ตอบ':esc(q.options[ans])}</b></p>${feedback(q,ans)}</article>`).join(''):'<div class="empty">ไม่มีข้อผิดหรือข้ามในชุดนี้</div>'}`}
+function bank(){main.innerHTML=head('QUESTION BANK / QUICK REVIEW','คลังข้อสอบ','ค้นหาโจทย์ด้วยคีย์เวิร์ด กรองตามบทหรือหัวข้อ แล้วเปิดดูเฉลยได้ทันที')+`<div class="filters"><input id="bank-query" type="search" placeholder="ค้นหาโจทย์ เช่น nominal, เงินเฟ้อ, gradient" value="${esc(bankFilter.query)}" aria-label="ค้นหาโจทย์"><select id="bank-chapter" aria-label="กรองตามบท"><option value="all">ทุกบท</option><option value="9.1" ${bankFilter.chapter==='9.1'?'selected':''}>9.1</option><option value="9.2" ${bankFilter.chapter==='9.2'?'selected':''}>9.2</option></select><select id="bank-topic" aria-label="กรองตามหัวข้อ"><option value="all">ทุกหัวข้อ</option>${topics().map(t=>`<option value="${esc(t)}" ${bankFilter.topic===t?'selected':''}>${esc(t)}</option>`).join('')}</select></div><div class="actions" style="margin-bottom:10px"><button class="secondary btn-sm" data-action="bankWeak">เฉพาะข้อที่ยังผิด</button><button class="secondary btn-sm" data-action="bankSaved">เฉพาะข้อที่บันทึก</button><button class="text-link" data-action="bankReset">ล้างตัวกรอง</button></div><div id="bank-results"></div>`;fillBank()}
+let bankSpecial='all';
+function fillBank(){const target=$('#bank-results');if(!target)return;const text=bankFilter.query.trim().toLowerCase();let pool=QUESTIONS.filter(q=>(bankFilter.chapter==='all'||q.chapter===bankFilter.chapter)&&(bankFilter.topic==='all'||q.topic===bankFilter.topic)&&(!text||[q.question,q.topic,q.ref,q.options.join(' '),q.why].join(' ').toLowerCase().includes(text))&&(bankSpecial==='all'||(bankSpecial==='weak'&&stat(q.id).lastCorrect===false)||(bankSpecial==='saved'&&state.bookmarks.includes(q.id))));target.innerHTML=`<p class="bank-count">พบ ${pool.length} จาก ${QUESTIONS.length} ข้อ${bankSpecial==='weak'?' · เฉพาะข้อที่ตอบผิดล่าสุด':bankSpecial==='saved'?' · เฉพาะข้อที่บันทึก':''}</p>${pool.length?pool.map(q=>`<article class="bank-row"><div class="question-meta"><span class="tag">${esc(q.chapter)} · ${esc(q.topic)}</span><span class="micro">${q.id} · ${esc(q.origin)}</span></div><h3>${esc(q.question)}</h3><details><summary>ดูเฉลยและวิธีคิด</summary>${feedback(q,null,true)}</details><button class="bookmark ${state.bookmarks.includes(q.id)?'on':''}" data-action="bookmarkBank" data-id="${q.id}">${state.bookmarks.includes(q.id)?'★ บันทึกแล้ว':'☆ บันทึก'}</button><button class="text-link" data-action="singlePractice" data-id="${q.id}">ฝึกข้อนี้ →</button></article>`).join(''):'<div class="empty">ไม่พบข้อที่ตรงกับตัวกรอง ลองคำค้นอื่น</div>'}`}
+function render(){switch(view){case 'home':return home();case 'learn':return learn();case 'lesson':return lesson();case 'practiceStart':return practiceStart();case 'practice':return practice();case 'practiceDone':return practiceDone();case 'examSetup':return examSetup();case 'exam':return exam();case 'result':return result();case 'bank':return bank();default:view='home';return home()}}
+document.addEventListener('click',e=>{
+ const viewEl=e.target.closest('[data-view]');if(viewEl){e.preventDefault();setView(viewEl.dataset.view);return}
+ const choice=e.target.closest('[data-choice]');if(choice){const value=Number(choice.dataset.choice);if(view==='practice'){const p=state.practice;if(!p.revealed){p.selected=value;save();practice()}}else if(view==='exam'){const ex=state.exam;if(ex&&!ex.finished){ex.answers[ex.ids[ex.index]]=value;save();exam()}}return}
+ const el=e.target.closest('[data-action]');if(!el)return;const action=el.dataset.action,id=el.dataset.id;
+ switch(action){
+ case 'openLesson': if(LESSONS.some(l=>l.id===id)){lessonId=id;setView('lesson')}break;
+ case 'markLesson':if(state.learned.includes(id))state.learned=state.learned.filter(x=>x!==id);else state.learned.push(id);save();lesson();toast(state.learned.includes(id)?'บันทึกว่าอ่านจบแล้ว':'ยกเลิกเครื่องหมายอ่านจบ');break;
+ case 'lessonPractice':startPractice('topic','all',el.dataset.topic);break;
+ case 'beginPractice':startPractice(el.dataset.mode,$('#practice-chapter')?.value||'all');break;
+ case 'confirmPracticeReset':if(pendingPractice){const p=pendingPractice;startPractice(p.mode,p.chapter,p.topic,true,p.singleId||'')}break;
+ case 'cancelPracticeReset':confirmPracticeReset=false;pendingPractice=null;practiceStart();break;
+ case 'resumePractice':confirmPracticeReset=false;setView('practice');break;
+ case 'practiceCheck':checkPractice();break;
+ case 'practiceNext':nextPractice();break;
+ case 'bookmark':case 'bookmarkBank':if(state.bookmarks.includes(id))state.bookmarks=state.bookmarks.filter(x=>x!==id);else state.bookmarks.push(id);save();if(action==='bookmark'&&view==='practice')practice();else if(view==='bank')fillBank();toast(state.bookmarks.includes(id)?'บันทึกข้อนี้แล้ว':'นำออกจากรายการบันทึก');break;
+ case 'beginExam':beginExam();break;
+ case 'resumeExam':confirmRestart=false;setView('exam');break;
+ case 'restartExam':confirmRestart=true;examSetup();break;
+ case 'confirmRestartExam':beginExam();break;
+ case 'cancelRestart':confirmRestart=false;examSetup();break;
+ case 'examPrev':if(state.exam.index>0)state.exam.index--;confirmExamSubmit=false;save();exam();goTop();break;
+ case 'examNext':if(state.exam.index<state.exam.ids.length-1)state.exam.index++;confirmExamSubmit=false;save();exam();goTop();break;
+ case 'jumpExam':state.exam.index=Number(el.dataset.index);confirmExamSubmit=false;save();exam();goTop();break;
+ case 'askSubmit':confirmExamSubmit=true;exam();document.querySelector('.exam-warning')?.scrollIntoView({behavior:'smooth',block:'nearest'});break;
+ case 'cancelSubmit':confirmExamSubmit=false;exam();break;
+ case 'confirmSubmit':finishExam();break;
+ case 'reviewFilter':reviewFilter=el.dataset.filter;result();break;
+ case 'bankWeak':bankSpecial=bankSpecial==='weak'?'all':'weak';fillBank();break;
+ case 'bankSaved':bankSpecial=bankSpecial==='saved'?'all':'saved';fillBank();break;
+ case 'bankReset':bankFilter={query:'',chapter:'all',topic:'all'};bankSpecial='all';bank();break;
+ case 'singlePractice':startPractice('single','all','',false,id);break;
+ }
+});
+document.addEventListener('change',e=>{if(e.target.id==='lesson-select'){lessonId=e.target.value;setView('lesson')}else if(e.target.id==='bank-chapter'){bankFilter.chapter=e.target.value;fillBank()}else if(e.target.id==='bank-topic'){bankFilter.topic=e.target.value;fillBank()}});
+document.addEventListener('input',e=>{if(e.target.id==='bank-query'){bankFilter.query=e.target.value;fillBank()}});
+document.addEventListener('keydown',e=>{if(['INPUT','SELECT','TEXTAREA'].includes(document.activeElement?.tagName))return;if(view==='practice'&&!e.altKey&&!e.ctrlKey&&!e.metaKey){const p=state.practice;if(!p)return;if(!p.revealed&&/^[1-4]$/.test(e.key)){p.selected=p.orders[p.ids[p.index]][Number(e.key)-1];save();practice()}else if(e.key==='Enter'&&(document.activeElement===main||document.activeElement===document.body)){e.preventDefault();p.revealed?nextPractice():checkPractice()}}});
+$('#update').addEventListener('click',()=>{const url=new URL(location.href);url.searchParams.set('refresh',String(Date.now()));location.replace(url.toString())});
+setView('home',{focus:false});
+</script>
+</body></html>
