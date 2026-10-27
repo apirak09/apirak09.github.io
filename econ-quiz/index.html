@@ -972,7 +972,7 @@
       "NPV = −10,000 + 4,000/(1.10) + 8,000/(1.10)²",
       "NPV = 247.93 บาท; ค่าเริ่มต้นไม่ต้อง discount"
     ],
-    "ref": "9.2 · หน้า 6–9, 40–42",
+    "ref": "9.2 · หน้า 6–9",
     "origin": "สร้างเพิ่มจากสไลด์"
   },
   {
@@ -1578,106 +1578,6 @@
     "origin": "สร้างเพิ่มจากสไลด์"
   },
   {
-    "id": "Q079",
-    "chapter": "9.2",
-    "topic": "Excel สำหรับ TVM",
-    "question": "Excel: B2 เป็นเงินลงทุน ณ วันนี้ (ค่าติดลบ) และ C2:E2 เป็นเงินรับสิ้นปี 1–3 ที่ i=8% สูตร NPV ใดเหมาะสม?",
-    "options": [
-      "=NPV(8%,C2:E2)+B2",
-      "=NPV(8%,B2:E2)",
-      "=NPV(8%,C2:E2)−B2",
-      "=FV(8%,C2:E2)+B2"
-    ],
-    "correct": 0,
-    "why": "NPV ใน Excel คิดว่า argument แรกเป็นเงินปลายงวด 1 ไม่ใช่ t=0",
-    "steps": [
-      "discount เงินใน C2:E2 ด้วย NPV(8%,C2:E2)",
-      "บวก B2 ที่ระบุเครื่องหมายไว้แล้วนอกฟังก์ชัน; เช่น B2 = −10,000"
-    ],
-    "ref": "9.2 · หน้า 40–42",
-    "origin": "สร้างเพิ่มจากสไลด์"
-  },
-  {
-    "id": "Q080",
-    "chapter": "9.2",
-    "topic": "Excel สำหรับ TVM",
-    "question": "Excel: ต้องหาเงินผ่อนรายเดือนจากเงินกู้ 20,000 ดอลลาร์ nominal 8% ต่อปี ทบต้นเดือน 60 เดือน สูตรใดให้จำนวนงวดเป็นบวก?",
-    "options": [
-      "=PMT(8%/12,60,-20000)",
-      "=PMT(8%,60,-20000)",
-      "=PMT(8%/12,5,-20000)",
-      "=PMT(8%/12,60,20000)"
-    ],
-    "correct": 0,
-    "why": "PMT ใช้อัตราและจำนวนงวดรายเดือน; ป้ายเงินต้องตรง convention ของผลลัพธ์ที่ต้องการ",
-    "steps": [
-      "i = 8%/12, n = 60",
-      "ใส่ PV เป็นลบเพื่อให้ PMT ส่งค่าบวก; ถ้า PV เป็นบวก PMT จะเป็นลบ"
-    ],
-    "ref": "9.2 · หน้า 40–42",
-    "origin": "สร้างเพิ่มจากสไลด์"
-  },
-  {
-    "id": "Q081",
-    "chapter": "9.2",
-    "topic": "Excel สำหรับ TVM",
-    "question": "Excel: ต้องแปลง nominal 12% ต่อปี ทบต้นรายเดือนเป็น effective ต่อปี ใช้สูตรใด?",
-    "options": [
-      "=EFFECT(12%,12)",
-      "=EFFECT(12%,1)",
-      "=EFFECT(1%,12)",
-      "=NPV(12%,12)"
-    ],
-    "correct": 0,
-    "why": "EFFECT รับ nominal annual rate และจำนวนรอบทบต่อปี",
-    "steps": [
-      "=EFFECT(12%,12) = (1+12%/12)¹²−1",
-      "ผลลัพธ์ประมาณ 12.68% ต่อปี"
-    ],
-    "ref": "9.2 · หน้า 40–42",
-    "origin": "สร้างเพิ่มจากสไลด์"
-  },
-  {
-    "id": "Q082",
-    "chapter": "9.2",
-    "topic": "Excel สำหรับ TVM",
-    "question": "Excel function ใดใช้หาอัตราดอกเบี้ยต่องวดเมื่อรู้จำนวนงวดและ cash flow ที่สอดคล้องกัน?",
-    "options": [
-      "RATE",
-      "NPER",
-      "PMT",
-      "FV"
-    ],
-    "correct": 0,
-    "why": "RATE ใช้หา i ส่วน NPER หา n, PMT หา A, FV หา F",
-    "steps": [
-      "ตัวอย่างกรณีเงินก้อน: =RATE(4,0,-10000,14641)",
-      "ผลคือ 10% ต่องวด เมื่อป้ายเงินเข้าและออกสอดคล้องกัน"
-    ],
-    "ref": "9.2 · หน้า 40–42",
-    "origin": "สร้างเพิ่มจากสไลด์"
-  },
-  {
-    "id": "Q083",
-    "chapter": "9.2",
-    "topic": "Excel สำหรับ TVM",
-    "question": "Excel function ใดใช้หาจำนวนงวด n จากอัตราดอกเบี้ยและรูปแบบ cash flow?",
-    "options": [
-      "NPER",
-      "NPV",
-      "EFFECT",
-      "RATE"
-    ],
-    "correct": 0,
-    "why": "NPER ใช้หาจำนวน periods ไม่ใช่ present value หรือ rate",
-    "steps": [
-      "เช่น =NPER(10%,0,-10000,13310) ได้ 3 งวด",
-      "กำหนดเครื่องหมายเงินเข้าและออกตรงข้ามกัน"
-    ],
-    "ref": "9.2 · หน้า 40–42",
-    "origin": "สร้างเพิ่มจากสไลด์"
-  },
-  {
     "id": "Q084",
     "chapter": "9.2",
     "topic": "กระแสเงินสดหลายช่วงเวลา",
@@ -1715,7 +1615,7 @@
       "NPV = CF₀ + CF₁/(1+i) + CF₂/(1+i)² + ...",
       "ถ้า CF₀ คือเงินลงทุน จะมีเครื่องหมายลบจากมุมมองผู้ลงทุน"
     ],
-    "ref": "9.2 · หน้า 6–9, 40–42",
+    "ref": "9.2 · หน้า 6–9",
     "origin": "สร้างเพิ่มจากสไลด์"
   },
   {
@@ -1846,7 +1746,7 @@
 <h3>ตัวอย่างกู้ 20,000 ดอลลาร์</h3><ol><li>Nominal 8% ต่อปี ทบรายเดือน, ผ่อน 5 ปี → i = 0.08/12 ต่อเดือน, n = 60</li><li>A = 20,000(A/P, 0.08/12, 60) ≈ <b>405.53 ดอลลาร์ต่อเดือน</b></li><li>คิดจากค่างวดก่อนปัด: ดอกเบี้ยรวม = 60A − 20,000 ≈ <b>4,331.67 ดอลลาร์</b> การปัดค่างวดแต่ละเดือนอาจทำให้ต่างเล็กน้อย</li></ol>
 <p>หนี้ก้อนเดียวกันยืดเวลาผ่อนมักทำให้ค่างวดลด แต่จ่ายดอกเบี้ยรวมมากขึ้น เพราะยอดคงค้างอยู่นานขึ้น</p>
 <div class="tip">หากโจทย์จ่ายรายปีแต่ทบรายเดือน ให้แปลงเป็น effective รายปีก่อนใช้ factor แบบรายปี</div>`},
-{id:'mixed', chapter:'9.2', title:'กระแสเงินสดไม่เท่ากันและ NPV', topic:'กระแสเงินสดหลายช่วงเวลา', pages:'9.2 หน้า 6–9, 17–18, 40–42', read:'7 นาที', html:`
+{id:'mixed', chapter:'9.2', title:'กระแสเงินสดไม่เท่ากันและ NPV', topic:'กระแสเงินสดหลายช่วงเวลา', pages:'9.2 หน้า 6–9, 17–18', read:'7 นาที', html:`
 <p>ถ้าจำนวนเงินแต่ละปีไม่เท่ากัน ไม่ควรใช้ P/A ครอบทั้งหมดโดยไม่มีการแยกชุด ให้แปลงรายการทีละก้อนหรือแยกชุดที่เท่ากันก่อนรวม</p>
 <h3>ตัวอย่างจากสไลด์</h3><p>ฝาก 5,000 ที่ t=0; 1,000 ที่ t=1; 2,000 ที่ t=3 และถอน 3,000 ที่ t=4; i = 8% ต้องการเงินที่ t=7</p><div class="formula">F₇ = 5,000(1.08)⁷ + 1,000(1.08)⁶<br>+ 2,000(1.08)⁴ − 3,000(1.08)³<br>= <b>9,097.84</b></div>
 <p>แต่ละเลขชี้กำลังเท่ากับ 7−t ของรายการนั้น หากต้องการค่า ณ t=0 ให้หาร F₇ ด้วย (1.08)⁷ ได้ประมาณ <b>5,308.50</b></p>
@@ -1862,10 +1762,7 @@
 <div class="formula">เงินไหล C ระหว่าง t=a ถึง b และคิดที่ T ≥ b:<br>F<sub>T</sub> = C(e<sup>r(T−a)</sup> − e<sup>r(T−b)</sup>)/r<br>เงินไหล A ต่อเนื่อง 0 ถึง n: P = A(1−e⁻ʳⁿ)/r</div>
 <h3>ตรวจตัวอย่างในสไลด์</h3><p>r=12% ต่อปี: ลงทุน 3 ล้านดอลลาร์/ปี ระหว่าง t=−2 ถึง −1 และ 7 ล้าน/ปี ระหว่าง −1 ถึง 0</p><ol><li>ช่วงแรก F₀ = 3(e<sup>0.24</sup>−e<sup>0.12</sup>)/0.12 = <b>3.5938 ล้าน</b></li><li>ช่วงที่สอง F₀ = 7(e<sup>0.12</sup>−1)/0.12 = <b>7.4373 ล้าน</b></li><li>รวมตาม timeline = <b>11.0311 ล้านดอลลาร์</b></li></ol>
 <div class="warning">สไลด์หน้า 28 ระบุ 12.44 ล้าน แต่ตัวคูณในเฉลยดูเหมือนทบเพิ่มอีกหนึ่งปีเทียบกับช่วงที่วาด จึงได้ผลต่างจากการรวมตาม timeline นี้ ควรถามผู้สอนว่าตั้งใจใช้ช่วงเวลาใด</div>`},
-{id:'excel', chapter:'9.2', title:'ใช้ Excel ตรวจคำตอบ', topic:'Excel สำหรับ TVM', pages:'9.2 หน้า 40–42', read:'7 นาที', html:`
-<div class="table-wrap"><table><thead><tr><th>หาอะไร</th><th>ฟังก์ชัน</th><th>ตัวอย่าง</th></tr></thead><tbody><tr><td>มูลค่าปัจจุบัน</td><td>PV</td><td>=PV(8%,5,-1000)</td></tr><tr><td>มูลค่าอนาคต</td><td>FV</td><td>=FV(8%,5,-1000)</td></tr><tr><td>ค่างวด</td><td>PMT</td><td>=PMT(8%/12,60,-20000)</td></tr><tr><td>อัตราต่องวด</td><td>RATE</td><td>=RATE(4,0,-10000,14641)</td></tr><tr><td>จำนวนงวด</td><td>NPER</td><td>=NPER(10%,0,-10000,13310)</td></tr><tr><td>Effective annual rate</td><td>EFFECT</td><td>=EFFECT(12%,12)</td></tr></tbody></table></div>
-<p>Excel ใช้ convention เงินเข้าและเงินออกคนละเครื่องหมาย เช่น ใส่ PV เป็น −20,000 เพื่อให้ PMT ออกมาเป็นบวก ตัวเลือก type ที่ไม่ได้ใส่มักหมายถึงจ่ายสิ้นงวด</p>
-<div class="warning"><b>Excel NPV:</b> =NPV(8%,C2:E2)+B2 เมื่อ C2 ถึง E2 เป็นเงินปลายงวดปี 1–3 และ B2 เป็นเงินวันนี้ที่มีเครื่องหมายอยู่แล้ว อย่าใส่ B2 เป็น argument แรกของ NPV เพราะ Excel จะคิดลดมันหนึ่งงวด</div>`}
+
 ];
 </script>
 <script>'use strict';
@@ -1885,6 +1782,31 @@ let toastTimer;
 function toast(message){const el=$('#toast');el.textContent=message;el.style.display='block';clearTimeout(toastTimer);toastTimer=setTimeout(()=>el.style.display='none',3000)}
 function shuf(arr){let a=[...arr];for(let i=a.length-1;i>0;i--){let j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
 function find(id){return QUESTIONS.find(q=>q.id===id)}
+// Keep existing progress, removing obsolete questions and safely adapting unfinished sessions.
+function migrateScope(){
+ const valid=new Set(QUESTIONS.map(q=>q.id)),validLessons=new Set(LESSONS.map(l=>l.id)),oldStats=state.stats;
+ state.bookmarks=state.bookmarks.filter(id=>valid.has(id));state.learned=state.learned.filter(id=>validLessons.has(id));
+ const p=state.practice;
+ if(p&&Array.isArray(p.ids)&&p.ids.some(id=>!valid.has(id))){
+  const oldIds=p.ids.slice(),index=Math.max(0,Math.min(p.index,oldIds.length-1)),current=oldIds[index];
+  const removedAnswered=oldIds.filter((id,i)=>!valid.has(id)&&(i<index||(i===index&&p.revealed)));
+  p.answered=Math.max(0,(p.answered||0)-removedAnswered.length);
+  p.correct=Math.max(0,(p.correct||0)-removedAnswered.filter(id=>oldStats[id]?.lastCorrect===true).length);
+  p.ids=oldIds.filter(id=>valid.has(id));p.index=oldIds.slice(0,index).filter(id=>valid.has(id)).length;
+  if(!valid.has(current)){p.selected=null;p.revealed=false}
+  if(!p.ids.length)state.practice=null;
+  else if(p.index>=p.ids.length){p.index=p.ids.length-1;p.finished=true;p.answered=p.ids.length}
+ }
+ const e=state.exam;
+ if(e&&Array.isArray(e.ids)&&e.ids.some(id=>!valid.has(id))){
+  e.answers=e.answers||{};e.orders=e.orders||{};
+  if(e.finished){for(const id of e.ids.filter(id=>!valid.has(id)))delete e.answers[id];e.ids=e.ids.filter(id=>valid.has(id));e.score=e.ids.reduce((n,id)=>n+(e.answers[id]===find(id).correct?1:0),0);if(!e.ids.length)state.exam=null}
+  else for(let i=0;i<e.ids.length;i++){const oldId=e.ids[i];if(valid.has(oldId))continue;const candidates=QUESTIONS.filter(q=>q.chapter==='9.2'&&!e.ids.includes(q.id));if(!candidates.length){state.exam=null;break}const replacement=shuf(candidates)[0].id;e.ids[i]=replacement;delete e.answers[oldId];delete e.orders[oldId];e.orders[replacement]=shuf([0,1,2,3])}
+ }
+ state.stats=Object.fromEntries(Object.entries(state.stats).filter(([id])=>valid.has(id)));
+ try{localStorage.setItem(KEY,JSON.stringify(state))}catch{}
+}
+migrateScope();
 function stat(id){return state.stats[id]||{attempts:0,correct:0,lastCorrect:null}}
 function record(id,isCorrect){const s=stat(id);state.stats[id]={attempts:s.attempts+1,correct:s.correct+(isCorrect?1:0),lastCorrect:isCorrect};}
 function summary(){const vals=Object.values(state.stats);let attempts=vals.reduce((n,x)=>n+(x.attempts||0),0),right=vals.reduce((n,x)=>n+(x.correct||0),0);return {seen:QUESTIONS.filter(q=>stat(q.id).attempts>0).length,weak:QUESTIONS.filter(q=>stat(q.id).lastCorrect===false).length,attempts,right,accuracy:attempts?Math.round(right/attempts*100):null}}
@@ -1899,7 +1821,7 @@ main.innerHTML=`<section class="hero"><div><div class="eyebrow">CHAPTER 9.1 + 9.
 <section class="stats"><div class="stat"><span>บทเรียน</span><strong>${LESSONS.length}<i> หัวข้อ</i></strong><span>ตามสไลด์ 9.1–9.2</span></div><div class="stat"><span>คลังข้อสอบ</span><strong>${QUESTIONS.length}<i> ข้อ</i></strong><span>โจทย์ 4 ตัวเลือก</span></div><div class="stat"><span>เคยฝึกแล้ว</span><strong>${s.seen}<i> / ${QUESTIONS.length}</i></strong><span>นับข้อไม่ซ้ำ</span></div><div class="stat"><span>ควรทบทวน</span><strong>${s.weak}<i> ข้อ</i></strong><span>ตอบล่าสุดยังไม่ถูก</span></div></section>
 <div class="section-title"><h2>เลือกวิธีฝึกของคุณ</h2><span class="micro">อ่านให้เข้าใจ แล้วลองทำ</span></div><section class="modes"><article class="mode featured"><span class="mode-number">01 / 10-QUESTION QUIZ</span><h3>จำลองควิซ</h3><p>สุ่ม 10 ข้อจากหลายหัวข้อ มี 4 ตัวเลือกต่อข้อ ส่งแล้วดูคะแนนและเฉลยทีละขั้น</p><button class="primary" data-view="examSetup">${resumeEx?'ทำชุดเดิมต่อ':'ตั้งค่าจำลองสอบ'} →</button></article><article class="mode"><span class="mode-number">02 / STUDY AT YOUR PACE</span><h3>บทเรียนและสูตร</h3><p>อ่านภาพรวม ตัวอย่างคำนวณ และจุดที่ต้องระวังตามลำดับของสไลด์</p><button class="secondary" data-view="learn">เปิดบทเรียน →</button></article><article class="mode"><span class="mode-number">03 / PRACTICE ALL</span><h3>ฝึกให้ครบทุกข้อ</h3><p>เฉลยทันทีหลังตอบ แต่ละข้อปรากฏครั้งเดียวในรอบ พร้อมทบทวนข้อที่ยังผิด</p><button class="secondary" data-view="practiceStart">${resume?'ทำต่อให้ครบ':'เลือกชุดฝึก'} →</button></article></section>
 <section class="coverage"><div class="coverage-top"><div><h3>ความคืบหน้าของคุณ</h3><span class="micro">บันทึกในเบราว์เซอร์ของอุปกรณ์นี้</span></div><span class="micro">อ่าน ${state.learned.length}/${LESSONS.length} บท · ฝึก ${s.seen}/${QUESTIONS.length} ข้อ</span></div><div class="bar" aria-label="ความคืบหน้าการทำข้อสอบ"><span style="width:${100*s.seen/QUESTIONS.length}%"></span></div><div class="dot-grid" aria-hidden="true">${QUESTIONS.map(q=>{let t=stat(q.id);return `<span class="dot ${!t.attempts?'':t.lastCorrect===false?'wrong':t.correct>=3?'mastered':'seen'}" title="${q.id}"></span>`}).join('')}</div><div class="legend"><span><i class="dot"></i>ยังไม่เคยทำ</span><span><i class="dot seen"></i>ตอบล่าสุดถูก</span><span><i class="dot wrong"></i>ตอบล่าสุดผิด</span><span><i class="dot mastered"></i>ตอบถูกสะสม ≥ 3 ครั้ง</span></div></section>${sourceNote()}`}
-function learn(){const done=state.learned.length;main.innerHTML=head('LEARNING / CHAPTER 9.1–9.2','เรียนทีละเรื่อง','บทเรียนสรุปหลักคิด สูตร วิธีแทนค่า และจุดที่มักพลาด พร้อมโจทย์ฝึกในแต่ละหัวข้อ')+`<section class="source-card"><div class="flex-between"><div><h2>บทเรียนทั้งหมด</h2><p>อ่านแล้ว ${done} จาก ${LESSONS.length} เรื่อง · เลือกเรื่องเพื่อเริ่มเรียน</p></div><span class="tag">${Math.round(done/LESSONS.length*100)}% COMPLETE</span></div><div class="bar"><span style="width:${done/LESSONS.length*100}%"></span></div><div class="modes" style="margin-top:20px">${['9.1','9.2'].map(ch=>`<article class="mode"><span class="mode-number">SECTION ${ch}</span><h3>${ch==='9.1'?'ดอกเบี้ยและเงินเฟ้อ':'Cash flow และปัจจัย'}</h3><p>${ch==='9.1'?'Time value, simple / compound interest, nominal และ effective rate, inflation':'แผนภาพ, factor, annuity, เงินกู้, gradient, continuous flow และ Excel'}</p><button class="secondary" data-action="openLesson" data-id="${LESSONS.find(l=>l.chapter===ch).id}">เริ่ม ${ch} →</button></article>`).join('')}<article class="mode featured"><span class="mode-number">QUICK ACCESS</span><h3>เลือกเรื่องที่อยากอ่าน</h3><p>มีตัวอย่างพร้อมวิธีเลือกสูตรและจุดสังเกตสำคัญ</p><button class="primary" data-action="openLesson" data-id="${esc(lessonId)}">ไปบทเรียน →</button></article></div></section>${sourceNote()}`}
+function learn(){const done=state.learned.length;main.innerHTML=head('LEARNING / CHAPTER 9.1–9.2','เรียนทีละเรื่อง','บทเรียนสรุปหลักคิด สูตร วิธีแทนค่า และจุดที่มักพลาด พร้อมโจทย์ฝึกในแต่ละหัวข้อ')+`<section class="source-card"><div class="flex-between"><div><h2>บทเรียนทั้งหมด</h2><p>อ่านแล้ว ${done} จาก ${LESSONS.length} เรื่อง · เลือกเรื่องเพื่อเริ่มเรียน</p></div><span class="tag">${Math.round(done/LESSONS.length*100)}% COMPLETE</span></div><div class="bar"><span style="width:${done/LESSONS.length*100}%"></span></div><div class="modes" style="margin-top:20px">${['9.1','9.2'].map(ch=>`<article class="mode"><span class="mode-number">SECTION ${ch}</span><h3>${ch==='9.1'?'ดอกเบี้ยและเงินเฟ้อ':'Cash flow และปัจจัย'}</h3><p>${ch==='9.1'?'Time value, simple / compound interest, nominal และ effective rate, inflation':'แผนภาพ, factor, annuity, เงินกู้, gradient และ continuous flow'}</p><button class="secondary" data-action="openLesson" data-id="${LESSONS.find(l=>l.chapter===ch).id}">เริ่ม ${ch} →</button></article>`).join('')}<article class="mode featured"><span class="mode-number">QUICK ACCESS</span><h3>เลือกเรื่องที่อยากอ่าน</h3><p>มีตัวอย่างพร้อมวิธีเลือกสูตรและจุดสังเกตสำคัญ</p><button class="primary" data-action="openLesson" data-id="${esc(lessonId)}">ไปบทเรียน →</button></article></div></section>${sourceNote()}`}
 function lesson(){let item=LESSONS.find(x=>x.id===lessonId)||LESSONS[0];lessonId=item.id;let idx=LESSONS.findIndex(x=>x.id===item.id),done=state.learned.includes(item.id);
 const menu=`<div class="lesson-menu-title">บทเรียน · ${state.learned.length}/${LESSONS.length} เรื่อง</div>${LESSONS.map((l,i)=>`<button class="lesson-item ${l.id===item.id?'active':''}" data-action="openLesson" data-id="${l.id}" ${l.id===item.id?'aria-current="page"':''}><span>${String(i+1).padStart(2,'0')}</span>${esc(l.title)} ${state.learned.includes(l.id)?'✓':''}</button>`).join('')}`;
 main.innerHTML=`<div class="lesson-layout"><aside class="lesson-menu" aria-label="สารบัญบทเรียน">${menu}</aside><div><label class="mobile-lesson"><span class="micro">เลือกบทเรียน</span><select id="lesson-select" aria-label="เลือกบทเรียน" style="width:100%">${LESSONS.map((l,i)=>`<option value="${l.id}" ${l.id===item.id?'selected':''}>${i+1}. ${esc(l.title)} ${state.learned.includes(l.id)?'✓':''}</option>`).join('')}</select></label><article class="lesson-article"><div class="eyebrow">SECTION ${esc(item.chapter)} / ${esc(item.read)}</div><h1>${esc(item.title)}</h1><p class="micro">อ้างอิง ${esc(item.pages)}</p>${item.html}<div class="lesson-bottom"><button class="secondary btn-sm" data-action="markLesson" data-id="${item.id}">${done?'✓ อ่านจบแล้ว':'ทำเครื่องหมายว่าอ่านแล้ว'}</button><div class="actions"><button class="secondary btn-sm" data-action="lessonPractice" data-topic="${esc(item.topic)}">ฝึกหัวข้อนี้ →</button>${idx<LESSONS.length-1?`<button class="primary btn-sm" data-action="openLesson" data-id="${LESSONS[idx+1].id}">บทถัดไป →</button>`:'<button class="primary btn-sm" data-view="examSetup">ลองทำควิซ →</button>'}</div></div></article></div></div>`}
@@ -1928,7 +1850,7 @@ function exam(){clearInterval(timer);const e=state.exam;if(!e){setView('examSetu
 main.innerHTML=`<div class="page-head flex-between"><div><div class="eyebrow">EXAM ROOM / QUESTION ${e.index+1} OF 10</div><h1>จำลองควิซ</h1></div><button class="secondary btn-sm" data-view="home">พักก่อน</button></div><div class="practice-layout"><section class="question-card">${questionUI(q,e.orders[q.id],selected,false,{exam:true})}<div class="exam-actions"><button class="secondary" data-action="examPrev" ${e.index===0?'disabled':''}>← ก่อนหน้า</button>${e.index<e.ids.length-1?'<button class="primary" data-action="examNext">ข้อถัดไป →</button>':'<button class="primary" data-action="askSubmit">ตรวจและส่งชุด →</button>'}</div>${confirmExamSubmit?`<div class="warning exam-warning">${answered<10?`ยังไม่ได้ตอบ ${10-answered} ข้อ ข้อที่ข้ามจะนับเป็น 0 คะแนน`: 'ตอบครบแล้ว พร้อมส่งคำตอบ'}<div class="actions"><button class="primary btn-sm" data-action="confirmSubmit">ยืนยันส่งคำตอบ</button><button class="secondary btn-sm" data-action="cancelSubmit">กลับไปตรวจ</button></div></div>`:''}</section><aside><section class="side-card">${e.deadline?'<div class="micro">เวลาที่เหลือ</div><div class="timer" id="timer"></div>':'<h3>ไม่จับเวลา</h3>'}<div class="side-row"><span>ตอบแล้ว</span><b>${answered}/10</b></div><div class="bar"><span style="width:${answered*10}%"></span></div><div class="exam-nav" aria-label="ไปยังข้อสอบ">${e.ids.map((id,i)=>`<button class="qnum ${e.answers[id]!==undefined?'answered':''} ${i===e.index?'current':''}" data-action="jumpExam" data-index="${i}" aria-label="ข้อ ${i+1}${e.answers[id]!==undefined?' ตอบแล้ว':''}" ${i===e.index?'aria-current="step"':''}>${i+1}</button>`).join('')}</div><button style="margin-top:22px;width:100%" class="secondary" data-action="askSubmit">ส่งคำตอบ</button><p class="micro">${e.deadline?'เวลายังเดินเมื่อพักหรือปิดหน้าเว็บ':'พักและกลับมาทำต่อได้บนอุปกรณ์นี้'}</p></section></aside></div>`;if(e.deadline){tick();if(!e.finished)timer=setInterval(tick,1000)}}
 function tick(){const e=state.exam;if(!e||e.finished)return;const left=Math.max(0,Math.ceil((e.deadline-Date.now())/1000)), el=$('#timer');if(el)el.textContent=String(Math.floor(left/60)).padStart(2,'0')+':'+String(left%60).padStart(2,'0');if(!left){clearInterval(timer);finishExam()}}
 function finishExam(){const e=state.exam;if(!e||e.finished)return;e.finished=true;e.score=0;for(const id of e.ids){const answer=e.answers[id];if(answer!==undefined){const ok=answer===find(id).correct;record(id,ok);if(ok)e.score++}}save();confirmExamSubmit=false;reviewFilter='all';setView('result')}
-function result(){const e=state.exam;if(!e||!e.finished){setView('examSetup');return}let answered=Object.keys(e.answers).length;let qs=e.ids.map((id,i)=>({q:find(id),n:i+1,ans:e.answers[id]??null}));if(reviewFilter==='wrong')qs=qs.filter(x=>x.ans!==x.q.correct);main.innerHTML=`<section class="result-hero"><div class="eyebrow">QUIZ COMPLETE / REVIEW YOUR REASONING</div><h1>จบชุดจำลองสอบแล้ว</h1><div class="score">${e.score}<small> / 10</small></div><p>ตอบแล้ว ${answered}/10 ข้อ · คำตอบที่ข้ามนับ 0 คะแนน</p><div class="actions"><button class="primary" data-view="examSetup">ทำชุดใหม่ →</button><button class="secondary" data-view="home">กลับภาพรวม</button></div></section><div class="section-title"><h2>ทบทวนเฉลยทุกข้อ</h2><div class="actions"><button class="${reviewFilter==='all'?'primary':'secondary'} btn-sm" data-action="reviewFilter" data-filter="all">ทุกข้อ</button><button class="${reviewFilter==='wrong'?'primary':'secondary'} btn-sm" data-action="reviewFilter" data-filter="wrong">ผิด / ข้าม</button></div></div>${qs.length?qs.map(({q,n,ans})=>`<article class="review-item"><div class="question-meta"><span class="tag">ข้อ ${n} · ${esc(q.topic)}</span><span class="micro">${esc(q.id)} · ${esc(q.origin)}</span></div><h3 class="result-question">${esc(q.question)}</h3><p class="review-choice">คำตอบของคุณ: <b>${ans===null?'ยังไม่ได้ตอบ':esc(q.options[ans])}</b></p>${feedback(q,ans)}</article>`).join(''):'<div class="empty">ไม่มีข้อผิดหรือข้ามในชุดนี้</div>'}`}
+function result(){const e=state.exam;if(!e||!e.finished){setView('examSetup');return}let answered=Object.keys(e.answers).length;let qs=e.ids.map((id,i)=>({q:find(id),n:i+1,ans:e.answers[id]??null}));if(reviewFilter==='wrong')qs=qs.filter(x=>x.ans!==x.q.correct);main.innerHTML=`<section class="result-hero"><div class="eyebrow">QUIZ COMPLETE / REVIEW YOUR REASONING</div><h1>จบชุดจำลองสอบแล้ว</h1><div class="score">${e.score}<small> / ${e.ids.length}</small></div><p>ตอบแล้ว ${answered}/${e.ids.length} ข้อ · คำตอบที่ข้ามนับ 0 คะแนน</p><div class="actions"><button class="primary" data-view="examSetup">ทำชุดใหม่ →</button><button class="secondary" data-view="home">กลับภาพรวม</button></div></section><div class="section-title"><h2>ทบทวนเฉลยทุกข้อ</h2><div class="actions"><button class="${reviewFilter==='all'?'primary':'secondary'} btn-sm" data-action="reviewFilter" data-filter="all">ทุกข้อ</button><button class="${reviewFilter==='wrong'?'primary':'secondary'} btn-sm" data-action="reviewFilter" data-filter="wrong">ผิด / ข้าม</button></div></div>${qs.length?qs.map(({q,n,ans})=>`<article class="review-item"><div class="question-meta"><span class="tag">ข้อ ${n} · ${esc(q.topic)}</span><span class="micro">${esc(q.id)} · ${esc(q.origin)}</span></div><h3 class="result-question">${esc(q.question)}</h3><p class="review-choice">คำตอบของคุณ: <b>${ans===null?'ยังไม่ได้ตอบ':esc(q.options[ans])}</b></p>${feedback(q,ans)}</article>`).join(''):'<div class="empty">ไม่มีข้อผิดหรือข้ามในชุดนี้</div>'}`}
 function bank(){main.innerHTML=head('QUESTION BANK / QUICK REVIEW','คลังข้อสอบ','ค้นหาโจทย์ด้วยคีย์เวิร์ด กรองตามบทหรือหัวข้อ แล้วเปิดดูเฉลยได้ทันที')+`<div class="filters"><input id="bank-query" type="search" placeholder="ค้นหาโจทย์ เช่น nominal, เงินเฟ้อ, gradient" value="${esc(bankFilter.query)}" aria-label="ค้นหาโจทย์"><select id="bank-chapter" aria-label="กรองตามบท"><option value="all">ทุกบท</option><option value="9.1" ${bankFilter.chapter==='9.1'?'selected':''}>9.1</option><option value="9.2" ${bankFilter.chapter==='9.2'?'selected':''}>9.2</option></select><select id="bank-topic" aria-label="กรองตามหัวข้อ"><option value="all">ทุกหัวข้อ</option>${topics().map(t=>`<option value="${esc(t)}" ${bankFilter.topic===t?'selected':''}>${esc(t)}</option>`).join('')}</select></div><div class="actions" style="margin-bottom:10px"><button class="secondary btn-sm" data-action="bankWeak">เฉพาะข้อที่ยังผิด</button><button class="secondary btn-sm" data-action="bankSaved">เฉพาะข้อที่บันทึก</button><button class="text-link" data-action="bankReset">ล้างตัวกรอง</button></div><div id="bank-results"></div>`;fillBank()}
 let bankSpecial='all';
 function fillBank(){const target=$('#bank-results');if(!target)return;const text=bankFilter.query.trim().toLowerCase();let pool=QUESTIONS.filter(q=>(bankFilter.chapter==='all'||q.chapter===bankFilter.chapter)&&(bankFilter.topic==='all'||q.topic===bankFilter.topic)&&(!text||[q.question,q.topic,q.ref,q.options.join(' '),q.why].join(' ').toLowerCase().includes(text))&&(bankSpecial==='all'||(bankSpecial==='weak'&&stat(q.id).lastCorrect===false)||(bankSpecial==='saved'&&state.bookmarks.includes(q.id))));target.innerHTML=`<p class="bank-count">พบ ${pool.length} จาก ${QUESTIONS.length} ข้อ${bankSpecial==='weak'?' · เฉพาะข้อที่ตอบผิดล่าสุด':bankSpecial==='saved'?' · เฉพาะข้อที่บันทึก':''}</p>${pool.length?pool.map(q=>`<article class="bank-row"><div class="question-meta"><span class="tag">${esc(q.chapter)} · ${esc(q.topic)}</span><span class="micro">${q.id} · ${esc(q.origin)}</span></div><h3>${esc(q.question)}</h3><details><summary>ดูเฉลยและวิธีคิด</summary>${feedback(q,null,true)}</details><button class="bookmark ${state.bookmarks.includes(q.id)?'on':''}" data-action="bookmarkBank" data-id="${q.id}">${state.bookmarks.includes(q.id)?'★ บันทึกแล้ว':'☆ บันทึก'}</button><button class="text-link" data-action="singlePractice" data-id="${q.id}">ฝึกข้อนี้ →</button></article>`).join(''):'<div class="empty">ไม่พบข้อที่ตรงกับตัวกรอง ลองคำค้นอื่น</div>'}`}
