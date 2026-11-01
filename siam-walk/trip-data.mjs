@@ -3,7 +3,6 @@ export const stops = [
     "id": "meet",
     "name": "หัวลำโพง",
     "mapName": "หัวลำโพง",
-    "category": "OUR MEETING POINT",
     "subtitle": "สถานีรถไฟกรุงเทพ · โถงหน้าสถานี",
     "stay": 0,
     "coordinates": [
@@ -15,9 +14,9 @@ export const stops = [
       "label": "Kcdtsg · Public domain",
       "url": "https://commons.wikimedia.org/wiki/File:Hua_Lamphong_Railway_Station.JPG"
     },
-    "description": "เจอกันที่โถงด้านหน้าอาคารสถานีรถไฟหัวลำโพง แล้วเริ่มวันด้วยการเดินไปหาข้าวเช้าแถวรองเมือง",
-    "note": "08:35 คือเวลานัดเจอ ไม่ใช่เวลารถไฟออก",
-    "meta": "จุดนัดหมาย · สถานีรถไฟหัวลำโพง",
+    "description": "นัดเจอที่โถงด้านหน้าสถานีรถไฟหัวลำโพง",
+    "note": "",
+    "meta": "จุดนัดพบ",
     "mapQuery": "Hua Lamphong Railway Station Bangkok",
     "markerClass": "station",
     "durationLabel": "เจอกัน 08:35"
@@ -26,7 +25,6 @@ export const stops = [
     "id": "breakfast",
     "name": "ข้าวเช้า",
     "mapName": "ข้าวเช้า",
-    "category": "A SLOW MORNING",
     "subtitle": "ย่านรองเมือง · พิกัดชั่วคราว",
     "stay": 60,
     "coordinates": [
@@ -38,11 +36,11 @@ export const stops = [
       "label": "Kcdtsg · Public domain",
       "url": "https://commons.wikimedia.org/wiki/File:Hua_Lamphong_Railway_Station.JPG"
     },
-    "description": "นั่งกินข้าวเช้า คุยกันสบาย ๆ สักหนึ่งชั่วโมง ก่อนออกเดินต่อไปสยามตามถนนและซอยฝั่งจุฬาฯ",
-    "note": "ยังไม่ได้เลือกร้าน หมุดนี้ใช้แทนย่านรองเมืองเพื่อจัดเวลาเดิน ถ้าเปลี่ยนร้าน ระยะและเวลาเดินช่วงเช้าจะเปลี่ยนตาม",
+    "description": "กินข้าวเช้า 1 ชั่วโมง แล้วเดินต่อไปสยาม",
+    "note": "ยังไม่ระบุร้าน ใช้พิกัดย่านรองเมืองไว้ก่อน ถ้าเปลี่ยนร้าน เวลาเดินจะเปลี่ยนตาม",
     "warm": true,
     "photoNote": "ภาพหัวลำโพงใกล้ย่านอาหารเช้า",
-    "meta": "เผื่อกินและพัก 1 ชั่วโมง",
+    "meta": "อาหารเช้า 60 นาที",
     "mapQuery": "Rong Mueang Bangkok",
     "markerClass": "breakfast"
   },
@@ -50,7 +48,6 @@ export const stops = [
     "id": "kinokuniya",
     "name": "Kinokuniya",
     "mapName": "Kinokuniya",
-    "category": "A LITTLE BOOK HUNT",
     "subtitle": "Siam Paragon · ชั้น 3",
     "stay": 60,
     "coordinates": [
@@ -62,9 +59,9 @@ export const stops = [
       "label": "Kay Ngee Tan Architects",
       "url": "https://www.kayngeetanarchitects.com/knta-projects-id-kino-spg"
     },
-    "description": "เดินเลือกหนังสือ ค่อย ๆ ดูชั้นที่สนใจ มีเวลาเต็มหนึ่งชั่วโมงให้หลงอยู่ในร้าน ก่อนเดินข้ามไปกินซูชิฝั่งสยามสแควร์วัน",
-    "note": "ขยับจาก 10:00 ในแผนเดิมเป็น 10:30 เพื่อให้กินข้าวเช้า 1 ชั่วโมงและเดินมาถึงได้จริง",
-    "meta": "เปิด 10:00–22:00 · ทุกวัน",
+    "description": "เลือกหนังสือ 1 ชั่วโมง ก่อนเดินข้ามไปกิน Sushiro ที่สยามสแควร์วัน",
+    "note": "ออกจากร้านประมาณ 11:30",
+    "meta": "เปิด 10:00–22:00",
     "official": "https://kinokuniyasupport.zendesk.com/hc/en-am/articles/7906064526873-Stores-in-Thailand",
     "mapQuery": "Kinokuniya Siam Paragon",
     "markerClass": "paragon-upper"
@@ -73,7 +70,6 @@ export const stops = [
     "id": "sushiro",
     "name": "Sushiro",
     "mapName": "Sushiro",
-    "category": "LUNCH FOR TWO",
     "subtitle": "Siam Square One · ชั้น 5",
     "stay": 70,
     "coordinates": [
@@ -85,10 +81,10 @@ export const stops = [
       "label": "กสิณธร ราชโอรส · CC BY-SA 4.0",
       "url": "https://commons.wikimedia.org/wiki/File:Siam_Square_One_(1).jpg"
     },
-    "description": "มื้อกลางวันที่ซูชิโร่ สาขาสยามสแควร์วัน ให้เวลากินพร้อมรอคิวรวม 70 นาที แล้วเดินกลับเข้าพารากอนไปดูโลกใต้น้ำ",
-    "note": "วันเสาร์คิวอาจยาวกว่าเวลาที่เผื่อไว้ เช็กคิวล่วงหน้าจากแอป Sushiro ได้",
+    "description": "กินมื้อกลางวันที่ Sushiro ชั้น 5 สยามสแควร์วัน ให้เวลา 70 นาที รวมรอคิว",
+    "note": "เช็กคิวจากแอป Sushiro ก่อนถึงร้าน",
     "photoNote": "ภาพอาคาร Siam Square One",
-    "meta": "เปิด 10:00–22:00 · ทุกวัน",
+    "meta": "เปิด 10:00–22:00",
     "official": "https://sushiro.co.th/branch/",
     "mapQuery": "Sushiro Siam Square One",
     "markerClass": "sushiro"
@@ -97,7 +93,6 @@ export const stops = [
     "id": "sealife",
     "name": "SEA LIFE",
     "mapName": "SEA LIFE",
-    "category": "OUR UNDERWATER HOURS",
     "subtitle": "Siam Paragon · ชั้น B1–B2",
     "stay": 120,
     "coordinates": [
@@ -109,9 +104,9 @@ export const stops = [
       "label": "SEA LIFE Bangkok Ocean World",
       "url": "https://www.visitsealife.com/bangkok/en/explore/aquarium-zones/ocean-tunnels/"
     },
-    "description": "ใช้เวลาสองชั่วโมงเดินดูปลา แมงกะพรุน และอุโมงค์ใต้น้ำ ค่อย ๆ ดู ค่อย ๆ ถ่ายรูป ช่วงบ่ายนี้อยู่ในแอร์กันยาว ๆ",
-    "note": "เข้าประมาณ 13:05 · เผื่อเวลาแสดงบัตรและลงชั้นใต้ดินในช่วงเดินจาก Sushiro แล้ว ควรเลือกตั๋วที่ตรงกับวันและช่วงเข้า",
-    "meta": "เปิด 10:00–20:00 · เข้ารอบสุดท้าย 19:00",
+    "description": "ดูอควาเรียม 2 ชั่วโมง ที่ชั้น B1–B2 สยามพารากอน",
+    "note": "เลือกตั๋ววันที่ 7 พ.ย. ช่วงเข้าประมาณ 13:05",
+    "meta": "เปิด 10:00–20:00 · เข้าสุดท้าย 19:00",
     "official": "https://www.visitsealife.com/bangkok/en/plan/before-you-visit/opening-hours/",
     "mapQuery": "SEA LIFE Bangkok Ocean World",
     "markerClass": "paragon-lower",
@@ -121,7 +116,6 @@ export const stops = [
     "id": "bantadthong",
     "name": "บรรทัดทอง",
     "mapName": "บรรทัดทอง",
-    "category": "AN AFTERNOON BITE",
     "subtitle": "โซนจุฬาฯ 16–20 · เดินเล่นหาของกิน",
     "stay": 40,
     "coordinates": [
@@ -133,10 +127,10 @@ export const stops = [
       "label": "Phoebus 28 · CC BY-SA 4.0",
       "url": "https://commons.wikimedia.org/wiki/File:Banthat_Thong_Road.jpg"
     },
-    "description": "แวะเดินดูร้าน แบ่งขนมหรือเครื่องดื่มกันก่อนเข้าสวน ให้เวลา 40 นาทีสำหรับพักและกินอะไรเบา ๆ",
-    "note": "มาถึงราว 15:40 บางร้านเปิดเฉพาะเย็น ยังไม่ได้เลือกร้านเจาะจง หมุดใช้แทนโซนเดินเล่น",
+    "description": "แวะของกินหรือของหวานที่บรรทัดทอง 40 นาที แล้วเดินต่อเข้าสวน",
+    "note": "ยังไม่เลือกร้าน บางร้านเปิดเฉพาะช่วงเย็น",
     "photoNote": "ภาพบรรทัดทองช่วงสะพานเหลือง · ภาพเก่า",
-    "meta": "เผื่อแวะพักและของว่าง 40 นาที",
+    "meta": "ของกิน / ของหวาน 40 นาที",
     "mapQuery": "Banthat Thong Road Chula 16 Bangkok",
     "markerClass": "bantadthong",
     "afternoon": true
@@ -145,8 +139,7 @@ export const stops = [
     "id": "park",
     "name": "อุทยาน 100 ปี จุฬาฯ",
     "mapName": "สวน 100 ปี",
-    "category": "A LITTLE GREEN ENDING",
-    "subtitle": "นั่งพักบนสนามหญ้า · เดินเล่นในสวน",
+    "subtitle": "อุทยาน 100 ปี จุฬาลงกรณ์มหาวิทยาลัย",
     "stay": 40,
     "coordinates": [
       13.7388,
@@ -157,8 +150,8 @@ export const stops = [
       "label": "PMCU · อุทยาน 100 ปี จุฬาฯ",
       "url": "https://pmcu.co.th/chula-centenary-park/"
     },
-    "description": "จบทริปด้วยพื้นที่สีเขียว เดินเล่นหรือนั่งคุยกันสักพัก ก่อนออกจากสวน 17:10 เพื่อเดินกลับหัวลำโพง",
-    "note": "ออกจากสวน 17:10 จะถึงสถานีประมาณ 17:30 เหลือเวลาเผื่ออีก 10 นาทีก่อน 17:40",
+    "description": "เดินเล่นหรือนั่งพักในสวน 40 นาที",
+    "note": "ออกจากสวน 17:10 เดินกลับถึงหัวลำโพงประมาณ 17:30",
     "meta": "เปิด 05:00–22:00 · เข้าฟรี",
     "official": "https://sustainability.chula.ac.th/th/report/3219/",
     "mapQuery": "Chulalongkorn University Centenary Park",
@@ -169,7 +162,6 @@ export const stops = [
     "id": "home",
     "name": "กลับหัวลำโพง",
     "mapName": "หัวลำโพง",
-    "category": "UNTIL NEXT TIME",
     "subtitle": "กลับถึงก่อนเวลา · เผื่อไว้ 10 นาที",
     "stay": 10,
     "coordinates": [
@@ -181,9 +173,9 @@ export const stops = [
       "label": "Kcdtsg · Public domain",
       "url": "https://commons.wikimedia.org/wiki/File:Hua_Lamphong_Railway_Station.JPG"
     },
-    "description": "เดินกลับมาถึงสถานีประมาณ 17:30 มีเวลาเผื่ออีก 10 นาที ก่อนเวลาสิ้นสุดแผน 17:40",
-    "note": "หากมีรถไฟต้องขึ้น ให้ยึดเวลาบนตั๋วและเผื่อเดินไปชานชาลาเพิ่มด้วย",
-    "meta": "สิ้นสุดแผน 17:40",
+    "description": "กลับถึงหัวลำโพงประมาณ 17:30 เหลือเวลาเผื่อ 10 นาทีก่อนจบแผน 17:40",
+    "note": "",
+    "meta": "จบทริป 17:40",
     "mapQuery": "Hua Lamphong Railway Station Bangkok",
     "markerClass": "station",
     "afternoon": true

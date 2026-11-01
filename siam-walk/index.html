@@ -3,63 +3,43 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta name="theme-color" content="#f6f6f1">
-  <meta name="description" content="หนึ่งวันเดินเล่นกับ P’dale — หัวลำโพง สยาม บรรทัดทอง และสวน 100 ปี จุฬาฯ วันเสาร์ที่ 7 พฤศจิกายน 2026">
-  <title>เดินไปด้วยกัน · 7 November 2026</title>
+  <meta name="theme-color" content="#244b39">
+  <meta name="description" content="แผนเที่ยวกับ P’dale วันที่ 7 พฤศจิกายน 2026 — หัวลำโพง สยาม บรรทัดทอง และสวน 100 ปี จุฬาฯ">
+  <title>เที่ยวกับ P’dale · 7 พ.ย. 2026</title>
   <link rel="icon" href="./assets/icon.svg" type="image/svg+xml">
+  <link rel="preload" href="./assets/itim.ttf" as="font" type="font/ttf" crossorigin>
   <link rel="stylesheet" href="./vendor/leaflet.css">
-  <link rel="stylesheet" href="./styles.css">
+  <link rel="stylesheet" href="./styles.css?v=2">
   <script defer src="./vendor/leaflet.js"></script>
-  <script type="module" src="./app.mjs"></script>
+  <script type="module" src="./app.mjs?v=2"></script>
 </head>
 <body>
+  <a class="skip-link" href="#trip">ข้ามไปแผนเที่ยว</a>
   <div class="page">
     <header class="masthead">
-      <div class="title-block">
-        <p class="eyebrow"><span class="little-route" aria-hidden="true">↗</span> A DAY WITH P’DALE <span class="city">BANGKOK</span></p>
-        <h1>เดินไปด้วยกัน<span class="title-dot">.</span></h1>
-        <p class="date-line">เสาร์ 7 พฤศจิกายน 2026 <span>·</span> เจอกันที่หัวลำโพง 08:35</p>
-      </div>
+      <div class="title-block"><p class="date-line">เสาร์ 7 พฤศจิกายน 2026</p><h1>เที่ยวกับ P’dale</h1><p class="meeting"><span class="red-cross" aria-hidden="true">×</span> เจอกันหัวลำโพง <strong>08:35</strong></p></div>
       <section class="countdown" aria-label="นับถอยหลังถึงวันนัด">
-        <p id="countdown-label"><span class="status-dot"></span> อีกนิดก็ได้เจอกัน</p>
+        <p id="countdown-label">เจอกันในอีก</p>
         <div class="countdown-digits" role="timer" aria-live="off">
-          <div><strong id="cd-days">--</strong><small>วัน</small></div><b>:</b>
-          <div><strong id="cd-hours">--</strong><small>ชั่วโมง</small></div><b>:</b>
-          <div><strong id="cd-minutes">--</strong><small>นาที</small></div><b>:</b>
-          <div><strong id="cd-seconds">--</strong><small>วินาที</small></div>
+          <div><strong id="cd-days">--</strong><span>วัน</span></div><b>:</b><div><strong id="cd-hours">--</strong><span>ชั่วโมง</span></div><b>:</b><div><strong id="cd-minutes">--</strong><span>นาที</span></div><b>:</b><div><strong id="cd-seconds">--</strong><span>วินาที</span></div>
         </div>
       </section>
     </header>
-
-    <main>
-      <div class="map-heading">
-        <div class="heading-left"><span class="mini-compass" aria-hidden="true">↗</span><span>หัวลำโพง <i>→</i> สยาม <i>→</i> จุฬาฯ</span></div>
-        <div class="trip-stats"><span id="total-distance">6.7 กม.</span><span>เดินทั้งหมด</span><span class="stats-divider">/</span><span>08:35–17:40</span></div>
-      </div>
-      <div class="workspace">
-        <section class="map-shell" aria-label="แผนที่ทริปเดินเที่ยว">
-          <div id="map"><div class="map-loading">กำลังเปิดแผนที่…</div></div>
-          <div class="map-caption"><span class="caption-line"></span> แตะหมุดดูที่เที่ยว · แตะเส้นประดูเวลาเดิน</div>
-          <div class="map-controls">
-            <button id="fit-map" class="map-control" type="button" aria-label="ดูเส้นทางทั้งหมด" title="ดูเส้นทางทั้งหมด"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M8 3H3v5m13-5h5v5M3 16v5h5m13-5v5h-5M8 8h8v8H8z"/></svg></button>
-            <div class="zoom-controls"><button id="zoom-in" class="map-control" type="button" aria-label="ขยายแผนที่">+</button><button id="zoom-out" class="map-control" type="button" aria-label="ย่อแผนที่">−</button></div>
-          </div>
-          <div id="tile-notice" class="tile-notice" hidden>แผนที่พื้นหลังโหลดไม่สำเร็จ ยังแตะจุดและเส้นทางได้</div>
-        </section>
-        <aside id="panel" class="panel" aria-label="ตารางเที่ยวและรายละเอียด"><div class="panel-loading">กำลังจัดตารางเที่ยว…</div></aside>
-      </div>
-      <footer class="page-footer"><span>วันสบาย ๆ หนึ่งวัน กับทางเดินอีกนิดหน่อย</span><button type="button" id="about-button">เกี่ยวกับเวลาและรูปภาพ <span>↗</span></button></footer>
+    <main id="trip">
+      <div class="map-toolbar"><p><span class="route-sample" aria-hidden="true"></span> เดินทั้งหมด <strong id="total-distance">6.7 กม.</strong></p><button id="schedule-button" class="paper-button" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M8 4h13M8 12h13M8 20h13M2 4h1M2 12h1M2 20h1"/></svg> ตารางเที่ยว</button></div>
+      <section class="map-shell" aria-label="แผนที่เที่ยวกับ P’dale">
+        <div id="map"><p class="map-loading">กำลังเปิดแผนที่…</p></div>
+        <div class="map-hint">แตะจุดดูสถานที่ · แตะเส้นประดูเวลาเดิน</div>
+        <img class="paper-decoration" src="./assets/map-frame.svg" alt="" aria-hidden="true">
+        <div class="map-compass" aria-hidden="true"><svg viewBox="0 0 100 110"><circle cx="50" cy="58" r="31" fill="#f6e8c8" stroke="#9f8a61" stroke-width="1.4"/><circle cx="50" cy="58" r="25" fill="none" stroke="#baa679" stroke-width=".8"/><path d="m50 25 8 25 25 8-25 8-8 25-8-25-25-8 25-8Z" fill="#d8b77c" stroke="#8b7049"/><path d="m50 25 8 25-8 8-8-8Z" fill="#ac4d35"/><path d="m50 58 8 8-8 25-8-25Z" fill="#668572"/><circle cx="50" cy="58" r="3" fill="#5d4c35"/><text x="50" y="16" text-anchor="middle" fill="#665236" font-size="14" font-family="serif">N</text></svg></div>
+        <div class="map-controls"><button id="fit-map" type="button" aria-label="ดูเส้นทางทั้งหมด" title="ดูทั้งหมด"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M8 3H3v5m13-5h5v5M3 16v5h5m13-5v5h-5M8 8h8v8H8z"/></svg></button><div class="zoom-controls"><button id="zoom-in" type="button" aria-label="ขยายแผนที่">+</button><button id="zoom-out" type="button" aria-label="ย่อแผนที่">−</button></div></div>
+      </section>
+      <div class="route-index" aria-label="ลำดับสถานที่" id="route-index"></div>
+      <footer><span>08:35–17:40</span><button id="about-button" type="button">เวลาเดิน / ที่มารูป</button></footer>
     </main>
-    <noscript><p class="noscript">เปิด JavaScript เพื่อใช้แผนที่และ countdown · นัด 7 พ.ย. 2026 เวลา 08:35 ที่สถานีรถไฟหัวลำโพง</p></noscript>
+    <noscript><p>เปิด JavaScript เพื่อใช้แผนที่และ countdown · นัดหัวลำโพง 7 พ.ย. 2026 เวลา 08:35</p></noscript>
   </div>
-  <dialog id="about-dialog" aria-labelledby="about-title">
-    <div class="dialog-top"><span class="eyebrow">A LITTLE NOTE</span><button id="close-about" class="icon-button" type="button" aria-label="ปิด">×</button></div>
-    <h2 id="about-title">เผื่อเวลาให้เดินสบาย</h2>
-    <p>ตารางนี้ปรับจากแผนในรูป ยึดนัด 08:35 และกลับหัวลำโพงก่อน 17:40 ทุกช่วงเดินเท้า เวลาทั้งหมดเป็นเวลาประเทศไทย</p>
-    <p>ระยะและแนวทางเดินมาจาก OpenStreetMap / FOSSGIS (โหมดเดินเท้า) เช็กเมื่อ 1 พ.ย. 2026 เวลาที่แสดงเป็นประมาณการที่เผื่อเดินช้า ทางข้ามถนน และขึ้นลงชั้นแล้ว ระยะรวมไม่รวมการเดินภายในร้าน อควาเรียม และสวน ไม่ใช่เวลานำทางสด</p>
-    <p>จุดข้าวเช้าเป็นพิกัดชั่วคราวย่านรองเมือง ยังไม่ได้เลือกร้าน รูปจึงใช้ภาพสถานีหัวลำโพงใกล้ย่านนั้น ส่วนรูปซูชิโร่เป็นภาพอาคาร Siam Square One</p>
-    <p>ซูชิโร่เผื่อกินและรอคิวรวม 70 นาที SEA LIFE เผื่อชม 2 ชั่วโมง หากคิวยาวให้ลดช่วงบรรทัดทองหรือเวลาในสวน</p>
-    <div id="source-links" class="source-links"></div>
-  </dialog>
+  <dialog id="panel" class="detail-dialog" aria-label="รายละเอียดแผนเที่ยว"></dialog>
+  <dialog id="about-dialog" class="about-dialog" aria-labelledby="about-title"><div class="sheet-header"><h2 id="about-title">เวลาเดิน / ที่มารูป</h2><button type="button" class="close-button" id="close-about" aria-label="ปิด">×</button></div><div class="about-body"><p>เวลาเป็นเวลาประเทศไทย นัดหัวลำโพง 08:35 และกลับถึงประมาณ 17:30 ก่อนจบแผน 17:40</p><p>ระยะและเส้นทางเดินจาก OpenStreetMap / FOSSGIS ตรวจเมื่อ 1 พ.ย. 2026 เวลาเดินเป็นประมาณการ รวมเผื่อทางข้ามถนนและขึ้นลงชั้นแล้ว ระยะรวมไม่รวมการเดินในร้าน SEA LIFE และสวน</p><p>ข้าวเช้ายังไม่เลือกร้าน หมุดใช้แทนย่านรองเมือง และใช้ภาพหัวลำโพงใกล้ย่านนั้น ส่วนรูป Sushiro เป็นภาพอาคาร Siam Square One</p><p>รูปบนแผนที่ขยับหลบกันเล็กน้อย เส้นบางเชื่อมกลับไปยังพิกัดจริง</p><div id="source-links" class="source-links"></div></div></dialog>
 </body>
 </html>

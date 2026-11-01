@@ -1,235 +1,88 @@
-import {stops, legs, meta} from './trip-data.mjs';
-import {countdown, buildSchedule, clock, distanceLabel} from './core.mjs';
+import {stops,legs,meta} from './trip-data.mjs?v=2';
+import {countdown,buildSchedule,clock,distanceLabel} from './core.mjs';
 import {basemap} from './basemap.mjs';
 
-const $ = (s) => document.querySelector(s);
-const escape = (s) => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-const schedule = buildSchedule(stops, legs);
-const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-const mobile = () => window.matchMedia('(max-width: 760px)').matches;
-const walkIcon = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="13.5" cy="4" r="2"/><path d="m8 12 3-5 4 2 2 4h3M11 8l-1 7-4 6m4-6 5 2 1 5M9 9l-4 3"/></svg>';
-const arrow = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M19 12H5m6-6-6 6 6 6"/></svg>';
-const externalIcon = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M14 3h7v7m0-7L10 14M10 4H4v16h16v-6"/></svg>';
-const pinIcon = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M19 10c0 5-7 11-7 11S5 15 5 10a7 7 0 1 1 14 0Z"/><circle cx="12" cy="10" r="2.5"/></svg>';
-let map, fullBounds;
-let selection = {type:'overview',index:null};
-const mapStops = new Map();
-const routeLayers = [];
-const routeBadges = [];
+const $=s=>document.querySelector(s);
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const schedule=buildSchedule(stops,legs);
+const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
+const compact=()=>matchMedia('(max-width:600px)').matches;
+const walk='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="13.5" cy="4" r="2"/><path d="m8 12 3-5 4 2 2 4h3M11 8l-1 7-4 6m4-6 5 2 1 5M9 9l-4 3"/></svg>';
+const arrow='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M19 12H5m6-6-6 6 6 6"/></svg>';
+const external='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M14 3h7v7m0-7L10 14M10 4H4v16h16v-6"/></svg>';
+const bowl='<svg viewBox="0 0 64 64" fill="none" stroke="#5b4935" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 30h46c-2 15-9 22-23 22S11 45 9 30Z" fill="#bc6e4f"/><path d="M9 30h46M26 52v4h12v-4"/><ellipse cx="32" cy="29" rx="23" ry="5" fill="#f6e7bb"/><path d="M24 9q-6 6 0 11m9-14q-6 7 0 13m9-9q-5 5 0 10" stroke="#9e824e"/><path d="m43 25 11-19m-5 20L61 8"/></svg>';
+const panel=$('#panel');
+let map,bounds,selection=null,layoutFrame;
+const pins=new Map(),routes=[];
 
-function updateCountdown() {
-  const c = countdown();
-  for (const key of ['days','hours','minutes','seconds']) $(`#cd-${key}`).textContent = String(c[key]).padStart(2,'0');
-  $('#countdown-label').innerHTML = `<span class="status-dot"></span> ${c.ended ? 'เก็บวันนี้ไว้เป็นความทรงจำ' : c.met ? 'ถึงเวลาเดินไปด้วยกันแล้ว' : 'อีกนิดก็ได้เจอกัน'}`;
-}
+function updateCountdown(){const c=countdown();for(const k of ['days','hours','minutes','seconds'])$(`#cd-${k}`).textContent=String(c[k]).padStart(2,'0');$('#countdown-label').textContent=c.ended?'จบทริปแล้ว':c.met?'ถึงเวลานัดแล้ว':'เจอกันในอีก';}
+function header(title){return `<div class="sheet-header">${title?`<h2>${esc(title)}</h2>`:`<button type="button" class="back-button" data-schedule>${arrow} ตารางเที่ยว</button>`}<button type="button" class="close-button" data-close aria-label="ปิดรายละเอียด">×</button></div>`;}
+function openPanel(html){panel.innerHTML=html;panel.scrollTop=0;if(!panel.open)panel.showModal();}
+function placeLink(s){return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(s.mapQuery)}`;}
+function walkLink(i){return `https://www.google.com/maps/dir/?api=1&origin=${stops[i].coordinates.join(',')}&destination=${stops[i+1].coordinates.join(',')}&travelmode=walking`;}
+function updateSelection(){for(const [i,p] of pins){const active=selection?.kind==='stop'&&(selection.i===i||(i===0&&selection.i===7));const b=p.marker.getElement()?.querySelector('button');b?.classList.toggle('active',active);b?.setAttribute('aria-pressed',String(active));}
+ routes.forEach((r,i)=>r.visual.setStyle({weight:selection?.kind==='leg'&&selection.i===i?6:4,opacity:selection?.kind==='leg'?(selection.i===i?1:.35):.9}));
+ document.querySelectorAll('.route-stop').forEach(b=>b.classList.toggle('selected',selection?.kind==='stop'&&Number(b.dataset.stop)===selection.i));}
+function showSchedule(){selection=null;updateSelection();openPanel(`${header('ตารางเที่ยว')}<ol class="schedule-list">${schedule.map((s,i)=>`<li><button type="button" class="stop-row" data-stop="${i}"><span class="stop-num">${i+1}</span><span><strong>${esc(s.name)}</strong><small>${esc(s.subtitle)}</small></span><time class="stop-time">${clock(s.arrival)}</time></button>${i<legs.length?`<div class="walk-row"><button type="button" data-leg="${i}">${walk} เดิน ${legs[i].minutes} นาที · ${distanceLabel(legs[i].distance)} →</button></div>`:''}</li>`).join('')}<li><p class="itinerary-note">ข้าวเช้ายังไม่เลือกร้าน<br>เวลาเดินรวมเผื่อทางข้ามถนนและขึ้นลงชั้นแล้ว</p></li></ol>`);history.replaceState(null,'',location.pathname+location.search);}
+function showStop(i){const s=schedule[i];if(!s)return;selection={kind:'stop',i};updateSelection();const initial=i===0;
+ openPanel(`${header()}<figure class="detail-photo"><img src="./assets/${s.image}.webp" alt="${esc(s.photoNote||`${s.name} · ${s.subtitle}`)}" width="1200" height="800"></figure><div class="detail-content">
+ ${i===0||i===7?`<div class="overlap-options"><button type="button" data-stop="0" class="${i===0?'active':''}">08:35 นัดเจอ</button><button type="button" data-stop="7" class="${i===7?'active':''}">17:30 ขากลับ</button></div>`:''}
+ <h2>${esc(s.name)}</h2><p class="detail-subtitle">${esc(s.subtitle)}</p><div class="time-band"><strong>${clock(s.arrival)}${initial?'':`–${clock(s.departure)}`}</strong><span>${initial?'เวลานัดเจอ':`${s.stay} นาที`}</span></div><p class="detail-description">${esc(s.description)}</p>${s.note?`<p class="detail-notice">${esc(s.note)}</p>`:''}<p class="detail-meta">${esc(s.meta)}</p>${s.photoNote?`<p class="photo-note">${esc(s.photoNote)}</p>`:''}<a class="photo-credit" href="${s.credit.url}" target="_blank" rel="noopener noreferrer">ภาพ: ${esc(s.credit.label)} ↗</a><a class="map-link" href="${placeLink(s)}" target="_blank" rel="noopener noreferrer">เปิด Google Maps ${external}</a>
+ ${i<legs.length?`<button type="button" class="next-connection" data-leg="${i}">${walk}<span><strong>ไป ${esc(stops[i+1].name)}</strong><em>เดิน ${legs[i].minutes} นาที · ${distanceLabel(legs[i].distance)}</em></span>→</button>`:''}</div><div class="detail-nav"><button type="button" data-stop="${i-1}" ${i===0?'disabled':''}>← ก่อนหน้า</button><span>${i+1} / 8</span><button type="button" data-stop="${i+1}" ${i===7?'disabled':''}>ถัดไป →</button></div>`);
+ history.replaceState(null,'',`#${s.id}`);}
+function showLeg(i){const l=legs[i];if(!l)return;selection={kind:'leg',i};updateSelection();const a=schedule[i],b=schedule[i+1];
+ openPanel(`${header('เส้นทางเดิน')}<div class="detail-content"><div class="route-heading"><h2>${esc(a.name)}</h2><span>→</span><h2>${esc(b.name)}</h2></div>${i===2||i===3?`<div class="overlap-options" style="margin-top:20px"><button type="button" data-leg="2" class="${i===2?'active':''}">ไป Sushiro</button><button type="button" data-leg="3" class="${i===3?'active':''}">กลับ SEA LIFE</button></div>`:''}<div class="route-metrics"><strong>${l.minutes}<small>นาที</small></strong><span>${distanceLabel(l.distance)}<br>โดยประมาณ</span></div><div class="route-times"><div><small>ออก</small><strong>${clock(a.departure)}</strong><span>${esc(a.name)}</span></div><div><small>ถึง</small><strong>${clock(b.arrival)}</strong><span>${esc(b.name)}</span></div></div><p>${esc(l.description)}</p><p class="route-brief">เผื่อเวลาทางข้ามถนน${[1,2,3,4].includes(i)?'และขึ้นลงชั้น':''}แล้ว${i===2||i===3?' ขากลับ SEA LIFE เพิ่มเวลาลงชั้นใต้ดินและแสดงบัตร':''}</p><a class="map-link" href="${walkLink(i)}" target="_blank" rel="noopener noreferrer">เปิดเส้นทางใน Google Maps ${external}</a><button type="button" class="next-connection" data-stop="${i+1}"><span><strong>ดู ${esc(b.name)}</strong><em>${clock(b.arrival)}${b.stay?`–${clock(b.departure)}`:''}</em></span>→</button></div>`);
+ history.replaceState(null,'',`#walk-${i+1}`);}
 
-function resetPanel(html) {
-  const panel = $('#panel');
-  panel.innerHTML=html;
-  panel.scrollTop=0;
-}
+function drawBase(){map.attributionControl.setPrefix(false);map.attributionControl.addAttribution('&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a>');
+ map.createPane('areas');map.getPane('areas').style.zIndex=200;map.createPane('roads');map.getPane('roads').style.zIndex=205;map.createPane('labels');map.getPane('labels').style.zIndex=300;
+ const ar=L.canvas({pane:'areas',padding:.3}),rr=L.canvas({pane:'roads',padding:.3});
+ for(const f of basemap.features){if(!['park','water','building'].includes(f.k))continue;const colors={park:'#a7b681',water:'#a8bdb1',building:'#beab7c'};const op={renderer:ar,interactive:false,color:colors[f.k],weight:.5,fillColor:colors[f.k],fillOpacity:f.k==='building'?.22:f.k==='water'?.55:.6};if(f.closed)L.polygon(f.c,op).addTo(map);else if(f.k==='water')L.polyline(f.c,{...op,weight:3,opacity:.5}).addTo(map);}
+ const roads=basemap.features.filter(f=>['major','street','path','rail'].includes(f.k));
+ for(const f of roads){if(f.k==='path')continue;L.polyline(f.c,{renderer:rr,interactive:false,color:f.k==='major'?'#b4a073':f.k==='street'?'#d2bd8e':'#a08c66',weight:f.k==='major'?6:f.k==='street'?2.5:1,opacity:f.k==='rail'?.35:.65,dashArray:f.k==='rail'?'3 5':undefined,lineCap:'round'}).addTo(map);}
+ for(const f of roads.filter(f=>f.k==='major'))L.polyline(f.c,{renderer:rr,interactive:false,color:'#f7ecca',weight:3.8,opacity:.9}).addTo(map);
+ const labels=[{name:'บรรทัดทอง',c:[13.743881,100.5231],angle:-80},{name:'พระราม 1',c:[13.746620,100.528877],angle:7},{name:'พระราม 4',c:[13.73525,100.5230],angle:22},{name:'พญาไท',c:[13.742256,100.530111],angle:-82},{name:'สยาม',c:[13.7482,100.5328],angle:0,area:true},{name:'จุฬาฯ',c:[13.7402,100.532],angle:0,area:true}];
+ for(const l of labels)L.marker(l.c,{pane:'labels',interactive:false,keyboard:false,icon:L.divIcon({className:`basemap-label ${l.area?'area-label':''}`,iconSize:[160,26],iconAnchor:[80,13],html:`<span style="transform:rotate(${l.angle}deg)">${l.name}</span>`})}).addTo(map);}
 
-function bringPanelIntoView(fromMap=false) {
-  if (fromMap && mobile()) $('#panel').scrollIntoView({behavior:reducedMotion?'instant':'smooth', block:'start'});
-}
+function layoutPins(){if(!map)return;cancelAnimationFrame(layoutFrame);layoutFrame=requestAnimationFrame(()=>{
+ const size=map.getSize(),small=compact(),placed=[],padding=small?16:28;
+ const preference=small?[[-18,35],[12,-25],[-30,-65],[-80,45],[35,40],[-55,-40],[55,65]]:[[-30,45],[-50,-35],[-25,-80],[-100,55],[80,40],[-65,-45],[80,55]];
+ const priority=[0,1,2,4,3,5,6];
+ const overlaps=(a,b)=>Math.max(0,Math.min(a.x+a.w,b.x+b.w)-Math.max(a.x,b.x))*Math.max(0,Math.min(a.y+a.h,b.y+b.h)-Math.max(a.y,b.y));
+ for(const i of priority){const p=pins.get(i),el=p.marker.getElement(),button=el?.querySelector('button');if(!button)continue;
+  const point=map.latLngToContainerPoint(stops[i].coordinates),cw=button.offsetWidth,ch=button.offsetHeight,w=cw+16,h=ch+16;
+  if(point.x<-70||point.y<-70||point.x>size.x+70||point.y>size.y+70){el.style.display='none';p.leader.setLatLngs([]);continue;}el.style.display='';
+  const pref={x:point.x+preference[i][0],y:point.y+preference[i][1]};
+  const candidates=[pref,{x:point.x,y:point.y},...[[-1,-1],[1,-1],[-1,1],[1,1],[0,-1],[0,1],[-1,0],[1,0]].flatMap(([x,y])=>[.75,1.25,1.8].map(r=>({x:point.x+x*w*r,y:point.y+y*h*r})))];
+  for(let y=60+h/2;y<size.y-36-h/2;y+=30)for(let x=padding+w/2;x<size.x-padding-w/2;x+=32)candidates.push({x,y});
+  let best=null;
+  for(const c of candidates){const cx=Math.max(padding+w/2,Math.min(size.x-padding-w/2,c.x)),cy=Math.max(58+h/2,Math.min(size.y-35-h/2,c.y));const rect={x:cx-w/2,y:cy-h/2,w,h};let score=(cx-pref.x)**2+(cy-pref.y)**2;
+   for(const q of placed)score+=overlaps(rect,q)*1e6;
+   score+=overlaps(rect,{x:0,y:size.y-(small?92:125),w:small?84:110,h:small?92:125})*1e5;
+   score+=overlaps(rect,small?{x:size.x-170,y:size.y-90,w:170,h:90}:{x:size.x-78,y:size.y-210,w:78,h:210})*1e5;
+   if(!best||score<best.score)best={cx,cy,rect,score};}
+  placed.push(best.rect);button.style.left=`${best.cx-point.x-cw/2}px`;button.style.top=`${best.cy-point.y-ch/2}px`;
+  const endpoint=map.containerPointToLatLng([best.cx,best.cy]);p.leader.setLatLngs([stops[i].coordinates,endpoint]);
+ }
+ });}
 
-function backButton() {return `<button class="back-button" type="button" data-overview>${arrow} กลับดูแผนทั้งวัน</button>`;}
-function googlePlace(s) {return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(s.mapQuery)}`;}
-function googleWalk(l) {const a=stops[l.id],b=stops[l.id+1];return `https://www.google.com/maps/dir/?api=1&origin=${a.coordinates.join(',')}&destination=${b.coordinates.join(',')}&travelmode=walking`;}
-function updateSelectedMap() {
-  for (const [i,marker] of mapStops) {
-    const button=marker.getElement()?.querySelector('button');
-    const active=selection.type==='stop'&&(i===selection.index||(i===0&&selection.index===7));
-    button?.classList.toggle('active',active);
-    button?.setAttribute('aria-pressed', String(active));
-  }
-  routeLayers.forEach((layer,i)=>{
-    const selected = selection.type==='leg'&&selection.index===i;
-    layer.visual.setStyle({opacity:selection.type==='leg'?(selected?1:.2):.85,weight:selected?5:3.2});
-    if(selected){layer.visual.bringToFront();layer.hit.bringToFront();}
-    routeBadges[i]?.getElement()?.querySelector('button')?.classList.toggle('active',selected);
-  });
-}
+function fitAll(){if(!map||!bounds)return;const narrow=map.getSize().x<900;map.fitBounds(bounds,{paddingTopLeft:compact()?[40,75]:narrow?[80,100]:[160,115],paddingBottomRight:compact()?[45,80]:narrow?[95,110]:[190,110],maxZoom:16.25,animate:false});layoutPins();}
+function initMap(){if(!window.L){$('#map').innerHTML='<p class="map-error">โหลดแผนที่ไม่สำเร็จ เปิดดูตารางเที่ยวจากปุ่มด้านบนได้</p>';return;}
+ $('#map').innerHTML='';map=L.map('map',{center:[13.742,100.526],zoom:15,zoomControl:false,scrollWheelZoom:false,zoomSnap:.25,minZoom:14,maxZoom:18,tapHold:false,maxBounds:[[13.734,100.514],[13.750,100.538]],maxBoundsViscosity:.7});drawBase();
+ map.createPane('routes');map.getPane('routes').style.zIndex=410;map.createPane('route-hit');map.getPane('route-hit').style.zIndex=415;map.createPane('leaders');map.getPane('leaders').style.zIndex=420;
+ legs.forEach((l,i)=>{const visual=L.polyline(l.coordinates,{pane:'routes',color:'#a9432f',weight:4,dashArray:'5 9',opacity:.9,lineCap:'round',interactive:false}).addTo(map);const hit=L.polyline(l.coordinates,{pane:'route-hit',weight:44,opacity:0}).addTo(map);hit.on('click',()=>showLeg(i===3?2:i));const path=hit.getElement();if(path){path.setAttribute('data-route',String(i));path.setAttribute('role','button');path.setAttribute('tabindex','0');path.setAttribute('aria-label',`เส้นประ ${stops[i].name} ไป ${stops[i+1].name} เดิน ${l.minutes} นาที`);path.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();showLeg(i);}});}routes.push({visual,hit});});
+ stops.slice(0,7).forEach((s,i)=>{const art=i===1?`<span class="pin-art">${bowl}</span>`:`<img src="./assets/${s.image}.webp" width="126" height="60" alt="" aria-hidden="true">`;
+  const marker=L.marker(s.coordinates,{keyboard:false,zIndexOffset:100+i,icon:L.divIcon({className:'map-pin',iconSize:[0,0],iconAnchor:[0,0],html:`<button type="button" class="pin-card" style="--tilt:${[-3,2,-2,3,-2,-3,2][i]}deg" data-stop="${i}" aria-label="${esc(s.name)} ${clock(schedule[i].arrival)}" aria-pressed="false"><span class="pin-order">${i===0?'1/8':i+1}</span>${art}<span class="pin-title">${esc(s.mapName)}</span></button>`})}).addTo(map);
+  const leader=L.polyline([],{pane:'leaders',color:'#846c44',weight:1.2,opacity:.65,interactive:false}).addTo(map);L.circleMarker(s.coordinates,{pane:'leaders',radius:3,weight:1.2,color:'#8b482e',fillColor:'#fff5d6',fillOpacity:1,interactive:false}).addTo(map);pins.set(i,{marker,leader});
+ });
+ bounds=L.latLngBounds(legs.flatMap(l=>l.coordinates));fitAll();map.on('moveend zoomend',layoutPins);map.on('resize',fitAll);new ResizeObserver(()=>{map.invalidateSize({pan:false});fitAll();}).observe($('#map'));document.fonts.ready.then(layoutPins);}
 
-function showOverview() {
-  selection={type:'overview',index:null};
-  resetPanel(`<div class="panel-inner"><div class="panel-topline"><p class="eyebrow">THE ITINERARY</p><span class="day-tag">07 / 11</span></div><h2>แผนของวัน</h2><p class="panel-intro">เดินเล่น กินข้าว ดูหนังสือ แล้วไปหาฝูงปลา</p>
-  <ol class="itinerary">${schedule.map((s,i)=>`<li class="stop-item"><button class="stop-row" type="button" data-stop="${i}" aria-label="${escape(s.name)} ${clock(s.arrival)} ดูรายละเอียด"><span class="stop-num">${String(i+1).padStart(2,'0')}</span><span class="stop-copy"><strong>${escape(s.name)}</strong><small>${escape(s.subtitle)}</small></span><time class="stop-time">${clock(s.arrival)}</time></button>${i<legs.length?`<div class="walk-row"><button type="button" data-leg="${i}" aria-label="เส้นทางจาก ${escape(s.name)} ไป ${escape(stops[i+1].name)} เดินประมาณ ${legs[i].minutes} นาที">${walkIcon} เดิน ${legs[i].minutes} นาที <span>· ${distanceLabel(legs[i].distance)}</span><span class="walk-arrow">↗</span></button></div>`:''}</li>`).join('')}</ol>
-  <p class="itinerary-note">เวลาเดินเผื่อทางข้ามถนนและขึ้นลงชั้นแล้ว<br>ข้าวเช้ายังไม่เลือกร้าน · กลับถึงหัวลำโพงก่อน 17:40</p></div>`);
-  updateSelectedMap();
-  history.replaceState(null,'',location.pathname+location.search);
-}
-
-function showStop(index,fromMap=false) {
-  if(!schedule[index])return;
-  selection={type:'stop',index};
-  const s=schedule[index];
-  const initial=index===0;
-  const next=index<legs.length?legs[index]:null;
-  resetPanel(`<div class="detail-top">${backButton()}${index===0||index===7?`<div class="overlap-options"><button type="button" data-stop="0" class="${index===0?'active':''}">นัดเจอ 08:35</button><button type="button" data-stop="7" class="${index===7?'active':''}">กลับถึง 17:30</button></div>`:''}<p class="detail-label">${String(index+1).padStart(2,'0')} / ${escape(s.category)}</p></div>
-  <figure class="detail-photo"><img src="./assets/${s.image}.webp" alt="${escape(s.photoNote||s.name+' · '+s.subtitle)}" width="1200" height="800"><a class="photo-credit" href="${s.credit.url}" target="_blank" rel="noopener noreferrer">${escape(s.credit.label)} ↗</a></figure>
-  <div class="detail-content"><div class="detail-title-row"><h2 tabindex="-1">${escape(s.name)}</h2></div><p class="detail-subtitle">${escape(s.subtitle)}</p>
-  <div class="time-band"><strong>${initial?clock(s.arrival):`${clock(s.arrival)} <small>–</small> ${clock(s.departure)}`}</strong><span>${initial?'เวลานัดเจอ':`ใช้เวลา ${s.stay>=60?(s.stay%60===0?`${s.stay/60} ชม.`:`${Math.floor(s.stay/60)} ชม. ${s.stay%60} นาที`):`${s.stay} นาที`}`}</span></div>
-  <p class="detail-description">${escape(s.description)}</p><p class="detail-notice ${s.warm?'warm':''}">${escape(s.note)}</p>
-  <div class="detail-meta">${pinIcon}<span>${escape(s.meta)}</span></div>
-  ${s.photoNote?`<p class="detail-label" style="font-size:9px;letter-spacing:0;margin-bottom:15px">${escape(s.photoNote)}</p>`:''}
-  <a class="map-link" href="${googlePlace(s)}" target="_blank" rel="noopener noreferrer">เปิดสถานที่ใน Google Maps ${externalIcon}</a>
-  ${next?`<button class="next-connection" type="button" data-leg="${index}">${walkIcon}<span><strong>ต่อไป ${escape(stops[index+1].name)}</strong>เดิน ${next.minutes} นาที · ${distanceLabel(next.distance)}</span><span>↗</span></button>`:''}</div>
-  <div class="detail-nav"><button type="button" data-stop="${index-1}" ${index===0?'disabled':''}>← ก่อนหน้า</button><span>${index+1} / ${stops.length}</span><button type="button" data-stop="${index+1}" ${index===stops.length-1?'disabled':''}>ถัดไป →</button></div>`);
-  updateSelectedMap();
-  if(map && !fromMap) map.panTo(s.coordinates,{animate:!reducedMotion});
-  bringPanelIntoView(fromMap);
-  history.replaceState(null,'',`#${s.id}`);
-}
-
-function showLeg(index,fromMap=false) {
-  const l=legs[index]; if(!l)return;
-  selection={type:'leg',index};
-  const a=schedule[index],b=schedule[index+1];
-  const overlap=index===2||index===3;
-  resetPanel(`<div class="panel-inner">${backButton()}<p class="detail-label route-kicker">ON FOOT / ${String(index+1).padStart(2,'0')} → ${String(index+2).padStart(2,'0')}</p>
-  <h2>${escape(a.name)}<br><span style="color:#a7b29e">→</span> ${escape(b.name)}</h2>
-  ${overlap?`<div class="overlap-options"><button type="button" data-leg="2" class="${index===2?'active':''}">ไปร้านซูชิ · 10 นาที</button><button type="button" data-leg="3" class="${index===3?'active':''}">กลับ SEA LIFE · 15 นาที</button></div>`:''}
-  <div class="route-visual" aria-hidden="true"><div class="route-line"></div><span class="route-end">${index+1}</span><span class="walk-symbol">${walkIcon}</span><span class="route-end">${index+2}</span></div>
-  <div class="route-metrics"><strong>${l.minutes}<small>นาที</small></strong><span>ระยะเดิน ${distanceLabel(l.distance)}<br>โดยประมาณ · รวมเวลาเผื่อ</span></div>
-  <div class="route-times"><div><small>ออกเดิน</small><strong>${clock(a.departure)}</strong><span class="route-dest">${escape(a.name)}</span></div><div><small>ถึงประมาณ</small><strong>${clock(b.arrival)}</strong><span class="route-dest">${escape(b.name)}</span></div></div>
-  <p class="route-description">${escape(l.description)}</p>
-  <p class="detail-notice">คำนวณจากแนวทางเดิน OpenStreetMap ระยะ ${distanceLabel(l.distance)} เผื่อเดินช้า ทางข้ามถนน${index===1||index===2||index===3||index===4?' และขึ้นลงชั้นในห้าง':''}แล้ว${overlap?' ระยะถนนไป–กลับเท่ากัน แต่ขากลับ SEA LIFE เผื่อลงชั้นใต้ดินและแสดงบัตรเพิ่ม':''}</p>
-  <a class="map-link" href="${googleWalk(l)}" target="_blank" rel="noopener noreferrer">เปิดนำทางเดินใน Google Maps ${externalIcon}</a>
-  <button class="next-connection" type="button" data-stop="${index+1}">${pinIcon}<span><strong>ดูจุดหมาย ${escape(b.name)}</strong>${clock(b.arrival)}${b.stay?`–${clock(b.departure)}`:''}</span><span>→</span></button></div>`);
-  updateSelectedMap();
-  if(map && !fromMap) {
-    map.fitBounds(l.coordinates,{padding:mobile()?[55,75]:[95,100],maxZoom:17,animate:!reducedMotion});
-  }
-  bringPanelIntoView(fromMap);
-  history.replaceState(null,'',`#walk-${index+1}`);
-}
-
-function routeMidpoint(coords) {
-  // By path length, so labels sit on the walk rather than a straight-line shortcut.
-  const lengths=coords.slice(1).map((p,i)=>Math.hypot((p[1]-coords[i][1])*Math.cos(p[0]*Math.PI/180),p[0]-coords[i][0]));
-  const target=lengths.reduce((a,b)=>a+b,0)/2;
-  let d=0;
-  for(let i=0;i<lengths.length;i++){if(d+lengths[i]>=target){const f=(target-d)/(lengths[i]||1);return coords[i].map((n,k)=>n+(coords[i+1][k]-n)*f);}d+=lengths[i];}
-  return coords[0];
-}
-
-function initMap() {
-  if(!window.L){$('#map').innerHTML='<div class="map-error">แผนที่ยังโหลดไม่สำเร็จ<br>ดูตารางเที่ยวและเปิดสถานที่ใน Google Maps ได้จากด้านข้าง</div>';return;}
-  $('#map').innerHTML='';
-  map=L.map('map',{center:[13.742,100.526],zoom:15,zoomControl:false,scrollWheelZoom:false,attributionControl:true,zoomSnap:.25,minZoom:14,maxZoom:18,preferCanvas:false,tapHold:false,maxBounds:[[13.734,100.514],[13.750,100.538]],maxBoundsViscosity:.7});
-  drawBasemap();
-  map.createPane('route-hit');map.getPane('route-hit').style.zIndex='415';
-  map.createPane('routes');map.getPane('routes').style.zIndex='410';
-  legs.forEach((l,i)=>{
-    const color=l.afternoon?'#c18b57':'#568465';
-    const visual=L.polyline(l.coordinates,{pane:'routes',color,weight:3.2,opacity:.85,dashArray:'3 8',lineCap:'round',interactive:false}).addTo(map);
-    const hit=L.polyline(l.coordinates,{pane:'route-hit',weight:22,opacity:0,interactive:true}).addTo(map);
-    hit.on('click',()=>showLeg(i===2||i===3?(selection.type==='leg'&&selection.index===3?3:2):i,true));
-    const path=hit.getElement();
-    path?.setAttribute('role','button');
-    path?.setAttribute('tabindex','0');
-    path?.setAttribute('data-route',String(i));
-    path?.setAttribute('aria-label',`เส้นประ ${stops[i].name} ไป ${stops[i+1].name} เดิน ${l.minutes} นาที`);
-    path?.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();showLeg(i,true);}});
-    routeLayers.push({visual,hit});
-    const mid=routeMidpoint(l.coordinates);
-    const offsets=mobile()?[[0,0],[-10,0],[-30,-4],[30,10],[35,0],[50,0],[-15,0]]:[[0,0],[0,0],[-35,-3],[35,10],[0,0],[30,0],[-5,0]];
-    const badge=L.marker(mid,{keyboard:false,zIndexOffset:-100,icon:L.divIcon({className:'walk-badge',iconSize:[0,0],iconAnchor:[-offsets[i][0],-offsets[i][1]],html:`<button type="button" data-leg="${i}" data-map aria-label="เดิน ${escape(stops[i].name)} ไป ${escape(stops[i+1].name)} ประมาณ ${l.minutes} นาที">${walkIcon}${l.minutes} น.</button>`})}).addTo(map);
-    badge.getElement()?.querySelector('button')?.addEventListener('click',e=>{e.stopPropagation();showLeg(i,true);});
-    routeBadges.push(badge);
-  });
-  stops.forEach((s,i)=>{
-    if(i===7)return;
-    const label=i===0?'1 · 8':String(i+1);
-    const marker=L.marker(s.coordinates,{keyboard:false,zIndexOffset:i===2?210:i===4?200:100,icon:L.divIcon({className:'map-pin',iconSize:[0,0],iconAnchor:[0,0],html:`<button type="button" class="pin-button ${s.markerClass} ${s.afternoon?'afternoon':''}" data-stop="${i}" data-map aria-label="${escape(s.name)} ${clock(schedule[i].arrival)}${i===0?' และกลับ 17:30':''}" aria-pressed="false"><span class="pin-number">${label}</span><span>${escape(s.mapName)}</span></button>`})}).addTo(map);
-    marker.getElement()?.querySelector('button')?.addEventListener('click',e=>{e.stopPropagation();showStop(i,true);});
-    mapStops.set(i,marker);
-  });
-  fullBounds=L.latLngBounds(legs.flatMap(l=>l.coordinates));
-  fitAll();
-  new ResizeObserver(()=>{map.invalidateSize({pan:false});}).observe($('#map'));
-  map.on('zoomend',()=>{
-    const zoom=map.getZoom();
-    $('#map').classList.toggle('map-near',zoom>16);
-    routeBadges.forEach((b,i)=>{const el=b.getElement();if(el)el.style.display=zoom<14.5&&(i===2||i===3||i===5)?'none':'';});
-  });
-}
-
-function drawBasemap() {
-  // The local vector extract is a real OSM street map. It needs no third-party
-  // image server, API key, live geocoding, or visitor location permission.
-  map.attributionControl.addAttribution('&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap contributors</a>');
-  map.createPane('base-areas');map.getPane('base-areas').style.zIndex='200';
-  map.createPane('base-roads');map.getPane('base-roads').style.zIndex='205';
-  map.createPane('base-labels');map.getPane('base-labels').style.zIndex='300';
-  const areaRenderer=L.canvas({pane:'base-areas',padding:.4});
-  const roadRenderer=L.canvas({pane:'base-roads',padding:.4});
-  const areas=basemap.features.filter(f=>['park','water','building'].includes(f.k));
-  for(const f of areas) {
-    const colors={park:'#dce7cc',water:'#d1e4e4',building:'#e5e8df'};
-    const options={renderer:areaRenderer,interactive:false,color:f.k==='building'?'#dde2d7':colors[f.k],weight:f.k==='building'?.5:1,fillColor:colors[f.k],fillOpacity:f.k==='building'?.7:.85};
-    if(f.closed)L.polygon(f.c,options).addTo(map);
-    else if(f.k==='water')L.polyline(f.c,{...options,weight:3}).addTo(map);
-  }
-  const roads=basemap.features.filter(f=>!['park','water','building'].includes(f.k));
-  for(const f of roads){
-    if(f.k==='major'||f.k==='street')L.polyline(f.c,{renderer:roadRenderer,interactive:false,color:'#dfe4d7',weight:f.k==='major'?11:5.5,opacity:.9,lineCap:'round'}).addTo(map);
-  }
-  for(const f of roads){
-    const options={renderer:roadRenderer,interactive:false,color:f.k==='rail'?'#d3dace':f.k==='path'?'#f9faf5':'#fdfdf8',weight:f.k==='major'?8:f.k==='street'?3.5:f.k==='rail'?1.2:1.4,opacity:f.k==='path'?.65:1,lineCap:'round'};
-    if(f.k==='rail')options.dashArray='4 5';
-    L.polyline(f.c,options).addTo(map);
-  }
-  const labels=[...basemap.labels,
-    {name:'ถนนบรรทัดทอง',c:[13.743881,100.523100],angle:-80},
-    {name:'ถนนพระราม 1',c:[13.746620,100.528877],angle:7},
-    {name:'สยาม',c:[13.7485,100.5328],angle:0,type:'area-label'},
-    {name:'จุฬาลงกรณ์มหาวิทยาลัย',c:[13.7398,100.5319],angle:0,type:'area-label'},
-  ];
-  for(const l of labels)L.marker(l.c,{pane:'base-labels',interactive:false,keyboard:false,icon:L.divIcon({className:`basemap-label ${l.type||''}`,iconSize:[150,20],iconAnchor:[75,10],html:`<span style="transform:rotate(${l.angle||0}deg)">${escape(l.name)}</span>`})}).addTo(map);
-}
-
-function fitAll() {
-  if(!map||!fullBounds)return;
-  map.fitBounds(fullBounds,{paddingTopLeft:mobile()?[45,85]:[115,105],paddingBottomRight:mobile()?[75,65]:[155,85],maxZoom:16.3,animate:!reducedMotion});
-}
-
-// Capture map controls before Leaflet's event delegation; marker buttons live
-// outside their zero-sized icon anchors and must not select the path beneath.
-$('#map').addEventListener('click',event=>{
-  const button=event.target.closest('button[data-stop],button[data-leg]');
-  if(!button)return;
-  event.preventDefault();event.stopPropagation();
-  if(button.dataset.stop!==undefined)showStop(Number(button.dataset.stop),true);
-  else showLeg(Number(button.dataset.leg),true);
-},true);
-document.addEventListener('click',event=>{
-  const target=event.target.closest('button');if(!target||target.disabled)return;
-  if(target.hasAttribute('data-overview'))showOverview();
-  else if(target.dataset.stop!==undefined)showStop(Number(target.dataset.stop),target.hasAttribute('data-map'));
-  else if(target.dataset.leg!==undefined)showLeg(Number(target.dataset.leg),target.hasAttribute('data-map'));
-});
-$('#fit-map').addEventListener('click',()=>{fitAll();showOverview();});
-$('#zoom-in').addEventListener('click',()=>map?.zoomIn());
-$('#zoom-out').addEventListener('click',()=>map?.zoomOut());
-$('#about-button').addEventListener('click',()=>$('#about-dialog').showModal());
-$('#close-about').addEventListener('click',()=>$('#about-dialog').close());
-$('#about-dialog').addEventListener('click',e=>{if(e.target===$('#about-dialog')){const r=e.target.getBoundingClientRect();if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)e.target.close();}});
-const sources=[
-  ['เส้นทางเดิน · FOSSGIS / OpenStreetMap','https://routing.openstreetmap.de/about.html'],
-  ['เวลาเปิด Kinokuniya · เว็บไซต์ทางการ',stops[2].official],
-  ['เวลาเปิด Sushiro · เว็บไซต์ทางการ',stops[3].official],
-  ['เวลาเปิด SEA LIFE · เว็บไซต์ทางการ',stops[4].official],
-  ['เวลาเปิดสวน · จุฬาลงกรณ์มหาวิทยาลัย',stops[6].official],
-];
-$('#source-links').innerHTML=`<p class="sources-heading">ข้อมูลสถานที่ · ตรวจสอบ 1 พ.ย. 2026</p>${sources.map(([t,u])=>`<a href="${u}" target="_blank" rel="noopener noreferrer">${t} ↗</a>`).join('')}<p class="sources-heading">ภาพสถานที่จริง · ย่อและปรับขนาดเพื่อแสดงผล</p>${Object.values(Object.fromEntries(stops.map(s=>[s.image,s.credit]))).map(c=>`<a href="${c.url}" target="_blank" rel="noopener noreferrer">${escape(c.label)} ↗</a>`).join('')}<a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank" rel="noopener noreferrer">ภาพ CC BY-SA 4.0 รวมภาพที่ย่อแล้ว ใช้สัญญาอนุญาตเดียวกัน ↗</a><a href="https://www.openstreetmap.org/fixthemap" target="_blank" rel="noopener noreferrer">แจ้งแก้ไขแผนที่ ↗</a>`;
-$('#total-distance').textContent=distanceLabel(meta.distanceMeters);
-const initialHash=location.hash.slice(1);
-showOverview();
-updateCountdown();
-setInterval(updateCountdown,1000);
-initMap();
-const initialStop=stops.findIndex(s=>s.id===initialHash);
-if(initialStop>=0)showStop(initialStop);
-else if(/^walk-[1-7]$/.test(initialHash))showLeg(Number(initialHash.slice(5))-1);
+$('#map').addEventListener('click',e=>{const b=e.target.closest('button[data-stop]');if(!b)return;e.preventDefault();e.stopPropagation();showStop(Number(b.dataset.stop));},true);
+document.addEventListener('click',e=>{const b=e.target.closest('button');if(!b||b.disabled)return;if(b.hasAttribute('data-close'))panel.close();else if(b.hasAttribute('data-schedule'))showSchedule();else if(b.dataset.stop!==undefined)showStop(Number(b.dataset.stop));else if(b.dataset.leg!==undefined)showLeg(Number(b.dataset.leg));});
+panel.addEventListener('close',()=>{selection=null;updateSelection();history.replaceState(null,'',location.pathname+location.search);});
+for(const d of [panel,$('#about-dialog')])d.addEventListener('click',e=>{if(e.target===d){const r=d.getBoundingClientRect();if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)d.close();}});
+$('#schedule-button').addEventListener('click',showSchedule);$('#fit-map').addEventListener('click',fitAll);$('#zoom-in').addEventListener('click',()=>map?.zoomIn());$('#zoom-out').addEventListener('click',()=>map?.zoomOut());$('#about-button').addEventListener('click',()=>$('#about-dialog').showModal());$('#close-about').addEventListener('click',()=>$('#about-dialog').close());
+$('#route-index').innerHTML=schedule.map((s,i)=>`<button type="button" class="route-stop" data-stop="${i}" aria-label="${esc(s.name)} ${clock(s.arrival)} ดูรายละเอียด"><span>${i+1} / 8</span><strong>${clock(s.arrival)}</strong><em>${esc(i===6?'สวน 100 ปี จุฬาฯ':s.name)}</em></button>`).join('');
+const sourceRows=[['เส้นทางเดิน · FOSSGIS / OpenStreetMap','https://routing.openstreetmap.de/about.html'],['เวลาเปิด Kinokuniya',stops[2].official],['เวลาเปิด Sushiro',stops[3].official],['เวลาเปิด SEA LIFE',stops[4].official],['เวลาเปิดสวน 100 ปี จุฬาฯ',stops[6].official]];
+$('#source-links').innerHTML=`<p class="sources-heading">ข้อมูลสถานที่</p>${sourceRows.map(([t,u])=>`<a href="${u}" target="_blank" rel="noopener noreferrer">${esc(t)} ↗</a>`).join('')}<p class="sources-heading">รูปภาพ</p>${Object.values(Object.fromEntries(stops.map(s=>[s.image,s.credit]))).map(c=>`<a href="${c.url}" target="_blank" rel="noopener noreferrer">${esc(c.label)} ↗</a>`).join('')}<a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank" rel="noopener noreferrer">สัญญาอนุญาตภาพ CC BY-SA 4.0 ↗</a><a href="https://www.openstreetmap.org/fixthemap" target="_blank" rel="noopener noreferrer">แจ้งแก้ไขแผนที่ ↗</a>`;
+$('#total-distance').textContent=distanceLabel(meta.distanceMeters);updateCountdown();setInterval(updateCountdown,1000);const hash=location.hash.slice(1);initMap();const first=stops.findIndex(s=>s.id===hash);if(first>=0)showStop(first);else if(/^walk-[1-7]$/.test(hash))showLeg(Number(hash.slice(5))-1);

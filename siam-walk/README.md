@@ -1,6 +1,6 @@
-# เดินไปด้วยกัน · 7 November 2026
+# เที่ยวกับ P’dale · 7 November 2026
 
-A minimal Thai walking itinerary and countdown for a day with P’dale. Static HTML/CSS/ES modules; GitHub Pages at `/siam-walk/`. No account, API key, build, or backend required.
+A Thai paper-map walking itinerary and countdown for a day with P’dale. Static HTML/CSS/ES modules; GitHub Pages at `/siam-walk/`. No account, API key, build, or backend required.
 
 The meeting is **7 November 2026, 08:35 Asia/Bangkok**. Countdown uses an explicit `+07:00` offset; it clamps at zero and changes its message at the meeting and after 17:40.
 
@@ -30,6 +30,7 @@ Walking geometry and distance: FOSSGIS OSRM **routed-foot** endpoint, OpenStreet
 - Aquarium photo: [SEA LIFE Bangkok Ocean World](https://www.visitsealife.com/bangkok/en/explore/aquarium-zones/ocean-tunnels/). [Opening hours](https://www.visitsealife.com/bangkok/en/plan/before-you-visit/opening-hours/).
 - Park photo: [PMCU](https://pmcu.co.th/chula-centenary-park/). [Opening hours from Chula](https://sustainability.chula.ac.th/th/report/3219/).
 - Sushiro hours/floor: [official branches](https://sushiro.co.th/branch/).
+- Itim, SIL Open Font License 1.1, from [Google Fonts](https://github.com/google/fonts/tree/main/ofl/itim); see `assets/itim-OFL.txt`.
 - IBM Plex Sans Thai, IBM, SIL Open Font License 1.1. [Source](https://github.com/IBM/plex).
 - Leaflet 1.9.4, BSD 2-Clause, see `vendor/leaflet-LICENSE.txt`.
 
@@ -37,4 +38,4 @@ Official venue photos remain copyrighted by their owners, and are credited with 
 
 ## Validation
 
-`node --test core.test.mjs` checks fixed timezone countdown behavior and budget continuity through all stops. `node --check app.mjs` checks module syntax. Mobile/desktop map interactions are manually verified in the browser.
+`node --test core.test.mjs` checks fixed timezone countdown behavior and budget continuity through all stops. `node --check app.mjs` checks module syntax. Mobile/tablet/desktop map interactions and text sizes are verified in the browser. See `docs/design-notes.md` for the visual revision.
