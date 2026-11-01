@@ -1,0 +1,40 @@
+# เดินไปด้วยกัน · 7 November 2026
+
+A minimal Thai walking itinerary and countdown for a day with P’dale. Static HTML/CSS/ES modules; GitHub Pages at `/siam-walk/`. No account, API key, build, or backend required.
+
+The meeting is **7 November 2026, 08:35 Asia/Bangkok**. Countdown uses an explicit `+07:00` offset; it clamps at zero and changes its message at the meeting and after 17:40.
+
+## Plan
+
+| Stop | Arrival–departure | Walk to next |
+| --- | --- | --- |
+| Hua Lamphong | 08:35 | 15 min |
+| Breakfast, Rong Mueang (provisional area) | 08:50–09:50 | 40 min |
+| Kinokuniya, Siam Paragon 3F | 10:30–11:30 | 10 min |
+| Sushiro, Siam Square One 5F | 11:40–12:50 | 15 min |
+| SEA LIFE, Siam Paragon B1–B2 | 13:05–15:05 | 35 min |
+| Banthat Thong (area, no restaurant selected) | 15:40–16:20 | 10 min |
+| CU Centenary Park, southwest entrance | 16:30–17:10 | 20 min |
+| Hua Lamphong | 17:30–17:40 | — |
+
+Walking geometry and distance: FOSSGIS OSRM **routed-foot** endpoint, OpenStreetMap graph, retrieved 2026-11-01. Total **6,693 m**, excluding indoor walking and time exploring the park. Original engine travel times are preserved in `routingSeconds`; displayed time budgets add slower walking, crossings, and floor changes. They are estimates, not live navigation. The breakfast point is explicitly provisional; changing the restaurant can change the morning route.
+
+## Sources and credits
+
+- Local vector map: [OpenStreetMap contributors](https://www.openstreetmap.org/copyright), ODbL. Downloaded a bounded area from the official map API on 2026-11-01, simplified for this map. No live tile provider is required. The extract and source URL are in `basemap.mjs`.
+- Routing: [FOSSGIS](https://routing.openstreetmap.de/about.html), pedestrian profile. Geometry saved at build time; no routing API calls on page load.
+- Hua Lamphong photo: Kcdtsg, [public domain](https://commons.wikimedia.org/wiki/File:Hua_Lamphong_Railway_Station.JPG).
+- Banthat Thong photo: Phoebus 28, [CC BY-SA 4.0](https://commons.wikimedia.org/wiki/File:Banthat_Thong_Road.jpg). Old photograph from 2020 showing the Saphan Lueang section. Resized/compressed WebP retains CC BY-SA 4.0.
+- Siam Square One building photo: กสิณธร ราชโอรส, [CC BY-SA 4.0](https://commons.wikimedia.org/wiki/File:Siam_Square_One_(1).jpg). Building photo, not a photograph of Sushiro itself. Resized/compressed WebP retains CC BY-SA 4.0.
+- Kinokuniya store photo: [Kay Ngee Tan Architects](https://www.kayngeetanarchitects.com/knta-projects-id-kino-spg), the store’s architect, 2023 renovation. Opening hours: [Kinokuniya Thailand](https://kinokuniyasupport.zendesk.com/hc/en-am/articles/7906064526873-Stores-in-Thailand).
+- Aquarium photo: [SEA LIFE Bangkok Ocean World](https://www.visitsealife.com/bangkok/en/explore/aquarium-zones/ocean-tunnels/). [Opening hours](https://www.visitsealife.com/bangkok/en/plan/before-you-visit/opening-hours/).
+- Park photo: [PMCU](https://pmcu.co.th/chula-centenary-park/). [Opening hours from Chula](https://sustainability.chula.ac.th/th/report/3219/).
+- Sushiro hours/floor: [official branches](https://sushiro.co.th/branch/).
+- IBM Plex Sans Thai, IBM, SIL Open Font License 1.1. [Source](https://github.com/IBM/plex).
+- Leaflet 1.9.4, BSD 2-Clause, see `vendor/leaflet-LICENSE.txt`.
+
+Official venue photos remain copyrighted by their owners, and are credited with source links in the app. Photos are historical reference imagery, not a promise of current appearance. `.openai/hosting.json` is checkout-local preview configuration and is excluded from publication.
+
+## Validation
+
+`node --test core.test.mjs` checks fixed timezone countdown behavior and budget continuity through all stops. `node --check app.mjs` checks module syntax. Mobile/desktop map interactions are manually verified in the browser.
