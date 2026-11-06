@@ -16,3 +16,5 @@ User constraints override marketing-site defaults: no full-screen promotional ph
 - Opened schedule, venue details, route details and mobile schedule.
 - Taste Skill's standalone Chrome checker was not run: this managed environment requires the supported browser and preview daemon. Actual browser rendering and DOM geometry were checked instead.
 - Screenshots reviewed at desktop, tablet and phone sizes.
+
+Observed map correction: measure pin dimensions after restoring the marker from display:none, so fit-all after zoom computes real bounds and avoids clipping. No itinerary content changed.

@@ -50,8 +50,9 @@ function layoutPins(){if(!map)return;cancelAnimationFrame(layoutFrame);layoutFra
  const priority=[0,1,2,4,3,5,6];
  const overlaps=(a,b)=>Math.max(0,Math.min(a.x+a.w,b.x+b.w)-Math.max(a.x,b.x))*Math.max(0,Math.min(a.y+a.h,b.y+b.h)-Math.max(a.y,b.y));
  for(const i of priority){const p=pins.get(i),el=p.marker.getElement(),button=el?.querySelector('button');if(!button)continue;
-  const point=map.latLngToContainerPoint(stops[i].coordinates),cw=button.offsetWidth,ch=button.offsetHeight,w=cw+16,h=ch+16;
+  const point=map.latLngToContainerPoint(stops[i].coordinates);
   if(point.x<-70||point.y<-70||point.x>size.x+70||point.y>size.y+70){el.style.display='none';p.leader.setLatLngs([]);continue;}el.style.display='';
+  const cw=button.offsetWidth,ch=button.offsetHeight,w=cw+16,h=ch+16;
   const pref={x:point.x+preference[i][0],y:point.y+preference[i][1]};
   const candidates=[pref,{x:point.x,y:point.y},...[[-1,-1],[1,-1],[-1,1],[1,1],[0,-1],[0,1],[-1,0],[1,0]].flatMap(([x,y])=>[.75,1.25,1.8].map(r=>({x:point.x+x*w*r,y:point.y+y*h*r})))];
   for(let y=60+h/2;y<size.y-36-h/2;y+=30)for(let x=padding+w/2;x<size.x-padding-w/2;x+=32)candidates.push({x,y});
@@ -68,7 +69,7 @@ function layoutPins(){if(!map)return;cancelAnimationFrame(layoutFrame);layoutFra
 
 function fitAll(){if(!map||!bounds)return;const narrow=map.getSize().x<900;map.fitBounds(bounds,{paddingTopLeft:compact()?[40,75]:narrow?[80,100]:[160,115],paddingBottomRight:compact()?[45,80]:narrow?[95,110]:[190,110],maxZoom:16.25,animate:false});layoutPins();}
 function initMap(){if(!window.L){$('#map').innerHTML='<p class="map-error">โหลดแผนที่ไม่สำเร็จ เปิดดูตารางเที่ยวจากปุ่มด้านบนได้</p>';return;}
- $('#map').innerHTML='';map=L.map('map',{center:[13.742,100.526],zoom:15,zoomControl:false,scrollWheelZoom:false,zoomSnap:.25,minZoom:14,maxZoom:18,tapHold:false,maxBounds:[[13.734,100.514],[13.750,100.538]],maxBoundsViscosity:.7});drawBase();
+ $('#map').innerHTML='';map=L.map('map',{center:[13.742,100.526],zoom:15,zoomAnimation:false,zoomControl:false,scrollWheelZoom:false,zoomSnap:.25,minZoom:14,maxZoom:18,tapHold:false,maxBounds:[[13.734,100.514],[13.750,100.538]],maxBoundsViscosity:.7});drawBase();
  map.createPane('routes');map.getPane('routes').style.zIndex=410;map.createPane('route-hit');map.getPane('route-hit').style.zIndex=415;map.createPane('leaders');map.getPane('leaders').style.zIndex=420;
  legs.forEach((l,i)=>{const visual=L.polyline(l.coordinates,{pane:'routes',color:'#a64b32',weight:4,dashArray:'5 9',opacity:.9,lineCap:'round',interactive:false}).addTo(map);const hit=L.polyline(l.coordinates,{pane:'route-hit',weight:44,opacity:0}).addTo(map);hit.on('click',()=>showLeg(i===3?2:i));const path=hit.getElement();if(path){path.setAttribute('data-route',String(i));path.setAttribute('role','button');path.setAttribute('tabindex','0');path.setAttribute('aria-label',`เส้นประ ${stops[i].name} ไป ${stops[i+1].name} เดิน ${l.minutes} นาที`);path.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();showLeg(i);}});}routes.push({visual,hit});});
  stops.slice(0,7).forEach((s,i)=>{const art=i===1?`<span class="pin-art">${bowl}</span>`:`<img src="./assets/${s.image}.webp" width="126" height="60" alt="" aria-hidden="true">`;
