@@ -1,0 +1,32 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Hua Hin With You//Trip//TH
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+BEGIN:VEVENT
+UID:huahin-2026-train-out@apirak09.github.io
+DTSTAMP:20261118T000000Z
+DTSTART:20261205T022000Z
+DTEND:20261205T065000Z
+SUMMARY:รถไฟ 261 · ไปหัวหิน
+DESCRIPTION:หัวลำโพง → หัวหิน · เตรียมมื้อกลางวันและน้ำไว้กินระหว่างทาง เวลาอ้างอิงตามแผนทริป ตรวจตั๋วจริงอีกครั้ง
+BEGIN:VALARM
+TRIGGER:-PT60M
+ACTION:DISPLAY
+DESCRIPTION:รถไฟ 261 · ไปหัวหิน
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:huahin-2026-train-back@apirak09.github.io
+DTSTAMP:20261118T000000Z
+DTSTART:20261207T075600Z
+DTEND:20261207T122000Z
+SUMMARY:รถไฟ 262 · กลับหัวลำโพง
+DESCRIPTION:หัวหิน → หัวลำโพง · เตรียมน้ำและของกินสำหรับขากลับ เวลาอ้างอิงตามแผนทริป ตรวจตั๋วจริงอีกครั้ง
+BEGIN:VALARM
+TRIGGER:-PT60M
+ACTION:DISPLAY
+DESCRIPTION:รถไฟ 262 · กลับหัวลำโพง
+END:VALARM
+END:VEVENT
+END:VCALENDAR

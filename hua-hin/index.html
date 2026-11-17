@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="th" data-type="software">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#f7f4ed">
+  <meta name="description" content="หัวหินของเราสองคน 5–7 ธันวาคม 2026 · แผนที่จริง ตารางเที่ยวแบบไม่รีบ และเวลาพักที่ Ayrest Hua Hin">
+  <meta property="og:title" content="Hua Hin, with you. · 5–7 Dec 2026">
+  <meta property="og:description" content="สามวัน สองคืน มีเวลาให้ทะเล ตลาดกลางคืน และเราสองคน">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://apirak09.github.io/hua-hin/">
+  <meta property="og:image" content="https://apirak09.github.io/hua-hin/assets/beach-evening.webp">
+  <meta name="page-type" content="software"><meta name="site-kind" content="software">
+  <title>Hua Hin, with you. — 5–7 ธันวาคม 2026</title>
+  <link rel="icon" href="./assets/icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="./assets/icon-192.png">
+  <link rel="manifest" href="./manifest.webmanifest">
+  <link rel="preload" href="./assets/plex-0.ttf" as="font" type="font/ttf" crossorigin>
+  <link rel="stylesheet" href="./vendor/leaflet.css">
+  <link rel="stylesheet" href="./styles.css">
+  <script defer src="./vendor/leaflet.js"></script>
+  <script type="module" src="./app.mjs"></script>
+</head>
+<body data-view="timeline">
+  <a class="skip-link" href="#plan">ข้ามไปแผนเที่ยว</a>
+  <header class="topbar wrap">
+    <a class="brand" href="./" aria-label="Hua Hin with you หน้าหลัก"><img src="./assets/icon.svg" width="38" height="38" alt=""><span>our little getaway<small>HUA HIN · DECEMBER 2026</small></span></a>
+    <nav class="top-actions" aria-label="เมนูทริป"><button class="text-button" data-view="overview" type="button">ภาพรวมทริป</button><button class="text-button" data-action="essentials" type="button"><span data-icon="bag"></span><span>กระเป๋าทริป</span></button><button class="icon-button share-button" data-action="share" type="button" aria-label="แชร์แผนทริป"><span data-icon="share"></span></button></nav>
+  </header>
+
+  <section class="hero wrap" aria-labelledby="hero-title">
+    <div class="hero-copy">
+      <p class="eyebrow"><span class="tiny-line"></span> 5—7 DECEMBER 2026 · JUST THE TWO OF US</p>
+      <h1 id="hero-title" lang="en">Hua Hin,<br><em>with you.</em></h1>
+      <p class="hero-thai">สามวัน สองคืน ที่ไม่ต้องรีบไปไหน</p>
+      <div class="hero-bottom"><a class="primary-button" href="#plan">เปิดแผนเที่ยว <span data-icon="arrow-down"></span></a><div class="countdown" role="timer" aria-live="off"><span id="countdown-label">ออกเดินทางในอีก</span><strong id="countdown-value">5 ธ.ค. 2026</strong></div></div>
+    </div>
+    <div class="hero-visual"><img class="hero-photo" src="./assets/beach-evening.webp" alt="ชายหาดหัวหินจริงในช่วงเย็น" width="1600" height="1000" fetchpriority="high"><div class="photo-date" aria-label="5 ถึง 7 ธันวาคม"><span>DEC</span><strong>05<span>—</span>07</strong><small>2026</small></div><div class="photo-note"><span data-icon="waves"></span> a little sea, a little us.</div></div>
+  </section>
+
+  <main id="plan" class="wrap plan">
+    <div class="day-navigation">
+      <div class="day-tabs" role="group" aria-label="เลือกวันเที่ยว">
+        <button type="button" class="day-tab active" data-day="1" aria-pressed="true"><span>DAY 01</span><strong>5 ธ.ค. <small>เสาร์</small></strong><em>ไปทะเลกัน</em></button>
+        <button type="button" class="day-tab" data-day="2" aria-pressed="false"><span>DAY 02</span><strong>6 ธ.ค. <small>อาทิตย์</small></strong><em>วันของเรา</em></button>
+        <button type="button" class="day-tab" data-day="3" aria-pressed="false"><span>DAY 03</span><strong>7 ธ.ค. <small>จันทร์</small></strong><em>ค่อย ๆ กลับ</em></button>
+      </div>
+      <div class="desktop-views" role="group" aria-label="รูปแบบการดู"><button class="view-button active" type="button" data-view="timeline" aria-pressed="true"><span data-icon="list"></span> กำหนดการ</button><button class="view-button" type="button" data-view="map" aria-pressed="false"><span data-icon="map"></span> แผนที่</button></div>
+    </div>
+
+    <div id="current-banner" class="current-banner" hidden></div>
+    <section id="daily-section" aria-labelledby="day-title">
+      <div class="day-heading"><div><p id="day-eyebrow" class="eyebrow">SATURDAY · 05 DEC</p><h2 id="day-title">รถไฟพาเราไปทะเล</h2><p id="day-subtitle">ถึงหัวหิน · รับลมเย็น · หาอะไรกินแล้วกลับไปพัก</p></div><button class="today-button" data-action="today" type="button"><span data-icon="compass"></span> ไปยังวันเดินทาง</button></div>
+      <div class="workspace">
+        <div class="timeline-pane"><div class="slow-note" id="day-highlight"><span data-icon="heart"></span><span>คืนนี้ไม่รีบ กลับโรงแรมประมาณ 20:10</span></div><ol class="timeline" id="timeline" aria-label="กำหนดการตามเวลา"></ol><p class="timeline-footnote">เวลาทั้งหมดเป็นเวลาประเทศไทย · ปรับกิจกรรมได้ตามสบาย<br>เวลารถไฟยึดตามแผนที่ให้มา ตรวจตั๋วและประกาศจริงอีกครั้ง</p></div>
+        <section class="map-pane" aria-label="แผนที่การเดินทาง">
+          <div class="map-topline"><div><span class="map-live-dot" aria-hidden="true"></span><strong id="map-title">หัวหินในวันแรก</strong></div><button type="button" class="text-button" id="map-all" aria-pressed="false">ดูทุกวัน <span data-icon="layers"></span></button></div>
+          <div class="map-shell"><div id="map" role="region" aria-label="แผนที่จริง แตะหมุดดูรายละเอียด"><p class="map-loading">กำลังเปิดแผนที่…</p></div><div class="map-tools"><button class="map-tool" type="button" id="fit-map" aria-label="แสดงเส้นทางทั้งหมด"><span data-icon="expand"></span></button><button class="map-tool" type="button" id="locate" aria-label="แสดงตำแหน่งปัจจุบันของฉัน"><span data-icon="locate"></span></button><div class="map-zooms"><button class="map-tool" type="button" id="zoom-in" aria-label="ขยายแผนที่">+</button><button class="map-tool" type="button" id="zoom-out" aria-label="ย่อแผนที่">−</button></div></div><div class="map-badge"><span data-icon="bed"></span> AYREST · OUR HOME BASE</div><div id="map-status" class="map-status" role="status" hidden></div></div>
+          <div class="map-legend"><span><i class="legend-car"></i> Grab / Bolt</span><span><i class="legend-walk"></i> เดิน</span><button type="button" class="text-button" id="bangkok-toggle" aria-pressed="false">รวมกรุงเทพฯ <span data-icon="train"></span></button></div>
+          <div id="all-day-key" class="all-day-key" hidden aria-label="สีเส้นทางแต่ละวัน"></div>
+          <div class="place-rail" id="place-rail" aria-label="สถานที่บนแผนที่"></div>
+          <div class="route-policy"><span data-icon="info"></span><p>ระยะตามเส้นทาง OSM · เวลาเป็นค่าประมาณ รวมเผื่อเรียกรถและรถติดในแผนแล้ว <button type="button" data-action="sources">ดูที่มา</button></p></div>
+        </section>
+      </div>
+    </section>
+    <section id="overview-section" class="overview-section" aria-labelledby="overview-title" hidden></section>
+    <section class="hotel-banner" aria-labelledby="hotel-banner-title"><img src="./assets/hotel.webp" width="640" height="480" alt="บรรยากาศ Ayrest Hua Hin Hotel" loading="lazy"><div><p class="eyebrow">OUR HOME FOR THE WEEKEND</p><h2 id="hotel-banner-title">Ayrest Hua Hin</h2><p>Deluxe King Bed · 5–7 ธันวาคม · 2 คืน</p><span>มีเวลาให้โรงแรมพอ ๆ กับเวลาออกไปเที่ยว</span><button type="button" class="text-button" data-place="hotel">ดูที่พักของเรา <span data-icon="arrow-right"></span></button></div><div class="hotel-stamp" aria-hidden="true">stay<br><em>a little</em><br>longer.</div></section>
+  </main>
+
+  <footer class="footer wrap"><p>Made for our days by the sea. <span data-icon="heart"></span></p><button type="button" data-action="sources">ข้อมูล เส้นทาง และเครดิตภาพ <span data-icon="arrow-up-right"></span></button><span id="offline-state">แผนพร้อมสำหรับวันเดินทาง</span></footer>
+  <nav class="mobile-nav" aria-label="เมนูหลัก"><button type="button" data-view="timeline" class="active" aria-pressed="true"><span data-icon="list"></span><span>กำหนดการ</span></button><button type="button" data-view="map" aria-pressed="false"><span data-icon="map"></span><span>แผนที่</span></button><button type="button" data-view="overview" aria-pressed="false"><span data-icon="grid"></span><span>ภาพรวม</span></button><button type="button" data-action="essentials"><span data-icon="bag"></span><span>กระเป๋าทริป</span></button></nav>
+  <dialog id="detail-dialog" class="detail-dialog" aria-labelledby="detail-title"><div id="detail-body"></div></dialog>
+  <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+  <noscript><div class="noscript wrap"><h2>ทริปหัวหิน 5–7 ธันวาคม 2026</h2><p>5 ธ.ค. นัดหัวลำโพง 08:30 รถไฟ 261 ออก 09:20 ถึงหัวหิน 13:50 → Ayrest → หาดหัวหิน → ตลาดโต้รุ่ง</p><p>6 ธ.ค. พักโรงแรม → เขาตะเกียบ → Cicada → Tamarind → กลับประมาณ 21:30</p><p>7 ธ.ค. เช็กเอาต์ก่อน 12:00 รถไฟ 262 ออกหัวหิน 14:56 ถึงหัวลำโพง 19:20</p><p>เปิด JavaScript เพื่อใช้แผนที่ รายละเอียด และกระเป๋าทริป</p></div></noscript>
+</body>
+</html>
