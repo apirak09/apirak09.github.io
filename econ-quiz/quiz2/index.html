@@ -1,0 +1,3570 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#125a4c"><meta name="description" content="เรียนวิเคราะห์ความคุ้มค่าการลงทุนจากสไลด์ 10.1–10.2 พร้อมข้อสอบจำลอง 15 ข้อและเฉลยละเอียด"><title>EconPrep Quiz 2 — Profitability Analysis 10.1–10.2</title>
+<style>@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&display=swap');
+:root{--ink:#172d29;--muted:#667670;--green:#125a4c;--deep:#0c3e36;--light:#edf4ee;--lime:#d8f591;--line:#dce4de;--red:#a64136;--paper:#fff;--bg:#f7f8f3;--amber:#795b21;--shadow:0 18px 45px rgba(26,56,42,.055)}*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--ink);font-family:'IBM Plex Sans Thai',system-ui,sans-serif;font-size:16px;line-height:1.7}button,input,select{font:inherit}button,a,input,select{touch-action:manipulation}button{cursor:pointer;border:0}a{color:var(--green)}button:disabled{cursor:default;opacity:.48}button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,summary:focus-visible{outline:3px solid #83a833;outline-offset:3px}.header{max-width:1400px;margin:auto;padding:20px 40px;display:flex;align-items:center;justify-content:space-between;gap:20px;border-bottom:1px solid var(--line)}.brand{text-decoration:none;display:flex;align-items:center;gap:12px;color:var(--ink);font:800 22px Manrope,system-ui,sans-serif;letter-spacing:-.7px;white-space:nowrap}.brand small{display:block;font-size:9px;letter-spacing:1.5px;color:var(--muted);margin-top:5px}.brand-icon{display:grid;place-items:center;background:var(--green);color:#d8f591;width:43px;height:43px;border-radius:13px;font:700 28px Georgia,serif}.header nav{display:flex;gap:3px}.nav{color:var(--muted);background:transparent;border-radius:9px;padding:9px 12px;white-space:nowrap}.nav.active{color:var(--green);background:var(--light);font-weight:600}.icon-btn{background:transparent;color:var(--muted);padding:8px;font-size:18px;white-space:nowrap}.icon-btn span{font-size:12px}main{max-width:1248px;margin:auto;padding:46px 32px 70px;min-height:calc(100vh - 190px)}h1,h2,h3,p{margin-top:0}h1{font-size:clamp(32px,4vw,49px);line-height:1.3;letter-spacing:-1.2px;font-weight:600;margin-bottom:18px}h2{font-size:23px;font-weight:600;line-height:1.5}h3{font-size:18px;line-height:1.5;font-weight:600}p{color:var(--muted)}.eyebrow{font:700 11px Manrope,system-ui,sans-serif;letter-spacing:1.7px;color:var(--green);margin-bottom:18px;text-transform:uppercase}.hero{display:grid;grid-template-columns:1.12fr 1fr;gap:50px;align-items:center;margin-bottom:32px}.hero p{max-width:570px;margin-bottom:24px}.hero-visual{min-height:277px;border-radius:23px;background:#e6eee1;position:relative;overflow:hidden;display:grid;place-items:center;padding:28px}.hero-visual svg{width:100%;height:auto;max-height:240px}.hero-visual .mini-label{position:absolute;left:23px;top:18px;font:700 10px Manrope,sans-serif;letter-spacing:1.3px;color:var(--green)}.hero-visual .bottom-label{position:absolute;bottom:16px;left:23px;right:23px;display:flex;justify-content:space-between;color:var(--green);font-size:11px}.primary,.secondary,.danger{display:inline-flex;align-items:center;justify-content:center;gap:9px;border-radius:10px;padding:11px 19px;font-weight:600;text-decoration:none;min-height:44px}.primary{background:var(--green);color:white}.primary:hover{background:var(--deep)}.secondary{background:white;color:var(--green);border:1px solid var(--line)}.secondary:hover{background:#f5f8f2}.danger{background:#f9e9e5;color:var(--red)}.actions{display:flex;gap:10px;align-items:center;flex-wrap:wrap}.micro{font-size:12px;color:var(--muted)}.stats{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--line);background:white;border-radius:16px;margin:0 0 32px;overflow:hidden}.stat{padding:20px 22px;border-right:1px solid var(--line)}.stat:last-child{border:0}.stat strong{display:block;font:700 28px Manrope,system-ui,sans-serif;letter-spacing:-1px;margin:8px 0 4px}.stat span{font-size:13px;color:var(--muted)}.stat i{font-style:normal;font-size:12px;color:var(--green)}.section-title{display:flex;justify-content:space-between;gap:20px;align-items:baseline;margin:28px 0 16px}.section-title h2{margin:0}.modes{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}.mode{background:white;border:1px solid var(--line);border-radius:17px;padding:24px;display:flex;flex-direction:column;align-items:flex-start;position:relative}.mode.featured{background:#f0f5e8;border-color:#bfd3ab}.mode .mode-number{font:600 11px Manrope,sans-serif;color:var(--muted);margin-bottom:24px;letter-spacing:1px}.mode h3{margin:0 0 8px}.mode p{font-size:14px;flex:1}.mode button{margin-top:4px}.tag{display:inline-flex;align-items:center;padding:4px 9px;border-radius:7px;font-size:11px;background:var(--light);color:var(--green);font-weight:600}.tag.warn{background:#fff0cc;color:var(--amber)}.coverage{margin-top:28px;background:white;border:1px solid var(--line);padding:24px;border-radius:17px}.coverage-top{display:flex;align-items:center;justify-content:space-between;gap:20px}.coverage-top h3{margin-bottom:4px}.bar{height:7px;background:#e9eee7;border-radius:10px;overflow:hidden}.bar span{height:100%;display:block;background:var(--green);border-radius:10px}.coverage .bar{margin:18px 0 10px}.dot-grid{display:flex;flex-wrap:wrap;gap:5px;margin-top:15px}.dot{height:10px;width:10px;border-radius:3px;background:#e4e9e2}.dot.seen{background:#9cbea4}.dot.mastered{background:var(--green)}.dot.wrong{background:#db9a87}.legend{display:flex;gap:16px;flex-wrap:wrap;font-size:11px;color:var(--muted);margin-top:12px}.legend span{display:flex;align-items:center;gap:5px}.page-head{margin-bottom:28px}.page-head h1{font-size:34px;margin-bottom:8px}.page-head p{max-width:760px;margin-bottom:0}.flex-between{display:flex;align-items:center;justify-content:space-between;gap:14px}.practice-layout{display:grid;grid-template-columns:minmax(0,1fr) 250px;gap:24px;align-items:start}.question-card,.side-card,.source-card{background:white;border:1px solid var(--line);border-radius:17px;padding:28px}.question-card{box-shadow:var(--shadow)}.side-card{padding:20px;margin-bottom:16px}.side-card h3{font-size:15px}.side-row{display:flex;justify-content:space-between;gap:10px;margin:11px 0;font-size:13px}.side-row b{font-family:Manrope,sans-serif}.question-meta{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:24px;flex-wrap:wrap}.question-title{font-size:21px;line-height:1.8;font-weight:500;margin-bottom:23px;white-space:pre-line;overflow-wrap:anywhere}.choices{display:grid;gap:10px}.choice{display:flex;align-items:flex-start;gap:14px;width:100%;text-align:left;border:1px solid var(--line);border-radius:12px;padding:13px 15px;background:white;color:var(--ink);line-height:1.65}.choice .letter{flex-shrink:0;width:29px;height:29px;border-radius:8px;background:#f1f4ee;display:grid;place-items:center;font:600 12px Manrope,sans-serif}.choice:hover:not(:disabled){border-color:var(--green);background:#f5f8f1}.choice.selected{border-color:var(--green);box-shadow:0 0 0 1px var(--green);background:#f1f7ec}.choice.correct{border-color:#5a9672;background:#eff8ef}.choice.incorrect{border-color:#ce9388;background:#fff2ed}.choice:disabled{opacity:1;color:var(--ink)}.choice.correct .letter{background:#d3ead1;color:#1f5834}.choice.incorrect .letter{background:#f0d3ca;color:var(--red)}.answer-panel{border-radius:12px;padding:22px;margin-top:22px;background:#edf6ed;border:1px solid #cce0c9}.answer-panel.wrong{background:#fff3ee;border-color:#f0d0c3}.answer-panel h3{margin-bottom:9px}.answer-panel p,.answer-panel li{font-size:14px;color:var(--ink);white-space:pre-line}.answer-panel ol{padding-left:23px}.answer-panel li{padding:3px 0}.answer-panel .source-line{font-size:12px;color:var(--muted);border-top:1px solid #cfdfce;padding-top:12px;margin:14px 0 0}.question-bottom{display:flex;justify-content:space-between;align-items:center;gap:16px;margin-top:25px;padding-top:20px;border-top:1px solid var(--line)}.bookmark{background:transparent;color:var(--muted);font-size:13px;padding:8px}.bookmark.on{color:var(--green);font-weight:600}.exam-actions{display:flex;justify-content:space-between;gap:10px;margin-top:25px}.exam-nav{display:flex;flex-wrap:wrap;gap:6px;margin-top:16px}.qnum{width:34px;height:34px;border-radius:7px;border:1px solid var(--line);background:white;font:600 11px Manrope,sans-serif;color:var(--muted)}.qnum.answered{background:var(--light);border-color:#bed0ba;color:var(--green)}.qnum.current{background:var(--green);color:white}.timer{font:700 25px Manrope,sans-serif;letter-spacing:1px;margin-bottom:10px}.notice,.tip,.warning{font-size:13px;line-height:1.8;border-left:3px solid #abc68e;padding:13px 16px;background:#f0f4e9;color:#526658;margin:20px 0;border-radius:0 8px 8px 0}.warning{background:#fff6df;border-color:#dbbd6c;color:#6c551f}.setup{display:flex;gap:18px;flex-wrap:wrap;margin:20px 0}.setup label{display:flex;flex-direction:column;gap:7px;font-size:13px;min-width:190px}input,select{background:white;border:1px solid var(--line);padding:10px 13px;border-radius:9px;color:var(--ink)}.score{font:800 70px Manrope,sans-serif;letter-spacing:-4px;color:var(--green);line-height:1.2}.score small{font-size:24px;color:var(--muted);letter-spacing:-1px}.result-hero{text-align:center;padding:24px 20px 32px}.result-hero .actions{justify-content:center;margin-top:22px}.review-item,.bank-row{background:white;border:1px solid var(--line);border-radius:12px;padding:18px 20px;margin:10px 0}.review-item h3,.bank-row h3{font-size:16px;line-height:1.7;margin:7px 0;font-weight:500}.review-item .answer-panel{margin-top:15px}.bank-row summary{cursor:pointer;color:var(--green);font-size:13px}.bank-row details{margin-top:12px}.filters{display:flex;flex-wrap:wrap;gap:10px;margin:22px 0}.filters input{flex:1;min-width:190px}.empty{padding:30px;text-align:center;color:var(--muted)}.lesson-layout{display:grid;grid-template-columns:250px minmax(0,1fr);gap:24px;align-items:start}.lesson-menu{position:sticky;top:16px;background:white;border:1px solid var(--line);border-radius:15px;padding:14px;max-height:82vh;overflow:auto}.lesson-menu-title{padding:8px 10px;font-size:11px;color:var(--muted);letter-spacing:1px;font-weight:700}.lesson-item{display:flex;width:100%;text-align:left;align-items:flex-start;gap:8px;background:transparent;border-radius:9px;padding:9px 10px;color:var(--muted);font-size:13px;line-height:1.5}.lesson-item.active{background:var(--light);color:var(--green);font-weight:600}.lesson-item span{min-width:24px;color:#8a9a90;font:600 11px Manrope;margin-top:4px}.lesson-article{background:white;border:1px solid var(--line);border-radius:17px;padding:32px 36px;min-width:0;box-shadow:var(--shadow)}.lesson-article h1{font-size:30px;margin:10px 0}.lesson-article h3{font-size:18px;margin-top:28px;margin-bottom:8px}.lesson-article p,.lesson-article li{color:#40514a}.lesson-article p{margin-bottom:16px}.lesson-article li{padding:4px 0}.lesson-article ol{padding-left:22px}.formula{font-size:15px;line-height:2;overflow-wrap:anywhere;background:#eef5ea;color:#21483d;border:1px solid #d4e4d0;border-radius:11px;padding:16px 18px;margin:18px 0;font-family:'IBM Plex Sans Thai',system-ui,sans-serif}.table-wrap{overflow-x:auto}.lesson-article table{width:100%;border-collapse:collapse;font-size:13px;margin:14px 0}.lesson-article th,.lesson-article td{text-align:left;border-bottom:1px solid var(--line);padding:10px;vertical-align:top}.lesson-article th{color:var(--green);font-weight:600}.lesson-bottom{border-top:1px solid var(--line);margin-top:30px;padding-top:22px;display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px}.text-link{background:none;padding:4px 0;color:var(--green);text-decoration:underline;font-size:13px}.source-links{display:flex;flex-wrap:wrap;gap:12px}.source-links a{font-size:12px}.loading{padding:80px;text-align:center;color:var(--muted)}footer{max-width:1240px;margin:auto;border-top:1px solid var(--line);padding:24px 24px 30px;display:flex;justify-content:space-between;gap:20px;font-size:11px;color:var(--muted)}#toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:var(--ink);color:white;padding:11px 20px;border-radius:10px;font-size:13px;z-index:5;max-width:90vw;display:none}.skip{position:absolute;top:-100px}.skip:focus{top:10px;left:10px;background:white;padding:10px;z-index:10}.mobile-lesson{display:none}.progress-label{font-size:12px;color:var(--muted)}.bank-count{font-size:13px;color:var(--muted)}.review-choice{font-size:13px;color:#40514a;margin:7px 0}.result-question{margin-bottom:8px}.source-card h2{margin-bottom:6px}.source-card p{font-size:14px}.kbd{font-family:Manrope,system-ui;font-size:11px;color:var(--muted);margin-top:15px}.exam-warning{margin:18px 0}.btn-sm{min-height:38px;padding:7px 13px;font-size:13px}
+@media(max-width:1000px){.header{padding:18px 24px;gap:10px}.nav{padding:8px 8px;font-size:13px}.hero{gap:24px}.practice-layout{grid-template-columns:minmax(0,1fr) 220px;gap:16px}.question-card{padding:24px}.modes{gap:12px}.mode{padding:20px}.stat{padding:17px}.lesson-layout{grid-template-columns:210px minmax(0,1fr);gap:16px}}
+@media(max-width:700px){.header{padding:15px 17px;flex-wrap:wrap}.brand{font-size:20px}.brand-icon{width:38px;height:38px;font-size:25px}.header nav{order:3;width:100%;display:flex;border-top:1px solid var(--line);padding-top:10px;margin-top:2px;overflow-x:auto;scrollbar-width:none}.header nav::-webkit-scrollbar{display:none}.nav{flex:1;font-size:12px;padding:8px 10px}.icon-btn{margin-left:auto}main{padding:30px 17px 45px}.hero{grid-template-columns:1fr;gap:22px;margin-bottom:25px}.hero-visual{min-height:180px;order:2}.hero-visual svg{max-height:155px}.hero h1{font-size:34px}.hero p{font-size:14px}.stats{grid-template-columns:repeat(2,1fr);margin-bottom:27px}.stat{padding:15px;border-bottom:1px solid var(--line)}.stat:nth-child(2){border-right:0}.stat:nth-child(n+3){border-bottom:0}.stat strong{font-size:25px}.modes{grid-template-columns:1fr}.mode .mode-number{margin-bottom:14px}.practice-layout{grid-template-columns:1fr}.practice-layout aside{display:grid;grid-template-columns:1fr;gap:0}.question-card,.source-card{padding:20px}.question-title{font-size:19px}.question-bottom{align-items:stretch}.question-bottom .primary{margin-left:auto}.page-head h1{font-size:29px}.lesson-layout{display:block}.lesson-menu{display:none}.mobile-lesson{display:block;width:100%;margin-bottom:15px}.lesson-article{padding:22px 20px}.lesson-article h1{font-size:26px}.lesson-bottom .actions{width:100%}.lesson-bottom .actions button{flex:1}.flex-between{align-items:flex-start}.filters input,.filters select{width:100%;min-width:0}.score{font-size:60px}footer{flex-direction:column;gap:5px;padding:22px 18px}}
+/* Question and scratch paper share the available width. */
+.work-summary{background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px 17px;margin:0 0 17px;display:flex;align-items:center;gap:12px 20px;flex-wrap:wrap}.work-summary .work-stats{display:flex;align-items:center;gap:9px 18px;flex-wrap:wrap;font-size:13px;color:var(--muted)}.work-summary .work-stats strong{color:var(--ink);font-family:Manrope,system-ui,sans-serif}.work-summary .exam-nav{margin:0;gap:5px}.work-summary .work-submit{margin-left:auto}.work-summary .timer{font-size:18px;margin:0;color:var(--green)}.scratch-layout{--paper-split:53%;display:grid;grid-template-columns:minmax(0,var(--paper-split)) 20px minmax(0,1fr);gap:0;align-items:start;min-width:0}.scratch-layout .question-card{min-width:0;container-type:inline-size}.scratch-layout .question-bottom{flex-wrap:wrap}.scratch-layout .question-title{overflow-wrap:anywhere}.splitter{position:relative;align-self:stretch;min-height:430px;cursor:col-resize;touch-action:none;display:flex;justify-content:center;align-items:center;outline-offset:-1px;user-select:none}.splitter:before{content:"";position:absolute;top:18px;bottom:18px;width:1px;background:#d4e0d5}.splitter span{position:sticky;top:45vh;width:15px;height:42px;border:1px solid #c8d9ca;border-radius:10px;background:#edf4ee;box-shadow:0 1px 4px #183b241a;z-index:1}.splitter span:before,.splitter span:after{content:"";position:absolute;top:12px;bottom:12px;width:1px;background:#799684}.splitter span:before{left:5px}.splitter span:after{right:5px}.splitter:hover span,.splitter:focus-visible span{background:#dceedd;border-color:#88a991}.scratch-card{position:sticky;top:12px;min-width:0;background:#fff;border:1px solid var(--line);border-radius:17px;overflow:hidden;box-shadow:var(--shadow);container-type:inline-size;align-self:start}.scratch-toolbar{display:flex;align-items:center;justify-content:space-between;gap:9px 12px;flex-wrap:wrap;padding:12px 15px;border-bottom:1px solid #e4ebe3}.scratch-title{min-width:0}.scratch-title strong{display:block;color:var(--ink);font-size:15px;line-height:1.35}.scratch-title span{display:block;color:var(--muted);font-size:10px;margin-top:3px;line-height:1.4}.pad-tools{display:flex;align-items:center;gap:4px;flex-wrap:wrap}.pad-tool{height:36px;width:36px;padding:0;border:1px solid transparent;border-radius:9px;display:grid;place-items:center;background:#f5f7f3;color:#475e50}.pad-tool:hover{background:#eaf1e8}.pad-tool.active{border-color:#6e977f;background:#e9f3e8;box-shadow:0 0 0 1px #6e977f}.pad-tool .ink-dot{width:16px;height:16px;background:var(--ink-color);border-radius:50%;box-shadow:inset 0 0 0 1px #0002}.pad-tool svg{width:21px;height:21px}.scratch-paper{height:clamp(400px,68vh,780px);position:relative;overflow:hidden;background-color:#fff;background-image:radial-gradient(#dfe8df 0.8px,transparent 0.9px);background-size:22px 22px}.scratch-paper canvas{display:block;width:100%;height:100%;touch-action:none;cursor:crosshair}.scratch-paper canvas.erasing{cursor:cell}.pad-loading{position:absolute;left:12px;top:12px;background:#f6faf5e8;border-radius:7px;padding:4px 8px;font-size:11px;color:var(--muted);pointer-events:none}.pad-loading[hidden]{display:none}
+@container (max-width:340px){.scratch-layout .question-title{font-size:17px;line-height:1.65}.scratch-layout .question-meta{margin-bottom:15px}.scratch-layout .choice{padding:10px;gap:8px;font-size:14px}.scratch-layout .choice .letter{width:25px;height:25px}.scratch-layout .question-bottom .primary{width:100%}.scratch-title span{font-size:9px}.scratch-toolbar{padding:10px}.pad-tools{gap:3px}.pad-tool{width:34px;height:34px}}
+@media(max-width:700px){.work-summary{padding:12px;gap:10px}.work-summary .work-stats{font-size:12px;gap:6px 12px}.work-summary .exam-nav{width:100%;flex-wrap:nowrap;overflow-x:auto;padding:2px 0}.work-summary .qnum{flex:0 0 31px;width:31px;height:31px}.work-summary .work-submit{margin-left:0}.scratch-layout{grid-template-columns:minmax(0,var(--paper-split)) 16px minmax(0,1fr)}.scratch-layout .question-card{padding:16px 12px}.scratch-layout .question-title{font-size:17px}.scratch-layout .choice{padding:10px 8px;gap:7px;font-size:14px}.scratch-layout .choice .letter{width:24px;height:24px}.splitter{min-height:420px}.splitter span{width:13px}.splitter span:before{left:4px}.splitter span:after{right:4px}.scratch-card{top:8px;border-radius:13px}.scratch-paper{height:clamp(360px,64vh,620px)}.scratch-toolbar{padding:9px}.pad-tool{width:32px;height:34px}.pad-tool .ink-dot{width:14px;height:14px}}
+.calc-launch{display:inline-flex;align-items:center;gap:5px;padding:7px 9px;min-height:34px;border:1px solid #d8e5d9;border-radius:9px;background:#f8faf6;color:var(--green);font-size:12px;font-weight:600;white-space:nowrap}.calc-launch:hover,.calc-launch[aria-expanded="true"]{background:#eaf3e8;border-color:#9ab8a0}.calc-launch span{font-size:16px;line-height:1}.calculator-panel{position:fixed;z-index:50;right:16px;bottom:16px;width:min(310px,calc(100vw - 24px));max-height:calc(100dvh - 24px);overflow-y:auto;background:#fff;border:1px solid #cbded0;border-radius:16px;box-shadow:0 18px 60px #173d2e36;padding:15px}.calculator-panel[hidden],.calc-fraction[hidden]{display:none}.calculator-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}.calculator-head strong{font-size:16px;color:var(--ink)}.calculator-close{width:32px;height:32px;border-radius:8px;font:400 24px system-ui;background:#f0f4ef;color:#53665a;line-height:1}.calc-expression-label{display:block;font-size:11px;color:var(--muted);margin-bottom:4px}.calc-expression{width:100%;font-family:Manrope,system-ui,sans-serif;font-size:17px;font-weight:600;text-align:right;border:1px solid #cfdfd2;background:#fbfcf9;padding:10px;min-height:46px}.calc-answer{min-height:55px;display:flex;flex-direction:column;align-items:flex-end;justify-content:center;padding:7px 3px;color:var(--green);font-family:Manrope,system-ui,sans-serif;overflow-wrap:anywhere}.calc-answer span{font-family:'IBM Plex Sans Thai',system-ui;font-size:11px;color:var(--muted)}.calc-answer strong{font-size:21px;line-height:1.4}.calc-answer small{font-family:'IBM Plex Sans Thai',system-ui;font-size:11px;color:var(--muted)}.calc-answer.error{color:var(--red);font-family:'IBM Plex Sans Thai',system-ui;font-size:12px}.calculator-keys{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px}.calculator-keys button{height:39px;border-radius:9px;border:1px solid #e3eae2;background:#f8faf7;color:var(--ink);font:600 16px Manrope,system-ui,sans-serif}.calculator-keys button:hover{background:#edf4ed}.calculator-keys .calc-op{background:#edf5e9;color:var(--green)}.calculator-keys .calc-equals{grid-column:span 2;background:var(--green);color:#fff;border-color:var(--green);font-size:19px}.calculator-keys .calc-fraction-key{grid-column:span 2;color:var(--green)}.calc-fraction{display:flex;align-items:end;gap:7px;border:1px solid #dce8db;background:#f6faf4;border-radius:10px;padding:8px;margin-bottom:8px}.calc-fraction label{display:flex;flex:1;min-width:0;flex-direction:column;gap:3px;color:var(--muted);font-size:10px}.calc-fraction input{width:100%;min-width:0;padding:6px 7px;font-size:14px}.calc-fraction span{padding-bottom:4px;color:var(--muted)}.calc-fraction button{background:var(--green);color:#fff;border-radius:7px;padding:7px 9px;font-size:12px;font-weight:600}.calc-fraction input::-webkit-inner-spin-button,.calc-fraction input::-webkit-outer-spin-button{appearance:none;margin:0}
+@media(max-width:700px){.calc-launch{min-height:32px;padding:5px 7px;font-size:11px}.calculator-panel{right:12px;bottom:12px;padding:12px}.calculator-keys button{height:37px}}
+/* Keep the resize grip visible near the top of a long question. */
+.splitter{align-items:flex-start;padding-top:58px}.splitter span{top:110px}
+@media(max-width:700px){.work-head{margin-bottom:14px}.work-summary{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:9px}.work-summary .work-stats{grid-column:1;min-width:0}.work-summary .work-submit{grid-column:2;grid-row:1;margin:0}.work-summary .exam-nav{grid-column:1 / -1;grid-row:2;display:grid;grid-template-columns:repeat(10,minmax(0,1fr));gap:3px;overflow:visible}.work-summary .qnum{width:100%;min-width:0;height:30px}.splitter{padding-top:55px}.splitter span{top:90px}}
+
+.quiz-switch{display:inline-flex;align-items:center;border:1px solid #b3d1c4;border-radius:10px;padding:8px 11px;font-size:12px;font-weight:700;white-space:nowrap;text-decoration:none;background:#e5f2ea;color:#185d48}.quiz-switch:hover{background:#d4ebdc}.quiz-switch-back{background:#eff6f2;color:#276553}
+
+.quiz-banner{max-width:1192px;margin:10px auto 0;padding:10px 16px;border:1px solid #b8d2c2;background:#edf5e9;border-radius:11px;display:flex;align-items:center;justify-content:space-between;gap:12px;color:#345348;font-size:13px}.quiz-banner strong{font-weight:700}.quiz-banner a{display:inline-flex;align-items:center;white-space:nowrap;text-decoration:none;color:#fff;background:#125a4c;border-radius:8px;padding:7px 11px;font-weight:700;font-size:12px}.quiz-banner a:hover{background:#0d443a}@media(max-width:700px){.quiz-banner{margin:9px 18px 0;padding:9px 11px;font-size:11px}.quiz-banner a{white-space:normal;text-align:center;font-size:11px;padding:7px 8px}}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">ข้ามไปเนื้อหา</a>
+<header class="header"><a class="brand" href="./" data-view="home" aria-label="EconPrep หน้าหลัก"><span class="brand-icon">∑</span><span>EconPrep<small>QUIZ 2 · PROFITABILITY</small></span></a><nav aria-label="เมนูหลัก"><button class="nav active" data-view="home">ภาพรวม</button><button class="nav" data-view="learn">บทเรียน</button><button class="nav" data-view="practiceStart">ฝึกทีละข้อ</button><button class="nav" data-view="examSetup">จำลองสอบ</button><button class="nav" data-view="bank">คลังข้อสอบ</button><a href="../" class="quiz-switch quiz-switch-back">← Quiz 1: 9.1–9.3</a></nav><button id="update" class="icon-btn" aria-label="โหลดเว็บเวอร์ชันล่าสุด">↻ <span>อัปเดต</span></button></header>
+<div class="quiz-banner"><span><strong>QUIZ 2</strong> · 10.1–10.2 · 15 ข้อ</span><a href="../">← Quiz 1 · 9.1–9.3</a></div>
+<main id="main" tabindex="-1"><div class="loading">กำลังเตรียมบทเรียนและคลังข้อสอบ…</div></main>
+<footer><span>EconPrep · เข้าใจเหตุผลก่อนจำสูตร</span><span>สื่อฝึกอิสระจากสไลด์และข้อสอบที่ให้มา · ไม่ใช่ระบบสอบทางการ</span></footer><div id="toast" role="status" aria-live="polite"></div>
+<script>const QUESTIONS = [
+  {
+    "id": "Q2-001",
+    "chapter": "10.1",
+    "topic": "แผนภาพโครงการ",
+    "question": "ก่อนวิเคราะห์โครงการ สิ่งใดช่วยระบุว่าต้อง discount นานเท่าไร?",
+    "options": [
+      "แผนภาพกระแสเงินสดที่ระบุเวลาและเครื่องหมายเงินเข้าออก",
+      "รวมเงินทุกจำนวนโดยไม่ดูปี",
+      "ใช้ปี start-up เป็นเวลา 0 เสมอแม้โจทย์กำหนดต่างกัน",
+      "เลือก IRR สูงสุดก่อนดูข้อมูล"
+    ],
+    "correct": 0,
+    "why": "ปีที่เกิดกระแสเป็นตัวกำหนดเลขชี้กำลังของการคิดลด",
+    "steps": [
+      "กำหนดมุมมองผู้ลงทุนและระบุเวลา t=0,1,…",
+      "เงินลงทุนเป็นลบและเงินรับเป็นบวกตามมุมมอง"
+    ],
+    "ref": "10.1 · หน้า 2–4",
+    "origin": "สร้างเพิ่มจากสไลด์",
+    "kind": "theory"
+  },
+  {
+    "id": "Q2-002",
+    "chapter": "10.1",
+    "topic": "แผนภาพโครงการ",
+    "question": "หากที่ดินซื้อที่ t=0 และเงินสร้างโรงงานจ่ายที่ t=1 กับ t=2 การหา NPV ณ t=0 ต้องทำอย่างไร?",
+    "options": [
+      "คิดลดเงินปี 1 และ 2 แยกกัน ส่วนเงิน t=0 ไม่คิดลด",
+      "บวกเงินสามก้อนแล้ว discount 2 ปีทั้งหมด",
+      "ไม่นับที่ดินเพราะไม่คิดค่าเสื่อม",
+      "คิดลดทุกจำนวนหนึ่งปีเสมอ"
+    ],
+    "correct": 0,
+    "why": "ตำแหน่งบน timeline เป็นตัวกำหนดจำนวนช่วงทบ/คิดลด",
+    "steps": [
+      "ที่ดิน t=0 อยู่ ณ เวลาที่ต้องการอยู่แล้ว",
+      "เงินที่ t=1 และ t=2 ใช้ตัวหาร 1+i และ (1+i)²"
+    ],
+    "ref": "10.1 · หน้า 2–4",
+    "origin": "สร้างเพิ่มจากสไลด์",
+    "kind": "theory"
+  },
+  {
+    "id": "Q2-003",
+    "chapter": "10.1",
+    "topic": "แผนภาพโครงการ",
+    "question": "ตามภาพโรงงานในสไลด์ หากโจทย์ระบุว่าได้ทุนหมุนเวียนคืนเมื่อปิดโครงการ ควรแสดง WC อย่างไร?",
+    "options": [
+      "จ่าย WC เมื่อต้องใช้ และแสดงเงินรับคืนเมื่อสิ้นโครงการ",
+      "หัก WC เป็นค่าเสื่อมทุกปี",
+      "ไม่นับ WC เป็นเงินสดเลย",
+      "นับ WC เป็นรายรับตั้งแต่ก่อนจ่าย"
+    ],
+    "correct": 0,
+    "why": "เงินทุนหมุนเวียนจ่ายออกเมื่อเริ่มและรับคืนตามเวลาที่โจทย์กำหนด",
+    "steps": [
+      "เงินออก WC มีเครื่องหมายลบ",
+      "เงินรับคืนเมื่อสิ้นโครงการมีเครื่องหมายบวกและอาจต้องคิดลด"
+    ],
+    "ref": "10.1 · หน้า 2–3",
+    "origin": "สร้างเพิ่มจากสไลด์",
+    "kind": "theory"
+  },
+  {
+    "id": "Q2-004",
+    "chapter": "10.1",
+    "topic": "แผนภาพโครงการ",
+    "question": "เวลาสร้างโรงงานกับอายุหลัง start-up ต่างกันอย่างไร?",
+    "options": [
+      "โรงงานอาจใช้เวลาก่อสร้างก่อนเริ่มนับปีดำเนินงาน",
+      "ต้องเป็นช่วงเดียวกันเสมอ",
+      "เงินลงทุนต้องจ่ายหลังดำเนินงานเท่านั้น",
+      "เวลาเริ่มต้นไม่มีผลต่อ NPV"
+    ],
+    "correct": 0,
+    "why": "ต้องแยกเวลาอ้างอิงกับเวลานับอายุโครงการ",
+    "steps": [
+      "เงินก่อสร้างอาจเกิดที่ t=0,1,2",
+      "ปีดำเนินการแรกอาจเป็น t=3 และการคิดลดนับจากเวลา 0"
+    ],
+    "ref": "10.1 · หน้า 2–4",
+    "origin": "สร้างเพิ่มจากสไลด์",
+    "kind": "theory"
+  },
+  {
+    "id": "Q2-005",
+    "chapter": "10.1",
+    "topic": "กำไรและกระแสเงินสด",
+    "question": "ทำไมค่าเสื่อมจึงถูกบวกกลับจากกำไรหลังภาษีเมื่อหา operating cash flow?",
+    "options": [
+      "เพราะเป็นค่าใช้จ่ายทางบัญชีที่ไม่ใช่เงินสดจ่ายซ้ำในปีนั้น",
+      "เพราะเป็นรายได้จากการขายสินค้า",
+      "เพราะทำให้ไม่ต้องเสียภาษี",
+      "เพราะค่าเสื่อมเป็นเงินลงทุนที่รับคืนทันที"
+    ],
+    "correct": 0,
+    "why": "กำไรถูกหักค่าเสื่อมแต่กระแสเงินสดไม่จ่ายค่าเสื่อมซ้ำ",
+    "steps": [
+      "กำไรก่อนภาษีหัก d เพื่อคำนวณภาษี",
+      "กำไรหลังภาษี + d = cash flow เมื่อไม่มีรายการเงินสดอื่น"
+    ],
+    "ref": "10.1 · หน้า 10–11",
+    "origin": "สร้างเพิ่มจากสไลด์",
+    "kind": "theory"
+  },
+  {
+    "id": "Q2-006",
+    "chapter": "10.1",
+    "topic": "กำไรและกระแสเงินสด",
+    "question": "ถ้า COMd ที่ให้มาได้รวมค่าเสื่อมแล้ว ควรระวังอะไร?",
+    "options": [
+      "อย่าหักค่าเสื่อมซ้ำโดยไม่แยกต้นทุน",
+      "หักค่าเสื่อมเพิ่มเสมอ",
+      "มอง COMd ทั้งก้อนเป็นเงินสดโดยไม่ตรวจองค์ประกอบ",
+      "ไม่ต้องคิดภาษี"
+    ],
+    "correct": 0,
+    "why": "สูตรรายรับ−COMd−d ใช้เมื่อ COMd ไม่รวม d",
+    "steps": [
+      "อ่านนิยาม COMd ในโจทย์",
+      "หากรวม d แล้วต้องแยกหรือปรับก่อนใช้สูตร"
+    ],
+    "ref": "10.1 · หน้า 10–11",
+    "origin": "สร้างเพิ่มจากสไลด์",
+    "kind": "theory"
+  },
+  {
+    "id": "Q2-007",
+    "chapter": "10.1",
+    "topic": "กำไรและกระแสเงินสด",
+    "question": "ภายใต้รายรับและต้นทุนเงินสดเท่าเดิม การเพิ่มค่าเสื่อมที่หักภาษีได้มีผลต่อภาษีอย่างไร เมื่อมีกำไรเสียภาษีเพียงพอ?",
+    "options": [
+      "ภาษีลดลงตามค่าเสื่อมที่เพิ่มคูณอัตราภาษี",
+      "ภาษีเพิ่มเท่าค่าเสื่อม",
+      "รายรับเพิ่มขึ้นอัตโนมัติ",
+      "ไม่กระทบภาษี"
+    ],
+    "correct": 0,
+    "why": "ค่าเสื่อมลดกำไรที่นำไปคูณอัตราภาษี",
+    "steps": [
+      "Δtax = −Δd×t ภายใต้สมมติฐานโจทย์",
+      "ส่วนลดภาษีนี้เรียกว่า tax shield"
+    ],
+    "ref": "10.1 · หน้า 10–11",
+    "origin": "สร้างเพิ่มจากสไลด์",
+    "kind": "theory"
+  },
+  {
+    "id": "Q2-008",
+    "chapter": "10.1",
+    "topic": "กำไรและกระแสเงินสด",
+    "question": "หากขายสินทรัพย์เมื่อสิ้นอายุ การคิดภาษีจากการขายต้องตรวจอะไร?",
+    "options": [
+      "เปรียบเทียบราคาขายกับ book value และเงื่อนไขภาษีในโจทย์",
+      "เก็บภาษีจากราคาขายเต็มจำนวนทุกกรณี",
+      "ไม่คิดภาษีทุกกรณี",
+      "ใช้ working capital แทน book value"
+    ],
+    "correct": 0,
+    "why": "ภาษีจากการขายขึ้นกับฐานภาษีและเงื่อนไขที่โจทย์กำหนด",
+    "steps": [
+      "กำไรจากขายอาจเป็นราคาขายลบ BV",
+      "ตัวอย่างเฉลยข้อสอบบางชุดตั้งสมมติฐานการเสียภาษีต่างกัน"
+    ],
+    "ref": "10.1 · หน้า 10–11; ข้อสอบ 2025 หน้า 8",
+    "origin": "สร้างเพิ่มจากสไลด์",
+    "kind": "theory"
+  },
+  {
+    "id": "Q2-009",
+    "chapter": "10.1",
+    "topic": "CCP CCR และ ROROI",
+    "question": "CCP และ NPV ต่างกันอย่างไร?",
+    "options": [
+      "CCP รวมกระแสโดยไม่คิดลด ส่วน NPV คิดลดสู่เวลาเดียวกัน",
+      "ทั้งสองคือ IRR",
+      "CCP คิดดอกเบี้ยเสมอ แต่ NPV ไม่คิด",
+      "NPV คือเงินรับปีสุดท้ายเท่านั้น"
+    ],
+    "correct": 0,
+    "why": "ความต่างสำคัญคือการคำนึงถึงเวลาและอัตราคิดลด",
+    "steps": [
+      "CCP เป็น cumulative cash position แบบไม่คิดลด",
+      "NPV รวม discounted CF ณ เวลาอ้างอิง"
+    ],
+    "ref": "10.1 · หน้า 7, 14–16",
+    "origin": "สร้างเพิ่มจากสไลด์",
+    "kind": "theory"
+  },
+  {
+    "id": "Q2-010",
+    "chapter": "10.1",
+    "topic": "CCP CCR และ ROROI",
+    "question": "CCR แสดงความสัมพันธ์ใด?",
+    "options": [
+      "ผลรวมเงินสดบวกหารด้วยขนาดผลรวมเงินสดลบโดยไม่คิดลด",
+      "กำไรสุทธิหารเงินลงทุนถาวร",
+      "NPV หารดอกเบี้ย",
+      "PV เงินเข้าหาร PV เงินออก"
+    ],
+    "correct": 0,
+    "why": "CCR เป็น cash ratio แบบไม่คิดลด",
+    "steps": [
+      "รวม CF บวกทั้งหมดเป็นตัวเศษ",
+      "ใช้ขนาดรวม CF ลบเป็นตัวส่วน"
+    ],
+    "ref": "10.1 · หน้า 7, 12",
+    "origin": "สร้างเพิ่มจากสไลด์",
+    "kind": "theory"
+  },
+  {
+    "id": "Q2-011",
+    "chapter": "10.1",
+    "topic": "CCP CCR และ ROROI",
+    "question": "ROROI ตามนิยามสไลด์ใช้อะไรเป็นตัวเศษ?",
+    "options": [
+      "กำไรสุทธิเฉลี่ยต่อปี",
+      "รายรับรวมตลอดอายุ",
+      "กระแสเงินสดปีแรก",
+      "มูลค่าที่ดินตอนเริ่มโครงการ"
+    ],
+    "correct": 0,
+    "why": "ROROI เป็นอัตราผลตอบแทนจากกำไรสุทธิบนฐาน FCI_L",
+    "steps": [
+      "หากำไรสุทธิหลังภาษีเฉลี่ยต่อปี",
+      "หารด้วย FCI_L และแปลงเป็นร้อยละ"
+    ],
+    "ref": "10.1 · หน้า 8, 12",
+    "origin": "สร้างเพิ่มจากสไลด์",
+    "kind": "theory"
+  },
+  {
+    "id": "Q2-012",
+    "chapter": "10.1",
+    "topic": "CCP CCR และ ROROI",
+    "question": "ROROI กับ DCFROR ต่างกันอย่างไร?",
+    "options": [
+      "ROROI ใช้กำไรเฉลี่ยบนฐานลงทุน ส่วน DCFROR คืออัตราที่ทำให้ NPV=0",
+      "ทั้งสองต้องมีค่าเท่ากัน",
+      "ROROI รวมการคิดลดทุกปีโดยนิยาม",
+      "DCFROR ไม่คำนึงถึงเวลา"
+    ],
+    "correct": 0,
+    "why": "ตัวชี้วัดหนึ่งเป็น accounting return อีกตัวใช้ discounted cash flow",
+    "steps": [
+      "ROROI = กำไรเฉลี่ย/FCI_L",
+      "DCFROR หาอัตราที่ PV เงินเข้าเท่ากับ PV เงินออก"
+    ],
+    "ref": "10.1 · หน้า 8, 22",
+    "origin": "สร้างเพิ่มจากสไลด์",
+    "kind": "theory"
+  },
+  {
+    "id": "Q2-013",
+    "chapter": "10.1",
+    "topic": "ระยะคืนทุน PBP",
+    "question": "PBP แบบไม่คิดลดละเลยสิ่งใด?",
+    "options": [
+      "มูลค่าเงินตามเวลาและกระแสเงินสดหลังคืนทุน",
+      "เฉพาะเงินลงทุนเริ่มต้น",
+      "เฉพาะเงินรับก่อนคืนทุน",
+      "การนับเวลา"
+    ],
+    "correct": 0,
+    "why": "PBP นับเวลาถึงเกณฑ์ จึงไม่ได้ประเมินทุกกระแสด้วยการคิดลด",
+    "steps": [
+      "PBP ใช้คัดกรองสภาพคล่องหรือความเสี่ยงเบื้องต้น",
+      "ควรใช้ร่วมกับ NPV/IRR สำหรับผลตอบแทนทั้งโครงการ"
+    ],
+    "ref": "10.1 · หน้า 34–45",
+    "origin": "สร้างเพิ่มจากสไลด์",
+    "kind": "theory"
+  },
+  {
+    "id": "Q2-014",
+    "chapter": "10.1",
+    "topic": "ระยะคืนทุน PBP",
+    "question": "PBP ในตัวอย่างโรงงานของสไลด์เริ่มนับเมื่อใดและคืนฐานใด?",
+    "options": [
+      "นับหลัง start-up เพื่อคืน FCI_L ตามนิยามตัวอย่าง",
+      "นับตั้งแต่ซื้อที่ดินเพื่อคืนเฉพาะ WC",
+      "คืน NPV ณ ปีสุดท้ายโดยไม่สนใจ start-up",
+      "ต้องคืน TCI เสมอทุกโจทย์"
+    ],
+    "correct": 0,
+    "why": "นิยาม PBP ไม่เหมือนกันทุกแหล่ง ต้องอ่านโจทย์",
+    "steps": [
+      "สไลด์ระบุเริ่มนับหลัง start-up",
+      "ตัวอย่างแยกที่ดินและ WC ออกจากฐาน FCI_L"
+    ],
+    "ref": "10.1 · หน้า 6, 12",
+    "origin": "สร้างเพิ่มจากสไลด์",
+    "kind": "theory"
+  },
+  {
+    "id": "Q2-015",
+    "chapter": "10.1",
+    "topic": "ระยะคืนทุน PBP",
+    "question": "หาก PBP แบบประมาณได้ 2.8 ปี แต่รายรับเป็นก้อนเฉพาะสิ้นปี คำอธิบายใดถูกต้อง?",
+    "options": [
+      "2.8 เป็นการประมาณเชิงเส้น; หากไม่สมมติเงินไหลระหว่างปี จะครบเมื่อสิ้นปี 3",
+      "คืนทุนแน่นอนในวันสุดท้ายของเดือนที่ 10",
+      "2.8 ปีเท่ากับ 28 เดือนเสมอ",
+      "ต้องปัดลงเป็น 2 ปีโดยอัตโนมัติ"
+    ],
+    "correct": 0,
+    "why": "การ interpolate ต้องอาศัยสมมติฐานการกระจายเงินระหว่างงวด",
+    "steps": [
+      "ถ้าเงินก้อนเกิดสิ้นปีเท่านั้น สถานะยังไม่คืนทุนจนถึงสิ้นปีถัดไป",
+      "ระบุวิธีนับที่โจทย์ต้องการ"
+    ],
+    "ref": "10.1 · หน้า 34–45",
+    "origin": "สร้างเพิ่มจากสไลด์",
+    "kind": "theory"
+  },
+  {
+    "id": "Q2-016",
+    "chapter": "10.1",
+    "topic": "ระยะคืนทุน PBP",
+    "question": "ทำไมโครงการคืนทุนเร็วที่สุดจึงไม่จำเป็นต้องดีที่สุด?",
+    "options": [
+      "อาจมี NPV ต่ำกว่าเพราะ PBP ไม่พิจารณากระแสหลังคืนทุน",
+      "เพราะเงินหลังคืนทุนไม่มีมูลค่า",
+      "เพราะ PBP เท่ากับ IRR เสมอ",
+      "เพราะต้นทุนเริ่มต้นไม่สำคัญ"
+    ],
+    "correct": 0,
+    "why": "ต้องดูผลตอบแทนตลอดโครงการ ไม่ใช่เพียงเวลาคืนทุน",
+    "steps": [
+      "สองโครงการคืนทุนเร็วต่างกันแต่รายรับหลังจากนั้นอาจต่างมาก",
+      "คำนวณ NPV ที่ MARR เพื่อเทียบมูลค่ารวม"
+    ],
+    "ref": "10.1 · หน้า 36, 45",
+    "origin": "สร้างเพิ่มจากสไลด์",
+    "kind": "theory"
+  },
+  {
+    "id": "Q2-017",
+    "chapter": "10.1",
+    "topic": "NPV และ PVR",
+    "question": "สำหรับโครงการเดี่ยว NPV ที่ MARR มากกว่า 0 สื่อว่าอะไร?",
+    "options": [
+      "มูลค่าที่คิดลดแล้วสูงกว่าฐานลงทุนภายใต้ MARR",
+      "NPV ต้องเท่ากับ IRR",
+      "กำไรก่อนภาษีเป็นศูนย์",
+      "ใช้ได้เฉพาะโครงการอายุตลอดไป"
+    ],
+    "correct": 0,
+    "why": "NPV บวกหมายถึงโครงการสร้างมูลค่าเพิ่มเมื่อคิดต้นทุนเงินทุนตาม MARR",
+    "steps": [
+      "คิดลด CF ทั้งหมดด้วย MARR",
+      "ถ้าเลือกไม่ลงทุนได้และไม่มีข้อจำกัดอื่น โดยเกณฑ์ NPV โครงการผ่าน"
+    ],
+    "ref": "10.1 · หน้า 14–16; 10.2 หน้า 7",
+    "origin": "สร้างเพิ่มจากสไลด์",
+    "kind": "theory"
+  },
+  {
+    "id": "Q2-018",
+    "chapter": "10.1",
+    "topic": "NPV และ PVR",
+    "question": "PVR มากกว่า 1 หมายถึงอะไร เมื่อคำนวณจากกระแสชุดเดียวกับ NPV?",
+    "options": [
+      "PV เงินเข้ามากกว่าขนาด PV เงินออก และ NPV เป็นบวก",
+      "IRR เป็นลบเสมอ",
+      "PV เงินเข้าน้อยกว่าเงินออก",
+      "cash flow ทุกปีเป็นบวก"
+    ],
+    "correct": 0,
+    "why": "PVR เปรียบเทียบมูลค่าปัจจุบันฝั่งเข้าและฝั่งออก",
+    "steps": [
+      "PVR=PV(+)/|PV(−)|",
+      "ถ้าอัตราส่วนมากกว่า 1 ผลต่าง PV เข้า−ออกเป็นบวก"
+    ],
+    "ref": "10.1 · หน้า 16, 20",
+    "origin": "สร้างเพิ่มจากสไลด์",
+    "kind": "theory"
+  },
+  {
+    "id": "Q2-019",
+    "chapter": "10.1",
+    "topic": "NPV และ PVR",
+    "question": "ถ้า NPV=0 ที่ i=MARR สำหรับโครงการทั่วไป หมายถึงอะไร?",
+    "options": [
+      "ผลตอบแทนพอดีกับเกณฑ์ MARR ในเชิงมูลค่าปัจจุบัน",
+      "ไม่มีเงินสดไหลเลย",
+      "ขาดทุนเท่ากับเงินลงทุนเริ่มต้น",
+      "PVR ต้องเป็นศูนย์"
+    ],
+    "correct": 0,
+    "why": "NPV รวมผลตอบแทนที่จำเป็นตามอัตราคิดลดแล้ว",
+    "steps": [
+      "PV เงินเข้าเท่ากับ PV เงินออก",
+      "PVR ของกระแสชุดเดียวกันเท่ากับ 1"
+    ],
+    "ref": "10.1 · หน้า 16; 10.2 หน้า 7",
+    "origin": "สร้างเพิ่มจากสไลด์",
+    "kind": "theory"
+  },
+  {
+    "id": "Q2-020",
+    "chapter": "10.1",
+    "topic": "ระยะคืนทุน DPBP",
+    "question": "DPBP ต่างจาก PBP อย่างไร?",
+    "options": [
+      "DPBP คิดลดกระแสก่อนหาจุดคืนทุน",
+      "DPBP บวกกระแสโดยไม่สนใจเวลา",
+      "PBP และ DPBP ต้องเท่ากันทุกอัตรา",
+      "DPBP ใช้เฉพาะรายรับติดลบ"
+    ],
+    "correct": 0,
+    "why": "discount ทำให้มูลค่าปัจจุบันของเงินในอนาคตลดลงเมื่อ i>0",
+    "steps": [
+      "กำหนดเวลาอ้างอิงและอัตรา i",
+      "สะสม discounted CF แล้วหาเวลาถึงฐานที่กำหนด"
+    ],
+    "ref": "10.1 · หน้า 15, 21, 34–39",
+    "origin": "สร้างเพิ่มจากสไลด์",
+    "kind": "theory"
+  },
+  {
+    "id": "Q2-021",
+    "chapter": "10.1",
+    "topic": "ระยะคืนทุน DPBP",
+    "question": "เมื่อกระแสรับเป็นบวกและรูปแบบอื่นเท่ากัน การเพิ่ม discount rate มักทำให้ DPBP เปลี่ยนอย่างไร?",
+    "options": [
+      "นานขึ้นหรือไม่คืนทุนภายในอายุโครงการ",
+      "สั้นลงเสมอ",
+      "เท่ากับ PBP เสมอ",
+      "กลายเป็นศูนย์เสมอ"
+    ],
+    "correct": 0,
+    "why": "อัตราสูงขึ้นลด PV ของเงินรับอนาคต",
+    "steps": [
+      "คิดลดแต่ละปีด้วยอัตราที่สูงขึ้น",
+      "ยอดรับสะสมถึงฐานลงทุนช้าลงภายใต้สมมติฐานนี้"
+    ],
+    "ref": "10.1 · หน้า 26, 44",
+    "origin": "สร้างเพิ่มจากสไลด์",
+    "kind": "theory"
+  },
+  {
+    "id": "Q2-022",
+    "chapter": "10.1",
+    "topic": "ระยะคืนทุน DPBP",
+    "question": "หาก discounted cash flow ตลอดอายุโครงการสะสมยังไม่ถึงฐานลงทุน จะตอบอย่างไร?",
+    "options": [
+      "ไม่คืนทุนภายในช่วงโครงการที่กำหนด",
+      "คืนทุนที่ปีแรก",
+      "นำค่าลบไปหารปีแล้วถือเป็นคำตอบแน่นอน",
+      "บอกว่า IRR เท่ากับ 100%"
+    ],
+    "correct": 0,
+    "why": "จุดคืนทุนไม่เกิดในช่วงที่กำหนด",
+    "steps": [
+      "สะสม discounted CF จนครบปีสุดท้าย",
+      "หากยังไม่ผ่านเป้าหมาย ห้ามสมมติรายรับหลังหมดอายุโดยไม่บอก"
+    ],
+    "ref": "10.1 · หน้า 34–39",
+    "origin": "สร้างเพิ่มจากสไลด์",
+    "kind": "theory"
+  },
+  {
+    "id": "Q2-023",
+    "chapter": "10.1",
+    "topic": "DCFROR และ MARR",
+    "question": "DCFROR นิยามว่าอะไร?",
+    "options": [
+      "อัตราคิดลดที่ทำให้ NPV ของกระแสโครงการเท่ากับศูนย์",
+      "เงินสดสะสมเมื่อไม่คิดลด",
+      "อัตราภาษีของโรงงาน",
+      "อัตรากำไรสุทธิเฉลี่ยหารรายรับ"
+    ],
+    "correct": 0,
+    "why": "นิยาม IRR หา i* จากสมการ NPV(i*)=0",
+    "steps": [
+      "เขียน CF ทุกปีพร้อมเครื่องหมาย",
+      "ทดลองอัตราเพื่อหาค่าใกล้จุด NPV=0"
+    ],
+    "ref": "10.1 · หน้า 22, 27–30",
+    "origin": "สร้างเพิ่มจากสไลด์",
+    "kind": "theory"
+  },
+  {
+    "id": "Q2-024",
+    "chapter": "10.1",
+    "topic": "DCFROR และ MARR",
+    "question": "โครงการทั่วไปลงทุนก่อนและรับเงินภายหลัง มี IRR=14% และ MARR=10% ควรตัดสินตามเกณฑ์ IRR อย่างไร?",
+    "options": [
+      "ผ่านเกณฑ์ผลตอบแทน เพราะ IRR มากกว่า MARR",
+      "ไม่ผ่าน เพราะ 14% มากกว่า 10%",
+      "ผ่านเฉพาะเมื่อ NPV เป็นลบ",
+      "ตัดสินไม่ได้แม้กำหนดกระแสปกติ"
+    ],
+    "correct": 0,
+    "why": "สำหรับกระแสแบบลงทุนก่อนและรับเงินภายหลัง สามารถเทียบ IRR กับ MARR",
+    "steps": [
+      "14% > 10%",
+      "ตรวจข้อจำกัดอื่น เช่น งบและเงื่อนไขคืนทุนเพิ่มเติม"
+    ],
+    "ref": "10.1 · หน้า 33",
+    "origin": "สร้างเพิ่มจากสไลด์",
+    "kind": "theory"
+  },
+  {
+    "id": "Q2-025",
+    "chapter": "10.1",
+    "topic": "DCFROR และ MARR",
+    "question": "กระแสเงินสดที่เปลี่ยนเครื่องหมายหลายครั้งอาจมีปัญหาใดในการใช้ IRR?",
+    "options": [
+      "อาจมีหลาย IRR หรือไม่มีคำตอบที่เหมาะสม",
+      "IRR ต้องเท่ากับ 0 เสมอ",
+      "NPV จะไม่ขึ้นกับอัตรา",
+      "ทำให้เงินทุกก้อนเกิด t=0"
+    ],
+    "correct": 0,
+    "why": "สมการ NPV=0 อาจมีหลายรากสำหรับกระแสไม่ปกติ",
+    "steps": [
+      "ตรวจรูปแบบกระแสและ NPV profile",
+      "ใช้ NPV ที่ MARR ประกอบการตัดสินใจ"
+    ],
+    "ref": "10.1 · หน้า 27–33",
+    "origin": "สร้างเพิ่มจากสไลด์",
+    "kind": "theory"
+  },
+  {
+    "id": "Q2-026",
+    "chapter": "10.1",
+    "topic": "ข้อสอบโรงงาน 2025",
+    "question": "ข้อสอบโรงงาน 2025 ให้ FCI 22 ล้านรวมที่ดิน 2 ล้าน FCIL เท่าใด?",
+    "options": [
+      "20 ล้านดอลลาร์",
+      "22 ล้านดอลลาร์",
+      "24 ล้านดอลลาร์",
+      "2 ล้านดอลลาร์"
+    ],
+    "correct": 0,
+    "why": "ฐานสินทรัพย์ถาวรไม่รวมที่ดิน",
+    "steps": [
+      "FCI_L = FCI รวมที่ดิน − ที่ดิน",
+      "22 − 2 = 20 ล้านดอลลาร์"
+    ],
+    "ref": "ข้อสอบ 2025 · หน้า 8",
+    "origin": "อิงข้อสอบปลายภาค 2025",
+    "kind": "theory"
+  },
+  {
+    "id": "Q2-027",
+    "chapter": "10.1",
+    "topic": "ข้อสอบโรงงาน 2025",
+    "question": "เหตุใด DPBP ของโจทย์โรงงาน 2025 จึงอาจได้ 6.37 หรือประมาณ 8.21 ปี?",
+    "options": [
+      "สองคำตอบใช้ฐานคืนทุนต่างกัน: FCI_L เทียบกับเงินลงทุนทั้งหมด",
+      "ใช้ดอกเบี้ยคนละสกุลเงินเสมอ",
+      "6.37 คือ IRR ไม่ใช่เวลา",
+      "ค่าเสื่อมต้องเป็นศูนย์"
+    ],
+    "correct": 0,
+    "why": "ต้องระบุว่าคืน FCI_L อย่างเดียวหรือรวมที่ดินและ WC",
+    "steps": [
+      "เฉลย 6.37 เทียบ cumulative discounted CF กับ −(land+WC)",
+      "การให้คืนเงินออกเริ่มต้นทั้งหมดใช้เป้า 0 และได้เวลานานกว่า"
+    ],
+    "ref": "ข้อสอบ 2025 · หน้า 8–9",
+    "origin": "อิงข้อสอบปลายภาค 2025",
+    "kind": "theory"
+  },
+  {
+    "id": "Q2-028",
+    "chapter": "10.2",
+    "topic": "การเลือกโครงการ",
+    "question": "ทางเลือก mutually exclusive หมายถึงข้อใด?",
+    "options": [
+      "เลือกได้ไม่เกินหนึ่งทางเลือกในกลุ่ม",
+      "สามารถเลือกทุกโครงการพร้อมกัน",
+      "โครงการทุกตัวต้องมี IRR เท่ากัน",
+      "ห้ามวิเคราะห์ NPV"
+    ],
+    "correct": 0,
+    "why": "ทางเลือกแข่งขันกันสำหรับบริการหรือทรัพยากรเดียวกัน",
+    "steps": [
+      "การเลือก A ตัดสิทธิเลือก B ในกลุ่ม",
+      "ถ้าเลือกไม่ลงทุนได้ อาจมี do-nothing เป็นทางเลือก"
+    ],
+    "ref": "10.2 · หน้า 3–4, 12",
+    "origin": "สร้างเพิ่มจากสไลด์",
+    "kind": "theory"
+  },
+  {
+    "id": "Q2-029",
+    "chapter": "10.2",
+    "topic": "การเลือกโครงการ",
+    "question": "โครงการเลือกได้เพียงหนึ่งเดียวและมีอายุเท่ากัน ควรเลือกอย่างไรเมื่อใช้ NPV?",
+    "options": [
+      "เลือก NPV สูงสุดที่ทำได้และผ่านข้อกำหนด",
+      "เลือก IRR รายโครงการสูงสุดโดยไม่ดูขนาดลงทุน",
+      "เลือกต้นทุนเริ่มต้นต่ำสุดเสมอ",
+      "รวม NPV ทุกโครงการราวกับทำพร้อมกัน"
+    ],
+    "correct": 0,
+    "why": "NPV วัดมูลค่าสุทธิที่อัตราเดียวกัน",
+    "steps": [
+      "เทียบกระแสในช่วงศึกษาเดียวกัน",
+      "ตรวจงบและความเป็นไปได้ แล้วเลือก NPV สูงสุด"
+    ],
+    "ref": "10.2 · หน้า 3–7, 12",
+    "origin": "สร้างเพิ่มจากสไลด์",
+    "kind": "theory"
+  },
+  {
+    "id": "Q2-030",
+    "chapter": "10.2",
+    "topic": "การเลือกโครงการ",
+    "question": "เมื่อมีบริการจำเป็นและสองทางเลือกมีแต่ต้นทุน การที่ NPV ทั้งคู่เป็นลบบอกอะไร?",
+    "options": [
+      "เป็นต้นทุนสุทธิ ควรเทียบว่าอันไหนติดลบน้อยกว่าเมื่อบริการเท่ากัน",
+      "ต้องไม่ทำบริการเสมอ",
+      "ต้องเลือกค่าลบมากที่สุด",
+      "แปลว่า IRR ของแต่ละทางเลือกเป็นบวกแน่นอน"
+    ],
+    "correct": 0,
+    "why": "โครงการต้นทุนล้วนไม่มีรายรับที่นับในโจทย์",
+    "steps": [
+      "เปรียบเทียบขนาด PV cost หรือ NPV ที่ติดลบน้อยที่สุด",
+      "หากเลิกบริการไม่ได้ do-nothing ไม่ใช่ทางเลือกที่เป็นไปได้"
+    ],
+    "ref": "10.2 · หน้า 13–15",
+    "origin": "สร้างเพิ่มจากสไลด์",
+    "kind": "theory"
+  },
+  {
+    "id": "Q2-031",
+    "chapter": "10.2",
+    "topic": "การเลือกโครงการ",
+    "question": "ทำไม IRR รายโครงการสูงสุดอาจไม่ใช่ทางเลือกที่ดีที่สุดสำหรับโครงการขนาดไม่เท่ากัน?",
+    "options": [
+      "ไม่บอกว่าการลงทุนส่วนเพิ่มสร้างมูลค่าคุ้ม MARR หรือไม่",
+      "IRR คือจำนวนเงินสุทธิของโครงการ",
+      "เงินลงทุนทุกโครงการต้องเท่ากัน",
+      "NPV ใช้ได้เฉพาะเงินเข้าเท่านั้น"
+    ],
+    "correct": 0,
+    "why": "การเลือกระหว่างขนาดต่างกันต้องพิจารณาเงินส่วนเพิ่มและขนาดมูลค่า",
+    "steps": [
+      "ใช้ NPV เมื่อเทียบช่วงเดียวกัน",
+      "หากใช้ IRR ให้พิจารณากระแสส่วนเพิ่ม"
+    ],
+    "ref": "10.2 · หน้า 3–6, 12",
+    "origin": "สร้างเพิ่มจากสไลด์",
+    "kind": "theory"
+  },
+  {
+    "id": "Q2-032",
+    "chapter": "10.2",
+    "topic": "NPV อายุเท่ากัน",
+    "question": "สองทางเลือกอายุเท่ากันและให้บริการเท่ากัน การใช้ PW เปรียบเทียบต้องมีสิ่งใดตรงกัน?",
+    "options": [
+      "เวลาอ้างอิง อัตราคิดลด และขอบเขตบริการ",
+      "ราคาซื้อเท่ากันเท่านั้น",
+      "IRR ต้องเท่ากัน",
+      "ค่าใช้จ่ายทุกปีต้องเป็นศูนย์"
+    ],
+    "correct": 0,
+    "why": "การเทียบมูลค่าต้องอยู่บนฐานเวลาและบริการเดียวกัน",
+    "steps": [
+      "นำทุก CF ไปยังเวลาอ้างอิงเดียวกัน",
+      "ใช้อัตรา i และสมมติฐานสอดคล้องกัน"
+    ],
+    "ref": "10.2 · หน้า 13–15",
+    "origin": "สร้างเพิ่มจากสไลด์",
+    "kind": "theory"
+  },
+  {
+    "id": "Q2-033",
+    "chapter": "10.2",
+    "topic": "NPV อายุเท่ากัน",
+    "question": "ทางเลือก A มี NPV −33,220 และ B มี NPV −32,441 โดยบริการเท่ากัน เลือกอะไร?",
+    "options": [
+      "เลือก B เพราะต้นทุนปัจจุบันน้อยกว่า",
+      "เลือก A เพราะ 33,220 มากกว่า 32,441",
+      "เลือก A เพราะ NPV ติดลบมากกว่า",
+      "ตอบไม่ได้เพราะทั้งคู่ติดลบ"
+    ],
+    "correct": 0,
+    "why": "สำหรับต้นทุนล้วน NPV ที่สูงกว่าคือค่าที่ลบน้อยกว่า",
+    "steps": [
+      "เปรียบเทียบ −32,441 > −33,220",
+      "จึงเลือก B เมื่อบริการและช่วงเวลาเท่ากัน"
+    ],
+    "ref": "10.2 · หน้า 14–15",
+    "origin": "สร้างเพิ่มจากสไลด์",
+    "kind": "theory"
+  },
+  {
+    "id": "Q2-034",
+    "chapter": "10.2",
+    "topic": "วิเคราะห์ส่วนเพิ่ม",
+    "question": "สูตรกระแสเงินสดส่วนเพิ่มเมื่อ challenger ลงทุนสูงกว่า defender คืออะไร?",
+    "options": [
+      "CF ของ challenger ลบ CF ของ defender ทุกปี",
+      "เอา IRR challenger ลบ IRR defender แล้วใช้แทน incremental IRR",
+      "เอา NPV มาหารอายุโดยไม่ดู cash flow",
+      "เอา CF defender ลบ challenger แล้วใช้เกณฑ์เดิมโดยไม่ดูเครื่องหมาย"
+    ],
+    "correct": 0,
+    "why": "IRR ส่วนเพิ่มต้องคำนวณจากกระแสที่ต่างกัน ไม่ใช่ผลต่างตัวเลข IRR",
+    "steps": [
+      "หา ΔCF_t = CF_challenger,t − CF_defender,t",
+      "หาอัตราที่ ΔNPV=0"
+    ],
+    "ref": "10.2 · หน้า 8–11; ข้อสอบ 2025 ข้อ 9–11",
+    "origin": "สร้างเพิ่มจากสไลด์",
+    "kind": "theory"
+  },
+  {
+    "id": "Q2-035",
+    "chapter": "10.2",
+    "topic": "วิเคราะห์ส่วนเพิ่ม",
+    "question": "หาก ΔNPV ของ B−A ที่ MARR เป็นบวก และ B ลงทุนมากกว่า เลือกอย่างไร?",
+    "options": [
+      "เลือก B ถ้าทั้งคู่ให้บริการและเงื่อนไขเปรียบเทียบตรงกัน",
+      "เลือก A เสมอ",
+      "เลือก B เฉพาะเมื่อ IRR รายโครงการ B ต่ำกว่า 0",
+      "ต้องเลือกทั้งสอง"
+    ],
+    "correct": 0,
+    "why": "ΔNPV=NPV_B−NPV_A ดังนั้นค่าบวกแปลว่า B เพิ่มมูลค่า",
+    "steps": [
+      "กำหนด B เป็น challenger ที่ลงทุนสูงกว่า",
+      "ΔNPV>0 หมายถึง NPV_B>NPV_A"
+    ],
+    "ref": "10.2 · หน้า 5–6, 8–11",
+    "origin": "สร้างเพิ่มจากสไลด์",
+    "kind": "theory"
+  },
+  {
+    "id": "Q2-036",
+    "chapter": "10.2",
+    "topic": "วิเคราะห์ส่วนเพิ่ม",
+    "question": "เมื่อกระแสส่วนเพิ่มเป็นแบบลงทุนก่อน–ได้ผลประหยัดภายหลัง และ ΔIRR ต่ำกว่า MARR จะเลือกอะไร?",
+    "options": [
+      "คงทางเลือกที่ลงทุนต่ำกว่า",
+      "เปลี่ยนไปตัวลงทุนสูงกว่าเสมอ",
+      "บวก MARR กับ ΔIRR แล้วเลือกสูงสุด",
+      "สรุปว่าทุกโครงการเป็นลบ"
+    ],
+    "correct": 0,
+    "why": "เงินส่วนเพิ่มให้ผลตอบแทนไม่ถึงเกณฑ์",
+    "steps": [
+      "เทียบ ΔIRR กับ MARR ของเงินลงทุนส่วนเพิ่ม",
+      "ภายใต้กระแสปกติ ΔNPV ที่ MARR จะเป็นลบ"
+    ],
+    "ref": "10.2 · หน้า 8–11",
+    "origin": "สร้างเพิ่มจากสไลด์",
+    "kind": "theory"
+  },
+  {
+    "id": "Q2-037",
+    "chapter": "10.2",
+    "topic": "วิเคราะห์ส่วนเพิ่ม",
+    "question": "ข้อใดถูกต้องเกี่ยวกับ IRR ของทางเลือกสองตัว?",
+    "options": [
+      "IRR ของกระแสส่วนเพิ่มโดยทั่วไปไม่เท่ากับ IRR_B − IRR_A",
+      "เอา IRR_B − IRR_A เป็น ΔIRR ได้เสมอ",
+      "IRR ส่วนเพิ่มต้องเท่ากับ MARR เสมอ",
+      "ใช้ IRR รายตัวสูงสุดเลือกได้ทุกกรณี"
+    ],
+    "correct": 0,
+    "why": "IRR เป็นผลเฉลยไม่เชิงเส้นของทั้งชุด cash flow",
+    "steps": [
+      "ลบ CF แต่ละเวลาก่อน",
+      "แก้สมการ NPV ของ CF ส่วนเพิ่มเท่ากับ 0"
+    ],
+    "ref": "10.2 · หน้า 8–11",
+    "origin": "สร้างเพิ่มจากสไลด์",
+    "kind": "theory"
+  },
+  {
+    "id": "Q2-038",
+    "chapter": "10.2",
+    "topic": "โจทย์เปรียบเทียบโครงการ",
+    "question": "ในตัวอย่าง A, B, C ของสไลด์ ที่ MARR 10% และเลือกได้เพียงหนึ่งโครงการ ผลลัพธ์คืออะไร?",
+    "options": [
+      "เลือก C ซึ่งมี NPV สูงสุด",
+      "เลือก A เพราะ IRR รายโครงการสูงสุด",
+      "เลือก B เพราะเงินลงทุนสูงสุด",
+      "เลือกทั้ง A และ C"
+    ],
+    "correct": 0,
+    "why": "เปรียบเทียบมูลค่าปัจจุบันสุทธิในช่วงเดียวกัน",
+    "steps": [
+      "NPV A=11.9, B=15.2, C=15.9 ล้าน",
+      "C สูงสุดและอยู่ในงบ 120 ล้าน"
+    ],
+    "ref": "10.2 · หน้า 3–6",
+    "origin": "ดัดแปลงจากตัวอย่างสไลด์",
+    "kind": "theory"
+  },
+  {
+    "id": "Q2-039",
+    "chapter": "10.2",
+    "topic": "โจทย์เปรียบเทียบโครงการ",
+    "question": "ในตัวอย่างสไลด์ ค่า ΔNPV ของ C−A เป็นบวก บอกอะไร?",
+    "options": [
+      "ผลประโยชน์เพิ่มของ C มีมูลค่ามากกว่าเงินลงทุนที่เพิ่มที่ MARR",
+      "A มี NPV สูงกว่า C",
+      "C ต้องมี IRR รายโครงการสูงกว่า A",
+      "สองโครงการต้องทำพร้อมกัน"
+    ],
+    "correct": 0,
+    "why": "ΔNPV เป็นส่วนต่าง NPV ของ C กับ A",
+    "steps": [
+      "ΔNPV C−A ประมาณ +3.70 ล้าน",
+      "จึงเลือก C แทน A ภายใต้เงื่อนไขเดียวกัน"
+    ],
+    "ref": "10.2 · หน้า 5",
+    "origin": "ดัดแปลงจากตัวอย่างสไลด์",
+    "kind": "theory"
+  },
+  {
+    "id": "Q2-040",
+    "chapter": "10.2",
+    "topic": "EAOC และ AW",
+    "question": "เมื่อรายงาน EAOC เป็นจำนวนบวกของต้นทุน ควรเลือกทางใด?",
+    "options": [
+      "เลือก EAOC ต่ำกว่า",
+      "เลือก EAOC สูงกว่า",
+      "เลือกอายุใช้งานสั้นสุดเสมอ",
+      "เลือกเงินลงทุนเริ่มต้นสูงสุดเสมอ"
+    ],
+    "correct": 0,
+    "why": "EAOC แสดงขนาดค่าใช้จ่ายรายปีเทียบเท่า",
+    "steps": [
+      "คำนวณ EAOC ที่ i เดียวกัน",
+      "บริการเท่ากันและสมมติฐานเหมาะสมจึงเลือกต้นทุนต่ำสุด"
+    ],
+    "ref": "10.2 · หน้า 16–19",
+    "origin": "สร้างเพิ่มจากสไลด์",
+    "kind": "theory"
+  },
+  {
+    "id": "Q2-041",
+    "chapter": "10.2",
+    "topic": "EAOC และ AW",
+    "question": "EAOC ของอุปกรณ์ไม่มีซาก ประกอบด้วยอะไร?",
+    "options": [
+      "ต้นทุนซื้อแปลงเป็นรายปีด้วย A/P บวกค่าเดินเครื่องรายปี",
+      "ราคาซื้อคูณ P/A บวกดอกเบี้ย",
+      "กำไรสุทธิหารต้นทุน",
+      "ต้นทุนซื้อหารจำนวนปีโดยไม่คำนึงถึงอัตราเสมอ"
+    ],
+    "correct": 0,
+    "why": "A/P แปลงทุนก้อนปัจจุบันเป็นต้นทุนรายปีเทียบเท่า",
+    "steps": [
+      "EAOC=C(A/P,i,n)+O",
+      "หน่วยเป็นเงินต่อปี"
+    ],
+    "ref": "10.2 · หน้า 17–19",
+    "origin": "สร้างเพิ่มจากสไลด์",
+    "kind": "theory"
+  },
+  {
+    "id": "Q2-042",
+    "chapter": "10.2",
+    "topic": "EAOC และมูลค่าซาก",
+    "question": "เมื่ออุปกรณ์มีมูลค่าซาก S สิ้นอายุ ผลต่อ EAOC คืออะไร?",
+    "options": [
+      "ลดต้นทุนรายปีโดยหัก S(A/F,i,n)",
+      "บวก S เต็มจำนวนทุกปี",
+      "ไม่เกี่ยวกับ EAOC",
+      "หัก S เป็นเงินก้อน ณ เวลา 0 โดยไม่คิดเวลา"
+    ],
+    "correct": 0,
+    "why": "ซากเป็นเงินรับปลายอายุ จึงลด capital recovery",
+    "steps": [
+      "EAOC=C(A/P)−S(A/F)+O",
+      "หรือเท่ากับ (C−S)(A/P)+Si+O"
+    ],
+    "ref": "10.2 · หน้า 16–20; ข้อสอบ 2025 หน้า 7",
+    "origin": "สร้างเพิ่มจากสไลด์",
+    "kind": "theory"
+  },
+  {
+    "id": "Q2-043",
+    "chapter": "10.2",
+    "topic": "EAOC และมูลค่าซาก",
+    "question": "ในการหา PW cost มูลค่าซาก ณ ปี n ควรจัดการอย่างไร?",
+    "options": [
+      "คิดลดกลับมาและหักจากขนาดต้นทุน",
+      "บวก S ทันทีที่ t=0",
+      "บวก S เป็นค่าใช้จ่ายทุกปี",
+      "ไม่ต้องสนใจเวลา"
+    ],
+    "correct": 0,
+    "why": "เงินรับจากซากเกิดในอนาคตและลดต้นทุนรวม",
+    "steps": [
+      "PV ซาก = S(P/F,i,n)",
+      "PV cost = C+O(P/A)−PV ซาก"
+    ],
+    "ref": "10.2 · หน้า 13–15",
+    "origin": "สร้างเพิ่มจากสไลด์",
+    "kind": "theory"
+  },
+  {
+    "id": "Q2-044",
+    "chapter": "10.2",
+    "topic": "อายุต่างกันและ LCM",
+    "question": "ต้องการเปรียบเทียบ PW ของทางเลือกอายุ 6 และ 9 ปี แบบทำซ้ำเหมือนเดิม ค.ร.น. เป็นเท่าใด?",
+    "options": [
+      "18 ปี",
+      "15 ปี",
+      "9 ปี",
+      "54 ปี"
+    ],
+    "correct": 0,
+    "why": "เลือกช่วงเวลาที่ทั้งสองทางเลือกจบรอบพร้อมกัน",
+    "steps": [
+      "6 ทำซ้ำ 3 รอบ; 9 ทำซ้ำ 2 รอบ",
+      "ค.ร.น.(6,9)=18"
+    ],
+    "ref": "10.2 · หน้า 21–25",
+    "origin": "สร้างเพิ่มจากสไลด์",
+    "kind": "theory"
+  },
+  {
+    "id": "Q2-045",
+    "chapter": "10.2",
+    "topic": "อายุต่างกันและ LCM",
+    "question": "การเปรียบเทียบด้วยช่วง LCM ต้องตั้งสมมติฐานใด?",
+    "options": [
+      "ต้องการบริการตลอดช่วงและแต่ละรอบทำซ้ำได้ตาม cash flow ที่กำหนด",
+      "อุปกรณ์ต้องราคาซื้อเท่ากัน",
+      "อัตราดอกเบี้ยต้องเป็นศูนย์",
+      "แต่ละรอบไม่ต้องซื้ออุปกรณ์ใหม่"
+    ],
+    "correct": 0,
+    "why": "วิธีทำซ้ำอาศัยรูปแบบบริการและการทดแทน",
+    "steps": [
+      "ระบุเวลาซื้อใหม่และซากในแต่ละรอบ",
+      "หากโจทย์ให้ช่วงโครงการจำกัดหรือเงื่อนไขใหม่ ต้องปรับวิธี"
+    ],
+    "ref": "10.2 · หน้า 21–25",
+    "origin": "สร้างเพิ่มจากสไลด์",
+    "kind": "theory"
+  },
+  {
+    "id": "Q2-046",
+    "chapter": "10.2",
+    "topic": "อายุต่างกันและ LCM",
+    "question": "การเปรียบเทียบ NPV ของอายุ 2 ปีกับ 4 ปี สามารถทำได้หรือไม่?",
+    "options": [
+      "ทำได้เมื่อกำหนดช่วงศึกษาเดียวกันและวิธีทดแทน/มูลค่าคงเหลือที่เหมาะสม",
+      "ทำไม่ได้โดยเด็ดขาด",
+      "ใช้ NPV ณ ปี 2 เทียบกับปี 4 ตรง ๆ ได้เสมอ",
+      "ต้องให้ดอกเบี้ยเป็นศูนย์"
+    ],
+    "correct": 0,
+    "why": "ปัญหาอยู่ที่ฐานเวลาและบริการต่างกัน ไม่ใช่วิธี NPV ใช้ไม่ได้",
+    "steps": [
+      "ขยายถึง LCM ถ้าสมมติซ้ำได้",
+      "หรือใช้ช่วงศึกษาร่วมอื่นพร้อมมูลค่าคงเหลือตามโจทย์"
+    ],
+    "ref": "10.2 · หน้า 16, 21–25",
+    "origin": "สร้างเพิ่มจากสไลด์",
+    "kind": "theory"
+  },
+  {
+    "id": "Q2-047",
+    "chapter": "10.2",
+    "topic": "AW และการทำซ้ำ",
+    "question": "AW ของหนึ่งรอบเท่ากับ AW ของหลายรอบเมื่อใด?",
+    "options": [
+      "เมื่อแต่ละรอบทำซ้ำด้วยกระแสและสมมติฐานเดียวกัน",
+      "เท่ากันเสมอแม้ราคาเปลี่ยนทุกรอบ",
+      "เฉพาะเมื่ออัตราดอกเบี้ยเป็นศูนย์",
+      "เฉพาะเมื่อไม่มีต้นทุนเดินเครื่อง"
+    ],
+    "correct": 0,
+    "why": "การทำซ้ำเหมือนเดิมทำให้ annual equivalent ต่อรอบคงเดิม",
+    "steps": [
+      "หา AW ของรอบแรกด้วย A/P",
+      "หากเงื่อนไขรอบใหม่เปลี่ยน ต้องคำนวณตามข้อมูลใหม่"
+    ],
+    "ref": "10.2 · หน้า 16–21; ข้อสอบ 2025 ข้อ 14",
+    "origin": "สร้างเพิ่มจากสไลด์",
+    "kind": "theory"
+  },
+  {
+    "id": "Q2-048",
+    "chapter": "10.2",
+    "topic": "AW และการทำซ้ำ",
+    "question": "เหตุใดจึงไม่เปรียบเทียบ Future Worth ของอายุ 2 ปีกับ 4 ปีที่ปลายอายุแต่ละตัวตรง ๆ?",
+    "options": [
+      "เพราะมูลค่าอยู่คนละเวลาและบริการต่างระยะ",
+      "เพราะอนาคตไม่มีมูลค่า",
+      "เพราะ future worth ต้องเป็นศูนย์",
+      "เพราะทุกทางเลือกต้องมีอายุเท่ากันโดยกฎหมาย"
+    ],
+    "correct": 0,
+    "why": "ต้องเทียบที่เวลาและช่วงบริการเดียวกัน",
+    "steps": [
+      "กำหนดช่วงศึกษาร่วมก่อน",
+      "ย้ายกระแสทุกตัวไปเวลาอ้างอิงร่วม"
+    ],
+    "ref": "ข้อสอบ 2025 · ข้อ 1; 10.2 หน้า 16–21",
+    "origin": "สร้างเพิ่มจากสไลด์",
+    "kind": "theory"
+  },
+  {
+    "id": "Q2-049",
+    "chapter": "10.2",
+    "topic": "AW และการทำซ้ำ",
+    "question": "หาก AW ของต้นทุนรายงานเป็นค่าลบ เช่น −4,215 และ −4,673 ควรเลือกอะไร?",
+    "options": [
+      "เลือก −4,215 เพราะเป็นต้นทุนขนาดต่ำกว่า",
+      "เลือก −4,673 เพราะตัวเลขมีขนาดมากกว่า",
+      "เลือกทั้งสองพร้อมกัน",
+      "ตัดสินจากเครื่องหมายลบอย่างเดียวไม่ได้แม้บริการเท่ากัน"
+    ],
+    "correct": 0,
+    "why": "ต้นทุนลบที่มีค่าสูงกว่าจะติดลบน้อยกว่า",
+    "steps": [
+      "−4,215 > −4,673",
+      "เทียบเท่าเลือก EAOC แบบบวก 4,215 ต่ำกว่า 4,673"
+    ],
+    "ref": "10.2 · หน้า 17–19",
+    "origin": "สร้างเพิ่มจากสไลด์",
+    "kind": "theory"
+  },
+  {
+    "id": "Q2-050",
+    "chapter": "10.2",
+    "topic": "Capitalized cost",
+    "question": "Capitalized cost หมายถึงอะไร?",
+    "options": [
+      "มูลค่าปัจจุบันของต้นทุนสำหรับบริการที่ดำเนินต่อเนื่องตลอดไปภายใต้สมมติฐาน",
+      "ค่าใช้จ่ายรายปีเทียบเท่าเสมอ",
+      "มูลค่าอนาคตที่ปีสุดท้ายของอายุ 10 ปี",
+      "กำไรสุทธิเฉลี่ยต่อปี"
+    ],
+    "correct": 0,
+    "why": "capitalized cost เป็น present worth ของกระแสไม่สิ้นสุด",
+    "steps": [
+      "ค่าใช้จ่ายรายปี O ตลอดไปมี PV=O/i เมื่อ i>0",
+      "ต้องระบุสมมติฐานอัตราคงที่และการทดแทน"
+    ],
+    "ref": "10.2 · หน้า 28–31; ข้อสอบ 2025 ข้อ 13",
+    "origin": "สร้างเพิ่มจากสไลด์",
+    "kind": "theory"
+  },
+  {
+    "id": "Q2-051",
+    "chapter": "10.2",
+    "topic": "Capitalized cost",
+    "question": "โครงการถาวรมีค่าบำรุง O ต่อปีเมื่อ i>0 มูลค่าปัจจุบันของค่าบำรุงเท่าใด?",
+    "options": [
+      "O/i",
+      "O×i",
+      "O×จำนวนปีซึ่งเป็นอนันต์แล้วหาร i",
+      "O(A/P,i,n)"
+    ],
+    "correct": 0,
+    "why": "มูลค่าปัจจุบันของ uniform perpetuity คือ O/i",
+    "steps": [
+      "O บาททุกสิ้นปีตลอดไป",
+      "ผลรวม discount = O/i เมื่ออัตราบวก"
+    ],
+    "ref": "10.2 · หน้า 30–31",
+    "origin": "สร้างเพิ่มจากสไลด์",
+    "kind": "theory"
+  },
+  {
+    "id": "Q2-052",
+    "chapter": "10.2",
+    "topic": "Capitalized cost",
+    "question": "CC และ EAOC ของบริการซ้ำตลอดไปสัมพันธ์กันอย่างไรเมื่อใช้สมมติฐานเดียวกันและ i>0?",
+    "options": [
+      "EAOC = i × CC",
+      "EAOC = CC/i",
+      "EAOC = CC + i",
+      "ทั้งสองมีหน่วยเดียวกัน"
+    ],
+    "correct": 0,
+    "why": "เงินก้อน CC ที่ให้เงินรายปีคงที่ตลอดไปมีรายปีเท่ากับดอกเบี้ย iCC",
+    "steps": [
+      "CC มีหน่วยเงินปัจจุบัน",
+      "EAOC มีหน่วยเงินต่อปี"
+    ],
+    "ref": "10.2 · หน้า 29–34",
+    "origin": "สร้างเพิ่มจากสไลด์",
+    "kind": "theory"
+  },
+  {
+    "id": "Q2-053",
+    "chapter": "10.2",
+    "topic": "เลือกวิธีวิเคราะห์",
+    "question": "หากอุปกรณ์สองตัวมีอายุไม่เท่ากันและทำซ้ำได้เหมือนเดิม วิธีใดเหมาะ?",
+    "options": [
+      "เปรียบเทียบ EAOC หรือ PW บนช่วง LCM",
+      "เปรียบเทียบเงินซื้อเริ่มต้นเพียงอย่างเดียว",
+      "เปรียบเทียบ FW คนละปีโดยตรง",
+      "เลือกตัวที่อายุสั้นที่สุด"
+    ],
+    "correct": 0,
+    "why": "ต้องปรับให้บริการและเวลาเปรียบเทียบสอดคล้องกัน",
+    "steps": [
+      "EAOC เปลี่ยนแต่ละรอบเป็นต้นทุนรายปี",
+      "LCM สร้างช่วงเวลาเดียวกันสำหรับ PW"
+    ],
+    "ref": "10.2 · หน้า 16–25",
+    "origin": "สร้างเพิ่มจากสไลด์",
+    "kind": "theory"
+  },
+  {
+    "id": "Q2-054",
+    "chapter": "10.2",
+    "topic": "เลือกวิธีวิเคราะห์",
+    "question": "การเลือกด้วย EAOC, PW ที่ LCM และ capitalized cost ควรให้ผลสอดคล้องกันเมื่อใด?",
+    "options": [
+      "เมื่อใช้อัตรา กระแสบริการ และสมมติฐานทำซ้ำที่เทียบเท่ากัน",
+      "แม้ใช้ช่วงศึกษาและต้นทุนคนละชุด",
+      "เฉพาะเมื่อ S เท่าราคาเริ่มต้น",
+      "ต้องเป็นโครงการอายุเท่ากันเท่านั้น"
+    ],
+    "correct": 0,
+    "why": "วิธีต่างกันแต่เปรียบเทียบทางเศรษฐกิจเดียวกัน",
+    "steps": [
+      "ตรวจสมมติฐานว่าซื้อซ้ำและ operating costs เท่าเดิม",
+      "ถ้าช่วงศึกษาไม่เหมือนกัน อันดับอาจเปลี่ยน"
+    ],
+    "ref": "10.2 · หน้า 16–21, 28–34",
+    "origin": "สร้างเพิ่มจากสไลด์",
+    "kind": "theory"
+  },
+  {
+    "id": "Q2-055",
+    "chapter": "10.1",
+    "topic": "กำไรและกระแสเงินสด",
+    "question": "เครื่องจักรต้นทุน 20 ล้าน มูลค่าซาก 0.5 ล้าน อายุ 10 ปี คิด SL ค่าเสื่อมต่อปีเท่าใด?",
+    "options": [
+      "1.95 ล้าน/ปี",
+      "2.00 ล้าน/ปี",
+      "2.05 ล้าน/ปี",
+      "0.05 ล้าน/ปี"
+    ],
+    "correct": 0,
+    "why": "SL กระจาย C−S เท่ากันทุกปี",
+    "steps": [
+      "d = (C−S)/n = (20−0.5)/10",
+      "d = 1.95 ล้านต่อปี"
+    ],
+    "ref": "10.1 · หน้า 10–11; ข้อสอบ 2025 · หน้า 8",
+    "origin": "สร้างเพิ่มจากสไลด์",
+    "kind": "calculation"
+  },
+  {
+    "id": "Q2-056",
+    "chapter": "10.1",
+    "topic": "กำไรและกระแสเงินสด",
+    "question": "เครื่องจักรต้นทุน 150 ล้าน มูลค่าซาก 10 ล้าน อายุ 7 ปี คิด SL ค่าเสื่อมต่อปีเท่าใด?",
+    "options": [
+      "20.00 ล้าน/ปี",
+      "21.43 ล้าน/ปี",
+      "22.86 ล้าน/ปี",
+      "1.43 ล้าน/ปี"
+    ],
+    "correct": 0,
+    "why": "SL กระจาย C−S เท่ากันทุกปี",
+    "steps": [
+      "d = (C−S)/n = (150−10)/7",
+      "d = 20.00 ล้านต่อปี"
+    ],
+    "ref": "10.1 · หน้า 10–11; ข้อสอบ 2025 · หน้า 8",
+    "origin": "สร้างเพิ่มจากสไลด์",
+    "kind": "calculation"
+  },
+  {
+    "id": "Q2-057",
+    "chapter": "10.1",
+    "topic": "กำไรและกระแสเงินสด",
+    "question": "เครื่องจักรต้นทุน 100 ล้าน มูลค่าซาก 10 ล้าน อายุ 5 ปี คิด SL ค่าเสื่อมต่อปีเท่าใด?",
+    "options": [
+      "18.00 ล้าน/ปี",
+      "20.00 ล้าน/ปี",
+      "22.00 ล้าน/ปี",
+      "2.00 ล้าน/ปี"
+    ],
+    "correct": 0,
+    "why": "SL กระจาย C−S เท่ากันทุกปี",
+    "steps": [
+      "d = (C−S)/n = (100−10)/5",
+      "d = 18.00 ล้านต่อปี"
+    ],
+    "ref": "10.1 · หน้า 10–11; ข้อสอบ 2025 · หน้า 8",
+    "origin": "สร้างเพิ่มจากสไลด์",
+    "kind": "calculation"
+  },
+  {
+    "id": "Q2-058",
+    "chapter": "10.1",
+    "topic": "กำไรและกระแสเงินสด",
+    "question": "รายรับ 75 ล้าน ต้นทุนเงินสด 30 ล้าน ค่าเสื่อม 30 ล้าน ภาษี 45% หากกำไรเป็นบวก operating CF หลังภาษีเท่าใด?",
+    "options": [
+      "38.25 ล้าน",
+      "8.25 ล้าน",
+      "45.00 ล้าน",
+      "15.00 ล้าน"
+    ],
+    "correct": 0,
+    "why": "หาภาษีจากกำไรที่หักค่าเสื่อม แล้วบวกค่าเสื่อมกลับเพราะไม่ใช่เงินสดจ่ายซ้ำ",
+    "steps": [
+      "กำไรก่อนภาษี = 75−30−30 = 15.00 ล้าน; ภาษี = 15.00×0.45 = 6.75 ล้าน",
+      "กำไรหลังภาษี = 8.25 ล้าน; CF = 8.25+30 = 38.25 ล้าน"
+    ],
+    "ref": "10.1 · หน้า 10–11",
+    "origin": "ดัดแปลงจากตัวอย่างสไลด์",
+    "kind": "calculation"
+  },
+  {
+    "id": "Q2-059",
+    "chapter": "10.1",
+    "topic": "กำไรและกระแสเงินสด",
+    "question": "รายรับ 100 ล้าน ต้นทุนเงินสด 40 ล้าน ค่าเสื่อม 20 ล้าน ภาษี 30% หากกำไรเป็นบวก operating CF หลังภาษีเท่าใด?",
+    "options": [
+      "48.00 ล้าน",
+      "28.00 ล้าน",
+      "60.00 ล้าน",
+      "40.00 ล้าน"
+    ],
+    "correct": 0,
+    "why": "หาภาษีจากกำไรที่หักค่าเสื่อม แล้วบวกค่าเสื่อมกลับเพราะไม่ใช่เงินสดจ่ายซ้ำ",
+    "steps": [
+      "กำไรก่อนภาษี = 100−40−20 = 40.00 ล้าน; ภาษี = 40.00×0.3 = 12.00 ล้าน",
+      "กำไรหลังภาษี = 28.00 ล้าน; CF = 28.00+20 = 48.00 ล้าน"
+    ],
+    "ref": "10.1 · หน้า 10–11",
+    "origin": "สร้างเพิ่มจากสไลด์",
+    "kind": "calculation"
+  },
+  {
+    "id": "Q2-060",
+    "chapter": "10.1",
+    "topic": "กำไรและกระแสเงินสด",
+    "question": "รายรับ 12 ล้าน ต้นทุนเงินสด 5 ล้าน ค่าเสื่อม 2 ล้าน ภาษี 25% หากกำไรเป็นบวก operating CF หลังภาษีเท่าใด?",
+    "options": [
+      "5.75 ล้าน",
+      "3.75 ล้าน",
+      "7.00 ล้าน",
+      "5.00 ล้าน"
+    ],
+    "correct": 0,
+    "why": "หาภาษีจากกำไรที่หักค่าเสื่อม แล้วบวกค่าเสื่อมกลับเพราะไม่ใช่เงินสดจ่ายซ้ำ",
+    "steps": [
+      "กำไรก่อนภาษี = 12−5−2 = 5.00 ล้าน; ภาษี = 5.00×0.25 = 1.25 ล้าน",
+      "กำไรหลังภาษี = 3.75 ล้าน; CF = 3.75+2 = 5.75 ล้าน"
+    ],
+    "ref": "10.1 · หน้า 10–11",
+    "origin": "สร้างเพิ่มจากสไลด์",
+    "kind": "calculation"
+  },
+  {
+    "id": "Q2-061",
+    "chapter": "10.1",
+    "topic": "กำไรและกระแสเงินสด",
+    "question": "รายรับ 40 ล้าน ต้นทุนเงินสด 12 ล้าน ค่าเสื่อม 6 ล้าน ภาษี 20% หากกำไรเป็นบวก operating CF หลังภาษีเท่าใด?",
+    "options": [
+      "23.60 ล้าน",
+      "17.60 ล้าน",
+      "28.00 ล้าน",
+      "22.00 ล้าน"
+    ],
+    "correct": 0,
+    "why": "หาภาษีจากกำไรที่หักค่าเสื่อม แล้วบวกค่าเสื่อมกลับเพราะไม่ใช่เงินสดจ่ายซ้ำ",
+    "steps": [
+      "กำไรก่อนภาษี = 40−12−6 = 22.00 ล้าน; ภาษี = 22.00×0.2 = 4.40 ล้าน",
+      "กำไรหลังภาษี = 17.60 ล้าน; CF = 17.60+6 = 23.60 ล้าน"
+    ],
+    "ref": "10.1 · หน้า 10–11",
+    "origin": "สร้างเพิ่มจากสไลด์",
+    "kind": "calculation"
+  },
+  {
+    "id": "Q2-062",
+    "chapter": "10.1",
+    "topic": "CCP CCR และ ROROI",
+    "question": "เงินลงทุนรวม 100 ล้าน และเงินรับตลอดโครงการรวม 140 ล้าน ไม่คิดลด ค่า CCP เท่าใด?",
+    "options": [
+      "40.00 ล้าน",
+      "140.00 ล้าน",
+      "100.00 ล้าน",
+      "240.00 ล้าน"
+    ],
+    "correct": 0,
+    "why": "CCP รวมเงินเข้าลบขนาดเงินออก โดยไม่คิดลด",
+    "steps": [
+      "CCP = ผลรวมเงินรับ − ผลรวมเงินจ่าย = 140−100",
+      "CCP = 40.00 ล้าน"
+    ],
+    "ref": "10.1 · หน้า 7, 12",
+    "origin": "สร้างเพิ่มจากสไลด์",
+    "kind": "calculation"
+  },
+  {
+    "id": "Q2-063",
+    "chapter": "10.1",
+    "topic": "CCP CCR และ ROROI",
+    "question": "เงินลงทุนรวม 100 ล้าน และเงินรับตลอดโครงการรวม 140 ล้าน ไม่คิดลด ค่า CCR เท่าใด?",
+    "options": [
+      "1.40 เท่า",
+      "0.71 เท่า",
+      "0.40 เท่า",
+      "140.00 เท่า"
+    ],
+    "correct": 0,
+    "why": "CCR เป็นอัตราส่วนเงินเข้าต่อขนาดเงินออก ไม่ใช่ผลต่าง",
+    "steps": [
+      "CCR = ผลรวมเงินรับ/ขนาดเงินออก = 140/100",
+      "CCR = 1.40 เท่า"
+    ],
+    "ref": "10.1 · หน้า 7, 12",
+    "origin": "สร้างเพิ่มจากสไลด์",
+    "kind": "calculation"
+  },
+  {
+    "id": "Q2-064",
+    "chapter": "10.1",
+    "topic": "CCP CCR และ ROROI",
+    "question": "เงินลงทุนรวม 190 ล้าน และเงินรับตลอดโครงการรวม 360.5 ล้าน ไม่คิดลด ค่า CCP เท่าใด?",
+    "options": [
+      "170.50 ล้าน",
+      "360.50 ล้าน",
+      "190.00 ล้าน",
+      "550.50 ล้าน"
+    ],
+    "correct": 0,
+    "why": "CCP รวมเงินเข้าลบขนาดเงินออก โดยไม่คิดลด",
+    "steps": [
+      "CCP = ผลรวมเงินรับ − ผลรวมเงินจ่าย = 360.5−190",
+      "CCP = 170.50 ล้าน"
+    ],
+    "ref": "10.1 · หน้า 7, 12",
+    "origin": "สร้างเพิ่มจากสไลด์",
+    "kind": "calculation"
+  },
+  {
+    "id": "Q2-065",
+    "chapter": "10.1",
+    "topic": "CCP CCR และ ROROI",
+    "question": "เงินลงทุนรวม 190 ล้าน และเงินรับตลอดโครงการรวม 360.5 ล้าน ไม่คิดลด ค่า CCR เท่าใด?",
+    "options": [
+      "1.90 เท่า",
+      "0.53 เท่า",
+      "0.90 เท่า",
+      "360.50 เท่า"
+    ],
+    "correct": 0,
+    "why": "CCR เป็นอัตราส่วนเงินเข้าต่อขนาดเงินออก ไม่ใช่ผลต่าง",
+    "steps": [
+      "CCR = ผลรวมเงินรับ/ขนาดเงินออก = 360.5/190",
+      "CCR = 1.90 เท่า"
+    ],
+    "ref": "10.1 · หน้า 7, 12",
+    "origin": "สร้างเพิ่มจากสไลด์",
+    "kind": "calculation"
+  },
+  {
+    "id": "Q2-066",
+    "chapter": "10.1",
+    "topic": "CCP CCR และ ROROI",
+    "question": "เงินลงทุนรวม 250 ล้าน และเงินรับตลอดโครงการรวม 325 ล้าน ไม่คิดลด ค่า CCP เท่าใด?",
+    "options": [
+      "75.00 ล้าน",
+      "325.00 ล้าน",
+      "250.00 ล้าน",
+      "575.00 ล้าน"
+    ],
+    "correct": 0,
+    "why": "CCP รวมเงินเข้าลบขนาดเงินออก โดยไม่คิดลด",
+    "steps": [
+      "CCP = ผลรวมเงินรับ − ผลรวมเงินจ่าย = 325−250",
+      "CCP = 75.00 ล้าน"
+    ],
+    "ref": "10.1 · หน้า 7, 12",
+    "origin": "สร้างเพิ่มจากสไลด์",
+    "kind": "calculation"
+  },
+  {
+    "id": "Q2-067",
+    "chapter": "10.1",
+    "topic": "CCP CCR และ ROROI",
+    "question": "เงินลงทุนรวม 250 ล้าน และเงินรับตลอดโครงการรวม 325 ล้าน ไม่คิดลด ค่า CCR เท่าใด?",
+    "options": [
+      "1.30 เท่า",
+      "0.77 เท่า",
+      "0.30 เท่า",
+      "325.00 เท่า"
+    ],
+    "correct": 0,
+    "why": "CCR เป็นอัตราส่วนเงินเข้าต่อขนาดเงินออก ไม่ใช่ผลต่าง",
+    "steps": [
+      "CCR = ผลรวมเงินรับ/ขนาดเงินออก = 325/250",
+      "CCR = 1.30 เท่า"
+    ],
+    "ref": "10.1 · หน้า 7, 12",
+    "origin": "สร้างเพิ่มจากสไลด์",
+    "kind": "calculation"
+  },
+  {
+    "id": "Q2-068",
+    "chapter": "10.1",
+    "topic": "CCP CCR และ ROROI",
+    "question": "เงินลงทุนรวม 80 ล้าน และเงินรับตลอดโครงการรวม 96 ล้าน ไม่คิดลด ค่า CCP เท่าใด?",
+    "options": [
+      "16.00 ล้าน",
+      "96.00 ล้าน",
+      "80.00 ล้าน",
+      "176.00 ล้าน"
+    ],
+    "correct": 0,
+    "why": "CCP รวมเงินเข้าลบขนาดเงินออก โดยไม่คิดลด",
+    "steps": [
+      "CCP = ผลรวมเงินรับ − ผลรวมเงินจ่าย = 96−80",
+      "CCP = 16.00 ล้าน"
+    ],
+    "ref": "10.1 · หน้า 7, 12",
+    "origin": "สร้างเพิ่มจากสไลด์",
+    "kind": "calculation"
+  },
+  {
+    "id": "Q2-069",
+    "chapter": "10.1",
+    "topic": "CCP CCR และ ROROI",
+    "question": "เงินลงทุนรวม 80 ล้าน และเงินรับตลอดโครงการรวม 96 ล้าน ไม่คิดลด ค่า CCR เท่าใด?",
+    "options": [
+      "1.20 เท่า",
+      "0.83 เท่า",
+      "0.20 เท่า",
+      "96.00 เท่า"
+    ],
+    "correct": 0,
+    "why": "CCR เป็นอัตราส่วนเงินเข้าต่อขนาดเงินออก ไม่ใช่ผลต่าง",
+    "steps": [
+      "CCR = ผลรวมเงินรับ/ขนาดเงินออก = 96/80",
+      "CCR = 1.20 เท่า"
+    ],
+    "ref": "10.1 · หน้า 7, 12",
+    "origin": "สร้างเพิ่มจากสไลด์",
+    "kind": "calculation"
+  },
+  {
+    "id": "Q2-070",
+    "chapter": "10.1",
+    "topic": "CCP CCR และ ROROI",
+    "question": "FCIL = 200 ล้าน และกำไรสุทธิเฉลี่ยหลังภาษี 20 ล้านต่อปี ROROI เท่าใด?",
+    "options": [
+      "10.00 % ต่อปี",
+      "0.10 % ต่อปี",
+      "1,000.00 % ต่อปี",
+      "90.00 % ต่อปี"
+    ],
+    "correct": 0,
+    "why": "ใช้กำไรสุทธิเฉลี่ยหารฐาน FCI_L",
+    "steps": [
+      "ROROI = กำไรสุทธิเฉลี่ย/FCI_L = 20/200",
+      "ROROI = 10.00% ต่อปี"
+    ],
+    "ref": "10.1 · หน้า 8, 12",
+    "origin": "สร้างเพิ่มจากสไลด์",
+    "kind": "calculation"
+  },
+  {
+    "id": "Q2-071",
+    "chapter": "10.1",
+    "topic": "CCP CCR และ ROROI",
+    "question": "FCIL = 150 ล้าน และกำไรสุทธิเฉลี่ยหลังภาษี 18 ล้านต่อปี ROROI เท่าใด?",
+    "options": [
+      "12.00 % ต่อปี",
+      "0.12 % ต่อปี",
+      "833.33 % ต่อปี",
+      "88.00 % ต่อปี"
+    ],
+    "correct": 0,
+    "why": "ใช้กำไรสุทธิเฉลี่ยหารฐาน FCI_L",
+    "steps": [
+      "ROROI = กำไรสุทธิเฉลี่ย/FCI_L = 18/150",
+      "ROROI = 12.00% ต่อปี"
+    ],
+    "ref": "10.1 · หน้า 8, 12",
+    "origin": "สร้างเพิ่มจากสไลด์",
+    "kind": "calculation"
+  },
+  {
+    "id": "Q2-072",
+    "chapter": "10.1",
+    "topic": "CCP CCR และ ROROI",
+    "question": "FCIL = 80 ล้าน และกำไรสุทธิเฉลี่ยหลังภาษี 12 ล้านต่อปี ROROI เท่าใด?",
+    "options": [
+      "15.00 % ต่อปี",
+      "0.15 % ต่อปี",
+      "666.67 % ต่อปี",
+      "85.00 % ต่อปี"
+    ],
+    "correct": 0,
+    "why": "ใช้กำไรสุทธิเฉลี่ยหารฐาน FCI_L",
+    "steps": [
+      "ROROI = กำไรสุทธิเฉลี่ย/FCI_L = 12/80",
+      "ROROI = 15.00% ต่อปี"
+    ],
+    "ref": "10.1 · หน้า 8, 12",
+    "origin": "สร้างเพิ่มจากสไลด์",
+    "kind": "calculation"
+  },
+  {
+    "id": "Q2-073",
+    "chapter": "10.1",
+    "topic": "ระยะคืนทุน PBP",
+    "question": "ลงทุน 120 ล้าน รับเงินสดเท่ากัน 30 ล้านทุกสิ้นปี โดยไม่คิดดอกเบี้ย PBP เท่าใด?",
+    "options": [
+      "4.00 ปี",
+      "2.00 ปี",
+      "5.00 ปี",
+      "6.00 ปี"
+    ],
+    "correct": 0,
+    "why": "ไม่คิดลดและเงินรับเท่ากัน จึงหารฐานลงทุนด้วย CF ต่อปี",
+    "steps": [
+      "PBP = เงินลงทุน/CF ต่อปี = 120/30",
+      "PBP = 4.00 ปี"
+    ],
+    "ref": "10.1 · หน้า 34–41",
+    "origin": "สร้างเพิ่มจากสไลด์",
+    "kind": "calculation"
+  },
+  {
+    "id": "Q2-074",
+    "chapter": "10.1",
+    "topic": "ระยะคืนทุน PBP",
+    "question": "ลงทุน 100 ล้าน รับเงินสดเท่ากัน 20 ล้านทุกสิ้นปี โดยไม่คิดดอกเบี้ย PBP เท่าใด?",
+    "options": [
+      "5.00 ปี",
+      "2.50 ปี",
+      "6.00 ปี",
+      "7.00 ปี"
+    ],
+    "correct": 0,
+    "why": "ไม่คิดลดและเงินรับเท่ากัน จึงหารฐานลงทุนด้วย CF ต่อปี",
+    "steps": [
+      "PBP = เงินลงทุน/CF ต่อปี = 100/20",
+      "PBP = 5.00 ปี"
+    ],
+    "ref": "10.1 · หน้า 34–41",
+    "origin": "สร้างเพิ่มจากสไลด์",
+    "kind": "calculation"
+  },
+  {
+    "id": "Q2-075",
+    "chapter": "10.1",
+    "topic": "ระยะคืนทุน PBP",
+    "question": "ลงทุน 90 ล้าน รับเงินสดเท่ากัน 30 ล้านทุกสิ้นปี โดยไม่คิดดอกเบี้ย PBP เท่าใด?",
+    "options": [
+      "3.00 ปี",
+      "1.50 ปี",
+      "4.00 ปี",
+      "5.00 ปี"
+    ],
+    "correct": 0,
+    "why": "ไม่คิดลดและเงินรับเท่ากัน จึงหารฐานลงทุนด้วย CF ต่อปี",
+    "steps": [
+      "PBP = เงินลงทุน/CF ต่อปี = 90/30",
+      "PBP = 3.00 ปี"
+    ],
+    "ref": "10.1 · หน้า 34–41",
+    "origin": "สร้างเพิ่มจากสไลด์",
+    "kind": "calculation"
+  },
+  {
+    "id": "Q2-076",
+    "chapter": "10.1",
+    "topic": "ระยะคืนทุน PBP",
+    "question": "ลงทุน 150 ล้าน รับเงินสดเท่ากัน 25 ล้านทุกสิ้นปี โดยไม่คิดดอกเบี้ย PBP เท่าใด?",
+    "options": [
+      "6.00 ปี",
+      "3.00 ปี",
+      "7.00 ปี",
+      "8.00 ปี"
+    ],
+    "correct": 0,
+    "why": "ไม่คิดลดและเงินรับเท่ากัน จึงหารฐานลงทุนด้วย CF ต่อปี",
+    "steps": [
+      "PBP = เงินลงทุน/CF ต่อปี = 150/25",
+      "PBP = 6.00 ปี"
+    ],
+    "ref": "10.1 · หน้า 34–41",
+    "origin": "สร้างเพิ่มจากสไลด์",
+    "kind": "calculation"
+  },
+  {
+    "id": "Q2-077",
+    "chapter": "10.1",
+    "topic": "ระยะคืนทุน PBP",
+    "question": "ลงทุน 100 ล้าน รับเงินปลายปี 1, 2 และ 3 เท่ากับ 30, 30, 50 ล้าน ไม่คิดลด หากประมาณเชิงเส้น PBP เท่าใด?",
+    "options": [
+      "2.80 ปี",
+      "2.00 ปี",
+      "3.40 ปี",
+      "3.00 ปี"
+    ],
+    "correct": 0,
+    "why": "สะสมเงินรับจนถึงปีก่อนคืนทุน แล้วหารส่วนที่ยังขาดด้วยเงินรับปีถัดไป",
+    "steps": [
+      "สิ้นปี 2 ได้ 30+30=60 ล้าน; ยังขาด 40 ล้าน",
+      "PBP ≈ 2+(40/50) = 2.80 ปี โดยสมมติประมาณเชิงเส้น"
+    ],
+    "ref": "10.1 · หน้า 34–45",
+    "origin": "สร้างเพิ่มจากสไลด์",
+    "kind": "calculation"
+  },
+  {
+    "id": "Q2-078",
+    "chapter": "10.1",
+    "topic": "ระยะคืนทุน PBP",
+    "question": "ลงทุน 120 ล้าน รับเงินปลายปี 1, 2 และ 3 เท่ากับ 30, 40, 80 ล้าน ไม่คิดลด หากประมาณเชิงเส้น PBP เท่าใด?",
+    "options": [
+      "2.62 ปี",
+      "1.50 ปี",
+      "3.12 ปี",
+      "3.00 ปี"
+    ],
+    "correct": 0,
+    "why": "สะสมเงินรับจนถึงปีก่อนคืนทุน แล้วหารส่วนที่ยังขาดด้วยเงินรับปีถัดไป",
+    "steps": [
+      "สิ้นปี 2 ได้ 30+40=70 ล้าน; ยังขาด 50 ล้าน",
+      "PBP ≈ 2+(50/80) = 2.62 ปี โดยสมมติประมาณเชิงเส้น"
+    ],
+    "ref": "10.1 · หน้า 34–45",
+    "origin": "สร้างเพิ่มจากสไลด์",
+    "kind": "calculation"
+  },
+  {
+    "id": "Q2-079",
+    "chapter": "10.1",
+    "topic": "ระยะคืนทุน PBP",
+    "question": "ลงทุน 200 ล้าน รับเงินปลายปี 1, 2 และ 3 เท่ากับ 40, 50, 120 ล้าน ไม่คิดลด หากประมาณเชิงเส้น PBP เท่าใด?",
+    "options": [
+      "2.92 ปี",
+      "1.67 ปี",
+      "3.33 ปี",
+      "3.00 ปี"
+    ],
+    "correct": 0,
+    "why": "สะสมเงินรับจนถึงปีก่อนคืนทุน แล้วหารส่วนที่ยังขาดด้วยเงินรับปีถัดไป",
+    "steps": [
+      "สิ้นปี 2 ได้ 40+50=90 ล้าน; ยังขาด 110 ล้าน",
+      "PBP ≈ 2+(110/120) = 2.92 ปี โดยสมมติประมาณเชิงเส้น"
+    ],
+    "ref": "10.1 · หน้า 34–45",
+    "origin": "สร้างเพิ่มจากสไลด์",
+    "kind": "calculation"
+  },
+  {
+    "id": "Q2-080",
+    "chapter": "10.1",
+    "topic": "NPV และ PVR",
+    "question": "ลงทุน 100 บาท วันนี้ รับ 60 บาททุกสิ้นปี 2 ปี อัตรา 10% ต่อปี NPV ประมาณเท่าใด?",
+    "options": [
+      "4.13 บาท",
+      "20.00 บาท",
+      "204.13 บาท",
+      "104.13 บาท"
+    ],
+    "correct": 0,
+    "why": "เงินรับเป็นชุดเท่ากันปลายปี จึงใช้ P/A หามูลค่าปัจจุบันแล้วหักเงินลงทุน",
+    "steps": [
+      "PV เงินรับ = 60(P/A,10%,2) = 60×1.73554 = 104.13 บาท",
+      "NPV = −100+104.13 = 4.13 บาท"
+    ],
+    "ref": "10.1 · หน้า 14–16",
+    "origin": "สร้างเพิ่มจากสไลด์",
+    "kind": "calculation"
+  },
+  {
+    "id": "Q2-081",
+    "chapter": "10.1",
+    "topic": "NPV และ PVR",
+    "question": "ลงทุน 100 บาท วันนี้ รับ 30 บาททุกสิ้นปี 5 ปี อัตรา 10% ต่อปี NPV ประมาณเท่าใด?",
+    "options": [
+      "13.72 บาท",
+      "50.00 บาท",
+      "213.72 บาท",
+      "113.72 บาท"
+    ],
+    "correct": 0,
+    "why": "เงินรับเป็นชุดเท่ากันปลายปี จึงใช้ P/A หามูลค่าปัจจุบันแล้วหักเงินลงทุน",
+    "steps": [
+      "PV เงินรับ = 30(P/A,10%,5) = 30×3.79079 = 113.72 บาท",
+      "NPV = −100+113.72 = 13.72 บาท"
+    ],
+    "ref": "10.1 · หน้า 14–16",
+    "origin": "สร้างเพิ่มจากสไลด์",
+    "kind": "calculation"
+  },
+  {
+    "id": "Q2-082",
+    "chapter": "10.1",
+    "topic": "NPV และ PVR",
+    "question": "ลงทุน 70,000 บาท วันนี้ รับ 12,150 บาททุกสิ้นปี 10 ปี อัตรา 12% ต่อปี NPV ประมาณเท่าใด?",
+    "options": [
+      "-1,349.79 บาท",
+      "51,500.00 บาท",
+      "138,650.21 บาท",
+      "68,650.21 บาท"
+    ],
+    "correct": 0,
+    "why": "เงินรับเป็นชุดเท่ากันปลายปี จึงใช้ P/A หามูลค่าปัจจุบันแล้วหักเงินลงทุน",
+    "steps": [
+      "PV เงินรับ = 12,150(P/A,12%,10) = 12,150×5.65022 = 68,650.21 บาท",
+      "NPV = −70,000+68,650.21 = -1,349.79 บาท"
+    ],
+    "ref": "10.1 · หน้า 14–16",
+    "origin": "สร้างเพิ่มจากสไลด์",
+    "kind": "calculation"
+  },
+  {
+    "id": "Q2-083",
+    "chapter": "10.1",
+    "topic": "NPV และ PVR",
+    "question": "ลงทุน 500 บาท วันนี้ รับ 160 บาททุกสิ้นปี 4 ปี อัตรา 8% ต่อปี NPV ประมาณเท่าใด?",
+    "options": [
+      "29.94 บาท",
+      "140.00 บาท",
+      "1,029.94 บาท",
+      "529.94 บาท"
+    ],
+    "correct": 0,
+    "why": "เงินรับเป็นชุดเท่ากันปลายปี จึงใช้ P/A หามูลค่าปัจจุบันแล้วหักเงินลงทุน",
+    "steps": [
+      "PV เงินรับ = 160(P/A,8%,4) = 160×3.31213 = 529.94 บาท",
+      "NPV = −500+529.94 = 29.94 บาท"
+    ],
+    "ref": "10.1 · หน้า 14–16",
+    "origin": "สร้างเพิ่มจากสไลด์",
+    "kind": "calculation"
+  },
+  {
+    "id": "Q2-084",
+    "chapter": "10.1",
+    "topic": "NPV และ PVR",
+    "question": "ลงทุน 800 บาท วันนี้ รับ 250 บาททุกสิ้นปี 6 ปี อัตรา 15% ต่อปี NPV ประมาณเท่าใด?",
+    "options": [
+      "146.12 บาท",
+      "700.00 บาท",
+      "1,746.12 บาท",
+      "946.12 บาท"
+    ],
+    "correct": 0,
+    "why": "เงินรับเป็นชุดเท่ากันปลายปี จึงใช้ P/A หามูลค่าปัจจุบันแล้วหักเงินลงทุน",
+    "steps": [
+      "PV เงินรับ = 250(P/A,15%,6) = 250×3.78448 = 946.12 บาท",
+      "NPV = −800+946.12 = 146.12 บาท"
+    ],
+    "ref": "10.1 · หน้า 14–16",
+    "origin": "สร้างเพิ่มจากสไลด์",
+    "kind": "calculation"
+  },
+  {
+    "id": "Q2-085",
+    "chapter": "10.1",
+    "topic": "NPV และ PVR",
+    "question": "ลงทุน 100 วันนี้ รับ 60 ทุกสิ้นปี 2 ปี ที่ i=10% PVR ประมาณเท่าใด?",
+    "options": [
+      "1.04 เท่า",
+      "0.96 เท่า",
+      "0.04 เท่า",
+      "104.13 เท่า"
+    ],
+    "correct": 0,
+    "why": "PVR คือ PV เงินรับหารด้วยขนาด PV เงินออก",
+    "steps": [
+      "PV เงินรับ = 60(P/A,10%,2) = 104.13",
+      "PV เงินออก=100; PVR=104.13/100=1.04 เท่า"
+    ],
+    "ref": "10.1 · หน้า 16, 20",
+    "origin": "สร้างเพิ่มจากสไลด์",
+    "kind": "calculation"
+  },
+  {
+    "id": "Q2-086",
+    "chapter": "10.1",
+    "topic": "NPV และ PVR",
+    "question": "ลงทุน 200 วันนี้ รับ 70 ทุกสิ้นปี 4 ปี ที่ i=8% PVR ประมาณเท่าใด?",
+    "options": [
+      "1.16 เท่า",
+      "0.86 เท่า",
+      "0.16 เท่า",
+      "231.85 เท่า"
+    ],
+    "correct": 0,
+    "why": "PVR คือ PV เงินรับหารด้วยขนาด PV เงินออก",
+    "steps": [
+      "PV เงินรับ = 70(P/A,8%,4) = 231.85",
+      "PV เงินออก=200; PVR=231.85/200=1.16 เท่า"
+    ],
+    "ref": "10.1 · หน้า 16, 20",
+    "origin": "สร้างเพิ่มจากสไลด์",
+    "kind": "calculation"
+  },
+  {
+    "id": "Q2-087",
+    "chapter": "10.1",
+    "topic": "NPV และ PVR",
+    "question": "ลงทุน 1000 วันนี้ รับ 350 ทุกสิ้นปี 5 ปี ที่ i=10% PVR ประมาณเท่าใด?",
+    "options": [
+      "1.33 เท่า",
+      "0.75 เท่า",
+      "0.33 เท่า",
+      "1,326.78 เท่า"
+    ],
+    "correct": 0,
+    "why": "PVR คือ PV เงินรับหารด้วยขนาด PV เงินออก",
+    "steps": [
+      "PV เงินรับ = 350(P/A,10%,5) = 1,326.78",
+      "PV เงินออก=1000; PVR=1,326.78/1000=1.33 เท่า"
+    ],
+    "ref": "10.1 · หน้า 16, 20",
+    "origin": "สร้างเพิ่มจากสไลด์",
+    "kind": "calculation"
+  },
+  {
+    "id": "Q2-088",
+    "chapter": "10.1",
+    "topic": "ระยะคืนทุน DPBP",
+    "question": "ลงทุน 100 วันนี้ รับ 60 สิ้นปีทุกปี อัตรา 10% เมื่อประมาณเชิงเส้นจาก discounted CF ระยะ DPBP เท่าใด?",
+    "options": [
+      "1.92 ปี",
+      "1.67 ปี",
+      "2.00 ปี",
+      "0.92 ปี"
+    ],
+    "correct": 0,
+    "why": "คิดลด CF ทุกปี แล้ว interpolate จากยอดที่ยังขาด",
+    "steps": [
+      "สิ้นปี 1 สะสม PV เงินรับ = 54.55; ยังขาด 45.45",
+      "PV เงินรับปี 2 = 49.59; DPBP ≈ 1+45.45/49.59 = 1.92 ปี"
+    ],
+    "ref": "10.1 · หน้า 34–39",
+    "origin": "สร้างเพิ่มจากสไลด์",
+    "kind": "calculation"
+  },
+  {
+    "id": "Q2-089",
+    "chapter": "10.1",
+    "topic": "ระยะคืนทุน DPBP",
+    "question": "ลงทุน 100 วันนี้ รับ 50 สิ้นปีทุกปี อัตรา 10% เมื่อประมาณเชิงเส้นจาก discounted CF ระยะ DPBP เท่าใด?",
+    "options": [
+      "2.35 ปี",
+      "2.00 ปี",
+      "3.00 ปี",
+      "0.35 ปี"
+    ],
+    "correct": 0,
+    "why": "คิดลด CF ทุกปี แล้ว interpolate จากยอดที่ยังขาด",
+    "steps": [
+      "สิ้นปี 2 สะสม PV เงินรับ = 86.78; ยังขาด 13.22",
+      "PV เงินรับปี 3 = 37.57; DPBP ≈ 2+13.22/37.57 = 2.35 ปี"
+    ],
+    "ref": "10.1 · หน้า 34–39",
+    "origin": "สร้างเพิ่มจากสไลด์",
+    "kind": "calculation"
+  },
+  {
+    "id": "Q2-090",
+    "chapter": "10.1",
+    "topic": "ระยะคืนทุน DPBP",
+    "question": "ลงทุน 120 วันนี้ รับ 60 สิ้นปีทุกปี อัตรา 8% เมื่อประมาณเชิงเส้นจาก discounted CF ระยะ DPBP เท่าใด?",
+    "options": [
+      "2.27 ปี",
+      "2.00 ปี",
+      "3.00 ปี",
+      "0.27 ปี"
+    ],
+    "correct": 0,
+    "why": "คิดลด CF ทุกปี แล้ว interpolate จากยอดที่ยังขาด",
+    "steps": [
+      "สิ้นปี 2 สะสม PV เงินรับ = 107.00; ยังขาด 13.00",
+      "PV เงินรับปี 3 = 47.63; DPBP ≈ 2+13.00/47.63 = 2.27 ปี"
+    ],
+    "ref": "10.1 · หน้า 34–39",
+    "origin": "สร้างเพิ่มจากสไลด์",
+    "kind": "calculation"
+  },
+  {
+    "id": "Q2-091",
+    "chapter": "10.1",
+    "topic": "DCFROR และ MARR",
+    "question": "ลงทุน 100 วันนี้ รับ 121.0 สิ้นปีที่ 2 เพียงครั้งเดียว IRR ต่อปีประมาณเท่าใด?",
+    "options": [
+      "10.00 %",
+      "21.00 %",
+      "17.36 %",
+      "15.00 %"
+    ],
+    "correct": 0,
+    "why": "ตั้ง NPV=0 แล้วแก้ i* ของเงินก้อนเดียว",
+    "steps": [
+      "0 = −100+121/(1+i*)^2",
+      "i* = (121/100)^(1/2)−1 = 10.00% ต่อปี"
+    ],
+    "ref": "10.1 · หน้า 27–30",
+    "origin": "สร้างเพิ่มจากสไลด์",
+    "kind": "calculation"
+  },
+  {
+    "id": "Q2-092",
+    "chapter": "10.1",
+    "topic": "DCFROR และ MARR",
+    "question": "ลงทุน 100 วันนี้ รับ 133.1 สิ้นปีที่ 3 เพียงครั้งเดียว IRR ต่อปีประมาณเท่าใด?",
+    "options": [
+      "10.00 %",
+      "33.10 %",
+      "24.87 %",
+      "15.00 %"
+    ],
+    "correct": 0,
+    "why": "ตั้ง NPV=0 แล้วแก้ i* ของเงินก้อนเดียว",
+    "steps": [
+      "0 = −100+133.1/(1+i*)^3",
+      "i* = (133.1/100)^(1/3)−1 = 10.00% ต่อปี"
+    ],
+    "ref": "10.1 · หน้า 27–30",
+    "origin": "สร้างเพิ่มจากสไลด์",
+    "kind": "calculation"
+  },
+  {
+    "id": "Q2-093",
+    "chapter": "10.1",
+    "topic": "DCFROR และ MARR",
+    "question": "ลงทุน 1,000 วันนี้ รับ 1,100.0 สิ้นปีที่ 1 เพียงครั้งเดียว IRR ต่อปีประมาณเท่าใด?",
+    "options": [
+      "10.00 %",
+      "20.00 %",
+      "9.09 %",
+      "15.00 %"
+    ],
+    "correct": 0,
+    "why": "ตั้ง NPV=0 แล้วแก้ i* ของเงินก้อนเดียว",
+    "steps": [
+      "0 = −1000+1100/(1+i*)^1",
+      "i* = (1100/1000)^(1/1)−1 = 10.00% ต่อปี"
+    ],
+    "ref": "10.1 · หน้า 27–30",
+    "origin": "สร้างเพิ่มจากสไลด์",
+    "kind": "calculation"
+  },
+  {
+    "id": "Q2-094",
+    "chapter": "10.1",
+    "topic": "DCFROR และ MARR",
+    "question": "ลงทุน 400 วันนี้ รับ 484.0 สิ้นปีที่ 2 เพียงครั้งเดียว IRR ต่อปีประมาณเท่าใด?",
+    "options": [
+      "10.00 %",
+      "21.00 %",
+      "17.36 %",
+      "15.00 %"
+    ],
+    "correct": 0,
+    "why": "ตั้ง NPV=0 แล้วแก้ i* ของเงินก้อนเดียว",
+    "steps": [
+      "0 = −400+484/(1+i*)^2",
+      "i* = (484/400)^(1/2)−1 = 10.00% ต่อปี"
+    ],
+    "ref": "10.1 · หน้า 27–30",
+    "origin": "สร้างเพิ่มจากสไลด์",
+    "kind": "calculation"
+  },
+  {
+    "id": "Q2-095",
+    "chapter": "10.1",
+    "topic": "DCFROR และ MARR",
+    "question": "ลงทุน 1,000 ดอลลาร์วันนี้ รับ 500 สิ้นปี 3 และ 1,500 สิ้นปี 5 DCFROR ประมาณเท่าใด?",
+    "options": [
+      "16.90 %",
+      "10.00 %",
+      "12.00 %",
+      "25.00 %"
+    ],
+    "correct": 0,
+    "why": "ตั้ง NPV เท่ากับศูนย์ แล้วหาค่าอัตราที่ทำให้เงินเข้า PV เท่ากับลงทุน",
+    "steps": [
+      "ตั้ง 0=−1,000+500/(1+i*)³+1,500/(1+i*)⁵",
+      "ทดลองหรือ interpolate จน NPV ใกล้ศูนย์ ได้ i* ≈ 16.90% ต่อปี"
+    ],
+    "ref": "10.1 · หน้า 28–30",
+    "origin": "ดัดแปลงจากตัวอย่างสไลด์",
+    "kind": "calculation"
+  },
+  {
+    "id": "Q2-096",
+    "chapter": "10.1",
+    "topic": "ข้อสอบโรงงาน 2025",
+    "question": "ข้อสอบ 2025: FCIL 20 ล้าน ซาก 0.5 ล้าน อายุ 10 ปี คิด SL ค่าเสื่อมต่อปีเท่าใด?",
+    "options": [
+      "1.95 ล้าน/ปี",
+      "2.00 ล้าน/ปี",
+      "2.05 ล้าน/ปี",
+      "0.50 ล้าน/ปี"
+    ],
+    "correct": 0,
+    "why": "ใช้ SL กับฐานไม่รวมที่ดิน",
+    "steps": [
+      "d=(20−0.5)/10",
+      "d=1.95 ล้านต่อปี"
+    ],
+    "ref": "ข้อสอบ 2025 · หน้า 8",
+    "origin": "อิงข้อสอบปลายภาค 2025",
+    "kind": "calculation"
+  },
+  {
+    "id": "Q2-097",
+    "chapter": "10.1",
+    "topic": "ข้อสอบโรงงาน 2025",
+    "question": "ข้อสอบ 2025: FCI รวมที่ดิน 22 ล้าน มีที่ดิน 2 ล้าน และ WC=10% ของ FCIL+WC จงหา WC ประมาณเท่าใด?",
+    "options": [
+      "2.22 ล้าน",
+      "2.00 ล้าน",
+      "2.50 ล้าน",
+      "20.00 ล้าน"
+    ],
+    "correct": 0,
+    "why": "WC อยู่ทั้งสองข้างของสมการ จึงต้องแก้สมการ",
+    "steps": [
+      "FCIL=22−2=20 ล้าน; WC=0.10(20+WC)",
+      "0.90WC=2 → WC=2.222... ล้าน"
+    ],
+    "ref": "ข้อสอบ 2025 · หน้า 8",
+    "origin": "ดัดแปลงจากข้อสอบปลายภาค 2025",
+    "kind": "calculation"
+  },
+  {
+    "id": "Q2-098",
+    "chapter": "10.1",
+    "topic": "ข้อสอบโรงงาน 2025",
+    "question": "ข้อสอบโรงงาน 2025: cumulative discounted CF สิ้นปี 6 = −5.123 ล้าน ปี 7 = −2.668 ล้าน จุดคืน FCIL ใช้เป้า −4.222 ล้าน ระยะ DPBP แบบประมาณเท่าใด?",
+    "options": [
+      "6.37 ปี",
+      "8.21 ปี",
+      "6.00 ปี",
+      "7.00 ปี"
+    ],
+    "correct": 0,
+    "why": "เฉลยแยก land และ WC จากฐานคืนทุน จึงหา crossing ที่ −4.222 ล้าน",
+    "steps": [
+      "ณ สิ้นปี 6 ยังต่ำกว่าเป้า 5.123−4.222=0.901 ล้าน",
+      "discounted CF ปี 7 = 5.123−2.668=2.455 ล้าน",
+      "DPBP ≈ 6+0.901/2.455 = 6.37 ปี"
+    ],
+    "ref": "ข้อสอบ 2025 · หน้า 8–9",
+    "origin": "ดัดแปลงจากข้อสอบปลายภาค 2025",
+    "kind": "calculation"
+  },
+  {
+    "id": "Q2-099",
+    "chapter": "10.1",
+    "topic": "ข้อสอบโรงงาน 2025",
+    "question": "ข้อสอบโรงงาน 2025: cumulative discounted CF สิ้นปี 8 = −0.435 ล้าน และสิ้นปี 9 = +1.594 ล้าน ถ้านับคืนเงินลงทุนทั้งหมด DPBP แบบประมาณเท่าใด?",
+    "options": [
+      "8.21 ปี",
+      "6.37 ปี",
+      "8.00 ปี",
+      "9.00 ปี"
+    ],
+    "correct": 0,
+    "why": "คืนเงินลงทุนทั้งหมดใช้เป้า cumulative discounted cash flow = 0",
+    "steps": [
+      "สิ้นปี 8 ยังขาด 0.435 ล้าน; PV เงินรับปี 9 = 1.594+0.435=2.029 ล้าน",
+      "DPBP ≈ 8+0.435/2.029 = 8.21 ปี"
+    ],
+    "ref": "ข้อสอบ 2025 · หน้า 8–9",
+    "origin": "ดัดแปลงจากข้อสอบปลายภาค 2025",
+    "kind": "calculation"
+  },
+  {
+    "id": "Q2-100",
+    "chapter": "10.1",
+    "topic": "ระยะคืนทุน DPBP",
+    "question": "ข้อสอบ 2025: ลงทุน 40,000 ดอลลาร์ ได้รายรับ 6,000 ทุกสิ้นปี และขายซาก 8,000 ได้เมื่อสิ้นปีใด ๆ ที่ 8% ระยะคืนทุนแบบคิดลดอยู่ช่วงใด?",
+    "options": [
+      "ระหว่างปี 8 และ 9",
+      "ระหว่างปี 5 และ 6",
+      "ระหว่างปี 6 และ 7",
+      "ไม่คืนทุนภายใน 10 ปี"
+    ],
+    "correct": 0,
+    "why": "นำรายรับสะสมและราคาซากที่ขายได้ในปีนั้นคิดลดมาเทียบกับเงินลงทุน",
+    "steps": [
+      "ปี 8: −40,000+6,000(P/A,8%,8)+8,000(P/F,8%,8) ≈ −1,198",
+      "ปี 9: ค่าเดียวกันเมื่อ n=9 ≈ +1,483 จึงผ่านระหว่างปี 8–9 ตามรูปแบบข้อสอบ; การคืนจริงขึ้นกับเวลาที่ขายได้"
+    ],
+    "ref": "ข้อสอบ 2025 · ข้อ 27",
+    "origin": "อิงข้อสอบปลายภาค 2025",
+    "kind": "calculation"
+  },
+  {
+    "id": "Q2-101",
+    "chapter": "10.1",
+    "topic": "NPV และ PVR",
+    "question": "ข้อสอบ 2025: ลงทุน 70,000 ดอลลาร์ รายรับ 14,000/ปี ค่าใช้จ่าย 1,850/ปี อายุ 10 ปี อัตรา nominal 23% ต่อ 2 ปี ทบต้นรายไตรมาส NPV ประมาณเท่าใด?",
+    "options": [
+      "-1,365.28 ดอลลาร์",
+      "-1,530.00 ดอลลาร์",
+      "1,540.00 ดอลลาร์",
+      "51,500.00 ดอลลาร์"
+    ],
+    "correct": 0,
+    "why": "แปลงอัตราต่อไตรมาสเป็น effective รายปีก่อนใช้ P/A เพราะ cash flow เป็นรายปี",
+    "steps": [
+      "สองปีมี 8 ไตรมาส: i_ไตรมาส=0.23/8=0.02875; i_eff=(1.02875)^4−1≈12.0055% ต่อปี",
+      "CF รายปี=14,000−1,850=12,150; NPV=−70,000+12,150(P/A,12.0055%,10)≈-1,365.28 ดอลลาร์",
+      "ข้อสอบเดิมมีตัวเลือก −1,350 ดอลลาร์ใกล้เคียงเมื่อปัดอัตราเป็น 12% ก่อนคำนวณ"
+    ],
+    "ref": "ข้อสอบ 2025 · ข้อ 30",
+    "origin": "ดัดแปลงจากข้อสอบปลายภาค 2025",
+    "kind": "calculation"
+  },
+  {
+    "id": "Q2-102",
+    "chapter": "10.1",
+    "topic": "NPV และ PVR",
+    "question": "ข้อสอบ 2025: ลงทุน $70,000 รายรับ $14,000/ปี ค่าใช้จ่าย $1,850/ปี 10 ปี ดอกเบี้ย 23% ต่อ 2 ปี ทบรายไตรมาส เลือก NPV ที่ใกล้ที่สุดในช้อยส์ต้นฉบับ",
+    "options": [
+      "−1,350 ดอลลาร์",
+      "−1,530 ดอลลาร์",
+      "1,540 ดอลลาร์",
+      "1,450 ดอลลาร์"
+    ],
+    "correct": 0,
+    "why": "แปลง nominal ให้เป็น effective ต่อปี และใช้ P/A กับกระแสสุทธิที่เท่ากัน",
+    "steps": [
+      "i_ไตรมาส=0.23/8=0.02875; i_ปี=(1.02875)^4−1≈12.0055%",
+      "NPV=−70,000+(14,000−1,850)(P/A,12.0055%,10)≈−1,365.28 ดอลลาร์",
+      "ในช้อยส์เดิม −1,350 ใกล้ที่สุด; ปัด i เป็น 12% จะได้ประมาณ −1,349.79"
+    ],
+    "ref": "ข้อสอบ 2025 · ข้อ 30",
+    "origin": "อิงข้อสอบปลายภาค 2025",
+    "kind": "calculation"
+  },
+  {
+    "id": "Q2-103",
+    "chapter": "10.2",
+    "topic": "NPV อายุเท่ากัน",
+    "question": "ซื้ออุปกรณ์ 23,000 ดอลลาร์ ค่าเดินเครื่อง 1,500/ปี 12 ปี ซาก 0 ที่สิ้นปี 12, i=10% NPV ต้นทุนประมาณเท่าใด?",
+    "options": [
+      "-33,220.54 ดอลลาร์",
+      "-41,000.00 ดอลลาร์",
+      "33,220.54 ดอลลาร์",
+      "-32,742.59 ดอลลาร์"
+    ],
+    "correct": 0,
+    "why": "กำหนดเงินซื้อและเดินเครื่องเป็นลบ ซากเป็นบวกแล้วคิดลดมาปัจจุบัน",
+    "steps": [
+      "NPV=−C−O(P/A,i,n)+S(P/F,i,n)",
+      "=−23,000−1,500(6.81369)+0(0.31863) = -33,220.54 ดอลลาร์"
+    ],
+    "ref": "10.2 · หน้า 13–15",
+    "origin": "ดัดแปลงจากตัวอย่างสไลด์",
+    "kind": "calculation"
+  },
+  {
+    "id": "Q2-104",
+    "chapter": "10.2",
+    "topic": "NPV อายุเท่ากัน",
+    "question": "ซื้ออุปกรณ์ 12,000 ดอลลาร์ ค่าเดินเครื่อง 3,000/ปี 12 ปี ซาก 0 ที่สิ้นปี 12, i=10% NPV ต้นทุนประมาณเท่าใด?",
+    "options": [
+      "-32,441.08 ดอลลาร์",
+      "-48,000.00 ดอลลาร์",
+      "32,441.08 ดอลลาร์",
+      "-31,485.18 ดอลลาร์"
+    ],
+    "correct": 0,
+    "why": "กำหนดเงินซื้อและเดินเครื่องเป็นลบ ซากเป็นบวกแล้วคิดลดมาปัจจุบัน",
+    "steps": [
+      "NPV=−C−O(P/A,i,n)+S(P/F,i,n)",
+      "=−12,000−3,000(6.81369)+0(0.31863) = -32,441.08 ดอลลาร์"
+    ],
+    "ref": "10.2 · หน้า 13–15",
+    "origin": "ดัดแปลงจากตัวอย่างสไลด์",
+    "kind": "calculation"
+  },
+  {
+    "id": "Q2-105",
+    "chapter": "10.2",
+    "topic": "NPV อายุเท่ากัน",
+    "question": "ซื้ออุปกรณ์ 10,000 ดอลลาร์ ค่าเดินเครื่อง 1,200/ปี 5 ปี ซาก 2,000 ที่สิ้นปี 5, i=8% NPV ต้นทุนประมาณเท่าใด?",
+    "options": [
+      "-13,430.09 ดอลลาร์",
+      "-14,000.00 ดอลลาร์",
+      "13,430.09 ดอลลาร์",
+      "-16,152.42 ดอลลาร์"
+    ],
+    "correct": 0,
+    "why": "กำหนดเงินซื้อและเดินเครื่องเป็นลบ ซากเป็นบวกแล้วคิดลดมาปัจจุบัน",
+    "steps": [
+      "NPV=−C−O(P/A,i,n)+S(P/F,i,n)",
+      "=−10,000−1,200(3.99271)+2,000(0.68058) = -13,430.09 ดอลลาร์"
+    ],
+    "ref": "10.2 · หน้า 13–15",
+    "origin": "สร้างเพิ่มจากสไลด์",
+    "kind": "calculation"
+  },
+  {
+    "id": "Q2-106",
+    "chapter": "10.2",
+    "topic": "NPV อายุเท่ากัน",
+    "question": "ซื้ออุปกรณ์ 50,000 ดอลลาร์ ค่าเดินเครื่อง 4,000/ปี 10 ปี ซาก 5,000 ที่สิ้นปี 10, i=10% NPV ต้นทุนประมาณเท่าใด?",
+    "options": [
+      "-72,650.55 ดอลลาร์",
+      "-85,000.00 ดอลลาร์",
+      "72,650.55 ดอลลาร์",
+      "-76,505.98 ดอลลาร์"
+    ],
+    "correct": 0,
+    "why": "กำหนดเงินซื้อและเดินเครื่องเป็นลบ ซากเป็นบวกแล้วคิดลดมาปัจจุบัน",
+    "steps": [
+      "NPV=−C−O(P/A,i,n)+S(P/F,i,n)",
+      "=−50,000−4,000(6.14457)+5,000(0.38554) = -72,650.55 ดอลลาร์"
+    ],
+    "ref": "10.2 · หน้า 13–15",
+    "origin": "สร้างเพิ่มจากสไลด์",
+    "kind": "calculation"
+  },
+  {
+    "id": "Q2-107",
+    "chapter": "10.2",
+    "topic": "วิเคราะห์ส่วนเพิ่ม",
+    "question": "เครื่อง B แพงกว่า A 10,000 บาท แต่ประหยัดค่าใช้จ่ายปีละ 3,000 บาท เป็นเวลา 5 ปี ที่ MARR 10% ค่า ΔNPV(B−A) เท่าใด?",
+    "options": [
+      "1,372.36 บาท",
+      "5,000.00 บาท",
+      "21,372.36 บาท",
+      "11,372.36 บาท"
+    ],
+    "correct": 0,
+    "why": "มองเงินลงทุนเพิ่มเป็นลบและผลประหยัดรายปีเป็นบวก แล้วคิดลดส่วนเพิ่ม",
+    "steps": [
+      "ΔNPV=−10,000+3,000(P/A,10%,5)",
+      "=−10,000+3,000(3.79079)=1,372.36 บาท; B คุ้มส่วนเพิ่ม"
+    ],
+    "ref": "10.2 · หน้า 5–11",
+    "origin": "สร้างเพิ่มจากสไลด์",
+    "kind": "calculation"
+  },
+  {
+    "id": "Q2-108",
+    "chapter": "10.2",
+    "topic": "วิเคราะห์ส่วนเพิ่ม",
+    "question": "เครื่อง B แพงกว่า A 5,000 บาท แต่ประหยัดค่าใช้จ่ายปีละ 1,600 บาท เป็นเวลา 4 ปี ที่ MARR 8% ค่า ΔNPV(B−A) เท่าใด?",
+    "options": [
+      "299.40 บาท",
+      "1,400.00 บาท",
+      "10,299.40 บาท",
+      "5,299.40 บาท"
+    ],
+    "correct": 0,
+    "why": "มองเงินลงทุนเพิ่มเป็นลบและผลประหยัดรายปีเป็นบวก แล้วคิดลดส่วนเพิ่ม",
+    "steps": [
+      "ΔNPV=−5,000+1,600(P/A,8%,4)",
+      "=−5,000+1,600(3.31213)=299.40 บาท; B คุ้มส่วนเพิ่ม"
+    ],
+    "ref": "10.2 · หน้า 5–11",
+    "origin": "สร้างเพิ่มจากสไลด์",
+    "kind": "calculation"
+  },
+  {
+    "id": "Q2-109",
+    "chapter": "10.2",
+    "topic": "วิเคราะห์ส่วนเพิ่ม",
+    "question": "เครื่อง B แพงกว่า A 20,000 บาท แต่ประหยัดค่าใช้จ่ายปีละ 5,000 บาท เป็นเวลา 6 ปี ที่ MARR 10% ค่า ΔNPV(B−A) เท่าใด?",
+    "options": [
+      "1,776.30 บาท",
+      "10,000.00 บาท",
+      "41,776.30 บาท",
+      "21,776.30 บาท"
+    ],
+    "correct": 0,
+    "why": "มองเงินลงทุนเพิ่มเป็นลบและผลประหยัดรายปีเป็นบวก แล้วคิดลดส่วนเพิ่ม",
+    "steps": [
+      "ΔNPV=−20,000+5,000(P/A,10%,6)",
+      "=−20,000+5,000(4.35526)=1,776.30 บาท; B คุ้มส่วนเพิ่ม"
+    ],
+    "ref": "10.2 · หน้า 5–11",
+    "origin": "สร้างเพิ่มจากสไลด์",
+    "kind": "calculation"
+  },
+  {
+    "id": "Q2-110",
+    "chapter": "10.2",
+    "topic": "วิเคราะห์ส่วนเพิ่ม",
+    "question": "เครื่อง B แพงกว่า A 10,000 บาท แต่ประหยัดค่าใช้จ่ายปีละ 2,000 บาท เป็นเวลา 5 ปี ที่ MARR 10% ค่า ΔNPV(B−A) เท่าใด?",
+    "options": [
+      "-2,418.43 บาท",
+      "0.00 บาท",
+      "17,581.57 บาท",
+      "7,581.57 บาท"
+    ],
+    "correct": 0,
+    "why": "มองเงินลงทุนเพิ่มเป็นลบและผลประหยัดรายปีเป็นบวก แล้วคิดลดส่วนเพิ่ม",
+    "steps": [
+      "ΔNPV=−10,000+2,000(P/A,10%,5)",
+      "=−10,000+2,000(3.79079)=-2,418.43 บาท; คง A เพราะส่วนเพิ่มไม่คุ้ม"
+    ],
+    "ref": "10.2 · หน้า 5–11",
+    "origin": "สร้างเพิ่มจากสไลด์",
+    "kind": "calculation"
+  },
+  {
+    "id": "Q2-111",
+    "chapter": "10.2",
+    "topic": "วิเคราะห์ส่วนเพิ่ม",
+    "question": "เครื่อง B แพงกว่า A 10,000 บาท แต่ประหยัดเงิน 3,000 บาททุกสิ้นปี 5 ปี ΔIRR(B−A) ประมาณเท่าใด?",
+    "options": [
+      "15.24 %",
+      "5.00 %",
+      "10.00 %",
+      "50.00 %"
+    ],
+    "correct": 0,
+    "why": "ตั้ง NPV ของกระแสส่วนเพิ่มเท่ากับศูนย์และหาอัตรา",
+    "steps": [
+      "0 = −10,000+3,000(P/A,i*,5)",
+      "ทดลองอัตราจน ΔNPV=0 ได้ ΔIRR ≈ 15.24% ต่อปี"
+    ],
+    "ref": "10.2 · หน้า 8–11",
+    "origin": "สร้างเพิ่มจากสไลด์",
+    "kind": "calculation"
+  },
+  {
+    "id": "Q2-112",
+    "chapter": "10.2",
+    "topic": "วิเคราะห์ส่วนเพิ่ม",
+    "question": "เครื่อง B แพงกว่า A 5,000 บาท แต่ประหยัดเงิน 1,600 บาททุกสิ้นปี 4 ปี ΔIRR(B−A) ประมาณเท่าใด?",
+    "options": [
+      "10.66 %",
+      "5.00 %",
+      "10.00 %",
+      "50.00 %"
+    ],
+    "correct": 0,
+    "why": "ตั้ง NPV ของกระแสส่วนเพิ่มเท่ากับศูนย์และหาอัตรา",
+    "steps": [
+      "0 = −5,000+1,600(P/A,i*,4)",
+      "ทดลองอัตราจน ΔNPV=0 ได้ ΔIRR ≈ 10.66% ต่อปี"
+    ],
+    "ref": "10.2 · หน้า 8–11",
+    "origin": "สร้างเพิ่มจากสไลด์",
+    "kind": "calculation"
+  },
+  {
+    "id": "Q2-113",
+    "chapter": "10.2",
+    "topic": "วิเคราะห์ส่วนเพิ่ม",
+    "question": "เครื่อง B แพงกว่า A 10,000 บาท แต่ประหยัดเงิน 4,000 บาททุกสิ้นปี 4 ปี ΔIRR(B−A) ประมาณเท่าใด?",
+    "options": [
+      "21.86 %",
+      "5.00 %",
+      "10.00 %",
+      "50.00 %"
+    ],
+    "correct": 0,
+    "why": "ตั้ง NPV ของกระแสส่วนเพิ่มเท่ากับศูนย์และหาอัตรา",
+    "steps": [
+      "0 = −10,000+4,000(P/A,i*,4)",
+      "ทดลองอัตราจน ΔNPV=0 ได้ ΔIRR ≈ 21.86% ต่อปี"
+    ],
+    "ref": "10.2 · หน้า 8–11",
+    "origin": "สร้างเพิ่มจากสไลด์",
+    "kind": "calculation"
+  },
+  {
+    "id": "Q2-114",
+    "chapter": "10.2",
+    "topic": "โจทย์เปรียบเทียบโครงการ",
+    "question": "สไลด์: C ลงทุนมากกว่า A 40 ล้าน ได้ CF เพิ่มปี 1 เท่ากับ 2 ล้าน และปี 2–10 ปีละ 8 ล้าน ที่ 10% ค่า ΔNPV C−A เท่าใด?",
+    "options": [
+      "3.70 ล้าน",
+      "34.00 ล้าน",
+      "10.97 ล้าน",
+      "-3.70 ล้าน"
+    ],
+    "correct": 0,
+    "why": "ชุด 8 ล้านเริ่มปี 2 จึงใช้ P/A 9 งวดที่ปี 1 แล้วคิดลดอีกหนึ่งงวด",
+    "steps": [
+      "ΔNPV=−40+2(P/F,10%,1)+8(P/A,10%,9)(P/F,10%,1)",
+      "=−40+1.818+41.884 = 3.70 ล้าน → เลือก C แทน A"
+    ],
+    "ref": "10.2 · หน้า 5",
+    "origin": "ดัดแปลงจากตัวอย่างสไลด์",
+    "kind": "calculation"
+  },
+  {
+    "id": "Q2-115",
+    "chapter": "10.2",
+    "topic": "โจทย์เปรียบเทียบโครงการ",
+    "question": "สไลด์: B ลงทุนมากกว่า C 20 ล้าน ได้ CF เพิ่มปี 1 = 10 ล้าน และปี 2–10 ปีละ 2 ล้าน ที่ 10% ค่า ΔNPV B−C เท่าใด?",
+    "options": [
+      "-0.44 ล้าน",
+      "0.44 ล้าน",
+      "8.00 ล้าน",
+      "1.38 ล้าน"
+    ],
+    "correct": 0,
+    "why": "คิดลดกระแสส่วนเพิ่มตามเวลาจริง โดยชุดปี 2–10 ต้องเลื่อนหนึ่งปี",
+    "steps": [
+      "ΔNPV=−20+10/1.1+2(P/A,10%,9)/1.1",
+      "≈ -0.44 ล้าน ติดลบ จึงคงทางเลือก C"
+    ],
+    "ref": "10.2 · หน้า 6",
+    "origin": "ดัดแปลงจากตัวอย่างสไลด์",
+    "kind": "calculation"
+  },
+  {
+    "id": "Q2-116",
+    "chapter": "10.2",
+    "topic": "EAOC และ AW",
+    "question": "เครื่องจักร C=8,000 ดอลลาร์ O=1,800/ปี อายุ 4 ปี ไม่มีซาก และ i=8% ค่า EAOC ประมาณเท่าใด?",
+    "options": [
+      "4,215.37 ดอลลาร์/ปี",
+      "3,800.00 ดอลลาร์/ปี",
+      "28,297.01 ดอลลาร์/ปี",
+      "615.37 ดอลลาร์/ปี"
+    ],
+    "correct": 0,
+    "why": "แปลงเงินซื้อปัจจุบันเป็นรายปีด้วย A/P แล้วรวม O",
+    "steps": [
+      "EAOC = 8,000(A/P,8%,4) + 1,800",
+      "= 8,000(0.301921) + 1,800 = 4,215.37 ดอลลาร์/ปี"
+    ],
+    "ref": "10.2 · หน้า 17–19",
+    "origin": "ดัดแปลงจากตัวอย่างสไลด์",
+    "kind": "calculation"
+  },
+  {
+    "id": "Q2-117",
+    "chapter": "10.2",
+    "topic": "EAOC และ AW",
+    "question": "เครื่องจักร C=16,000 ดอลลาร์ O=1,600/ปี อายุ 7 ปี ไม่มีซาก และ i=8% ค่า EAOC ประมาณเท่าใด?",
+    "options": [
+      "4,673.16 ดอลลาร์/ปี",
+      "3,885.71 ดอลลาร์/ปี",
+      "84,901.92 ดอลลาร์/ปี",
+      "1,473.16 ดอลลาร์/ปี"
+    ],
+    "correct": 0,
+    "why": "แปลงเงินซื้อปัจจุบันเป็นรายปีด้วย A/P แล้วรวม O",
+    "steps": [
+      "EAOC = 16,000(A/P,8%,7) + 1,600",
+      "= 16,000(0.192072) + 1,600 = 4,673.16 ดอลลาร์/ปี"
+    ],
+    "ref": "10.2 · หน้า 17–19",
+    "origin": "ดัดแปลงจากตัวอย่างสไลด์",
+    "kind": "calculation"
+  },
+  {
+    "id": "Q2-118",
+    "chapter": "10.2",
+    "topic": "EAOC และ AW",
+    "question": "เครื่องจักร C=10,000 ดอลลาร์ O=1,000/ปี อายุ 5 ปี ไม่มีซาก และ i=10% ค่า EAOC ประมาณเท่าใด?",
+    "options": [
+      "3,637.97 ดอลลาร์/ปี",
+      "3,000.00 ดอลลาร์/ปี",
+      "38,907.87 ดอลลาร์/ปี",
+      "1,637.97 ดอลลาร์/ปี"
+    ],
+    "correct": 0,
+    "why": "แปลงเงินซื้อปัจจุบันเป็นรายปีด้วย A/P แล้วรวม O",
+    "steps": [
+      "EAOC = 10,000(A/P,10%,5) + 1,000",
+      "= 10,000(0.263797) + 1,000 = 3,637.97 ดอลลาร์/ปี"
+    ],
+    "ref": "10.2 · หน้า 17–19",
+    "origin": "สร้างเพิ่มจากสไลด์",
+    "kind": "calculation"
+  },
+  {
+    "id": "Q2-119",
+    "chapter": "10.2",
+    "topic": "EAOC และ AW",
+    "question": "เครื่องจักร C=12,000 ดอลลาร์ O=1,200/ปี อายุ 6 ปี ไม่มีซาก และ i=10% ค่า EAOC ประมาณเท่าใด?",
+    "options": [
+      "3,955.29 ดอลลาร์/ปี",
+      "3,200.00 ดอลลาร์/ปี",
+      "53,463.13 ดอลลาร์/ปี",
+      "1,555.29 ดอลลาร์/ปี"
+    ],
+    "correct": 0,
+    "why": "แปลงเงินซื้อปัจจุบันเป็นรายปีด้วย A/P แล้วรวม O",
+    "steps": [
+      "EAOC = 12,000(A/P,10%,6) + 1,200",
+      "= 12,000(0.229607) + 1,200 = 3,955.29 ดอลลาร์/ปี"
+    ],
+    "ref": "10.2 · หน้า 17–19",
+    "origin": "สร้างเพิ่มจากสไลด์",
+    "kind": "calculation"
+  },
+  {
+    "id": "Q2-120",
+    "chapter": "10.2",
+    "topic": "EAOC และ AW",
+    "question": "เครื่องจักร C=20,000 ดอลลาร์ O=2,500/ปี อายุ 8 ปี ไม่มีซาก และ i=8% ค่า EAOC ประมาณเท่าใด?",
+    "options": [
+      "5,980.30 ดอลลาร์/ปี",
+      "5,000.00 ดอลลาร์/ปี",
+      "117,432.78 ดอลลาร์/ปี",
+      "980.30 ดอลลาร์/ปี"
+    ],
+    "correct": 0,
+    "why": "แปลงเงินซื้อปัจจุบันเป็นรายปีด้วย A/P แล้วรวม O",
+    "steps": [
+      "EAOC = 20,000(A/P,8%,8) + 2,500",
+      "= 20,000(0.174015) + 2,500 = 5,980.30 ดอลลาร์/ปี"
+    ],
+    "ref": "10.2 · หน้า 17–19",
+    "origin": "สร้างเพิ่มจากสไลด์",
+    "kind": "calculation"
+  },
+  {
+    "id": "Q2-121",
+    "chapter": "10.2",
+    "topic": "EAOC และมูลค่าซาก",
+    "question": "เครื่องราคา 10,000 ซาก 2,000 บาท อายุ 5 ปี ค่าเดินเครื่อง 1,000 บาท/ปี ที่ i=10% EAOC ประมาณเท่าใด?",
+    "options": [
+      "3,310.38 บาท/ปี",
+      "3,637.97 บาท/ปี",
+      "3,000.00 บาท/ปี",
+      "3,965.57 บาท/ปี"
+    ],
+    "correct": 0,
+    "why": "ซากเป็นเงินรับปลายอายุ จึงหัก S(A/F) จาก capital recovery",
+    "steps": [
+      "EAOC=C(A/P)−S(A/F)+O",
+      "=10,000(0.263797)−2,000(0.163797)+1,000=3,310.38 บาท/ปี"
+    ],
+    "ref": "10.2 · หน้า 16–20",
+    "origin": "สร้างเพิ่มจากสไลด์",
+    "kind": "calculation"
+  },
+  {
+    "id": "Q2-122",
+    "chapter": "10.2",
+    "topic": "EAOC และมูลค่าซาก",
+    "question": "เครื่องราคา 12,000 ซาก 2,000 บาท อายุ 4 ปี ค่าเดินเครื่อง 1,500 บาท/ปี ที่ i=8% EAOC ประมาณเท่าใด?",
+    "options": [
+      "4,679.21 บาท/ปี",
+      "5,123.05 บาท/ปี",
+      "4,500.00 บาท/ปี",
+      "5,566.89 บาท/ปี"
+    ],
+    "correct": 0,
+    "why": "ซากเป็นเงินรับปลายอายุ จึงหัก S(A/F) จาก capital recovery",
+    "steps": [
+      "EAOC=C(A/P)−S(A/F)+O",
+      "=12,000(0.301921)−2,000(0.221921)+1,500=4,679.21 บาท/ปี"
+    ],
+    "ref": "10.2 · หน้า 16–20",
+    "origin": "สร้างเพิ่มจากสไลด์",
+    "kind": "calculation"
+  },
+  {
+    "id": "Q2-123",
+    "chapter": "10.2",
+    "topic": "EAOC และมูลค่าซาก",
+    "question": "เครื่องราคา 20,000 ซาก 5,000 บาท อายุ 6 ปี ค่าเดินเครื่อง 2,000 บาท/ปี ที่ i=10% EAOC ประมาณเท่าใด?",
+    "options": [
+      "5,944.11 บาท/ปี",
+      "6,592.15 บาท/ปี",
+      "5,333.33 บาท/ปี",
+      "7,240.18 บาท/ปี"
+    ],
+    "correct": 0,
+    "why": "ซากเป็นเงินรับปลายอายุ จึงหัก S(A/F) จาก capital recovery",
+    "steps": [
+      "EAOC=C(A/P)−S(A/F)+O",
+      "=20,000(0.229607)−5,000(0.129607)+2,000=5,944.11 บาท/ปี"
+    ],
+    "ref": "10.2 · หน้า 16–20",
+    "origin": "สร้างเพิ่มจากสไลด์",
+    "kind": "calculation"
+  },
+  {
+    "id": "Q2-124",
+    "chapter": "10.2",
+    "topic": "EAOC และมูลค่าซาก",
+    "question": "เครื่องราคา 8,000 ซาก 1,000 บาท อายุ 4 ปี ค่าเดินเครื่อง 800 บาท/ปี ที่ i=8% EAOC ประมาณเท่าใด?",
+    "options": [
+      "2,993.45 บาท/ปี",
+      "3,215.37 บาท/ปี",
+      "2,800.00 บาท/ปี",
+      "3,437.29 บาท/ปี"
+    ],
+    "correct": 0,
+    "why": "ซากเป็นเงินรับปลายอายุ จึงหัก S(A/F) จาก capital recovery",
+    "steps": [
+      "EAOC=C(A/P)−S(A/F)+O",
+      "=8,000(0.301921)−1,000(0.221921)+800=2,993.45 บาท/ปี"
+    ],
+    "ref": "10.2 · หน้า 16–20",
+    "origin": "สร้างเพิ่มจากสไลด์",
+    "kind": "calculation"
+  },
+  {
+    "id": "Q2-125",
+    "chapter": "10.2",
+    "topic": "อายุต่างกันและ LCM",
+    "question": "ข้อสอบ 2025: วัสดุ A ซื้อ 205,000 ซาก 2,000 อายุ 2 ปี ค่าเดินเครื่อง 29,000/ปี ทำซ้ำถึงปี 4 ที่ 10% PW ประมาณเท่าใด?",
+    "options": [
+      "-463,328.67 ดอลลาร์",
+      "-253,677.69 ดอลลาร์",
+      "-306,926.10 ดอลลาร์",
+      "-295,560.07 ดอลลาร์"
+    ],
+    "correct": 0,
+    "why": "LCM อายุ 2 กับ 4 คือ 4 ปี จึงซื้อซ้ำปี 2 พร้อมรับซากและคิดลดทุกรายการ",
+    "steps": [
+      "PW_A=−205,000−29,000(P/A,10%,4)−(205,000−2,000)(P/F,10%,2)+2,000(P/F,10%,4)",
+      "แทน factor ได้ PW_A ≈ -463,328.67 ดอลลาร์; เฉลยเดิมประมาณ −463,320 เมื่อปัด factor"
+    ],
+    "ref": "ข้อสอบ 2025 · หน้า 7–8",
+    "origin": "อิงข้อสอบปลายภาค 2025",
+    "kind": "calculation"
+  },
+  {
+    "id": "Q2-126",
+    "chapter": "10.2",
+    "topic": "อายุต่างกันและ LCM",
+    "question": "ข้อสอบ 2025: วัสดุ B ซื้อ 235,000 ซาก 20,000 อายุ 4 ปี ค่าเดินเครื่อง 27,000/ปี ที่ 10% PW ในช่วง 4 ปีเท่าใด?",
+    "options": [
+      "-306,926.10 ดอลลาร์",
+      "-320,586.37 ดอลลาร์",
+      "-334,246.64 ดอลลาร์",
+      "-463,328.67 ดอลลาร์"
+    ],
+    "correct": 0,
+    "why": "อายุ 4 ปีเท่ากับช่วงศึกษา จึงซื้อครั้งเดียวและรับซากปี 4",
+    "steps": [
+      "PW_B=−235,000−27,000(P/A,10%,4)+20,000(P/F,10%,4)",
+      "ได้ PW_B≈-306,926.10 ดอลลาร์; สูงกว่า A ที่ประมาณ −463,328.67 จึงเลือก B"
+    ],
+    "ref": "ข้อสอบ 2025 · หน้า 7–8",
+    "origin": "อิงข้อสอบปลายภาค 2025",
+    "kind": "calculation"
+  },
+  {
+    "id": "Q2-127",
+    "chapter": "10.2",
+    "topic": "อายุต่างกันและ LCM",
+    "question": "ทางเลือกอายุ 2 และ 4 ปี หากทำซ้ำเหมือนเดิมและใช้ช่วงร่วมน้อยสุด ต้องใช้กี่ปี?",
+    "options": [
+      "4 ปี",
+      "5 ปี",
+      "7 ปี",
+      "8 ปี"
+    ],
+    "correct": 0,
+    "why": "หา ค.ร.น. ของอายุทั้งสอง เพื่อให้ครบรอบพร้อมกัน",
+    "steps": [
+      "ค.ร.น. ของ 2 และ 4 เท่ากับ 4",
+      "จำนวนรอบคือ 2 และ 1 รอบ ตามลำดับ"
+    ],
+    "ref": "10.2 · หน้า 21–25",
+    "origin": "สร้างเพิ่มจากสไลด์",
+    "kind": "calculation"
+  },
+  {
+    "id": "Q2-128",
+    "chapter": "10.2",
+    "topic": "อายุต่างกันและ LCM",
+    "question": "ทางเลือกอายุ 4 และ 6 ปี หากทำซ้ำเหมือนเดิมและใช้ช่วงร่วมน้อยสุด ต้องใช้กี่ปี?",
+    "options": [
+      "12 ปี",
+      "13 ปี",
+      "15 ปี",
+      "24 ปี"
+    ],
+    "correct": 0,
+    "why": "หา ค.ร.น. ของอายุทั้งสอง เพื่อให้ครบรอบพร้อมกัน",
+    "steps": [
+      "ค.ร.น. ของ 4 และ 6 เท่ากับ 12",
+      "จำนวนรอบคือ 3 และ 2 รอบ ตามลำดับ"
+    ],
+    "ref": "10.2 · หน้า 21–25",
+    "origin": "สร้างเพิ่มจากสไลด์",
+    "kind": "calculation"
+  },
+  {
+    "id": "Q2-129",
+    "chapter": "10.2",
+    "topic": "อายุต่างกันและ LCM",
+    "question": "ทางเลือกอายุ 6 และ 9 ปี หากทำซ้ำเหมือนเดิมและใช้ช่วงร่วมน้อยสุด ต้องใช้กี่ปี?",
+    "options": [
+      "18 ปี",
+      "19 ปี",
+      "21 ปี",
+      "36 ปี"
+    ],
+    "correct": 0,
+    "why": "หา ค.ร.น. ของอายุทั้งสอง เพื่อให้ครบรอบพร้อมกัน",
+    "steps": [
+      "ค.ร.น. ของ 6 และ 9 เท่ากับ 18",
+      "จำนวนรอบคือ 3 และ 2 รอบ ตามลำดับ"
+    ],
+    "ref": "10.2 · หน้า 21–25",
+    "origin": "สร้างเพิ่มจากสไลด์",
+    "kind": "calculation"
+  },
+  {
+    "id": "Q2-130",
+    "chapter": "10.2",
+    "topic": "อายุต่างกันและ LCM",
+    "question": "ทางเลือกอายุ 3 และ 5 ปี หากทำซ้ำเหมือนเดิมและใช้ช่วงร่วมน้อยสุด ต้องใช้กี่ปี?",
+    "options": [
+      "15 ปี",
+      "16 ปี",
+      "18 ปี",
+      "30 ปี"
+    ],
+    "correct": 0,
+    "why": "หา ค.ร.น. ของอายุทั้งสอง เพื่อให้ครบรอบพร้อมกัน",
+    "steps": [
+      "ค.ร.น. ของ 3 และ 5 เท่ากับ 15",
+      "จำนวนรอบคือ 5 และ 3 รอบ ตามลำดับ"
+    ],
+    "ref": "10.2 · หน้า 21–25",
+    "origin": "สร้างเพิ่มจากสไลด์",
+    "kind": "calculation"
+  },
+  {
+    "id": "Q2-131",
+    "chapter": "10.2",
+    "topic": "อายุต่างกันและ LCM",
+    "question": "ทางเลือกอายุ 4 และ 7 ปี หากทำซ้ำเหมือนเดิมและใช้ช่วงร่วมน้อยสุด ต้องใช้กี่ปี?",
+    "options": [
+      "28 ปี",
+      "29 ปี",
+      "31 ปี",
+      "56 ปี"
+    ],
+    "correct": 0,
+    "why": "หา ค.ร.น. ของอายุทั้งสอง เพื่อให้ครบรอบพร้อมกัน",
+    "steps": [
+      "ค.ร.น. ของ 4 และ 7 เท่ากับ 28",
+      "จำนวนรอบคือ 7 และ 4 รอบ ตามลำดับ"
+    ],
+    "ref": "10.2 · หน้า 21–25",
+    "origin": "สร้างเพิ่มจากสไลด์",
+    "kind": "calculation"
+  },
+  {
+    "id": "Q2-132",
+    "chapter": "10.2",
+    "topic": "Capitalized cost",
+    "question": "อุปกรณ์ราคา 8,000 ดอลลาร์ ต้องเปลี่ยนใหม่ราคาเดิมทุก 4 ปี ไม่มีซาก ค่าเดินเครื่อง 1,800/ปีตลอดไป และ i=8% Equivalent capitalized cost เท่าใด?",
+    "options": [
+      "52,692.08 ดอลลาร์",
+      "30,500.00 ดอลลาร์",
+      "4,215.37 ดอลลาร์",
+      "31,992.08 ดอลลาร์"
+    ],
+    "correct": 0,
+    "why": "รวม PV ของการซื้อซ้ำไม่สิ้นสุดกับ PV ค่าเดินเครื่องตลอดไป",
+    "steps": [
+      "CC_อุปกรณ์=C/[1−(1+i)^(−n)]=30,192.08 ดอลลาร์",
+      "PV ค่าเดินเครื่อง=O/i=1,800/0.08=22,500.00",
+      "ECC=30,192.08+22,500.00=52,692.08 ดอลลาร์"
+    ],
+    "ref": "10.2 · หน้า 28–31, 33",
+    "origin": "ดัดแปลงจากตัวอย่างสไลด์",
+    "kind": "calculation"
+  },
+  {
+    "id": "Q2-133",
+    "chapter": "10.2",
+    "topic": "Capitalized cost",
+    "question": "อุปกรณ์ราคา 16,000 ดอลลาร์ ต้องเปลี่ยนใหม่ราคาเดิมทุก 7 ปี ไม่มีซาก ค่าเดินเครื่อง 1,600/ปีตลอดไป และ i=8% Equivalent capitalized cost เท่าใด?",
+    "options": [
+      "58,414.48 ดอลลาร์",
+      "36,000.00 ดอลลาร์",
+      "4,673.16 ดอลลาร์",
+      "40,014.48 ดอลลาร์"
+    ],
+    "correct": 0,
+    "why": "รวม PV ของการซื้อซ้ำไม่สิ้นสุดกับ PV ค่าเดินเครื่องตลอดไป",
+    "steps": [
+      "CC_อุปกรณ์=C/[1−(1+i)^(−n)]=38,414.48 ดอลลาร์",
+      "PV ค่าเดินเครื่อง=O/i=1,600/0.08=20,000.00",
+      "ECC=38,414.48+20,000.00=58,414.48 ดอลลาร์"
+    ],
+    "ref": "10.2 · หน้า 28–31, 33",
+    "origin": "ดัดแปลงจากตัวอย่างสไลด์",
+    "kind": "calculation"
+  },
+  {
+    "id": "Q2-134",
+    "chapter": "10.2",
+    "topic": "Capitalized cost",
+    "question": "อุปกรณ์ราคา 10,000 ดอลลาร์ ต้องเปลี่ยนใหม่ราคาเดิมทุก 5 ปี ไม่มีซาก ค่าเดินเครื่อง 1,000/ปีตลอดไป และ i=10% Equivalent capitalized cost เท่าใด?",
+    "options": [
+      "36,379.75 ดอลลาร์",
+      "20,000.00 ดอลลาร์",
+      "3,637.97 ดอลลาร์",
+      "27,379.75 ดอลลาร์"
+    ],
+    "correct": 0,
+    "why": "รวม PV ของการซื้อซ้ำไม่สิ้นสุดกับ PV ค่าเดินเครื่องตลอดไป",
+    "steps": [
+      "CC_อุปกรณ์=C/[1−(1+i)^(−n)]=26,379.75 ดอลลาร์",
+      "PV ค่าเดินเครื่อง=O/i=1,000/0.1=10,000.00",
+      "ECC=26,379.75+10,000.00=36,379.75 ดอลลาร์"
+    ],
+    "ref": "10.2 · หน้า 28–31, 33",
+    "origin": "สร้างเพิ่มจากสไลด์",
+    "kind": "calculation"
+  },
+  {
+    "id": "Q2-135",
+    "chapter": "10.2",
+    "topic": "Capitalized cost",
+    "question": "อุปกรณ์ราคา 20,000 ดอลลาร์ ต้องเปลี่ยนใหม่ราคาเดิมทุก 10 ปี ไม่มีซาก ค่าเดินเครื่อง 2,000/ปีตลอดไป และ i=10% Equivalent capitalized cost เท่าใด?",
+    "options": [
+      "52,549.08 ดอลลาร์",
+      "40,000.00 ดอลลาร์",
+      "5,254.91 ดอลลาร์",
+      "34,549.08 ดอลลาร์"
+    ],
+    "correct": 0,
+    "why": "รวม PV ของการซื้อซ้ำไม่สิ้นสุดกับ PV ค่าเดินเครื่องตลอดไป",
+    "steps": [
+      "CC_อุปกรณ์=C/[1−(1+i)^(−n)]=32,549.08 ดอลลาร์",
+      "PV ค่าเดินเครื่อง=O/i=2,000/0.1=20,000.00",
+      "ECC=32,549.08+20,000.00=52,549.08 ดอลลาร์"
+    ],
+    "ref": "10.2 · หน้า 28–31, 33",
+    "origin": "สร้างเพิ่มจากสไลด์",
+    "kind": "calculation"
+  },
+  {
+    "id": "Q2-136",
+    "chapter": "10.2",
+    "topic": "Capitalized cost",
+    "question": "โครงการถาวรลงทุนเริ่มต้น 8,000,000 บาท ค่าบำรุง 140,000 บาท/ปี ไม่มีการซื้อซ้ำเพิ่มเติม และ i=3.5% ค่าใช้จ่ายรายปีเทียบเท่าเท่าใด?",
+    "options": [
+      "420,000.00 บาท/ปี",
+      "280,000.00 บาท/ปี",
+      "4,000,000.00 บาท/ปี",
+      "8,140,000.00 บาท/ปี"
+    ],
+    "correct": 0,
+    "why": "เงินลงทุนก้อนถาวรคิดเป็นรายปี Ci และบวกค่าบำรุงรายปี",
+    "steps": [
+      "Annual expense = C×i+O",
+      "=8,000,000×0.035+140,000 = 420,000.00 บาทต่อปี"
+    ],
+    "ref": "ข้อสอบ 2025 · ข้อ 15; 10.2 หน้า 28–31",
+    "origin": "ดัดแปลงจากข้อสอบปลายภาค 2025",
+    "kind": "calculation"
+  },
+  {
+    "id": "Q2-137",
+    "chapter": "10.2",
+    "topic": "Capitalized cost",
+    "question": "โครงการถาวรลงทุนเริ่มต้น 1,000,000 บาท ค่าบำรุง 50,000 บาท/ปี ไม่มีการซื้อซ้ำเพิ่มเติม และ i=5% ค่าใช้จ่ายรายปีเทียบเท่าเท่าใด?",
+    "options": [
+      "100,000.00 บาท/ปี",
+      "50,000.00 บาท/ปี",
+      "1,000,000.00 บาท/ปี",
+      "1,050,000.00 บาท/ปี"
+    ],
+    "correct": 0,
+    "why": "เงินลงทุนก้อนถาวรคิดเป็นรายปี Ci และบวกค่าบำรุงรายปี",
+    "steps": [
+      "Annual expense = C×i+O",
+      "=1,000,000×0.05+50,000 = 100,000.00 บาทต่อปี"
+    ],
+    "ref": "ข้อสอบ 2025 · ข้อ 15; 10.2 หน้า 28–31",
+    "origin": "สร้างเพิ่มจากสไลด์",
+    "kind": "calculation"
+  },
+  {
+    "id": "Q2-138",
+    "chapter": "10.2",
+    "topic": "Capitalized cost",
+    "question": "โครงการถาวรลงทุนเริ่มต้น 500,000 บาท ค่าบำรุง 20,000 บาท/ปี ไม่มีการซื้อซ้ำเพิ่มเติม และ i=8% ค่าใช้จ่ายรายปีเทียบเท่าเท่าใด?",
+    "options": [
+      "60,000.00 บาท/ปี",
+      "40,000.00 บาท/ปี",
+      "250,000.00 บาท/ปี",
+      "520,000.00 บาท/ปี"
+    ],
+    "correct": 0,
+    "why": "เงินลงทุนก้อนถาวรคิดเป็นรายปี Ci และบวกค่าบำรุงรายปี",
+    "steps": [
+      "Annual expense = C×i+O",
+      "=500,000×0.08+20,000 = 60,000.00 บาทต่อปี"
+    ],
+    "ref": "ข้อสอบ 2025 · ข้อ 15; 10.2 หน้า 28–31",
+    "origin": "สร้างเพิ่มจากสไลด์",
+    "kind": "calculation"
+  },
+  {
+    "id": "Q2-139",
+    "chapter": "10.2",
+    "topic": "Capitalized cost",
+    "question": "ค่าบำรุง 1,000 บาท ทุกสิ้นปีตลอดไป ที่ i=10% มูลค่าปัจจุบันเท่าใด?",
+    "options": [
+      "10,000.00 บาท",
+      "100.00 บาท",
+      "1,100.00 บาท",
+      "5,000.00 บาท"
+    ],
+    "correct": 0,
+    "why": "ใช้มูลค่าปัจจุบันของ uniform perpetuity",
+    "steps": [
+      "PV=O/i = 1,000/0.1",
+      "PV=10,000.00 บาท"
+    ],
+    "ref": "10.2 · หน้า 30–31",
+    "origin": "สร้างเพิ่มจากสไลด์",
+    "kind": "calculation"
+  },
+  {
+    "id": "Q2-140",
+    "chapter": "10.2",
+    "topic": "Capitalized cost",
+    "question": "ค่าบำรุง 1,800 บาท ทุกสิ้นปีตลอดไป ที่ i=8% มูลค่าปัจจุบันเท่าใด?",
+    "options": [
+      "22,500.00 บาท",
+      "144.00 บาท",
+      "1,944.00 บาท",
+      "18,000.00 บาท"
+    ],
+    "correct": 0,
+    "why": "ใช้มูลค่าปัจจุบันของ uniform perpetuity",
+    "steps": [
+      "PV=O/i = 1,800/0.08",
+      "PV=22,500.00 บาท"
+    ],
+    "ref": "10.2 · หน้า 30–31",
+    "origin": "สร้างเพิ่มจากสไลด์",
+    "kind": "calculation"
+  },
+  {
+    "id": "Q2-141",
+    "chapter": "10.2",
+    "topic": "Capitalized cost",
+    "question": "ค่าบำรุง 5,000 บาท ทุกสิ้นปีตลอดไป ที่ i=5% มูลค่าปัจจุบันเท่าใด?",
+    "options": [
+      "100,000.00 บาท",
+      "250.00 บาท",
+      "5,250.00 บาท",
+      "50,000.00 บาท"
+    ],
+    "correct": 0,
+    "why": "ใช้มูลค่าปัจจุบันของ uniform perpetuity",
+    "steps": [
+      "PV=O/i = 5,000/0.05",
+      "PV=100,000.00 บาท"
+    ],
+    "ref": "10.2 · หน้า 30–31",
+    "origin": "สร้างเพิ่มจากสไลด์",
+    "kind": "calculation"
+  },
+  {
+    "id": "Q2-142",
+    "chapter": "10.1",
+    "topic": "ตัวอย่างโรงงาน 150 ล้าน",
+    "question": "สไลด์ 10.1: FCIL 150 ล้าน ใช้ MACRS อัตราปีแรก 20% ค่าเสื่อมปีแรกเท่าใด?",
+    "options": [
+      "30.00 ล้าน",
+      "20.00 ล้าน",
+      "48.00 ล้าน",
+      "150.00 ล้าน"
+    ],
+    "correct": 0,
+    "why": "อัตราตารางปีแรกคูณต้นทุนเดิม FCIL",
+    "steps": [
+      "d₁=150×20%",
+      "d₁=30 ล้าน"
+    ],
+    "ref": "10.1 · หน้า 10–11",
+    "origin": "ดัดแปลงจากตัวอย่างสไลด์",
+    "kind": "calculation"
+  },
+  {
+    "id": "Q2-143",
+    "chapter": "10.1",
+    "topic": "ตัวอย่างโรงงาน 150 ล้าน",
+    "question": "สไลด์ 10.1: หลัง start-up 3 ปี cumulative CF=−67.69 ล้าน และหลัง 4 ปี=−35.16 ล้าน เป้าคืน FCIL คือ −40 ล้าน PBP แบบประมาณเท่าใด?",
+    "options": [
+      "3.85 ปี",
+      "3.00 ปี",
+      "4.00 ปี",
+      "5.94 ปี"
+    ],
+    "correct": 0,
+    "why": "สไลด์แยกที่ดินและ WC จึงเทียบจุดคืน FCIL กับยอด −40 ล้าน",
+    "steps": [
+      "หลัง 3 ปี ยังขาด 67.69−40=27.69 ล้าน; CF ปีถัดไป=67.69−35.16=32.53 ล้าน",
+      "PBP ≈ 3+27.69/32.53=3.85 ปีหลัง start-up"
+    ],
+    "ref": "10.1 · หน้า 12",
+    "origin": "ดัดแปลงจากตัวอย่างสไลด์",
+    "kind": "calculation"
+  },
+  {
+    "id": "Q2-144",
+    "chapter": "10.1",
+    "topic": "ตัวอย่างโรงงาน 150 ล้าน",
+    "question": "สไลด์ 10.1: ที่ i=10% จุดคืน FCIL อยู่ที่ cumulative discounted CF = −34.793 ล้าน หลัง start-up 5 ปี cumulative=−47.337 และหลัง 6 ปี=−33.977 ล้าน DPBP แบบประมาณเท่าใด?",
+    "options": [
+      "5.94 ปี",
+      "5.00 ปี",
+      "6.00 ปี",
+      "3.85 ปี"
+    ],
+    "correct": 0,
+    "why": "เป้าหมายเป็น PV ของที่ดินและ WC ที่แยกจากฐาน FCIL และเริ่มนับหลัง start-up",
+    "steps": [
+      "หลัง start-up 5 ปี ยังขาด 47.337−34.793=12.544 ล้าน; discounted CF ปีถัดไป=13.360 ล้าน",
+      "DPBP ≈ 5+12.544/13.360=5.94 ปี"
+    ],
+    "ref": "10.1 · หน้า 23–26",
+    "origin": "ดัดแปลงจากตัวอย่างสไลด์",
+    "kind": "calculation"
+  },
+  {
+    "id": "Q2-145",
+    "chapter": "10.1",
+    "topic": "ตัวอย่างโรงงาน 150 ล้าน",
+    "question": "สไลด์ 10.1: ที่ i=10% PV เงินเข้ารวมประมาณ 183.32 ล้าน และ PV เงินออกมีขนาด 166.20 ล้าน NPV เท่าใด?",
+    "options": [
+      "17.12 ล้าน",
+      "183.32 ล้าน",
+      "166.20 ล้าน",
+      "-17.12 ล้าน"
+    ],
+    "correct": 0,
+    "why": "NPV คือ PV เงินเข้าลบขนาด PV เงินออก",
+    "steps": [
+      "NPV=PV(+)−|PV(−)|=183.32−166.20",
+      "NPV=17.12 ล้านดอลลาร์"
+    ],
+    "ref": "10.1 · หน้า 23–24",
+    "origin": "ดัดแปลงจากตัวอย่างสไลด์",
+    "kind": "calculation"
+  },
+  {
+    "id": "Q2-146",
+    "chapter": "10.1",
+    "topic": "ตัวอย่างโรงงาน 150 ล้าน",
+    "question": "สไลด์ 10.1: PV เงินเข้า 183.32 ล้าน และ PV เงินออก 166.20 ล้าน PVR ประมาณเท่าใด?",
+    "options": [
+      "1.10 เท่า",
+      "0.91 เท่า",
+      "0.10 เท่า",
+      "1.50 เท่า"
+    ],
+    "correct": 0,
+    "why": "PVR คืออัตราส่วน PV เงินเข้าต่อขนาด PV เงินออก",
+    "steps": [
+      "PVR=183.32/166.20",
+      "PVR≈1.10 เท่า ซึ่งมากกว่า 1 สอดคล้องกับ NPV บวก"
+    ],
+    "ref": "10.1 · หน้า 23–24",
+    "origin": "ดัดแปลงจากตัวอย่างสไลด์",
+    "kind": "calculation"
+  },
+  {
+    "id": "Q2-147",
+    "chapter": "10.1",
+    "topic": "ตัวอย่างโรงงาน 150 ล้าน",
+    "question": "สไลด์ 10.1: FCI_L=150 ล้าน ค่าเสื่อมตลอดอายุ 150 ล้าน และ operating CF รวม 10 ปี 320.50 ล้าน ไม่รวมเงินคืนที่ดิน/WC ROROI ประมาณเท่าใด?",
+    "options": [
+      "11.37 % ต่อปี",
+      "21.37 % ต่อปี",
+      "213.67 % ต่อปี",
+      "46.80 % ต่อปี"
+    ],
+    "correct": 0,
+    "why": "ROROI ใช้กำไรสุทธิเฉลี่ย ไม่ใช่ cash flow เฉลี่ย; จึงลบค่าเสื่อมรวมก่อน",
+    "steps": [
+      "กำไรสุทธิรวม = operating CF รวม − ค่าเสื่อมรวม = 320.50−150=170.50 ล้าน",
+      "กำไรสุทธิเฉลี่ย=170.50/10=17.05; ROROI=17.05/150≈11.37% ต่อปี"
+    ],
+    "ref": "10.1 · หน้า 8, 12",
+    "origin": "ดัดแปลงจากตัวอย่างสไลด์",
+    "kind": "calculation"
+  },
+  {
+    "id": "Q2-148",
+    "chapter": "10.1",
+    "topic": "ข้อสอบโรงงาน 2025",
+    "question": "ข้อสอบโรงงาน 2025: ลงทุนเริ่มต้น 24.222 ล้าน รับ CF 4.085 ล้านปี 1–3, 4.785 ล้านปี 4–9, และ 9.357 ล้านปี 10 ที่ 10% NPV ประมาณเท่าใด?",
+    "options": [
+      "5.20 ล้าน",
+      "26.10 ล้าน",
+      "-5.20 ล้าน",
+      "0.00 ล้าน"
+    ],
+    "correct": 0,
+    "why": "คิดลดเงินรับแต่ละช่วงกลับ t=0 แล้วหักเงินลงทุนเริ่มต้น",
+    "steps": [
+      "NPV=−24.222+4.085(P/A,10%,3)+4.785(P/A,10%,6)(P/F,10%,3)+9.357(P/F,10%,10)",
+      "NPV≈5.20 ล้านดอลลาร์; CF ปี 10 รวมรายการคืนตามสมมติฐานตารางเฉลย"
+    ],
+    "ref": "ข้อสอบ 2025 · หน้า 8–9",
+    "origin": "ดัดแปลงจากข้อสอบปลายภาค 2025",
+    "kind": "calculation"
+  },
+  {
+    "id": "Q2-149",
+    "chapter": "10.1",
+    "topic": "ข้อสอบโรงงาน 2025",
+    "question": "ข้อสอบโรงงาน 2025: DCFROR=14.33%, MARR=21%, DPBP=6.37 ปี และกำหนดคืนทุนไม่เกิน 5 ปี ควรตัดสินใจอย่างไร?",
+    "options": [
+      "ไม่ผ่านทั้งเกณฑ์ผลตอบแทนและระยะคืนทุน",
+      "ผ่านทั้งสองเกณฑ์",
+      "ผ่าน IRR แต่ไม่ผ่านคืนทุน",
+      "ไม่ผ่าน IRR แต่ผ่านคืนทุน"
+    ],
+    "correct": 0,
+    "why": "เทียบแต่ละเงื่อนไขอย่างเป็นอิสระ",
+    "steps": [
+      "14.33% < 21% จึงไม่ผ่านเกณฑ์ผลตอบแทน",
+      "6.37 > 5 ปี จึงไม่ผ่านเกณฑ์ระยะคืนทุน"
+    ],
+    "ref": "ข้อสอบ 2025 · หน้า 9",
+    "origin": "อิงข้อสอบปลายภาค 2025",
+    "kind": "theory"
+  },
+  {
+    "id": "Q2-150",
+    "chapter": "10.2",
+    "topic": "อายุต่างกันและ LCM",
+    "question": "สไลด์: สถานที่ A ค่าแรกเข้า 15,000 ค่าเช่า 3,500/ปี คืนเงินมัดจำ 1,000 สิ้นรอบ อายุรอบ 6 ปี ทำซ้ำถึงปี 18 ที่ 15% PW ต้นทุนประมาณเท่าใด?",
+    "options": [
+      "-45,036.36 ดอลลาร์",
+      "-41,383.28 ดอลลาร์",
+      "-27,813.36 ดอลลาร์",
+      "45,036.36 ดอลลาร์"
+    ],
+    "correct": 0,
+    "why": "รอบละ 6 ปี ต้องเริ่มรอบที่ปี 0, 6, 12 และคืนมัดจำปี 6, 12, 18",
+    "steps": [
+      "PW_A=−15,000−14,000(P/F,15%,6)−14,000(P/F,15%,12)+1,000(P/F,15%,18)−3,500(P/A,15%,18)",
+      "แทน factor ได้ประมาณ -45,036.36 ดอลลาร์; ตัวเลขสไลด์ประมาณ −45,036"
+    ],
+    "ref": "10.2 · หน้า 21–25",
+    "origin": "ดัดแปลงจากตัวอย่างสไลด์",
+    "kind": "calculation"
+  },
+  {
+    "id": "Q2-151",
+    "chapter": "10.2",
+    "topic": "อายุต่างกันและ LCM",
+    "question": "สไลด์: สถานที่ B ค่าแรกเข้า 18,000 ค่าเช่า 3,100/ปี คืนมัดจำ 2,000 สิ้นรอบ อายุรอบ 9 ปี ทำซ้ำถึงปี 18 ที่ 15% PW ต้นทุนประมาณเท่าใด?",
+    "options": [
+      "-41,383.28 ดอลลาร์",
+      "-45,036.36 ดอลลาร์",
+      "-32,223.39 ดอลลาร์",
+      "41,383.28 ดอลลาร์"
+    ],
+    "correct": 0,
+    "why": "รอบละ 9 ปี เริ่มรอบที่ปี 0 และ 9 พร้อมคืนมัดจำปี 9 และ 18",
+    "steps": [
+      "PW_B=−18,000−(18,000−2,000)(P/F,15%,9)+2,000(P/F,15%,18)−3,100(P/A,15%,18)",
+      "PW_B≈-41,383.28 ดอลลาร์ สูงกว่า A≈-45,036.36 จึงเลือก B"
+    ],
+    "ref": "10.2 · หน้า 21–25",
+    "origin": "ดัดแปลงจากตัวอย่างสไลด์",
+    "kind": "calculation"
+  }
+]
+;</script>
+<script>const LESSONS = [
+{id:'project-timeline',chapter:'10.1',title:'ภาพรวมโครงการและ Cash Flow',topic:'แผนภาพโครงการ',pages:'10.1 หน้า 2–4; ข้อสอบ 2025 ข้อ 31',read:'8 นาที',html:`
+<p>เริ่มจากวาดเส้นเวลาและระบุเงินที่เข้า–ออกก่อนเลือกสูตร มองจากฝั่งผู้ลงทุน: เงินลงทุนและค่าใช้จ่ายเป็นลบ เงินรับเป็นบวก</p><div class="formula">เงินลงทุนเริ่มต้นอาจประกอบด้วย ที่ดิน + FCI<sub>L</sub> + Working Capital<br>เมื่อปิดโครงการ อาจได้ราคาที่ดิน + WC + มูลค่าซากคืน ตามโจทย์</div>
+<p><b>FCI<sub>L</sub></b> คือต้นทุนสินทรัพย์ถาวรไม่รวมที่ดิน; <b>WC</b> คือทุนหมุนเวียน และ <b>S</b> คือมูลค่าซาก อย่าคิดว่า WC เป็นค่าเสื่อมหรือรับคืนทันทีโดยไม่มีเงื่อนไข</p>
+<h3>ตัวอย่างเส้นเวลา</h3><p>ซื้อที่ดิน 10 ที่ t=0 ลงทุนโรงงาน 90 ที่ t=1 และ 60 ที่ t=2 พร้อม WC 30 ที่ t=2 แล้วเริ่มดำเนินงาน ค่าใช้จ่ายเริ่มแรกกระจายต่างเวลา ถ้าต้องการ NPV ณ t=0 ต้อง discount แต่ละรายการตามปีจริง</p><div class="tip">เวลาสร้างโรงงานกับเวลาหลัง start-up ไม่จำเป็นต้องเริ่มที่จุดเดียวกัน: สไลด์นับระยะคืนทุนหลัง start-up แต่ discount ทุกกระแสกลับไปเวลา 0</div>`},
+{id:'after-tax-flow',chapter:'10.1',title:'กำไร ภาษี และกระแสเงินสด',topic:'กำไรและกระแสเงินสด',pages:'10.1 หน้า 10–11; ข้อสอบ 2025 ข้อโรงงาน',read:'9 นาที',html:`
+<p>หาก COMd ที่โจทย์ให้ <b>ไม่รวมค่าเสื่อม</b> และกำไรเสียภาษีเป็นบวก ให้หาภาษีจากรายรับลบต้นทุนลบค่าเสื่อม แล้วบวกค่าเสื่อมกลับเพื่อหากระแสเงินสด</p><div class="formula">กำไรก่อนภาษี = R − COMd − d<sub>k</sub><br>กำไรหลังภาษี = (R − COMd − d<sub>k</sub>)(1−t)<br>Operating CF = (R − COMd − d<sub>k</sub>)(1−t)+d<sub>k</sub></div>
+<h3>ตัวอย่างโรงงานในสไลด์ หน่วยล้านดอลลาร์</h3><ol><li>รายรับ 75, COMd 30, ค่าเสื่อมปีแรก 30 และภาษี 45%</li><li>กำไรก่อนภาษี = 75−30−30 = 15; ภาษี = 15(0.45)=6.75</li><li>กำไรหลังภาษี = 8.25; บวกค่าเสื่อมกลับ 30 → <b>CF = 38.25 ล้าน</b></li></ol><p>ค่าเสื่อมไม่ใช่เงินสดที่จ่ายซ้ำปีนั้น แต่มีผลลดฐานภาษี ตรวจด้วยว่า COMd รวมค่าเสื่อมแล้วหรือยัง เพื่อไม่หักซ้ำ</p><div class="warning">เงินขายซากอาจมีภาษีจากกำไร/ขาดทุนเมื่อขายเทียบกับ book value ตามเงื่อนไขโจทย์ อย่าสมมติทุกข้อเหมือนกัน</div>`},
+{id:'undiscounted-metrics',chapter:'10.1',title:'CCP, CCR และ ROROI',topic:'CCP CCR และ ROROI',pages:'10.1 หน้า 5–12',read:'9 นาที',html:`
+<p>ตัวชี้วัดแบบ <b>ไม่คิดลด</b> รวมเงินต่างเวลาเป็นตัวเลขตามจำนวนเงิน จึงคำนวณง่ายแต่ไม่สะท้อน time value of money</p><div class="formula">CCP = ผลรวม CF ทั้งโครงการ ณ สิ้นอายุ (ยังไม่ discount)<br>CCR = ผลรวมเงินเข้า / ขนาดผลรวมเงินออก<br>ROROI = กำไรสุทธิเฉลี่ยต่อปี / FCI<sub>L</sub></div>
+<p>ถ้าเงินออกเริ่มต้น 100 และเงินเข้ารวม 140: CCP=40 และ CCR=140/100=1.40 ภายใต้กรณีเงินออกมีเพียง 100 ค่า CCR=1+CCP/100</p><p>ถ้า FCI<sub>L</sub>=200 ล้าน และกำไรสุทธิหลังภาษีเฉลี่ยปีละ 20 ล้าน → ROROI=20/200=10% ต่อปี เป็น accounting return โดยโจทย์ต้องบอกนิยามกำไรและฐานให้ชัด</p><div class="tip">อย่าสับสน <b>กำไรสุทธิ</b> กับ <b>cash flow</b>: cash flow บวกค่าเสื่อมกลับแล้ว ในขณะที่กำไรสุทธิยังหักค่าเสื่อมอยู่</div>`},
+{id:'payback-conventions',chapter:'10.1',title:'PBP: ระยะคืนทุนและนิยามฐาน',topic:'ระยะคืนทุน PBP',pages:'10.1 หน้า 6, 12, 34–45; ข้อสอบ 2025',read:'10 นาที',html:`
+<p><b>PBP</b> คือเวลาจนเงินรับสะสมชดเชยฐานลงทุนที่กำหนด โดยยังไม่คิดลด แต่คำว่า “คืนทุน” ต้องดูว่าโจทย์ให้นับฐานใดและเริ่มนับเมื่อไร</p><div class="formula">PBP เมื่อเงินรับเท่ากันทุกปี = ฐานลงทุน / CF ต่อปี<br>ถ้า CF ไม่เท่ากัน: ปีเต็มก่อนถึงเป้า + ส่วนที่ยังขาด / CF ของปีถัดไป</div>
+<h3>ตัวอย่าง</h3><p>ลงทุน 100, ได้ CF 30, 30, 50 สิ้นปี: สิ้นปี 2 รับสะสม 60 ยังขาด 40 → แบบประมาณเชิงเส้น PBP=2+40/50=<b>2.8 ปี</b> หากจ่ายเป็นก้อนสิ้นปีจริงและไม่สมมติไหลสม่ำเสมอ จะครบเมื่อสิ้นปี 3</p>
+<p>ในสไลด์โรงงาน นิยาม PBP คือเวลาหลัง start-up เพื่อคืน <b>FCI<sub>L</sub></b> โดยไม่นับ WC และที่ดินที่ตั้งสมมติฐานว่ากู้คืนได้; บางโจทย์ใช้เงินลงทุนทั้งหมด ต้องดูคำจำกัดความก่อนเสมอ</p><div class="warning">PBP ไม่ดูเงินหลังคืนทุน และ PBP ปกติไม่คิดมูลค่าเงินตามเวลา จึงเหมาะเป็นตัวกรองร่วมกับ NPV ไม่ใช่ตัดสินเพียงตัวเดียว</div>`},
+{id:'lecture-case-150',chapter:'10.1',title:'แกะตัวอย่างในสไลด์: โรงงาน 150 ล้าน',topic:'ตัวอย่างโรงงาน 150 ล้าน',pages:'10.1 หน้า 10–12, 17, 23–25',read:'11 นาที',html:`
+<p>ตัวอย่าง 10.1 แยกเงินลงทุนที่ดิน 10 ล้านที่ปี 0, FCI<sub>L</sub> 90 ล้านที่ปี 1 และ 60 ล้านที่ปี 2, WC 30 ล้านที่ปี 2 โดย start-up เมื่อสิ้นปี 2 และดำเนินงาน 10 ปี รายรับ 75, COMd 30, ภาษี 45%, ใช้ MACRS 5 ปี</p>
+<ol><li>ค่าเสื่อมปีดำเนินงานแรก = 150(20%)=30 ล้าน; CF หลังภาษี = (75−30−30)(1−0.45)+30=<b>38.25 ล้าน</b></li><li>ค่าเสื่อมปีถัดมา = 150(32%)=48 ล้าน; CF = (75−30−48)(0.55)+48=<b>46.35 ล้าน</b></li><li>สไลด์นับ PBP เพื่อคืน FCI<sub>L</sub> จึงหา cumulative CF เมื่อถึง −(ที่ดิน+WC)=−40 ล้าน: หลัง start-up 3 ปี cumulative≈−67.69 และ 4 ปี≈−35.16 → PBP≈<b>3.85 ปี</b></li><li>ที่ i=10% คิดลดที่ดินและ WC เป็น 10+30/1.1²=34.793 ล้าน; จุดคืน FCI<sub>L</sub> คือ cumulative discounted CF =−34.793 ล้าน → DPBP≈<b>5.94 ปีหลัง start-up</b></li><li>หากรวมกระแสทั้งโครงการที่ i=10% จะได้ NPV≈<b>17.12 ล้าน</b> และ PVR≈<b>1.10</b>; CCP≈170.50 ล้านเมื่อไม่คิดลด</li></ol>
+<div class="warning">ในตารางสไลด์บางแถวมีตัวเลขสะสมไม่สอดคล้องกัน เช่น discounted cumulative สิ้นปี 4 ที่คำนวณจาก CF ในตารางได้ประมาณ −105.80 ล้าน ขณะที่สไลด์พิมพ์ −103.80; ควรตรวจจากแต่ละรายการแทนการบวกตัวเลขที่พิมพ์โดยตรง</div>`},
+{id:'npv-pvr',chapter:'10.1',title:'NPV และ PVR: เงินต่างเวลาต้องย้ายก่อน',topic:'NPV และ PVR',pages:'10.1 หน้า 14–20; ข้อสอบ 2025 ข้อ 30',read:'10 นาที',html:`
+<p>Discounted analysis นำทุกกระแสไปเทียบ ณ เวลา 0 โดยใช้อัตราที่เหมาะสม เช่น MARR</p><div class="formula">NPV = Σ CF<sub>t</sub>/(1+i)<sup>t</sup><br>PVR = PV ของกระแสเงินสดบวก / ขนาด PV ของกระแสเงินสดลบ</div>
+<p>ลงทุน 100 วันนี้ รับ 60 สิ้นปี 1 และ 60 สิ้นปี 2 ที่ i=10%: NPV=−100+60/1.10+60/1.10²=<b>+4.13</b>; PV เงินเข้า =104.13 และ PVR=104.13/100=<b>1.0413</b></p><p>โครงการเดี่ยวเมื่อกำหนด MARR: NPV&gt;0 คุ้มตามเกณฑ์, NPV=0 เท่าทุนบนฐาน MARR, NPV&lt;0 ไม่ผ่าน และ PVR มากกว่า 1 เทียบเท่า NPV บวกเมื่อใช้ฐานกระแสเดียวกัน</p><h3>โจทย์สอบเก่าที่อัตราและงวดไม่ตรงกัน</h3><p>อัตรา nominal 23% ต่อ 2 ปี ทบรายไตรมาส → สองปีมี 8 ไตรมาส จึง i ต่อไตรมาส = 0.23/8 = 2.875% และ effective ต่อปี = (1.02875)⁴−1 ≈ 12.0055% แล้วจึงใช้กับ CF รายปี ถ้าลงทุน 70,000 รับสุทธิ 12,150 ต่อปี 10 ปี จะได้ NPV ≈ <b>−1,365.28 ดอลลาร์</b>; ช้อยส์ข้อสอบเก่า −1,350 เป็นค่าที่ใกล้เมื่อปัดอัตราเป็น 12%</p><div class="tip">เงิน CF₀ ไม่ต้องคิดลด และเครื่องหมายเงินเข้า–ออกต้องสอดคล้องทั้งโจทย์</div>`},
+{id:'discounted-payback',chapter:'10.1',title:'DPBP: คืนทุนเมื่อคิดดอกเบี้ย',topic:'ระยะคืนทุน DPBP',pages:'10.1 หน้า 15, 21–24, 34–45; ข้อสอบ 2025 ข้อ 27',read:'10 นาที',html:`
+<p><b>DPBP</b> คิดลด cash flow แต่ละงวดก่อนสะสม แล้วหาจุดคืนฐานที่โจทย์กำหนด โดยปกติสำหรับกระแสรับบวกชุดเดียวกัน DPBP จะไม่สั้นกว่า PBP เมื่อ i&gt;0</p><div class="formula">มูลค่าปัจจุบัน CF ปี t = CF<sub>t</sub>/(1+i)<sup>t</sup><br>DPBP ≈ ปีเต็มก่อนถึงเป้า + ส่วนที่ขาด / discounted CF ปีถัดไป</div>
+<h3>ตัวอย่าง</h3><p>ลงทุน 100 ที่ t=0 และรับ 60 สิ้นปี 1, 60 สิ้นปี 2 ที่ 10%: PV₁=54.55, PV₂=49.59; สิ้นปี 1 ยังขาด 45.45 → DPBP ≈ 1+45.45/49.59 = <b>1.92 ปี</b> หากใช้การประมาณเชิงเส้น; หากรับเงินเป็นก้อนสิ้นปีจริงจุดคืนทุนอยู่สิ้นปี 2</p><p>กรณีฐานคือ FCI<sub>L</sub> เท่านั้น ให้แยกที่ดิน/WC ตามนิยาม และต้องเทียบมูลค่าที่เวลาอ้างอิงเดียวกัน อย่าใช้ยอด undiscounted ไปเทียบกับ discounted โดยไม่ปรับ</p><div class="tip">ถ้าผลรวม discounted CF ตลอดระยะโครงการยังไม่ถึงฐานที่กำหนด ให้ตอบว่าไม่คืนทุนภายในอายุโครงการ</div>`},
+{id:'irr-marr',chapter:'10.1',title:'DCFROR, IRR และ MARR',topic:'DCFROR และ MARR',pages:'10.1 หน้า 22, 25–33',read:'10 นาที',html:`
+<p><b>DCFROR หรือ IRR</b> คืออัตรา i* ที่ทำให้ NPV ของกระแสเงินสดที่กำหนดเท่ากับศูนย์ ส่วน <b>MARR</b> คืออัตราผลตอบแทนขั้นต่ำที่ใช้ตัดสินใจ</p><div class="formula">0 = Σ CF<sub>t</sub>/(1+i*)<sup>t</sup><br>โครงการทั่วไปที่ลงทุนก่อนและรับเงินภายหลัง: i* &gt; MARR → ผ่านเกณฑ์ผลตอบแทน</div>
+<h3>ตัวอย่างจากสไลด์</h3><p>จ่าย 1,000 ที่ t=0 รับ 500 ที่ปี 3 และ 1,500 ที่ปี 5: ตั้ง 0=−1,000+500/(1+i*)³+1,500/(1+i*)⁵ แล้วลองอัตราหรือ interpolate ได้ i*≈<b>16.90%</b> ต่อปี</p><p>ถ้า MARR=10% โครงการผ่านเกณฑ์อัตราผลตอบแทน; ถ้า MARR=20% ไม่ผ่าน ทั้งนี้ยังต้องดูข้อจำกัดอื่น เช่น ระยะคืนทุน</p><div class="warning">กระแสเงินสดที่เปลี่ยนเครื่องหมายหลายครั้งอาจมีหลาย IRR หรือไม่มี IRR ให้ตรวจ NPV profile และบริบท ไม่ใช้กฎ IRR อย่างไม่มีเงื่อนไข</div>`},
+{id:'exam-plant',chapter:'10.1',title:'แกะข้อสอบเก่า: โรงงาน 22 ล้าน',topic:'ข้อสอบโรงงาน 2025',pages:'ข้อสอบปลายภาค 2025 หน้า 8–9; 10.1 หน้า 10–25',read:'12 นาที',html:`
+<p>โจทย์ให้ FCI รวมที่ดิน 22 ล้าน โดยที่ดิน 2 ล้าน; WC=10% ของเงินลงทุนรวมที่ไม่รวมที่ดิน; อายุ 10 ปี, S=0.5, SL, ภาษี 30%, i=10%</p><ol><li>FCI<sub>L</sub>=22−2=<b>20 ล้าน</b>; WC=0.10(20+WC) → WC=2.222 ล้าน; เงินออกเริ่มต้นทั้งหมด=24.222 ล้าน</li><li>SL d=(20−0.5)/10=<b>1.95 ล้าน/ปี</b></li><li>ปี 1–3: R=7 และ COMd=2 → CF=(7−2−1.95)(0.70)+1.95=<b>4.085 ล้าน/ปี</b></li><li>ปี 4–10: R=8 → CF=(8−2−1.95)(0.70)+1.95=<b>4.785 ล้าน/ปี</b> ก่อนรายการสุดท้าย</li><li>ตามวิธีเฉลยข้อสอบ ปี 10 รวมคืนที่ดิน 2, WC 2.222 และซากหลังภาษี 0.35 → CF ปี 10 ≈9.357 ล้าน; NPV ที่ 10% ≈<b>5.20 ล้าน</b>; IRR≈<b>14.33%</b></li></ol>
+<p>DPBP เฉลยประมาณ <b>6.37 ปี</b> ใช้นิยามคืน FCI<sub>L</sub> โดยแยกที่ดินและ WC: สิ้นปี 6 discounted cumulative≈−5.123, สิ้นปี 7≈−2.668, เป้าหมาย=−4.222 → 6+(5.123−4.222)/(5.123−2.668)≈6.37 ปี หากนับคืน <b>เงินลงทุนทั้งหมด</b> เป้าหมายเป็น 0 จะได้ประมาณ <b>8.21 ปี</b></p>
+<div class="warning">ข้อสอบนับราคาซาก 0.5 เป็นรายรับปีสุดท้ายและหักภาษี 30% ทั้งจำนวนตามตาราง ถ้าโจทย์อื่นคิดภาษีเฉพาะกำไรขายซากเทียบกับ BV ผลจะต่างกัน ต้องใช้เงื่อนไขที่กำหนด</div>`},
+{id:'exclusive-projects',chapter:'10.2',title:'โครงการเดี่ยวและทางเลือกที่เลือกได้หนึ่งเดียว',topic:'การเลือกโครงการ',pages:'10.2 หน้า 2–4, 7, 12–13',read:'8 นาที',html:`
+<p><b>โครงการเดี่ยว</b> เทียบกับไม่ลงทุน: ที่ MARR ถ้า NPV&gt;0 ผ่านเกณฑ์มูลค่า หากเลือกไม่ลงทุนได้</p><p><b>Mutually exclusive</b> คือเลือกได้ไม่เกินหนึ่งทางเลือก เช่น เลือกปั๊ม A หรือ B ที่ให้บริการเดียวกัน เมื่อใช้ช่วงวิเคราะห์และสมมติฐานเดียวกัน ให้เลือก <b>NPV สูงที่สุด</b> ที่ผ่านข้อจำกัด โดยอย่าตัดสินจาก IRR รายโครงการที่สูงที่สุดเพียงอย่างเดียว</p><div class="formula">โครงการรายรับสุทธิ: เลือก NPV สูงสุด<br>ทางเลือกที่มีแต่ต้นทุน: เลือก PV ต้นทุนที่มีขนาดต่ำสุด หรือ NPV ที่ติดลบน้อยสุด</div><div class="tip">ถ้าเป็นบริการที่จำเป็นต้องทำ อาจไม่มีตัวเลือก “ไม่ทำ” แม้ทั้งสอง NPV ติดลบ เพราะตัวเลขนั้นเป็นต้นทุน ไม่ได้แปลว่าควรยกเลิกบริการเสมอ</div>`},
+{id:'equal-life',chapter:'10.2',title:'เทียบ NPV เมื่ออายุเท่ากัน',topic:'NPV อายุเท่ากัน',pages:'10.2 หน้า 13–15',read:'9 นาที',html:`
+<p>ถ้าบริการ อายุ และขอบเขตเท่ากัน เปรียบเทียบที่เวลาอ้างอิงเดียวกันด้วยอัตราเดียวกันได้โดยตรง</p><div class="formula">NPV = −C − O(P/A,i,n) + S(P/F,i,n)<br>หรือ PV cost = C + O(P/A,i,n) − S(P/F,i,n)</div>
+<h3>คอนเดนเซอร์จากสไลด์: n=12, i=10%</h3><p>A ต้นทุน 23,000 ค่าเดินเครื่อง 1,500/ปี → NPV≈−33,220.54 ดอลลาร์; B ต้นทุน 12,000 ค่าเดินเครื่อง 3,000/ปี → NPV≈−32,441.08 ดอลลาร์ จึงเลือก <b>B</b> เพราะ NPV สูงกว่า หรือค่าใช้จ่ายปัจจุบันต่ำกว่า</p><div class="tip">ตัวเลข −32,441 สูงกว่า −33,221 แม้ค่าบวก 32,441 จะมีขนาดต้นทุนน้อยกว่า</div>`},
+{id:'incremental',chapter:'10.2',title:'Incremental NPV และ Incremental ROR',topic:'วิเคราะห์ส่วนเพิ่ม',pages:'10.2 หน้า 5–12; ข้อสอบ 2025 ข้อ 9–11',read:'11 นาที',html:`
+<p>ใช้เมื่อต้องเลือกระหว่างทางเลือกที่ลงทุนไม่เท่ากัน คำถามคือ <b>เงินที่จ่ายเพิ่มเพื่อเปลี่ยนไปทางเลือกแพงกว่า คุ้มค่าหรือไม่?</b></p><ol><li>เรียงตามเงินลงทุนเริ่มต้นจากน้อยไปมาก</li><li>ตั้งกระแสส่วนเพิ่ม = กระแสทางเลือกแพงกว่า − กระแสทางเลือกถูกกว่า ในทุกเวลา</li><li>หา ΔNPV ที่ MARR หรือหา ΔIRR จากสมการ ΔNPV=0</li><li>สำหรับส่วนเพิ่มแบบลงทุนก่อน–รับประโยชน์ภายหลัง: ΔNPV&gt;0 หรือ ΔIRR&gt;MARR → ทางเลือกแพงกว่าคุ้ม; ถ้าต่ำกว่าให้เลือกฐานเดิม</li></ol><div class="formula">ΔCF<sub>t</sub> = CF<sub>challenger,t</sub> − CF<sub>defender,t</sub><br>ΔNPV = NPV<sub>challenger</sub> − NPV<sub>defender</sub></div>
+<div class="warning">ต้องเทียบช่วงเวลาและบริการให้สอดคล้องกัน ถ้าอายุไม่เท่ากันให้ใช้ช่วงศึกษาร่วมหรือสมมติฐานทำซ้ำให้เหมาะสม และถ้ากระแสส่วนเพิ่มไม่เป็นแบบปกติ IRR อาจตีความไม่ได้โดยตรง</div>`},
+{id:'three-projects',chapter:'10.2',title:'ตัวอย่างเลือก A, B, C จากสไลด์',topic:'โจทย์เปรียบเทียบโครงการ',pages:'10.2 หน้า 3–6',read:'10 นาที',html:`
+<p>งบสูงสุด 120 ล้าน; A ลงทุน 60 มี NPV=11.9, B ลงทุน 120 NPV=15.2, C ลงทุน 100 NPV=15.9 (ล้านดอลลาร์) ที่ MARR 10%; เป็นโครงการเลือกได้อย่างเดียว</p><ol><li>A มี NPV บวก จึงใช้เป็นฐาน</li><li>เทียบ C−A: ลงทุนเพิ่ม 40, เงินเพิ่มปี 1 =2, ปี 2–10 =8 ต่อปี → ΔNPV=−40+2/1.1+8(P/A,10%,9)/1.1≈<b>+3.70 ล้าน</b> จึงเปลี่ยนฐานเป็น C</li><li>เทียบ B−C: ลงทุนเพิ่ม 20, ปี 1 เพิ่ม 10, ปี 2–10 เพิ่ม 2 ต่อปี → ΔNPV≈<b>−0.44 ล้าน</b> จึงคง C</li></ol><p>ผลสอดคล้องกับการเลือก NPV สูงสุดคือ <b>C</b> แม้ A จะมี IRR รายโครงการสูงกว่า</p><div class="tip">ΔIRR C−A≈11.91% และ B−C≈9.28% จากข้อมูลกระแสเงินสดตามสไลด์; สไลด์ระบุประมาณ 11.9% และ 9.4% ตามลำดับ</div>`},
+{id:'eaoc',chapter:'10.2',title:'EAOC: เปรียบเทียบค่าใช้จ่ายต่อปี',topic:'EAOC และ AW',pages:'10.2 หน้า 16–20, 32–34',read:'10 นาที',html:`
+<p>เมื่ออายุอุปกรณ์ไม่เท่ากัน วิธี Equivalent Annual Operating Cost แปลงต้นทุนแต่ละทางเลือกเป็นค่าใช้จ่ายรายปีเทียบเท่า โดยใช้สมมติฐานการทำซ้ำและบริการเท่าเดิมตามที่เหมาะกับโจทย์</p><div class="formula">EAOC = C(A/P,i,n) + O &nbsp; เมื่อ S=0<br>(A/P,i,n)=i(1+i)<sup>n</sup>/[(1+i)<sup>n</sup>−1]</div>
+<h3>ตัวอย่างปั๊มในสไลด์</h3><p>A: C=8,000, O=1,800/ปี, n=4; B: C=16,000, O=1,600/ปี, n=7; i=8%</p><ol><li>EAOC<sub>A</sub>=8,000(A/P,8%,4)+1,800≈<b>4,215.37 ดอลลาร์/ปี</b></li><li>EAOC<sub>B</sub>=16,000(A/P,8%,7)+1,600≈<b>4,673.16 ดอลลาร์/ปี</b></li><li>เลือก A เพราะต้นทุนต่อปีต่ำกว่า สไลด์ปัดเป็นประมาณ 4,220 และ 4,670</li></ol><div class="tip">EAOC ในที่นี้เขียนเป็นค่าบวกซึ่งหมายถึง “ขนาดต้นทุน” จึงเลือกตัวเลขต่ำสุด</div>`},
+{id:'salvage-eaoc',chapter:'10.2',title:'EAOC เมื่อมีมูลค่าซาก',topic:'EAOC และมูลค่าซาก',pages:'10.2 หน้า 16–20; ข้อสอบ 2025 ข้อวัสดุ',read:'8 นาที',html:`
+<p>มูลค่าซากเป็นเงินรับเมื่อสิ้นอายุ จึงลดต้นทุนรายปีเทียบเท่า</p><div class="formula">EAOC = C(A/P,i,n) − S(A/F,i,n) + O<br>= (C−S)(A/P,i,n) + Si + O</div>
+<p>ตัวอย่าง C=10,000, S=2,000, n=5, i=10%, O=1,000 ต่อปี: EAOC =10,000(A/P,10%,5)−2,000(A/F,10%,5)+1,000 ≈ <b>3,310.38 ดอลลาร์/ปี</b></p><div class="tip">S ไม่ใช่เงินที่ได้รับ ณ วันนี้: ถ้าใช้ PW ต้องคิดลด S กลับจากปี n ก่อน</div>`},
+{id:'lcm',chapter:'10.2',title:'อายุต่างกัน: Common Denominator และ LCM',topic:'อายุต่างกันและ LCM',pages:'10.2 หน้า 21–27; ข้อสอบ 2025 ข้อวัสดุ',read:'10 นาที',html:`
+<p>ถ้าเลือกใช้ Present Worth กับอายุต่างกัน ต้องเปรียบเทียบบริการในช่วงศึกษาเดียวกัน เช่น ทำซ้ำถึง ค.ร.น. ของอายุ เมื่อโจทย์สมมติว่าอุปกรณ์ถูกทดแทนและมีต้นทุน/บริการเหมือนเดิมทุกรอบ</p><p>อายุ 2 ปี กับ 4 ปี → ค.ร.น.=4 ปี อุปกรณ์ 2 ปีต้องซื้อที่ปี 0 และปี 2 และมีซากปลายแต่ละรอบ</p><h3>ข้อสอบวัสดุปี 2025 ที่ i=10%</h3><p>A: ซื้อ 205,000, O=29,000/ปี, S=2,000, อายุ 2 ปี; B: ซื้อ 235,000, O=27,000/ปี, S=20,000, อายุ 4 ปี</p><div class="formula">PW<sub>A</sub>=−205,000−29,000(P/A,10%,4)<br>−(205,000−2,000)(P/F,10%,2)+2,000(P/F,10%,4) ≈ −463,328.67<br>PW<sub>B</sub>=−235,000−27,000(P/A,10%,4)+20,000(P/F,10%,4) ≈ −306,926.10</div><p>เลือก B เพราะ NPV ติดลบน้อยกว่า เฉลยต้นฉบับมีการปัด factor จึงต่างเล็กน้อย</p><div class="warning">LCM ไม่จำเป็นเสมอ: หากโจทย์กำหนดช่วงโครงการจำกัดหรือทดแทนไม่เหมือนเดิม ให้ใช้ช่วงศึกษาที่กำหนดและมูลค่าคงเหลือที่เหมาะสม</div>`},
+{id:'aw-repeat',chapter:'10.2',title:'AW และการทำซ้ำหลายรอบ',topic:'AW และการทำซ้ำ',pages:'10.2 หน้า 16–21; ข้อสอบ 2025 ข้อ 1, 12–14',read:'8 นาที',html:`
+<p>Annual Worth (AW) คือจำนวนรายปีเท่ากันที่เทียบเท่ากับมูลค่าโครงการ เมื่ออายุไม่เท่ากันสามารถหา AW ของหนึ่งรอบแต่ละทางเลือกแล้วเทียบได้ หากบริการและรูปแบบการทดแทนซ้ำเหมือนเดิม</p><div class="formula">AW = PW ของหนึ่งรอบ × (A/P,i,n)<br>AW ของต้นทุนเป็นลบ → เลือกค่าที่สูงกว่า / ติดลบน้อยกว่า<br>EAOC เขียนเป็นต้นทุนบวก → เลือกค่าต่ำกว่า</div>
+<p>ภายใต้สมมติฐานรอบซ้ำเหมือนกัน AW ที่หาในหนึ่งรอบเท่ากับ AW ของ 2 หรือ 3 รอบ ไม่จำเป็นต้องขยายถึง ค.ร.น. เพื่อหา AW แต่ถ้าราคาซื้อหรือค่าเดินเครื่องรอบใหม่เปลี่ยนไป ผลนี้ไม่อัตโนมัติ</p><div class="tip">เปรียบเทียบ Future Worth ของคนละอายุที่คนละเวลาตรง ๆ ไม่ได้ ต้องย้ายไปเวลาเดียวกันก่อน</div>`},
+{id:'capitalized-cost',chapter:'10.2',title:'Capitalized Cost: ต้นทุนของบริการตลอดไป',topic:'Capitalized cost',pages:'10.2 หน้า 28–31, 33; ข้อสอบ 2025 ข้อ 13, 15',read:'11 นาที',html:`
+<p>Capitalized Cost คือ <b>มูลค่าปัจจุบัน</b> ของบริการที่ดำเนินและทดแทนต่อเนื่องตลอดไป ภายใต้อัตรา i&gt;0 และสมมติฐานที่กำหนด ไม่ใช่ค่าใช้จ่ายรายปี</p><div class="formula">เปลี่ยนเครื่องราคา C ทุก n ปี ไม่มีซาก:<br>CC = C + C/[(1+i)<sup>n</sup>−1]<br>รวมค่าเดินเครื่อง O ต่อปีตลอดไป: ECC = CC + O/i</div><p>สูตรเกิดจากเงินก้อนสำรอง R ที่มีดอกเบี้ยสะสม n ปีพอจ่ายเครื่องใหม่: R[(1+i)ⁿ−1]=C จากนั้น CC=C+R และค่า O ตลอดไปคิดเป็น O/i</p><h3>ตัวอย่างปั๊ม</h3><p>A: C=8,000, n=4, O=1,800, i=8% → ECC≈<b>52,692.08 ดอลลาร์</b>; B: C=16,000, n=7, O=1,600 → ECC≈<b>58,414.48 ดอลลาร์</b> จึงเลือก A ซึ่งสอดคล้องกับ EAOC เมื่อใช้สมมติฐานเดียวกัน</p><div class="tip">สำหรับโครงการถาวรที่ลงทุนเริ่มต้น C และบำรุง O ต่อปีอย่างเดียว ค่าใช้จ่ายรายปีเทียบเท่า = Ci+O ส่วน capitalized cost = C+O/i</div>`},
+{id:'selection-summary',chapter:'10.2',title:'เลือกเครื่องมือให้ตรงโจทย์',topic:'เลือกวิธีวิเคราะห์',pages:'10.2 หน้า 2, 12, 16–34; ข้อสอบ 2025',read:'7 นาที',html:`
+<div class="table-wrap"><table><thead><tr><th>ลักษณะโจทย์</th><th>วิธีที่เหมาะ</th><th>ตัดสินอย่างไร</th></tr></thead><tbody><tr><td>โครงการเดียว</td><td>NPV หรือ IRR ที่ MARR</td><td>NPV ≥ 0; IRR ≥ MARR ภายใต้เงื่อนไขกระแสปกติ</td></tr><tr><td>ต้องเลือกหนึ่งเดียว อายุเท่ากัน</td><td>NPV หรือ incremental</td><td>เลือก NPV สูงสุดที่ทำได้</td></tr><tr><td>อายุต่างกัน ทดแทนซ้ำ</td><td>EAOC/AW หรือ PW ช่วง LCM</td><td>เลือกต้นทุนรายปีต่ำสุด</td></tr><tr><td>บริการต่อเนื่องตลอดไป</td><td>Capitalized cost</td><td>เลือก PV ต้นทุนต่ำสุด</td></tr></tbody></table></div>
+<p>ถ้าต้องลงทุนเพิ่มเพื่อประหยัดค่าเดินเครื่อง ให้เปรียบเทียบผลประหยัดส่วนเพิ่มกับเงินลงทุนส่วนเพิ่ม ไม่ควรเลือกเครื่องราคาถูกที่สุดโดยดูเพียงราคาแรกซื้อ</p><div class="warning">ผลของแต่ละวิธีจะสอดคล้องกันเมื่อใช้กระแสเงินสด ระยะศึกษา อัตรา และสมมติฐานการทดแทนเดียวกัน</div>`},
+];
+</script>
+<script>// Safe arithmetic parser for the course calculator: no eval or network calls.
+function calcGcd(a,b){a=a<0n?-a:a;b=b<0n?-b:b;while(b){const r=a%b;a=b;b=r}return a||1n}
+function calcRational(n,d){if(d===0n)throw Error('หารด้วยศูนย์ไม่ได้');if(d<0n){n=-n;d=-d}if(n.toString().length>150||d.toString().length>150)return null;const g=calcGcd(n,d);return {n:n/g,d:d/g}}
+function calcNumberFraction(raw){
+ const m=raw.toLowerCase().match(/^(\d*\.?\d+|\d+\.)(?:e([+-]?\d+))?$/);if(!m)return null;
+ const bits=m[1].split('.'),digits=(bits[0]||'0')+(bits[1]||''),exponent=Number(m[2]||0)-(bits[1]||'').length;
+ if(digits.length>80||Math.abs(exponent)>80)return null;
+ let n=BigInt(digits||'0'),d=1n;if(exponent>=0)n*=10n**BigInt(exponent);else d=10n**BigInt(-exponent);return calcRational(n,d);
+}
+function calcApply(op,a,b){
+ let value,r=null;
+ if(op==='+'){value=a.value+b.value;if(a.r&&b.r)r=calcRational(a.r.n*b.r.d+b.r.n*a.r.d,a.r.d*b.r.d)}
+ else if(op==='-'){value=a.value-b.value;if(a.r&&b.r)r=calcRational(a.r.n*b.r.d-b.r.n*a.r.d,a.r.d*b.r.d)}
+ else if(op==='*'){value=a.value*b.value;if(a.r&&b.r)r=calcRational(a.r.n*b.r.n,a.r.d*b.r.d)}
+ else if(op==='/'){if(b.value===0)throw Error('หารด้วยศูนย์ไม่ได้');value=a.value/b.value;if(a.r&&b.r)r=calcRational(a.r.n*b.r.d,a.r.d*b.r.n)}
+ else if(op==='^'){
+  value=(a.value<0&&b.r&&b.r.d%2n===1n)?(b.r.n%2n===0n?1:-1)*Math.pow(-a.value,b.value):Math.pow(a.value,b.value);
+  if(a.r&&b.r&&b.r.d===1n&&b.r.n>=-50n&&b.r.n<=50n){const n=b.r.n<0n?-b.r.n:b.r.n;const nn=a.r.n**n,dd=a.r.d**n;r=b.r.n<0n?calcRational(dd,nn):calcRational(nn,dd)}
+ }
+ if(!Number.isFinite(value))throw Error('ผลลัพธ์อยู่นอกช่วงที่คำนวณได้');
+ if(r){const rn=Number(r.n),rd=Number(r.d);if(Number.isFinite(rn)&&Number.isFinite(rd))value=rn/rd}
+ return {value,r};
+}
+function calculateExpression(input){
+ const src=String(input).replace(/×/g,'*').replace(/÷/g,'/').replace(/−/g,'-').trim();if(!src)throw Error('กรุณาใส่ตัวเลข');if(src.length>300)throw Error('นิพจน์ยาวเกินไป');
+ const tokens=[];let i=0;while(i<src.length){if(/\s/.test(src[i])){i++;continue}const chunk=src.slice(i),m=chunk.match(/^(?:\d+(?:\.\d*)?|\.\d+)(?:[eE][+-]?\d+)?/);if(m){const v=Number(m[0]);if(!Number.isFinite(v))throw Error('ตัวเลขมากเกินไป');tokens.push({type:'number',text:m[0],value:v});i+=m[0].length;continue}if('+-*/^()'.includes(src[i])){tokens.push({type:src[i]});i++;continue}throw Error('มีสัญลักษณ์ที่เครื่องคิดเลขไม่รองรับ')}
+ let at=0;const peek=()=>tokens[at]?.type;
+ function primary(){const t=tokens[at];if(!t)throw Error('นิพจน์ยังไม่ครบ');if(t.type==='number'){at++;return {value:t.value,r:calcNumberFraction(t.text)}}if(t.type==='('){at++;const v=sum();if(peek()!==')')throw Error('วงเล็บยังไม่ครบ');at++;return v}throw Error('ตรวจตำแหน่งตัวเลขหรือเครื่องหมาย')}
+ function power(){let v=primary();if(peek()==='^'){at++;v=calcApply('^',v,unary())}return v}
+ function unary(){if(peek()==='+'||peek()==='-'){const op=tokens[at++].type,v=unary();if(op==='-')return {value:-v.value,r:v.r?{n:-v.r.n,d:v.r.d}:null};return v}return power()}
+ function product(){let v=unary();while(peek()==='*'||peek()==='/'){let op=tokens[at++].type;v=calcApply(op,v,unary())}return v}
+ function sum(){let v=product();while(peek()==='+'||peek()==='-'){let op=tokens[at++].type;v=calcApply(op,v,product())}return v}
+ const result=sum();if(at!==tokens.length)throw Error('ตรวจตำแหน่งตัวเลขหรือวงเล็บ');if(!Number.isFinite(result.value))throw Error('ผลลัพธ์อยู่นอกช่วงที่คำนวณได้');return result;
+}
+function calcFormat(n){if(Object.is(n,-0)||n===0)return '0';return Number(n.toPrecision(12)).toString()}
+function calcFractionText(r){if(!r||r.d===1n)return '';const text=`${r.n}/${r.d}`;return text.length<=60?text:''}
+function calculatorMarkup(){return `<section id="calculator-panel" class="calculator-panel" aria-label="เครื่องคิดเลข" hidden><div class="calculator-head"><strong>เครื่องคิดเลข</strong><button type="button" class="calculator-close" data-calc-action="close" aria-label="ปิดเครื่องคิดเลข">×</button></div><label class="calc-expression-label" for="calc-expression">นิพจน์</label><input id="calc-expression" class="calc-expression" type="text" inputmode="none" autocomplete="off" spellcheck="false" aria-label="นิพจน์สำหรับคำนวณ" placeholder="เช่น (1+0.08)^5"><div class="calc-answer" id="calc-answer" role="status" aria-live="polite"><span>ผลลัพธ์จะแสดงที่นี่</span></div><div id="calc-fraction" class="calc-fraction" hidden><label>เศษ<input id="calc-numerator" type="number" inputmode="decimal" step="any" placeholder="1"></label><span>⁄</span><label>ส่วน<input id="calc-denominator" type="number" inputmode="decimal" step="any" placeholder="2"></label><button type="button" data-calc-action="insertFraction">ใส่</button></div><div class="calculator-keys" aria-label="ปุ่มเครื่องคิดเลข"><button data-calc-action="clear">C</button><button data-calc-value="(">(</button><button data-calc-value=")">)</button><button data-calc-action="back" aria-label="ลบตัวก่อนหน้า">⌫</button><button data-calc-value="7">7</button><button data-calc-value="8">8</button><button data-calc-value="9">9</button><button class="calc-op" data-calc-value="÷">÷</button><button data-calc-value="4">4</button><button data-calc-value="5">5</button><button data-calc-value="6">6</button><button class="calc-op" data-calc-value="×">×</button><button data-calc-value="1">1</button><button data-calc-value="2">2</button><button data-calc-value="3">3</button><button class="calc-op" data-calc-value="−">−</button><button data-calc-value="0">0</button><button data-calc-value=".">.</button><button class="calc-op" data-calc-value="^" aria-label="ยกกำลัง">xʸ</button><button class="calc-op" data-calc-value="+">+</button><button class="calc-fraction-key" data-calc-action="fraction" aria-label="ใส่เศษส่วน">a⁄b</button><button class="calc-equals" data-calc-action="equals">=</button></div></section>`}
+let calculatorReady=false;
+function initCalculator(){
+ if(calculatorReady||typeof document==='undefined'||!document.body||typeof document.body.insertAdjacentHTML!=='function')return;
+ document.body.insertAdjacentHTML('beforeend',calculatorMarkup());calculatorReady=true;
+ const panel=document.querySelector('#calculator-panel'),input=document.querySelector('#calc-expression'),answer=document.querySelector('#calc-answer'),fraction=document.querySelector('#calc-fraction');
+ function resetAnswer(){answer.innerHTML='<span>ผลลัพธ์จะแสดงที่นี่</span>';answer.classList.remove('error')}
+ function insert(value){const start=input.selectionStart??input.value.length,end=input.selectionEnd??input.value.length;input.value=input.value.slice(0,start)+value+input.value.slice(end);input.focus({preventScroll:true});input.setSelectionRange(start+value.length,start+value.length);resetAnswer()}
+ function solve(){try{const result=calculateExpression(input.value),frac=calcFractionText(result.r);answer.classList.remove('error');answer.innerHTML=`<strong>= ${calcFormat(result.value)}</strong>${frac?`<small>เศษส่วน = ${frac}</small>`:''}`}catch(err){answer.classList.add('error');answer.textContent=err.message||'ตรวจสอบนิพจน์'} }
+ panel.addEventListener('click',event=>{
+  const el=event.target.closest('[data-calc-action],[data-calc-value]');if(!el)return;
+  if(el.dataset.calcValue!==undefined){insert(el.dataset.calcValue);return}
+  switch(el.dataset.calcAction){
+   case 'close':closeCalculator();break;
+   case 'clear':input.value='';fraction.hidden=true;resetAnswer();input.focus({preventScroll:true});break;
+   case 'back':{const start=input.selectionStart??input.value.length,end=input.selectionEnd??input.value.length;if(start!==end){input.value=input.value.slice(0,start)+input.value.slice(end);input.setSelectionRange(start,start)}else if(start>0){input.value=input.value.slice(0,start-1)+input.value.slice(start);input.setSelectionRange(start-1,start-1)}input.focus({preventScroll:true});resetAnswer();break}
+   case 'equals':solve();break;
+   case 'fraction':fraction.hidden=!fraction.hidden;if(!fraction.hidden)document.querySelector('#calc-numerator').focus({preventScroll:true});break;
+   case 'insertFraction':{let n=document.querySelector('#calc-numerator').value.trim(),d=document.querySelector('#calc-denominator').value.trim();if(n===''||d===''){answer.classList.add('error');answer.textContent='กรอกทั้งเศษและส่วน';return}if(Number(d)===0){answer.classList.add('error');answer.textContent='ส่วนของเศษส่วนต้องไม่เป็นศูนย์';return}let pos=input.selectionStart??input.value.length,prefix=input.value.slice(0,pos);let mul=/[\d)]\s*$/.test(prefix)?'×':'';insert(`${mul}(${n}÷${d})`);fraction.hidden=true;document.querySelector('#calc-numerator').value='';document.querySelector('#calc-denominator').value='';break}
+  }
+ });
+ input.addEventListener('input',resetAnswer);input.addEventListener('keydown',ev=>{if(ev.key==='Enter'){ev.preventDefault();solve()}else if(ev.key==='Escape'){ev.preventDefault();closeCalculator()}});
+}
+function toggleCalculator(){initCalculator();const panel=document.querySelector('#calculator-panel');if(!panel)return;panel.hidden=!panel.hidden;for(const b of document.querySelectorAll('[data-action="toggleCalc"]'))b.setAttribute('aria-expanded',String(!panel.hidden));if(!panel.hidden)document.querySelector('#calc-expression')?.focus({preventScroll:true})}
+function closeCalculator(){const panel=document.querySelector('#calculator-panel');if(panel)panel.hidden=true;for(const b of document.querySelectorAll('[data-action="toggleCalc"]'))b.setAttribute('aria-expanded','false')}
+initCalculator();
+</script>
+<script>// A simple per-question scratch sheet. Strokes are stored locally in IndexedDB.
+const PAD_TOOLS={black:{label:'ปากกาสีดำ',color:'#1f2937',width:2.5},blue:{label:'ปากกาสีน้ำเงิน',color:'#1d4ed8',width:2.5},red:{label:'ปากกาสีแดง',color:'#d33636',width:2.5},eraser:{label:'ยางลบ',color:'#000000',width:24}};
+const padSheets=new Map();
+let padDBPromise=null, padCleanup=null, padStorageWarned=false;
+function padDatabase(){
+ if(padDBPromise)return padDBPromise;
+ padDBPromise=new Promise(resolve=>{
+  if(typeof indexedDB==='undefined'){resolve(null);return}
+  let req;try{req=indexedDB.open('econprep-quiz2-scratch-v1',1)}catch{resolve(null);return}
+  req.onupgradeneeded=()=>{if(!req.result.objectStoreNames.contains('sheets'))req.result.createObjectStore('sheets')};
+  req.onsuccess=()=>resolve(req.result);req.onerror=()=>resolve(null);req.onblocked=()=>resolve(null);
+ });
+ return padDBPromise;
+}
+function padRead(key){return padDatabase().then(db=>new Promise(resolve=>{if(!db){resolve([]);return}try{const req=db.transaction('sheets','readonly').objectStore('sheets').get(key);req.onsuccess=()=>resolve(Array.isArray(req.result)?req.result:[]);req.onerror=()=>resolve([])}catch{resolve([])}}))}
+function getPadSheet(key){
+ if(padSheets.has(key))return padSheets.get(key);
+ const sheet={key,strokes:[],loaded:false,chain:Promise.resolve()};padSheets.set(key,sheet);
+ sheet.ready=padRead(key).then(strokes=>{sheet.strokes=strokes;sheet.loaded=true;return sheet}).catch(()=>{sheet.loaded=true;return sheet});
+ return sheet;
+}
+function savePadSheet(sheet){
+ const snapshot=sheet.strokes.map(s=>({tool:s.tool,points:s.points.map(p=>[p[0],p[1]])}));
+ sheet.chain=sheet.chain.catch(()=>{}).then(()=>padDatabase()).then(db=>new Promise(resolve=>{
+  if(!db){if(!padStorageWarned){padStorageWarned=true;toast('กระดาษทดบันทึกไม่ได้ แต่ยังใช้ได้ชั่วคราวในหน้านี้')}resolve();return}
+  try{const tx=db.transaction('sheets','readwrite');tx.objectStore('sheets').put(snapshot,sheet.key);tx.oncomplete=()=>resolve();tx.onerror=tx.onabort=()=>{if(!padStorageWarned){padStorageWarned=true;toast('บันทึกกระดาษทดไม่สำเร็จ รอยเขียนยังอยู่ในหน้านี้')}resolve()}}catch{if(!padStorageWarned){padStorageWarned=true;toast('บันทึกกระดาษทดไม่สำเร็จ รอยเขียนยังอยู่ในหน้านี้')}resolve()}
+ }));
+}
+function scratchMarkup(){
+ const selected=PAD_TOOLS[state.paperTool]?state.paperTool:'black';const calculatorOpen=!!document.querySelector('#calculator-panel:not([hidden])');
+ const eraser='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8.2 17.8 3.8 13.4a1.8 1.8 0 0 1 0-2.55l6.95-6.96a1.8 1.8 0 0 1 2.55 0l6.9 6.9a1.8 1.8 0 0 1 0 2.55l-4.45 4.46H8.2Zm-2.4-6.4 6.1 6.1M8.2 18.4h12" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+ const controls=Object.entries(PAD_TOOLS).map(([name,tool])=>`<button type="button" class="pad-tool ${selected===name?'active':''} ${name==='eraser'?'eraser-tool':''}" data-pad-tool="${name}" aria-label="${tool.label}" title="${tool.label}" aria-pressed="${selected===name}">${name==='eraser'?eraser:`<span class="ink-dot" style="--ink-color:${tool.color}"></span>`}</button>`).join('');
+ return `<div class="splitter" id="pad-splitter" role="separator" tabindex="0" aria-orientation="vertical" aria-label="ปรับความกว้างระหว่างโจทย์กับกระดาษทด" aria-valuemin="20" aria-valuemax="80" aria-valuenow="${Math.round((Number(state.paperSplit)||0.53)*100)}" title="ลากซ้ายหรือขวาเพื่อปรับขนาด"><span aria-hidden="true"></span></div><aside class="scratch-card" aria-label="กระดาษทด"><div class="scratch-toolbar"><div class="scratch-title"><strong>กระดาษทด</strong><span>แยกตามข้อ · บันทึกในเครื่อง</span></div><div class="pad-tools" role="group" aria-label="เลือกปากกาหรือยางลบ">${controls}</div><button class="calc-launch" type="button" data-action="toggleCalc" aria-controls="calculator-panel" aria-expanded="${calculatorOpen}"><span aria-hidden="true">▦</span> เครื่องคิดเลข</button></div><div class="scratch-paper"><canvas id="scratch-canvas" aria-label="พื้นที่เขียนกระดาษทด ใช้นิ้ว ปากกา หรือเมาส์เขียนได้">เบราว์เซอร์นี้ไม่รองรับกระดาษทด</canvas><span class="pad-loading" id="pad-loading">กำลังเตรียมกระดาษ…</span></div></aside>`;
+}
+function teardownScratch(){if(padCleanup){padCleanup();padCleanup=null}}
+function mountScratch(key){
+ teardownScratch();
+ const layout=document.querySelector('.scratch-layout'),canvas=document.querySelector('#scratch-canvas'),splitter=document.querySelector('#pad-splitter'),loading=document.querySelector('#pad-loading');
+ if(!layout||!canvas||!splitter)return;
+ const ctx=canvas.getContext('2d');if(!ctx){if(loading)loading.textContent='เบราว์เซอร์นี้ไม่รองรับการเขียน';return}
+ const sheet=getPadSheet(key),paper=canvas.parentElement;
+ let active=true,stroke=null,pointer=null,dragPointer=null,raf=0,dpr=1,lastW=0,lastH=0,currentSplit=0.53;
+ const toolNow=()=>PAD_TOOLS[state.paperTool]?state.paperTool:'black';
+ function setCanvasSize(){
+  if(!active)return;const rect=canvas.getBoundingClientRect();if(!rect.width||!rect.height)return;
+  const scale=Math.min(window.devicePixelRatio||1,2.5),w=Math.max(1,Math.round(rect.width*scale)),h=Math.max(1,Math.round(rect.height*scale));
+  if(w===lastW&&h===lastH&&scale===dpr)return;
+  lastW=w;lastH=h;dpr=scale;canvas.width=w;canvas.height=h;ctx.setTransform(dpr,0,0,dpr,0,0);redraw();
+ }
+ function paint(stroke,from,to){
+  const tool=PAD_TOOLS[stroke.tool]||PAD_TOOLS.black;ctx.save();ctx.globalCompositeOperation=stroke.tool==='eraser'?'destination-out':'source-over';ctx.strokeStyle=tool.color;ctx.fillStyle=tool.color;ctx.lineWidth=tool.width;ctx.lineCap='round';ctx.lineJoin='round';ctx.beginPath();
+  if(to){ctx.moveTo(from[0],from[1]);ctx.lineTo(to[0],to[1]);ctx.stroke()}else{ctx.arc(from[0],from[1],tool.width/2,0,Math.PI*2);ctx.fill()}ctx.restore();
+ }
+ function redraw(){
+  if(!active)return;ctx.clearRect(0,0,canvas.width/dpr,canvas.height/dpr);
+  for(const line of sheet.strokes){if(!Array.isArray(line.points)||!line.points.length)continue;if(line.points.length===1)paint(line,line.points[0]);else for(let i=1;i<line.points.length;i++)paint(line,line.points[i-1],line.points[i])}
+ }
+ function scheduleResize(){if(raf)cancelAnimationFrame(raf);raf=requestAnimationFrame(()=>{raf=0;setCanvasSize()})}
+ const observer=typeof ResizeObserver==='function'?new ResizeObserver(scheduleResize):null;if(observer)observer.observe(paper);else window.addEventListener('resize',scheduleResize);
+ function point(ev){const r=canvas.getBoundingClientRect();return [Math.round((ev.clientX-r.left)*10)/10,Math.round((ev.clientY-r.top)*10)/10]}
+ function down(ev){
+  if(!sheet.loaded||pointer!==null||(ev.pointerType==='mouse'&&ev.button!==0))return;ev.preventDefault();pointer=ev.pointerId;try{canvas.setPointerCapture(pointer)}catch{}
+  stroke={tool:toolNow(),points:[point(ev)]};sheet.strokes.push(stroke);paint(stroke,stroke.points[0]);
+ }
+ function move(ev){
+  if(pointer!==ev.pointerId||!stroke)return;ev.preventDefault();const events=typeof ev.getCoalescedEvents==='function'?ev.getCoalescedEvents():[];const samples=events.length?events:[ev];
+  for(const sample of samples){const next=point(sample),prev=stroke.points[stroke.points.length-1];if(Math.hypot(next[0]-prev[0],next[1]-prev[1])<0.8)continue;stroke.points.push(next);paint(stroke,prev,next)}
+ }
+ function finish(ev){if(pointer!==ev.pointerId||!stroke)return;ev.preventDefault();pointer=null;stroke=null;savePadSheet(sheet)}
+ canvas.addEventListener('pointerdown',down);canvas.addEventListener('pointermove',move);canvas.addEventListener('pointerup',finish);canvas.addEventListener('pointercancel',finish);canvas.addEventListener('lostpointercapture',finish);
+ const buttons=[...layout.querySelectorAll('[data-pad-tool]')];
+ function selectTool(ev){const button=ev.currentTarget,tool=button.dataset.padTool;if(!PAD_TOOLS[tool])return;state.paperTool=tool;save();for(const b of buttons){let on=b.dataset.padTool===tool;b.classList.toggle('active',on);b.setAttribute('aria-pressed',String(on))}canvas.classList.toggle('erasing',tool==='eraser')}
+ for(const b of buttons)b.addEventListener('click',selectTool);
+ canvas.classList.toggle('erasing',toolNow()==='eraser');
+ function splitBounds(){const width=layout.getBoundingClientRect().width,divider=splitter.getBoundingClientRect().width;const minLeft=Math.min(300,Math.max(105,width*0.25)),minRight=Math.min(265,Math.max(105,width*0.25));return {width,min:minLeft/width,max:(width-divider-minRight)/width}}
+ function applySplit(value,persist=false){const b=splitBounds();if(!b.width)return;const ratio=Math.max(b.min,Math.min(b.max,value));currentSplit=ratio;layout.style.setProperty('--paper-split',`${ratio*100}%`);splitter.setAttribute('aria-valuemin',String(Math.round(b.min*100)));splitter.setAttribute('aria-valuemax',String(Math.round(b.max*100)));splitter.setAttribute('aria-valuenow',String(Math.round(ratio*100)));if(persist){state.paperSplit=ratio;save()}}
+ function splitDown(ev){if(ev.pointerType==='mouse'&&ev.button!==0)return;ev.preventDefault();dragPointer=ev.pointerId;try{splitter.setPointerCapture(dragPointer)}catch{}splitMove(ev)}
+ function splitMove(ev){if(ev.pointerId!==dragPointer)return;ev.preventDefault();const r=layout.getBoundingClientRect();applySplit((ev.clientX-r.left)/r.width)}
+ function splitUp(ev){if(ev.pointerId===dragPointer){dragPointer=null;ev.preventDefault();state.paperSplit=currentSplit;save()}}
+ function splitKey(ev){if(ev.key!=='ArrowLeft'&&ev.key!=='ArrowRight')return;ev.preventDefault();const current=Number(splitter.getAttribute('aria-valuenow'))/100;applySplit(current+(ev.key==='ArrowRight'?0.04:-0.04),true)}
+ splitter.addEventListener('pointerdown',splitDown);splitter.addEventListener('pointermove',splitMove);splitter.addEventListener('pointerup',splitUp);splitter.addEventListener('pointercancel',splitUp);splitter.addEventListener('keydown',splitKey);
+ applySplit(Number(state.paperSplit)||0.53);setCanvasSize();
+ sheet.ready.then(()=>{if(!active)return;if(loading)loading.hidden=true;redraw()});
+ padCleanup=()=>{active=false;if(stroke){stroke=null;pointer=null;savePadSheet(sheet)}if(observer)observer.disconnect();else window.removeEventListener('resize',scheduleResize);if(raf)cancelAnimationFrame(raf);for(const b of buttons)b.removeEventListener('click',selectTool);canvas.removeEventListener('pointerdown',down);canvas.removeEventListener('pointermove',move);canvas.removeEventListener('pointerup',finish);canvas.removeEventListener('pointercancel',finish);canvas.removeEventListener('lostpointercapture',finish);splitter.removeEventListener('pointerdown',splitDown);splitter.removeEventListener('pointermove',splitMove);splitter.removeEventListener('pointerup',splitUp);splitter.removeEventListener('pointercancel',splitUp);splitter.removeEventListener('keydown',splitKey)};
+}
+</script>
+<script>'use strict';
+const KEY='econprep_quiz2_10_1_10_2_v1';
+const $=s=>document.querySelector(s), main=$('#main');
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const initial=()=>({stats:{},bookmarks:[],learned:[],practice:null,exam:null,round:0});
+let state;
+try{state={...initial(),...JSON.parse(localStorage.getItem(KEY)||'{}')}}catch{state=initial()}
+if(!state.stats||typeof state.stats!=='object')state.stats={};
+if(!Array.isArray(state.bookmarks))state.bookmarks=[];
+if(!Array.isArray(state.learned))state.learned=[];
+let view='home', lessonId=LESSONS[0].id, reviewFilter='all', timer=null, bankFilter={query:'',chapter:'all',topic:'all'},confirmExamSubmit=false,confirmRestart=false,confirmPracticeReset=false;
+const letters=['A','B','C','D'];
+function save(){try{localStorage.setItem(KEY,JSON.stringify(state))}catch{toast('ไม่สามารถบันทึกในเบราว์เซอร์นี้ได้')}}
+let toastTimer;
+function toast(message){const el=$('#toast');el.textContent=message;el.style.display='block';clearTimeout(toastTimer);toastTimer=setTimeout(()=>el.style.display='none',3000)}
+function shuf(arr){let a=[...arr];for(let i=a.length-1;i>0;i--){let j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+function find(id){return QUESTIONS.find(q=>q.id===id)}
+// Keep existing progress, removing obsolete questions and safely adapting unfinished sessions.
+function migrateScope(){
+ const valid=new Set(QUESTIONS.map(q=>q.id)),validLessons=new Set(LESSONS.map(l=>l.id)),oldStats=state.stats;
+ state.bookmarks=state.bookmarks.filter(id=>valid.has(id));state.learned=state.learned.filter(id=>validLessons.has(id));
+ const p=state.practice;
+ if(p&&Array.isArray(p.ids)&&p.ids.some(id=>!valid.has(id))){
+  const oldIds=p.ids.slice(),index=Math.max(0,Math.min(p.index,oldIds.length-1)),current=oldIds[index];
+  const removedAnswered=oldIds.filter((id,i)=>!valid.has(id)&&(i<index||(i===index&&p.revealed)));
+  p.answered=Math.max(0,(p.answered||0)-removedAnswered.length);
+  p.correct=Math.max(0,(p.correct||0)-removedAnswered.filter(id=>oldStats[id]?.lastCorrect===true).length);
+  p.ids=oldIds.filter(id=>valid.has(id));p.index=oldIds.slice(0,index).filter(id=>valid.has(id)).length;
+  if(!valid.has(current)){p.selected=null;p.revealed=false}
+  if(!p.ids.length)state.practice=null;
+  else if(p.index>=p.ids.length){p.index=p.ids.length-1;p.finished=true;p.answered=p.ids.length}
+ }
+ const e=state.exam;
+ if(e&&Array.isArray(e.ids)&&e.ids.some(id=>!valid.has(id))){
+  e.answers=e.answers||{};e.orders=e.orders||{};
+  if(e.finished){for(const id of e.ids.filter(id=>!valid.has(id)))delete e.answers[id];e.ids=e.ids.filter(id=>valid.has(id));e.score=e.ids.reduce((n,id)=>n+(e.answers[id]===find(id).correct?1:0),0);if(!e.ids.length)state.exam=null}
+  else for(let i=0;i<e.ids.length;i++){const oldId=e.ids[i];if(valid.has(oldId))continue;const candidates=QUESTIONS.filter(q=>q.chapter==='10.2'&&!e.ids.includes(q.id));if(!candidates.length){state.exam=null;break}const replacement=shuf(candidates)[0].id;e.ids[i]=replacement;delete e.answers[oldId];delete e.orders[oldId];e.orders[replacement]=shuf([0,1,2,3])}
+ }
+ state.stats=Object.fromEntries(Object.entries(state.stats).filter(([id])=>valid.has(id)));
+ try{localStorage.setItem(KEY,JSON.stringify(state))}catch{}
+}
+migrateScope();
+function stat(id){return state.stats[id]||{attempts:0,correct:0,lastCorrect:null}}
+function record(id,isCorrect){const s=stat(id);state.stats[id]={attempts:s.attempts+1,correct:s.correct+(isCorrect?1:0),lastCorrect:isCorrect};}
+function summary(){const vals=Object.values(state.stats);let attempts=vals.reduce((n,x)=>n+(x.attempts||0),0),right=vals.reduce((n,x)=>n+(x.correct||0),0);return {seen:QUESTIONS.filter(q=>stat(q.id).attempts>0).length,weak:QUESTIONS.filter(q=>stat(q.id).lastCorrect===false).length,attempts,right,accuracy:attempts?Math.round(right/attempts*100):null}}
+function setView(v,{focus=true}={}){teardownScratch();if(v!=='practice'&&v!=='exam')closeCalculator();clearInterval(timer);view=v;document.querySelectorAll('.nav').forEach(x=>{let nav=x.dataset.view;let active=nav===v||(nav==='learn'&&v==='lesson')||(nav==='practiceStart'&&['practice','practiceDone'].includes(v))||(nav==='examSetup'&&['exam','result'].includes(v));x.classList.toggle('active',active);if(active)x.setAttribute('aria-current','page');else x.removeAttribute('aria-current')});render();if(focus){main.focus({preventScroll:true});window.scrollTo({top:0,behavior:'instant'})}}
+function goTop(){window.scrollTo({top:0,behavior:'instant'});main.focus({preventScroll:true})}
+const topics=()=>[...new Set(QUESTIONS.map(x=>x.topic))];
+const head=(label,title,desc='')=>`<div class="page-head"><div class="eyebrow">${esc(label)}</div><h1>${esc(title)}</h1>${desc?`<p>${esc(desc)}</p>`:''}</div>`;
+function sourceNote(){return `<div class="notice">แหล่งอ้างอิง: <a href="https://mycourseville-default.s3.ap-southeast-1.amazonaws.com/useruploaded_course_files/2025_1/67749/materials/Section_3_CH_10_1-196666-17623275606469.pdf" target="_blank" rel="noopener noreferrer">สไลด์ 10.1 ↗</a> · <a href="https://mycourseville-default.s3.ap-southeast-1.amazonaws.com/useruploaded_course_files/2026_1/82162/materials/Section_3_CH_10_2-196666-17943641872303.pdf" target="_blank" rel="noopener noreferrer">สไลด์ 10.2 ↗</a> · <a href="https://drive.google.com/drive/folders/1uCYPxCg6GRYN_JaAj4r798SVz02m4vPJ" target="_blank" rel="noopener noreferrer">ข้อสอบปลายภาค 2025 ↗</a><br>โจทย์บางข้อดัดแปลงและสร้างเพิ่ม เฉลยแสดงสมมติฐานและวิธีคิด</div>`}
+function home(){const s=summary(),pr=state.practice, ex=state.exam; const resume=pr&&!pr.finished&&pr.ids?.length>0;const resumeEx=ex&&!ex.finished&&ex.ids?.length>0;
+const svg=`<svg viewBox="0 0 520 230" role="img" aria-label="แผนภาพเงินปัจจุบันเดินทางไปยังมูลค่าในอนาคต"><path d="M35 167H485" fill="none" stroke="#89a793" stroke-width="2"/><path d="M475 161l10 6-10 6" fill="none" stroke="#89a793" stroke-width="2"/><path d="M90 165V100M228 165V124M344 165V95M437 165V56" stroke="#125a4c" stroke-width="3" stroke-linecap="round"/><path d="M84 108l6-9 6 9M222 132l6-9 6 9M338 103l6-9 6 9M431 64l6-9 6 9" fill="none" stroke="#125a4c" stroke-width="3" stroke-linecap="round"/><circle cx="90" cy="167" r="5" fill="#125a4c"/><circle cx="228" cy="167" r="5" fill="#125a4c"/><circle cx="344" cy="167" r="5" fill="#125a4c"/><circle cx="437" cy="167" r="5" fill="#125a4c"/><text x="74" y="194" font-size="14" font-family="sans-serif" fill="#50766a">now</text><text x="215" y="194" font-size="14" font-family="sans-serif" fill="#50766a">t = 1</text><text x="331" y="194" font-size="14" font-family="sans-serif" fill="#50766a">t = 2</text><text x="417" y="194" font-size="14" font-family="sans-serif" fill="#50766a">future</text><text x="74" y="87" font-size="22" font-family="Georgia" fill="#125a4c">P</text><text x="216" y="111" font-size="20" font-family="Georgia" fill="#125a4c">A</text><text x="332" y="82" font-size="20" font-family="Georgia" fill="#125a4c">A</text><text x="425" y="45" font-size="22" font-family="Georgia" fill="#125a4c">F</text><circle cx="422" cy="52" r="29" fill="none" stroke="#c1dca9" stroke-width="13" opacity=".55"/></svg>`;
+main.innerHTML=`<section class="hero"><div><div class="eyebrow">QUIZ 2 / CHAPTER 10.1 + 10.2</div><h1>วิเคราะห์ความคุ้มค่า<br>ตัดสินใจอย่างมั่นใจ</h1><p>เรียน PBP, NPV, DCFROR และการเปรียบเทียบทางเลือก พร้อมโจทย์ทฤษฎี–คำนวณ และเฉลยแสดงวิธีคิดทีละขั้น</p><div class="actions"><button class="primary" data-view="examSetup">${resumeEx?'กลับไปทำชุดสอบ':'เริ่มจำลองสอบ 15 ข้อ'} →</button><button class="secondary" data-view="learn">อ่านบทเรียน</button></div><p class="micro" style="margin:14px 0 0">ชุดสอบผสม 10.1 และ 10.2 · แยกจาก Quiz 1 · เฉลยหลังส่ง</p></div><div class="hero-visual"><span class="mini-label">PROFITABILITY ANALYSIS</span>${svg}<div class="bottom-label"><span>ONE PERIOD AT A TIME</span><span>10.1 — 10.2</span></div></div></section>
+<section class="stats"><div class="stat"><span>บทเรียน</span><strong>${LESSONS.length}<i> หัวข้อ</i></strong><span>ตามสไลด์ 10.1–10.2</span></div><div class="stat"><span>คลังข้อสอบ</span><strong>${QUESTIONS.length}<i> ข้อ</i></strong><span>โจทย์ 4 ตัวเลือก</span></div><div class="stat"><span>เคยฝึกแล้ว</span><strong>${s.seen}<i> / ${QUESTIONS.length}</i></strong><span>นับข้อไม่ซ้ำ</span></div><div class="stat"><span>ควรทบทวน</span><strong>${s.weak}<i> ข้อ</i></strong><span>ตอบล่าสุดยังไม่ถูก</span></div></section>
+<div class="section-title"><h2>เลือกวิธีฝึกของคุณ</h2><span class="micro">อ่านให้เข้าใจ แล้วลองทำ</span></div><section class="modes"><article class="mode featured"><span class="mode-number">01 / 15-QUESTION QUIZ</span><h3>จำลองควิซ</h3><p>สุ่ม 15 ข้อจากหลายหัวข้อ มี 4 ตัวเลือกต่อข้อ ส่งแล้วดูคะแนนและเฉลยทีละขั้น</p><button class="primary" data-view="examSetup">${resumeEx?'ทำชุดเดิมต่อ':'ตั้งค่าจำลองสอบ'} →</button></article><article class="mode"><span class="mode-number">02 / STUDY AT YOUR PACE</span><h3>บทเรียนและสูตร</h3><p>อ่านภาพรวม ตัวอย่างคำนวณ และจุดที่ต้องระวังตามลำดับของสไลด์</p><button class="secondary" data-view="learn">เปิดบทเรียน →</button></article><article class="mode"><span class="mode-number">03 / PRACTICE ALL</span><h3>ฝึกให้ครบทุกข้อ</h3><p>เฉลยทันทีหลังตอบ แต่ละข้อปรากฏครั้งเดียวในรอบ พร้อมทบทวนข้อที่ยังผิด</p><button class="secondary" data-view="practiceStart">${resume?'ทำต่อให้ครบ':'เลือกชุดฝึก'} →</button></article></section>
+<section class="coverage"><div class="coverage-top"><div><h3>ความคืบหน้าของคุณ</h3><span class="micro">บันทึกในเบราว์เซอร์ของอุปกรณ์นี้</span></div><span class="micro">อ่าน ${state.learned.length}/${LESSONS.length} บท · ฝึก ${s.seen}/${QUESTIONS.length} ข้อ</span></div><div class="bar" aria-label="ความคืบหน้าการทำข้อสอบ"><span style="width:${100*s.seen/QUESTIONS.length}%"></span></div><div class="dot-grid" aria-hidden="true">${QUESTIONS.map(q=>{let t=stat(q.id);return `<span class="dot ${!t.attempts?'':t.lastCorrect===false?'wrong':t.correct>=3?'mastered':'seen'}" title="${q.id}"></span>`}).join('')}</div><div class="legend"><span><i class="dot"></i>ยังไม่เคยทำ</span><span><i class="dot seen"></i>ตอบล่าสุดถูก</span><span><i class="dot wrong"></i>ตอบล่าสุดผิด</span><span><i class="dot mastered"></i>ตอบถูกสะสม ≥ 3 ครั้ง</span></div></section>${sourceNote()}`}
+function learn(){const done=state.learned.length;main.innerHTML=head('LEARNING / CHAPTER 10.1–10.2','เรียนทีละเรื่อง','บทเรียนสรุปหลักคิด สูตร วิธีแทนค่า และจุดที่มักพลาด พร้อมโจทย์ฝึกในแต่ละหัวข้อ')+`<section class="source-card"><div class="flex-between"><div><h2>บทเรียนทั้งหมด</h2><p>อ่านแล้ว ${done} จาก ${LESSONS.length} เรื่อง · เลือกเรื่องเพื่อเริ่มเรียน</p></div><span class="tag">${Math.round(done/LESSONS.length*100)}% COMPLETE</span></div><div class="bar"><span style="width:${done/LESSONS.length*100}%"></span></div><div class="modes" style="margin-top:20px">${['10.1','10.2'].map(ch=>`<article class="mode"><span class="mode-number">SECTION ${ch}</span><h3>${ch==='10.1'?'วัดความคุ้มค่าของโครงการ':'เปรียบเทียบทางเลือก'}</h3><p>${ch==='10.1'?'Cash flow, PBP, NPV, PVR และ DCFROR':'Incremental ROR, NPV, AW, EAOC และ capitalized cost'}</p><button class="secondary" data-action="openLesson" data-id="${LESSONS.find(l=>l.chapter===ch).id}">เริ่ม ${ch} →</button></article>`).join('')}<article class="mode featured"><span class="mode-number">QUICK ACCESS</span><h3>เลือกเรื่องที่อยากอ่าน</h3><p>มีตัวอย่างพร้อมวิธีเลือกสูตรและจุดสังเกตสำคัญ</p><button class="primary" data-action="openLesson" data-id="${esc(lessonId)}">ไปบทเรียน →</button></article></div></section>${sourceNote()}`}
+function lesson(){let item=LESSONS.find(x=>x.id===lessonId)||LESSONS[0];lessonId=item.id;let idx=LESSONS.findIndex(x=>x.id===item.id),done=state.learned.includes(item.id);
+const menu=`<div class="lesson-menu-title">บทเรียน · ${state.learned.length}/${LESSONS.length} เรื่อง</div>${LESSONS.map((l,i)=>`<button class="lesson-item ${l.id===item.id?'active':''}" data-action="openLesson" data-id="${l.id}" ${l.id===item.id?'aria-current="page"':''}><span>${String(i+1).padStart(2,'0')}</span>${esc(l.title)} ${state.learned.includes(l.id)?'✓':''}</button>`).join('')}`;
+main.innerHTML=`<div class="lesson-layout"><aside class="lesson-menu" aria-label="สารบัญบทเรียน">${menu}</aside><div><label class="mobile-lesson"><span class="micro">เลือกบทเรียน</span><select id="lesson-select" aria-label="เลือกบทเรียน" style="width:100%">${LESSONS.map((l,i)=>`<option value="${l.id}" ${l.id===item.id?'selected':''}>${i+1}. ${esc(l.title)} ${state.learned.includes(l.id)?'✓':''}</option>`).join('')}</select></label><article class="lesson-article"><div class="eyebrow">SECTION ${esc(item.chapter)} / ${esc(item.read)}</div><h1>${esc(item.title)}</h1><p class="micro">อ้างอิง ${esc(item.pages)}</p>${item.html}<div class="lesson-bottom"><button class="secondary btn-sm" data-action="markLesson" data-id="${item.id}">${done?'✓ อ่านจบแล้ว':'ทำเครื่องหมายว่าอ่านแล้ว'}</button><div class="actions"><button class="secondary btn-sm" data-action="lessonPractice" data-topic="${esc(item.topic)}">ฝึกหัวข้อนี้ →</button>${idx<LESSONS.length-1?`<button class="primary btn-sm" data-action="openLesson" data-id="${LESSONS[idx+1].id}">บทถัดไป →</button>`:'<button class="primary btn-sm" data-view="examSetup">ลองทำควิซ →</button>'}</div></div></article></div></div>`}
+function questionUI(q,choiceOrder,selected=null,revealed=false,options={}){let {exam=false}=options;return `<div class="question-meta"><span class="tag">${esc(q.chapter)} · ${esc(q.topic)}</span><span class="micro">${esc(q.id)} · ${esc(q.origin)}</span></div><h2 class="question-title">${esc(q.question)}</h2><div class="choices" role="group" aria-label="ตัวเลือกคำตอบ">${choiceOrder.map((original,i)=>`<button class="choice ${original===selected?'selected':''} ${revealed&&original===q.correct?'correct':''} ${revealed&&original===selected&&original!==q.correct?'incorrect':''}" data-choice="${original}" aria-pressed="${original===selected}" ${revealed?'disabled':''}><span class="letter">${letters[i]}</span><span>${esc(q.options[original])}</span></button>`).join('')}</div>${revealed?feedback(q,selected):''}`}
+function feedback(q,selected,reviewOnly=false){let correct=reviewOnly||selected===q.correct, title=reviewOnly?'คำตอบที่ถูกต้อง':selected===null?'ยังไม่ได้ตอบ':correct?'✓ ตอบถูกแล้ว':'ยังไม่ถูก';return `<div class="answer-panel ${correct?'':'wrong'}" role="status"><h3>${title} · เฉลย ${esc(q.options[q.correct])}</h3><p><b>ทำไมจึงใช้วิธีนี้:</b> ${esc(q.why)}</p><ol>${q.steps.map(t=>`<li>${esc(t)}</li>`).join('')}</ol><div class="source-line">${esc(q.origin)} · ${esc(q.ref)} · <a href="${q.chapter==='10.1'?'https://mycourseville-default.s3.ap-southeast-1.amazonaws.com/useruploaded_course_files/2025_1/67749/materials/Section_3_CH_10_1-196666-17623275606469.pdf':'https://mycourseville-default.s3.ap-southeast-1.amazonaws.com/useruploaded_course_files/2026_1/82162/materials/Section_3_CH_10_2-196666-17943641872303.pdf'}" target="_blank" rel="noopener noreferrer">สไลด์ ${esc(q.chapter)} ↗</a> · <a href="https://drive.google.com/drive/folders/1uCYPxCg6GRYN_JaAj4r798SVz02m4vPJ" target="_blank" rel="noopener noreferrer">ข้อสอบเดิม ↗</a></div></div>`}
+function practiceStart(){const s=summary(),p=state.practice;main.innerHTML=head('PRACTICE / LEARN BY DOING','ฝึกทีละข้อ','ตอบแล้วดูเฉลยละเอียดทันที แต่ละข้อปรากฏครั้งเดียวภายในชุด')+`<section class="source-card"><h2>เลือกชุดฝึก</h2><div class="setup"><label>บทที่ต้องการ<select id="practice-chapter"><option value="all">ทั้ง 10.1 และ 10.2</option><option value="10.1">เฉพาะ 10.1</option><option value="10.2">เฉพาะ 10.2</option></select></label></div><div class="actions"><button class="primary" data-action="beginPractice" data-mode="all">${p&&!p.finished?'เริ่มชุดฝึกใหม่':'ฝึกให้ครบทุกข้อ'} →</button><button class="secondary" data-action="beginPractice" data-mode="weak">ข้อที่ยังผิด · ${s.weak}</button><button class="secondary" data-action="beginPractice" data-mode="saved">ข้อที่บันทึก · ${state.bookmarks.length}</button></div>${p&&!p.finished?`<div class="notice">มีชุดที่ทำค้างไว้ · อยู่ข้อ ${p.index+1}/${p.ids.length}<br><button class="text-link" data-action="resumePractice">กลับไปทำต่อ</button>${confirmPracticeReset?'<p>เริ่มชุดใหม่จะเขียนทับชุดฝึกเดิม แต่สถิติและข้อที่บันทึกยังอยู่</p><button class="primary btn-sm" data-action="confirmPracticeReset">ยืนยันเริ่มชุดใหม่</button> <button class="secondary btn-sm" data-action="cancelPracticeReset">ยกเลิก</button>':''}</div>`:''}<p class="micro">ผลการทำบันทึกในอุปกรณ์นี้ · ตอบผิดก็ไปข้อต่อไป ไม่แทรกข้อเดิมในชุด</p></section>${sourceNote()}`}
+let pendingPractice=null;
+function startPractice(mode='all',chapter='all',topic='',force=false,singleId=''){
+ if(state.practice&&!state.practice.finished&&!force){pendingPractice={mode,chapter,topic,singleId};confirmPracticeReset=true;setView('practiceStart');return}
+ let pool=QUESTIONS.filter(q=>(chapter==='all'||q.chapter===chapter)&&(!topic||q.topic===topic));
+ if(mode==='weak')pool=pool.filter(q=>stat(q.id).lastCorrect===false);if(mode==='saved')pool=pool.filter(q=>state.bookmarks.includes(q.id));if(mode==='single')pool=pool.filter(q=>q.id===singleId);
+ if(!pool.length){toast(mode==='weak'?'ยังไม่มีข้อที่ตอบผิดในบทที่เลือก':mode==='saved'?'ยังไม่มีข้อที่บันทึกไว้ในบทที่เลือก':'ไม่มีโจทย์ในชุดนี้');return}
+ const ids=shuf(pool.map(q=>q.id)),orders=Object.fromEntries(ids.map(id=>[id,shuf([0,1,2,3])]));
+ state.practice={mode,chapter,topic,ids,orders,index:0,selected:null,revealed:false,finished:false,correct:0,answered:0,started:Date.now()};state.round++;confirmPracticeReset=false;pendingPractice=null;save();setView('practice');
+}
+function practice(){
+ teardownScratch();let p=state.practice;if(!p||p.finished){setView('practiceStart');return}let q=find(p.ids[p.index]);if(!q){state.practice=null;save();setView('practiceStart');return}
+ if(!p.started){p.started=Date.now();save()}
+ const remaining=p.ids.length-p.index-(p.revealed?1:0);
+ main.innerHTML=`<div class="page-head flex-between work-head"><div><div class="eyebrow">PRACTICE / ${esc(p.topic || (p.chapter==='all'?'ALL TOPICS':p.chapter))}</div><h1>ฝึกทีละข้อ</h1></div><button class="secondary btn-sm" data-view="home">พักก่อน</button></div>
+ <div class="work-summary"><div class="work-stats"><span>ข้อ <strong>${p.index+1} / ${p.ids.length}</strong></span><span>ตอบแล้ว <strong>${p.answered}</strong></span><span>ถูก <strong>${p.correct}</strong></span><span>เหลือ <strong>${remaining}</strong></span></div></div>
+ <div class="scratch-layout"><section class="question-card">${questionUI(q,p.orders[q.id],p.selected,p.revealed)}<div class="question-bottom"><button class="bookmark ${state.bookmarks.includes(q.id)?'on':''}" data-action="bookmark" data-id="${q.id}">${state.bookmarks.includes(q.id)?'★ บันทึกไว้แล้ว':'☆ บันทึกข้อนี้'}</button>${p.revealed?`<button class="primary" data-action="practiceNext">${p.index===p.ids.length-1?'สรุปชุดนี้':'ข้อต่อไป'} →</button>`:`<button class="primary" data-action="practiceCheck" ${p.selected===null?'disabled':''}>ตรวจคำตอบ →</button>`}</div><p class="kbd">เลือกคำตอบ 1–4 · Enter เพื่อตรวจหรือไปข้อต่อไป</p></section>${scratchMarkup()}</div>`;
+ mountScratch(`practice:${p.started}:${q.id}`);
+}
+function practiceDone(){const p=state.practice;main.innerHTML=`<section class="result-hero"><div class="eyebrow">PRACTICE COMPLETE</div><h1>ฝึกครบชุดแล้ว</h1><div class="score">${p.correct}<small> / ${p.ids.length}</small></div><p>ทำครบ ${p.answered} ข้อ และไม่แทรกข้อซ้ำในชุดนี้</p><div class="actions"><button class="primary" data-action="beginPractice" data-mode="weak">ทบทวนข้อที่ยังผิด</button><button class="secondary" data-view="bank">เปิดคลังข้อสอบ</button><button class="text-link" data-view="home">กลับภาพรวม</button></div></section>`}
+function checkPractice(){let p=state.practice;if(!p||p.revealed||p.selected===null)return;const q=find(p.ids[p.index]);let ok=p.selected===q.correct;p.revealed=true;p.answered++;if(ok)p.correct++;record(q.id,ok);save();practice()}
+function nextPractice(){const p=state.practice;if(!p||!p.revealed)return;if(p.index===p.ids.length-1){p.finished=true;save();setView('practiceDone');return}p.index++;p.selected=null;p.revealed=false;save();practice();goTop()}
+function topicSelection(pool,count){let groups={};for(const q of pool)(groups[q.topic]??=[]).push(q);let ids=[],topicOrder=shuf(Object.keys(groups));for(let topic of topicOrder){if(ids.length>=count)break;ids.push(shuf(groups[topic])[0].id)}if(ids.length<count){let rest=shuf(pool.filter(q=>!ids.includes(q.id)).map(q=>q.id));ids.push(...rest.slice(0,count-ids.length))}return ids}
+function examSetup(){const e=state.exam,resume=e&&!e.finished;main.innerHTML=head('EXAM ROOM / 15 QUESTIONS','จำลองควิซ 15 ข้อ','โจทย์ 4 ตัวเลือก ไม่มีข้อซ้ำในชุด และแสดงเฉลยหลังส่งคำตอบ')+`<section class="source-card"><h2>ตั้งค่าชุดสอบ</h2><div class="setup"><label>เนื้อหาที่ออก<select id="exam-chapter"><option value="all">ผสม 10.1 + 10.2 (บทละ 7–8 ข้อ)</option><option value="10.1">เฉพาะ 10.1</option><option value="10.2">เฉพาะ 10.2</option></select></label><label>เวลาฝึก<select id="exam-minutes"><option value="0">ไม่จับเวลา</option><option value="20">20 นาที</option><option value="30">30 นาที</option><option value="45">45 นาที</option></select></label></div><div class="notice">ชุดผสมสุ่มให้แต่ละบทมี 7–8 ข้อ และมีทั้งทฤษฎีและคำนวณ · สัดส่วนและเวลาใช้เพื่อฝึก ไม่ใช่รายละเอียดสอบจริงที่ยืนยันแล้ว</div>${resume?`<p>มีชุดสอบที่ยังทำไม่เสร็จ (${Object.keys(e.answers).length}/15 ข้อ)${e.deadline?' · เวลายังคงเดินขณะพัก':''}</p><div class="actions"><button class="primary" data-action="resumeExam">ทำชุดเดิมต่อ →</button><button class="secondary" data-action="restartExam">เริ่มชุดใหม่</button></div>${confirmRestart?'<div class="warning">เริ่มชุดใหม่จะเขียนทับชุดสอบที่ยังไม่ส่ง <div class="actions"><button class="primary btn-sm" data-action="confirmRestartExam">ยืนยันเริ่มชุดใหม่</button><button class="secondary btn-sm" data-action="cancelRestart">ยกเลิก</button></div></div>':''}`:'<button class="primary" data-action="beginExam">เริ่มจำลองสอบ →</button>'}</section>${sourceNote()}`}
+function examSelection(ch){
+ const pick=(chapter,count)=>{const pool=QUESTIONS.filter(q=>q.chapter===chapter),theory=Math.floor(count/2);return [...topicSelection(pool.filter(q=>q.kind==='theory'),theory),...topicSelection(pool.filter(q=>q.kind==='calculation'),count-theory)]};
+ if(ch==='all'){const chapters=['10.1','10.2'],extra=shuf(chapters)[0];return shuf(chapters.flatMap(c=>pick(c,c===extra?8:7)))}
+ return shuf(pick(ch,15));
+}
+function beginExam(){let ch=$('#exam-chapter')?.value||'all',minutes=Number($('#exam-minutes')?.value||0),ids=examSelection(ch);
+ state.exam={ids,orders:Object.fromEntries(ids.map(id=>[id,shuf([0,1,2,3])])),answers:{},index:0,chapter:ch,started:Date.now(),deadline:minutes?Date.now()+minutes*60000:null,finished:false};confirmRestart=false;confirmExamSubmit=false;save();setView('exam');}
+function exam(){
+ teardownScratch();clearInterval(timer);const e=state.exam;if(!e){setView('examSetup');return}if(e.finished){setView('result');return}if(e.deadline&&Date.now()>=e.deadline){finishExam();return}
+ if(!e.started){e.started=Date.now();save()}
+ const q=find(e.ids[e.index]),selected=e.answers[q.id]??null,answered=Object.keys(e.answers).length;
+ main.innerHTML=`<div class="page-head flex-between work-head"><div><div class="eyebrow">EXAM ROOM / QUESTION ${e.index+1} OF 15</div><h1>จำลองควิซ</h1></div><button class="secondary btn-sm" data-view="home">พักก่อน</button></div>
+ <div class="work-summary"><div class="work-stats"><span>ตอบแล้ว <strong>${answered}/15</strong></span>${e.deadline?'<span>เวลาที่เหลือ <strong class="timer" id="timer"></strong></span>':'<span>ไม่จับเวลา</span>'}</div><div class="exam-nav" aria-label="ไปยังข้อสอบ">${e.ids.map((id,i)=>`<button class="qnum ${e.answers[id]!==undefined?'answered':''} ${i===e.index?'current':''}" data-action="jumpExam" data-index="${i}" aria-label="ข้อ ${i+1}${e.answers[id]!==undefined?' ตอบแล้ว':''}" ${i===e.index?'aria-current="step"':''}>${i+1}</button>`).join('')}</div><button class="secondary btn-sm work-submit" data-action="askSubmit">ส่งคำตอบ</button></div>
+ <div class="scratch-layout"><section class="question-card">${questionUI(q,e.orders[q.id],selected,false,{exam:true})}<div class="exam-actions"><button class="secondary" data-action="examPrev" ${e.index===0?'disabled':''}>← ก่อนหน้า</button>${e.index<e.ids.length-1?'<button class="primary" data-action="examNext">ข้อถัดไป →</button>':'<button class="primary" data-action="askSubmit">ตรวจและส่งชุด →</button>'}</div>${confirmExamSubmit?`<div class="warning exam-warning">${answered<15?`ยังไม่ได้ตอบ ${15-answered} ข้อ ข้อที่ข้ามจะนับเป็น 0 คะแนน`: 'ตอบครบแล้ว พร้อมส่งคำตอบ'}<div class="actions"><button class="primary btn-sm" data-action="confirmSubmit">ยืนยันส่งคำตอบ</button><button class="secondary btn-sm" data-action="cancelSubmit">กลับไปตรวจ</button></div></div>`:''}</section>${scratchMarkup()}</div>`;
+ mountScratch(`exam:${e.started}:${q.id}`);if(e.deadline){tick();if(!e.finished)timer=setInterval(tick,1000)}
+}
+function tick(){const e=state.exam;if(!e||e.finished)return;const left=Math.max(0,Math.ceil((e.deadline-Date.now())/1000)), el=$('#timer');if(el)el.textContent=String(Math.floor(left/60)).padStart(2,'0')+':'+String(left%60).padStart(2,'0');if(!left){clearInterval(timer);finishExam()}}
+function finishExam(){const e=state.exam;if(!e||e.finished)return;e.finished=true;e.score=0;for(const id of e.ids){const answer=e.answers[id];if(answer!==undefined){const ok=answer===find(id).correct;record(id,ok);if(ok)e.score++}}save();confirmExamSubmit=false;reviewFilter='all';setView('result')}
+function result(){const e=state.exam;if(!e||!e.finished){setView('examSetup');return}let answered=Object.keys(e.answers).length;let qs=e.ids.map((id,i)=>({q:find(id),n:i+1,ans:e.answers[id]??null}));if(reviewFilter==='wrong')qs=qs.filter(x=>x.ans!==x.q.correct);main.innerHTML=`<section class="result-hero"><div class="eyebrow">QUIZ COMPLETE / REVIEW YOUR REASONING</div><h1>จบชุดจำลองสอบแล้ว</h1><div class="score">${e.score}<small> / ${e.ids.length}</small></div><p>ตอบแล้ว ${answered}/${e.ids.length} ข้อ · คำตอบที่ข้ามนับ 0 คะแนน</p><div class="actions"><button class="primary" data-view="examSetup">ทำชุดใหม่ →</button><button class="secondary" data-view="home">กลับภาพรวม</button></div></section><div class="section-title"><h2>ทบทวนเฉลยทุกข้อ</h2><div class="actions"><button class="${reviewFilter==='all'?'primary':'secondary'} btn-sm" data-action="reviewFilter" data-filter="all">ทุกข้อ</button><button class="${reviewFilter==='wrong'?'primary':'secondary'} btn-sm" data-action="reviewFilter" data-filter="wrong">ผิด / ข้าม</button></div></div>${qs.length?qs.map(({q,n,ans})=>`<article class="review-item"><div class="question-meta"><span class="tag">ข้อ ${n} · ${esc(q.topic)}</span><span class="micro">${esc(q.id)} · ${esc(q.origin)}</span></div><h3 class="result-question">${esc(q.question)}</h3><p class="review-choice">คำตอบของคุณ: <b>${ans===null?'ยังไม่ได้ตอบ':esc(q.options[ans])}</b></p>${feedback(q,ans)}</article>`).join(''):'<div class="empty">ไม่มีข้อผิดหรือข้ามในชุดนี้</div>'}`}
+function bank(){main.innerHTML=head('QUESTION BANK / QUICK REVIEW','คลังข้อสอบ','ค้นหาโจทย์ด้วยคีย์เวิร์ด กรองตามบทหรือหัวข้อ แล้วเปิดดูเฉลยได้ทันที')+`<div class="filters"><input id="bank-query" type="search" placeholder="ค้นหาโจทย์ เช่น NPV, คืนทุน, EAOC" value="${esc(bankFilter.query)}" aria-label="ค้นหาโจทย์"><select id="bank-chapter" aria-label="กรองตามบท"><option value="all">ทุกบท</option><option value="10.1" ${bankFilter.chapter==='10.1'?'selected':''}>10.1</option><option value="10.2" ${bankFilter.chapter==='10.2'?'selected':''}>10.2</option></select><select id="bank-topic" aria-label="กรองตามหัวข้อ"><option value="all">ทุกหัวข้อ</option>${topics().map(t=>`<option value="${esc(t)}" ${bankFilter.topic===t?'selected':''}>${esc(t)}</option>`).join('')}</select></div><div class="actions" style="margin-bottom:10px"><button class="secondary btn-sm" data-action="bankWeak">เฉพาะข้อที่ยังผิด</button><button class="secondary btn-sm" data-action="bankSaved">เฉพาะข้อที่บันทึก</button><button class="text-link" data-action="bankReset">ล้างตัวกรอง</button></div><div id="bank-results"></div>`;fillBank()}
+let bankSpecial='all';
+function fillBank(){const target=$('#bank-results');if(!target)return;const text=bankFilter.query.trim().toLowerCase();let pool=QUESTIONS.filter(q=>(bankFilter.chapter==='all'||q.chapter===bankFilter.chapter)&&(bankFilter.topic==='all'||q.topic===bankFilter.topic)&&(!text||[q.question,q.topic,q.ref,q.options.join(' '),q.why].join(' ').toLowerCase().includes(text))&&(bankSpecial==='all'||(bankSpecial==='weak'&&stat(q.id).lastCorrect===false)||(bankSpecial==='saved'&&state.bookmarks.includes(q.id))));target.innerHTML=`<p class="bank-count">พบ ${pool.length} จาก ${QUESTIONS.length} ข้อ${bankSpecial==='weak'?' · เฉพาะข้อที่ตอบผิดล่าสุด':bankSpecial==='saved'?' · เฉพาะข้อที่บันทึก':''}</p>${pool.length?pool.map(q=>`<article class="bank-row"><div class="question-meta"><span class="tag">${esc(q.chapter)} · ${esc(q.topic)}</span><span class="micro">${q.id} · ${esc(q.origin)}</span></div><h3>${esc(q.question)}</h3><details><summary>ดูเฉลยและวิธีคิด</summary>${feedback(q,null,true)}</details><button class="bookmark ${state.bookmarks.includes(q.id)?'on':''}" data-action="bookmarkBank" data-id="${q.id}">${state.bookmarks.includes(q.id)?'★ บันทึกแล้ว':'☆ บันทึก'}</button><button class="text-link" data-action="singlePractice" data-id="${q.id}">ฝึกข้อนี้ →</button></article>`).join(''):'<div class="empty">ไม่พบข้อที่ตรงกับตัวกรอง ลองคำค้นอื่น</div>'}`}
+function render(){switch(view){case 'home':return home();case 'learn':return learn();case 'lesson':return lesson();case 'practiceStart':return practiceStart();case 'practice':return practice();case 'practiceDone':return practiceDone();case 'examSetup':return examSetup();case 'exam':return exam();case 'result':return result();case 'bank':return bank();default:view='home';return home()}}
+document.addEventListener('click',e=>{
+ const viewEl=e.target.closest('[data-view]');if(viewEl){e.preventDefault();setView(viewEl.dataset.view);return}
+ const choice=e.target.closest('[data-choice]');if(choice){const value=Number(choice.dataset.choice);if(view==='practice'){const p=state.practice;if(!p.revealed){p.selected=value;save();practice()}}else if(view==='exam'){const ex=state.exam;if(ex&&!ex.finished){ex.answers[ex.ids[ex.index]]=value;save();exam()}}return}
+ const el=e.target.closest('[data-action]');if(!el)return;const action=el.dataset.action,id=el.dataset.id;
+ switch(action){
+ case 'toggleCalc':toggleCalculator();break;
+ case 'openLesson': if(LESSONS.some(l=>l.id===id)){lessonId=id;setView('lesson')}break;
+ case 'markLesson':if(state.learned.includes(id))state.learned=state.learned.filter(x=>x!==id);else state.learned.push(id);save();lesson();toast(state.learned.includes(id)?'บันทึกว่าอ่านจบแล้ว':'ยกเลิกเครื่องหมายอ่านจบ');break;
+ case 'lessonPractice':startPractice('topic','all',el.dataset.topic);break;
+ case 'beginPractice':startPractice(el.dataset.mode,$('#practice-chapter')?.value||'all');break;
+ case 'confirmPracticeReset':if(pendingPractice){const p=pendingPractice;startPractice(p.mode,p.chapter,p.topic,true,p.singleId||'')}break;
+ case 'cancelPracticeReset':confirmPracticeReset=false;pendingPractice=null;practiceStart();break;
+ case 'resumePractice':confirmPracticeReset=false;setView('practice');break;
+ case 'practiceCheck':checkPractice();break;
+ case 'practiceNext':nextPractice();break;
+ case 'bookmark':case 'bookmarkBank':if(state.bookmarks.includes(id))state.bookmarks=state.bookmarks.filter(x=>x!==id);else state.bookmarks.push(id);save();if(action==='bookmark'&&view==='practice')practice();else if(view==='bank')fillBank();toast(state.bookmarks.includes(id)?'บันทึกข้อนี้แล้ว':'นำออกจากรายการบันทึก');break;
+ case 'beginExam':beginExam();break;
+ case 'resumeExam':confirmRestart=false;setView('exam');break;
+ case 'restartExam':{const chapter=$('#exam-chapter')?.value||'all',minutes=$('#exam-minutes')?.value||'0';confirmRestart=true;examSetup();if($('#exam-chapter'))$('#exam-chapter').value=chapter;if($('#exam-minutes'))$('#exam-minutes').value=minutes;break;}
+ case 'confirmRestartExam':beginExam();break;
+ case 'cancelRestart':confirmRestart=false;examSetup();break;
+ case 'examPrev':if(state.exam.index>0)state.exam.index--;confirmExamSubmit=false;save();exam();goTop();break;
+ case 'examNext':if(state.exam.index<state.exam.ids.length-1)state.exam.index++;confirmExamSubmit=false;save();exam();goTop();break;
+ case 'jumpExam':state.exam.index=Number(el.dataset.index);confirmExamSubmit=false;save();exam();goTop();break;
+ case 'askSubmit':confirmExamSubmit=true;exam();document.querySelector('.exam-warning')?.scrollIntoView({behavior:'smooth',block:'nearest'});break;
+ case 'cancelSubmit':confirmExamSubmit=false;exam();break;
+ case 'confirmSubmit':finishExam();break;
+ case 'reviewFilter':reviewFilter=el.dataset.filter;result();break;
+ case 'bankWeak':bankSpecial=bankSpecial==='weak'?'all':'weak';fillBank();break;
+ case 'bankSaved':bankSpecial=bankSpecial==='saved'?'all':'saved';fillBank();break;
+ case 'bankReset':bankFilter={query:'',chapter:'all',topic:'all'};bankSpecial='all';bank();break;
+ case 'singlePractice':startPractice('single','all','',false,id);break;
+ }
+});
+document.addEventListener('change',e=>{if(e.target.id==='lesson-select'){lessonId=e.target.value;setView('lesson')}else if(e.target.id==='bank-chapter'){bankFilter.chapter=e.target.value;fillBank()}else if(e.target.id==='bank-topic'){bankFilter.topic=e.target.value;fillBank()}});
+document.addEventListener('input',e=>{if(e.target.id==='bank-query'){bankFilter.query=e.target.value;fillBank()}});
+document.addEventListener('keydown',e=>{if(['INPUT','SELECT','TEXTAREA'].includes(document.activeElement?.tagName))return;if(view==='practice'&&!e.altKey&&!e.ctrlKey&&!e.metaKey){const p=state.practice;if(!p)return;if(!p.revealed&&/^[1-4]$/.test(e.key)){p.selected=p.orders[p.ids[p.index]][Number(e.key)-1];save();practice()}else if(e.key==='Enter'&&(document.activeElement===main||document.activeElement===document.body)){e.preventDefault();p.revealed?nextPractice():checkPractice()}}});
+$('#update').addEventListener('click',()=>{const url=new URL(location.href);url.searchParams.set('refresh',String(Date.now()));location.replace(url.toString())});
+setView('home',{focus:false});
+</script>
+</body></html>
+
