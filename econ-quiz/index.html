@@ -15,11 +15,14 @@
 /* Keep the resize grip visible near the top of a long question. */
 .splitter{align-items:flex-start;padding-top:58px}.splitter span{top:110px}
 @media(max-width:700px){.work-head{margin-bottom:14px}.work-summary{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:9px}.work-summary .work-stats{grid-column:1;min-width:0}.work-summary .work-submit{grid-column:2;grid-row:1;margin:0}.work-summary .exam-nav{grid-column:1 / -1;grid-row:2;display:grid;grid-template-columns:repeat(10,minmax(0,1fr));gap:3px;overflow:visible}.work-summary .qnum{width:100%;min-width:0;height:30px}.splitter{padding-top:55px}.splitter span{top:90px}}
+
+.quiz-banner{max-width:1192px;margin:10px auto 0;padding:10px 16px;border:1px solid #b8d2c2;background:#edf5e9;border-radius:11px;display:flex;align-items:center;justify-content:space-between;gap:12px;color:#345348;font-size:13px}.quiz-banner strong{font-weight:700}.quiz-banner a{display:inline-flex;align-items:center;white-space:nowrap;text-decoration:none;color:#fff;background:#125a4c;border-radius:8px;padding:7px 11px;font-weight:700;font-size:12px}.quiz-banner a:hover{background:#0d443a}@media(max-width:700px){.quiz-banner{margin:9px 18px 0;padding:9px 11px;font-size:11px}.quiz-banner a{white-space:normal;text-align:center;font-size:11px;padding:7px 8px}}
 </style>
 </head>
 <body>
 <a class="skip" href="#main">ข้ามไปเนื้อหา</a>
 <header class="header"><a class="brand" href="./" data-view="home" aria-label="EconPrep หน้าหลัก"><span class="brand-icon">∑</span><span>EconPrep<small>TIME VALUE OF MONEY</small></span></a><nav aria-label="เมนูหลัก"><button class="nav active" data-view="home">ภาพรวม</button><button class="nav" data-view="learn">บทเรียน</button><button class="nav" data-view="practiceStart">ฝึกทีละข้อ</button><button class="nav" data-view="examSetup">จำลองสอบ</button><button class="nav" data-view="bank">คลังข้อสอบ</button></nav><button id="update" class="icon-btn" aria-label="โหลดเว็บเวอร์ชันล่าสุด">↻ <span>อัปเดต</span></button></header>
+<div class="quiz-banner"><span><strong>QUIZ 1</strong> · 9.1–9.3</span><a href="./quiz2/">ไป Quiz 2 · 10.1–10.2 →</a></div>
 <main id="main" tabindex="-1"><div class="loading">กำลังเตรียมบทเรียนและคลังข้อสอบ…</div></main>
 <footer><span>EconPrep · เข้าใจเหตุผลก่อนจำสูตร</span><span>สื่อฝึกอิสระจากสไลด์และข้อสอบที่ให้มา · ไม่ใช่ระบบสอบทางการ</span></footer><div id="toast" role="status" aria-live="polite"></div>
 <script>const QUESTIONS = [
