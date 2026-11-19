@@ -1,6 +1,7 @@
-export const STREAM_URL = "wss://nbstream.binance.com/equity/stream?streams=ANT@quote/price/ANT@tradingStatus/ANT@tradability";
+export const STREAM_URL = "wss://nbstream.binance.com/equity/stream?streams=ANT@quote/ANT@tradingStatus/ANT@tradability";
 export const QUOTE_MAX_AGE = 12_000;
-export const IPO_SESSION = Date.parse("2026-11-19T14:30:00Z");
+// First market trade was confirmed by 11:56:03 a.m. New York time on IPO day.
+export const LISTED_SINCE = Date.parse("2026-11-19T16:56:03Z");
 const symbol = "ANT";
 const clock = new Intl.DateTimeFormat("en-CA", {
   timeZone: "America/New_York",
@@ -44,17 +45,6 @@ export function fresh(time, now, maxAge = QUOTE_MAX_AGE) {
 
 export function decode(packet) {
   const event = packet?.data ?? packet;
-  if (event?.e === "price" && Array.isArray(event.rates)) {
-    const rate = event.rates.find(item => item.s === symbol);
-    if (!rate) return null;
-    const price = Number(rate.p);
-    const time = timestamp(rate.t);
-    return {
-      type: "price",
-      phase: rate.mp,
-      mark: price > 0 && Number.isFinite(price) && time ? { price, time } : null,
-    };
-  }
   if (event?.e === "quote" && event.s === symbol) {
     const bid = Number(event.bp);
     const ask = Number(event.ap);
@@ -87,22 +77,21 @@ export function createFeed(onUpdate, Socket = globalThis.WebSocket) {
   let packetTimer;
   let attempts = 0;
   let status = "connecting";
-  let phase;
   let mark;
   let quote;
-  let confirmedSession = false;
   let halt;
   let resumeAt = 0;
   let tradability;
 
   function snapshot(now = Date.now()) {
     const session = regularSession(now);
+    const listed = now >= LISTED_SINCE;
     const halted = Boolean(halt) || now < resumeAt
       || tradability === "NONE" || tradability === "DELISTING" || tradability === "OFFMARKET";
-    const tradable = status === "connected" && session && confirmedSession && phase === "O"
-      && !halted && fresh(quote?.time, now) && quote.time >= resumeAt && sameMarketDay(quote.time, now);
+    const tradable = status === "connected" && session && listed && !halted && fresh(quote?.time, now)
+      && quote.time >= Math.max(LISTED_SINCE, resumeAt) && sameMarketDay(quote.time, now) && regularSession(quote.time);
     return {
-      connection: status, mark, quote, session, confirmedSession, halted, tradable,
+      connection: status, mark, quote, session, listed, halted, tradable,
       canBuy: tradable && tradability !== "SELL",
       canSell: tradable && tradability !== "BUY",
     };
@@ -111,15 +100,13 @@ export function createFeed(onUpdate, Socket = globalThis.WebSocket) {
   function accept(update, now) {
     if (!update) return;
     switch (update.type) {
-      case "price":
-        phase = update.phase;
-        if (update.mark && (!mark || update.mark.time >= mark.time)) mark = update.mark;
-        if (phase === "O" && update.mark?.time >= IPO_SESSION && fresh(update.mark.time, now, 30_000)
-          && sameMarketDay(update.mark.time, now) && regularSession(update.mark.time)) confirmedSession = true;
-        if (phase && phase !== "O") confirmedSession = false;
-        break;
       case "quote":
-        if (!update.quote || !quote || update.quote.time >= quote.time) quote = update.quote;
+        if (!update.quote || update.quote.time < LISTED_SINCE) {
+          quote = undefined;
+        } else if (!quote || update.quote.time >= quote.time) {
+          quote = update.quote;
+          mark = { price: (quote.bid + quote.ask) / 2, time: quote.time };
+        }
         break;
       case "status":
         if (interruptions.has(update.status)) halt = update.status;
@@ -145,8 +132,6 @@ export function createFeed(onUpdate, Socket = globalThis.WebSocket) {
     socket = undefined;
     previous?.close();
     status = "connecting";
-    phase = undefined;
-    confirmedSession = false;
     quote = undefined;
     onUpdate();
 

@@ -1,4 +1,4 @@
-import { createFeed, fresh } from "./feed.js";
+import { createFeed, fresh } from "./feed.js?v=2";
 import {
   UNIT, amounts, available, changeSettings, fillOrder, fillPending, parseDecimal,
   readPortfolio, validateOrder, valuePortfolio,
@@ -106,7 +106,7 @@ function describeMarket(state) {
   if (!state.session) return ["closed", "นอกเวลาซื้อขาย", "คำสั่งจำลองจับคู่ในช่วงตลาดปกติของสหรัฐฯ"];
   if (state.connection === "disconnected") return ["error", "กำลังเชื่อมต่อใหม่", "ฟีดขาดการเชื่อมต่อ ระบบจะลองอีกครั้ง"];
   if (state.connection === "connecting") return ["waiting", "กำลังเชื่อมต่อ", "กำลังเชื่อมต่อ Binance Stocks"];
-  if (!state.confirmedSession) return ["waiting", "รอเริ่มซื้อขาย", "กำลังรอราคาซื้อขาย ANT ที่มีเวลาจากตลาด"];
+  if (!state.listed) return ["waiting", "รอเริ่มซื้อขาย", "กำลังรอการเปิดซื้อขายจาก Nasdaq"];
   if (!state.tradable) return ["stale", "รอ Bid / Ask สด", "ระบบพักการจับคู่จนกว่าจะได้รับราคาอัปเดต"];
   return ["live", "เรียลไทม์", "รับ Bid / Ask จาก Binance Stocks"];
 }
@@ -132,7 +132,9 @@ function renderMarket() {
   if (market.mark) {
     const point = market.mark;
     if (!points.length || point.time > points.at(-1).time) {
-      points.push(point);
+      if (points.length && Math.floor(point.time / 1_000) === Math.floor(points.at(-1).time / 1_000)) {
+        points[points.length - 1] = point;
+      } else points.push(point);
       while (points.length > 1 && points[0].time < point.time - windowWidth) points.shift();
       drawChart();
     }

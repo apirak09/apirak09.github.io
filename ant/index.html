@@ -10,7 +10,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Noto+Sans+Thai:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="./style.css">
-  <script type="module" src="./app.js"></script>
+  <script type="module" src="./app.js?v=2"></script>
 </head>
 <body>
   <header class="top">
@@ -42,7 +42,7 @@
       </div>
       <div class="quote-bar">
         <div class="last-quote">
-          <span class="label">ราคาล่าสุด</span>
+          <span class="label">ราคากลาง Bid / Ask</span>
           <div><strong id="last-price">—</strong> <small id="ipo-change"></small></div>
         </div>
         <div>
@@ -74,11 +74,11 @@
           </div>
         </div>
         <div class="plot">
-          <canvas id="chart" role="img" aria-label="กราฟราคา ANT ในช่วงเวลาที่เลือก"></canvas>
+          <canvas id="chart" role="img" aria-label="กราฟราคากลาง Bid และ Ask ของ ANT ในช่วงเวลาที่เลือก"></canvas>
           <div class="chart-empty" id="chart-empty">
             <div class="empty-graphic" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
             <strong id="chart-message">กำลังเชื่อมต่อราคา ANT</strong>
-            <span id="chart-detail">กราฟจะเริ่มเมื่อได้รับราคาซื้อขายจากตลาด</span>
+            <span id="chart-detail">กราฟจะเริ่มเมื่อได้รับ Bid และ Ask จากตลาด</span>
           </div>
         </div>
         <div class="chart-footer">
