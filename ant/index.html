@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0b111a">
+  <meta name="description" content="จำลองซื้อขายหุ้น Anthropic (ANT) ด้วยเงินจำลองและราคา Bid/Ask จาก Binance Stocks">
+  <title>ANT Paper · จำลองเทรด Anthropic</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Noto+Sans+Thai:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./style.css">
+  <script type="module" src="./app.js"></script>
+</head>
+<body>
+  <header class="top">
+    <div class="top-inner">
+      <a class="brand" href="./" aria-label="ANT Paper">
+        <span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span>
+        <span>ANT<span class="brand-muted"> Paper</span></span>
+      </a>
+      <div class="top-actions">
+        <span class="paper-tag">พอร์ตจำลอง</span>
+        <button class="button outline" id="open-settings" type="button">ปรับเงินทุน</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="ticker" aria-label="ราคาหุ้น Anthropic">
+      <div class="ticker-main">
+        <div class="ticker-id">
+          <div class="ticker-mark" aria-hidden="true">A</div>
+          <div>
+            <h1>Anthropic <span>ANT</span></h1>
+            <p>NASDAQ <span aria-hidden="true">·</span> USD</p>
+          </div>
+        </div>
+        <div id="feed-state" class="feed-badge" data-state="waiting" role="status">
+          <span class="feed-dot"></span><span id="feed-label">กำลังเชื่อมต่อราคา</span>
+        </div>
+      </div>
+      <div class="quote-bar">
+        <div class="last-quote">
+          <span class="label">ราคาล่าสุด</span>
+          <div><strong id="last-price">—</strong> <small id="ipo-change"></small></div>
+        </div>
+        <div>
+          <span class="label">Bid <span class="sub">ราคารับซื้อ</span></span>
+          <strong class="up" id="bid">—</strong>
+        </div>
+        <div>
+          <span class="label">Ask <span class="sub">ราคาเสนอขาย</span></span>
+          <strong class="down" id="ask">—</strong>
+        </div>
+        <div>
+          <span class="label">ราคา IPO</span>
+          <strong>$83.00</strong>
+        </div>
+      </div>
+    </section>
+
+    <div class="desk">
+      <section class="card chart-card" aria-labelledby="chart-title">
+        <div class="card-heading">
+          <div>
+            <h2 id="chart-title">ANT / USD</h2>
+            <p id="price-time">รอราคาจากตลาด</p>
+          </div>
+          <div class="segmented timeframes" aria-label="ช่วงเวลากราฟ">
+            <button type="button" data-range="5" aria-pressed="false">5m</button>
+            <button type="button" data-range="30" aria-pressed="true">30m</button>
+            <button type="button" data-range="120" aria-pressed="false">2h</button>
+          </div>
+        </div>
+        <div class="plot">
+          <canvas id="chart" role="img" aria-label="กราฟราคา ANT ในช่วงเวลาที่เลือก"></canvas>
+          <div class="chart-empty" id="chart-empty">
+            <div class="empty-graphic" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+            <strong id="chart-message">กำลังเชื่อมต่อราคา ANT</strong>
+            <span id="chart-detail">กราฟจะเริ่มเมื่อได้รับราคาซื้อขายจากตลาด</span>
+          </div>
+        </div>
+        <div class="chart-footer">
+          <a href="https://developers.binance.com/en/docs/catalog/advanced-trading-stocks-trading/api/ws-streams/market-streams" target="_blank" rel="noopener noreferrer">ข้อมูลจาก Binance Stocks</a>
+          <span>เวลาไทย</span>
+        </div>
+      </section>
+
+      <section class="card order-card" id="order-card" aria-labelledby="order-title">
+        <div class="card-heading">
+          <h2 id="order-title">ส่งคำสั่งจำลอง</h2>
+          <span class="ticket-symbol">ANT</span>
+        </div>
+        <form id="ticket" autocomplete="off" novalidate>
+          <div class="segmented side" aria-label="ซื้อหรือขาย">
+            <button type="button" data-side="buy" aria-pressed="true">ซื้อ</button>
+            <button type="button" data-side="sell" aria-pressed="false">ขาย</button>
+          </div>
+          <div class="type-choices" aria-label="ประเภทคำสั่ง">
+            <button type="button" data-kind="market" aria-pressed="true">ราคาตลาด</button>
+            <button type="button" data-kind="limit" aria-pressed="false">ตั้งราคา</button>
+          </div>
+          <label class="field" for="limit" id="limit-field" hidden>
+            <span>ราคาที่ตั้ง</span>
+            <span class="input-wrap"><input id="limit" type="text" inputmode="decimal" placeholder="0.00"><span>USD</span></span>
+          </label>
+          <label class="field" for="qty">
+            <span>จำนวนหุ้น</span>
+            <span class="input-wrap"><input id="qty" type="text" inputmode="decimal" value="1" placeholder="0"><span>ANT</span></span>
+          </label>
+          <div class="sizes" aria-label="จำนวนหุ้นเป็นสัดส่วนของยอดพร้อมใช้">
+            <button type="button" data-size="0.25">25%</button>
+            <button type="button" data-size="0.5">50%</button>
+            <button type="button" data-size="1">ทั้งหมด</button>
+          </div>
+          <dl class="costs">
+            <div><dt id="available-label">เงินพร้อมซื้อ</dt><dd id="available">—</dd></div>
+            <div><dt>ราคาอ้างอิง</dt><dd id="reference">—</dd></div>
+            <div><dt>ค่าคอมฯ โดยประมาณ</dt><dd id="fee-estimate">—</dd></div>
+            <div class="total"><dt id="estimate-label">ยอดจ่ายประมาณ</dt><dd id="estimate">—</dd></div>
+          </dl>
+          <button class="button submit" id="submit-order" type="submit" disabled>ซื้อ ANT</button>
+          <p class="ticket-note" id="order-note">คำสั่งราคาตลาดรอ Bid และ Ask ที่อัปเดต</p>
+          <div id="notice" class="notice" role="status" hidden></div>
+        </form>
+      </section>
+
+      <section class="card portfolio-card" aria-labelledby="portfolio-title">
+        <div class="card-heading">
+          <h2 id="portfolio-title">พอร์ตของฉัน</h2>
+          <span class="ticket-symbol">USD</span>
+        </div>
+        <div class="portfolio-hero">
+          <div><span class="label">มูลค่าพอร์ต</span><strong id="equity">—</strong></div>
+          <div><span class="label">กำไร/ขาดทุนรวม</span><strong id="total-pnl">—</strong><small id="total-pct"></small></div>
+        </div>
+        <dl class="portfolio-details">
+          <div><dt>เงินทุนจำลอง</dt><dd id="capital">—</dd></div>
+          <div><dt>เงินสด</dt><dd id="cash">—</dd></div>
+          <div><dt>หุ้น ANT</dt><dd id="position">—</dd></div>
+          <div><dt>ต้นทุนเฉลี่ย</dt><dd id="average">—</dd></div>
+          <div><dt>กำไร/ขาดทุนที่ขายแล้ว</dt><dd id="realized">—</dd></div>
+          <div><dt>กำไร/ขาดทุนที่ยังถือ</dt><dd id="unrealized">—</dd></div>
+        </dl>
+        <p id="valuation-note" class="portfolio-note">หุ้นที่ยังถือประเมินด้วยราคา Bid</p>
+      </section>
+
+      <section class="card activity-card" aria-labelledby="activity-title">
+        <div class="card-heading">
+          <h2 id="activity-title">รายการซื้อขาย</h2>
+        </div>
+        <div class="activity-tabs" aria-label="แสดงรายการ">
+          <button type="button" data-list="fills" aria-pressed="true">จับคู่แล้ว <span id="fill-count">0</span></button>
+          <button type="button" data-list="orders" aria-pressed="false">คำสั่งค้าง <span id="order-count">0</span></button>
+        </div>
+        <div id="activity"></div>
+      </section>
+    </div>
+    <footer class="page-footer">ใช้เงินจำลองทั้งหมด · คำสั่งค้างจะจับคู่ได้ระหว่างที่เปิดหน้านี้อยู่และมีราคาสด</footer>
+  </main>
+
+  <dialog id="settings" aria-labelledby="settings-title">
+    <form id="settings-form" autocomplete="off" novalidate>
+      <div class="card-heading">
+        <h2 id="settings-title">ปรับเงินทุนจำลอง</h2>
+        <button class="icon-button" type="button" id="close-settings" aria-label="ปิด">×</button>
+      </div>
+      <label class="field" for="new-capital">
+        <span>เงินทุนรวม</span>
+        <span class="input-wrap"><input id="new-capital" type="text" inputmode="decimal"><span>USD</span></span>
+      </label>
+      <p class="ticket-note">ส่วนต่างของเงินทุนจะเพิ่มหรือลดในเงินสดของพอร์ต</p>
+      <label class="field" for="new-fee">
+        <span>ค่าคอมมิชชันต่อขา</span>
+        <span class="input-wrap"><input id="new-fee" type="text" inputmode="decimal"><span>%</span></span>
+      </label>
+      <p class="ticket-note">ตั้ง 0 สำหรับรายการจำลองที่ไม่คิดค่าคอมฯ</p>
+      <p class="notice" id="settings-error" role="alert" hidden></p>
+      <button class="button save" type="submit">บันทึก</button>
+    </form>
+  </dialog>
+  <noscript><p class="no-script">เปิด JavaScript เพื่อเชื่อมต่อราคาและส่งคำสั่งจำลอง</p></noscript>
+</body>
+</html>
